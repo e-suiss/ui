@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A pie with each category name printed outside its slice and connected by a leader line. Use it when readers shouldn't have to match colors against a separate legend.
 
+Replace `chartData` and the category entries in `chartConfig`; labels read their text from the config. Change what the custom `label` renderer returns to print values or percentages, and shrink `outerRadius` if long names get clipped. Outside labels collide when slices are thin, so keep the category count low.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/pie-chart-label
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts pie-chart-label
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/pie-chart-label.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/pie-chart-label.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { PieChartLabel } from "@/components/charts/pie-chart-label"
 ```tsx
 <PieChartLabel />
 ```
-
-Replace `chartData` and the category entries in `chartConfig`; labels read their text from the config. To print values or percentages instead, change what the custom `label` renderer returns. Shrink `outerRadius` if long names get clipped at the edges.
-
-## Notes
-
-Outside labels collide when slices are thin, so keep the category count low.
 
 </Only>
 
@@ -77,7 +81,17 @@ A `PieChart` with a smaller radius to leave room for labels. `chartData` holds o
 
 </Only>
 
+<Only platform="rn">
+
+Replace `chartData` with your records and keep `dataKey` and `nameKey` in step with your field names. Add one entry per slice to `chartConfig` with its label and color; the component takes no props.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +141,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +153,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/pie-chart-label.tsx`:
+2. Copy and paste the following code into `components/charts/pie-chart-label.tsx`:
 
 <ComponentSource path="uniwind/components/charts/pie-chart-label.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +165,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/pie-chart-label.tsx`:
+2. Copy and paste the following code into `components/charts/pie-chart-label.tsx`:
 
 <ComponentSource path="nativewind/components/charts/pie-chart-label.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +177,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/pie-chart-label.tsx`:
+2. Copy and paste the following code into `components/charts/pie-chart-label.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/pie-chart-label.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +264,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +307,6 @@ fun PieLabelExample() {
     PieChartLabel()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your records and keep `dataKey` and `nameKey` in step with your field names. Add one entry per slice to `chartConfig` with its label and color; the component takes no props.
 
 </Only>
 

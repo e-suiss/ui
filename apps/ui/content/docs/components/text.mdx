@@ -19,6 +19,10 @@ It reads `TextClassContext`, so components such as `Button` can pass a text colo
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -61,7 +65,9 @@ npx @esuiss/ui@latest add text --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -69,7 +75,7 @@ npx @esuiss/ui@latest add text --platform kotlin
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -87,17 +93,17 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/text.tsx`:
+3. Copy and paste the following code into `components/ui/text.tsx`:
 
 <ComponentSource path="uniwind/components/ui/text.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -115,11 +121,11 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/text.tsx`:
+3. Copy and paste the following code into `components/ui/text.tsx`:
 
 <ComponentSource path="nativewind/components/ui/text.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -137,11 +143,11 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-2. Copy the source into `components/ui/text.tsx`:
+2. Copy and paste the following code into `components/ui/text.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/text.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -204,6 +210,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -247,14 +257,6 @@ fun TextExample() {
 
 </Only>
 
-<Only platform="rn">
-
-Pick a `variant` for the role of the text, and add classes through `className` for one-off changes.
-
-Use the `render` prop to render a different component with the same classes. `TextClassContext` is exported so your own components can style nested `Text` the same way.
-
-</Only>
-
 ## Examples
 
 ### Typography
@@ -269,82 +271,6 @@ The four heading levels.
 
 <NativeExample name="text-headings" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Text
-
-The text element with typography variants.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `RenderProp<Record<string, unknown>, Record<string, never>>` | - | Renders another component in place of the default `Text`, with the same props. |
-| `variant` | `"default" \| "h1" \| "h2" \| "h3" \| "h4" \| "p" \| "blockquote" \| "code" \| "lead" \| "large" \| "small" \| "muted"` | `"default"` | Typography style. |
-
-Also accepts the props of `TextProps`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### TextVariant
-
-Values: `.default`, `.h1`, `.h2`, `.h3`, `.h4`, `.p`, `.blockquote`, `.code`, `.lead`, `.large`, `.small`, `.muted`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### .textVariant
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `TextVariant`: `.default` \| `.h1` \| `.h2` \| `.h3` \| `.h4` \| `.p` \| `.blockquote` \| `.code` \| `.lead` \| `.large` \| `.small` \| `.muted` | - | Typography style. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### TextVariant
-
-Values: `Default`, `H1`, `H2`, `H3`, `H4`, `P`, `Blockquote`, `Code`, `Lead`, `Large`, `Small`, `Muted`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Text
-
-The text element with typography variants.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `TextVariant`: `Default` \| `H1` \| `H2` \| `H3` \| `H4` \| `P` \| `Blockquote` \| `Code` \| `Lead` \| `Large` \| `Small` \| `Muted` | `TextVariant.Default` | Typography style. |
-| `color` | `Color` | `Color.Unspecified` | - |
-| `textAlign` | `TextAlign` | `TextAlign.Unspecified` | - |
-| `overflow` | `TextOverflow` | `TextOverflow.Clip` | - |
-| `softWrap` | `Boolean` | `true` | - |
-| `maxLines` | `Int` | `Int.MAX_VALUE` | - |
-| `minLines` | `Int` | `1` | - |
-| `style` | `TextStyle` | `TextStyle.Default` | - |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -352,10 +278,63 @@ The text element with typography variants.
 - `h1` to `h4` set `role="heading"`, so VoiceOver and TalkBack can navigate by heading.
 - Text scales with the system font size.
 
-## Notes
+</Only>
 
-- Colors use the `text-foreground` and `text-muted-foreground` tokens; `code` uses `bg-muted` and `blockquote` a `border-border` start border.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Text
+
+The text element with typography variants.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `RenderProp<Record<string, unknown>, Record<string, never>>` | - |
+| `variant` | `"default" \| "h1" \| "h2" \| "h3" \| "h4" \| "p" \| "blockquote" \| "code" \| "lead" \| "large" \| "small" \| "muted"` | `"default"` |
+
+Also accepts the props of `TextProps`.
+
+Pick a `variant` for the role of the text, and add classes through `className` for one-off changes. Use `render` to render another component in place of the default `Text`, with the same props and classes. `TextClassContext` is exported so your own components can style nested `Text` the same way.
+
+</Only>
+
+<Only platform="swift">
+
+### TextVariant
+
+Values: `.default`, `.h1`, `.h2`, `.h3`, `.h4`, `.p`, `.blockquote`, `.code`, `.lead`, `.large`, `.small`, `.muted`.
+
+### .textVariant
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `TextVariant`: `.default` \| `.h1` \| `.h2` \| `.h3` \| `.h4` \| `.p` \| `.blockquote` \| `.code` \| `.lead` \| `.large` \| `.small` \| `.muted` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### TextVariant
+
+Values: `Default`, `H1`, `H2`, `H3`, `H4`, `P`, `Blockquote`, `Code`, `Lead`, `Large`, `Small`, `Muted`.
+
+### Text
+
+The text element with typography variants.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `TextVariant`: `Default` \| `H1` \| `H2` \| `H3` \| `H4` \| `P` \| `Blockquote` \| `Code` \| `Lead` \| `Large` \| `Small` \| `Muted` | `TextVariant.Default` |
+| `color` | `Color` | `Color.Unspecified` |
+| `textAlign` | `TextAlign` | `TextAlign.Unspecified` |
+| `overflow` | `TextOverflow` | `TextOverflow.Clip` |
+| `softWrap` | `Boolean` | `true` |
+| `maxLines` | `Int` | `Int.MAX_VALUE` |
+| `minLines` | `Int` | `1` |
+| `style` | `TextStyle` | `TextStyle.Default` |
 
 </Only>
 

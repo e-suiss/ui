@@ -11,11 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 Drawer wraps the Base UI Drawer. The `Drawer` root manages the open state and the swipe direction, and `DrawerTrigger` opens it. `DrawerContent` renders the panel in a portal, over a dimmed `DrawerOverlay` when modal, with an optional swipe handle and close button. Inside it, `DrawerHeader` holds the `DrawerTitle` and `DrawerDescription`, and `DrawerFooter` holds the actions. `DrawerClose` closes the drawer from any element.
 
-The drawer opens from the bottom by default and can also open from the top, left or right. It supports snap points, a floating style inset from the screen edges, and a non-modal mode. To get the iOS sheet effect, where the page behind scales down as a bottom drawer opens, wrap the page in `DrawerProvider` with `DrawerIndentBackground` and `DrawerIndent`. Use a drawer for touch-friendly, swipeable panels; for a centered window, use a dialog.
+The drawer opens from the bottom by default and can also open from the top, left or right. It supports snap points, a floating style inset from the screen edges, a non-modal mode and a page behind it that scales down. Use a drawer for touch-friendly, swipeable panels; for a centered window, use a dialog.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/drawer
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add drawer
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
@@ -37,16 +41,35 @@ npm install @base-ui/react @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), `use-scrollbar-gap`.
 
-3. Copy the source into `components/ui/drawer.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/drawer.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { DrawerProvider, DrawerIndentBackground, DrawerIndent, Drawer, DrawerTrigger, DrawerPortal, DrawerClose, DrawerOverlay, DrawerSwipeHandle, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription } from "@/components/ui/drawer"
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerIndent,
+  DrawerIndentBackground,
+  DrawerOverlay,
+  DrawerPortal,
+  DrawerProvider,
+  DrawerSwipeHandle,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
 import { Button } from "@/components/ui/button"
 ```
 
@@ -110,264 +133,64 @@ import { Button } from "@/components/ui/button"
 
 </OnlyBase>
 
-The drawer is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Set `swipeDirection` to `down`, `up`, `left` or `right` to choose the edge it opens from and the direction it is swiped to close.
+## Composition
 
-Pass `snapPoints`, such as `[0.5, 1]`, to let people drag the drawer between heights; it opens at the first snap point unless you set `defaultSnapPoint`, or control it with `snapPoint` and `onSnapPointChange`. Set `modal={false}` to keep the rest of the page interactive; no overlay is rendered in that case.
+Use the following composition to build a `Drawer`:
 
-<OnlyBase base="base aria">
-
-Render the trigger or a close button as another component, such as a `Button`, with the `render` prop.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Set `asChild` on `DrawerTrigger` or `DrawerClose` to render your own `Button` as the trigger or close button.
-
-</OnlyBase>
-
-For the indented page effect, place `DrawerIndentBackground` and `DrawerIndent` inside `DrawerProvider` and put the page content in `DrawerIndent`. The page is scaled while a non-floating drawer that opens from the bottom is open, and, with snap points, only at the last snap point.
+```text
+Drawer
+├── DrawerTrigger
+└── DrawerContent
+    ├── DrawerHeader
+    │   ├── DrawerTitle
+    │   └── DrawerDescription
+    └── DrawerFooter
+        └── DrawerClose
+```
 
 ## Examples
 
 ### Directions
 
-Four drawers that open from the bottom, top, left and right edges.
+Set `swipeDirection` to `down`, `up`, `left` or `right` to choose the edge the drawer opens from and the direction it is swiped to close.
 
 <ComponentPreview name="drawer-directions" />
 
 ### With close button
 
-A drawer with an icon close button in the top corner.
+Set `showCloseButton` on `DrawerContent` to add an icon close button in the top corner.
 
 <ComponentPreview name="drawer-with-close-button" />
 
 ### With close label
 
-A drawer whose close button shows a text label instead of an icon.
+Set `closeLabel` on `DrawerContent` to replace the close button's icon with text.
 
 <ComponentPreview name="drawer-with-close-label" />
 
 ### Floating
 
-A floating drawer, inset from the screen edges with rounded corners on all sides.
+Set `floating` to inset the drawer from the screen edges and round all of its corners.
 
 <ComponentPreview name="drawer-floating" />
 
 ### With snap points
 
-A drawer that opens at half height and expands when dragged up.
+Pass `snapPoints`, such as `[0.5, 1]`, to let people drag the drawer between heights. This one opens at half height and expands when dragged up.
 
 <ComponentPreview name="drawer-with-snap-points" />
 
 ### Non modal
 
-A non-modal drawer that leaves the rest of the page interactive.
+Set `modal={false}` to keep the rest of the page interactive. No overlay is rendered in that case.
 
 <ComponentPreview name="drawer-non-modal" />
 
 ### Sheet with detents
 
-An iOS-style event sheet with snap points that scales the page behind it using `DrawerIndent`.
+An event sheet with snap points that scales the page behind it. Place `DrawerIndentBackground` and `DrawerIndent` inside `DrawerProvider` and put the page content in `DrawerIndent`.
 
 <ComponentPreview name="drawer-sheet-with-detents" layout="fullscreen" />
-
-## API Reference
-
-<Anatomy>
-
-- [Drawer](#drawer)
-  - [DrawerTrigger](#drawertrigger)
-  - [DrawerContent](#drawercontent)
-    - [DrawerHeader](#drawerheader)
-      - [DrawerTitle](#drawertitle)
-      - [DrawerDescription](#drawerdescription)
-    - [DrawerFooter](#drawerfooter)
-      - [DrawerClose](#drawerclose)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### DrawerProvider
-
-Coordinates drawers with `DrawerIndent` so the page can react when a drawer opens.
-
-Also accepts the props of `DrawerPrimitive.Provider.Props`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### DrawerIndentBackground
-
-The dark layer shown behind the page when it scales down.
-
-Also accepts the props of `DrawerPrimitive.IndentBackground.Props`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### DrawerIndent
-
-Wraps the page content and scales it down while a bottom drawer is open.
-
-Also accepts the props of `DrawerPrimitive.Indent.Props`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### Drawer
-
-The root that manages the open state, swipe direction and snap points.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `floating` | `boolean` | `false` | Insets the drawer from the screen edges and rounds all of its corners. |
-| `showSwipeHandle` | `boolean` | `false` | Shows a grab bar on the edge of the panel that faces the screen center. |
-
-Also accepts the props of `DrawerPrimitive.Root.Props`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### DrawerTrigger
-
-The button that opens the drawer.
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element as the trigger instead of a `button`. |
-
-</OnlyBase>
-
-Also accepts the props of `DrawerPrimitive.Trigger.Props`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### DrawerPortal
-
-Renders its children into a portal outside the current DOM hierarchy.
-
-Also accepts the props of `DrawerPrimitive.Portal.Props`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### DrawerClose
-
-A button that closes the drawer.
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element as the close button instead of a `button`. |
-
-</OnlyBase>
-
-Also accepts the props of `DrawerPrimitive.Close.Props`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### DrawerOverlay
-
-The dimmed layer behind a modal drawer, which fades as the drawer is swiped away.
-
-Also accepts the props of `DrawerPrimitive.Backdrop.Props`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### DrawerSwipeHandle
-
-The grab bar people drag to move or dismiss the drawer.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### DrawerContent
-
-The drawer panel, rendered in a portal with an optional overlay, swipe handle and close button.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton` | `boolean` | `false` | Shows a close button in the top corner. |
-| `closeLabel` | `string` | - | Replaces the close button's icon with this text. |
-
-Also accepts the props of `DrawerPrimitive.Popup.Props`.
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### DrawerHeader
-
-Groups the title and description.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### DrawerFooter
-
-Holds the drawer's actions at the bottom of the panel.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### DrawerTitle
-
-The drawer's title, which also names it for assistive technology.
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element as the title. |
-
-</OnlyBase>
-
-Also accepts the props of `DrawerPrimitive.Title.Props`.
-
-</ApiPart>
-
-<ApiPart index={14}>
-
-### DrawerDescription
-
-Supporting text that describes the drawer for assistive technology.
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element as the description. |
-
-</OnlyBase>
-
-Also accepts the props of `DrawerPrimitive.Description.Props`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -377,13 +200,167 @@ Also accepts the props of `DrawerPrimitive.Description.Props`.
 - The swipe handle is hidden from assistive technology, so always provide another way to close the drawer, such as a `DrawerClose` button.
 - The icon-only close button has a visually hidden `Close` label.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values such as `drawer-popup`, `drawer-content`, `drawer-overlay`, `drawer-swipe-handle`, `drawer-close-button`, `drawer-header`, `drawer-footer` and `drawer-indent`.
-- The panel sets `data-swipe-direction`, `data-swipe-axis`, and, when applicable, `data-floating` and `data-snap-points`. A drawer at its last snap point gets `data-expanded`. `DrawerIndent` gets `data-raised` while the page is scaled.
-- Side drawers are `75%` wide, and `24rem` wide from the `sm` breakpoint. Top and bottom drawers are limited to the viewport height minus `6rem`.
-- Nested drawers stack, with the drawer behind scaled down slightly.
-- Uses the `popover`, `background` and `border` colors, with a `bg-black/50` backdrop. Animations are disabled on `DrawerIndent` when reduced motion is preferred.
+### DrawerProvider
+
+Coordinates drawers with `DrawerIndent` so the page can react when a drawer opens.
+
+Also accepts the props of `DrawerPrimitive.Provider.Props`.
+
+Place `DrawerIndentBackground` and `DrawerIndent` inside it and put the page content in `DrawerIndent`.
+
+### DrawerIndentBackground
+
+The dark layer shown behind the page when it scales down.
+
+Also accepts the props of `DrawerPrimitive.IndentBackground.Props`.
+
+### DrawerIndent
+
+Wraps the page content and scales it down while a bottom drawer is open.
+
+Also accepts the props of `DrawerPrimitive.Indent.Props`.
+
+The page is scaled while a non-floating drawer that opens from the bottom is open, and, with snap points, only at the last snap point. It gets `data-raised` while the page is scaled. Animations are disabled when reduced motion is preferred.
+
+### Drawer
+
+The root that manages the open state, swipe direction and snap points.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `floating` | `boolean` | `false` |
+| `showSwipeHandle` | `boolean` | `false` |
+
+Also accepts the props of `DrawerPrimitive.Root.Props`.
+
+The drawer is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. With `snapPoints` it opens at the first snap point unless you set `defaultSnapPoint`, or control it with `snapPoint` and `onSnapPointChange`. `showSwipeHandle` shows a grab bar on the edge of the panel that faces the screen center. Nested drawers stack, with the drawer behind scaled down slightly.
+
+### DrawerTrigger
+
+The button that opens the drawer.
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
+
+</OnlyBase>
+
+Also accepts the props of `DrawerPrimitive.Trigger.Props`.
+
+<OnlyBase base="base aria">
+
+Render the trigger as another component, such as a `Button`, with the `render` prop.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` to render your own `Button` as the trigger instead of a `button`.
+
+</OnlyBase>
+
+### DrawerPortal
+
+Renders its children into a portal outside the current DOM hierarchy.
+
+Also accepts the props of `DrawerPrimitive.Portal.Props`.
+
+### DrawerClose
+
+A button that closes the drawer.
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
+
+</OnlyBase>
+
+Also accepts the props of `DrawerPrimitive.Close.Props`.
+
+<OnlyBase base="base aria">
+
+Render the close button as another component, such as a `Button`, with the `render` prop.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` to render your own `Button` as the close button instead of a `button`.
+
+</OnlyBase>
+
+### DrawerOverlay
+
+The dimmed layer behind a modal drawer, which fades as the drawer is swiped away.
+
+Also accepts the props of `DrawerPrimitive.Backdrop.Props`.
+
+### DrawerSwipeHandle
+
+The grab bar people drag to move or dismiss the drawer.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### DrawerContent
+
+The drawer panel, rendered in a portal with an optional overlay, swipe handle and close button.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `showCloseButton` | `boolean` | `false` |
+| `closeLabel` | `string` | - |
+
+Also accepts the props of `DrawerPrimitive.Popup.Props`.
+
+The panel sets `data-swipe-direction`, `data-swipe-axis`, and, when applicable, `data-floating` and `data-snap-points`. A drawer at its last snap point gets `data-expanded`. Side drawers are `75%` wide, and `24rem` wide from the `sm` breakpoint. Top and bottom drawers are limited to the viewport height minus `6rem`.
+
+### DrawerHeader
+
+Groups the title and description.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### DrawerFooter
+
+Holds the drawer's actions at the bottom of the panel.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### DrawerTitle
+
+The drawer's title, which also names it for assistive technology.
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
+
+</OnlyBase>
+
+Also accepts the props of `DrawerPrimitive.Title.Props`.
+
+### DrawerDescription
+
+Supporting text that describes the drawer for assistive technology.
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
+
+</OnlyBase>
+
+Also accepts the props of `DrawerPrimitive.Description.Props`.
+
+Each part sets a `data-slot`, such as `drawer-content` or `drawer-swipe-handle`, for styling.
 
 </Only>
 
@@ -395,11 +372,13 @@ Also accepts the props of `DrawerPrimitive.Description.Props`.
 
 `Drawer` presents content in a panel attached to an edge of the screen. It slides in from the bottom by default, or from the top, left or right with `swipeDirection`, and the user can drag it closed in that direction. The content renders through a portal (inside a full-window overlay on iOS) and respects the safe-area insets.
 
-Set `floating` to inset the panel from the screen edges with all corners rounded. Use `snapPoints` to let a bottom drawer rest at several heights. Wrap your app in `DrawerProvider` and its screen in `DrawerIndent` to scale the page back behind an open bottom drawer.
-
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -449,7 +428,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -457,7 +438,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
@@ -493,17 +474,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/drawer.tsx`:
+5. Copy and paste the following code into `components/ui/drawer.tsx`:
 
 <ComponentSource path="uniwind/components/ui/drawer.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
@@ -539,17 +520,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/drawer.tsx`:
+5. Copy and paste the following code into `components/ui/drawer.tsx`:
 
 <ComponentSource path="nativewind/components/ui/drawer.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
@@ -585,11 +566,11 @@ npx expo install phosphor-react-native react-native-gesture-handler react-native
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/drawer.tsx`:
+5. Copy and paste the following code into `components/ui/drawer.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/drawer.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -674,6 +655,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -865,16 +850,6 @@ fun DrawerGoal(defaultOpen: Boolean, floating: Boolean, label: String = "Open dr
 
 </Only>
 
-<Only platform="rn">
-
-Compose `DrawerTrigger` and `DrawerContent` with a `DrawerHeader` (`DrawerTitle`, `DrawerDescription`), your content and a `DrawerFooter`. Use `DrawerClose` to close it from a button.
-
-Set `showSwipeHandle` to show a grab handle, and `showCloseButton` on the content for a corner close button, with `closeLabel` for a text button. `snapPoints` accepts fractions of the screen such as `[0.4, 1]`; control the current one with `snapPoint` and `onSnapPointChange`.
-
-With `modal={false}` there is no scrim. For the scaled background, render `DrawerIndentBackground` behind a `DrawerIndent` inside `DrawerProvider`.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -885,13 +860,19 @@ With `modal={false}` there is no scrim. For the scaled background, render `Drawe
 
 A drawer that rests at 40% and full height.
 
+<Only platform="rn">
+
+`snapPoints` accepts fractions of the screen such as `[0.4, 1]`; control the current one with `snapPoint` and `onSnapPointChange`.
+
+</Only>
+
 <NativeExample name="drawer-snap-points" />
 
 <Only platform="rn kotlin">
 
 ### Floating
 
-A floating drawer inset from the edges.
+Set `floating` to inset the panel from the screen edges with all corners rounded.
 
 <NativeExample name="drawer-floating" />
 
@@ -901,7 +882,7 @@ A floating drawer inset from the edges.
 
 ### Sides
 
-Drawers from the top, bottom, left and right.
+Set `swipeDirection` to open drawers from the top, bottom, left and right.
 
 <NativeExample name="drawer-sides" />
 
@@ -919,268 +900,6 @@ The React Native tab shows 1 more example.
 
 </Only>
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### DrawerProvider
-
-Tracks open drawers for the indent effect.
-
-Also accepts the props of `DrawerPrimitive.ProviderProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### DrawerIndentBackground
-
-Background shown behind the scaled screen.
-
-Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.IndentBackground>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### DrawerIndent
-
-Screen wrapper that scales back while a bottom drawer is open.
-
-Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Indent>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### Drawer
-
-Root that holds the open state, direction and snap points.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `floating` | `boolean` | `false` | Insets the panel from the edges. |
-| `showSwipeHandle` | `boolean` | `false` | Shows a grab handle. |
-
-Also accepts the props of `DrawerPrimitive.RootProps`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### DrawerOverlay
-
-Dimmed scrim behind a modal drawer.
-
-Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Backdrop>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### DrawerSwipeHandle
-
-Grab handle on the dragging edge.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### DrawerContent
-
-Sliding panel with optional handle and close button.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `portalHost` | `string` | - | Name of the portal host to render into. |
-| `showCloseButton` | `boolean` | `false` | Shows a corner close button. |
-| `closeLabel` | `string` | - | Text for the close button instead of the icon. |
-
-Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Popup>`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### DrawerHeader
-
-Area for the title and description.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### DrawerFooter
-
-Area for actions at the end of the panel.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### DrawerTitle
-
-Drawer heading, centered for top and bottom drawers.
-
-Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Title>`.
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### DrawerDescription
-
-Supporting text.
-
-Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Description>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .drawer
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
-| `detents` | `Set<PresentationDetent>?` | `nil` | - |
-| `selection` | `Binding<PresentationDetent>?` | `nil` | The selected value. |
-| `onDismiss` | `(() -> Void)?` | `nil` | Called when it closes. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### DrawerContent
-
-Sliding panel with optional handle and close button.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton` | `Bool` | `false` | Shows a corner close button. |
-| `closeLabel` | `LocalizedStringKey?` | `nil` | Text for the close button instead of the icon. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### DrawerHeader
-
-Area for the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### DrawerFooter
-
-Area for actions at the end of the panel.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Drawer
-
-Root that holds the open state, direction and snap points.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `Boolean` | - | - |
-| `onOpenChange` | `(Boolean) -> Unit` | - | Called when it opens or closes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `snapPoints` | `List<Float>` | `emptyList()` | - |
-| `onSnapPointChange` | `(Float) -> Unit` | `{}` | - |
-| `floating` | `Boolean` | `false` | Insets the panel from the edges. |
-| `showSwipeHandle` | `Boolean` | `false` | Shows a grab handle. |
-| `showCloseButton` | `Boolean` | `false` | Shows a corner close button. |
-| `closeLabel` | `String?` | `null` | Text for the close button instead of the icon. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### DrawerHeader
-
-Area for the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### DrawerFooter
-
-Area for actions at the end of the panel.
-
-Receiver: `ColumnScope`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### DrawerTitle
-
-Drawer heading, centered for top and bottom drawers.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### DrawerDescription
-
-Supporting text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1189,11 +908,193 @@ Supporting text.
 - The swipe handle and decorative edge fill are hidden from screen readers.
 - The icon close button is labelled "Close".
 
-## Notes
+</Only>
 
-- Padding follows the safe-area insets, and a docked drawer extends its background past the screen edge so drag overshoot shows no gap.
-- Animations respect the system Reduce Motion setting.
-- Uses `bg-popover`, `bg-black/50` and `bg-border` tokens; light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### DrawerProvider
+
+Tracks open drawers for the indent effect.
+
+Also accepts the props of `DrawerPrimitive.ProviderProps`.
+
+Wrap your app in it and render `DrawerIndentBackground` behind a `DrawerIndent` that holds the screen, to scale the page back behind an open bottom drawer.
+
+### DrawerIndentBackground
+
+Background shown behind the scaled screen.
+
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.IndentBackground>`.
+
+### DrawerIndent
+
+Screen wrapper that scales back while a bottom drawer is open.
+
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Indent>`.
+
+### Drawer
+
+Root that holds the open state, direction and snap points.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `floating` | `boolean` | `false` |
+| `showSwipeHandle` | `boolean` | `false` |
+
+Also accepts the props of `DrawerPrimitive.RootProps`.
+
+`showSwipeHandle` shows a grab handle. With `modal={false}` there is no scrim. A docked drawer extends its background past the screen edge so drag overshoot shows no gap, and animations respect the system Reduce Motion setting.
+
+### DrawerOverlay
+
+Dimmed scrim behind a modal drawer.
+
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Backdrop>`.
+
+### DrawerSwipeHandle
+
+Grab handle on the dragging edge.
+
+Also accepts the props of `ViewProps`.
+
+### DrawerContent
+
+Sliding panel with optional handle and close button.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `portalHost` | `string` | - |
+| `showCloseButton` | `boolean` | `false` |
+| `closeLabel` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Popup>`.
+
+Set `showCloseButton` for a corner close button, and `closeLabel` to show text instead of the icon. `portalHost` names the portal host to render into. Padding follows the safe-area insets. Use `DrawerClose` to close the drawer from a button.
+
+### DrawerHeader
+
+Area for the title and description.
+
+Also accepts the props of `ViewProps`.
+
+### DrawerFooter
+
+Area for actions at the end of the panel.
+
+Also accepts the props of `ViewProps`.
+
+### DrawerTitle
+
+Drawer heading, centered for top and bottom drawers.
+
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Title>`.
+
+### DrawerDescription
+
+Supporting text.
+
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Description>`.
+
+</Only>
+
+<Only platform="swift">
+
+### .drawer
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - |
+| `detents` | `Set<PresentationDetent>?` | `nil` |
+| `selection` | `Binding<PresentationDetent>?` | `nil` |
+| `onDismiss` | `(() -> Void)?` | `nil` |
+| `content` | `() -> Content` | - |
+
+### DrawerContent
+
+Sliding panel with optional handle and close button.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `showCloseButton` | `Bool` | `false` |
+| `closeLabel` | `LocalizedStringKey?` | `nil` |
+| `content` | `() -> Content` | - |
+
+### DrawerHeader
+
+Area for the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### DrawerFooter
+
+Area for actions at the end of the panel.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### Drawer
+
+Root that holds the open state, direction and snap points.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `open` | `Boolean` | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `snapPoints` | `List<Float>` | `emptyList()` |
+| `onSnapPointChange` | `(Float) -> Unit` | `{}` |
+| `floating` | `Boolean` | `false` |
+| `showSwipeHandle` | `Boolean` | `false` |
+| `showCloseButton` | `Boolean` | `false` |
+| `closeLabel` | `String?` | `null` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### DrawerHeader
+
+Area for the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### DrawerFooter
+
+Area for actions at the end of the panel.
+
+Receiver: `ColumnScope`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### DrawerTitle
+
+Drawer heading, centered for top and bottom drawers.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### DrawerDescription
+
+Supporting text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
 
 </Only>
 

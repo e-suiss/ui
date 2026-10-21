@@ -15,7 +15,9 @@ Use it for short waits whose length is unknown, such as saving or loading more. 
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/spinner
@@ -27,15 +29,21 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add spinner
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
-2. Copy the source into `components/ui/spinner.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/spinner.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -47,31 +55,31 @@ import { Spinner } from "@/components/ui/spinner"
 <Spinner />
 ```
 
-Change the size with a `size-*` class and the color with a `text-*` class. Inside a `Button`, pair it with `disabled` and give it `data-icon="inline-start"` to place it before the label.
-
 ## Examples
 
 ### Sizes
 
-Shows spinners from `size-3` to `size-8`.
+Change the size with a `size-*` class, from `size-3` to `size-8`.
 
 <ComponentPreview name="spinner-sizes" />
 
 ### Colors
 
-Tints spinners with `text-*` color classes.
+Change the color with a `text-*` class.
 
 <ComponentPreview name="spinner-colors" />
 
 ### In button
 
-Places a spinner in disabled buttons that are busy.
+Place a spinner in a busy `Button` with `disabled`, and give it `data-icon="inline-start"` to place it before the label.
 
 <ComponentPreview name="spinner-in-button" />
 
-## API Reference
+## Accessibility
 
-<ApiPart index={1}>
+- Renders with the `status` role and the accessible name `Loading`. Override `aria-label` to describe the specific task.
+
+## API Reference
 
 ### Spinner
 
@@ -79,16 +87,7 @@ The animated activity indicator.
 
 Also accepts the props of `React.ComponentProps<"svg">`.
 
-</ApiPart>
-
-## Accessibility
-
-- Renders with the `status` role and the accessible name `Loading`. Override `aria-label` to describe the specific task.
-
-## Notes
-
-- Uses `data-slot="spinner"`.
-- The rotation lasts `0.8s` and moves in eight steps, so one spoke advances at a time.
+The rotation lasts `0.8s` and moves in eight steps, so one spoke advances at a time. Style it through `data-slot="spinner"`.
 
 </Only>
 
@@ -103,6 +102,10 @@ Also accepts the props of `React.ComponentProps<"svg">`.
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -146,7 +149,9 @@ npx @esuiss/ui@latest add spinner --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -154,43 +159,43 @@ npx @esuiss/ui@latest add spinner --platform kotlin
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
 ```
 
-2. Copy the source into `components/ui/spinner.tsx`:
+2. Copy and paste the following code into `components/ui/spinner.tsx`:
 
 <ComponentSource path="uniwind/components/ui/spinner.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn nativewind
 ```
 
-2. Copy the source into `components/ui/spinner.tsx`:
+2. Copy and paste the following code into `components/ui/spinner.tsx`:
 
 <ComponentSource path="nativewind/components/ui/spinner.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Copy the source into `components/ui/spinner.tsx`:
+1. Copy and paste the following code into `components/ui/spinner.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/spinner.tsx" />
 
-2. Update the import paths to match your project.
+2. Update the import paths to match your project setup.
 
 </div>
 
@@ -255,6 +260,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -298,17 +307,11 @@ fun SpinnerExample() {
 
 </Only>
 
-<Only platform="rn">
-
-Set `size` in points (default `16`) and `colorClassName` with an `accent-*` class, such as `accent-primary` or `accent-destructive`. Inside a button, use `accent-primary-foreground` on the `default` variant so the spinner matches the label.
-
-</Only>
-
 ## Examples
 
 ### Sizes
 
-Spinners at 12, 16, 24 and 32 points.
+Spinners at 12, 16, 24 and 32 points, set with `size`.
 
 <NativeExample name="spinner-sizes" />
 
@@ -324,64 +327,6 @@ Spinners inside disabled buttons next to a label.
 
 <NativeExample name="spinner-in-button" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Spinner
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `number` | `16` | Width and height in points. Defaults to `16`. |
-| `colorClassName` | `string` | `"accent-muted-foreground"` | Class that sets the indicator color. Defaults to `accent-muted-foreground`. |
-
-Also accepts the props of `React.ComponentProps<typeof ActivityIndicator>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### Spinner
-
-The animated activity indicator.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ size` | `Size`: `.sm` \| `.default` \| `.lg` \| `.xl` | `.default` | Width and height in points. |
-| `label` | `LocalizedStringKey` | `"Loading"` | The label. |
-| `dimension` | `CGFloat` | - | - |
-
-Overloads: `init(_:label:)`, `init(dimension:label:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Spinner
-
-The animated activity indicator.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `size` | `Dp` | `16.dp` | Width and height in points. |
-| `color` | `Color` | `Color.Unspecified` | - |
-| `contentDescription` | `String` | `"Loading"` | - |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -389,10 +334,55 @@ The animated activity indicator.
 - The wrapper has `role="progressbar"`, is `accessible`, and sets `busy: true` in `accessibilityState`.
 - It is announced as `"Loading"` unless you pass another `accessibilityLabel`.
 
-## Notes
+</Only>
 
-- The default color uses the `muted-foreground` token.
-- The look of the indicator comes from the platform's native activity indicator, so it differs between iOS and Android.
+## API Reference
+
+<Only platform="rn">
+
+### Spinner
+
+The animated activity indicator.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `number` | `16` |
+| `colorClassName` | `string` | `"accent-muted-foreground"` |
+
+Also accepts the props of `React.ComponentProps<typeof ActivityIndicator>`.
+
+`size` sets the width and height in points. `colorClassName` sets the indicator color with an `accent-*` class, such as `accent-primary` or `accent-destructive`. Inside a button, use `accent-primary-foreground` on the `default` variant so the spinner matches the label. The look of the indicator comes from the platform's native activity indicator, so it differs between iOS and Android.
+
+</Only>
+
+<Only platform="swift">
+
+### Spinner
+
+The animated activity indicator.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ size` | `Size`: `.sm` \| `.default` \| `.lg` \| `.xl` | `.default` |
+| `label` | `LocalizedStringKey` | `"Loading"` |
+| `dimension` | `CGFloat` | - |
+
+Overloads: `init(_:label:)`, `init(dimension:label:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### Spinner
+
+The animated activity indicator.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `size` | `Dp` | `16.dp` |
+| `color` | `Color` | `Color.Unspecified` |
+| `contentDescription` | `String` | `"Loading"` |
 
 </Only>
 

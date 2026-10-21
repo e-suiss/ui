@@ -11,29 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 `Item` is a row container. Inside it, `ItemMedia` holds an icon, image or avatar, `ItemContent` stacks an `ItemTitle` and `ItemDescription`, and `ItemActions` holds buttons or indicators at the end. `ItemHeader` and `ItemFooter` span the full width of the item, above and below the main row. The whole item can also render as a link or button.
 
-<OnlyBase base="base">
-
-Use the `render` prop to turn the whole item into a link or button.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Set `asChild` and pass a link or button as the child to turn the whole item into it.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Pass a `render` function that returns a link or button with the props it receives to turn the whole item into it.
-
-</OnlyBase>
-
-`ItemGroup` stacks items as a list, and its `inset` variant groups them into a rounded list on `bg-muted`, like iOS Settings. Place an `ItemSeparator` between items to divide them. Use items to display content; for form controls with labels and validation, use `Field`.
+`ItemGroup` stacks items as a list, and `ItemSeparator` divides them. Use items to display content; for form controls with labels and validation, use `Field`.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/item
@@ -45,25 +29,42 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add item
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react class-variance-authority
 ```
 
-2. Copy the source into `components/ui/item.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/item.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions, ItemHeader, ItemFooter } from "@/components/ui/item"
 import { Button } from "@/components/ui/button"
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemFooter,
+  ItemGroup,
+  ItemHeader,
+  ItemMedia,
+  ItemSeparator,
+  ItemTitle,
+} from "@/components/ui/item"
 ```
 
 ```tsx
@@ -87,39 +88,75 @@ import { Button } from "@/components/ui/button"
 </div>
 ```
 
-`ItemGroup` has the `list` role, so set `role="listitem"` on each `Item` inside it. Choose a `variant` for the item's border and background, and a `size` for its padding. Items inside a group with `sm` or `xs` items are spaced more tightly.
+## Composition
 
-When `ItemDescription` is present, the media aligns to the top of the item instead of its center. The title is limited to one line and the description to two.
+Use the following composition to build a `Item`:
+
+```text
+Item
+├── ItemMedia
+├── ItemContent
+│   ├── ItemTitle
+│   └── ItemDescription
+├── ItemActions
+├── ItemHeader
+│   └── ItemTitle
+└── ItemFooter
+ItemGroup
+├── ItemSeparator
+└── Item
+    ├── ItemMedia
+    ├── ItemContent
+    │   ├── ItemTitle
+    │   └── ItemDescription
+    └── ItemActions
+```
 
 ## Examples
 
 ### Variants
 
-The `default`, `outline` and `muted` item variants.
+Use the `variant` prop for the item's border and background: `default` has neither, `outline` adds a border and `muted` adds a subtle background.
 
 <ComponentPreview name="item-variants" />
 
 ### Sizes
 
-The `default`, `sm` and `xs` item sizes.
+Use the `size` prop to set the padding and gap: `default` is the roomiest, then `sm`, then `xs`. A group of `sm` or `xs` items is spaced more tightly.
 
 <ComponentPreview name="item-sizes" />
 
 ### As link
 
-An item rendered as a link, so the whole row is one focusable target.
+<OnlyBase base="base">
+
+Use the `render` prop to render the whole item as a link or button, so the row is one focusable target. A linked item gets the `accent` background on hover.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` and pass a link or button as the child to render the whole item as it, so the row is one focusable target. A linked item gets the `accent` background on hover.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function that returns a link or button and spread the props it receives onto it, so the row is one focusable target. A linked item gets the `accent` background on hover.
+
+</OnlyBase>
 
 <ComponentPreview name="item-as-link" />
 
 ### With image
 
-A list of people with image media, separators and an invite button on each row.
+Set `variant="image"` on `ItemMedia` to crop an image into a rounded square that scales with the item size. This list of people adds separators and an invite button on each row.
 
 <ComponentPreview name="item-with-image" />
 
 ### Inset
 
-The same list in an `inset` item group, forming a rounded list with inset separators.
+Set `variant="inset"` on `ItemGroup` to group the items into a rounded list on `bg-muted`, with square item corners and separators inset from the start.
 
 <ComponentPreview name="item-inset" />
 
@@ -135,45 +172,26 @@ A plan summary with a price in the header and a renewal date and action in the f
 
 <ComponentPreview name="item-with-header-and-footer" />
 
+## Accessibility
+
+- `ItemGroup` has the `list` role; give each `Item` in it the `listitem` role.
+- `ItemSeparator` has the `none` role, so it is ignored by assistive technology.
+- An item rendered as a link or button is a single focusable element and shows a focus ring.
+- Give icon-only action buttons an accessible name with `aria-label`.
+
 ## API Reference
-
-<Anatomy>
-
-- [Item](#item)
-  - [ItemMedia](#itemmedia)
-  - [ItemContent](#itemcontent)
-    - [ItemTitle](#itemtitle)
-    - [ItemDescription](#itemdescription)
-  - [ItemActions](#itemactions)
-  - [ItemHeader](#itemheader)
-    - [ItemTitle](#itemtitle)
-  - [ItemFooter](#itemfooter)
-- [ItemGroup](#itemgroup)
-  - [ItemSeparator](#itemseparator)
-  - [Item](#item)
-    - [ItemMedia](#itemmedia)
-    - [ItemContent](#itemcontent)
-      - [ItemTitle](#itemtitle)
-      - [ItemDescription](#itemdescription)
-    - [ItemActions](#itemactions)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### ItemGroup
 
 Stacks items as a list, or groups them into an inset list.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "inset"` | `"default"` | `inset` groups the items into a rounded list on `bg-muted`, with square item corners and separators inset from the start. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "inset"` | `"default"` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+The group has the `list` role, so set `role="listitem"` on each `Item` inside it.
 
 ### ItemSeparator
 
@@ -181,18 +199,14 @@ A divider between items.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### Item
 
 The row container for media, content and actions.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline" \| "muted"` | `"default"` | `default` has no border or background, `outline` adds a border, and `muted` adds a subtle background. |
-| `size` | `"default" \| "sm" \| "xs"` | `"default"` | Sets the padding and gap: `default` is the roomiest, then `sm`, then `xs`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "muted"` | `"default"` |
+| `size` | `"default" \| "sm" \| "xs"` | `"default"` |
 
 <OnlyBase base="base">
 
@@ -202,9 +216,9 @@ Also accepts the props of `useRender.ComponentProps<"div">`.
 
 <OnlyBase base="radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element as the item. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
@@ -212,31 +226,27 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `(props) => React.ReactNode` | - | Renders your own element with the props it receives. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `(props) => React.ReactNode` | - |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={4}>
+`Item` sets `data-variant` and `data-size` for styling.
 
 ### ItemMedia
 
 Holds an icon, image or avatar at the start of the item.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "icon" \| "image"` | `"default"` | `icon` sizes an icon, `image` crops an image into a rounded square that scales with the item size, and `default` renders the media as is. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "icon" \| "image"` | `"default"` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={5}>
+`icon` sizes an icon, `image` crops an image into a rounded square, and `default` renders the media as is. When `ItemDescription` is present, the media aligns to the top of the item instead of its center.
 
 ### ItemContent
 
@@ -244,19 +254,11 @@ Stacks the title and description.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={6}>
-
 ### ItemTitle
 
 The item's title, limited to one line.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={7}>
 
 ### ItemDescription
 
@@ -264,19 +266,11 @@ Supporting text, limited to two lines.
 
 Also accepts the props of `React.ComponentProps<"p">`.
 
-</ApiPart>
-
-<ApiPart index={8}>
-
 ### ItemActions
 
 Holds buttons or indicators at the end of the item.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={9}>
 
 ### ItemHeader
 
@@ -284,31 +278,13 @@ A full-width row above the item's content.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={10}>
-
 ### ItemFooter
 
 A full-width row below the item's content.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-## Accessibility
-
-- `ItemGroup` has the `list` role; give each `Item` in it the `listitem` role.
-- `ItemSeparator` has the `none` role, so it is ignored by assistive technology.
-- An item rendered as a link or button is a single focusable element and shows a focus ring.
-- Give icon-only action buttons an accessible name with `aria-label`.
-
-## Notes
-
-- Styling hooks: `data-slot` values `item-group`, `item-separator`, `item`, `item-media`, `item-content`, `item-title`, `item-description`, `item-actions`, `item-header` and `item-footer`.
-- `Item` sets `data-variant` and `data-size`; `ItemGroup` and `ItemMedia` set `data-variant`.
-- An item rendered as an anchor gets the `accent` background on hover.
-- Uses the `border`, `muted`, `accent`, `muted-foreground` and `primary` colors.
+Each part sets a `data-slot`, such as `item-media` or `item-title`, for styling.
 
 </Only>
 
@@ -322,9 +298,15 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 </Only>
 
+Compose a row from `ItemMedia`, `ItemContent` (holding `ItemTitle` and `ItemDescription`) and `ItemActions`. Use `ItemHeader` and `ItemFooter` for full-width rows above or below the main content.
+
 `ItemGroup` stacks items as a list. Its `inset` variant joins them into one rounded card with square inner corners, which suits settings screens; add `ItemSeparator` between rows to draw an inset divider.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -374,7 +356,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -382,7 +366,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -400,17 +384,17 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/item.tsx`:
+4. Copy and paste the following code into `components/ui/item.tsx`:
 
 <ComponentSource path="uniwind/components/ui/item.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -428,11 +412,11 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/item.tsx`:
+4. Copy and paste the following code into `components/ui/item.tsx`:
 
 <ComponentSource path="nativewind/components/ui/item.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -450,11 +434,11 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/item.tsx`:
+3. Copy and paste the following code into `components/ui/item.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/item.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -533,6 +517,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -741,16 +729,6 @@ fun ItemDefault() {
 
 </Only>
 
-Compose a row from `ItemMedia`, `ItemContent` (holding `ItemTitle` and `ItemDescription`) and `ItemActions`. Use `ItemHeader` and `ItemFooter` for full-width rows above or below the main content.
-
-<Only platform="rn">
-
-`ItemMedia` with `variant="icon"` sizes icons to 16 points; `variant="image"` makes a square thumbnail that shrinks with the item size. `ItemTitle` truncates to one line and `ItemDescription` to two by default; override with `numberOfLines`. Text inside `ItemActions` picks up `text-muted-foreground`.
-
-Pass `render` to render the row as another component while keeping the item styles.
-
-</Only>
-
 ## Examples
 
 ### Inset group
@@ -763,470 +741,6 @@ Pressable rows in an inset group, with colored icon tiles, separators and traili
 
 <NativeExample name="item-inset-group" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### ItemGroup
-
-List container for items.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "inset"` | `"default"` | `default` stacks items with a gap; `inset` joins them into one rounded card. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ItemSeparator
-
-Divider between items, inset inside an inset group.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### Item
-
-The row itself, pressable when given a press handler.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline" \| "muted"` | `"default"` | Visual style. |
-| `size` | `"default" \| "sm" \| "xs"` | `"default"` | Padding and gap. |
-| `render` | `RenderProp` | - | Renders the item as another element, such as a `Pressable`. |
-
-Also accepts the props of `PressableProps`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ItemMedia
-
-Leading icon, image or avatar.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "icon" \| "image"` | `"default"` | `default`, `icon` for 16-point icons, or `image` for a square thumbnail. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ItemContent
-
-Flexible column for the title and description.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### ItemTitle
-
-Single-line title.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### ItemDescription
-
-Secondary text, up to two lines.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### ItemActions
-
-Trailing row for values, buttons or chevrons.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### ItemHeader
-
-Full-width row above the content.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### ItemFooter
-
-Full-width row below the content.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### ItemVariant
-
-Values: `.default`, `.outline`, `.muted`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ItemSize
-
-Values: `.default`, `.sm`, `.xs`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ItemGroupVariant
-
-Values: `.default`, `.inset`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ItemGroup
-
-List container for items.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `ItemGroupVariant`: `.default` \| `.inset` | `.default` | `default` stacks items with a gap; `inset` joins them into one rounded card. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ItemSeparator
-
-Divider between items, inset inside an inset group.
-
-Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### Item
-
-The row itself, pressable when given a press handler.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `ItemVariant`: `.default` \| `.outline` \| `.muted` | `.default` | Visual style. |
-| `size` | `ItemSize`: `.default` \| `.sm` \| `.xs` | `.default` | Padding and gap. |
-| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### ItemMediaVariant
-
-Values: `.default`, `.icon`, `.image`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### ItemMedia
-
-Leading icon, image or avatar.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `ItemMediaVariant`: `.default` \| `.icon` \| `.image` | `.default` | `default`, `icon` for 16-point icons, or `image` for a square thumbnail. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### ItemContent
-
-Flexible column for the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### ItemTitle
-
-Single-line title.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `verbatim` | `String` | - | The title text. |
-
-Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### ItemDescription
-
-Secondary text, up to two lines.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ description` | `LocalizedStringKey` | - | The supporting text. |
-| `verbatim` | `String` | - | The supporting text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### ItemActions
-
-Trailing row for values, buttons or chevrons.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### ItemHeader
-
-Full-width row above the content.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={14}>
-
-### ItemFooter
-
-Full-width row below the content.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### ItemVariant
-
-Values: `Default`, `Outline`, `Muted`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ItemSize
-
-Values: `Default`, `Sm`, `Xs`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ItemGroupVariant
-
-Values: `Default`, `Inset`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ItemMediaVariant
-
-Values: `Default`, `Icon`, `Image`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ItemGroup
-
-List container for items.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `ItemGroupVariant`: `Default` \| `Inset` | `ItemGroupVariant.Default` | `default` stacks items with a gap; `inset` joins them into one rounded card. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### ItemSeparator
-
-Divider between items, inset inside an inset group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### Item
-
-The row itself, pressable when given a press handler.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `ItemVariant`: `Default` \| `Outline` \| `Muted` | `ItemVariant.Default` | Visual style. |
-| `size` | `ItemSize`: `Default` \| `Sm` \| `Xs` | `ItemSize.Default` | Padding and gap. |
-| `onClick` | `(() -> Unit)?` | `null` | Called when it is tapped. |
-| `onLongClick` | `(() -> Unit)?` | `null` | - |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `selected` | `Boolean?` | `null` | - |
-| `role` | `Role?` | `Role.Button` | - |
-| `onClickLabel` | `String?` | `null` | - |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### ItemMedia
-
-Leading icon, image or avatar.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `ItemMediaVariant`: `Default` \| `Icon` \| `Image` | `ItemMediaVariant.Default` | `default`, `icon` for 16-point icons, or `image` for a square thumbnail. |
-| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### ItemContent
-
-Flexible column for the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### ItemTitle
-
-Single-line title.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `ItemTitle(content)`, `ItemTitle(text)`.
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### ItemDescription
-
-Secondary text, up to two lines.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### ItemActions
-
-Trailing row for values, buttons or chevrons.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### ItemHeader
-
-Full-width row above the content.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={14}>
-
-### ItemFooter
-
-Full-width row below the content.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1236,10 +750,327 @@ Full-width row below the content.
 - `disabled` dims the item and blocks presses.
 - `ItemSeparator` is hidden from VoiceOver and TalkBack.
 
-## Notes
+</Only>
 
-- Uses `bg-muted` for inset groups and the `muted` variant, `border-border` for `outline`, and `opacity-80` for the pressed state.
-- Colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### ItemGroup
+
+List container for items.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "inset"` | `"default"` |
+
+Also accepts the props of `ViewProps`.
+
+`default` stacks items with a gap; `inset` joins them into one rounded card.
+
+### ItemSeparator
+
+Divider between items, inset inside an inset group.
+
+Also accepts the props of `ViewProps`.
+
+### Item
+
+The row itself, pressable when given a press handler.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "muted"` | `"default"` |
+| `size` | `"default" \| "sm" \| "xs"` | `"default"` |
+| `render` | `RenderProp` | - |
+
+Also accepts the props of `PressableProps`.
+
+`size` sets the padding and gap. Pass `render` to render the row as another component, such as a `Pressable`, while keeping the item styles.
+
+### ItemMedia
+
+Leading icon, image or avatar.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "icon" \| "image"` | `"default"` |
+
+Also accepts the props of `ViewProps`.
+
+`icon` sizes icons to 16 points, and `image` makes a square thumbnail that shrinks with the item size.
+
+### ItemContent
+
+Flexible column for the title and description.
+
+Also accepts the props of `ViewProps`.
+
+### ItemTitle
+
+Single-line title.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+`ItemTitle` truncates to one line and `ItemDescription` to two by default; override with `numberOfLines`.
+
+### ItemDescription
+
+Secondary text, up to two lines.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+### ItemActions
+
+Trailing row for values, buttons or chevrons.
+
+Also accepts the props of `ViewProps`.
+
+Text inside it picks up `text-muted-foreground`.
+
+### ItemHeader
+
+Full-width row above the content.
+
+Also accepts the props of `ViewProps`.
+
+### ItemFooter
+
+Full-width row below the content.
+
+Also accepts the props of `ViewProps`.
+
+</Only>
+
+<Only platform="swift">
+
+### ItemVariant
+
+Values: `.default`, `.outline`, `.muted`.
+
+### ItemSize
+
+Values: `.default`, `.sm`, `.xs`.
+
+### ItemGroupVariant
+
+Values: `.default`, `.inset`.
+
+### ItemGroup
+
+List container for items.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `ItemGroupVariant`: `.default` \| `.inset` | `.default` |
+| `content` | `() -> Content` | - |
+
+### ItemSeparator
+
+Divider between items, inset inside an inset group.
+
+Takes no parameters.
+
+### Item
+
+The row itself, pressable when given a press handler.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `ItemVariant`: `.default` \| `.outline` \| `.muted` | `.default` |
+| `size` | `ItemSize`: `.default` \| `.sm` \| `.xs` | `.default` |
+| `action` | `(() -> Void)?` | `nil` |
+| `content` | `() -> Content` | - |
+
+### ItemMediaVariant
+
+Values: `.default`, `.icon`, `.image`.
+
+### ItemMedia
+
+Leading icon, image or avatar.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `ItemMediaVariant`: `.default` \| `.icon` \| `.image` | `.default` |
+| `content` | `() -> Content` | - |
+
+### ItemContent
+
+Flexible column for the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### ItemTitle
+
+Single-line title.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+| `_ title` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
+
+### ItemDescription
+
+Secondary text, up to two lines.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### ItemActions
+
+Trailing row for values, buttons or chevrons.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### ItemHeader
+
+Full-width row above the content.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### ItemFooter
+
+Full-width row below the content.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### ItemVariant
+
+Values: `Default`, `Outline`, `Muted`.
+
+### ItemSize
+
+Values: `Default`, `Sm`, `Xs`.
+
+### ItemGroupVariant
+
+Values: `Default`, `Inset`.
+
+### ItemMediaVariant
+
+Values: `Default`, `Icon`, `Image`.
+
+### ItemGroup
+
+List container for items.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `ItemGroupVariant`: `Default` \| `Inset` | `ItemGroupVariant.Default` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### ItemSeparator
+
+Divider between items, inset inside an inset group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+
+### Item
+
+The row itself, pressable when given a press handler.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `ItemVariant`: `Default` \| `Outline` \| `Muted` | `ItemVariant.Default` |
+| `size` | `ItemSize`: `Default` \| `Sm` \| `Xs` | `ItemSize.Default` |
+| `onClick` | `(() -> Unit)?` | `null` |
+| `onLongClick` | `(() -> Unit)?` | `null` |
+| `enabled` | `Boolean` | `true` |
+| `selected` | `Boolean?` | `null` |
+| `role` | `Role?` | `Role.Button` |
+| `onClickLabel` | `String?` | `null` |
+| `content` | `@Composable () -> Unit` | - |
+
+### ItemMedia
+
+Leading icon, image or avatar.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `ItemMediaVariant`: `Default` \| `Icon` \| `Image` | `ItemMediaVariant.Default` |
+| `content` | `@Composable BoxScope.() -> Unit` | - |
+
+### ItemContent
+
+Flexible column for the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### ItemTitle
+
+Single-line title.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `ItemTitle(content)`, `ItemTitle(text)`.
+
+### ItemDescription
+
+Secondary text, up to two lines.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### ItemActions
+
+Trailing row for values, buttons or chevrons.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+
+### ItemHeader
+
+Full-width row above the content.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+
+### ItemFooter
+
+Full-width row below the content.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
 
 </Only>
 

@@ -47,8 +47,6 @@ import { Button } from "@/components/ui/button"
 </div>
 ```
 
-The row scrolls sideways when the suggestions do not fit, and `shrink-0` keeps each label on one line.
-
 ## AI SDK
 
 The label is the message. Send it as is.
@@ -57,14 +55,16 @@ The label is the message. Send it as is.
 sendMessage({ text: suggestion })
 ```
 
-## API Reference
-
-See [Button](/docs/components/button#api-reference).
-
 ## Accessibility
 
 - Each suggestion is a button whose label is the prompt, so it is announced as written.
 - Keep labels short and specific, so the row can be scanned quickly.
+
+## API Reference
+
+See [Button](/docs/components/button#api-reference).
+
+The row scrolls sideways when the suggestions do not fit, and `shrink-0` keeps each label on one line.
 
 </Only>
 

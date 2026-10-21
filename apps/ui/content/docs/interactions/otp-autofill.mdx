@@ -15,7 +15,9 @@ The suggestion adapts to the device through `useIsMobile`. Below `48rem` it dock
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/otp-autofill
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add interactions otp-autofill
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -37,11 +41,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Input OTP](/docs/components/input-otp), `use-mobile`.
 
-3. Copy the source into `components/interactions/otp-autofill.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/interactions/otp-autofill.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -69,11 +77,6 @@ import { InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/
 </OtpAutofill>
 ```
 
-- Place `OtpAutofillInput` and `OtpAutofillSuggestion` inside `OtpAutofill`. Pass `InputOTPGroup`, `InputOTPSlot`, and `InputOTPSeparator` from `input-otp` as the input's children.
-- The value is managed internally. Typing or pasting also verifies automatically once the code reaches `maxLength`; a paste of several characters fills with the same animation.
-- `onVerify` may be async. Use `useOtpAutofill` to read `state` (`idle`, `filling`, `verifying`, `verified`, `invalid`) for status text or other UI.
-- Set `code` on the suggestion to `null` until a code arrives; the suggestion stays hidden without one.
-
 ## Examples
 
 ### Wrong code
@@ -82,54 +85,6 @@ A rejected code shakes the field, shows an error, clears, and accepts a code typ
 
 <ComponentPreview name="otp-autofill-wrong-code" responsive />
 
-## API Reference
-
-<ApiPart index={1}>
-
-### OtpAutofill
-
-The root that holds the code value and verification state.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `maxLength` | `number` | Required | The number of characters in the code; verification runs once it is reached. |
-| `onVerify` | `(code: string) => Promise<boolean> \| boolean` | Required | Called with the complete code; return or resolve `true` to accept it or `false` to reject it. |
-| `webOtp` | `boolean` | `true` | Listens for SMS codes through the WebOTP API, where supported. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### OtpAutofillInput
-
-The `InputOTP` field wired to the autofill state.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `containerClassName` | `string` | - | Classes for the slot container, merged with the state styles. |
-| `children` | `React.ReactNode` | Required | The slot groups and separators that make up the field. |
-
-Also accepts the props of `React.ComponentProps<"input">`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### OtpAutofillSuggestion
-
-The button that offers the received code and fills it when pressed.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `code` | `string \| null \| undefined` | Required | The received code to offer; the suggestion is hidden while it is empty. |
-| `source` | `React.ReactNode` | `"From Messages"` | The label that names where the code came from. |
-
-Also accepts the props of `React.ComponentProps<"button">`.
-
-</ApiPart>
-
 ## Accessibility
 
 - Label the field with `aria-label` on `OtpAutofillInput`, which renders a single text input.
@@ -137,10 +92,49 @@ Also accepts the props of `React.ComponentProps<"button">`.
 - The suggestion is a native button that is `inert` while hidden, and it prevents focus from leaving the field on press.
 - After a rejected code, focus returns to the field. Pair the root with a `role="status"` element to announce the result.
 
-## Notes
+## API Reference
 
-- The root exposes `data-slot="otp-autofill"` and `data-state`. The suggestion uses `data-slot="otp-autofill-suggestion"`, `data-placement` (`keyboard` or `inline`), and `data-closed` while hidden.
-- The pop and shake animations are skipped under `prefers-reduced-motion`.
+### OtpAutofill
+
+The root that holds the code value and verification state.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `maxLength` | `number` | Required |
+| `onVerify` | `(code: string) => Promise<boolean> \| boolean` | Required |
+| `webOtp` | `boolean` | `true` |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Place `OtpAutofillInput` and `OtpAutofillSuggestion` inside `OtpAutofill`. The value is managed internally. `onVerify` is called with the complete code once it reaches `maxLength`, whether it was filled, typed or pasted; return or resolve `true` to accept it or `false` to reject it. A paste of several characters fills with the same animation. Use `useOtpAutofill` to read `state` (`idle`, `filling`, `verifying`, `verified`, `invalid`) for status text or other UI. `webOtp` listens for SMS codes through the WebOTP API, where supported.
+
+The root sets `data-slot="otp-autofill"` and `data-state`. The pop and shake animations are skipped under `prefers-reduced-motion`.
+
+### OtpAutofillInput
+
+The `InputOTP` field wired to the autofill state.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `containerClassName` | `string` | - |
+| `children` | `React.ReactNode` | Required |
+
+Also accepts the props of `React.ComponentProps<"input">`.
+
+Pass `InputOTPGroup`, `InputOTPSlot` and `InputOTPSeparator` from `input-otp` as children. `containerClassName` styles the slot container and is merged with the state styles.
+
+### OtpAutofillSuggestion
+
+The button that offers the received code and fills it when pressed.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `code` | `string \| null \| undefined` | Required |
+| `source` | `React.ReactNode` | `"From Messages"` |
+
+Also accepts the props of `React.ComponentProps<"button">`.
+
+Set `code` to `null` until a code arrives; the suggestion stays hidden without one. `source` names where the code came from. The suggestion sets `data-slot="otp-autofill-suggestion"`, `data-placement` (`keyboard` or `inline`) and `data-closed` while hidden.
 
 </Only>
 
@@ -152,7 +146,17 @@ Also accepts the props of `React.ComponentProps<"button">`.
 
 When all digits are entered, `onVerify` runs and the slots dim while it is pending. A valid code turns the slots green and locks the input. An invalid code turns them red and shakes the row, then clears the input and refocuses it. Pasting or a system autofill of several digits plays the same digit-by-digit fill.
 
+<Only platform="kotlin">
+
+Pass `maxLength` and `onVerify`, a suspending function that returns whether the code is right. Put `InputOTPGroup` and `InputOTPSlot`s inside `OtpAutofillInput`, and render an `OtpAutofillSuggestion` with the `code` your app received; it hides when `code` is empty.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -202,7 +206,9 @@ The CLI also adds what it builds on: [Input OTP](/docs/components/input-otp), [T
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -210,7 +216,7 @@ The CLI also adds what it builds on: [Input OTP](/docs/components/input-otp), [T
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets
@@ -230,17 +236,17 @@ npx expo install cn react-native-reanimated react-native-safe-area-context react
 
 <ComponentSource path="uniwind/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/otp-autofill.tsx`:
+5. Copy and paste the following code into `components/interactions/otp-autofill.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/otp-autofill.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets
@@ -260,17 +266,17 @@ npx expo install cn react-native-reanimated react-native-safe-area-context react
 
 <ComponentSource path="nativewind/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/otp-autofill.tsx`:
+5. Copy and paste the following code into `components/interactions/otp-autofill.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/otp-autofill.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-safe-area-context react-native-worklets
@@ -290,11 +296,11 @@ npx expo install react-native-reanimated react-native-safe-area-context react-na
 
 <ComponentSource path="stylesheet/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/otp-autofill.tsx`:
+5. Copy and paste the following code into `components/interactions/otp-autofill.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/otp-autofill.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -395,6 +401,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -742,24 +752,6 @@ fun OtpAutofillVerification(incoming: String) {
 
 </Only>
 
-<Only platform="rn">
-
-Pass `maxLength` and `onVerify`, which returns a boolean or a promise of one. Put `InputOTPGroup` and `InputOTPSlot`s inside `OtpAutofillInput`, and render an `OtpAutofillSuggestion` with the `code` your app received; it hides when `code` is empty.
-
-</Only>
-
-<Only platform="kotlin">
-
-Pass `maxLength` and `onVerify`, a suspending function that returns whether the code is right. Put `InputOTPGroup` and `InputOTPSlot`s inside `OtpAutofillInput`, and render an `OtpAutofillSuggestion` with the `code` your app received; it hides when `code` is empty.
-
-</Only>
-
-<Only platform="rn">
-
-The input sets `textContentType="oneTimeCode"` and the platform's one-time code `autoComplete`, so the system can also offer the code. `useOtpAutofill` returns `state`, `value`, `fill` and `inputRef` for custom controls.
-
-</Only>
-
 ## Examples
 
 ### Wrong code
@@ -774,125 +766,107 @@ A four-digit code with its own suggestion.
 
 <NativeExample name="otp-autofill-four-digits" />
 
+<Only platform="rn">
+
+## Accessibility
+
+- `accessibilityLabel` on `OtpAutofillInput` is passed to the underlying text input.
+- The suggestion bar has the `button` role.
+- The input is read-only while filling, verifying and after a valid code.
+
+</Only>
+
 ## API Reference
 
 <Only platform="rn">
-
-<ApiPart index={1}>
 
 ### OtpAutofill
 
 The root that holds the code and verification state.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `maxLength` | `number` | Required | Number of digits in the code. |
-| `onVerify` | `(code: string) => Promise<boolean> \| boolean` | Required | Checks a complete code; return `true` when it is valid. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `maxLength` | `number` | Required |
+| `onVerify` | `(code: string) => Promise<boolean> \| boolean` | Required |
 
 Also accepts the props of `React.ComponentProps<typeof View>`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+`maxLength` is the number of digits in the code. `onVerify` checks a complete code, returning a boolean or a promise of one; return `true` when it is valid. `useOtpAutofill` returns `state`, `value`, `fill` and `inputRef` for custom controls.
 
 ### OtpAutofillInput
 
 The `InputOTP` that shows each state and shakes on an invalid code.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `containerClassName` | `string` | - | Classes for the animated container around the input. |
-| `children` | `React.ReactNode` | Required | The content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `containerClassName` | `string` | - |
+| `children` | `React.ReactNode` | Required |
 
 Also accepts the props of `React.ComponentProps<typeof InputOTP>`.
 
-</ApiPart>
-
-<ApiPart index={3}>
+Put `InputOTPGroup` and `InputOTPSlot`s inside it. `containerClassName` styles the animated container around the input. The input sets `textContentType="oneTimeCode"` and the platform's one-time code `autoComplete`, so the system can also offer the code. Slide and shake animations respect the system reduce motion setting.
 
 ### OtpAutofillSuggestion
 
 A bar above the keyboard that fills the suggested code on press.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `code` | `string \| null \| undefined` | Required | The code to suggest, or `null` to hide the bar. |
-| `source` | `React.ReactNode` | `"From Messages"` | Label above the code. Defaults to `From Messages`. |
-| `portalHost` | `string` | - | Name of a portal host to render into. |
-| `className` | `string` | - | Classes merged onto the root element. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `code` | `string \| null \| undefined` | Required |
+| `source` | `React.ReactNode` | `"From Messages"` |
+| `portalHost` | `string` | - |
+| `className` | `string` | - |
 
 Also accepts the props of `React.ComponentProps<typeof Pressable>`.
 
-</ApiPart>
+Render it with the `code` your app received, or `null` to hide the bar. `source` is the label above the code. `portalHost` names a portal host to render into. The bar sits on the keyboard or above the bottom safe area.
 
 </Only>
 
 <Only platform="swift">
 
-<ApiPart index={1}>
-
 ### OtpAutofillState
 
 Values: `.idle`, `.filling`, `.verifying`, `.verified`, `.invalid`.
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### OtpAutofill
 
 The root that holds the code and verification state.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `length` | `Int` | - | - |
-| `onVerify` | `(String) async -> Bool` | - | Checks a complete code; return `true` when it is valid. |
-| `content` | `(OtpAutofillState) -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `length` | `Int` | - |
+| `onVerify` | `(String) async -> Bool` | - |
+| `content` | `(OtpAutofillState) -> Content` | - |
 
 ### OtpAutofillInput
 
 The `InputOTP` that shows each state and shakes on an invalid code.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `autoFocus` | `Bool` | `false` | - |
-| `content` | `() -> Content` | - | The content. |
-| `length` | `Int` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `autoFocus` | `Bool` | `false` |
+| `content` | `() -> Content` | - |
+| `length` | `Int` | - |
 
 Overloads: `init(autoFocus:content:)`, `init(length:autoFocus:)`.
-
-</ApiPart>
-
-<ApiPart index={4}>
 
 ### OtpAutofillSuggestion
 
 A bar above the keyboard that fills the suggested code on press.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `code` | `String?` | - | The received code to offer; the suggestion is hidden while it is empty. |
-| `source` | `LocalizedStringKey` | `"From Messages"` | Label above the code. |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `code` | `String?` | - |
+| `source` | `LocalizedStringKey` | `"From Messages"` |
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### OtpAutofillState
 
 Values: `Idle`, `Filling`, `Verifying`, `Verified`, `Invalid`.
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### OtpAutofillScope
 
@@ -902,34 +876,22 @@ Values: `Idle`, `Filling`, `Verifying`, `Verified`, `Invalid`.
 | `value` | `String get()` |
 | `maxLength` | `Int get()` |
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### OtpAutofillScope.fill
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `code` | `String` | - | - |
-
-</ApiPart>
-
-<ApiPart index={4}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `code` | `String` | - |
 
 ### OtpAutofill
 
 The root that holds the code and verification state.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `maxLength` | `Int` | - | Number of digits in the code. |
-| `onVerify` | `suspend (String) -> Boolean` | - | Checks a complete code; return `true` when it is valid. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable OtpAutofillScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `maxLength` | `Int` | - |
+| `onVerify` | `suspend (String) -> Boolean` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable OtpAutofillScope.() -> Unit` | - |
 
 ### OtpAutofillInput
 
@@ -937,17 +899,13 @@ The `InputOTP` that shows each state and shakes on an invalid code.
 
 Receiver: `OtpAutofillScope`.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `contentDescription` | `String?` | `null` | - |
-| `autoFocus` | `Boolean` | `false` | - |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `content` | `(@Composable RowScope.() -> Unit)?` | `null` | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `contentDescription` | `String?` | `null` |
+| `autoFocus` | `Boolean` | `false` |
+| `enabled` | `Boolean` | `true` |
+| `content` | `(@Composable RowScope.() -> Unit)?` | `null` |
 
 ### OtpAutofillSuggestion
 
@@ -955,29 +913,11 @@ A bar above the keyboard that fills the suggested code on press.
 
 Receiver: `OtpAutofillScope`.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `code` | `String?` | - | The code to suggest, or `null` to hide the bar. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `source` | `String` | `"From Messages"` | Label above the code. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- `accessibilityLabel` on `OtpAutofillInput` is passed to the underlying text input.
-- The suggestion bar has the `button` role.
-- The input is read-only while filling, verifying and after a valid code.
-
-## Notes
-
-- Invalid slots use `border-destructive` with a `bg-destructive` tint that is stronger in dark mode; verified slots use `border-green-500` and `bg-green-500/10 dark:bg-green-500/20`.
-- The suggestion bar uses `bg-popover`, or `bg-muted` in dark mode, and sits on the keyboard or above the bottom safe area.
-- Slide and shake animations respect the system reduce motion setting.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `code` | `String?` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `source` | `String` | `"From Messages"` |
 
 </Only>
 

@@ -15,7 +15,9 @@ The countdown pauses while the pointer hovers the bar, while it has focus, and w
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/undo-bar
@@ -27,17 +29,23 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add interactions undo-bar
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
 2. Add the pieces it builds on: [Button](/docs/components/button).
 
-3. Copy the source into `components/interactions/undo-bar.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/interactions/undo-bar.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -74,11 +82,6 @@ function DeleteButton({ note }: { note: Note }) {
 }
 ```
 
-- Wrap the app or screen in `UndoBarProvider` and call `show({ title, actionLabel, onUndo, onCommit })` from `useUndoBar` after performing the action.
-- Apply the change optimistically, restore it in `onUndo`, and finalize it in `onCommit`.
-- `actionLabel` defaults to `Undo`. `useUndoBar` also returns `undo` and `dismiss` to settle the current entry from code.
-- It pairs well with `SwipeActions`, including full swipes.
-
 ## Examples
 
 ### Longer timeout
@@ -89,25 +92,9 @@ A `timeout` of 10 seconds keeps the bar on screen longer before committing.
 
 ### With swipe actions
 
-Notes deleted from swipe actions, including a full swipe, can be restored from the bar.
+Notes deleted from `SwipeActions`, including a full swipe, can be restored from the bar.
 
 <ComponentPreview name="undo-bar-with-swipe-actions" responsive />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### UndoBarProvider
-
-Provides `useUndoBar` and renders the floating undo bar.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `timeout` | `number` | `5000` | Milliseconds the bar stays visible before committing. |
-| `className` | `string` | - | Classes for the fixed region that positions the bar. |
-| `children` | `React.ReactNode` | - | The content that can show undo entries. |
-
-</ApiPart>
 
 ## Accessibility
 
@@ -116,10 +103,21 @@ Provides `useUndoBar` and renders the floating undo bar.
 - `Ctrl+Z` or `Cmd+Z` triggers undo while the bar is visible, except when focus is in an editable field.
 - The countdown pauses while the bar has keyboard focus, giving people time to reach the button.
 
-## Notes
+## API Reference
 
-- Parts use `data-slot` values `undo-bar-region`, `undo-bar`, `undo-bar-title`, and `undo-bar-action`. The bar sets `data-paused` while the countdown is paused and `data-closed` while closing.
-- The bar is fixed to the bottom of the viewport above the safe-area inset.
+### UndoBarProvider
+
+Provides `useUndoBar` and renders the floating undo bar.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `timeout` | `number` | `5000` |
+| `className` | `string` | - |
+| `children` | `React.ReactNode` | - |
+
+Wrap the app or screen in `UndoBarProvider` and call `show({ title, actionLabel, onUndo, onCommit })` from `useUndoBar` after performing the action. Apply the change optimistically, restore it in `onUndo`, and finalize it in `onCommit`. `actionLabel` defaults to `Undo`. `useUndoBar` also returns `undo` and `dismiss` to settle the current entry from code.
+
+`timeout` is the number of milliseconds the bar stays visible before committing. `className` styles the fixed region that positions the bar, which sits at the bottom of the viewport above the safe-area inset. Each part sets a `data-slot`, such as `undo-bar` or `undo-bar-action`, for styling. The bar sets `data-paused` while the countdown is paused and `data-closed` while closing.
 
 </Only>
 
@@ -136,6 +134,10 @@ Provides `useUndoBar` and renders the floating undo bar.
 If the user presses Undo, `onUndo` runs. If the countdown runs out, `onCommit` runs. Only one bar shows at a time: calling `show` again commits the previous action first. The countdown pauses while the app is in the background and resumes with the time left. Use it after deleting, archiving or moving items.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -185,7 +187,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Text](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -193,7 +197,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Text](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets
@@ -211,17 +215,17 @@ npx expo install cn react-native-reanimated react-native-safe-area-context react
 
 <ComponentSource path="uniwind/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/undo-bar.tsx`:
+5. Copy and paste the following code into `components/interactions/undo-bar.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/undo-bar.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets
@@ -239,17 +243,17 @@ npx expo install cn react-native-reanimated react-native-safe-area-context react
 
 <ComponentSource path="nativewind/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/undo-bar.tsx`:
+5. Copy and paste the following code into `components/interactions/undo-bar.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/undo-bar.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-safe-area-context react-native-worklets
@@ -267,11 +271,11 @@ npx expo install react-native-reanimated react-native-safe-area-context react-na
 
 <ComponentSource path="stylesheet/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/undo-bar.tsx`:
+5. Copy and paste the following code into `components/interactions/undo-bar.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/undo-bar.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -356,6 +360,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -788,14 +796,6 @@ fun UndoBarNotesList(state: UndoBarState, deleteFirst: Boolean = false) {
 
 </Only>
 
-<Only platform="rn">
-
-Wrap the screen or app in `UndoBarProvider`. After removing an item from the UI, call `show({ title, onUndo, onCommit?, actionLabel? })`: restore the item in `onUndo`, and do the permanent work, such as a server delete, in `onCommit`.
-
-`useUndoBar` also returns `undo`, which runs the current undo, and `dismiss`, which commits and hides the bar.
-
-</Only>
-
 ## Examples
 
 ### Showing
@@ -820,30 +820,38 @@ Shows the bar after a swipe-to-delete in a list with swipe actions.
 
 <NativeExample name="undo-bar-with-swipe-actions" />
 
+<Only platform="rn">
+
+## Accessibility
+
+- A string title is announced when the bar appears.
+- The bar has the `group` role and is a polite live region.
+- The countdown ring is hidden from screen readers.
+
+</Only>
+
 ## API Reference
 
 <Only platform="rn">
-
-<ApiPart index={1}>
 
 ### UndoBarProvider
 
 Holds the current undo entry and renders the bar in a portal.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `timeout` | `number` | `5000` | Countdown length in milliseconds. Defaults to `5000`. |
-| `className` | `string` | - | Classes for the bar. |
-| `portalHost` | `string` | - | Name of a portal host to render into. |
-| `children` | `React.ReactNode` | - | The content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `timeout` | `number` | `5000` |
+| `className` | `string` | - |
+| `portalHost` | `string` | - |
+| `children` | `React.ReactNode` | - |
 
-</ApiPart>
+Wrap the screen or app in `UndoBarProvider`. After removing an item from the UI, call `show({ title, onUndo, onCommit?, actionLabel? })` from `useUndoBar`: restore the item in `onUndo`, and do the permanent work, such as a server delete, in `onCommit`. `useUndoBar` also returns `undo`, which runs the current undo, and `dismiss`, which commits and hides the bar.
+
+`timeout` is the countdown length in milliseconds. `className` styles the bar, and `portalHost` names a portal host to render into. The bar is up to 384 points wide and centered. The ring drains linearly and runs counterclockwise in right-to-left layouts. Slide animations respect the system reduce motion setting; the countdown always runs.
 
 </Only>
 
 <Only platform="swift">
-
-<ApiPart index={1}>
 
 ### UndoBarEntry
 
@@ -852,10 +860,6 @@ Holds the current undo entry and renders the bar in a portal.
 | `id` | `UUID` |
 | `title` | `LocalizedStringResource` |
 | `actionLabel` | `LocalizedStringResource?` |
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### UndoBarManager
 
@@ -867,90 +871,54 @@ Takes no parameters.
 | `entry` | `UndoBarEntry?` |
 | `timeout` | `Duration` |
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### UndoBarManager.show
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringResource` | - | - |
-| `actionLabel` | `LocalizedStringResource?` | `nil` | - |
-| `onUndo` | `() -> Void` | - | - |
-| `onCommit` | `(() -> Void)?` | `nil` | - |
-
-</ApiPart>
-
-<ApiPart index={4}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - |
+| `actionLabel` | `LocalizedStringResource?` | `nil` |
+| `onUndo` | `() -> Void` | - |
+| `onCommit` | `(() -> Void)?` | `nil` |
 
 ### UndoBarManager.undo
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### UndoBarManager.dismiss
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={6}>
-
 ### .undoBar
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ manager` | `UndoBarManager` | `.shared` | - |
-| `timeout` | `Duration` | `.seconds(5)` | - |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ manager` | `UndoBarManager` | `.shared` |
+| `timeout` | `Duration` | `.seconds(5)` |
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### UndoBarState
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### UndoBarState.show
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String` | - | - |
-| `onUndo` | `() -> Unit` | - | - |
-| `actionLabel` | `String?` | `null` | - |
-| `onCommit` | `(() -> Unit)?` | `null` | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String` | - |
+| `onUndo` | `() -> Unit` | - |
+| `actionLabel` | `String?` | `null` |
+| `onCommit` | `(() -> Unit)?` | `null` |
 
 ### UndoBarState.undo
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### UndoBarState.dismiss
 
 Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={5}>
 
 ### rememberUndoBarState
 
@@ -958,38 +926,16 @@ Takes no parameters.
 
 Returns `UndoBarState`.
 
-</ApiPart>
-
-<ApiPart index={6}>
-
 ### UndoBarProvider
 
 Holds the current undo entry and renders the bar in a portal.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `state` | `UndoBarState` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `timeoutMillis` | `Long` | `5000` | - |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- A string title is announced when the bar appears.
-- The bar has the `group` role and is a polite live region.
-- The countdown ring is hidden from screen readers.
-
-## Notes
-
-- The bar is up to 384 points wide and centered; it uses `bg-popover`, or `bg-muted` in dark mode, with a `border-border` outline.
-- The ring drains linearly and runs counterclockwise in right-to-left layouts.
-- Slide animations respect the system reduce motion setting; the countdown always runs.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `state` | `UndoBarState` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `timeoutMillis` | `Long` | `5000` |
+| `content` | `@Composable () -> Unit` | - |
 
 </Only>
 

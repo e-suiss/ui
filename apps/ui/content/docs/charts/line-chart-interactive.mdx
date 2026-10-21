@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 Monthly temperatures for several cities with chips to show or hide each city and a switch between average, high and low. A row of stats under the chart shows each city's range and follows the cursor month. Use it as a pattern for comparing many series where readers pick which ones to see.
 
+Replace `CITIES` with your series and add a label and color for each to `chartConfig`; the `visible` state sets which ones start visible. The high and low modes come from a demo formula, so replace `temperature` with real values and fit the fixed value axis `domain` to your range, since values outside it are clipped. The last visible city can't be hidden, and new lines draw in with an animation that is skipped when reduced motion is preferred.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/line-chart-interactive
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts line-chart-interactive
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
 
-3. Copy the source into `components/charts/line-chart-interactive.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/line-chart-interactive.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { LineChartInteractive } from "@/components/charts/line-chart-interactive
 ```tsx
 <LineChartInteractive />
 ```
-
-Replace `CITIES` with your own series and add a matching entry with label and color to `chartConfig` for each one. Set which series start visible in the `visible` state. The high and low modes are derived from the averages with a demo formula, so replace `temperature` with real values, and adjust the fixed value axis `domain` to your range.
-
-## Notes
-
-The last visible city can't be hidden, so the chart is never empty. Values outside the fixed value axis range are clipped. Newly shown lines draw in with an animation that is skipped when reduced motion is preferred.
 
 </Only>
 
@@ -75,9 +79,15 @@ The last visible city can't be hidden, so the chart is never empty. Values outsi
 
 One line per visible city across twelve months. A `ToggleGroup` switches between average, high and low temperatures, and a row of `Toggle` chips shows or hides each city, keeping at least one on. Touching the plot reports the month through `onActiveIndexChange`, and the summary under the chart switches from each city's range to its value for that month. The lines animate with `animationDuration={650}` and `animationEasing="ease-in-out"`.
 
+Replace `CITIES` with your series and monthly values, and add a matching entry to `chartConfig` and `SWATCH` for each. The high and low values are derived in `temperature()`, so replace that with real data. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +147,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -143,17 +155,17 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
 
-3. Copy the source into `components/charts/line-chart-interactive.tsx`:
+3. Copy and paste the following code into `components/charts/line-chart-interactive.tsx`:
 
 <ComponentSource path="uniwind/components/charts/line-chart-interactive.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -161,11 +173,11 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
 
-3. Copy the source into `components/charts/line-chart-interactive.tsx`:
+3. Copy and paste the following code into `components/charts/line-chart-interactive.tsx`:
 
 <ComponentSource path="nativewind/components/charts/line-chart-interactive.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -173,11 +185,11 @@ npx expo install cn
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle), [Toggle Group](/docs/components/toggle-group).
 
-2. Copy the source into `components/charts/line-chart-interactive.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-interactive.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/line-chart-interactive.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -291,6 +303,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -330,12 +346,6 @@ fun LineInteractiveExample() {
     LineChartInteractive()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `CITIES` with your series and monthly values, and add a matching entry to `chartConfig` and `SWATCH` for each. The high and low values are derived in `temperature()`, so replace that with real data. The component takes no props.
 
 </Only>
 

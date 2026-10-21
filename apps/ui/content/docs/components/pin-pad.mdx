@@ -19,6 +19,10 @@ An optional biometric key appears in the bottom-left corner of the keypad when `
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -67,7 +71,9 @@ The CLI also adds what it builds on: [Keypad](/docs/components/keypad). It also 
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -75,7 +81,7 @@ The CLI also adds what it builds on: [Keypad](/docs/components/keypad). It also 
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -93,17 +99,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/primitives/hooks.ts" plain />
 
-5. Copy the source into `components/ui/pin-pad.tsx`:
+5. Copy and paste the following code into `components/ui/pin-pad.tsx`:
 
 <ComponentSource path="uniwind/components/ui/pin-pad.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -121,17 +127,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/primitives/hooks.ts" plain />
 
-5. Copy the source into `components/ui/pin-pad.tsx`:
+5. Copy and paste the following code into `components/ui/pin-pad.tsx`:
 
 <ComponentSource path="nativewind/components/ui/pin-pad.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -149,11 +155,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/primitives/hooks.ts" plain />
 
-5. Copy the source into `components/ui/pin-pad.tsx`:
+5. Copy and paste the following code into `components/ui/pin-pad.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/pin-pad.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -245,6 +251,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -318,18 +328,6 @@ fun PinPadCentered(content: @Composable () -> Unit) {
 
 </Only>
 
-<Only platform="rn kotlin">
-
-Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. `onComplete` fires with the full code once the last digit is entered; check the code there, set `error` when it is wrong and clear the value to let the user try again.
-
-</Only>
-
-<Only platform="rn">
-
-Pass `onBiometric` to show the biometric key, with `biometricIcon` and `biometricLabel` to match the method in use. Style the dots and keypad separately with `dotsClassName` and `keypadClassName`.
-
-</Only>
-
 ## Examples
 
 ### Filled
@@ -347,6 +345,12 @@ The error state with red dots.
 ### Verify
 
 Checks the code on completion, shows an error for a wrong code and clears it.
+
+<Only platform="rn kotlin">
+
+`onComplete` fires with the full code once the last digit is entered. Check the code there, set `error` when it is wrong and clear the value to let the user try again.
+
+</Only>
 
 <NativeExample name="pin-pad-verify" />
 
@@ -366,6 +370,12 @@ A biometric key with the default fingerprint icon.
 
 A biometric key with a face icon and a matching label.
 
+<Only platform="rn">
+
+Set `biometricIcon` and `biometricLabel` to match the method in use.
+
+</Only>
+
 <NativeExample name="pin-pad-face-biometric" />
 
 ### Four digits
@@ -378,84 +388,6 @@ A four-digit code with `length={4}`.
 
 <NativeExample name="pin-pad-four-digits" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### PinPad
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `length` | `number` | `6` | Number of digits, clamped between 4 and 8. Defaults to `6`. |
-| `value` | `string` | - | Entered digits for controlled use. |
-| `defaultValue` | `string` | `""` | Initial digits for uncontrolled use. Non-digits are removed. |
-| `onValueChange` | `(value: string) => void` | - | Called with the new value after each digit or deletion. |
-| `onComplete` | `(value: string) => void` | - | Called with the full code when the last digit is entered. |
-| `error` | `boolean` | `false` | Shows the error state. Turning it on shakes the dots and plays an error haptic. |
-| `disabled` | `boolean` | `false` | Turns off the keypad and dims the dots. |
-| `onBiometric` | `() => void` | - | Called when the biometric key is pressed. The key is shown only when this is set. |
-| `biometricIcon` | `PhosphorIcon` | - | Icon for the biometric key. |
-| `biometricLabel` | `string` | - | Accessibility label for the biometric key. |
-| `deleteLabel` | `string` | - | Accessibility label for the delete key. |
-| `dotsLabel` | `(entered: number, length: number) => string` | `defaultDotsLabel` | Builds the dots label from the entered count and the length. Defaults to "3 of 6 entered". |
-| `dotsClassName` | `string` | - | Classes for the dots row. |
-| `keypadClassName` | `string` | - | Classes for the keypad. |
-
-Also accepts the props of `React.ComponentProps<typeof View>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### PinPad
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Binding<String>` | - | Entered digits for controlled use. |
-| `length` | `Int` | `6` | Number of digits, clamped between 4 and 8. |
-| `error` | `Bool` | `false` | Shows the error state. Turning it on shakes the dots and plays an error haptic. |
-| `biometricIcon` | `Image` | `Ph.fingerprint.regular` | Icon for the biometric key. |
-| `biometricLabel` | `LocalizedStringKey` | `"Use biometrics"` | Accessibility label for the biometric key. |
-| `deleteLabel` | `LocalizedStringKey` | `"Delete"` | Accessibility label for the delete key. |
-| `onBiometric` | `(() -> Void)?` | `nil` | Called when the biometric key is pressed. The key is shown only when this is set. |
-| `onComplete` | `((String) -> Void)?` | `nil` | Called with the full code when the last digit is entered. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### PinPad
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `value` | `String?` | `null` | Entered digits for controlled use. |
-| `onValueChange` | `((String) -> Unit)?` | `null` | Called with the new value after each digit or deletion. |
-| `defaultValue` | `String` | `""` | Initial digits for uncontrolled use. Non-digits are removed. |
-| `length` | `Int` | `6` | Number of digits, clamped between 4 and 8. |
-| `onComplete` | `((String) -> Unit)?` | `null` | Called with the full code when the last digit is entered. |
-| `error` | `Boolean` | `false` | Shows the error state. Turning it on shakes the dots and plays an error haptic. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `onBiometric` | `(() -> Unit)?` | `null` | Called when the biometric key is pressed. The key is shown only when this is set. |
-| `biometricIcon` | `ImageVector` | `PhosphorIcons.Regular.Fingerprint` | Icon for the biometric key. |
-| `biometricLabel` | `String` | `"Use biometrics"` | Accessibility label for the biometric key. |
-| `deleteLabel` | `String` | `"Delete"` | Accessibility label for the delete key. |
-| `entryLabel` | `(entered: Int, length: Int) -> String` | `{ entered, total -> "$entered of $total entered" }` | - |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -465,9 +397,81 @@ Also accepts the props of `React.ComponentProps<typeof View>`.
 - Keypad keys are buttons labeled with their digit; the delete and biometric keys use `deleteLabel` and `biometricLabel`.
 - The shake animation respects the system reduce motion setting.
 
-## Notes
+</Only>
 
-- Uses `bg-foreground` for filled dots, `border-input` for empty ones and `bg-destructive` in the error state; colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### PinPad
+
+The `PinPad` component shows passcode dots above a numeric keypad.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `length` | `number` | `6` |
+| `value` | `string` | - |
+| `defaultValue` | `string` | `""` |
+| `onValueChange` | `(value: string) => void` | - |
+| `onComplete` | `(value: string) => void` | - |
+| `error` | `boolean` | `false` |
+| `disabled` | `boolean` | `false` |
+| `onBiometric` | `() => void` | - |
+| `biometricIcon` | `PhosphorIcon` | - |
+| `biometricLabel` | `string` | - |
+| `deleteLabel` | `string` | - |
+| `dotsLabel` | `(entered: number, length: number) => string` | `defaultDotsLabel` |
+| `dotsClassName` | `string` | - |
+| `keypadClassName` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
+
+Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. Non-digits in `defaultValue` are removed. `length` is clamped between 4 and 8. `onValueChange` is called after each digit or deletion, and `onComplete` with the full code when the last digit is entered. Turning `error` on shakes the dots and plays an error haptic. `disabled` turns off the keypad and dims the dots.
+
+The biometric key is shown only when `onBiometric` is set. `biometricLabel` and `deleteLabel` are the accessibility labels of those keys. `dotsLabel` builds the dots label from the entered count and the length, such as "3 of 6 entered". Style the dots and keypad separately with `dotsClassName` and `keypadClassName`.
+
+</Only>
+
+<Only platform="swift">
+
+### PinPad
+
+The `PinPad` component shows passcode dots above a numeric keypad.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Binding<String>` | - |
+| `length` | `Int` | `6` |
+| `error` | `Bool` | `false` |
+| `biometricIcon` | `Image` | `Ph.fingerprint.regular` |
+| `biometricLabel` | `LocalizedStringKey` | `"Use biometrics"` |
+| `deleteLabel` | `LocalizedStringKey` | `"Delete"` |
+| `onBiometric` | `(() -> Void)?` | `nil` |
+| `onComplete` | `((String) -> Void)?` | `nil` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### PinPad
+
+The `PinPad` component shows passcode dots above a numeric keypad.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `value` | `String?` | `null` |
+| `onValueChange` | `((String) -> Unit)?` | `null` |
+| `defaultValue` | `String` | `""` |
+| `length` | `Int` | `6` |
+| `onComplete` | `((String) -> Unit)?` | `null` |
+| `error` | `Boolean` | `false` |
+| `enabled` | `Boolean` | `true` |
+| `onBiometric` | `(() -> Unit)?` | `null` |
+| `biometricIcon` | `ImageVector` | `PhosphorIcons.Regular.Fingerprint` |
+| `biometricLabel` | `String` | `"Use biometrics"` |
+| `deleteLabel` | `String` | `"Delete"` |
+| `entryLabel` | `(entered: Int, length: Int) -> String` | `{ entered, total -> "$entered of $total entered" }` |
 
 </Only>
 

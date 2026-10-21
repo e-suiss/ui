@@ -11,11 +11,13 @@ platforms: [web]
 
 `Panel` presents secondary content such as forms, filters or details without leaving the page. On desktop it renders a suiss/ui `Sheet` that slides in from the chosen side. On mobile (below `48rem`, via `useIsMobile`) it switches to a `Drawer` with a swipe handle, and every subcomponent swaps to its Drawer counterpart.
 
-The parts mirror the Sheet and Drawer anatomy: a trigger, content with an optional close button, header, title, description, body, footer and a close control. Use it where a desktop layout calls for a side sheet and a phone calls for a bottom sheet.
+Use it where a desktop layout calls for a side sheet and a phone calls for a bottom sheet.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/panel
@@ -27,22 +29,38 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns panel
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
 2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Sheet](/docs/components/sheet), `use-mobile`.
 
-3. Copy the source into `components/patterns/panel.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/panel.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Panel, PanelTrigger, PanelContent, PanelHeader, PanelTitle, PanelDescription, PanelBody, PanelFooter, PanelClose } from "@/components/patterns/panel"
+import {
+  Panel,
+  PanelBody,
+  PanelClose,
+  PanelContent,
+  PanelDescription,
+  PanelFooter,
+  PanelHeader,
+  PanelTitle,
+  PanelTrigger,
+} from "@/components/patterns/panel"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -110,88 +128,75 @@ import { Label } from "@/components/ui/label"
 
 </OnlyBase>
 
-- Compose `PanelTrigger` and `PanelContent` inside `Panel`. All parts must be used inside `Panel`, or they throw.
-- Put scrollable or form content in `PanelBody`, which applies padding that matches each presentation.
+## Composition
 
-<OnlyBase base="base aria">
+Use the following composition to build a `Panel`:
 
-- Open state is uncontrolled by default; use `defaultOpen` for an initial state, or `open` with `onOpenChange` to control it.
-- Use the `render` prop on `PanelTrigger` and `PanelClose` to render them as a suiss/ui `Button`.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-- Open state is uncontrolled by default; use `defaultOpen` for an initial state, or `open` with `onOpenChange` to control it.
-- Set `asChild` on `PanelTrigger` and `PanelClose` to render a suiss/ui `Button` in their place.
-
-</OnlyBase>
+```text
+Panel
+├── PanelTrigger
+└── PanelContent
+    ├── PanelHeader
+    │   ├── PanelTitle
+    │   └── PanelDescription
+    ├── PanelBody
+    └── PanelFooter
+        └── PanelClose
+```
 
 ## Examples
 
 ### By default
 
-Starts open with `defaultOpen` and closes from the close button.
+Set `defaultOpen` to start open. The panel closes from the close button.
 
 <ComponentPreview name="panel-open-by-default" layout="fullscreen" responsive />
 
 ### Sides
 
-Opens the desktop sheet from the top, right, bottom and left.
+Set `side` on `PanelContent` to open the desktop sheet from the top, right, bottom or left. It is ignored on mobile.
 
 <ComponentPreview name="panel-sides" layout="fullscreen" responsive />
 
 ### With close label
 
-Replaces the close icon with a Done text button through `closeLabel`.
+Set `closeLabel` to replace the close icon with a Done text button.
 
 <ComponentPreview name="panel-with-close-label" layout="fullscreen" responsive />
 
 ### Without close button
 
-Hides the built-in close button and closes from a Cancel button instead.
+Set `showCloseButton` to `false` to hide the built-in close button, and close from a Cancel button in `PanelClose` instead.
 
 <ComponentPreview name="panel-without-close-button" layout="fullscreen" responsive />
 
 ### Floating
 
-Insets the mobile drawer from the screen edges with `floating`.
+Set `floating` to inset the mobile drawer from the screen edges. It has no effect on desktop.
 
 <ComponentPreview name="panel-floating" layout="fullscreen" responsive />
 
+## Accessibility
+
+- The content is a `dialog` named by `PanelTitle` and described by `PanelDescription`.
+- Escape closes the panel and returns focus to the trigger.
+- The built-in close button is named Close, or by `closeLabel` when set.
+
 ## API Reference
-
-<Anatomy>
-
-- [Panel](#panel)
-  - [PanelTrigger](#paneltrigger)
-  - [PanelContent](#panelcontent)
-    - [PanelHeader](#panelheader)
-      - [PanelTitle](#paneltitle)
-      - [PanelDescription](#paneldescription)
-    - [PanelBody](#panelbody)
-    - [PanelFooter](#panelfooter)
-      - [PanelClose](#panelclose)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### Panel
 
 The root that chooses Sheet or Drawer and holds the open state.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Whether the panel is open, for controlled use. |
-| `defaultOpen` | `boolean` | - | Whether the panel starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called with the new open state when the panel opens or closes. |
-| `floating` | `boolean` | - | Insets the mobile drawer from the screen edges. Has no effect on desktop. |
-| `children` | `React.ReactNode` | - | The trigger and content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | - |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `floating` | `boolean` | - |
+| `children` | `React.ReactNode` | - |
 
-</ApiPart>
-
-<ApiPart index={2}>
+Open state is uncontrolled by default; use `defaultOpen` for an initial state, or `open` with `onOpenChange` to control it. Compose `PanelTrigger` and `PanelContent` inside `Panel`; all parts must be used inside it, or they throw. The presentation follows the viewport at render time, so a panel open while the viewport crosses `48rem` re-renders in the other presentation.
 
 ### PanelTrigger
 
@@ -199,17 +204,17 @@ The button that opens the panel.
 
 <OnlyBase base="base aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `React.ReactElement` | - | Replaces the rendered element, for example with a `Button`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `React.ReactElement` | - |
 
 </OnlyBase>
 
 <OnlyBase base="radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element, such as a `Button`, in place of the default button. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
 
 </OnlyBase>
 
@@ -225,19 +230,15 @@ Also accepts `className`, `children`, `id` and `aria-label`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### PanelContent
 
 The popup surface, with an optional close button.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"right"` | The screen edge the desktop sheet slides in from. Ignored on mobile. |
-| `showCloseButton` | `boolean` | `true` | Shows the built-in close button. |
-| `closeLabel` | `string` | - | Text for the close button in place of the icon. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"right"` |
+| `showCloseButton` | `boolean` | `true` |
+| `closeLabel` | `string` | - |
 
 <OnlyBase base="base radix">
 
@@ -251,19 +252,11 @@ Also accepts `className`, `style`, `children`, `id` and `aria-label`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### PanelHeader
 
 Groups the title and description.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={5}>
 
 ### PanelTitle
 
@@ -281,10 +274,6 @@ Also accepts `className`, `children` and `id`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={6}>
-
 ### PanelDescription
 
 Supporting text that describes the dialog.
@@ -301,19 +290,13 @@ Also accepts `className`, `children` and `id`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={7}>
-
 ### PanelBody
 
 The padded main content area.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={8}>
+Put scrollable or form content here. Its padding matches each presentation.
 
 ### PanelFooter
 
@@ -321,27 +304,23 @@ Holds the panel's actions.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={9}>
-
 ### PanelClose
 
 A button that closes the panel.
 
 <OnlyBase base="base aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `React.ReactElement` | - | Replaces the rendered element, for example with a `Button`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `React.ReactElement` | - |
 
 </OnlyBase>
 
 <OnlyBase base="radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element, such as a `Button`, in place of the default button. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
 
 </OnlyBase>
 
@@ -357,16 +336,18 @@ Also accepts `className`, `children`, `id` and `aria-label`.
 
 </OnlyBase>
 
-</ApiPart>
+<OnlyBase base="base aria">
 
-## Accessibility
+Use the `render` prop on `PanelTrigger` and `PanelClose` to render them as a suiss/ui `Button`.
 
-- The content is a `dialog` named by `PanelTitle` and described by `PanelDescription`.
-- Escape closes the panel and returns focus to the trigger.
-- The built-in close button is named Close, or by `closeLabel` when set.
+</OnlyBase>
 
-## Notes
+<OnlyBase base="radix">
 
-Styling hooks: `data-slot="panel"`, `panel-trigger`, `panel-content`, `panel-header`, `panel-title`, `panel-description`, `panel-body`, `panel-footer` and `panel-close`. The presentation follows the viewport at render time, so a panel open while the viewport crosses `48rem` re-renders in the other presentation.
+Set `asChild` on `PanelTrigger` and `PanelClose` to render a suiss/ui `Button` in their place.
+
+</OnlyBase>
+
+Each part sets a `data-slot`, such as `panel-content` or `panel-close`, for styling.
 
 </Only>

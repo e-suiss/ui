@@ -15,7 +15,9 @@ The panel floats inset from the screen edge with rounded corners and slides in f
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/sheet
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add sheet
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
@@ -37,11 +41,15 @@ npm install @base-ui/react @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), `use-scrollbar-gap`.
 
-3. Copy the source into `components/ui/sheet.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/sheet.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -49,7 +57,16 @@ npm install @base-ui/react @phosphor-icons/react
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Sheet, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription } from "@/components/ui/sheet"
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 ```
 
 <OnlyBase base="base">
@@ -138,174 +155,52 @@ import { Sheet, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetFooter
 
 </OnlyBase>
 
-<OnlyBase base="base">
+## Composition
 
-Use `defaultOpen` for an uncontrolled sheet, or `open` with `onOpenChange` to control it. Use the `render` prop on `SheetTrigger` and `SheetClose` to render them as a `Button`.
+Use the following composition to build a `Sheet`:
 
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Use `defaultOpen` for an uncontrolled sheet, or `open` with `onOpenChange` to control it. Set `asChild` on `SheetTrigger` and `SheetClose` to render a `Button` in their place.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Use `defaultOpen` for an uncontrolled sheet, or `isOpen` with `onOpenChange` to control it. The `Button` placed first inside `Sheet` opens it, and a `Button` with `slot="close"` closes it.
-
-</OnlyBase>
-
-`SheetFooter` sits at the bottom of the panel with `mt-auto`. By default `SheetContent` adds an icon close button in the top corner; set `closeLabel` to show a text button instead, or `showCloseButton={false}` to remove it.
+```text
+Sheet
+├── SheetTrigger
+└── SheetContent
+    ├── SheetHeader
+    │   ├── SheetTitle
+    │   └── SheetDescription
+    └── SheetFooter
+        └── SheetClose
+```
 
 ## Examples
 
 ### Sides
 
-Opens a sheet from each of the four edges.
+Use the `side` prop on `SheetContent` to open the sheet from each of the four edges.
 
 <ComponentPreview name="sheet-sides" />
 
 ### Left
 
-Renders a sheet open on the left side.
+A sheet with `side="left"`, rendered open.
 
 <ComponentPreview name="sheet-open-left" />
 
 ### Bottom
 
-Renders a sheet open along the bottom edge.
+A sheet with `side="bottom"`, rendered open along the bottom edge.
 
 <ComponentPreview name="sheet-open-bottom" />
 
 ### Without close button
 
-Removes the built-in close button.
+Set `showCloseButton={false}` on `SheetContent` to remove the built-in close button.
 
 <ComponentPreview name="sheet-without-close-button" />
 
 ### With close label
 
-Replaces the icon close button with a text button labelled `Done`.
+Set `closeLabel="Done"` to replace the icon close button with a text button.
 
 <ComponentPreview name="sheet-with-close-label" />
-
-## API Reference
-
-<Anatomy>
-
-- [Sheet](#sheet)
-  - [SheetTrigger](#sheettrigger)
-  - [SheetContent](#sheetcontent)
-    - [SheetHeader](#sheetheader)
-      - [SheetTitle](#sheettitle)
-      - [SheetDescription](#sheetdescription)
-    - [SheetFooter](#sheetfooter)
-      - [SheetClose](#sheetclose)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Sheet
-
-The root that holds the open state.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SheetTrigger
-
-The element that opens the sheet.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SheetClose
-
-An element that closes the sheet when pressed.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SheetContent
-
-The sliding panel, rendered in a portal with a backdrop.
-
-<OnlyBase base="base radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"right"` | Chooses the edge the sheet slides in from. |
-| `showCloseButton` | `boolean` | `true` | Shows the built-in close button in the top corner. |
-| `closeLabel` | `string` | - | Shows this text in the close button instead of an icon. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"right"` | Chooses the edge the sheet slides in from. |
-| `showCloseButton` | `boolean` | `true` | Shows the built-in close button in the top corner. |
-| `closeLabel` | `string` | - | Shows this text in the close button instead of an icon. |
-| `isDismissable` | `boolean` | `true` | Closes the sheet when the backdrop is pressed. |
-| `isKeyboardDismissDisabled` | `boolean` | `false` | Stops `Escape` from closing the sheet. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SheetHeader
-
-A padded stack for the title and description.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### SheetFooter
-
-A padded stack for actions, pushed to the bottom of the panel.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### SheetTitle
-
-The sheet's title, which names the dialog.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### SheetDescription
-
-Supporting text, which describes the dialog.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -326,11 +221,103 @@ Also accepts the props of the primitive part it wraps.
 
 - The icon close button has the hidden label `Close`.
 
-## Notes
+## API Reference
 
-- Parts carry `data-slot` attributes such as `sheet-content`, `sheet-overlay` and `sheet-close`; the panel also sets `data-side`.
-- Left and right sheets are 3/4 of the screen wide, up to `max-w-sm` from the `sm` breakpoint. Slide directions flip in right-to-left layouts.
-- The panel uses `bg-popover` and the backdrop uses `bg-black/50`.
+### Sheet
+
+The root that holds the open state.
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base">
+
+Use `defaultOpen` for an uncontrolled sheet, or `open` with `onOpenChange` to control it. Use the `render` prop on `SheetTrigger` and `SheetClose` to render them as a `Button`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Use `defaultOpen` for an uncontrolled sheet, or `open` with `onOpenChange` to control it. Set `asChild` on `SheetTrigger` and `SheetClose` to render a `Button` in their place.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Use `defaultOpen` for an uncontrolled sheet, or `isOpen` with `onOpenChange` to control it. The `Button` placed first inside `Sheet` opens it, and a `Button` with `slot="close"` closes it.
+
+</OnlyBase>
+
+### SheetTrigger
+
+The element that opens the sheet.
+
+Also accepts the props of the primitive part it wraps.
+
+### SheetClose
+
+An element that closes the sheet when pressed.
+
+Also accepts the props of the primitive part it wraps.
+
+### SheetContent
+
+The sliding panel, rendered in a portal with a backdrop.
+
+<OnlyBase base="base radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"right"` |
+| `showCloseButton` | `boolean` | `true` |
+| `closeLabel` | `string` | - |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"right"` |
+| `showCloseButton` | `boolean` | `true` |
+| `closeLabel` | `string` | - |
+| `isDismissable` | `boolean` | `true` |
+| `isKeyboardDismissDisabled` | `boolean` | `false` |
+
+`isDismissable` closes the sheet when the backdrop is pressed, and `isKeyboardDismissDisabled` stops `Escape` from closing it.
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+`side` is the edge the sheet slides in from; slide directions flip in right-to-left layouts. Left and right sheets are 3/4 of the screen wide, up to `max-w-sm` from the `sm` breakpoint. By default the panel shows an icon close button in the top corner; set `closeLabel` to show that text instead, or `showCloseButton={false}` to remove it.
+
+### SheetHeader
+
+A padded stack for the title and description.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### SheetFooter
+
+A padded stack for actions, pushed to the bottom of the panel.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+The footer sits at the bottom of the panel with `mt-auto`.
+
+### SheetTitle
+
+The sheet's title, which names the dialog.
+
+Also accepts the props of the primitive part it wraps.
+
+### SheetDescription
+
+Supporting text, which describes the dialog.
+
+Also accepts the props of the primitive part it wraps.
+
+Each part sets a `data-slot`, such as `sheet-content` or `sheet-overlay`, for styling. The panel also sets `data-side`.
 
 </Only>
 
@@ -351,6 +338,10 @@ Use `right` or `left` for navigation and detail panels that span the screen heig
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -400,7 +391,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -408,7 +401,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
@@ -444,17 +437,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/sheet.tsx`:
+5. Copy and paste the following code into `components/ui/sheet.tsx`:
 
 <ComponentSource path="uniwind/components/ui/sheet.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
@@ -490,17 +483,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/sheet.tsx`:
+5. Copy and paste the following code into `components/ui/sheet.tsx`:
 
 <ComponentSource path="nativewind/components/ui/sheet.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
@@ -536,11 +529,11 @@ npx expo install phosphor-react-native react-native-gesture-handler react-native
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/sheet.tsx`:
+5. Copy and paste the following code into `components/ui/sheet.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/sheet.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -625,6 +618,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -916,16 +913,6 @@ fun SheetDefault(defaultOpen: Boolean) {
 
 </Only>
 
-<Only platform="rn">
-
-Wrap a `SheetTrigger` and a `SheetContent` in `Sheet`. Inside the content, compose `SheetHeader` with `SheetTitle` and `SheetDescription`, your body, and a `SheetFooter`, which is pushed to the bottom. Use `SheetTrigger` and `SheetClose` with `render` to turn a `Button` into a trigger or close control.
-
-`Sheet` accepts `open`, `defaultOpen` and `onOpenChange` for controlled or uncontrolled use, plus `modal`, `disablePointerDismissal`, `onOpenChangeComplete` and `actionsRef`. The swipe direction follows the `side` of its content.
-
-A close button is shown in the top corner by default. Set `closeLabel` to show a text button instead of the X icon, or `showCloseButton={false}` to remove it. `SheetHeader` adds end padding so the title does not run under the button.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -948,217 +935,6 @@ A bottom sheet whose close button reads "Done" instead of showing an icon.
 
 <NativeExample name="sheet-with-close-label" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Sheet
-
-Root that holds the open state.
-
-Also accepts the props of `DrawerPrimitive.RootProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SheetContent
-
-The panel, rendered in a portal with an overlay and an optional close button.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `portalHost` | `string` | - | Name of the portal host to render into. |
-| `side` | `SheetSide` | `"right"` | Edge the sheet slides in from: `top`, `right`, `bottom` or `left`. Defaults to `right`. |
-| `showCloseButton` | `boolean` | `true` | Shows the close button in the top corner. Defaults to `true`. |
-| `closeLabel` | `string` | - | Text for the close button. When omitted, an X icon is shown. |
-
-Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Popup>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SheetHeader
-
-Column for the title and description.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SheetFooter
-
-Column of actions pushed to the bottom of the panel.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SheetTitle
-
-Heading that labels the sheet.
-
-Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Title>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### SheetDescription
-
-Secondary text under the title.
-
-Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Description>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .sheet
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
-| `side` | `Edge` | - | Edge the sheet slides in from: `top`, `right`, `bottom` or `left`. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SheetContent
-
-The panel, rendered in a portal with an overlay and an optional close button.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton` | `Bool` | `true` | Shows the close button in the top corner. |
-| `closeLabel` | `LocalizedStringKey?` | `nil` | Text for the close button. When omitted, an X icon is shown. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SheetHeader
-
-Column for the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SheetFooter
-
-Column of actions pushed to the bottom of the panel.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### SheetSide
-
-Values: `Top`, `Right`, `Bottom`, `Left`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Sheet
-
-Root that holds the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `Boolean` | - | - |
-| `onOpenChange` | `(Boolean) -> Unit` | - | Called when it opens or closes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `side` | `SheetSide`: `Top` \| `Right` \| `Bottom` \| `Left` | `SheetSide.Right` | Edge the sheet slides in from: `top`, `right`, `bottom` or `left`. |
-| `showCloseButton` | `Boolean` | `true` | Shows the close button in the top corner. |
-| `closeLabel` | `String?` | `null` | Text for the close button. When omitted, an X icon is shown. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SheetHeader
-
-Column for the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SheetFooter
-
-Column of actions pushed to the bottom of the panel.
-
-Receiver: `ColumnScope`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SheetTitle
-
-Heading that labels the sheet.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### SheetDescription
-
-Secondary text under the title.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1169,11 +945,158 @@ Secondary text under the title.
 - The icon-only close button has the accessibility label "Close".
 - Animations respect the system reduce motion setting.
 
-## Notes
+</Only>
 
-- Uses `bg-popover` for the panel and `bg-black/50` for the overlay; colors follow the system appearance.
-- On iOS the sheet renders inside a `FullWindowOverlay` from `react-native-screens`, so it appears above native modals.
-- Side sheets are three quarters of the screen width, capped at `max-w-sm` on larger screens.
+## API Reference
+
+<Only platform="rn">
+
+### Sheet
+
+Root that holds the open state.
+
+Also accepts the props of `DrawerPrimitive.RootProps`.
+
+Use `open`, `defaultOpen` and `onOpenChange` for controlled or uncontrolled use. `Sheet` also accepts `modal`, `disablePointerDismissal`, `onOpenChangeComplete` and `actionsRef`. The swipe direction follows the `side` of its content. Use `SheetTrigger` and `SheetClose` with `render` to turn a `Button` into a trigger or close control.
+
+### SheetContent
+
+The panel, rendered in a portal with an overlay and an optional close button.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `portalHost` | `string` | - |
+| `side` | `SheetSide` | `"right"` |
+| `showCloseButton` | `boolean` | `true` |
+| `closeLabel` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Popup>`.
+
+`side` is the edge the sheet slides in from. Side sheets are three quarters of the screen width, capped at `max-w-sm` on larger screens. A close button is shown in the top corner by default; set `closeLabel` to show a text button instead of the X icon, or `showCloseButton={false}` to remove it. `portalHost` names the portal host to render into. On iOS the sheet renders inside a `FullWindowOverlay` from `react-native-screens`, so it appears above native modals.
+
+### SheetHeader
+
+Column for the title and description.
+
+Also accepts the props of `ViewProps`.
+
+The header adds end padding so the title does not run under the close button.
+
+### SheetFooter
+
+Column of actions pushed to the bottom of the panel.
+
+Also accepts the props of `ViewProps`.
+
+### SheetTitle
+
+Heading that labels the sheet.
+
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Title>`.
+
+### SheetDescription
+
+Secondary text under the title.
+
+Also accepts the props of `React.ComponentProps<typeof DrawerPrimitive.Description>`.
+
+</Only>
+
+<Only platform="swift">
+
+### .sheet
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - |
+| `side` | `Edge` | - |
+| `content` | `() -> Content` | - |
+
+### SheetContent
+
+The panel, rendered in a portal with an overlay and an optional close button.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `showCloseButton` | `Bool` | `true` |
+| `closeLabel` | `LocalizedStringKey?` | `nil` |
+| `content` | `() -> Content` | - |
+
+### SheetHeader
+
+Column for the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### SheetFooter
+
+Column of actions pushed to the bottom of the panel.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### SheetSide
+
+Values: `Top`, `Right`, `Bottom`, `Left`.
+
+### Sheet
+
+Root that holds the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `open` | `Boolean` | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `side` | `SheetSide`: `Top` \| `Right` \| `Bottom` \| `Left` | `SheetSide.Right` |
+| `showCloseButton` | `Boolean` | `true` |
+| `closeLabel` | `String?` | `null` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### SheetHeader
+
+Column for the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### SheetFooter
+
+Column of actions pushed to the bottom of the panel.
+
+Receiver: `ColumnScope`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### SheetTitle
+
+Heading that labels the sheet.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### SheetDescription
+
+Secondary text under the title.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
 
 </Only>
 

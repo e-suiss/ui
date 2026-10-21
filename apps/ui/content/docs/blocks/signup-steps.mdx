@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A signup flow that asks one question at a time, name, then email, then password, with progress dots above. Each step slides in from the direction of travel, Continue stays disabled until the answer is valid, and the last step becomes Create account. The finish screen greets the user by first name. Use it for onboarding where a long form would feel heavy.
 
+Edit `steps`; each has a key, title, description, placeholder, input type, autocomplete value and a `valid` function. Add matching keys to the `Values` type when you add steps. Replace the final step with a call to your registration API.
+
+The progress dots are an ordered list with the current step marked, and each input after the first receives focus automatically.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/signup-steps
@@ -25,9 +31,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks signup-steps
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +43,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Input](/docs/components/input).
 
-3. Copy the source into `components/blocks/signup-steps.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/signup-steps.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +62,6 @@ import { SignupSteps } from "@/components/blocks/signup-steps"
 ```tsx
 <SignupSteps />
 ```
-
-Edit `steps`; each has a key, title, description, placeholder, input type, autocomplete value and a `valid` function. Add matching keys to the `Values` type when you add steps. Replace the final step with a call to your registration API.
-
-## Notes
-
-The progress dots are an ordered list with the current step marked, and each input after the first receives focus automatically.
 
 </Only>
 
@@ -75,9 +81,15 @@ The progress dots are an ordered list with the current step marked, and each inp
 
 A progress bar tracks the step, and each step slides in with a title, description and a single `Input`. The email step checks the format and the password step shows a live rule checklist. Back and Continue `Button`s sit in a `BottomBar`, and the last step creates the account and shows a confirmation.
 
+Edit the `STEPS` copy and `RULES` to fit your product. `onSubmit` receives the name, email and password when the last step is completed.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +139,9 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +149,7 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -147,17 +161,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/signup-steps.tsx`:
+4. Copy and paste the following code into `components/blocks/signup-steps.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/signup-steps.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -169,17 +183,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/signup-steps.tsx`:
+4. Copy and paste the following code into `components/blocks/signup-steps.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/signup-steps.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -191,11 +205,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/signup-steps.tsx`:
+4. Copy and paste the following code into `components/blocks/signup-steps.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/signup-steps.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -293,6 +307,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -332,12 +350,6 @@ fun SignupStepsExample() {
     SignupSteps()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Edit the `STEPS` copy and `RULES` to fit your product. `onSubmit` receives the name, email and password when the last step is completed.
 
 </Only>
 

@@ -15,7 +15,9 @@ Use a toggle for a single on-off option such as bold text or a bookmark. To choo
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/toggle
@@ -27,19 +29,25 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add toggle
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react class-variance-authority
 ```
 
-2. Copy the source into `components/ui/toggle.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/toggle.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -48,92 +56,62 @@ import { Toggle } from "@/components/ui/toggle"
 ```
 
 ```tsx
-<Toggle aria-label="Toggle bold"><TextBIcon /></Toggle>
+<Toggle aria-label="Toggle bold">
+  <TextBIcon />
+</Toggle>
 ```
-
-<OnlyBase base="base radix">
-
-Use `defaultPressed` for an uncontrolled toggle, or `pressed` with `onPressedChange` to control it. Set `disabled` so it ignores clicks.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Use `defaultSelected` for an uncontrolled toggle, or `isSelected` with `onChange` to control it. Set `isDisabled` so it ignores clicks.
-
-</OnlyBase>
-
-Mark an icon beside a label with `data-icon="inline-start"` or `data-icon="inline-end"` to tighten the padding on that side.
 
 ## Examples
 
 ### Pressed
 
-Starts in the pressed state.
-
-<ComponentPreview name="toggle-pressed" />
-
-### Variants
-
-Compares the `default` and `outline` variants.
-
-<ComponentPreview name="toggle-variants" />
-
-### Sizes
-
-Compares the `sm`, `default` and `lg` sizes.
-
-<ComponentPreview name="toggle-sizes" />
-
-### With text
-
-Pairs an icon with a text label.
-
-<ComponentPreview name="toggle-with-text" />
-
-### Disabled
-
-Disables the toggle so it ignores clicks.
-
-<ComponentPreview name="toggle-disabled" />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### Toggle
-
-The pressable two-state button.
-
 <OnlyBase base="base radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline"` | `"default"` | Uses a borderless `default` style or an `outline` style with a border. |
-| `size` | `"default" \| "sm" \| "lg"` | `"default"` | Sets the height and padding: `sm`, `default` or `lg`. |
-| `pressed` | `boolean` | — | The controlled pressed state. Pass it with `onPressedChange`. |
-| `defaultPressed` | `boolean` | `false` | Whether the toggle starts pressed. |
-| `onPressedChange` | `(pressed: boolean) => void` | — | Called when the pressed state changes. |
-| `disabled` | `boolean` | `false` | Ignores clicks and keyboard presses. |
+Set `defaultPressed` to start the toggle in the pressed state.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline"` | `"default"` | Uses a borderless `default` style or an `outline` style with a border. |
-| `size` | `"default" \| "sm" \| "lg"` | `"default"` | Sets the height and padding: `sm`, `default` or `lg`. |
-| `isSelected` | `boolean` | — | The controlled pressed state. Pass it with `onChange`. |
-| `defaultSelected` | `boolean` | `false` | Whether the toggle starts pressed. |
-| `onChange` | `(isSelected: boolean) => void` | — | Called when the pressed state changes. |
-| `isDisabled` | `boolean` | `false` | Ignores clicks and keyboard presses. |
+Set `defaultSelected` to start the toggle in the pressed state.
 
 </OnlyBase>
 
-Also accepts the props of the primitive part it wraps.
+<ComponentPreview name="toggle-pressed" />
 
-</ApiPart>
+### Variants
+
+Use the `variant` prop to switch between the borderless `default` style and the `outline` style with a border.
+
+<ComponentPreview name="toggle-variants" />
+
+### Sizes
+
+Use the `size` prop to set the height and padding: `sm`, `default` or `lg`.
+
+<ComponentPreview name="toggle-sizes" />
+
+### With text
+
+Pairs an icon with a text label. Mark the icon with `data-icon="inline-start"` or `data-icon="inline-end"` to tighten the padding on that side.
+
+<ComponentPreview name="toggle-with-text" />
+
+### Disabled
+
+<OnlyBase base="base radix">
+
+Set `disabled` so the toggle ignores clicks and keyboard presses.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Set `isDisabled` so the toggle ignores clicks and keyboard presses.
+
+</OnlyBase>
+
+<ComponentPreview name="toggle-disabled" />
 
 ## Accessibility
 
@@ -141,22 +119,53 @@ Also accepts the props of the primitive part it wraps.
 - `Enter` and `Space` toggle the focused button.
 - An icon-only toggle needs an `aria-label`.
 
-## Notes
+## API Reference
+
+### Toggle
+
+The pressable two-state button.
 
 <OnlyBase base="base radix">
 
-- Uses `data-slot="toggle"`. Pressed styles key off `aria-pressed`.
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline"` | `"default"` |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` |
+| `pressed` | `boolean` | — |
+| `defaultPressed` | `boolean` | `false` |
+| `onPressedChange` | `(pressed: boolean) => void` | — |
+| `disabled` | `boolean` | `false` |
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-- Uses `data-slot="toggle"`. Pressed styles key off `data-selected`.
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline"` | `"default"` |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` |
+| `isSelected` | `boolean` | — |
+| `defaultSelected` | `boolean` | `false` |
+| `onChange` | `(isSelected: boolean) => void` | — |
+| `isDisabled` | `boolean` | `false` |
 
 </OnlyBase>
 
-- `toggleVariants` is exported so other components, such as `ToggleGroupItem`, can share the styles.
-- The press animation is removed when reduced motion is preferred.
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base radix">
+
+Use `defaultPressed` for an uncontrolled toggle, or `pressed` with `onPressedChange` to control it. The toggle sets `data-slot="toggle"`, and its pressed styles key off `aria-pressed`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Use `defaultSelected` for an uncontrolled toggle, or `isSelected` with `onChange` to control it. The toggle sets `data-slot="toggle"`, and its pressed styles key off `data-selected`.
+
+</OnlyBase>
+
+`toggleVariants` is exported so other components, such as `ToggleGroupItem`, can share the styles. The press animation is removed when reduced motion is preferred.
 
 </Only>
 
@@ -173,6 +182,10 @@ Also accepts the props of the primitive part it wraps.
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -222,7 +235,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -230,7 +245,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -258,17 +273,17 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/toggle.tsx`:
+4. Copy and paste the following code into `components/ui/toggle.tsx`:
 
 <ComponentSource path="uniwind/components/ui/toggle.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -296,11 +311,11 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/toggle.tsx`:
+4. Copy and paste the following code into `components/ui/toggle.tsx`:
 
 <ComponentSource path="nativewind/components/ui/toggle.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -328,11 +343,11 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/toggle.tsx`:
+3. Copy and paste the following code into `components/ui/toggle.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/toggle.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -427,6 +442,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -618,14 +637,6 @@ fun ToggleBold(initial: Boolean = false) {
 
 </Only>
 
-<Only platform="rn">
-
-Control the state with `pressed` and `onPressedChange(pressed, details)`, or leave it uncontrolled with `defaultPressed`. Put text in a `Text` and icons in `ToggleIcon`.
-
-Icon-only toggles need an `accessibilityLabel`. To group toggles with single or multiple selection, use Toggle Group. `toggleVariants`, `toggleStateClassName` and `toggleTextClassName` are exported for reuse in custom components.
-
-</Only>
-
 ## Examples
 
 ### Pressed
@@ -658,112 +669,6 @@ Disabled toggles in the off and on states.
 
 <NativeExample name="toggle-disabled" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Toggle
-
-The pressable two-state button.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline"` | `"default"` | Visual style: `default` or `outline`. |
-| `size` | `"default" \| "sm" \| "lg"` | `"default"` | Height and padding: `default`, `sm` or `lg`. |
-
-Also accepts the props of `React.ComponentProps<typeof TogglePrimitive>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ToggleIcon
-
-An icon sized for a toggle.
-
-Also accepts the props of `React.ComponentProps<typeof Icon>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### ToggleVariant
-
-Values: `.default`, `.outline`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ToggleSize
-
-Values: `.default`, `.sm`, `.lg`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### .toggleStyle(.variant)
-
-Style that creates `VariantToggleStyle`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `ToggleVariant`: `.default` \| `.outline` | `.default` | Visual style: `default` or `outline`. |
-| `size` | `ToggleSize`: `.default` \| `.sm` \| `.lg` | `.default` | Height and padding: `default`, `sm` or `lg`. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### ToggleVariant
-
-Values: `Default`, `Outline`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ToggleSize
-
-Values: `Default`, `Sm`, `Lg`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### Toggle
-
-The pressable two-state button.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `pressed` | `Boolean` | - | The controlled pressed state. Pass it with `onPressedChange`. |
-| `onPressedChange` | `(Boolean) -> Unit` | - | Called when the pressed state changes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `ToggleVariant`: `Default` \| `Outline` | `ToggleVariant.Default` | Visual style: `default` or `outline`. |
-| `size` | `ToggleSize`: `Default` \| `Sm` \| `Lg` | `ToggleSize.Default` | Height and padding: `default`, `sm` or `lg`. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `interactionSource` | `MutableInteractionSource?` | `null` | - |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `Toggle(pressed, onPressedChange, interactionSource, content)`, `Toggle(text, pressed, onPressedChange)`.
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -772,11 +677,81 @@ Overloads: `Toggle(pressed, onPressedChange, interactionSource, content)`, `Togg
 - Inside a single-select Toggle Group, it uses the `radio` role instead.
 - Icon-only toggles need an `accessibilityLabel`.
 
-## Notes
+</Only>
 
-- Changing the state triggers a selection haptic when a haptics adapter is provided through `HapticsContext`.
-- Uses the `bg-accent`, `text-primary` and `border-border` tokens, with `opacity-80` while pressed and `opacity-50` when disabled.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Toggle
+
+The pressable two-state button.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline"` | `"default"` |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<typeof TogglePrimitive>`.
+
+Control the state with `pressed` and `onPressedChange(pressed, details)`, or leave it uncontrolled with `defaultPressed`. Put text in a `Text` and icons in `ToggleIcon`. To group toggles with single or multiple selection, use Toggle Group. Changing the state triggers a selection haptic when a haptics adapter is provided through `HapticsContext`. `toggleVariants`, `toggleStateClassName` and `toggleTextClassName` are exported for reuse in custom components.
+
+### ToggleIcon
+
+An icon sized for a toggle.
+
+Also accepts the props of `React.ComponentProps<typeof Icon>`.
+
+</Only>
+
+<Only platform="swift">
+
+### ToggleVariant
+
+Values: `.default`, `.outline`.
+
+### ToggleSize
+
+Values: `.default`, `.sm`, `.lg`.
+
+### .toggleStyle(.variant)
+
+Style that creates `VariantToggleStyle`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `ToggleVariant`: `.default` \| `.outline` | `.default` |
+| `size` | `ToggleSize`: `.default` \| `.sm` \| `.lg` | `.default` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### ToggleVariant
+
+Values: `Default`, `Outline`.
+
+### ToggleSize
+
+Values: `Default`, `Sm`, `Lg`.
+
+### Toggle
+
+The pressable two-state button.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `pressed` | `Boolean` | - |
+| `onPressedChange` | `(Boolean) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `ToggleVariant`: `Default` \| `Outline` | `ToggleVariant.Default` |
+| `size` | `ToggleSize`: `Default` \| `Sm` \| `Lg` | `ToggleSize.Default` |
+| `enabled` | `Boolean` | `true` |
+| `interactionSource` | `MutableInteractionSource?` | `null` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `Toggle(pressed, onPressedChange, interactionSource, content)`, `Toggle(text, pressed, onPressedChange)`.
 
 </Only>
 

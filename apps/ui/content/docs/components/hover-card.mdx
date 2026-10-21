@@ -15,7 +15,9 @@ Use a hover card for supplementary, non-essential previews, such as a profile su
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/hover-card
@@ -27,19 +29,25 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add hover-card
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react
 ```
 
-2. Copy the source into `components/ui/hover-card.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/hover-card.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -78,89 +86,23 @@ import { buttonVariants } from "@/components/ui/button"
 </HoverCard>
 ```
 
-The trigger renders an anchor, so give it an `href`. Position the card with the `side`, `sideOffset`, `align` and `alignOffset` props on `HoverCardContent`; by default it opens on the `bottom`, centered, `4` pixels from the trigger and shifted `4` pixels along it.
+## Composition
 
-<OnlyBase base="base radix">
+Use the following composition to build a `HoverCard`:
 
-Set `defaultOpen` on the root to start open, or control it with `open` and `onOpenChange`.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Set `defaultOpen` on the root to start open, or control it with `isOpen` and `onOpenChange`.
-
-</OnlyBase>
+```text
+HoverCard
+├── HoverCardTrigger
+└── HoverCardContent
+```
 
 ## Examples
 
 ### Sides
 
-Four hover cards opening on the `top`, `right`, `bottom` and `left` sides of their triggers.
+Use the `side` prop on `HoverCardContent` to open the card on the `top`, `right`, `bottom` or `left` of its trigger.
 
 <ComponentPreview name="hover-card-sides" />
-
-## API Reference
-
-<Anatomy>
-
-- [HoverCard](#hovercard)
-  - [HoverCardTrigger](#hovercardtrigger)
-  - [HoverCardContent](#hovercardcontent)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### HoverCard
-
-The root that manages the card's open state.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### HoverCardTrigger
-
-The link that opens the card on hover or focus.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### HoverCardContent
-
-The floating card, rendered in a portal and positioned relative to the trigger.
-
-<OnlyBase base="base aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"bottom"` | The side of the trigger the card opens on. |
-| `sideOffset` | `number` | `4` | The gap in pixels between the trigger and the card. |
-| `align` | `"start" \| "center" \| "end"` | `"center"` | How the card lines up with the trigger along that side. |
-| `alignOffset` | `number` | `4` | The offset in pixels along the alignment axis. |
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` | The side of the trigger the card opens on. |
-| `sideOffset` | `number` | `4` | The gap in pixels between the trigger and the card. |
-| `align` | `"start" \| "center" \| "end"` | `"center"` | How the card lines up with the trigger along that side. |
-| `alignOffset` | `number` | `4` | The offset in pixels along the alignment axis. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive parts it wraps.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -168,11 +110,64 @@ Also accepts the props of the primitive parts it wraps.
 - The card opens when the pointer rests on the trigger or when the trigger receives keyboard focus, and closes when the pointer leaves.
 - The card is a visual preview; make sure the same information is available elsewhere, for example on the linked page.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values `hover-card-trigger` and `hover-card-content`. The root renders no element of its own.
-- `HoverCardContent` slides in from the side it opens on, and fades and zooms as it opens and closes.
-- The card is `w-72` by default; override it with `className`.
-- Uses the `popover` and `popover-foreground` colors.
+### HoverCard
+
+The root that manages the card's open state. It renders no element of its own.
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base radix">
+
+Set `defaultOpen` to start open, or control it with `open` and `onOpenChange`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Set `defaultOpen` to start open, or control it with `isOpen` and `onOpenChange`.
+
+</OnlyBase>
+
+### HoverCardTrigger
+
+The link that opens the card on hover or focus.
+
+Also accepts the props of the primitive part it wraps.
+
+The trigger renders an anchor, so give it an `href`.
+
+### HoverCardContent
+
+The floating card, rendered in a portal and positioned relative to the trigger.
+
+<OnlyBase base="base aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"bottom"` |
+| `sideOffset` | `number` | `4` |
+| `align` | `"start" \| "center" \| "end"` | `"center"` |
+| `alignOffset` | `number` | `4` |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` |
+| `sideOffset` | `number` | `4` |
+| `align` | `"start" \| "center" \| "end"` | `"center"` |
+| `alignOffset` | `number` | `4` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive parts it wraps.
+
+`side` picks the side of the trigger the card opens on, and `align` how it lines up along that side. `sideOffset` is the gap in pixels between the trigger and the card, and `alignOffset` the offset in pixels along the alignment axis. The card is `w-72` by default; override it with `className`. It slides in from the side it opens on, and fades and zooms as it opens and closes.
+
+Each part sets a `data-slot`, such as `hover-card-trigger` or `hover-card-content`, for styling.
 
 </Only>

@@ -11,11 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 Message Scroller manages scrolling for conversation views. `MessageScrollerProvider` creates the scroll controller and holds options such as the initial position and auto-scroll. Inside it, `MessageScroller` is the root, `MessageScrollerViewport` is the scrollable region, and `MessageScrollerContent` lists one `MessageScrollerItem` per message. `MessageScrollerButton` sits inside the root and jumps to the start or end.
 
-The scroller opens at the end by default, preserves the reading position when older messages are prepended, and can anchor a newly added message to the top of the viewport. Use it for chat and activity feeds; use Scroll Area for general scrollable content.
+Use it for chat and activity feeds; use Scroll Area for general scrollable content.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/message-scroller
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add message-scroller
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
@@ -37,16 +41,27 @@ npm install @base-ui/react @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Scroll Area](/docs/components/scroll-area), `use-message-scroller`.
 
-3. Copy the source into `components/ui/message-scroller.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/message-scroller.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { MessageScrollerProvider, MessageScroller, MessageScrollerViewport, MessageScrollerContent, MessageScrollerItem, MessageScrollerButton } from "@/components/ui/message-scroller"
+import {
+  MessageScroller,
+  MessageScrollerButton,
+  MessageScrollerContent,
+  MessageScrollerItem,
+  MessageScrollerProvider,
+  MessageScrollerViewport,
+} from "@/components/ui/message-scroller"
 import { Message, MessageContent } from "@/components/ui/message"
 import { Bubble, BubbleContent } from "@/components/ui/bubble"
 ```
@@ -76,53 +91,54 @@ import { Bubble, BubbleContent } from "@/components/ui/bubble"
 </div>
 ```
 
-Place every part inside `MessageScrollerProvider`; the components and hooks throw outside of it. Provider options:
+## Composition
 
-- `defaultScrollPosition`: `"end"` (default), `"start"`, or `"last-anchor"` to open at the last item marked with `scrollAnchor`.
-- `autoScroll`: when `true`, follows new content at the bottom until the user scrolls away. Defaults to `false`.
-- `scrollEdgeThreshold`, `scrollPreviousItemPeek` and `scrollMargin`: pixel values that tune edge detection and anchoring (defaults `8`, `64` and `0`).
+Use the following composition to build a `MessageScrollerProvider`:
 
-Give each item a stable `messageId` so it can be targeted programmatically. The exported `useMessageScroller` hook returns `scrollToEnd`, `scrollToStart` and `scrollToMessage`; `useMessageScrollerScrollable` reports whether each edge can scroll, and `useMessageScrollerVisibility` reports the visible message IDs.
+```text
+MessageScrollerProvider
+└── MessageScroller
+    ├── MessageScrollerViewport
+    │   └── MessageScrollerContent
+    │       └── MessageScrollerItem
+    └── MessageScrollerButton
+```
 
 ## Examples
 
 ### Start at top
 
-A scroller that opens at the first message with `defaultScrollPosition="start"`, with buttons for both directions.
+Set `defaultScrollPosition="start"` on the provider to open at the first message. The example adds a `MessageScrollerButton` for each direction.
 
 <ComponentPreview name="message-scroller-start-at-top" />
 
+## Accessibility
+
+- The viewport has `role="region"`, an `aria-label` of `Messages` by default, and `tabIndex={0}` so it can be scrolled with the keyboard.
+- The content has `role="log"` with `aria-relevant="additions"`, so assistive technology can announce new messages.
+- `MessageScrollerButton` includes a visually hidden label, `Scroll to end` or `Scroll to start`. While it cannot scroll, the button is `inert` and removed from the tab order.
+- Wheel, touch and scrolling keys stop auto-follow so the user's reading position is respected.
+
 ## API Reference
-
-<Anatomy>
-
-- [MessageScrollerProvider](#messagescrollerprovider)
-  - [MessageScroller](#messagescroller)
-    - [MessageScrollerViewport](#messagescrollerviewport)
-      - [MessageScrollerContent](#messagescrollercontent)
-        - [MessageScrollerItem](#messagescrolleritem)
-    - [MessageScrollerButton](#messagescrollerbutton)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### MessageScrollerProvider
 
 Creates the scroll controller and provides it to the parts and hooks inside.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The scroller parts and any components that use the message scroller hooks. |
-| `defaultScrollPosition` | `"start" \| "end" \| "last-anchor"` | `"end"` | Where the scroller opens: the first item, the last item, or the last item marked with `scrollAnchor`. |
-| `autoScroll` | `boolean` | `false` | Follows new content at the bottom until the user scrolls away. |
-| `scrollEdgeThreshold` | `number` | `8` | Distance in pixels from an edge that still counts as being at that edge. |
-| `scrollPreviousItemPeek` | `number` | `64` | Pixels of the previous item left visible above an anchored item. |
-| `scrollMargin` | `number` | `0` | Extra offset in pixels from the top of the viewport when anchoring an item. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+| `defaultScrollPosition` | `"start" \| "end" \| "last-anchor"` | `"end"` |
+| `autoScroll` | `boolean` | `false` |
+| `scrollEdgeThreshold` | `number` | `8` |
+| `scrollPreviousItemPeek` | `number` | `64` |
+| `scrollMargin` | `number` | `0` |
 
-</ApiPart>
+Place every part inside `MessageScrollerProvider`; the components and hooks throw outside of it. `defaultScrollPosition` sets where the scroller opens: the first item, the last item, or the last item marked with `scrollAnchor`. When `autoScroll` is `true`, the scroller follows new content at the bottom until the user scrolls away.
 
-<ApiPart index={2}>
+`scrollEdgeThreshold` is the distance in pixels from an edge that still counts as being at that edge. `scrollPreviousItemPeek` is how many pixels of the previous item stay visible above an anchored item, and `scrollMargin` adds an offset in pixels from the top of the viewport when anchoring.
+
+The exported `useMessageScroller` hook returns `scrollToEnd`, `scrollToStart` and `scrollToMessage`. `useMessageScrollerScrollable` reports whether each edge can scroll, and `useMessageScrollerVisibility` reports the visible message IDs.
 
 ### MessageScroller
 
@@ -130,63 +146,53 @@ The root container, built on a scroll area.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### MessageScrollerViewport
 
 The focusable scrollable region, rendered with a vertical scrollbar.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `preserveScrollOnPrepend` | `boolean` | `true` | Keeps the visible messages in place when items are inserted before the first one, such as when loading history. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `preserveScrollOnPrepend` | `boolean` | `true` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={4}>
+`preserveScrollOnPrepend` keeps the visible messages in place when items are inserted before the first one, such as when loading history. Until the initial position is applied, the root and viewport receive `data-pending-scroll` and the viewport is invisible. They also get `data-scrollable` with the scrollable edges, and `data-autoscrolling` while a programmatic scroll is running.
 
 ### MessageScrollerContent
 
 The live log that holds the message items.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `spacerClassName` | `string` | - | Class name for the hidden spacer element the scroller appends after the items. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `spacerClassName` | `string` | - |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={5}>
+`spacerClassName` styles the hidden spacer element the scroller appends after the items.
 
 ### MessageScrollerItem
 
 Wraps one message and registers it with the controller.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `messageId` | `string` | - | A stable ID used for `scrollToMessage`, visibility tracking and the `data-message-id` attribute. |
-| `scrollAnchor` | `boolean` | `false` | Marks the item as an anchor; when it is added, the scroller aligns it to the top of the viewport instead of the bottom. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `messageId` | `string` | - |
+| `scrollAnchor` | `boolean` | `false` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={6}>
+Give each item a stable `messageId`; it is used for `scrollToMessage`, visibility tracking and the `data-message-id` attribute. When an item with `scrollAnchor` is added, the scroller aligns it to the top of the viewport instead of the bottom, and the item sets `data-scroll-anchor`. Items use `content-visibility: auto` to keep long transcripts fast.
 
 ### MessageScrollerButton
 
 A floating button that appears when the scroller can move toward its direction and jumps there on click.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `behavior` | `ScrollBehavior` | `"smooth"` | The scroll behavior used when jumping, such as `smooth` or `auto`. |
-| `direction` | `"start" \| "end"` | `"end"` | Which edge the button scrolls to: `end` or `start`. It also sets the button's position and icon rotation. |
-| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"secondary"` | The `Button` variant. |
-| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"icon-sm"` | The `Button` size. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `behavior` | `ScrollBehavior` | `"smooth"` |
+| `direction` | `"start" \| "end"` | `"end"` |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"secondary"` |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"icon-sm"` |
 
 <OnlyBase base="base">
 
@@ -196,9 +202,9 @@ Also accepts the props of `useRender.ComponentProps<"button">`.
 
 <OnlyBase base="radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element as the button. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
 
 Also accepts the props of `React.ComponentProps<"button">`.
 
@@ -206,29 +212,17 @@ Also accepts the props of `React.ComponentProps<"button">`.
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `(props) => React.ReactNode` | - | Renders your own element with the props it receives. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `(props) => React.ReactNode` | - |
 
 Also accepts the props of `React.ComponentProps<"button">`.
 
 </OnlyBase>
 
-</ApiPart>
+`direction` sets the edge the button scrolls to, as well as its position and icon rotation. `behavior` is the scroll behavior used when jumping, such as `smooth` or `auto`. `variant` and `size` are passed to `Button`. The button exposes `data-active`, `data-direction`, `data-variant` and `data-size`.
 
-## Accessibility
-
-- The viewport has `role="region"`, an `aria-label` of `Messages` by default, and `tabIndex={0}` so it can be scrolled with the keyboard.
-- The content has `role="log"` with `aria-relevant="additions"`, so assistive technology can announce new messages.
-- `MessageScrollerButton` includes a visually hidden label, `Scroll to end` or `Scroll to start`. While it cannot scroll, the button is `inert` and removed from the tab order.
-- Wheel, touch and scrolling keys stop auto-follow so the user's reading position is respected.
-
-## Notes
-
-- Styling hooks: `data-slot` values `message-scroller`, `message-scroller-viewport`, `message-scroller-content`, `message-scroller-item` and `message-scroller-button`.
-- The root and viewport receive `data-pending-scroll` until the initial position is applied; the viewport is invisible during that time. They also get `data-scrollable` with the scrollable edges and `data-autoscrolling` while a programmatic scroll is running.
-- The button exposes `data-active`, `data-direction`, `data-variant` and `data-size`. It defaults to the `secondary` variant and `icon-sm` size of `Button`.
-- Items set `data-scroll-anchor` and use `content-visibility: auto` to keep long transcripts fast.
+Each part sets a `data-slot`, such as `message-scroller-viewport` or `message-scroller-item`, for styling.
 
 </Only>
 
@@ -245,6 +239,10 @@ Also accepts the props of `React.ComponentProps<"button">`.
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -294,7 +292,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -302,7 +302,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -318,17 +318,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/primitives/hooks.ts" plain />
 
-5. Copy the source into `components/ui/message-scroller.tsx`:
+5. Copy and paste the following code into `components/ui/message-scroller.tsx`:
 
 <ComponentSource path="uniwind/components/ui/message-scroller.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -344,17 +344,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/primitives/hooks.ts" plain />
 
-5. Copy the source into `components/ui/message-scroller.tsx`:
+5. Copy and paste the following code into `components/ui/message-scroller.tsx`:
 
 <ComponentSource path="nativewind/components/ui/message-scroller.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -370,11 +370,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/primitives/hooks.ts" plain />
 
-5. Copy the source into `components/ui/message-scroller.tsx`:
+5. Copy and paste the following code into `components/ui/message-scroller.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/message-scroller.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -453,6 +453,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -1497,21 +1501,11 @@ fun MessageScrollerChat(
 
 </Only>
 
-<Only platform="rn">
-
-Place `MessageScrollerViewport` and `MessageScrollerButton` inside `MessageScroller`. Wrap everything in `MessageScrollerProvider` when components outside the scroller, such as a composer, need to call the scroll hooks.
-
-`useMessageScroller` returns `scrollToEnd`, `scrollToStart` and `scrollToMessage(id, { align, animated })`. `useMessageScrollerScrollable`, `useMessageScrollerUnreadCount` and `useMessageScrollerVisibility` read whether each edge is scrollable, the unread count, and the visible message ids.
-
-Set `onLoadOlder` to fetch older history when the user scrolls near the top. Other `FlatList` props such as `ListEmptyComponent` pass through.
-
-</Only>
-
 ## Examples
 
 ### Unread while scrolled up
 
-New messages arrive while scrolled up, so the button shows an unread count.
+New messages arrive while scrolled up, so `MessageScrollerButton` shows an unread count badge.
 
 <NativeExample name="message-scroller-unread-while-scrolled-up" />
 
@@ -1519,7 +1513,7 @@ New messages arrive while scrolled up, so the button shows an unread count.
 
 <Only platform="rn">
 
-An empty thread that renders an Empty state through `ListEmptyComponent`.
+An empty thread that renders an Empty state through `ListEmptyComponent`, a `FlatList` prop the viewport passes through.
 
 </Only>
 
@@ -1527,30 +1521,38 @@ An empty thread that renders an Empty state through `ListEmptyComponent`.
 
 ### Load older
 
-Loads earlier messages with `onLoadOlder` when scrolling to the top.
+Set `onLoadOlder` to load earlier messages when the user scrolls near the top.
 
 <NativeExample name="message-scroller-load-older" />
+
+<Only platform="rn">
+
+## Accessibility
+
+- The button has a default label, "Scroll to end" or "Scroll to start", and includes the number of new messages when there are any.
+- While the button is hidden it ignores touches and is hidden from VoiceOver and TalkBack.
+- The button animation respects the system reduce motion setting.
+
+</Only>
 
 ## API Reference
 
 <Only platform="rn">
 
-<ApiPart index={1}>
-
 ### MessageScrollerProvider
 
 Shares one scroll controller with components outside the scroller.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-| `scrollEdgeThreshold` | `number` | `8` | Distance in points from an edge that still counts as being at that edge. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+| `scrollEdgeThreshold` | `number` | `8` |
 
 Also accepts the props of `MessageScrollerOptions`.
 
-</ApiPart>
+Wrap everything in `MessageScrollerProvider` when components outside the scroller, such as a composer, need to call the scroll hooks. `scrollEdgeThreshold` is the distance in points from an edge that still counts as being at that edge.
 
-<ApiPart index={2}>
+`useMessageScroller` returns `scrollToEnd`, `scrollToStart` and `scrollToMessage(id, { align, animated })`. `useMessageScrollerScrollable`, `useMessageScrollerUnreadCount` and `useMessageScrollerVisibility` read whether each edge is scrollable, the unread count, and the visible message ids.
 
 ### MessageScroller
 
@@ -1558,26 +1560,22 @@ Container that clips the list and positions the button.
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
-
-<ApiPart index={3}>
+Place `MessageScrollerViewport` and `MessageScrollerButton` inside it.
 
 ### MessageScrollerViewport
 
 Inverted `FlatList` that renders the messages.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `data` | `readonly T[]` | Required | The messages to render. |
-| `keyExtractor` | `(item: T, index: number) => string` | Required | Returns a stable key for each message. |
-| `renderItem` | `(info: { item: T; index: number }) => React.ReactElement \| null` | Required | Renders one message. |
-| `onLoadOlder` | `() => void` | - | Called near the top so older messages can be loaded. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `data` | `readonly T[]` | Required |
+| `keyExtractor` | `(item: T, index: number) => string` | Required |
+| `renderItem` | `(info: { item: T; index: number }) => React.ReactElement \| null` | Required |
+| `onLoadOlder` | `() => void` | - |
 
 Also accepts the props of `MessageScrollerViewportProps<T>`.
 
-</ApiPart>
-
-<ApiPart index={4}>
+Pass `data` in chronological order; the viewport reverses it internally and maps indexes back for `renderItem` and `keyExtractor`, which should return a stable key for each message. `onLoadOlder` is called near the top so older messages can be loaded. Other `FlatList` props pass through. The keyboard dismisses interactively on iOS and on drag on Android, and taps on handled children keep it open.
 
 ### MessageScrollerItem
 
@@ -1585,45 +1583,31 @@ Row wrapper with horizontal padding.
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### MessageScrollerButton
 
 Floating button that scrolls to the newest or oldest message.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-| `direction` | `MessageScrollerScrollDirection` | `"end"` | `end` scrolls to the newest message, `start` to the oldest. Defaults to `end`. |
-| `animated` | `boolean` | `true` | Whether the scroll is animated. Defaults to `true`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+| `direction` | `MessageScrollerScrollDirection` | `"end"` |
+| `animated` | `boolean` | `true` |
 
 Also accepts the props of `React.ComponentProps<typeof Button>`.
 
-</ApiPart>
+`direction="end"` scrolls to the newest message and `start` to the oldest. `animated` animates the scroll. The button uses `bg-card` with `border-border`, and the unread badge uses `bg-primary` with `text-primary-foreground`.
 
 </Only>
 
 <Only platform="swift">
 
-<ApiPart index={1}>
-
 ### MessageScrollerDefaultScrollPosition
 
 Values: `.start`, `.end`.
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### MessageScrollerScrollDirection
 
 Values: `.start`, `.end`.
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### MessageScrollerController
 
@@ -1635,101 +1619,69 @@ Takes no parameters.
 | `isAtEnd` | `Bool` |
 | `isAtStart` | `Bool` |
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### MessageScrollerController.canScroll
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ direction` | `MessageScrollerScrollDirection`: `.start` \| `.end` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ direction` | `MessageScrollerScrollDirection`: `.start` \| `.end` | - |
 
 Returns `Bool`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### MessageScrollerController.scrollToEnd
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `animated` | `Bool` | `true` | - |
-
-</ApiPart>
-
-<ApiPart index={6}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `animated` | `Bool` | `true` |
 
 ### MessageScrollerController.scrollToStart
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `animated` | `Bool` | `true` | - |
-
-</ApiPart>
-
-<ApiPart index={7}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `animated` | `Bool` | `true` |
 
 ### MessageScrollerController.scrollToMessage
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ id` | `ID` | - | - |
-| `anchor` | `UnitPoint` | `.top` | - |
-| `animated` | `Bool` | `true` | - |
-
-</ApiPart>
-
-<ApiPart index={8}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ id` | `ID` | - |
+| `anchor` | `UnitPoint` | `.top` |
+| `animated` | `Bool` | `true` |
 
 ### MessageScroller
 
 Container that clips the list and positions the button.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ data` | `Data` | - | The messages to render. |
-| `id` | `KeyPath<Data.Element, ID>` | - | - |
-| `spacing` | `CGFloat` | `12` | - |
-| `defaultScrollPosition` | `MessageScrollerDefaultScrollPosition`: `.start` \| `.end` | `.end` | Where the scroller opens: the first item, the last item, or the last item marked with `scrollAnchor`. |
-| `autoScroll` | `Bool` | `true` | Follows new content at the bottom until the user scrolls away. |
-| `scrollEdgeThreshold` | `CGFloat` | `8` | Distance in points from an edge that still counts as being at that edge. |
-| `buttons` | `Set<MessageScrollerScrollDirection>` | `[.end]` | - |
-| `controller` | `MessageScrollerController?` | `nil` | - |
-| `onLoadOlder` | `(() -> Void)?` | `nil` | Called near the top so older messages can be loaded. |
-| `row` | `(Data.Element) -> Row` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ data` | `Data` | - |
+| `id` | `KeyPath<Data.Element, ID>` | - |
+| `spacing` | `CGFloat` | `12` |
+| `defaultScrollPosition` | `MessageScrollerDefaultScrollPosition`: `.start` \| `.end` | `.end` |
+| `autoScroll` | `Bool` | `true` |
+| `scrollEdgeThreshold` | `CGFloat` | `8` |
+| `buttons` | `Set<MessageScrollerScrollDirection>` | `[.end]` |
+| `controller` | `MessageScrollerController?` | `nil` |
+| `onLoadOlder` | `(() -> Void)?` | `nil` |
+| `row` | `(Data.Element) -> Row` | - |
 
 Overloads: `init(_:id:spacing:defaultScrollPosition:autoScroll:scrollEdgeThreshold:buttons:controller:onLoadOlder:row:)`, `init(_:spacing:defaultScrollPosition:autoScroll:scrollEdgeThreshold:buttons:controller:onLoadOlder:row:)`.
-
-</ApiPart>
-
-<ApiPart index={9}>
 
 ### MessageScrollerButton
 
 Floating button that scrolls to the newest or oldest message.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `direction` | `MessageScrollerScrollDirection`: `.start` \| `.end` | `.end` | `end` scrolls to the newest message, `start` to the oldest. |
-| `controller` | `MessageScrollerController?` | `nil` | - |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `direction` | `MessageScrollerScrollDirection`: `.start` \| `.end` | `.end` |
+| `controller` | `MessageScrollerController?` | `nil` |
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### MessageScrollerScrollDirection
 
 Values: `Start`, `End`.
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### MessageScrollerState
 
@@ -1740,42 +1692,26 @@ Values: `Start`, `End`.
 | `canScrollToStart` | `Boolean` |
 | `visibleKeys` | `List<Any>` |
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### MessageScrollerState.scrollToEnd
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `animated` | `Boolean` | `true` | - |
-
-</ApiPart>
-
-<ApiPart index={4}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `animated` | `Boolean` | `true` |
 
 ### MessageScrollerState.scrollToStart
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `animated` | `Boolean` | `true` | - |
-
-</ApiPart>
-
-<ApiPart index={5}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `animated` | `Boolean` | `true` |
 
 ### MessageScrollerState.scrollToMessage
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `key` | `Any` | - | - |
-| `animated` | `Boolean` | `true` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `key` | `Any` | - |
+| `animated` | `Boolean` | `true` |
 
 Returns `Boolean`.
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### rememberMessageScrollerState
 
@@ -1783,30 +1719,22 @@ Takes no parameters.
 
 Returns `MessageScrollerState`.
 
-</ApiPart>
-
-<ApiPart index={7}>
-
 ### MessageScroller
 
 Container that clips the list and positions the button.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `List<T>` | - | - |
-| `key` | `(T) -> Any` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `state` | `MessageScrollerState` | `rememberMessageScrollerState()` | - |
-| `onLoadOlder` | `(() -> Unit)?` | `null` | Called near the top so older messages can be loaded. |
-| `loadingOlder` | `Boolean` | `false` | - |
-| `contentPadding` | `PaddingValues` | `PaddingValues(16.dp)` | - |
-| `verticalArrangement` | `Arrangement.Vertical` | `Arrangement.spacedBy(12.dp, Alignment.Bottom)` | - |
-| `overlay` | `@Composable BoxScope.() -> Unit` | `{ MessageScrollerButton() }` | - |
-| `content` | `@Composable LazyItemScope.(T) -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={8}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `items` | `List<T>` | - |
+| `key` | `(T) -> Any` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `state` | `MessageScrollerState` | `rememberMessageScrollerState()` |
+| `onLoadOlder` | `(() -> Unit)?` | `null` |
+| `loadingOlder` | `Boolean` | `false` |
+| `contentPadding` | `PaddingValues` | `PaddingValues(16.dp)` |
+| `verticalArrangement` | `Arrangement.Vertical` | `Arrangement.spacedBy(12.dp, Alignment.Bottom)` |
+| `overlay` | `@Composable BoxScope.() -> Unit` | `{ MessageScrollerButton() }` |
+| `content` | `@Composable LazyItemScope.(T) -> Unit` | - |
 
 ### MessageScrollerButton
 
@@ -1814,30 +1742,12 @@ Floating button that scrolls to the newest or oldest message.
 
 Receiver: `BoxScope`.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `direction` | `MessageScrollerScrollDirection`: `Start` \| `End` | `MessageScrollerScrollDirection.End` | `end` scrolls to the newest message, `start` to the oldest. |
-| `animated` | `Boolean` | `true` | Whether the scroll is animated. |
-| `contentDescription` | `String` | `if (direction == MessageScrollerScrollDirection.End) "Scroll to end" else "Scroll to start"` | - |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- The button has a default label, "Scroll to end" or "Scroll to start", and includes the number of new messages when there are any.
-- While the button is hidden it ignores touches and is hidden from VoiceOver and TalkBack.
-- The button animation respects the system reduce motion setting.
-
-## Notes
-
-- The keyboard dismisses interactively on iOS and on drag on Android, and taps on handled children keep it open.
-- The button uses `bg-card` with `border-border`, and the badge uses `bg-primary` with `text-primary-foreground`.
-- Light and dark colors follow the system appearance.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `direction` | `MessageScrollerScrollDirection`: `Start` \| `End` | `MessageScrollerScrollDirection.End` |
+| `animated` | `Boolean` | `true` |
+| `contentDescription` | `String` | `if (direction == MessageScrollerScrollDirection.End) "Scroll to end" else "Scroll to start"` |
 
 </Only>
 

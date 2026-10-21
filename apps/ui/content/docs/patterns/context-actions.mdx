@@ -9,13 +9,15 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="context-actions-demo" layout="fullscreen" responsive />
 
-`ContextActions` attaches a set of actions to an area of the page. On desktop it renders a `ContextMenu` that opens at the pointer on right click. Below the `48rem` breakpoint it renders an `AlertSheet` instead, opened by a 500 ms long press on touch, by the context menu event, or by the `ContextMenu` key or `Shift+F10`; the sheet groups the items in a card and appends a Cancel button.
+`ContextActions` attaches a set of actions to an area of the page. On desktop it renders a `ContextMenu` that opens at the pointer on right click. Below the `48rem` breakpoint it renders an `AlertSheet` instead, opened by a long press.
 
 Use it for secondary actions on content such as photos, files or list rows, where actions should stay out of the way until requested.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/context-actions
@@ -27,22 +29,35 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns context-actions
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
 2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet), [Context Menu](/docs/components/context-menu), `use-mobile`.
 
-3. Copy the source into `components/patterns/context-actions.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/context-actions.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { ContextActions, ContextActionsTrigger, ContextActionsContent, ContextActionsLabel, ContextActionsItem, ContextActionsSeparator } from "@/components/patterns/context-actions"
+import {
+  ContextActions,
+  ContextActionsContent,
+  ContextActionsItem,
+  ContextActionsLabel,
+  ContextActionsSeparator,
+  ContextActionsTrigger,
+} from "@/components/patterns/context-actions"
 ```
 
 ```tsx
@@ -63,50 +78,52 @@ import { ContextActions, ContextActionsTrigger, ContextActionsContent, ContextAc
 </div>
 ```
 
-Wrap the target area in `ContextActionsTrigger` and list the actions in `ContextActionsContent`. The open state is internal; use `onOpenChange` to react to it. A long press is cancelled if the finger moves more than 10 pixels, so scrolling over the trigger does not open the sheet.
+## Composition
+
+Use the following composition to build a `ContextActions`:
+
+```text
+ContextActions
+├── ContextActionsTrigger
+└── ContextActionsContent
+    ├── ContextActionsLabel
+    ├── ContextActionsItem
+    └── ContextActionsSeparator
+```
 
 ## Examples
 
 ### With icons
 
-Places an icon before every action, including a destructive Delete item.
+Places an icon before every action. Set `variant="destructive"` on an item, here Delete, to style it as a destructive action.
 
 <ComponentPreview name="context-actions-with-icons" layout="fullscreen" responsive />
 
 ### Not dismissible
 
-Sets `dismissible` to `false` so the mobile sheet closes only through an action or Cancel.
+Set `dismissible` to `false` so the mobile sheet uses an alert dialog that closes only through an action or Cancel, not on an outside press.
 
 <ComponentPreview name="context-actions-not-dismissible" layout="fullscreen" responsive />
 
+## Accessibility
+
+- On desktop the popup has the `menu` role and receives focus when opened; arrow keys move between `menuitem`s and `Enter` runs the focused one.
+- `Escape` closes the menu.
+- On mobile the trigger has `role="button"`, `tabIndex={0}` and `aria-haspopup="dialog"`, and opens with the `ContextMenu` key or `Shift+F10`.
+
 ## API Reference
-
-<Anatomy>
-
-- [ContextActions](#contextactions)
-  - [ContextActionsTrigger](#contextactionstrigger)
-  - [ContextActionsContent](#contextactionscontent)
-    - [ContextActionsLabel](#contextactionslabel)
-    - [ContextActionsItem](#contextactionsitem)
-    - [ContextActionsSeparator](#contextactionsseparator)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### ContextActions
 
 The root that renders a `ContextMenu` on desktop and an `AlertSheet` on mobile.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when the menu or sheet opens or closes. |
-| `dismissible` | `boolean` | `true` | When `true`, the mobile sheet closes on an outside press; when `false`, it uses an alert dialog that closes only through an action or Cancel. |
-| `children` | `React.ReactNode` | - | The trigger and content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `dismissible` | `boolean` | `true` |
+| `children` | `React.ReactNode` | - |
 
-</ApiPart>
-
-<ApiPart index={2}>
+The open state is internal; use `onOpenChange` to react to it.
 
 ### ContextActionsTrigger
 
@@ -114,17 +131,15 @@ The area that opens the actions on right click, or on long press and keyboard on
 
 Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
 
-</ApiPart>
-
-<ApiPart index={3}>
+Wrap the target area in it. On mobile it opens the sheet on a 500 ms long press on touch, on the context menu event, or on the `ContextMenu` key or `Shift+F10`. A long press is cancelled if the finger moves more than 10 pixels, so scrolling over the trigger does not open the sheet. The trigger also disables text selection and the iOS touch callout so a long press does not select text.
 
 ### ContextActionsContent
 
 The popup holding the actions; on mobile it adds a Cancel button below them.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `cancelLabel` | `string` | `"Cancel"` | Text of the Cancel button shown below the actions on mobile. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `cancelLabel` | `string` | `"Cancel"` |
 
 <OnlyBase base="base radix">
 
@@ -138,9 +153,7 @@ Also accepts `className`, `children`, `id` and `aria-label`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={4}>
+On mobile the sheet groups the items in a card and appends a Cancel button labelled by `cancelLabel`.
 
 ### ContextActionsLabel
 
@@ -158,18 +171,14 @@ Also accepts `className`, `children` and `id`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### ContextActionsItem
 
 An actionable entry that closes the actions when chosen.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | - | Use `destructive` to style the item as a destructive action. |
-| `disabled` | `boolean` | - | Prevents the item from being chosen. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | - |
+| `disabled` | `boolean` | - |
 
 <OnlyBase base="base radix">
 
@@ -182,10 +191,6 @@ Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
 Respond to the item with `onAction`. Also accepts `className`, `children`, `id` and `aria-label`.
 
 </OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### ContextActionsSeparator
 
@@ -203,17 +208,7 @@ Also accepts `className`.
 
 </OnlyBase>
 
-</ApiPart>
-
-## Accessibility
-
-- On desktop the popup has the `menu` role and receives focus when opened; arrow keys move between `menuitem`s and `Enter` runs the focused one.
-- `Escape` closes the menu.
-- On mobile the trigger has `role="button"`, `tabIndex={0}` and `aria-haspopup="dialog"`, and opens with the `ContextMenu` key or `Shift+F10`.
-
-## Notes
-
-Parts carry `data-slot` values `context-actions`, `context-actions-trigger`, `context-actions-content`, `context-actions-label`, `context-actions-item` and `context-actions-separator`. On mobile the trigger disables text selection and the iOS touch callout so a long press does not select text.
+Each part sets a `data-slot`, such as `context-actions-trigger` or `context-actions-item`, for styling.
 
 </Only>
 
@@ -230,6 +225,10 @@ Parts carry `data-slot` values `context-actions`, `context-actions-trigger`, `co
 Use it for secondary actions on photos, messages or list rows that should not take up space on screen.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -279,7 +278,9 @@ The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet)
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -289,11 +290,11 @@ The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet)
 
 1. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
 
-2. Copy the source into `components/patterns/context-actions.tsx`:
+2. Copy and paste the following code into `components/patterns/context-actions.tsx`:
 
 <ComponentSource path="uniwind/components/patterns/context-actions.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -301,11 +302,11 @@ The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet)
 
 1. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
 
-2. Copy the source into `components/patterns/context-actions.tsx`:
+2. Copy and paste the following code into `components/patterns/context-actions.tsx`:
 
 <ComponentSource path="nativewind/components/patterns/context-actions.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -313,11 +314,11 @@ The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet)
 
 1. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
 
-2. Copy the source into `components/patterns/context-actions.tsx`:
+2. Copy and paste the following code into `components/patterns/context-actions.tsx`:
 
 <ComponentSource path="stylesheet/components/patterns/context-actions.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -440,6 +441,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -578,18 +583,6 @@ fun ContextActionsDefault() {
 
 </Only>
 
-<Only platform="rn kotlin">
-
-Wrap the target in `ContextActionsTrigger` and list `ContextActionsItem`s in `ContextActionsContent`. Add a `ContextActionsLabel` first to show a title.
-
-</Only>
-
-<Only platform="rn">
-
-The open state is managed internally; use `onOpenChange` to react to it. `ContextActionsTrigger` accepts every `Pressable` prop, so `onPress` still works for a normal tap, and your own `onLongPress` runs before the sheet opens. Change the hold time with `delayLongPress`.
-
-</Only>
-
 ## Examples
 
 ### Inline
@@ -597,202 +590,6 @@ The open state is managed internally; use `onOpenChange` to react to it. `Contex
 A small message bubble as the trigger, with a custom `cancelLabel`.
 
 <NativeExample name="context-actions-inline" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### ContextActions
-
-The root that owns the open state.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when the sheet opens or closes. |
-| `dismissible` | `boolean` | `true` | When `false`, the sheet ignores outside presses. Defaults to `true`. |
-| `children` | `React.ReactNode` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ContextActionsTrigger
-
-A `Pressable` that opens the sheet on long press.
-
-Also accepts the props of `React.ComponentProps<typeof Pressable>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ContextActionsContent
-
-The sheet with the grouped items and a Cancel button.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `cancelLabel` | `string` | `"Cancel"` | Text of the Cancel button. Defaults to `Cancel`. |
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetContent>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ContextActionsLabel
-
-A title shown at the top of the group.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetTitle>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ContextActionsItem
-
-An actionable entry, rendered as an `AlertSheetAction`.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetAction>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### ContextActionsSeparator
-
-Kept for API parity; renders nothing.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Classes merged onto the root element. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### ContextActions
-
-The root that owns the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `dismissible` | `Bool` | `true` | When `false`, the sheet ignores outside presses. |
-| `cancelLabel` | `LocalizedStringKey` | `"Cancel"` | Text of the Cancel button. |
-| `onOpenChange` | `((Bool) -> Void)?` | `nil` | Called when the sheet opens or closes. |
-| `content` | `() -> Content` | - | The content. |
-| `label` | `() -> Label` | - | The label. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### .contextActions
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `dismissible` | `Bool` | `true` | When `false`, the sheet ignores outside presses. |
-| `cancelLabel` | `LocalizedStringKey` | `"Cancel"` | Text of the Cancel button. |
-| `onOpenChange` | `((Bool) -> Void)?` | `nil` | Called when the sheet opens or closes. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### ContextActions
-
-The root that owns the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onOpenChange` | `(Boolean) -> Unit` | `{}` | Called when the sheet opens or closes. |
-| `dismissible` | `Boolean` | `true` | When `false`, the sheet ignores outside presses. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ContextActionsTrigger
-
-The area that opens the actions on right click, or on long press and keyboard on mobile.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `label` | `String` | `"Show actions"` | The label. |
-| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ContextActionsContent
-
-The sheet with the grouped items and a Cancel button.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `cancelLabel` | `String` | `"Cancel"` | Text of the Cancel button. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ContextActionsLabel
-
-A title shown at the top of the group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ContextActionsItem
-
-An actionable entry, rendered as an `AlertSheetAction`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `onClick` | `() -> Unit` | - | Called when it is tapped. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `MenuItemVariant` | `MenuItemVariant.Default` | Use `destructive` to style the item as a destructive action. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `icon` | `ImageVector?` | `null` | The icon. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### ContextActionsSeparator
-
-Kept for API parity; renders nothing.
-
-Takes no parameters.
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -802,10 +599,151 @@ Takes no parameters.
 - It adds `longpress` and `showActions` ("Show actions") accessibility actions, so screen reader users can open the sheet without holding.
 - Your own `accessibilityActions` and `onAccessibilityAction` are kept.
 
-## Notes
+</Only>
 
-- Item text uses `text-primary`, or `text-destructive` for the `destructive` variant.
-- On iOS the sheet renders in a full-window overlay so it appears above native screens.
+## API Reference
+
+<Only platform="rn">
+
+### ContextActions
+
+The root that owns the open state.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `dismissible` | `boolean` | `true` |
+| `children` | `React.ReactNode` | - |
+
+The open state is managed internally; use `onOpenChange` to react to it. Set `dismissible` to `false` so the sheet ignores outside presses.
+
+### ContextActionsTrigger
+
+A `Pressable` that opens the sheet on long press.
+
+Also accepts the props of `React.ComponentProps<typeof Pressable>`.
+
+Wrap the target in it. `onPress` still works for a normal tap, and your own `onLongPress` runs before the sheet opens. Change the hold time with `delayLongPress`.
+
+### ContextActionsContent
+
+The sheet with the grouped items and a Cancel button.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `cancelLabel` | `string` | `"Cancel"` |
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetContent>`.
+
+List `ContextActionsItem`s in it, with a `ContextActionsLabel` first to show a title. On iOS the sheet renders in a full-window overlay so it appears above native screens.
+
+### ContextActionsLabel
+
+A title shown at the top of the group.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetTitle>`.
+
+### ContextActionsItem
+
+An actionable entry, rendered as an `AlertSheetAction`.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetAction>`.
+
+### ContextActionsSeparator
+
+Kept for API parity; renders nothing.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | - |
+
+</Only>
+
+<Only platform="swift">
+
+### ContextActions
+
+The root that owns the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `dismissible` | `Bool` | `true` |
+| `cancelLabel` | `LocalizedStringKey` | `"Cancel"` |
+| `onOpenChange` | `((Bool) -> Void)?` | `nil` |
+| `content` | `() -> Content` | - |
+| `label` | `() -> Label` | - |
+
+### .contextActions
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `dismissible` | `Bool` | `true` |
+| `cancelLabel` | `LocalizedStringKey` | `"Cancel"` |
+| `onOpenChange` | `((Bool) -> Void)?` | `nil` |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### ContextActions
+
+The root that owns the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `onOpenChange` | `(Boolean) -> Unit` | `{}` |
+| `dismissible` | `Boolean` | `true` |
+| `content` | `@Composable () -> Unit` | - |
+
+### ContextActionsTrigger
+
+The area that opens the actions on right click, or on long press and keyboard on mobile.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `true` |
+| `label` | `String` | `"Show actions"` |
+| `content` | `@Composable BoxScope.() -> Unit` | - |
+
+### ContextActionsContent
+
+The sheet with the grouped items and a Cancel button.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `cancelLabel` | `String` | `"Cancel"` |
+| `content` | `@Composable () -> Unit` | - |
+
+### ContextActionsLabel
+
+A title shown at the top of the group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### ContextActionsItem
+
+An actionable entry, rendered as an `AlertSheetAction`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `onClick` | `() -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `MenuItemVariant` | `MenuItemVariant.Default` |
+| `enabled` | `Boolean` | `true` |
+| `icon` | `ImageVector?` | `null` |
+
+### ContextActionsSeparator
+
+Kept for API parity; renders nothing.
+
+Takes no parameters.
 
 </Only>
 

@@ -15,7 +15,9 @@ To show several people together, place avatars in an `AvatarGroup`, which overla
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/avatar
@@ -27,24 +29,37 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add avatar
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react
 ```
 
-2. Copy the source into `components/ui/avatar.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/avatar.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarGroup, AvatarGroupCount } from "@/components/ui/avatar"
+import {
+  Avatar,
+  AvatarBadge,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarImage,
+} from "@/components/ui/avatar"
 ```
 
 ```tsx
@@ -54,85 +69,84 @@ import { Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarGroup, AvatarGr
 </Avatar>
 ```
 
-Always provide an `AvatarFallback` alongside `AvatarImage`, usually the person's initials. The fallback can also hold an icon, which scales to 60% of the avatar.
+## Composition
 
-Set `size` on each `Avatar`. Inside an `AvatarGroup`, `AvatarGroupCount` matches the size of the avatars in the group automatically.
+Use the following composition to build a `Avatar`:
+
+```text
+Avatar
+├── AvatarImage
+├── AvatarFallback
+└── AvatarBadge
+AvatarGroup
+├── Avatar
+│   ├── AvatarImage
+│   └── AvatarFallback
+└── AvatarGroupCount
+```
 
 ## Examples
 
 ### Fallback
 
-Shows initials when no image is provided.
+Put the person's initials in `AvatarFallback`. They show when no image is provided.
 
 <ComponentPreview name="avatar-fallback" />
 
 ### Fallback sizes
 
-Initials fallbacks at every size.
+Initials fallbacks at every `size`. The fallback text scales with the avatar.
 
 <ComponentPreview name="avatar-fallback-sizes" />
 
 ### Placeholder
 
-Uses a person icon as the fallback at every size.
+Put a person icon in `AvatarFallback`. The icon scales to 60% of the avatar.
 
 <ComponentPreview name="avatar-placeholder" />
 
 ### Sizes
 
-Image avatars in the `sm`, `default`, `lg` and `xl` sizes.
+Set `size` on each `Avatar` to `sm`, `default`, `lg` or `xl`.
 
 <ComponentPreview name="avatar-sizes" />
 
 ### With badge
 
-Adds a check-mark status badge to each size.
+Add an `AvatarBadge` with a check-mark icon to each size. At the `sm` size, icons inside the badge are hidden.
 
 <ComponentPreview name="avatar-with-badge" />
 
 ### Group
 
-Overlaps several avatars and ends with a `+4` count.
+Place avatars in an `AvatarGroup` and end it with an `AvatarGroupCount` showing `+4`. The count matches the size of the avatars in the group.
 
 <ComponentPreview name="avatar-group" />
 
 ### Group with icon count
 
-A large group whose count shows a plus icon instead of a number.
+Put a plus icon in `AvatarGroupCount` instead of a number.
 
 <ComponentPreview name="avatar-group-with-icon-count" />
 
+## Accessibility
+
+- Give `AvatarImage` an `alt` that names the person.
+- `AvatarBadge` and `AvatarGroupCount` are plain elements; if they carry meaning, label them or describe the status in nearby text.
+
 ## API Reference
-
-<Anatomy>
-
-- [Avatar](#avatar)
-  - [AvatarImage](#avatarimage)
-  - [AvatarFallback](#avatarfallback)
-  - [AvatarBadge](#avatarbadge)
-- [AvatarGroup](#avatargroup)
-  - [Avatar](#avatar)
-    - [AvatarImage](#avatarimage)
-    - [AvatarFallback](#avatarfallback)
-  - [AvatarGroupCount](#avatargroupcount)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### Avatar
 
 The circular root that sets the size.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"default" \| "sm" \| "lg" \| "xl"` | `"default"` | Diameter of the avatar: `sm`, `default`, `lg` or `xl`. Also scales the fallback text and badge. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"default" \| "sm" \| "lg" \| "xl"` | `"default"` |
 
 Also accepts the props of the primitive part it wraps.
 
-</ApiPart>
-
-<ApiPart index={2}>
+`size` sets the diameter and also scales the fallback text and badge. It is exposed as `data-size`.
 
 ### AvatarImage
 
@@ -140,27 +154,23 @@ The person's image, cropped to a circle.
 
 Also accepts the props of the primitive part it wraps.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### AvatarFallback
 
 Content shown when the image is missing or still loading.
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `delay` | `number` | - | Milliseconds to wait before showing the fallback. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `delay` | `number` | - |
+
+`delay` is the number of milliseconds to wait before showing the fallback.
 
 </OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 
-</ApiPart>
-
-<ApiPart index={4}>
+Always provide an `AvatarFallback` alongside `AvatarImage`, usually the person's initials. The fallback can also hold an icon, which scales to 60% of the avatar. It uses a vertical gradient of `muted-foreground` with `text-primary-foreground`.
 
 ### AvatarBadge
 
@@ -168,9 +178,7 @@ A small status indicator pinned to the bottom-end corner.
 
 Also accepts the props of `React.ComponentProps<"span">`.
 
-</ApiPart>
-
-<ApiPart index={5}>
+The badge uses `bg-primary` by default; override it, for example with `bg-green-500`. At the `sm` size, icons inside the badge are hidden.
 
 ### AvatarGroup
 
@@ -178,28 +186,15 @@ A row that overlaps avatars with a ring between them.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={6}>
-
 ### AvatarGroupCount
 
 A trailing circle that shows how many avatars are not displayed.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
+Inside an `AvatarGroup`, `AvatarGroupCount` matches the size of the avatars in the group automatically.
 
-## Accessibility
-
-- Give `AvatarImage` an `alt` that names the person.
-- `AvatarBadge` and `AvatarGroupCount` are plain elements; if they carry meaning, label them or describe the status in nearby text.
-
-## Notes
-
-- Styling hooks: `data-slot="avatar"`, `"avatar-image"`, `"avatar-fallback"`, `"avatar-badge"`, `"avatar-group"` and `"avatar-group-count"`, plus `data-size` on the root.
-- `AvatarBadge` uses `bg-primary` by default; override it, for example with `bg-green-500`. At the `sm` size, icons inside the badge are hidden.
-- The fallback uses a vertical gradient of `muted-foreground` with `text-primary-foreground`.
+Each part sets a `data-slot`, such as `avatar`, `avatar-fallback` or `avatar-group-count`, for styling.
 
 </Only>
 
@@ -216,6 +211,10 @@ Also accepts the props of `React.ComponentProps<"div">`.
 `AvatarBadge` adds a small status dot in the bottom-end corner, and `AvatarGroup` overlaps several avatars with an outline between them, with `AvatarGroupCount` for the remaining number.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -265,7 +264,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -273,7 +274,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -293,17 +294,17 @@ npx expo install cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/avatar.tsx`:
+4. Copy and paste the following code into `components/ui/avatar.tsx`:
 
 <ComponentSource path="uniwind/components/ui/avatar.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -323,11 +324,11 @@ npx expo install cn
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/avatar.tsx`:
+4. Copy and paste the following code into `components/ui/avatar.tsx`:
 
 <ComponentSource path="nativewind/components/ui/avatar.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -347,11 +348,11 @@ npx expo install cn
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/avatar.tsx`:
+3. Copy and paste the following code into `components/ui/avatar.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/avatar.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -420,6 +421,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -505,315 +510,31 @@ fun AvatarDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-Give `AvatarImage` a `source` and an `alt`. Put initials or an `Icon` in `AvatarFallback`; plain strings are wrapped in `Text`. Use `delay` on the fallback to avoid a flash on fast connections, and `onLoadingStatusChange` on the image to react to loading.
-
-</Only>
-
-Set `size` on each `Avatar`, and pass the same `size` to `AvatarGroupCount`. On the `sm` size, the badge hides its children and shows a plain dot.
-
 ## Examples
 
 ### Fallback
 
-Initials shown when there is no image.
+Put initials in `AvatarFallback`. They show when there is no image.
 
 <NativeExample name="avatar-fallback" />
 
 ### Sizes
 
-The `sm`, `default`, `lg` and `xl` sizes.
+Set `size` on each `Avatar` to `sm`, `default`, `lg` or `xl`.
 
 <NativeExample name="avatar-sizes" />
 
 ### Group
 
-Overlapping avatars in an `AvatarGroup` with a count.
+Overlapping avatars in an `AvatarGroup` with a count. Pass the same `size` to `AvatarGroupCount` as to the avatars.
 
 <NativeExample name="avatar-group" />
 
 ### With badge
 
-A check badge at each size.
+An `AvatarBadge` with a check icon at each size. On the `sm` size, the badge hides its children and shows a plain dot.
 
 <NativeExample name="avatar-with-badge" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Avatar
-
-Round container that sets the size.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `AvatarSize` | `"default"` | `sm`, `default`, `lg` or `xl`. |
-
-Also accepts the props of `React.ComponentProps<typeof AvatarPrimitive.Root>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AvatarImage
-
-Image that appears once it has loaded.
-
-Also accepts the props of `React.ComponentProps<typeof AvatarPrimitive.Image>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AvatarFallback
-
-Initials or icon shown while the image is missing.
-
-Also accepts the props of `React.ComponentProps<typeof AvatarPrimitive.Fallback>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AvatarBadge
-
-Status dot in the bottom-end corner.
-
-Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### AvatarGroup
-
-Row that overlaps its avatars.
-
-Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### AvatarGroupCount
-
-Round counter for the remaining items in a group.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `AvatarSize` | `"default"` | Matches the size of the avatars in the group. |
-
-Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### AvatarSize
-
-Values: `.sm`, `.default`, `.lg`, `.xl`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Avatar
-
-Round container that sets the size.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `Size`: `.sm` \| `.default` \| `.lg` \| `.xl` | `.default` | Diameter of the avatar: `sm`, `default`, `lg` or `xl`. Also scales the fallback text and badge. |
-| `content` | `() -> Content` | - | The content. |
-| `url` | `URL?` | - | - |
-| `fallback` | `() -> Fallback` | - | - |
-| `initials` | `String` | - | - |
-
-Overloads: `init(size:content:)`, `init(url:size:fallback:)`, `init(url:initials:size:)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AvatarImage
-
-Image that appears once it has loaded.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `url` | `URL?` | - | - |
-| `_ image` | `Image` | - | - |
-
-Overloads: `init(url:)`, `init(_:)`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AvatarFallback
-
-Initials or icon shown while the image is missing.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-| `_ initials` | `String` | - | - |
-| `icon` | `Image` | - | The icon. |
-
-Overloads: `init(content:)`, `init(_:)`, `init(icon:)`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### AvatarIcon
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ image` | `Image` | - | - |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### AvatarBadge
-
-Status dot in the bottom-end corner.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-| `icon` | `Image` | - | The icon. |
-
-Overloads: `init(content:)`, `init()`, `init(icon:)`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### AvatarGroup
-
-Row that overlaps its avatars.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### AvatarGroupCount
-
-Round counter for the remaining items in a group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `AvatarSize`: `.sm` \| `.default` \| `.lg` \| `.xl` | `.default` | Matches the size of the avatars in the group. |
-| `content` | `() -> Content` | - | The content. |
-| `_ count` | `String` | - | - |
-
-Overloads: `init(size:content:)`, `init(_:size:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### AvatarSize
-
-Values: `Sm`, `Default`, `Lg`, `Xl`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Avatar
-
-Round container that sets the size.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `size` | `AvatarSize`: `Sm` \| `Default` \| `Lg` \| `Xl` | `AvatarSize.Default` | Diameter of the avatar: `sm`, `default`, `lg` or `xl`. Also scales the fallback text and badge. |
-| `image` | `Painter?` | `null` | - |
-| `contentDescription` | `String?` | `null` | - |
-| `badge` | `(@Composable () -> Unit)?` | `null` | - |
-| `fallback` | `(@Composable () -> Unit)?` | `null` | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AvatarFallback
-
-Initials or icon shown while the image is missing.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `AvatarFallback(content)`, `AvatarFallback(text)`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AvatarBadge
-
-Status dot in the bottom-end corner.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | `{}` | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### AvatarGroup
-
-Row that overlaps its avatars.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### AvatarGroupCount
-
-Round counter for the remaining items in a group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `size` | `AvatarSize`: `Sm` \| `Default` \| `Lg` \| `Xl` | `AvatarSize.Default` | Matches the size of the avatars in the group. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `AvatarGroupCount(content)`, `AvatarGroupCount(text)`.
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -823,10 +544,207 @@ Overloads: `AvatarGroupCount(content)`, `AvatarGroupCount(text)`.
 - The image is hidden from screen readers until it has loaded.
 - The badge has no label; describe the status in nearby text if it matters.
 
-## Notes
+</Only>
 
-- Uses `bg-muted-foreground`, `bg-primary`, `bg-muted` and `border-background` tokens; the fallback is softer in dark mode.
-- Light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Avatar
+
+Round container that sets the size.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `AvatarSize` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<typeof AvatarPrimitive.Root>`.
+
+### AvatarImage
+
+Image that appears once it has loaded.
+
+Also accepts the props of `React.ComponentProps<typeof AvatarPrimitive.Image>`.
+
+Give `AvatarImage` a `source` and an `alt`. Use `onLoadingStatusChange` to react to loading.
+
+### AvatarFallback
+
+Initials or icon shown while the image is missing.
+
+Also accepts the props of `React.ComponentProps<typeof AvatarPrimitive.Fallback>`.
+
+Put initials or an `Icon` in the fallback; plain strings are wrapped in `Text`. Use `delay` to avoid a flash on fast connections. The fallback is softer in dark mode.
+
+### AvatarBadge
+
+Status dot in the bottom-end corner.
+
+Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
+
+### AvatarGroup
+
+Row that overlaps its avatars.
+
+Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
+
+### AvatarGroupCount
+
+Round counter for the remaining items in a group.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `AvatarSize` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
+
+Set `size` to match the avatars in the group.
+
+</Only>
+
+<Only platform="swift">
+
+### AvatarSize
+
+Values: `.sm`, `.default`, `.lg`, `.xl`.
+
+### Avatar
+
+Round container that sets the size.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `size` | `Size`: `.sm` \| `.default` \| `.lg` \| `.xl` | `.default` |
+| `content` | `() -> Content` | - |
+| `url` | `URL?` | - |
+| `fallback` | `() -> Fallback` | - |
+| `initials` | `String` | - |
+
+Overloads: `init(size:content:)`, `init(url:size:fallback:)`, `init(url:initials:size:)`.
+
+### AvatarImage
+
+Image that appears once it has loaded.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `url` | `URL?` | - |
+| `_ image` | `Image` | - |
+
+Overloads: `init(url:)`, `init(_:)`.
+
+### AvatarFallback
+
+Initials or icon shown while the image is missing.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+| `_ initials` | `String` | - |
+| `icon` | `Image` | - |
+
+Overloads: `init(content:)`, `init(_:)`, `init(icon:)`.
+
+### AvatarIcon
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ image` | `Image` | - |
+
+### AvatarBadge
+
+Status dot in the bottom-end corner.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+| `icon` | `Image` | - |
+
+Overloads: `init(content:)`, `init()`, `init(icon:)`.
+
+### AvatarGroup
+
+Row that overlaps its avatars.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### AvatarGroupCount
+
+Round counter for the remaining items in a group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `size` | `AvatarSize`: `.sm` \| `.default` \| `.lg` \| `.xl` | `.default` |
+| `content` | `() -> Content` | - |
+| `_ count` | `String` | - |
+
+Overloads: `init(size:content:)`, `init(_:size:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### AvatarSize
+
+Values: `Sm`, `Default`, `Lg`, `Xl`.
+
+### Avatar
+
+Round container that sets the size.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `size` | `AvatarSize`: `Sm` \| `Default` \| `Lg` \| `Xl` | `AvatarSize.Default` |
+| `image` | `Painter?` | `null` |
+| `contentDescription` | `String?` | `null` |
+| `badge` | `(@Composable () -> Unit)?` | `null` |
+| `fallback` | `(@Composable () -> Unit)?` | `null` |
+
+### AvatarFallback
+
+Initials or icon shown while the image is missing.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `AvatarFallback(content)`, `AvatarFallback(text)`.
+
+### AvatarBadge
+
+Status dot in the bottom-end corner.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | `{}` |
+
+### AvatarGroup
+
+Row that overlaps its avatars.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
+
+### AvatarGroupCount
+
+Round counter for the remaining items in a group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `size` | `AvatarSize`: `Sm` \| `Default` \| `Lg` \| `Xl` | `AvatarSize.Default` |
+| `content` | `@Composable () -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `AvatarGroupCount(content)`, `AvatarGroupCount(text)`.
 
 </Only>
 

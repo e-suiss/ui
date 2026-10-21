@@ -15,7 +15,9 @@ Only one row stays open at a time. Tapping the content or pressing elsewhere clo
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/swipe-actions
@@ -27,24 +29,35 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add interactions swipe-actions
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install class-variance-authority
 ```
 
-2. Copy the source into `components/interactions/swipe-actions.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/interactions/swipe-actions.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { SwipeActions, SwipeActionsContent, SwipeActionsActions, SwipeAction } from "@/components/interactions/swipe-actions"
+import {
+  SwipeAction,
+  SwipeActions,
+  SwipeActionsActions,
+  SwipeActionsContent,
+} from "@/components/interactions/swipe-actions"
 ```
 
 ```tsx
@@ -65,84 +78,30 @@ import { SwipeActions, SwipeActionsContent, SwipeActionsActions, SwipeAction } f
 </SwipeActions>
 ```
 
-- Place `SwipeActionsContent` inside `SwipeActions`, with a `SwipeActionsActions` for each side that has actions. Rows can have leading actions, trailing actions, or both.
-- Handle each action with `onClick`. A full swipe runs the action by clicking it, so the same handler covers both.
-- `useSwipeActions` returns `close` for closing the row from custom controls.
-- Gestures are detected with pointer events and locked to the horizontal axis after a few pixels, so vertical scrolling still works.
+## Composition
+
+Use the following composition to build a `SwipeActions`:
+
+```text
+SwipeActions
+├── SwipeActionsContent
+└── SwipeActionsActions
+    └── SwipeAction
+```
 
 ## Examples
 
 ### Both sides
 
-A row with a leading Unread action on one side and trailing Archive and Delete actions on the other.
+A row with a leading Unread action on one side and trailing Archive and Delete actions on the other. Add a `SwipeActionsActions` for each side and set its `side` to `leading` or `trailing`.
 
 <ComponentPreview name="swipe-actions-both-sides" layout="padded" responsive />
 
 ### Variants
 
-The `default`, `neutral`, `archive`, and `destructive` action colors side by side.
+Use the `variant` prop on `SwipeAction` to set the action color: `default`, `neutral`, `archive` or `destructive`.
 
 <ComponentPreview name="swipe-actions-variants" layout="padded" responsive />
-
-## API Reference
-
-<Anatomy>
-
-- [SwipeActions](#swipeactions)
-  - [SwipeActionsContent](#swipeactionscontent)
-  - [SwipeActionsActions](#swipeactionsactions)
-    - [SwipeAction](#swipeaction)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### SwipeActions
-
-The row container that tracks the swipe and manages open state.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SwipeActionsContent
-
-The visible row content that moves with the swipe.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SwipeActionsActions
-
-The group of actions revealed on one side of the row.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `SwipeActionsSide` | `"trailing"` | The edge the actions appear on: `leading` or `trailing`. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SwipeAction
-
-A single action button revealed by the swipe.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive" \| "archive" \| "neutral"` | `"default"` | The background color of the action: `default`, `destructive`, `archive`, or `neutral`. |
-| `fullSwipe` | `boolean` | `false` | Lets a long swipe expand this action across the row and run it. |
-
-Also accepts the props of `React.ComponentProps<"button">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -151,11 +110,48 @@ Also accepts the props of `React.ComponentProps<"button">`.
 - `Escape` closes an open row.
 - Leading and trailing sides follow the writing direction, so swipes mirror in right-to-left layouts.
 
-## Notes
+## API Reference
 
-- The root uses `data-slot="swipe-actions"` and sets `data-open` (`leading` or `trailing`), `data-full` during a full swipe, and `data-removing` while the row collapses. Action groups expose `data-side`, and full-swipe actions set `data-full-swipe`.
-- The `--swipe-actions-offset` custom property holds the current offset.
-- `swipeActionVariants` is exported for styling other elements like an action.
+### SwipeActions
+
+The row container that tracks the swipe and manages open state.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Place `SwipeActionsContent` inside `SwipeActions`, with a `SwipeActionsActions` for each side that has actions. Gestures are detected with pointer events and locked to the horizontal axis after a few pixels, so vertical scrolling still works. `useSwipeActions` returns `close` for closing the row from custom controls.
+
+The root sets `data-slot="swipe-actions"`, `data-open` (`leading` or `trailing`), `data-full` during a full swipe and `data-removing` while the row collapses. The `--swipe-actions-offset` custom property holds the current offset.
+
+### SwipeActionsContent
+
+The visible row content that moves with the swipe.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### SwipeActionsActions
+
+The group of actions revealed on one side of the row.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `SwipeActionsSide` | `"trailing"` |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Action groups expose `data-side`.
+
+### SwipeAction
+
+A single action button revealed by the swipe.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "destructive" \| "archive" \| "neutral"` | `"default"` |
+| `fullSwipe` | `boolean` | `false` |
+
+Also accepts the props of `React.ComponentProps<"button">`.
+
+Handle each action with `onClick`. `fullSwipe` lets a long swipe expand the action across the row and run it by clicking it, so the same handler covers both. Full-swipe actions set `data-full-swipe`. `swipeActionVariants` is exported for styling other elements like an action.
 
 </Only>
 
@@ -168,6 +164,10 @@ Also accepts the props of `React.ComponentProps<"button">`.
 When an action has `fullSwipe`, dragging past 60% of the row width expands that action over the others with a medium impact haptic. Releasing there slides the row off, collapses its height, then runs the action, which suits delete or archive. Use it for mail, message or task lists.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -217,7 +217,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -225,7 +227,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn react-native-gesture-handler react-native-reanimated react-native-worklets
@@ -241,17 +243,17 @@ npx expo install class-variance-authority cn react-native-gesture-handler react-
 
 <ComponentSource path="uniwind/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/interactions/swipe-actions.tsx`:
+5. Copy and paste the following code into `components/interactions/swipe-actions.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/swipe-actions.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn react-native-gesture-handler react-native-reanimated react-native-worklets
@@ -267,17 +269,17 @@ npx expo install class-variance-authority cn react-native-gesture-handler react-
 
 <ComponentSource path="nativewind/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/interactions/swipe-actions.tsx`:
+5. Copy and paste the following code into `components/interactions/swipe-actions.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/swipe-actions.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-gesture-handler react-native-reanimated react-native-worklets
@@ -293,11 +295,11 @@ npx expo install react-native-gesture-handler react-native-reanimated react-nati
 
 <ComponentSource path="stylesheet/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/interactions/swipe-actions.tsx`:
+5. Copy and paste the following code into `components/interactions/swipe-actions.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/swipe-actions.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -374,6 +376,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -662,9 +668,11 @@ fun SwipeActionsInbox() {
 
 <Only platform="rn">
 
-Put the row in `SwipeActionsContent`, and the buttons in one `SwipeActionsActions` per side, with `side` set to `leading` or `trailing` (the default). Leading actions are on the left in left-to-right layouts and on the right in right-to-left layouts.
+## Accessibility
 
-Pressing an action runs `onPress` and closes the row. For a full-swipe action, `onPress` runs after the row collapses, so remove the item from your data there. `useSwipeActions` returns `close` for closing the row from inside it. `swipeActionVariants` is also exported.
+- Every action is offered as an accessibility action on `SwipeActionsContent`, labelled by its `accessibilityLabel` or text, so screen reader users can run it without swiping.
+- Hidden actions are removed from the accessibility tree until their side is open.
+- The row has the `group` role and each action the `button` role.
 
 </Only>
 
@@ -672,21 +680,17 @@ Pressing an action runs `onPress` and closes the row. For a full-swipe action, `
 
 <Only platform="rn">
 
-<ApiPart index={1}>
-
 ### SwipeActions
 
 The root that handles the swipe gesture.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onOpenChange` | `(side: SwipeActionsSide \| null) => void` | - | Called with `leading`, `trailing` or `null` when the row opens or closes. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `onOpenChange` | `(side: SwipeActionsSide \| null) => void` | - |
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+`onOpenChange` is called with `leading`, `trailing` or `null` when the row opens or closes. `useSwipeActions` returns `close` for closing the row from inside it.
 
 ### SwipeActionsContent
 
@@ -694,122 +698,90 @@ The row content that slides.
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### SwipeActionsActions
 
 The group of actions for one side.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `SwipeActionsSide` | - | `leading` or `trailing`. Defaults to `trailing`. |
-| `children` | `React.ReactNode` | - | The content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `SwipeActionsSide` | - |
+| `children` | `React.ReactNode` | - |
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
-
-<ApiPart index={4}>
+Put the row in `SwipeActionsContent`, and the buttons in one `SwipeActionsActions` per side, with `side` set to `leading` or `trailing` (the default). Leading actions are on the left in left-to-right layouts and on the right in right-to-left layouts.
 
 ### SwipeAction
 
 One action button.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive" \| "archive" \| "neutral"` | `"default"` | Background color of the action. |
-| `fullSwipe` | `boolean` | `false` | Runs the action when the row is swiped all the way. |
-| `onPress` | `() => void` | - | Called when the action is pressed or fully swiped. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "destructive" \| "archive" \| "neutral"` | `"default"` |
+| `fullSwipe` | `boolean` | `false` |
+| `onPress` | `() => void` | - |
 
 Also accepts the props of `PressableProps`, except `onPress`, which takes no arguments.
 
-</ApiPart>
+Pressing an action runs `onPress` and closes the row. For a `fullSwipe` action, `onPress` runs after the row collapses, so remove the item from your data there. The full-swipe haptic plays only if the app provides an adapter through `HapticsProvider`. `swipeActionVariants` is also exported.
 
 </Only>
 
 <Only platform="swift">
 
-<ApiPart index={1}>
-
 ### SwipeActionVariant
 
 Values: `.default`, `.destructive`, `.archive`, `.neutral`.
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### SwipeActions
 
 The root that handles the swipe gesture.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `background` | `Color` | `EsuissColor.background` | - |
-| `content` | `() -> Content` | - | The content. |
-| `leading` | `() -> Leading` | - | Content before the main content. |
-| `trailing` | `() -> Trailing` | - | Content after the main content. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `background` | `Color` | `EsuissColor.background` |
+| `content` | `() -> Content` | - |
+| `leading` | `() -> Leading` | - |
+| `trailing` | `() -> Trailing` | - |
 
 Overloads: `init(background:content:leading:trailing:)`, `init(background:content:trailing:)`, `init(background:content:leading:)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### SwipeAction
 
 One action button.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `variant` | `SwipeActionVariant`: `.default` \| `.destructive` \| `.archive` \| `.neutral` | `.default` | Background color of the action. |
-| `fullSwipe` | `Bool` | `false` | Runs the action when the row is swiped all the way. |
-| `action` | `() -> Void` | - | Called when the action is pressed or fully swiped. |
-| `label` | `() -> Label` | - | The label. |
-| `icon` | `Image` | - | The icon. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `variant` | `SwipeActionVariant`: `.default` \| `.destructive` \| `.archive` \| `.neutral` | `.default` |
+| `fullSwipe` | `Bool` | `false` |
+| `action` | `() -> Void` | - |
+| `label` | `() -> Label` | - |
+| `icon` | `Image` | - |
 
 Overloads: `init(_:variant:fullSwipe:action:label:)`, `init(_:icon:variant:fullSwipe:action:)`, `init(_:variant:fullSwipe:action:)`.
-
-</ApiPart>
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### SwipeActionsSide
 
 Values: `Leading`, `Trailing`.
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### SwipeActionVariant
 
 Values: `Default`, `Destructive`, `Archive`, `Neutral`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### SwipeAction
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `String` | - | - |
-| `onClick` | `() -> Unit` | - | - |
-| `icon` | `ImageVector?` | `null` | - |
-| `variant` | `SwipeActionVariant`: `Default` \| `Destructive` \| `Archive` \| `Neutral` | `SwipeActionVariant.Default` | - |
-| `fullSwipe` | `Boolean` | `false` | - |
-
-</ApiPart>
-
-<ApiPart index={4}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `label` | `String` | - |
+| `onClick` | `() -> Unit` | - |
+| `icon` | `ImageVector?` | `null` |
+| `variant` | `SwipeActionVariant`: `Default` \| `Destructive` \| `Archive` \| `Neutral` | `SwipeActionVariant.Default` |
+| `fullSwipe` | `Boolean` | `false` |
 
 ### SwipeActionsState
 
@@ -817,27 +789,15 @@ Values: `Default`, `Destructive`, `Archive`, `Neutral`.
 | --- | --- |
 | `openSide` | `SwipeActionsSide?` |
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### SwipeActionsState.close
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={6}>
-
 ### SwipeActionsState.open
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `SwipeActionsSide`: `Leading` \| `Trailing` | - | - |
-
-</ApiPart>
-
-<ApiPart index={7}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `side` | `SwipeActionsSide`: `Leading` \| `Trailing` | - |
 
 ### rememberSwipeActionsState
 
@@ -845,40 +805,19 @@ Takes no parameters.
 
 Returns `SwipeActionsState`.
 
-</ApiPart>
-
-<ApiPart index={8}>
-
 ### SwipeActions
 
 The root that handles the swipe gesture.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `leading` | `List<SwipeAction>` | `emptyList()` | Content before the main content. |
-| `trailing` | `List<SwipeAction>` | `emptyList()` | Content after the main content. |
-| `state` | `SwipeActionsState` | `rememberSwipeActionsState()` | - |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `background` | `Color` | `EsuissTheme.colors.background` | - |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- Every action is offered as an accessibility action on `SwipeActionsContent`, labelled by its `accessibilityLabel` or text, so screen reader users can run it without swiping.
-- Hidden actions are removed from the accessibility tree until their side is open.
-- The row has the `group` role and each action the `button` role.
-
-## Notes
-
-- The full-swipe haptic plays only if the app provides an adapter through `HapticsProvider`.
-- Action colors use `bg-primary`, `bg-destructive`, `bg-purple-500` and `bg-zinc-500` with `text-primary-foreground` labels and icons; the content uses `bg-background`.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `leading` | `List<SwipeAction>` | `emptyList()` |
+| `trailing` | `List<SwipeAction>` | `emptyList()` |
+| `state` | `SwipeActionsState` | `rememberSwipeActionsState()` |
+| `enabled` | `Boolean` | `true` |
+| `background` | `Color` | `EsuissTheme.colors.background` |
+| `content` | `@Composable () -> Unit` | - |
 
 </Only>
 

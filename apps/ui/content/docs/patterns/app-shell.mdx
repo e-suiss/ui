@@ -9,13 +9,15 @@ platforms: [web]
 
 <ComponentPreview name="app-shell-demo" layout="fullscreen" responsive />
 
-`AppShell` builds navigation from an `items` array of `AppShellItem` objects and wraps your page content. On desktop it renders a `Sidebar` inside a `SidebarProvider`, with optional `header` and `footer`, group labels, badges, tooltips on collapsed icons and a `SidebarRail`; the page renders in a `SidebarInset`.
+`AppShell` builds navigation from an `items` array and wraps your page content. On desktop it renders a collapsible `Sidebar` and the page renders in a `SidebarInset`. On mobile a `TabBar` pinned to the bottom of the screen replaces the sidebar.
 
-Below the `48rem` breakpoint the sidebar is replaced by a `TabBar` pinned to the bottom of the screen, and the content renders in a `main` element padded to clear it. Items that do not fit in the tab bar move behind its More trigger. Use it as the outermost layout of an app with a handful of top-level destinations.
+Use it as the outermost layout of an app with a handful of top-level destinations.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/app-shell
@@ -27,17 +29,23 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns app-shell
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
 2. Add the pieces it builds on: [Sidebar](/docs/components/sidebar), [Tab Bar](/docs/components/tab-bar).
 
-3. Copy the source into `components/patterns/app-shell.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/app-shell.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -60,45 +68,41 @@ const items: AppShellItem[] = [
 </AppShell>
 ```
 
-Each `AppShellItem` has a `value`, `label` and `icon`, plus optional `href`, `badge`, `group` and `disabled`. Items with the same `group` render under a shared `SidebarGroupLabel`. The selected item is controlled with `value` and `onValueChange`, or uncontrolled with `defaultValue`; it defaults to the first item. Items with an `href` render through `render`, which defaults to a plain anchor, so you can pass your router's link component.
-
-The sidebar accepts `variant` (`sidebar`, `floating` or `inset`), `collapsible` (`icon` by default, `offcanvas` or `none`), `side`, `rail`, and `open`, `defaultOpen` and `onOpenChange` for its expanded state. `moreLabel` sets the tab bar's More trigger text and `label` names the navigation landmark (`Main` by default). Place `AppShellTrigger` in your page header to toggle the sidebar.
-
 ## Examples
 
 ### With header and footer
 
-Adds a brand menu in the sidebar header and an account menu in the footer.
+Use `header` and `footer` to add a brand menu at the top of the sidebar and an account menu at the bottom.
 
 <ComponentPreview name="app-shell-with-header-and-footer" layout="fullscreen" responsive />
 
 ### Grouped
 
-Splits items into labelled Platform and Workspace groups and disables one item.
+Items with the same `group` render under a shared `SidebarGroupLabel`, here Platform and Workspace. Set `disabled` on an item to disable it.
 
 <ComponentPreview name="app-shell-grouped" layout="fullscreen" responsive />
 
 ### More tab
 
-Uses eight items with `defaultValue` so extra items overflow into the mobile tab bar's More panel.
+Uses eight items with `defaultValue`. Items that do not fit in the mobile tab bar move behind its More trigger, whose text comes from `moreLabel`.
 
 <ComponentPreview name="app-shell-more-tab" layout="fullscreen" responsive />
 
 ### Links
 
-Gives every item an `href` so each renders as a link to its route.
+Gives every item an `href` so each renders as a link to its route through `render`.
 
 <ComponentPreview name="app-shell-links" layout="fullscreen" responsive />
 
 ### Floating
 
-Uses the `floating` sidebar variant.
+Set `variant="floating"` to use the floating sidebar style.
 
 <ComponentPreview name="app-shell-floating" layout="fullscreen" responsive />
 
 ### Inset
 
-Uses the `inset` sidebar variant.
+Set `variant="inset"` to use the inset sidebar style.
 
 <ComponentPreview name="app-shell-inset" layout="fullscreen" responsive />
 
@@ -110,71 +114,15 @@ Sets `collapsible` to `offcanvas` so collapsing slides the whole sidebar out of 
 
 ### Right side
 
-Places the sidebar on the right with `side`.
+Set `side="right"` to place the sidebar on the right.
 
 <ComponentPreview name="app-shell-right-side" layout="fullscreen" responsive />
 
 ### Collapsed
 
-Starts with the sidebar collapsed to icons through `defaultOpen={false}`.
+Set `defaultOpen={false}` to start with the sidebar collapsed to icons. Collapsed items show their label in a tooltip.
 
 <ComponentPreview name="app-shell-collapsed" layout="fullscreen" responsive />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### AppShell
-
-The root layout that renders the sidebar or tab bar from `items` and wraps the page content.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `AppShellItem[]` | Required | The destinations, each with a `value`, `label` and `icon`. |
-| `value` | `string` | - | The selected item, for controlled use. |
-| `defaultValue` | `string` | First item | The initially selected item when uncontrolled. |
-| `onValueChange` | `(value: string) => void` | - | Called when an item is chosen. |
-| `header` | `React.ReactNode` | - | Content at the top of the sidebar. |
-| `footer` | `React.ReactNode` | - | Content at the bottom of the sidebar. |
-| `variant` | `"sidebar" \| "floating" \| "inset"` | `"sidebar"` | The sidebar style. |
-| `collapsible` | `"offcanvas" \| "icon" \| "none"` | `"icon"` | How the sidebar collapses. |
-| `side` | `"left" \| "right"` | `"left"` | The side the sidebar sits on. |
-| `rail` | `boolean` | `true` | Shows a rail along the sidebar edge that toggles it. |
-| `open` | `boolean` | - | Whether the sidebar is expanded, for controlled use. |
-| `defaultOpen` | `boolean` | `true` | Whether the sidebar starts expanded when uncontrolled. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when the sidebar expands or collapses. |
-| `moreLabel` | `string` | `"More"` | Text of the More tab on mobile. |
-| `label` | `string` | `"Main"` | The accessible name of the tab bar on mobile. |
-| `className` | `string` | - | Classes for the content area. |
-| `children` | `React.ReactNode` | - | The page content. |
-
-<OnlyBase base="base radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `React.ReactElement` | A plain `a` | The element items with an `href` render as, such as your router's link. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `(props: React.ComponentProps<"a">) => React.ReactNode` | A plain `a` | Renders items with an `href`, such as your router's link. It receives the link props, including `href`. |
-
-</OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AppShellTrigger
-
-A `SidebarTrigger` that toggles the sidebar on desktop and renders nothing on mobile.
-
-Also accepts the props of `React.ComponentProps<typeof SidebarTrigger>`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -184,8 +132,70 @@ Also accepts the props of `React.ComponentProps<typeof SidebarTrigger>`.
 - With `collapsible="offcanvas"`, the hidden sidebar is removed from view and the tab order.
 - Disabled items are disabled buttons.
 
-## Notes
+## API Reference
 
-The sidebar exposes `data-state` (`expanded` or `collapsed`), `data-collapsible`, `data-variant` and `data-side` for styling. On mobile the wrapper carries `data-slot="app-shell"` and the content `data-slot="app-shell-content"`; `className` applies to the content area on both layouts. `rail` only renders when `collapsible` is not `none`.
+### AppShell
+
+The root layout that renders the sidebar or tab bar from `items` and wraps the page content.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `items` | `AppShellItem[]` | Required |
+| `value` | `string` | - |
+| `defaultValue` | `string` | First item |
+| `onValueChange` | `(value: string) => void` | - |
+| `header` | `React.ReactNode` | - |
+| `footer` | `React.ReactNode` | - |
+| `variant` | `"sidebar" \| "floating" \| "inset"` | `"sidebar"` |
+| `collapsible` | `"offcanvas" \| "icon" \| "none"` | `"icon"` |
+| `side` | `"left" \| "right"` | `"left"` |
+| `rail` | `boolean` | `true` |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `true` |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `moreLabel` | `string` | `"More"` |
+| `label` | `string` | `"Main"` |
+| `className` | `string` | - |
+| `children` | `React.ReactNode` | - |
+
+<OnlyBase base="base radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `React.ReactElement` | A plain `a` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `(props: React.ComponentProps<"a">) => React.ReactNode` | A plain `a` |
+
+</OnlyBase>
+
+Each `AppShellItem` has a `value`, `label` and `icon`, plus optional `href`, `badge`, `group` and `disabled`. The selected item is controlled with `value` and `onValueChange`, or uncontrolled with `defaultValue`; it defaults to the first item. `open`, `defaultOpen` and `onOpenChange` hold the sidebar's expanded state. `rail` renders a rail along the sidebar edge that toggles it, only when `collapsible` is not `none`. `label` names the navigation landmark on mobile.
+
+<OnlyBase base="base radix">
+
+Items with an `href` render as the `render` element, a plain anchor by default, so you can pass your router's link component.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Items with an `href` render through the `render` function, a plain anchor by default, so you can return your router's link component. It receives the link props, including `href`.
+
+</OnlyBase>
+
+Below the `48rem` breakpoint the content renders in a `main` element padded to clear the tab bar. `className` applies to the content area on both layouts. The sidebar sets `data-state` (`expanded` or `collapsed`), `data-collapsible`, `data-variant` and `data-side`, and on mobile the wrapper and content set `data-slot="app-shell"` and `data-slot="app-shell-content"`, for styling.
+
+### AppShellTrigger
+
+A `SidebarTrigger` that toggles the sidebar on desktop and renders nothing on mobile.
+
+Also accepts the props of `React.ComponentProps<typeof SidebarTrigger>`.
+
+Place it in your page header to toggle the sidebar.
 
 </Only>

@@ -11,13 +11,11 @@ platforms: [rn, swift, kotlin]
 
 `Header` is a 44-point bar that sorts its children into three slots: `HeaderBack` and leading `HeaderActions` on the start side, `HeaderTitle` in the center, and everything else on the end side. The side slots share the remaining width equally, so the title stays centered.
 
-<Only platform="rn">
-
-For a large title, create a scroll state with `useHeaderScroll()`, pass it to both `Header` and `HeaderScrollView`, and put a `HeaderLargeTitle` at the top of the scroll view. As the large title scrolls away, the small title fades in and a hairline appears under the bar. Pulling down stretches the large title slightly.
-
-</Only>
-
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -67,7 +65,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -75,7 +75,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -87,17 +87,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/ui/header.tsx`:
+4. Copy and paste the following code into `components/ui/header.tsx`:
 
 <ComponentSource path="uniwind/components/ui/header.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -109,17 +109,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/ui/header.tsx`:
+4. Copy and paste the following code into `components/ui/header.tsx`:
 
 <ComponentSource path="nativewind/components/ui/header.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -131,11 +131,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/ui/header.tsx`:
+4. Copy and paste the following code into `components/ui/header.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/header.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -226,6 +226,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -357,25 +361,17 @@ fun HeaderDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-`HeaderBack` shows a caret and an optional text label such as the previous screen's name; wire `onPress` to your navigation. Group icon buttons in `HeaderActions`, and set `side="leading"` to place a group on the start side.
-
-</Only>
-
-<Only platform="rn swift">
-
-Both `HeaderTitle` and `HeaderLargeTitle` accept a `subtitle`. Plain strings are wrapped in `Text` and truncated to one line in the bar.
-
-Without a large title, you can still pass the same `scroll` to `Header` and `HeaderScrollView` to show the hairline once content scrolls under the bar.
-
-</Only>
-
 ## Examples
 
 ### Large title
 
 A large title that collapses into the bar on scroll.
+
+<Only platform="rn">
+
+Create a scroll state with `useHeaderScroll()`, pass it to both `Header` and `HeaderScrollView`, and put a `HeaderLargeTitle` at the top of the scroll view. As the large title scrolls away, the small title fades in and a hairline appears under the bar. Pulling down stretches the large title slightly.
+
+</Only>
 
 <NativeExample name="header-large-title" />
 
@@ -389,17 +385,35 @@ A large title with a subtitle.
 
 A compact title whose hairline appears on scroll.
 
+<Only platform="rn swift">
+
+Without a large title, you can still pass the same `scroll` to `Header` and `HeaderScrollView` to show the hairline once content scrolls under the bar.
+
+</Only>
+
 <NativeExample name="header-compact-with-scroll" />
 
 ### Subtitle
 
 A two-line title with a subtitle.
 
+<Only platform="rn swift">
+
+Both `HeaderTitle` and `HeaderLargeTitle` accept a `subtitle`. Plain strings are wrapped in `Text` and truncated to one line in the bar.
+
+</Only>
+
 <NativeExample name="header-subtitle" />
 
 ### Leading actions
 
 Actions on both sides of the title.
+
+<Only platform="rn">
+
+Set `side="leading"` on `HeaderActions` to place a group on the start side.
+
+</Only>
 
 <NativeExample name="header-leading-actions" />
 
@@ -409,200 +423,166 @@ A long back label that truncates.
 
 <NativeExample name="header-back-only" />
 
+<Only platform="rn">
+
+## Accessibility
+
+- `HeaderTitle` and a string `HeaderLargeTitle` have the `heading` role.
+- `HeaderBack` has the `button` role and is labelled with its text, or "Back" when it has none.
+- Give icon-only actions an `accessibilityLabel`.
+
+</Only>
+
 ## API Reference
 
 <Only platform="rn">
-
-<ApiPart index={1}>
 
 ### Header
 
 Bar that lays out the back button, title and actions.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `scroll` | `HeaderScroll` | - | Scroll state from `useHeaderScroll()`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `scroll` | `HeaderScroll` | - |
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+`scroll` takes the scroll state from `useHeaderScroll()`. Colors follow light and dark mode with the system appearance.
 
 ### HeaderTitle
 
 Centered title with optional subtitle.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `subtitle` | `React.ReactNode` | - | Second line under the title. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `subtitle` | `React.ReactNode` | - |
 
 Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### HeaderLargeTitle
 
 Large title at the top of the scroll content.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `subtitle` | `React.ReactNode` | - | Line under the large title. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `subtitle` | `React.ReactNode` | - |
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
-
-<ApiPart index={4}>
+In right-to-left layouts the large title scales from the correct edge.
 
 ### HeaderBack
 
 Back button with a caret and optional label.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
 
 Also accepts the props of `React.ComponentProps<typeof Pressable>`.
 
-</ApiPart>
-
-<ApiPart index={5}>
+Pass a text label such as the previous screen's name as `children`, and wire `onPress` to your navigation. The button dims to `opacity-80` while pressed, and the caret rotates in right-to-left layouts.
 
 ### HeaderActions
 
 Row of actions for either side.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"leading" \| "trailing"` | `"trailing"` | `leading` or `trailing`. Defaults to `trailing`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"leading" \| "trailing"` | `"trailing"` |
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
-
-<ApiPart index={6}>
+Group icon buttons in `HeaderActions`.
 
 ### HeaderScrollView
 
 Scroll view that drives the header animations.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `scroll` | `HeaderScroll` | Required | Scroll state from `useHeaderScroll()`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `scroll` | `HeaderScroll` | Required |
 
 Also accepts the props of `ScrollViewProps`.
 
-</ApiPart>
+Pass the same scroll state from `useHeaderScroll()` that the `Header` gets.
 
 </Only>
 
 <Only platform="swift">
 
-<ApiPart index={1}>
-
 ### Header
 
 Bar that lays out the back button, title and actions.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `() -> Title` | - | The title text. |
-| `leading` | `() -> Leading` | - | Content before the main content. |
-| `trailing` | `() -> Trailing` | - | Content after the main content. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `() -> Title` | - |
+| `leading` | `() -> Leading` | - |
+| `trailing` | `() -> Trailing` | - |
 
 Overloads: `init(title:leading:trailing:)`, `init(title:trailing:)`, `init(title:leading:)`, `init(title:)`.
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### HeaderTitle
 
 Centered title with optional subtitle.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `subtitle` | `LocalizedStringKey?` | `nil` | Second line under the title. |
-| `verbatim` | `String` | - | The title text. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `subtitle` | `LocalizedStringKey?` | `nil` |
+| `verbatim` | `String` | - |
 
 Overloads: `init(_:subtitle:)`, `init(verbatim:subtitle:)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### HeaderLargeTitle
 
 Large title at the top of the scroll content.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `subtitle` | `LocalizedStringKey?` | `nil` | Line under the large title. |
-| `verbatim` | `String` | - | The title text. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `subtitle` | `LocalizedStringKey?` | `nil` |
+| `verbatim` | `String` | - |
 
 Overloads: `init(_:subtitle:)`, `init(verbatim:subtitle:)`.
-
-</ApiPart>
-
-<ApiPart index={4}>
 
 ### HeaderBack
 
 Back button with a caret and optional label.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ label` | `LocalizedStringKey?` | `nil` | The label. |
-| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
-| `verbatim` | `String` | - | The label. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ label` | `LocalizedStringKey?` | `nil` |
+| `action` | `(() -> Void)?` | `nil` |
+| `verbatim` | `String` | - |
 
 Overloads: `init(_:action:)`, `init(verbatim:action:)`.
-
-</ApiPart>
-
-<ApiPart index={5}>
 
 ### HeaderActions
 
 Row of actions for either side.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
 
 ### HeaderScrollView
 
 Scroll view that drives the header animations.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-| `header` | `() -> HeaderContent` | - | - |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+| `header` | `() -> HeaderContent` | - |
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### HeaderActionsSide
 
 Values: `Leading`, `Trailing`.
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### HeaderState
 
@@ -613,103 +593,62 @@ Takes no parameters.
 | `collapsedFraction` | `Float` |
 | `nestedScrollConnection` | `NestedScrollConnection` |
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### rememberHeaderState
 
 Takes no parameters.
 
 Returns `HeaderState`.
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### Header
 
 Bar that lays out the back button, title and actions.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `state` | `HeaderState` | `rememberHeaderState()` | - |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `state` | `HeaderState` | `rememberHeaderState()` |
+| `content` | `@Composable () -> Unit` | - |
 
 ### HeaderTitle
 
 Centered title with optional subtitle.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `subtitle` | `String?` | `null` | Second line under the title. |
-
-</ApiPart>
-
-<ApiPart index={6}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `subtitle` | `String?` | `null` |
 
 ### HeaderLargeTitle
 
 Large title at the top of the scroll content.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `subtitle` | `String?` | `null` | Line under the large title. |
-
-</ApiPart>
-
-<ApiPart index={7}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `subtitle` | `String?` | `null` |
 
 ### HeaderBack
 
 Back button with a caret and optional label.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onClick` | `() -> Unit` | - | Called when it is tapped. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `text` | `String?` | `"Back"` | The text. |
-| `contentDescription` | `String` | `text ?: "Back"` | - |
-
-</ApiPart>
-
-<ApiPart index={8}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `onClick` | `() -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `text` | `String?` | `"Back"` |
+| `contentDescription` | `String` | `text ?: "Back"` |
 
 ### HeaderActions
 
 Row of actions for either side.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `side` | `HeaderActionsSide`: `Leading` \| `Trailing` | `HeaderActionsSide.Trailing` | - |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- `HeaderTitle` and a string `HeaderLargeTitle` have the `heading` role.
-- `HeaderBack` has the `button` role and is labelled with its text, or "Back" when it has none.
-- Give icon-only actions an `accessibilityLabel`.
-
-## Notes
-
-- The back caret rotates and the large title scales from the correct edge in right-to-left layouts.
-- Uses `text-primary` and `bg-border` tokens, with `opacity-80` while pressed; light and dark follow the system appearance.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `side` | `HeaderActionsSide`: `Leading` \| `Trailing` | `HeaderActionsSide.Trailing` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
 
 </Only>
 

@@ -15,7 +15,9 @@ Use a card to present a self-contained summary, such as a plan, a metric or a pl
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/card
@@ -27,21 +29,35 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add card
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
-2. Copy the source into `components/ui/card.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/card.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
 import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter } from "@/components/ui/card"
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 ```
 
 ```tsx
@@ -67,72 +83,71 @@ import { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, 
 </div>
 ```
 
-All parts are plain `div` elements, so you can omit any of them. Add `border-b` to `CardHeader` or `border-t` to `CardFooter` to draw a divider; the card adds matching padding on that side.
+## Composition
 
-Spacing is controlled by the `--card-spacing` custom property, which the `sm` size reduces.
+Use the following composition to build a `Card`:
+
+```text
+Card
+├── CardHeader
+│   ├── CardTitle
+│   ├── CardDescription
+│   └── CardAction
+├── CardContent
+└── CardFooter
+```
 
 ## Examples
 
 ### Small
 
-The `sm` size with tighter spacing.
+Set `size="sm"` for tighter spacing.
 
 <ComponentPreview name="card-small" />
 
 ### Filled
 
-The `filled` variant on a flat `bg-muted` surface with no shadow.
+Set `variant="filled"` for a flat `bg-muted` surface with no shadow.
 
 <ComponentPreview name="card-filled" />
 
 ### With action
 
-Places an icon button in the header with `CardAction`.
+Place an icon button in the header with `CardAction`. The header switches to a two-column grid and puts the action in the top-end corner.
 
 <ComponentPreview name="card-with-action" />
 
 ### With borders
 
-Separates the header and footer with borders.
+Add `border-b` to `CardHeader` or `border-t` to `CardFooter` to draw a divider; the card adds matching padding on that side.
 
 <ComponentPreview name="card-with-borders" />
 
 ### With image
 
-Leads with a full-bleed image above the header.
+Place an `img` as the first child of the card to run it edge to edge above the header, with rounded top corners and no top padding.
 
 <ComponentPreview name="card-with-image" />
 
+## Accessibility
+
+- Card parts are non-semantic `div` elements, and `CardTitle` is not a heading. If the title belongs in the document outline, place a heading element such as `h2` inside it.
+- Icon-only buttons in `CardAction` need an `aria-label`.
+
 ## API Reference
-
-<Anatomy>
-
-- [Card](#card)
-  - [CardHeader](#cardheader)
-    - [CardTitle](#cardtitle)
-    - [CardDescription](#carddescription)
-    - [CardAction](#cardaction)
-  - [CardContent](#cardcontent)
-  - [CardFooter](#cardfooter)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### Card
 
 The rounded container that sets size and surface.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"default" \| "sm"` | `"default"` | Inner spacing: `default` or the more compact `sm`. |
-| `variant` | `"default" \| "filled"` | `"default"` | Surface style. `default` is raised with a shadow and ring; `filled` uses `bg-muted` with no shadow. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"default" \| "sm"` | `"default"` |
+| `variant` | `"default" \| "filled"` | `"default"` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+The `default` variant is raised with a shadow and ring; `filled` uses `bg-muted` with no shadow. Spacing comes from the `--card-spacing` custom property, which the `sm` size reduces. All parts are plain `div` elements, so you can omit any of them.
 
 ### CardHeader
 
@@ -140,19 +155,11 @@ Lays out the title, description and action.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### CardTitle
 
 The card's heading text.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={4}>
 
 ### CardDescription
 
@@ -160,19 +167,11 @@ Secondary text below the title.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### CardAction
 
 A slot in the header's top-end corner for a button or menu.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### CardContent
 
@@ -180,28 +179,13 @@ The main body, padded to the card's spacing.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={7}>
-
 ### CardFooter
 
 A row for actions or summary at the bottom.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-## Accessibility
-
-- Card parts are non-semantic `div` elements, and `CardTitle` is not a heading. If the title belongs in the document outline, place a heading element such as `h2` inside it.
-- Icon-only buttons in `CardAction` need an `aria-label`.
-
-## Notes
-
-- Styling hooks: `data-slot` values `card`, `card-header`, `card-title`, `card-description`, `card-action`, `card-content` and `card-footer`, plus `data-size` and `data-variant` on the root.
-- The header switches to a two-column grid when it contains a `CardAction`.
-- Calendar detects `data-slot="card-content"` and drops its own background inside a card.
+Each part sets a `data-slot`, such as `card-header` or `card-content`, for styling, and the root also sets `data-size` and `data-variant`. Calendar detects `data-slot="card-content"` and drops its own background inside a card.
 
 </Only>
 
@@ -218,6 +202,10 @@ Also accepts the props of `React.ComponentProps<"div">`.
 The `sm` size reduces the padding and gaps for dense layouts. All parts read the size from context, so their horizontal padding stays aligned.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -267,7 +255,9 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -275,7 +265,7 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -283,17 +273,17 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/card.tsx`:
+3. Copy and paste the following code into `components/ui/card.tsx`:
 
 <ComponentSource path="uniwind/components/ui/card.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -301,11 +291,11 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/card.tsx`:
+3. Copy and paste the following code into `components/ui/card.tsx`:
 
 <ComponentSource path="nativewind/components/ui/card.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -313,11 +303,11 @@ npx expo install cn
 
 1. Add the pieces it builds on: [Text](/docs/components/text).
 
-2. Copy the source into `components/ui/card.tsx`:
+2. Copy and paste the following code into `components/ui/card.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/card.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -386,6 +376,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -597,14 +591,6 @@ fun CardDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-Put a `CardTitle` and `CardDescription` in `CardHeader`. Add a `CardAction` anywhere in the header and it is placed in the top-end corner beside the title.
-
-To show an image edge to edge, place it directly in the card before the header and add `pt-0` to the card; only the header, content and footer are padded horizontally.
-
-</Only>
-
 ## Examples
 
 ### Small
@@ -617,7 +603,7 @@ The compact `sm` size.
 
 <Only platform="rn">
 
-A `CardAction` button beside the title.
+Add a `CardAction` anywhere in the header and it is placed in the top-end corner beside the title.
 
 </Only>
 
@@ -627,6 +613,12 @@ A `CardAction` button beside the title.
 
 An edge-to-edge image above the header.
 
+<Only platform="rn">
+
+To show an image edge to edge, place it directly in the card before the header and add `pt-0` to the card; only the header, content and footer are padded horizontally.
+
+</Only>
+
 <NativeExample name="card-with-image" />
 
 ### Filled
@@ -635,271 +627,6 @@ The flat `filled` variant.
 
 <NativeExample name="card-filled" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Card
-
-Outer container that sets the size and variant.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `CardSize` | `"default"` | `default` or `sm`. |
-| `variant` | `CardVariant` | `"default"` | `default` (raised) or `filled`. |
-
-Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### CardHeader
-
-Title area; places a `CardAction` beside the text.
-
-Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### CardTitle
-
-Bold heading.
-
-Also accepts the props of `Text`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### CardDescription
-
-Secondary text below the title.
-
-Also accepts the props of `Text`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### CardAction
-
-Slot for a button in the header.
-
-Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### CardContent
-
-Padded body.
-
-Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### CardFooter
-
-Padded row for actions.
-
-Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### Card
-
-Outer container that sets the size and variant.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `Variant`: `.default` \| `.filled` | `.default` | `default` (raised) or `filled`. |
-| `size` | `Size`: `.default` \| `.sm` | `.default` | Inner spacing: `default` or the more compact `sm`. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### CardHeader
-
-Title area; places a `CardAction` beside the text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `description` | `LocalizedStringKey?` | `nil` | The supporting text. |
-| `action` | `() -> Action` | - | Called when it is tapped. |
-
-Overloads: `init(_:description:action:)`, `init(_:description:)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### CardTitle
-
-Bold heading.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### CardDescription
-
-Secondary text below the title.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ text` | `LocalizedStringKey` | - | The text. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### CardContent
-
-Padded body.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### CardFooter
-
-Padded row for actions.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### CardVariant
-
-Values: `Default`, `Filled`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### CardSize
-
-Values: `Default`, `Sm`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### Card
-
-Outer container that sets the size and variant.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `CardVariant`: `Default` \| `Filled` | `CardVariant.Default` | `default` (raised) or `filled`. |
-| `size` | `CardSize`: `Default` \| `Sm` | `CardSize.Default` | Inner spacing: `default` or the more compact `sm`. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### CardHeader
-
-Title area; places a `CardAction` beside the text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String` | - | The title text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `description` | `String?` | `null` | The supporting text. |
-| `action` | `(@Composable () -> Unit)?` | `null` | Called when it is tapped. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### CardTitle
-
-Bold heading.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### CardDescription
-
-Secondary text below the title.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### CardContent
-
-Padded body.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### CardFooter
-
-Padded row for actions.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -907,10 +634,190 @@ Padded row for actions.
 - `CardTitle` has the `heading` role.
 - The card itself adds no role; actions inside provide their own.
 
-## Notes
+</Only>
 
-- Uses `bg-card` with a shadow, or `bg-muted` for `filled`; the border is stronger in dark mode.
-- Light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Card
+
+Outer container that sets the size and variant.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `CardSize` | `"default"` |
+| `variant` | `CardVariant` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
+
+`size` is `"default"` or `"sm"`, and `variant` is `"default"` (raised) or `"filled"`. The `filled` variant uses `bg-muted` without the shadow, and the border is stronger in dark mode. Colors follow the system appearance.
+
+### CardHeader
+
+Title area; places a `CardAction` beside the text.
+
+Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
+
+Put a `CardTitle` and `CardDescription` in it.
+
+### CardTitle
+
+Bold heading.
+
+Also accepts the props of `Text`.
+
+### CardDescription
+
+Secondary text below the title.
+
+Also accepts the props of `Text`.
+
+### CardAction
+
+Slot for a button in the header.
+
+Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
+
+### CardContent
+
+Padded body.
+
+Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
+
+### CardFooter
+
+Padded row for actions.
+
+Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
+
+</Only>
+
+<Only platform="swift">
+
+### Card
+
+Outer container that sets the size and variant.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `Variant`: `.default` \| `.filled` | `.default` |
+| `size` | `Size`: `.default` \| `.sm` | `.default` |
+| `content` | `() -> Content` | - |
+
+### CardHeader
+
+Title area; places a `CardAction` beside the text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `description` | `LocalizedStringKey?` | `nil` |
+| `action` | `() -> Action` | - |
+
+Overloads: `init(_:description:action:)`, `init(_:description:)`.
+
+### CardTitle
+
+Bold heading.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+
+### CardDescription
+
+Secondary text below the title.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ text` | `LocalizedStringKey` | - |
+
+### CardContent
+
+Padded body.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### CardFooter
+
+Padded row for actions.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### CardVariant
+
+Values: `Default`, `Filled`.
+
+### CardSize
+
+Values: `Default`, `Sm`.
+
+### Card
+
+Outer container that sets the size and variant.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `CardVariant`: `Default` \| `Filled` | `CardVariant.Default` |
+| `size` | `CardSize`: `Default` \| `Sm` | `CardSize.Default` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### CardHeader
+
+Title area; places a `CardAction` beside the text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `description` | `String?` | `null` |
+| `action` | `(@Composable () -> Unit)?` | `null` |
+
+### CardTitle
+
+Bold heading.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### CardDescription
+
+Secondary text below the title.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### CardContent
+
+Padded body.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### CardFooter
+
+Padded row for actions.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
 
 </Only>
 

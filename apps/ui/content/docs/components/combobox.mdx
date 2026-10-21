@@ -15,7 +15,9 @@ For multiple selection, replace `ComboboxInput` with `ComboboxChips`, which show
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/combobox
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add combobox
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
@@ -37,16 +41,37 @@ npm install @base-ui/react @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Input Group](/docs/components/input-group).
 
-3. Copy the source into `components/ui/combobox.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/combobox.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Combobox, ComboboxValue, ComboboxTrigger, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxGroup, ComboboxLabel, ComboboxCollection, ComboboxEmpty, ComboboxSeparator, ComboboxChips, ComboboxChip, ComboboxChipsInput, useComboboxAnchor } from "@/components/ui/combobox"
+import {
+  Combobox,
+  ComboboxChip,
+  ComboboxChips,
+  ComboboxChipsInput,
+  ComboboxCollection,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxGroup,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxLabel,
+  ComboboxList,
+  ComboboxSeparator,
+  ComboboxTrigger,
+  ComboboxValue,
+  useComboboxAnchor,
+} from "@/components/ui/combobox"
 ```
 
 ```tsx
@@ -70,241 +95,60 @@ import { Combobox, ComboboxValue, ComboboxTrigger, ComboboxInput, ComboboxConten
 </div>
 ```
 
-Pass `items` to the root and a function as the child of `ComboboxList`, which receives each item and returns a `ComboboxItem` with a matching `value`. The value is uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. To read or control the typed text, use `inputValue` and `onInputValueChange`.
+## Composition
 
-For grouped data, pass groups as `items`, render a `ComboboxGroup` with its own `items` for each one, and render its items with `ComboboxCollection`. For multiple selection, set `multiple` on the root, create a ref with `useComboboxAnchor`, attach it to `ComboboxChips`, and pass it as `anchor` to `ComboboxContent` so the popup aligns to the chips field. Use `ComboboxValue` with a render function to map the selected values to chips.
+Use the following composition to build a `Combobox`:
+
+```text
+Combobox
+├── ComboboxInput
+├── ComboboxTrigger
+├── ComboboxChips
+│   └── ComboboxValue
+│       ├── ComboboxChip
+│       └── ComboboxChipsInput
+└── ComboboxContent
+    ├── ComboboxEmpty
+    └── ComboboxList
+        ├── ComboboxItem
+        └── ComboboxGroup
+            ├── ComboboxSeparator
+            ├── ComboboxLabel
+            └── ComboboxCollection
+                └── ComboboxItem
+```
 
 ## Examples
 
 ### With clear button
 
-A combobox with a starting value and a clear button, enabled with `showClear`.
+Set `showClear` on `ComboboxInput` to show a clear button at the end of the field. When shown, it hides the open button. This combobox also starts with a value.
 
 <ComponentPreview name="combobox-with-clear-button" />
 
 ### Disabled
 
-A disabled combobox whose input and toggle button cannot be focused or used.
+Set `disabled` on `ComboboxInput` to disable the field and its buttons, so they cannot be focused or used.
 
 <ComponentPreview name="combobox-disabled" />
 
 ### Grouped
 
-Options grouped by region with labels and separators between groups.
+Pass groups as `items`, render a `ComboboxGroup` with its own `items` for each one, and render its items with `ComboboxCollection`. Labels and separators divide the regions.
 
 <ComponentPreview name="combobox-grouped" />
 
 ### Highlight match
 
-A controlled `inputValue` used to emphasize the matching part of each option.
+Control the typed text with `inputValue` and `onInputValueChange`, and use it to emphasize the matching part of each option.
 
 <ComponentPreview name="combobox-highlight-match" />
 
 ### Multiple
 
-Multiple selection shown as removable chips, with Backspace removing the last chip.
+Set `multiple` on the root, create a ref with `useComboboxAnchor`, attach it to `ComboboxChips`, and pass it as `anchor` to `ComboboxContent`. `ComboboxValue` maps the selected values to removable chips, and Backspace removes the last chip.
 
 <ComponentPreview name="combobox-multiple" />
-
-## API Reference
-
-<Anatomy>
-
-- [Combobox](#combobox)
-  - [ComboboxInput](#comboboxinput)
-  - [ComboboxTrigger](#comboboxtrigger)
-  - [ComboboxChips](#comboboxchips)
-    - [ComboboxValue](#comboboxvalue)
-      - [ComboboxChip](#comboboxchip)
-      - [ComboboxChipsInput](#comboboxchipsinput)
-  - [ComboboxContent](#comboboxcontent)
-    - [ComboboxEmpty](#comboboxempty)
-    - [ComboboxList](#comboboxlist)
-      - [ComboboxItem](#comboboxitem)
-      - [ComboboxGroup](#comboboxgroup)
-        - [ComboboxSeparator](#comboboxseparator)
-        - [ComboboxLabel](#comboboxlabel)
-        - [ComboboxCollection](#comboboxcollection)
-          - [ComboboxItem](#comboboxitem)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Combobox
-
-The root that holds the items, the selected value and the open state.
-
-Also accepts the props of `ComboboxPrimitive.Root`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ComboboxValue
-
-Renders the current value, or passes it to a render function, for example to draw chips.
-
-Also accepts the props of `ComboboxPrimitive.Value.Props`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ComboboxTrigger
-
-A button that opens the list, with a caret icon.
-
-Also accepts the props of `ComboboxPrimitive.Trigger.Props`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ComboboxInput
-
-The text field, rendered inside an `InputGroup` with optional open and clear buttons.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showTrigger` | `boolean` | `true` | Shows the button at the end of the field that opens the list. |
-| `showClear` | `boolean` | `false` | Shows a clear button at the end of the field. When shown, it hides the open button. |
-| `disabled` | `boolean` | `false` | Disables the field and its buttons. |
-
-Also accepts the props of `ComboboxPrimitive.Input.Props`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ComboboxContent
-
-The popup, rendered in a portal and positioned below the input.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | Which side of the anchor the popup opens on. |
-| `sideOffset` | `number` | `6` | Distance from the anchor in pixels. |
-| `align` | `"start" \| "center" \| "end"` | `"start"` | Alignment against the anchor. |
-| `alignOffset` | `number` | `0` | Offset along the alignment axis in pixels. |
-| `anchor` | `Element \| React.RefObject<Element \| null> \| null` | — | The element to position against, such as the ref from `useComboboxAnchor`. Defaults to the input. |
-
-Also accepts the props of `ComboboxPrimitive.Popup.Props`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### ComboboxList
-
-The scrollable list that renders items through a render function.
-
-Also accepts the props of `ComboboxPrimitive.List.Props`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### ComboboxItem
-
-A selectable option that shows a check mark when selected.
-
-Also accepts the props of `ComboboxPrimitive.Item.Props`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### ComboboxGroup
-
-Groups related options and takes its own `items`.
-
-Also accepts the props of `ComboboxPrimitive.Group.Props`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### ComboboxLabel
-
-The visible label of a group.
-
-Also accepts the props of `ComboboxPrimitive.GroupLabel.Props`.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### ComboboxCollection
-
-Renders the items of a group through a render function.
-
-Also accepts the props of `ComboboxPrimitive.Collection.Props`.
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### ComboboxEmpty
-
-Content shown when no options match the typed text.
-
-Also accepts the props of `ComboboxPrimitive.Empty.Props`.
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### ComboboxSeparator
-
-A divider between groups.
-
-Also accepts the props of `ComboboxPrimitive.Separator.Props`.
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### ComboboxChips
-
-The field that holds selected values as chips in multiple selection.
-
-Also accepts the props of `ComboboxPrimitive.Chips.Props`, including `ref`.
-
-</ApiPart>
-
-<ApiPart index={14}>
-
-### ComboboxChip
-
-A selected value shown as a chip, with an optional remove button.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showRemove` | `boolean` | `true` | Shows a button inside the chip that removes the value. |
-| `removeLabel` | `string` | `Remove {value}` | Accessible name of the remove button. Defaults to `Remove` followed by the chip text. |
-
-Also accepts the props of `ComboboxPrimitive.Chip.Props`.
-
-</ApiPart>
-
-<ApiPart index={15}>
-
-### ComboboxChipsInput
-
-The text field placed after the chips in multiple selection.
-
-Also accepts the props of `ComboboxPrimitive.Input.Props`.
-
-</ApiPart>
-
-### useComboboxAnchor
-
-```tsx
-const anchor = useComboboxAnchor()
-```
-
-Returns a ref for `ComboboxChips`. Pass the same ref as `anchor` to `ComboboxContent` so the popup aligns to the chips field.
 
 ## Accessibility
 
@@ -316,12 +160,136 @@ Returns a ref for `ComboboxChips`. Pass the same ref as `anchor` to `ComboboxCon
 - When disabled, the input and the open button are disabled and removed from the Tab order.
 - Give the input an accessible name with a visible label or `aria-label`.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values such as `combobox-content`, `combobox-list`, `combobox-item`, `combobox-label`, `combobox-empty`, `combobox-chips`, `combobox-chip`, `combobox-chip-remove` and `combobox-chip-input`.
-- Highlighted items get `data-highlighted` and disabled items get `data-disabled`.
-- The popup matches the width of its anchor through `--anchor-width` and limits its height to the available space.
-- Uses the `popover`, `accent`, `primary`, `secondary` and `border` colors.
+### Combobox
+
+The root that holds the items, the selected value and the open state.
+
+Also accepts the props of `ComboboxPrimitive.Root`.
+
+Pass `items` to the root and a function as the child of `ComboboxList`, which receives each item and returns a `ComboboxItem` with a matching `value`. The value is uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. To read or control the typed text, use `inputValue` and `onInputValueChange`.
+
+### ComboboxValue
+
+Renders the current value, or passes it to a render function, for example to draw chips.
+
+Also accepts the props of `ComboboxPrimitive.Value.Props`.
+
+### ComboboxTrigger
+
+A button that opens the list, with a caret icon.
+
+Also accepts the props of `ComboboxPrimitive.Trigger.Props`.
+
+### ComboboxInput
+
+The text field, rendered inside an `InputGroup` with optional open and clear buttons.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `showTrigger` | `boolean` | `true` |
+| `showClear` | `boolean` | `false` |
+| `disabled` | `boolean` | `false` |
+
+Also accepts the props of `ComboboxPrimitive.Input.Props`.
+
+`showTrigger` shows the button at the end of the field that opens the list. `showClear` shows a clear button, which hides the open button. `disabled` disables the field and its buttons.
+
+### ComboboxContent
+
+The popup, rendered in a portal and positioned below the input.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` |
+| `sideOffset` | `number` | `6` |
+| `align` | `"start" \| "center" \| "end"` | `"start"` |
+| `alignOffset` | `number` | `0` |
+| `anchor` | `Element \| React.RefObject<Element \| null> \| null` | — |
+
+Also accepts the props of `ComboboxPrimitive.Popup.Props`.
+
+`side` and `align` place the popup against its anchor, and `sideOffset` and `alignOffset` are in pixels. `anchor` is the element to position against, such as the ref from `useComboboxAnchor`; it defaults to the input. The popup matches the width of its anchor through `--anchor-width` and limits its height to the available space.
+
+### ComboboxList
+
+The scrollable list that renders items through a render function.
+
+Also accepts the props of `ComboboxPrimitive.List.Props`.
+
+### ComboboxItem
+
+A selectable option that shows a check mark when selected.
+
+Also accepts the props of `ComboboxPrimitive.Item.Props`.
+
+Highlighted items get `data-highlighted` and disabled items get `data-disabled`.
+
+### ComboboxGroup
+
+Groups related options and takes its own `items`.
+
+Also accepts the props of `ComboboxPrimitive.Group.Props`.
+
+### ComboboxLabel
+
+The visible label of a group.
+
+Also accepts the props of `ComboboxPrimitive.GroupLabel.Props`.
+
+### ComboboxCollection
+
+Renders the items of a group through a render function.
+
+Also accepts the props of `ComboboxPrimitive.Collection.Props`.
+
+### ComboboxEmpty
+
+Content shown when no options match the typed text.
+
+Also accepts the props of `ComboboxPrimitive.Empty.Props`.
+
+### ComboboxSeparator
+
+A divider between groups.
+
+Also accepts the props of `ComboboxPrimitive.Separator.Props`.
+
+### ComboboxChips
+
+The field that holds selected values as chips in multiple selection.
+
+Also accepts the props of `ComboboxPrimitive.Chips.Props`, including `ref`.
+
+### ComboboxChip
+
+A selected value shown as a chip, with an optional remove button.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `showRemove` | `boolean` | `true` |
+| `removeLabel` | `string` | `Remove {value}` |
+
+Also accepts the props of `ComboboxPrimitive.Chip.Props`.
+
+`showRemove` shows a button inside the chip that removes the value. `removeLabel` is the accessible name of that button.
+
+### ComboboxChipsInput
+
+The text field placed after the chips in multiple selection.
+
+Also accepts the props of `ComboboxPrimitive.Input.Props`.
+
+### useComboboxAnchor
+
+```tsx
+const anchor = useComboboxAnchor()
+```
+
+Returns a ref for `ComboboxChips`. Pass the same ref as `anchor` to `ComboboxContent` so the popup aligns to the chips field.
+
+Each part sets a `data-slot`, such as `combobox-item` or `combobox-chip-remove`, for styling.
 
 </Only>
 
@@ -342,6 +310,10 @@ For multiple selection, set `multiple` and use `ComboboxChips` with a `ComboboxC
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -391,7 +363,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -399,7 +373,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -443,17 +417,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/combobox.tsx`:
+5. Copy and paste the following code into `components/ui/combobox.tsx`:
 
 <ComponentSource path="uniwind/components/ui/combobox.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn nativewind phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -497,17 +471,17 @@ npx expo install cn nativewind phosphor-react-native react-native-reanimated rea
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/combobox.tsx`:
+5. Copy and paste the following code into `components/ui/combobox.tsx`:
 
 <ComponentSource path="nativewind/components/ui/combobox.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -551,11 +525,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-scre
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/combobox.tsx`:
+5. Copy and paste the following code into `components/ui/combobox.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/combobox.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -664,6 +638,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -896,16 +874,6 @@ fun ComboboxDemo(
 
 </Only>
 
-<Only platform="rn">
-
-Pass `items` to the root and render the filtered list with a function child of `ComboboxList`. For grouped items, render a `ComboboxGroup` per group with a `ComboboxLabel` and a `ComboboxCollection`. Add `ComboboxEmpty` for the no-results message.
-
-Use `value`, `defaultValue` and `onValueChange` for the selection, and `inputValue` with `onInputValueChange` for the typed text. For object items, provide `itemToStringLabel`. `filter`, `limit` and `locale` tune matching.
-
-With chips, create a ref with `useComboboxAnchor()`, attach it to `ComboboxChips`, and pass it to `ComboboxContent` as `anchor` so the list lines up with the chips field. On `ComboboxInput`, set `showClear` to add a clear button and `showTrigger={false}` to hide the caret.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -914,7 +882,7 @@ With chips, create a ref with `useComboboxAnchor()`, attach it to `ComboboxChips
 
 ### With value
 
-Starts with a selected value.
+Set an initial value so the combobox starts with a selection.
 
 <NativeExample name="combobox-with-value" />
 
@@ -942,6 +910,12 @@ Items in labelled groups with separators.
 
 Multiple selection shown as removable chips.
 
+<Only platform="rn">
+
+Set `multiple` and create a ref with `useComboboxAnchor()`. Attach it to `ComboboxChips`, and pass it to `ComboboxContent` as `anchor` so the list lines up with the chips field.
+
+</Only>
+
 <NativeExample name="combobox-multiple" />
 
 ### With label
@@ -968,258 +942,6 @@ The React Native tab shows 1 more example.
 
 </Only>
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Combobox
-
-The root that holds the items, the selected value, the typed text and the open state.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `Item[] \| ComboboxItemGroup<Item>[]` | - | The items to filter, flat or grouped. |
-| `value` | `Value \| Value[] \| null` | - | The selected value, for controlled use. |
-| `defaultValue` | `Value \| Value[] \| null` | - | The initial value when uncontrolled. |
-| `onValueChange` | `(value, details) => void` | - | Called when the selection changes. |
-| `multiple` | `boolean` | `false` | Allows several values to be selected. |
-| `inputValue` | `string` | - | The typed text, for controlled use. |
-| `onInputValueChange` | `(inputValue: string, details) => void` | - | Called when the typed text changes. |
-| `filter` | `ComboboxFilter<Item> \| null` | - | Custom filter function; `null` turns filtering off. |
-| `limit` | `number` | - | The maximum number of items shown. |
-| `itemToStringLabel` | `(itemValue: Value) => string` | - | Returns the label shown for an item value. |
-| `openOnInputClick` | `boolean` | `true` | Opens the list when the input is pressed. |
-| `open` | `boolean` | - | Whether the list is open, for controlled use. |
-| `defaultOpen` | `boolean` | `false` | Whether the list starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the list opens or closes. |
-| `disabled` | `boolean` | `false` | Disables the combobox. |
-| `readOnly` | `boolean` | `false` | Shows the value without allowing changes. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ComboboxTrigger
-
-Round button that opens the list.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-
-Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Trigger>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ComboboxInput
-
-Text field with caret trigger and optional clear button.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Classes merged onto the root element. |
-| `children` | `React.ReactNode` | - | The content. |
-| `showTrigger` | `boolean` | `true` | Shows the caret button. Defaults to `true`. |
-| `showClear` | `boolean` | `false` | Shows a clear button when there is text or a value. |
-| `invalid` | `boolean` | - | Shows the destructive border; also read from a surrounding Field. |
-
-Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Input>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ComboboxContent
-
-Floating popup for the list.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `portalHost` | `string` | - | Name of the portal host to render into. |
-
-Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Popup>`, `PositionerProps`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ComboboxList
-
-Scrollable list of items.
-
-Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.List>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### ComboboxItem
-
-Selectable option with a check mark when selected.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-
-Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Item>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### ComboboxGroup
-
-Group of items.
-
-Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Group>`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### ComboboxLabel
-
-Heading for a group.
-
-Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.GroupLabel>`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### ComboboxEmpty
-
-Message shown when nothing matches.
-
-Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Empty>`.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### ComboboxSeparator
-
-Line between groups.
-
-Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Separator>`.
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### ComboboxChips
-
-Field that holds chips for multiple selection.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `invalid` | `boolean` | - | Shows the destructive border. |
-
-Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Chips>`.
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### ComboboxChip
-
-Selected value with a remove button.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showRemove` | `boolean` | `true` | Shows the remove button. Defaults to `true`. |
-
-Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Chip>`.
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### ComboboxChipsInput
-
-Text input inside the chips field.
-
-Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Input>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### Combobox
-
-The root that holds the items, the selected value, the typed text and the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ items` | `[Item]` | - | The items to filter, flat or grouped. |
-| `selection` | `Binding<Item?>` | - | The selected value. |
-| `placeholder` | `LocalizedStringKey` | `"Select"` | Text shown while it is empty. |
-| `searchPlaceholder` | `LocalizedStringKey` | `"Search"` | - |
-| `emptyText` | `LocalizedStringKey` | `"No items found."` | - |
-| `title` | `(Item) -> String` | - | The title text. |
-
-Overloads: `init(_:selection:placeholder:searchPlaceholder:emptyText:title:)`, `init(_:selection:placeholder:searchPlaceholder:emptyText:title:)`, `init(_:selection:placeholder:searchPlaceholder:emptyText:)`, `init(_:selection:placeholder:searchPlaceholder:emptyText:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Combobox
-
-The root that holds the items, the selected value, the typed text and the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `List<T>` | - | The items to filter, flat or grouped. |
-| `value` | `T?` | - | The selected value, for controlled use. |
-| `onValueChange` | `(T?) -> Unit` | - | Called when the selection changes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `itemText` | `(T) -> String` | `{ it.toString() }` | - |
-| `placeholder` | `String` | `""` | Text shown while it is empty. |
-| `emptyText` | `String` | `"No items found."` | - |
-| `groupBy` | `((T) -> String)?` | `null` | - |
-| `showTrigger` | `Boolean` | `true` | Shows the caret button. |
-| `showClear` | `Boolean` | `false` | Shows a clear button when there is text or a value. |
-| `invalid` | `Boolean?` | `null` | Shows the destructive border; also read from a surrounding Field. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `filter` | `(T, String) -> Boolean` | `{ item, query -> itemText(item).contains(query, ignoreCase = true) }` | Custom filter function; `null` turns filtering off. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### MultiCombobox
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `List<T>` | - | The items to filter, flat or grouped. |
-| `values` | `List<T>` | - | - |
-| `onValuesChange` | `(List<T>) -> Unit` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `itemText` | `(T) -> String` | `{ it.toString() }` | - |
-| `placeholder` | `String` | `""` | Text shown while it is empty. |
-| `emptyText` | `String` | `"No items found."` | - |
-| `groupBy` | `((T) -> String)?` | `null` | - |
-| `invalid` | `Boolean?` | `null` | Shows the destructive border; also read from a surrounding Field. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `filter` | `(T, String) -> Boolean` | `{ item, query -> itemText(item).contains(query, ignoreCase = true) }` | Custom filter function; `null` turns filtering off. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1229,11 +951,203 @@ The root that holds the items, the selected value, the typed text and the open s
 - The empty message is a polite live region.
 - The trigger, clear and chip remove buttons are labelled "Show options", "Clear" and "Remove".
 
-## Notes
+</Only>
 
-- Uses `bg-secondary`, `bg-popover`, `border-ring` and `border-destructive` tokens; light and dark follow the system appearance.
-- In Uniwind and NativeWind, a focused field also draws the `ring-3 ring-ring/50` focus ring.
-- Fade animations respect the system Reduce Motion setting.
+## API Reference
+
+<Only platform="rn">
+
+### Combobox
+
+The root that holds the items, the selected value, the typed text and the open state.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `items` | `Item[] \| ComboboxItemGroup<Item>[]` | - |
+| `value` | `Value \| Value[] \| null` | - |
+| `defaultValue` | `Value \| Value[] \| null` | - |
+| `onValueChange` | `(value, details) => void` | - |
+| `multiple` | `boolean` | `false` |
+| `inputValue` | `string` | - |
+| `onInputValueChange` | `(inputValue: string, details) => void` | - |
+| `filter` | `ComboboxFilter<Item> \| null` | - |
+| `limit` | `number` | - |
+| `itemToStringLabel` | `(itemValue: Value) => string` | - |
+| `openOnInputClick` | `boolean` | `true` |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean, details) => void` | - |
+| `disabled` | `boolean` | `false` |
+| `readOnly` | `boolean` | `false` |
+
+Pass `items`, flat or grouped, and render the filtered list with a function child of `ComboboxList`. Use `value`, `defaultValue` and `onValueChange` for the selection, and `inputValue` with `onInputValueChange` for the typed text. For object items, provide `itemToStringLabel`. `filter`, `limit` and `locale` tune matching: a `null` filter turns filtering off, and `limit` caps the number of items shown. `readOnly` shows the value without allowing changes.
+
+### ComboboxTrigger
+
+Round button that opens the list.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Trigger>`.
+
+### ComboboxInput
+
+Text field with caret trigger and optional clear button.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | - |
+| `children` | `React.ReactNode` | - |
+| `showTrigger` | `boolean` | `true` |
+| `showClear` | `boolean` | `false` |
+| `invalid` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Input>`.
+
+Set `showClear` to add a clear button, shown when there is text or a value, and `showTrigger={false}` to hide the caret. `invalid` shows the destructive border; it is also read from a surrounding Field. In Uniwind and NativeWind, a focused field also draws the `ring-3 ring-ring/50` focus ring.
+
+### ComboboxContent
+
+Floating popup for the list.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `portalHost` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Popup>`, `PositionerProps`.
+
+`portalHost` names the portal host to render into. Fade animations respect the system Reduce Motion setting.
+
+### ComboboxList
+
+Scrollable list of items.
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.List>`.
+
+### ComboboxItem
+
+Selectable option with a check mark when selected.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Item>`.
+
+### ComboboxGroup
+
+Group of items.
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Group>`.
+
+For grouped items, render a `ComboboxGroup` per group with a `ComboboxLabel` and a `ComboboxCollection`.
+
+### ComboboxLabel
+
+Heading for a group.
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.GroupLabel>`.
+
+### ComboboxEmpty
+
+Message shown when nothing matches.
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Empty>`.
+
+Add it for the no-results message.
+
+### ComboboxSeparator
+
+Line between groups.
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Separator>`.
+
+### ComboboxChips
+
+Field that holds chips for multiple selection.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `invalid` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Chips>`.
+
+### ComboboxChip
+
+Selected value with a remove button.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `showRemove` | `boolean` | `true` |
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Chip>`.
+
+### ComboboxChipsInput
+
+Text input inside the chips field.
+
+Also accepts the props of `React.ComponentProps<typeof ComboboxPrimitive.Input>`.
+
+</Only>
+
+<Only platform="swift">
+
+### Combobox
+
+The root that holds the items, the selected value, the typed text and the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ items` | `[Item]` | - |
+| `selection` | `Binding<Item?>` | - |
+| `placeholder` | `LocalizedStringKey` | `"Select"` |
+| `searchPlaceholder` | `LocalizedStringKey` | `"Search"` |
+| `emptyText` | `LocalizedStringKey` | `"No items found."` |
+| `title` | `(Item) -> String` | - |
+
+Overloads: `init(_:selection:placeholder:searchPlaceholder:emptyText:title:)`, `init(_:selection:placeholder:searchPlaceholder:emptyText:title:)`, `init(_:selection:placeholder:searchPlaceholder:emptyText:)`, `init(_:selection:placeholder:searchPlaceholder:emptyText:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### Combobox
+
+The root that holds the items, the selected value, the typed text and the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `items` | `List<T>` | - |
+| `value` | `T?` | - |
+| `onValueChange` | `(T?) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `itemText` | `(T) -> String` | `{ it.toString() }` |
+| `placeholder` | `String` | `""` |
+| `emptyText` | `String` | `"No items found."` |
+| `groupBy` | `((T) -> String)?` | `null` |
+| `showTrigger` | `Boolean` | `true` |
+| `showClear` | `Boolean` | `false` |
+| `invalid` | `Boolean?` | `null` |
+| `enabled` | `Boolean` | `true` |
+| `filter` | `(T, String) -> Boolean` | `{ item, query -> itemText(item).contains(query, ignoreCase = true) }` |
+
+### MultiCombobox
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `items` | `List<T>` | - |
+| `values` | `List<T>` | - |
+| `onValuesChange` | `(List<T>) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `itemText` | `(T) -> String` | `{ it.toString() }` |
+| `placeholder` | `String` | `""` |
+| `emptyText` | `String` | `"No items found."` |
+| `groupBy` | `((T) -> String)?` | `null` |
+| `invalid` | `Boolean?` | `null` |
+| `enabled` | `Boolean` | `true` |
+| `filter` | `(T, String) -> Boolean` | `{ item, query -> itemText(item).contains(query, ignoreCase = true) }` |
 
 </Only>
 

@@ -126,13 +126,11 @@ import {
 
 </OnlyBase>
 
-Mark finished steps with no status, the current step with `running` and the steps still to come with `pending`. Keep the progress count in a `TraceDescription` so the title itself stays the goal.
-
 ## Examples
 
 ### Details
 
-A description above the steps, inside `TraceCollapsibleContent`.
+Shows a description above the steps, inside `TraceCollapsibleContent`.
 
 <ComponentPreview name="plan-description" />
 
@@ -152,14 +150,16 @@ const stream = createUIMessageStream({
 const plan = message.parts.find((part) => part.type === "data-plan")
 ```
 
-## API Reference
-
-See [Trace](/docs/components/trace#api-reference).
-
 ## Accessibility
 
 - The plan line is a button with `aria-expanded`, and its accessible name includes the progress count.
 - Pending steps are muted and the running step shimmers, so the step icons also differ by state.
+
+## API Reference
+
+See [Trace](/docs/components/trace#api-reference).
+
+Mark finished steps with no status, the current step with `running` and the steps still to come with `pending`. Keep the progress count in a `TraceDescription` so the title itself stays the goal.
 
 </Only>
 

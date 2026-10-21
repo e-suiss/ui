@@ -15,7 +15,9 @@ A `Field` wraps one control together with its `FieldLabel`, an optional `FieldDe
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/field
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add field
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install class-variance-authority
@@ -37,16 +41,31 @@ npm install class-variance-authority
 
 2. Add the pieces it builds on: [Label](/docs/components/label), [Separator](/docs/components/separator).
 
-3. Copy the source into `components/ui/field.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/field.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { FieldSet, FieldLegend, FieldGroup, Field, FieldContent, FieldLabel, FieldTitle, FieldDescription, FieldSeparator, FieldError } from "@/components/ui/field"
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+  FieldTitle,
+} from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 ```
 
@@ -62,11 +81,38 @@ import { Input } from "@/components/ui/input"
 </div>
 ```
 
-Connect each `FieldLabel` to its control with `htmlFor` and `id`. Set `orientation="horizontal"` to place the label beside the control, for example for a checkbox or switch, or `responsive` to switch from vertical to horizontal when the surrounding `FieldGroup` is wide enough.
+## Composition
 
-To show an error, set `aria-invalid` on the control and render a `FieldError` with children or an `errors` array. Pass `data-disabled` on a `Field` to dim its label when the control is disabled.
+Use the following composition to build a `Field`:
 
-To build selectable cards, place a horizontal `Field` inside a `FieldLabel`; the label gets a border, and a highlighted ring when the control inside it is checked.
+```text
+Field
+├── FieldLabel
+├── FieldDescription
+└── FieldError
+FieldSet
+├── FieldLegend
+├── FieldGroup
+│   └── Field
+│       └── FieldLabel
+├── FieldDescription
+└── FieldLabel
+    └── Field
+        └── FieldContent
+            ├── FieldTitle
+            └── FieldDescription
+FieldGroup
+├── Field
+│   ├── FieldLabel
+│   ├── FieldContent
+│   │   ├── FieldLabel
+│   │   └── FieldDescription
+│   └── FieldDescription
+├── FieldSet
+│   ├── FieldLegend
+│   └── FieldDescription
+└── FieldSeparator
+```
 
 ## Examples
 
@@ -78,7 +124,7 @@ A description that contains a link, styled with `text-primary` and an underline.
 
 ### Inset
 
-Horizontal fields in an `inset` field group, forming a rounded settings list with separators.
+Set `variant="inset"` on `FieldGroup` to put horizontal fields in a rounded settings list with separators.
 
 <ComponentPreview name="field-inset" />
 
@@ -90,31 +136,31 @@ A field that labels and describes a `Textarea`.
 
 ### Invalid
 
-An invalid field with an error message announced as an alert.
+Set `aria-invalid` on the control and render a `FieldError` with the message. The error is announced as an alert.
 
 <ComponentPreview name="field-invalid" />
 
 ### Multiple errors
 
-A `FieldError` that renders an `errors` array as a bulleted list.
+Pass an `errors` array to `FieldError` to render the messages as a bulleted list.
 
 <ComponentPreview name="field-multiple-errors" />
 
 ### Disabled
 
-A disabled field with a dimmed label and a disabled input.
+Set `data-disabled` on the `Field` to dim its label when the control is disabled.
 
 <ComponentPreview name="field-disabled" />
 
 ### Horizontal
 
-Horizontal fields with a checkbox and a switch, one with a description in `FieldContent`.
+Set `orientation="horizontal"` to place the label beside the control, here a checkbox and a switch. One field holds its label and description in `FieldContent`.
 
 <ComponentPreview name="field-horizontal" />
 
 ### Choice cards
 
-Radio options presented as selectable cards by nesting a `Field` inside a `FieldLabel`.
+Place a horizontal `Field` inside a `FieldLabel` to present radio options as selectable cards. The label gets a border, and a highlighted ring when the control inside it is checked.
 
 <ComponentPreview name="field-choice-cards" />
 
@@ -126,162 +172,9 @@ A complete payment form built from field sets, groups, a separator and actions.
 
 ### Separator with text
 
-A `FieldSeparator` with text between a sign-in button and an email field.
+Pass text as the children of `FieldSeparator` to center it on the line, here between a sign-in button and an email field.
 
 <ComponentPreview name="field-separator-with-text" />
-
-## API Reference
-
-<Anatomy>
-
-- [Field](#field)
-  - [FieldLabel](#fieldlabel)
-  - [FieldDescription](#fielddescription)
-  - [FieldError](#fielderror)
-- [FieldSet](#fieldset)
-  - [FieldLegend](#fieldlegend)
-  - [FieldGroup](#fieldgroup)
-    - [Field](#field)
-      - [FieldLabel](#fieldlabel)
-  - [FieldDescription](#fielddescription)
-  - [FieldLabel](#fieldlabel)
-    - [Field](#field)
-      - [FieldContent](#fieldcontent)
-        - [FieldTitle](#fieldtitle)
-        - [FieldDescription](#fielddescription)
-- [FieldGroup](#fieldgroup)
-  - [Field](#field)
-    - [FieldLabel](#fieldlabel)
-    - [FieldContent](#fieldcontent)
-      - [FieldLabel](#fieldlabel)
-      - [FieldDescription](#fielddescription)
-    - [FieldDescription](#fielddescription)
-  - [FieldSet](#fieldset)
-    - [FieldLegend](#fieldlegend)
-    - [FieldDescription](#fielddescription)
-  - [FieldSeparator](#fieldseparator)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### FieldSet
-
-Groups related fields in a native `fieldset`.
-
-Also accepts the props of `React.ComponentProps<"fieldset">`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### FieldLegend
-
-The caption of a field set.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"legend" \| "label"` | `"legend"` | Sets `data-variant` to `legend` or `label` so the legend can be styled as a section caption or as a field label. |
-
-Also accepts the props of `React.ComponentProps<"legend">`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### FieldGroup
-
-Stacks fields with consistent spacing, or groups them into an inset list.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "inset"` | `"default"` | `inset` groups the fields into a rounded list on `bg-muted`, with separators between rows and inputs aligned to the end. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### Field
-
-Wraps a single control with its label, description and error.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `orientation` | `"vertical" \| "horizontal" \| "responsive"` | `"vertical"` | `vertical` stacks the label above the control, `horizontal` places them side by side, and `responsive` switches to horizontal when the field group is wide enough. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### FieldContent
-
-Stacks a label and description next to a control in a horizontal field.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### FieldLabel
-
-The label of a field's control.
-
-Also accepts the props of `React.ComponentProps<typeof Label>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### FieldTitle
-
-A heading inside a field that is not a label, such as the title of a choice card.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### FieldDescription
-
-Supporting text that describes the control.
-
-Also accepts the props of `React.ComponentProps<"p">`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### FieldSeparator
-
-A divider between sections, with optional centered text.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | Optional text centered on the separator line. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### FieldError
-
-An error message for the field.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `errors` | `Array<{ message?: string } \| undefined>` | - | A list of error objects to display. Duplicate messages are removed; one message renders as text and several render as a list. Ignored when children are provided. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -291,12 +184,99 @@ Also accepts the props of `React.ComponentProps<"div">`.
 - Set `aria-invalid` on the control to mark it invalid; `FieldError` does not set it for you.
 - Clicking a `FieldLabel` focuses or toggles its associated control.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values `field-set`, `field-legend`, `field-group`, `field`, `field-content`, `field-label` (used by both `FieldLabel` and `FieldTitle`), `field-description`, `field-separator` and `field-error`.
-- `Field` sets `data-orientation`, and `FieldGroup` and `FieldLegend` set `data-variant`.
-- `FieldGroup` is a container query context named `field-group`, which drives the `responsive` orientation.
-- Uses the `muted`, `border`, `muted-foreground`, `primary`, `destructive` and `accent` colors.
+### FieldSet
+
+Groups related fields in a native `fieldset`.
+
+Also accepts the props of `React.ComponentProps<"fieldset">`.
+
+### FieldLegend
+
+The caption of a field set.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"legend" \| "label"` | `"legend"` |
+
+Also accepts the props of `React.ComponentProps<"legend">`.
+
+`variant` sets `data-variant` so the legend can be styled as a section caption or as a field label.
+
+### FieldGroup
+
+Stacks fields with consistent spacing, or groups them into an inset list.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "inset"` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+The `inset` variant groups the fields into a rounded list on `bg-muted`, with separators between rows and inputs aligned to the end. The group sets `data-variant` and is a container query context named `field-group`, which drives the `responsive` orientation of its fields.
+
+### Field
+
+Wraps a single control with its label, description and error.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `orientation` | `"vertical" \| "horizontal" \| "responsive"` | `"vertical"` |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+`vertical` stacks the label above the control, `horizontal` places them side by side, and `responsive` switches to horizontal when the surrounding `FieldGroup` is wide enough. The field sets `data-orientation`.
+
+### FieldContent
+
+Stacks a label and description next to a control in a horizontal field.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### FieldLabel
+
+The label of a field's control.
+
+Also accepts the props of `React.ComponentProps<typeof Label>`.
+
+Connect each `FieldLabel` to its control with `htmlFor` and `id`.
+
+### FieldTitle
+
+A heading inside a field that is not a label, such as the title of a choice card.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### FieldDescription
+
+Supporting text that describes the control.
+
+Also accepts the props of `React.ComponentProps<"p">`.
+
+### FieldSeparator
+
+A divider between sections, with optional centered text.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### FieldError
+
+An error message for the field.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `errors` | `Array<{ message?: string } \| undefined>` | - |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Pass children or an `errors` array. Duplicate messages are removed; one message renders as text and several render as a list. `errors` is ignored when children are provided.
+
+Each part sets a `data-slot`, such as `field`, `field-group` or `field-error`, for styling. `FieldTitle` shares the `field-label` slot with `FieldLabel`.
 
 </Only>
 
@@ -313,6 +293,10 @@ Also accepts the props of `React.ComponentProps<"div">`.
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -362,7 +346,9 @@ The CLI also adds what it builds on: [Separator](/docs/components/separator).
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -370,7 +356,7 @@ The CLI also adds what it builds on: [Separator](/docs/components/separator).
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -400,17 +386,17 @@ npx expo install cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/field.tsx`:
+4. Copy and paste the following code into `components/ui/field.tsx`:
 
 <ComponentSource path="uniwind/components/ui/field.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -440,11 +426,11 @@ npx expo install cn
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/field.tsx`:
+4. Copy and paste the following code into `components/ui/field.tsx`:
 
 <ComponentSource path="nativewind/components/ui/field.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -474,11 +460,11 @@ npx expo install cn
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/field.tsx`:
+3. Copy and paste the following code into `components/ui/field.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/field.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -548,6 +534,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -633,25 +623,17 @@ fun FieldDefault() {
 
 </Only>
 
-<Only platform="rn kotlin">
-
-Put a `FieldLabel`, the control and a `FieldError` inside `Field`. The control is labelled by the label and uses the description and error text as its accessibility hint. Set `invalid` to force the error state, or let validation decide it.
-
-</Only>
-
-<Only platform="rn">
-
-`FieldError` shows its children, or the messages from `errors` (for example from a form library), and can be limited to one failure with `match`, such as `tooShort`. Use `orientation="horizontal"` for a label beside a switch or checkbox, with `FieldContent` holding a `FieldTitle` and `FieldDescription`.
-
-</Only>
-
-`FieldSeparator` divides fields and can show short text such as "or" in the middle.
-
 ## Examples
 
 ### Invalid
 
 A field in the invalid state with an error message.
+
+<Only platform="rn kotlin">
+
+Set `invalid` to force the error state, or let validation decide it.
+
+</Only>
 
 <NativeExample name="field-invalid" />
 
@@ -670,6 +652,12 @@ A disabled field.
 ### Horizontal
 
 Switch rows with a title and description beside the control.
+
+<Only platform="rn">
+
+Use `orientation="horizontal"` for a label beside a switch or checkbox, with `FieldContent` holding a `FieldTitle` and `FieldDescription`.
+
+</Only>
 
 <NativeExample name="field-horizontal" />
 
@@ -691,464 +679,6 @@ A complete form with validation and a submit button.
 
 <NativeExample name="field-form" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### FieldSet
-
-Group of related fields.
-
-Also accepts the props of `React.ComponentProps<typeof FieldsetPrimitive.Root>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### FieldLegend
-
-Heading for a fieldset.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"legend" \| "label"` | `"legend"` | `legend` (heading) or `label`. |
-
-Also accepts the props of `React.ComponentProps<typeof FieldsetPrimitive.Legend>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### FieldGroup
-
-Stack of fields, plain or inset.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `FieldGroupVariant` | `"default"` | `default` or `inset`. |
-
-Also accepts the props of `React.ComponentProps<typeof View>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### Field
-
-One field that shares state with its control.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `orientation` | `FieldOrientation` | `"vertical"` | `vertical`, `horizontal` or `responsive`. |
-
-Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Root>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### FieldContent
-
-Column for a title and description beside a control.
-
-Also accepts the props of `React.ComponentProps<typeof View>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### FieldLabel
-
-Label linked to the control.
-
-Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Label>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### FieldTitle
-
-Bold text for a field's title.
-
-Also accepts the props of `React.ComponentProps<typeof RNText>`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### FieldDescription
-
-Helper text.
-
-Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Description>`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### FieldSeparator
-
-Divider with optional centered text.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-
-Also accepts the props of `React.ComponentProps<typeof View>`.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### FieldError
-
-Error message shown when validation fails.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `errors` | `Array<{ message?: string } \| undefined>` | - | Array of `{ message }` objects to show. |
-
-Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Error>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .invalid
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ isInvalid` | `Bool` | `true` | - |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### FieldOrientation
-
-Values: `.vertical`, `.horizontal`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### Field
-
-One field that shares state with its control.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `orientation` | `FieldOrientation`: `.vertical` \| `.horizontal` | `.vertical` | `vertical` stacks the label above the control, `horizontal` places them side by side, and `responsive` switches to horizontal when the field group is wide enough. |
-| `invalid` | `Bool?` | `nil` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### FieldContent
-
-Column for a title and description beside a control.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### FieldTitle
-
-Bold text for a field's title.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### FieldDescription
-
-Helper text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ description` | `LocalizedStringKey` | - | The supporting text. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### FieldError
-
-Error message shown when validation fails.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ message` | `LocalizedStringKey` | - | - |
-| `errors` | `[String?]` | - | - |
-
-Overloads: `init(_:)`, `init(errors:)`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### FieldGroupVariant
-
-Values: `.default`, `.inset`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### FieldGroup
-
-Stack of fields, plain or inset.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `FieldGroupVariant`: `.default` \| `.inset` | `.default` | `legend` (heading) or `label`. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### FieldSet
-
-Group of related fields.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### FieldLegend
-
-Heading for a fieldset.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `variant` | `Variant`: `.legend` \| `.label` | `.legend` | `legend` (heading) or `label`. |
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### FieldSeparator
-
-Divider with optional centered text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(content:)`, `init()`, `init(_:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### FieldOrientation
-
-Values: `Vertical`, `Horizontal`, `Responsive`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### FieldGroupVariant
-
-Values: `Default`, `Inset`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### FieldLegendVariant
-
-Values: `Legend`, `Label`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### FieldScope.weight
-
-Receiver: `Modifier`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `weight` | `Float` | - | - |
-
-Returns `Modifier`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### FieldSet
-
-Group of related fields.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `FieldGroupVariant`: `Default` \| `Inset` | `FieldGroupVariant.Default` | `legend` (heading) or `label`. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### FieldLegend
-
-Heading for a fieldset.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `FieldLegendVariant`: `Legend` \| `Label` | `FieldLegendVariant.Legend` | `legend` (heading) or `label`. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### FieldGroup
-
-Stack of fields, plain or inset.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `FieldGroupVariant`: `Default` \| `Inset` | `FieldGroupVariant.Default` | `legend` (heading) or `label`. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### Field
-
-One field that shares state with its control.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `orientation` | `FieldOrientation`: `Vertical` \| `Horizontal` \| `Responsive` | `FieldOrientation.Vertical` | `vertical` stacks the label above the control, `horizontal` places them side by side, and `responsive` switches to horizontal when the field group is wide enough. |
-| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
-| `invalid` | `Boolean` | `false` | - |
-| `content` | `@Composable FieldScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### FieldContent
-
-Column for a title and description beside a control.
-
-Receiver: `FieldScope`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### FieldLabel
-
-Label linked to the control.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### FieldTitle
-
-Bold text for a field's title.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### FieldDescription
-
-Helper text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### FieldSeparator
-
-Divider with optional centered text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `text` | `String?` | `null` | The text. |
-
-</ApiPart>
-
-<ApiPart index={14}>
-
-### FieldError
-
-Error message shown when validation fails.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String?` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `errors` | `List<String?>` | - | - |
-
-Overloads: `FieldError(text)`, `FieldError(errors)`.
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1158,10 +688,327 @@ Overloads: `FieldError(text)`, `FieldError(errors)`.
 - `FieldSet` has the `group` role labelled by its legend; the legend has the `header` role.
 - Disabled state is passed to the label and control.
 
-## Notes
+</Only>
 
-- Uses `text-foreground`, `text-muted-foreground`, `text-destructive` and `bg-muted` tokens; light and dark follow the system appearance.
-- Inset separators use start and end offsets, so they flip in right-to-left layouts.
+## API Reference
+
+<Only platform="rn">
+
+### FieldSet
+
+Group of related fields.
+
+Also accepts the props of `React.ComponentProps<typeof FieldsetPrimitive.Root>`.
+
+### FieldLegend
+
+Heading for a fieldset.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"legend" \| "label"` | `"legend"` |
+
+Also accepts the props of `React.ComponentProps<typeof FieldsetPrimitive.Legend>`.
+
+### FieldGroup
+
+Stack of fields, plain or inset.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `FieldGroupVariant` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
+
+`variant` is `default` or `inset`. Inset separators use start and end offsets, so they flip in right-to-left layouts.
+
+### Field
+
+One field that shares state with its control.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `orientation` | `FieldOrientation` | `"vertical"` |
+
+Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Root>`.
+
+`orientation` is `vertical`, `horizontal` or `responsive`. Put a `FieldLabel`, the control and a `FieldError` inside `Field`. The control is labelled by the label and uses the description and error text as its accessibility hint.
+
+### FieldContent
+
+Column for a title and description beside a control.
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
+
+### FieldLabel
+
+Label linked to the control.
+
+Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Label>`.
+
+### FieldTitle
+
+Bold text for a field's title.
+
+Also accepts the props of `React.ComponentProps<typeof RNText>`.
+
+### FieldDescription
+
+Helper text.
+
+Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Description>`.
+
+### FieldSeparator
+
+Divider with optional centered text.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
+
+`FieldSeparator` divides fields and can show short text such as "or" in the middle.
+
+### FieldError
+
+Error message shown when validation fails.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `errors` | `Array<{ message?: string } \| undefined>` | - |
+
+Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Error>`.
+
+`FieldError` shows its children, or the messages from `errors`, an array of `{ message }` objects (for example from a form library). Limit it to one failure with `match`, such as `tooShort`.
+
+</Only>
+
+<Only platform="swift">
+
+### .invalid
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ isInvalid` | `Bool` | `true` |
+
+### FieldOrientation
+
+Values: `.vertical`, `.horizontal`.
+
+### Field
+
+One field that shares state with its control.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `orientation` | `FieldOrientation`: `.vertical` \| `.horizontal` | `.vertical` |
+| `invalid` | `Bool?` | `nil` |
+| `content` | `() -> Content` | - |
+
+### FieldContent
+
+Column for a title and description beside a control.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### FieldTitle
+
+Bold text for a field's title.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+
+### FieldDescription
+
+Helper text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - |
+
+### FieldError
+
+Error message shown when validation fails.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ message` | `LocalizedStringKey` | - |
+| `errors` | `[String?]` | - |
+
+Overloads: `init(_:)`, `init(errors:)`.
+
+### FieldGroupVariant
+
+Values: `.default`, `.inset`.
+
+### FieldGroup
+
+Stack of fields, plain or inset.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `FieldGroupVariant`: `.default` \| `.inset` | `.default` |
+| `content` | `() -> Content` | - |
+
+### FieldSet
+
+Group of related fields.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### FieldLegend
+
+Heading for a fieldset.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `variant` | `Variant`: `.legend` \| `.label` | `.legend` |
+
+### FieldSeparator
+
+Divider with optional centered text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(content:)`, `init()`, `init(_:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### FieldOrientation
+
+Values: `Vertical`, `Horizontal`, `Responsive`.
+
+### FieldGroupVariant
+
+Values: `Default`, `Inset`.
+
+### FieldLegendVariant
+
+Values: `Legend`, `Label`.
+
+### FieldScope.weight
+
+Receiver: `Modifier`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `weight` | `Float` | - |
+
+Returns `Modifier`.
+
+### FieldSet
+
+Group of related fields.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `FieldGroupVariant`: `Default` \| `Inset` | `FieldGroupVariant.Default` |
+| `enabled` | `Boolean` | `true` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### FieldLegend
+
+Heading for a fieldset.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `FieldLegendVariant`: `Legend` \| `Label` | `FieldLegendVariant.Legend` |
+
+### FieldGroup
+
+Stack of fields, plain or inset.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `FieldGroupVariant`: `Default` \| `Inset` | `FieldGroupVariant.Default` |
+| `content` | `@Composable () -> Unit` | - |
+
+### Field
+
+One field that shares state with its control.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `orientation` | `FieldOrientation`: `Vertical` \| `Horizontal` \| `Responsive` | `FieldOrientation.Vertical` |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` |
+| `invalid` | `Boolean` | `false` |
+| `content` | `@Composable FieldScope.() -> Unit` | - |
+
+### FieldContent
+
+Column for a title and description beside a control.
+
+Receiver: `FieldScope`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### FieldLabel
+
+Label linked to the control.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### FieldTitle
+
+Bold text for a field's title.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### FieldDescription
+
+Helper text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### FieldSeparator
+
+Divider with optional centered text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `text` | `String?` | `null` |
+
+### FieldError
+
+Error message shown when validation fails.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String?` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `errors` | `List<String?>` | - |
+
+Overloads: `FieldError(text)`, `FieldError(errors)`.
 
 </Only>
 

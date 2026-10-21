@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A row of small battery rings, one per device, that switch from green to red when the charge drops to the low threshold. Use compact rings like these for status at a glance, in widgets, settings pages or device lists.
 
+Replace the `devices` array with your names and levels from 0 to 100. `LOW` sets the warning threshold, and the two colors live in the per-ring config. The letter in each ring is the first character of the name. The rings are hidden from assistive technology and have no tooltip, so the percentage and name under each ring carry the information.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/radial-chart-batteries
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts radial-chart-batteries
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/radial-chart-batteries.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/radial-chart-batteries.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { RadialChartBatteries } from "@/components/charts/radial-chart-batteries
 ```tsx
 <RadialChartBatteries />
 ```
-
-Replace the `devices` array with your own names and levels from 0 to 100. Change `LOW` to move the warning threshold, and edit the two colors in the per-ring config. The letter in each ring is the first character of the name.
-
-## Notes
-
-The rings are hidden from assistive technology and have no tooltip; the percentage and name printed under each ring carry the information.
 
 </Only>
 
@@ -75,9 +79,15 @@ The rings are hidden from assistive technology and have no tooltip; the percenta
 
 A `Card` that renders one `RadialBarChart` ring per entry in `devices`, each with a level from 0 to 100. A ring turns red at or below `LOW` (20%) and is green otherwise, with the device initial in the center and its percentage and name below. Each gauge is a single accessible element labeled with name and level. Nothing is interactive. The rings set `isAnimationActive={false}` and draw without the enter animation.
 
+Replace `devices` with your names and levels, and change `LOW` to move the warning threshold. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +149,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/radial-chart-batteries.tsx`:
+2. Copy and paste the following code into `components/charts/radial-chart-batteries.tsx`:
 
 <ComponentSource path="uniwind/components/charts/radial-chart-batteries.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +161,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/radial-chart-batteries.tsx`:
+2. Copy and paste the following code into `components/charts/radial-chart-batteries.tsx`:
 
 <ComponentSource path="nativewind/components/charts/radial-chart-batteries.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +173,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/radial-chart-batteries.tsx`:
+2. Copy and paste the following code into `components/charts/radial-chart-batteries.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/radial-chart-batteries.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +260,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +303,6 @@ fun RadialBatteriesExample() {
     RadialChartBatteries()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `devices` with your names and levels, and change `LOW` to move the warning threshold. The component takes no props.
 
 </Only>
 

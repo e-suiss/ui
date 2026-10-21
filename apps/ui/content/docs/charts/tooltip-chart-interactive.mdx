@@ -11,9 +11,13 @@ platforms: [web]
 
 A stacked quarterly revenue chart with live controls for every tooltip option: indicator style, hover or click trigger, a total in the title, and hiding the title or indicator. Use it to try combinations before copying the settings into your own chart.
 
+Copy the props of the combination you like into your chart: `indicator`, `hideLabel` and `hideIndicator` go on the tooltip content, and `trigger` on `ChartTooltip`. The total in the title comes from a label formatter that sums the rows. With the click trigger, the tooltip appears after a bar is clicked and stays in place as the pointer moves. Every control is a labeled switch or toggle group that works with the keyboard.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/tooltip-chart-interactive
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts tooltip-chart-interactive
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Switch](/docs/components/switch), [Toggle Group](/docs/components/toggle-group).
 
-3. Copy the source into `components/charts/tooltip-chart-interactive.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/tooltip-chart-interactive.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,11 +60,5 @@ import { TooltipChartInteractive } from "@/components/charts/tooltip-chart-inter
 ```tsx
 <TooltipChartInteractive />
 ```
-
-Pick the combination you like, then copy the matching props into your chart: `indicator`, `hideLabel` and `hideIndicator` go on the tooltip content, and `trigger` on `ChartTooltip`. The total in the title comes from a label formatter that sums the rows.
-
-## Notes
-
-With the click trigger, the tooltip appears only after a bar is clicked and stays in place as the pointer moves. Every control is a labeled, keyboard-operable switch or toggle group.
 
 </Only>

@@ -15,7 +15,9 @@ Use a dropdown menu for actions and settings behind a visible button. For action
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/dropdown-menu
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add dropdown-menu
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
@@ -37,16 +41,36 @@ npm install @base-ui/react @phosphor-icons/react
 
 2. Add the pieces it builds on: `use-platform`.
 
-3. Copy the source into `components/ui/dropdown-menu.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/dropdown-menu.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { DropdownMenu, DropdownMenuPortal, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut } from "@/components/ui/dropdown-menu"
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 ```
 
@@ -228,368 +252,50 @@ import { Button } from "@/components/ui/button"
 
 </OnlyBase>
 
-<OnlyBase base="base">
+## Composition
 
-The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Render the trigger as another component, such as a `Button`, with the `render` prop.
+Use the following composition to build a `DropdownMenu`:
 
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Set `asChild` on `DropdownMenuTrigger` to render your own `Button` as the trigger.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `isOpen` and `onOpenChange`. The `Button` placed first inside `DropdownMenu` opens it.
-
-</OnlyBase>
-
-Selecting a regular item closes the menu.
-
-Checkbox and radio items keep the menu open so several choices can be made in a row.
-
-<OnlyBase base="base radix">
-
-Checkbox items are uncontrolled with `defaultChecked`, or controlled with `checked` and `onCheckedChange`. Radio groups take `defaultValue`, or `value` and `onValueChange`, and each radio item needs a `value`.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Checkbox items are uncontrolled with `defaultSelected`, or controlled with `isSelected` and `onChange`. Radio groups take `defaultValue`, or `value` and `onChange`, and each radio item needs a `value`.
-
-</OnlyBase>
-
-Set `inset` on items and labels without an icon to align their text with items that have one, and set `variant="destructive"` on items that delete or remove something.
+```text
+DropdownMenu
+├── DropdownMenuTrigger
+└── DropdownMenuContent
+    ├── DropdownMenuGroup
+    │   ├── DropdownMenuLabel
+    │   ├── DropdownMenuItem
+    │   │   └── DropdownMenuShortcut
+    │   └── DropdownMenuCheckboxItem
+    ├── DropdownMenuSeparator
+    ├── DropdownMenuSub
+    │   ├── DropdownMenuSubTrigger
+    │   └── DropdownMenuSubContent
+    │       └── DropdownMenuItem
+    ├── DropdownMenuRadioGroup
+    │   ├── DropdownMenuLabel
+    │   └── DropdownMenuRadioItem
+    └── DropdownMenuItem
+        └── DropdownMenuShortcut
+```
 
 ## Examples
 
 ### Checkboxes
 
-Controlled checkbox items that toggle interface elements, including a disabled item.
+Controlled checkbox items that toggle interface elements, including a disabled item. Checkbox items keep the menu open so several choices can be made in a row.
 
 <ComponentPreview name="dropdown-menu-checkboxes" />
 
 ### Radio group
 
-A controlled radio group for choosing a single panel position.
+A controlled radio group for choosing a single panel position. Each radio item needs a `value`.
 
 <ComponentPreview name="dropdown-menu-radio-group" />
 
 ### Inset
 
-A labelled group of inset items without icons, each with a keyboard shortcut.
+Set `inset` on items and labels without an icon to align their text with items that have one. Each item here also has a keyboard shortcut.
 
 <ComponentPreview name="dropdown-menu-inset" />
-
-## API Reference
-
-<Anatomy>
-
-- [DropdownMenu](#dropdownmenu)
-  - [DropdownMenuTrigger](#dropdownmenutrigger)
-  - [DropdownMenuContent](#dropdownmenucontent)
-    - [DropdownMenuGroup](#dropdownmenugroup)
-      - [DropdownMenuLabel](#dropdownmenulabel)
-      - [DropdownMenuItem](#dropdownmenuitem)
-        - [DropdownMenuShortcut](#dropdownmenushortcut)
-      - [DropdownMenuCheckboxItem](#dropdownmenucheckboxitem)
-    - [DropdownMenuSeparator](#dropdownmenuseparator)
-    - [DropdownMenuSub](#dropdownmenusub)
-      - [DropdownMenuSubTrigger](#dropdownmenusubtrigger)
-      - [DropdownMenuSubContent](#dropdownmenusubcontent)
-        - [DropdownMenuItem](#dropdownmenuitem)
-    - [DropdownMenuRadioGroup](#dropdownmenuradiogroup)
-      - [DropdownMenuLabel](#dropdownmenulabel)
-      - [DropdownMenuRadioItem](#dropdownmenuradioitem)
-    - [DropdownMenuItem](#dropdownmenuitem)
-      - [DropdownMenuShortcut](#dropdownmenushortcut)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### DropdownMenu
-
-The root that manages the menu's open state.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### DropdownMenuPortal
-
-Renders its children into a portal outside the current DOM hierarchy.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### DropdownMenuTrigger
-
-The button that opens the menu.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### DropdownMenuContent
-
-The menu panel, rendered in a portal and positioned relative to the trigger.
-
-<OnlyBase base="base">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"bottom"` | The side of the trigger the menu opens on. |
-| `sideOffset` | `number` | `4` | The gap in pixels between the trigger and the menu. |
-| `align` | `"start" \| "center" \| "end"` | `"start"` | How the menu lines up with the trigger along that side. |
-| `alignOffset` | `number` | `0` | The offset in pixels along the alignment axis. |
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` | The side of the trigger the menu opens on. |
-| `sideOffset` | `number` | `4` | The gap in pixels between the trigger and the menu. |
-| `align` | `"start" \| "center" \| "end"` | `"start"` | How the menu lines up with the trigger along that side. |
-| `alignOffset` | `number` | `0` | The offset in pixels along the alignment axis. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `placement` | `Placement` | `"bottom start"` | Where the menu opens relative to the trigger, from React Aria. |
-| `offset` | `number` | `4` | The gap in pixels between the trigger and the menu. |
-| `crossOffset` | `number` | `0` | The offset in pixels along the cross axis. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive parts it wraps.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### DropdownMenuGroup
-
-Groups related items.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### DropdownMenuLabel
-
-A heading for a group of items.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Adds leading padding so the label aligns with items that have an icon or indicator. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### DropdownMenuItem
-
-An action in the menu.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Adds leading padding so the item aligns with items that have an icon or indicator. |
-| `variant` | `"default" \| "destructive"` | `"default"` | `destructive` colors the item and its icon with the `destructive` color. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### DropdownMenuSub
-
-The root of a nested submenu.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### DropdownMenuSubTrigger
-
-The item that opens a submenu, shown with a trailing caret.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Adds leading padding so the trigger aligns with items that have an icon or indicator. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### DropdownMenuSubContent
-
-The panel of a submenu, opened beside its trigger.
-
-<OnlyBase base="base">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"inline-end"` | The side of the submenu trigger the menu opens on. |
-| `sideOffset` | `number` | `0` | The gap in pixels between the submenu trigger and the menu. |
-| `align` | `"start" \| "center" \| "end"` | `"start"` | How the menu lines up with the submenu trigger along that side. |
-| `alignOffset` | `number` | `-3` | The offset in pixels along the alignment axis. |
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `sideOffset` | `number` | `0` | The gap in pixels between the submenu trigger and the menu. |
-| `alignOffset` | `number` | `-3` | The offset in pixels along the alignment axis. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `placement` | `Placement` | `"end top"` | Where the menu opens relative to the submenu trigger, from React Aria. |
-| `offset` | `number` | `0` | The gap in pixels between the submenu trigger and the menu. |
-| `crossOffset` | `number` | `-3` | The offset in pixels along the cross axis. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### DropdownMenuCheckboxItem
-
-An item that toggles a setting on or off and shows a check mark when on.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Adds leading padding so the item aligns with other inset items. |
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `defaultChecked` | `boolean` | `false` | Whether it starts checked when uncontrolled. |
-| `closeOnClick` | `boolean` | `false` | Closes the menu when the item is selected. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isSelected` | `boolean` | - | The controlled checked state. Pass it with `onChange`. |
-| `defaultSelected` | `boolean` | `false` | Whether it starts checked when uncontrolled. |
-| `onChange` | `(isSelected: boolean) => void` | - | Called when the item is checked or unchecked. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### DropdownMenuRadioGroup
-
-Groups radio items so that only one can be selected.
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | - | The selected item's `value`, for controlled use. Pass it with `onChange`. |
-| `defaultValue` | `string` | - | The item selected at first when uncontrolled. |
-| `onChange` | `(value: string) => void` | - | Called with the `value` of the newly selected item. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### DropdownMenuRadioItem
-
-An item in a radio group that shows a check mark when selected.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Adds leading padding so the item aligns with other inset items. |
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `closeOnClick` | `boolean` | `false` | Closes the menu when the item is selected. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | - | The value the group reports when this item is selected. Required. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={14}>
-
-### DropdownMenuSeparator
-
-A divider between groups of items.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={15}>
-
-### DropdownMenuShortcut
-
-Displays a keyboard shortcut at the end of an item.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `mod` | `boolean` | - | Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere. |
-
-Also accepts the props of `React.ComponentProps<"span">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -600,12 +306,317 @@ Also accepts the props of `React.ComponentProps<"span">`.
 - Escape closes the menu and returns focus to the trigger.
 - `DropdownMenuShortcut` only displays a shortcut; it does not register one. It is hidden on small screens.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values such as `dropdown-menu-content`, `dropdown-menu-item`, `dropdown-menu-checkbox-item`, `dropdown-menu-checkbox-item-indicator`, `dropdown-menu-radio-item`, `dropdown-menu-radio-item-indicator`, `dropdown-menu-sub-trigger`, `dropdown-menu-label`, `dropdown-menu-separator` and `dropdown-menu-shortcut`.
-- Items set `data-inset` and `data-variant`; disabled items get `data-disabled`, and an open submenu trigger gets `data-popup-open`.
-- By default the menu opens below the trigger, aligned to `start`, and matches the trigger's width with a minimum of `12rem`. Override the width with `className`.
-- Uses the `popover`, `accent`, `destructive` and `border` colors.
+### DropdownMenu
+
+The root that manages the menu's open state.
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base radix">
+
+The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The menu is uncontrolled by default; set `defaultOpen` to start open, or control it with `isOpen` and `onOpenChange`. The `Button` placed first inside `DropdownMenu` opens it.
+
+</OnlyBase>
+
+### DropdownMenuPortal
+
+Renders its children into a portal outside the current DOM hierarchy.
+
+Also accepts the props of the primitive part it wraps.
+
+### DropdownMenuTrigger
+
+The button that opens the menu.
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base">
+
+Render the trigger as another component, such as a `Button`, with the `render` prop.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` to render your own `Button` as the trigger.
+
+</OnlyBase>
+
+### DropdownMenuContent
+
+The menu panel, rendered in a portal and positioned relative to the trigger.
+
+<OnlyBase base="base">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"bottom"` |
+| `sideOffset` | `number` | `4` |
+| `align` | `"start" \| "center" \| "end"` | `"start"` |
+| `alignOffset` | `number` | `0` |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` |
+| `sideOffset` | `number` | `4` |
+| `align` | `"start" \| "center" \| "end"` | `"start"` |
+| `alignOffset` | `number` | `0` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `placement` | `Placement` | `"bottom start"` |
+| `offset` | `number` | `4` |
+| `crossOffset` | `number` | `0` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive parts it wraps.
+
+<OnlyBase base="base radix">
+
+`side` is the side of the trigger the menu opens on, and `align` how it lines up with the trigger along that side. `sideOffset` and `alignOffset` are in pixels.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+`placement` sets where the menu opens relative to the trigger. `offset` and `crossOffset` are in pixels.
+
+</OnlyBase>
+
+By default the menu opens below the trigger, aligned to `start`, and matches the trigger's width with a minimum of `12rem`. Override the width with `className`.
+
+### DropdownMenuGroup
+
+Groups related items.
+
+Also accepts the props of the primitive part it wraps.
+
+### DropdownMenuLabel
+
+A heading for a group of items.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+
+Also accepts the props of the primitive part it wraps.
+
+### DropdownMenuItem
+
+An action in the menu.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+| `variant` | `"default" \| "destructive"` | `"default"` |
+
+Also accepts the props of the primitive part it wraps.
+
+Selecting a regular item closes the menu. `inset` adds leading padding so the item aligns with items that have an icon or indicator; labels, sub triggers, checkbox and radio items take it too. `variant="destructive"` colors the item and its icon with the `destructive` color; use it on items that delete or remove something. Items set `data-inset` and `data-variant`, and disabled items get `data-disabled`.
+
+### DropdownMenuSub
+
+The root of a nested submenu.
+
+Also accepts the props of the primitive part it wraps.
+
+### DropdownMenuSubTrigger
+
+The item that opens a submenu, shown with a trailing caret.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+
+Also accepts the props of the primitive part it wraps.
+
+An open submenu trigger gets `data-popup-open`.
+
+### DropdownMenuSubContent
+
+The panel of a submenu, opened beside its trigger.
+
+<OnlyBase base="base">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"inline-end"` |
+| `sideOffset` | `number` | `0` |
+| `align` | `"start" \| "center" \| "end"` | `"start"` |
+| `alignOffset` | `number` | `-3` |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `sideOffset` | `number` | `0` |
+| `alignOffset` | `number` | `-3` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `placement` | `Placement` | `"end top"` |
+| `offset` | `number` | `0` |
+| `crossOffset` | `number` | `-3` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+The placement props work as on `DropdownMenuContent`, measured against the submenu trigger.
+
+### DropdownMenuCheckboxItem
+
+An item that toggles a setting on or off and shows a check mark when on.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `defaultChecked` | `boolean` | `false` |
+| `closeOnClick` | `boolean` | `false` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `isSelected` | `boolean` | - |
+| `defaultSelected` | `boolean` | `false` |
+| `onChange` | `(isSelected: boolean) => void` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base radix">
+
+Checkbox items are uncontrolled with `defaultChecked`, or controlled with `checked` and `onCheckedChange`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `closeOnClick` to close the menu when the item is selected.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Checkbox items are uncontrolled with `defaultSelected`, or controlled with `isSelected` and `onChange`.
+
+</OnlyBase>
+
+Checkbox and radio items keep the menu open so several choices can be made in a row.
+
+### DropdownMenuRadioGroup
+
+Groups radio items so that only one can be selected.
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | - |
+| `defaultValue` | `string` | - |
+| `onChange` | `(value: string) => void` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base radix">
+
+Radio groups take `defaultValue`, or `value` and `onValueChange`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Radio groups take `defaultValue`, or `value` and `onChange`, which is called with the `value` of the newly selected item.
+
+</OnlyBase>
+
+### DropdownMenuRadioItem
+
+An item in a radio group that shows a check mark when selected.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `closeOnClick` | `boolean` | `false` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+Each radio item needs a `value`, which the group reports when it is selected.
+
+<OnlyBase base="radix">
+
+Set `closeOnClick` to close the menu when the item is selected.
+
+</OnlyBase>
+
+### DropdownMenuSeparator
+
+A divider between groups of items.
+
+Also accepts the props of the primitive part it wraps.
+
+### DropdownMenuShortcut
+
+Displays a keyboard shortcut at the end of an item.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `mod` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+Set `mod` to prefix the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere.
+
+Each part sets a `data-slot`, such as `dropdown-menu-item` or `dropdown-menu-checkbox-item-indicator`, for styling.
 
 </Only>
 
@@ -622,6 +633,10 @@ Items can be plain actions, checkbox items, radio items in a group, or a submenu
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -671,7 +686,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -679,7 +696,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -715,17 +732,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/dropdown-menu.tsx`:
+5. Copy and paste the following code into `components/ui/dropdown-menu.tsx`:
 
 <ComponentSource path="uniwind/components/ui/dropdown-menu.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -761,17 +778,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/dropdown-menu.tsx`:
+5. Copy and paste the following code into `components/ui/dropdown-menu.tsx`:
 
 <ComponentSource path="nativewind/components/ui/dropdown-menu.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -807,11 +824,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-scre
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/dropdown-menu.tsx`:
+5. Copy and paste the following code into `components/ui/dropdown-menu.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/dropdown-menu.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -912,6 +929,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -1180,24 +1201,6 @@ fun DropdownMenuAccount(defaultOpen: Boolean) {
 
 </Only>
 
-<Only platform="rn">
-
-Use `render` on `DropdownMenuTrigger` to render it as a `Button`. Items close the menu when pressed unless `closeOnPress={false}`.
-
-</Only>
-
-<Only platform="rn kotlin">
-
-Use `DropdownMenuCheckboxItem` with `checked` and `onCheckedChange`, and `DropdownMenuRadioItem` inside a `DropdownMenuRadioGroup` with `value` and `onValueChange`. Group items with `DropdownMenuGroup` and `DropdownMenuLabel`, and divide sections with `DropdownMenuSeparator`.
-
-</Only>
-
-<Only platform="rn">
-
-Set `variant="destructive"` on an item that deletes or removes. Use `inset` on items without an icon to align them with items that have one. Position the content with `side`, `align`, `sideOffset` and `alignOffset`.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -1208,463 +1211,31 @@ Set `variant="destructive"` on an item that deletes or removes. Use `inset` on i
 
 Checkbox items that toggle panels on and off.
 
+<Only platform="rn kotlin">
+
+Use `DropdownMenuCheckboxItem` with `checked` and `onCheckedChange`.
+
+</Only>
+
 <NativeExample name="dropdown-menu-checkboxes" />
 
 ### Radio group
 
 Radio items that pick one value.
 
+<Only platform="rn kotlin">
+
+Put `DropdownMenuRadioItem`s inside a `DropdownMenuRadioGroup` with `value` and `onValueChange`.
+
+</Only>
+
 <NativeExample name="dropdown-menu-radio-group" />
 
 ### Inset
 
-Items aligned with `inset`.
+Use `inset` on items without an icon to align them with items that have one.
 
 <NativeExample name="dropdown-menu-inset" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### DropdownMenu
-
-The root that manages the open state.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Whether the menu is open, for controlled use. |
-| `defaultOpen` | `boolean` | `false` | Whether the menu starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the menu opens or closes. |
-| `modal` | `boolean` | `true` | Blocks interaction with the rest of the screen while open. |
-| `disabled` | `boolean` | `false` | Prevents the menu from opening. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### DropdownMenuContent
-
-Floating menu card.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `portalHost` | `string` | - | Name of the portal host to render into. |
-
-Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Popup>`, `PositionerProps`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### DropdownMenuSubTrigger
-
-Row that expands the submenu.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-| `iconClassName` | `string` | - | Extra classes for the caret icon. |
-| `inset` | `boolean` | - | Adds start padding. |
-
-Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.SubmenuTrigger>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### DropdownMenuSubContent
-
-Items of the submenu.
-
-Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Popup>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### DropdownMenuItem
-
-Action row.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Adds start padding to align with icon items. |
-| `variant` | `"default" \| "destructive"` | `"default"` | `default` or `destructive`. |
-
-Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Item>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### DropdownMenuCheckboxItem
-
-Row with a check mark that toggles.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-| `inset` | `boolean` | - | Adds start padding. |
-
-Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.CheckboxItem>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### DropdownMenuRadioItem
-
-Row that selects one value in its group.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-| `inset` | `boolean` | - | Adds start padding. |
-
-Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.RadioItem>`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### DropdownMenuLabel
-
-Heading for a group.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Adds start padding. |
-
-Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.GroupLabel>`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### DropdownMenuSeparator
-
-Line between sections.
-
-Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Separator>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### DropdownMenu
-
-The root that manages the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isPresented` | `Binding<Bool>?` | `nil` | Whether it is shown. |
-| `side` | `Edge` | `.bottom` | The side of the trigger the menu opens on. |
-| `align` | `PopupAlignment` | `.start` | How the menu lines up with the trigger along that side. |
-| `sideOffset` | `CGFloat` | `4` | The gap in pixels between the trigger and the menu. |
-| `alignOffset` | `CGFloat` | `0` | The offset in pixels along the alignment axis. |
-| `content` | `() -> Content` | - | The content. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(isPresented:side:align:sideOffset:alignOffset:content:label:)`, `init(_:isPresented:side:align:content:)`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### DropdownMenuItem
-
-Action row.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `Variant`: `.default` \| `.destructive` | `.default` | `destructive` colors the item and its icon with the `destructive` color. |
-| `inset` | `Bool` | `false` | Adds start padding to align with icon items. |
-| `action` | `() -> Void` | - | Called when it is tapped. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `icon` | `Image` | - | The icon. |
-
-Overloads: `init(variant:inset:action:label:)`, `init(_:variant:inset:action:)`, `init(_:icon:variant:action:)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### DropdownMenuCheckboxItem
-
-Row with a check mark that toggles.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isOn` | `Binding<Bool>` | - | - |
-| `inset` | `Bool` | `false` | Adds start padding. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(isOn:inset:label:)`, `init(_:isOn:inset:)`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### DropdownMenuRadioGroup
-
-Groups radio items so that only one can be selected.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selection` | `Binding<Value>` | - | The selected value. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### DropdownMenuRadioItem
-
-Row that selects one value in its group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Value` | - | The current value. |
-| `inset` | `Bool` | `false` | Adds start padding. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(value:inset:label:)`, `init(_:value:inset:)`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### DropdownMenuLabel
-
-Heading for a group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `inset` | `Bool` | `false` | Adds start padding. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### DropdownMenuGroup
-
-Groups related items.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### DropdownMenuSeparator
-
-Line between sections.
-
-Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### DropdownMenuSub
-
-The root of a nested submenu.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `Bool` | `false` | Adds start padding. |
-| `content` | `() -> Content` | - | The content. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `icon` | `Image` | - | The icon. |
-
-Overloads: `init(inset:content:label:)`, `init(_:inset:content:)`, `init(_:icon:content:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### MenuItemVariant
-
-Values: `Default`, `Destructive`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### DropdownMenu
-
-The root that manages the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `expanded` | `Boolean` | - | - |
-| `onExpandedChange` | `(Boolean) -> Unit` | - | - |
-| `trigger` | `@Composable () -> Unit` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `side` | `PopupSide` | `PopupSide.Bottom` | The side of the trigger the menu opens on. |
-| `align` | `PopupAlign` | `PopupAlign.Start` | How the menu lines up with the trigger along that side. |
-| `sideOffset` | `Dp` | `4.dp` | The gap in pixels between the trigger and the menu. |
-| `alignOffset` | `Dp` | `0.dp` | The offset in pixels along the alignment axis. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### DropdownMenuItem
-
-Action row.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onClick` | `() -> Unit` | - | Called when it is tapped. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `MenuItemVariant`: `Default` \| `Destructive` | `MenuItemVariant.Default` | `destructive` colors the item and its icon with the `destructive` color. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `inset` | `Boolean` | `false` | Adds start padding to align with icon items. |
-| `closeOnClick` | `Boolean` | `true` | Closes the menu when the item is selected. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-| `icon` | `ImageVector?` | `null` | The icon. |
-
-Overloads: `DropdownMenuItem(onClick, content)`, `DropdownMenuItem(text, onClick, icon)`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### DropdownMenuCheckboxItem
-
-Row with a check mark that toggles.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `checked` | `Boolean` | - | - |
-| `onCheckedChange` | `(Boolean) -> Unit` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `inset` | `Boolean` | `false` | Adds start padding. |
-| `closeOnClick` | `Boolean` | `false` | Closes the menu when the item is selected. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `DropdownMenuCheckboxItem(checked, onCheckedChange, closeOnClick, content)`, `DropdownMenuCheckboxItem(text, checked, onCheckedChange)`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### DropdownMenuRadioGroup
-
-Groups radio items so that only one can be selected.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String?` | - | The current value. |
-| `onValueChange` | `(String) -> Unit` | - | Called when the value changes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### DropdownMenuRadioItem
-
-Row that selects one value in its group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | The current value. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `inset` | `Boolean` | `false` | Adds start padding. |
-| `closeOnClick` | `Boolean` | `false` | Closes the menu when the item is selected. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `DropdownMenuRadioItem(value, closeOnClick, content)`, `DropdownMenuRadioItem(value, text)`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### DropdownMenuLabel
-
-Heading for a group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `inset` | `Boolean` | `false` | Adds start padding. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### DropdownMenuSeparator
-
-Line between sections.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### DropdownMenuGroup
-
-Groups related items.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### DropdownMenuSub
-
-The root of a nested submenu.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `icon` | `ImageVector?` | `null` | The icon. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `inset` | `Boolean` | `false` | Adds start padding. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-| `trigger` | `@Composable RowScope.() -> Unit` | - | - |
-
-Overloads: `DropdownMenuSub(text, icon, content)`, `DropdownMenuSub(trigger, content)`.
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -1674,10 +1245,347 @@ Overloads: `DropdownMenuSub(text, icon, content)`, `DropdownMenuSub(trigger, con
 - The popup has the `menu` role; items use `menuitem`, `checkbox` and `radio` roles, and radio groups use `radiogroup`.
 - Groups are labelled by their `DropdownMenuLabel`, and separators have the `separator` role.
 
-## Notes
+</Only>
 
-- Uses `bg-popover`, and `bg-accent` for an open submenu trigger; a highlighted item fades to `opacity-80` and a disabled one to `opacity-50`; light and dark follow the system appearance.
-- The fade-in respects the system Reduce Motion setting.
+## API Reference
+
+<Only platform="rn">
+
+### DropdownMenu
+
+The root that manages the open state.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean, details) => void` | - |
+| `modal` | `boolean` | `true` |
+| `disabled` | `boolean` | `false` |
+
+Use `open` with `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled. `modal` blocks interaction with the rest of the screen while open, and `disabled` prevents the menu from opening. Use `render` on `DropdownMenuTrigger` to render it as a `Button`.
+
+### DropdownMenuContent
+
+Floating menu card.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `portalHost` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Popup>`, `PositionerProps`.
+
+Position the content with `side`, `align`, `sideOffset` and `alignOffset`. `portalHost` names the portal host to render into. The fade-in respects the system Reduce Motion setting.
+
+### DropdownMenuSubTrigger
+
+Row that expands the submenu.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+| `iconClassName` | `string` | - |
+| `inset` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.SubmenuTrigger>`.
+
+`iconClassName` adds classes to the caret icon. An open submenu trigger uses `bg-accent`.
+
+### DropdownMenuSubContent
+
+Items of the submenu.
+
+Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Popup>`.
+
+### DropdownMenuItem
+
+Action row.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+| `variant` | `"default" \| "destructive"` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Item>`.
+
+Items close the menu when pressed unless `closeOnPress={false}`. Set `variant="destructive"` on an item that deletes or removes. `inset` adds start padding; the sub trigger, checkbox, radio and label parts take it too. A highlighted item fades to `opacity-80` and a disabled one to `opacity-50`.
+
+### DropdownMenuCheckboxItem
+
+Row with a check mark that toggles.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+| `inset` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.CheckboxItem>`.
+
+### DropdownMenuRadioItem
+
+Row that selects one value in its group.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+| `inset` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.RadioItem>`.
+
+### DropdownMenuLabel
+
+Heading for a group.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.GroupLabel>`.
+
+Group items with `DropdownMenuGroup` and a `DropdownMenuLabel`, and divide sections with `DropdownMenuSeparator`.
+
+### DropdownMenuSeparator
+
+Line between sections.
+
+Also accepts the props of `React.ComponentProps<typeof MenuPrimitive.Separator>`.
+
+</Only>
+
+<Only platform="swift">
+
+### DropdownMenu
+
+The root that manages the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isPresented` | `Binding<Bool>?` | `nil` |
+| `side` | `Edge` | `.bottom` |
+| `align` | `PopupAlignment` | `.start` |
+| `sideOffset` | `CGFloat` | `4` |
+| `alignOffset` | `CGFloat` | `0` |
+| `content` | `() -> Content` | - |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(isPresented:side:align:sideOffset:alignOffset:content:label:)`, `init(_:isPresented:side:align:content:)`.
+
+### DropdownMenuItem
+
+Action row.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `variant` | `Variant`: `.default` \| `.destructive` | `.default` |
+| `inset` | `Bool` | `false` |
+| `action` | `() -> Void` | - |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+| `icon` | `Image` | - |
+
+Overloads: `init(variant:inset:action:label:)`, `init(_:variant:inset:action:)`, `init(_:icon:variant:action:)`.
+
+### DropdownMenuCheckboxItem
+
+Row with a check mark that toggles.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isOn` | `Binding<Bool>` | - |
+| `inset` | `Bool` | `false` |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(isOn:inset:label:)`, `init(_:isOn:inset:)`.
+
+### DropdownMenuRadioGroup
+
+Groups radio items so that only one can be selected.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `selection` | `Binding<Value>` | - |
+| `content` | `() -> Content` | - |
+
+### DropdownMenuRadioItem
+
+Row that selects one value in its group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Value` | - |
+| `inset` | `Bool` | `false` |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(value:inset:label:)`, `init(_:value:inset:)`.
+
+### DropdownMenuLabel
+
+Heading for a group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `inset` | `Bool` | `false` |
+
+### DropdownMenuGroup
+
+Groups related items.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### DropdownMenuSeparator
+
+Line between sections.
+
+Takes no parameters.
+
+### DropdownMenuSub
+
+The root of a nested submenu.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `inset` | `Bool` | `false` |
+| `content` | `() -> Content` | - |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+| `icon` | `Image` | - |
+
+Overloads: `init(inset:content:label:)`, `init(_:inset:content:)`, `init(_:icon:content:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### MenuItemVariant
+
+Values: `Default`, `Destructive`.
+
+### DropdownMenu
+
+The root that manages the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `expanded` | `Boolean` | - |
+| `onExpandedChange` | `(Boolean) -> Unit` | - |
+| `trigger` | `@Composable () -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `side` | `PopupSide` | `PopupSide.Bottom` |
+| `align` | `PopupAlign` | `PopupAlign.Start` |
+| `sideOffset` | `Dp` | `4.dp` |
+| `alignOffset` | `Dp` | `0.dp` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### DropdownMenuItem
+
+Action row.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `onClick` | `() -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `MenuItemVariant`: `Default` \| `Destructive` | `MenuItemVariant.Default` |
+| `enabled` | `Boolean` | `true` |
+| `inset` | `Boolean` | `false` |
+| `closeOnClick` | `Boolean` | `true` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+| `icon` | `ImageVector?` | `null` |
+
+Overloads: `DropdownMenuItem(onClick, content)`, `DropdownMenuItem(text, onClick, icon)`.
+
+### DropdownMenuCheckboxItem
+
+Row with a check mark that toggles.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `checked` | `Boolean` | - |
+| `onCheckedChange` | `(Boolean) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `true` |
+| `inset` | `Boolean` | `false` |
+| `closeOnClick` | `Boolean` | `false` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `DropdownMenuCheckboxItem(checked, onCheckedChange, closeOnClick, content)`, `DropdownMenuCheckboxItem(text, checked, onCheckedChange)`.
+
+### DropdownMenuRadioGroup
+
+Groups radio items so that only one can be selected.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String?` | - |
+| `onValueChange` | `(String) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### DropdownMenuRadioItem
+
+Row that selects one value in its group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `true` |
+| `inset` | `Boolean` | `false` |
+| `closeOnClick` | `Boolean` | `false` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `DropdownMenuRadioItem(value, closeOnClick, content)`, `DropdownMenuRadioItem(value, text)`.
+
+### DropdownMenuLabel
+
+Heading for a group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `inset` | `Boolean` | `false` |
+
+### DropdownMenuSeparator
+
+Line between sections.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+
+### DropdownMenuGroup
+
+Groups related items.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### DropdownMenuSub
+
+The root of a nested submenu.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `icon` | `ImageVector?` | `null` |
+| `enabled` | `Boolean` | `true` |
+| `inset` | `Boolean` | `false` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+| `trigger` | `@Composable RowScope.() -> Unit` | - |
+
+Overloads: `DropdownMenuSub(text, icon, content)`, `DropdownMenuSub(trigger, content)`.
 
 </Only>
 

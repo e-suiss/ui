@@ -19,6 +19,10 @@ Use it for the main call to action of a screen, such as checkout or a form submi
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -67,7 +71,9 @@ The CLI also adds what it builds on: [Screen](/docs/components/screen). It also 
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -75,7 +81,7 @@ The CLI also adds what it builds on: [Screen](/docs/components/screen). It also 
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets
@@ -91,17 +97,17 @@ npx expo install cn react-native-reanimated react-native-safe-area-context react
 
 <ComponentSource path="uniwind/components/primitives/keyboard.ts" plain />
 
-5. Copy the source into `components/ui/bottom-bar.tsx`:
+5. Copy and paste the following code into `components/ui/bottom-bar.tsx`:
 
 <ComponentSource path="uniwind/components/ui/bottom-bar.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-safe-area-context react-native-worklets
@@ -117,17 +123,17 @@ npx expo install cn react-native-reanimated react-native-safe-area-context react
 
 <ComponentSource path="nativewind/components/primitives/keyboard.ts" plain />
 
-5. Copy the source into `components/ui/bottom-bar.tsx`:
+5. Copy and paste the following code into `components/ui/bottom-bar.tsx`:
 
 <ComponentSource path="nativewind/components/ui/bottom-bar.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-safe-area-context react-native-worklets
@@ -143,11 +149,11 @@ npx expo install react-native-reanimated react-native-safe-area-context react-na
 
 <ComponentSource path="stylesheet/components/primitives/keyboard.ts" plain />
 
-5. Copy the source into `components/ui/bottom-bar.tsx`:
+5. Copy and paste the following code into `components/ui/bottom-bar.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/bottom-bar.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -215,6 +221,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -392,25 +402,17 @@ fun BottomBarDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-Place `BottomBar` as the last child of the screen so it sits below the scrolling content. Stack buttons in `BottomBarContent`, or add `flex-row` to place them side by side.
-
-</Only>
-
-Set `separator` to draw a hairline above the bar. Inside a `Screen` that already handles the bottom safe-area edge, the inset is not added twice.
-
 ## Examples
 
 ### With separator
 
-A hairline above the bar with `separator`.
+Set `separator` to draw a hairline above the bar.
 
 <NativeExample name="bottom-bar-with-separator" />
 
 ### Two actions
 
-A primary and a plain button stacked.
+A primary and a plain button stacked in `BottomBarContent`.
 
 <NativeExample name="bottom-bar-two-actions" />
 
@@ -418,104 +420,19 @@ A primary and a plain button stacked.
 
 Back and Next buttons in a row.
 
+<Only platform="rn">
+
+Add `flex-row` to `BottomBarContent` to place the buttons side by side.
+
+</Only>
+
 <NativeExample name="bottom-bar-side-by-side" />
 
 ### Above keyboard
 
-The bar moving up with the keyboard while an input is focused.
+The bar moving up with the keyboard while an input is focused. Inside a `Screen` that already handles the bottom safe-area edge, the inset is not added twice.
 
 <NativeExample name="bottom-bar-above-keyboard" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### BottomBar
-
-Bottom container that follows the safe area and keyboard.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `separator` | `boolean` | `false` | Draws a top border. Defaults to `false`. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### BottomBarContent
-
-Padded area for the actions.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### BottomBar
-
-Bottom container that follows the safe area and keyboard.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `separator` | `Bool` | `true` | Draws a top border. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### BottomBarContent
-
-Padded area for the actions.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### BottomBar
-
-Bottom container that follows the safe area and keyboard.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `separator` | `Boolean` | `false` | Draws a top border. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### BottomBarContent
-
-Padded area for the actions.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `horizontalAlignment` | `Alignment.Horizontal` | `Alignment.CenterHorizontally` | - |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -523,10 +440,74 @@ Padded area for the actions.
 
 - The bar adds no role; each action inside provides its own.
 
-## Notes
+</Only>
 
-- The padding animation respects the system Reduce Motion setting.
-- Uses `bg-background` and `border-border` tokens; light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### BottomBar
+
+Bottom container that follows the safe area and keyboard.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `separator` | `boolean` | `false` |
+
+Also accepts the props of `ViewProps`.
+
+Place `BottomBar` as the last child of the screen so it sits below the scrolling content. `separator` draws a top border. The padding animation respects the system Reduce Motion setting.
+
+### BottomBarContent
+
+Padded area for the actions.
+
+Also accepts the props of `ViewProps`.
+
+</Only>
+
+<Only platform="swift">
+
+### BottomBar
+
+Bottom container that follows the safe area and keyboard.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `separator` | `Bool` | `true` |
+| `content` | `() -> Content` | - |
+
+### BottomBarContent
+
+Padded area for the actions.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### BottomBar
+
+Bottom container that follows the safe area and keyboard.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `separator` | `Boolean` | `false` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### BottomBarContent
+
+Padded area for the actions.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `horizontalAlignment` | `Alignment.Horizontal` | `Alignment.CenterHorizontally` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
 
 </Only>
 

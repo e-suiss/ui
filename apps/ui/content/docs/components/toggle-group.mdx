@@ -11,11 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 `ToggleGroup` wraps the toggle group primitive of the chosen base and holds `ToggleGroupItem` buttons that share the group's `variant` and `size`. Items can be spaced apart, attached into one bar, or combined into a segmented control.
 
-With `spacing={0}` and the `default` variant, the group becomes a segmented control: a filled track where a raised pill slides to the pressed item. Use a segmented group to switch between views, such as day, week and month. For a single on-off option, use `Toggle`; for switching panels of content, use `Tabs`.
+Use a segmented group to switch between views, such as day, week and month. For a single on-off option, use `Toggle`; for switching panels of content, use `Tabs`.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/toggle-group
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add toggle-group
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react class-variance-authority
@@ -37,11 +41,15 @@ npm install @base-ui/react class-variance-authority
 
 2. Add the pieces it builds on: [Toggle](/docs/components/toggle).
 
-3. Copy the source into `components/ui/toggle-group.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/toggle-group.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -65,8 +73,6 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 </ToggleGroup>
 ```
 
-The group's value is an array of item values. Use `defaultValue` for an uncontrolled group, or `value` with `onValueChange` to control it. Set `multiple` to let several items be pressed at once; without it, pressing an item releases the others.
-
 </OnlyBase>
 
 <OnlyBase base="radix">
@@ -84,8 +90,6 @@ The group's value is an array of item values. Use `defaultValue` for an uncontro
   </ToggleGroupItem>
 </ToggleGroup>
 ```
-
-Set `type` to `"single"` or `"multiple"`; it is required. With `"single"` the value is one item value, and pressing an item releases the others. With `"multiple"` it is an array of item values. Use `defaultValue` for an uncontrolled group, or `value` with `onValueChange` to control it.
 
 </OnlyBase>
 
@@ -105,170 +109,88 @@ Set `type` to `"single"` or `"multiple"`; it is required. With `"single"` the va
 </ToggleGroup>
 ```
 
-Give each item an `id`. The selection is a set of item ids. Use `defaultSelectedKeys` for an uncontrolled group, or `selectedKeys` with `onSelectionChange` to control it. Set `selectionMode="multiple"` to let several items be pressed at once; the default, `"single"`, releases the others when an item is pressed.
-
 </OnlyBase>
 
-Set `variant` and `size` on `ToggleGroup`; items take these from the group. Use `spacing={0}` with the `outline` variant to join items into one bordered bar.
+## Composition
+
+Use the following composition to build a `ToggleGroup`:
+
+```text
+ToggleGroup
+└── ToggleGroupItem
+```
 
 ## Examples
 
 ### Outline
 
-Uses the `outline` variant with spaced items.
+Set `variant="outline"` on the group to give every spaced item a border.
 
 <ComponentPreview name="toggle-group-outline" />
 
 ### Attached
 
-Joins outline items into one bar with `spacing={0}`.
+Use `spacing={0}` with the `outline` variant to join items into one bordered bar.
 
 <ComponentPreview name="toggle-group-attached" />
 
 ### Sizes
 
-Compares the `sm`, `default` and `lg` sizes.
+Use the `size` prop on the group to set the height and padding of every item: `sm`, `default` or `lg`.
 
 <ComponentPreview name="toggle-group-sizes" />
 
 ### Segmented
 
-Shows a single-choice segmented control with a sliding pill.
+With `spacing={0}` and the `default` variant, the group becomes a segmented control: a filled track where a raised pill slides to the pressed item. This one allows a single choice.
 
 <ComponentPreview name="toggle-group-segmented" />
 
 ### Segmented vertical
 
-Stacks a segmented control vertically.
+Set `orientation="vertical"` to stack a segmented control.
 
 <ComponentPreview name="toggle-group-segmented-vertical" />
 
 ### Segmented multiple
 
-Uses a segmented control that allows several pressed items.
+A segmented control that allows several pressed items. The sliding pill appears only when exactly one item is pressed.
 
 <ComponentPreview name="toggle-group-segmented-multiple" />
 
 ### Segmented sizes
 
-Compares segmented controls in each size.
+Compares segmented controls in each `size`.
 
 <ComponentPreview name="toggle-group-segmented-sizes" />
 
 ### Single selection
 
-Allows only one pressed item in an outline group.
+Allows only one pressed item in an outline group; pressing an item releases the others.
 
 <ComponentPreview name="toggle-group-single-selection" />
 
 ### Vertical
 
-Stacks attached outline items vertically.
+Set `orientation="vertical"` to stack attached outline items.
 
 <ComponentPreview name="toggle-group-vertical" />
 
 ### Disabled
 
-Disables every item in the group.
-
-<ComponentPreview name="toggle-group-disabled" />
-
-## API Reference
-
-<Anatomy>
-
-- [ToggleGroup](#togglegroup)
-  - [ToggleGroupItem](#togglegroupitem)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### ToggleGroup
-
-The container that holds the pressed values and shared styles.
-
-<OnlyBase base="base">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline"` | `"default"` | Styles every item: borderless `default`, or `outline` with a border. |
-| `size` | `"default" \| "sm" \| "lg"` | `"default"` | Sets the height and padding of every item. |
-| `spacing` | `number` | `2` | Sets the gap between items on the spacing scale; `0` attaches them, or makes a segmented control with the `default` variant. |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays items out in a row or a column, and sets which arrow keys move focus. |
-| `multiple` | `boolean` | `false` | Lets several items be pressed at once. |
-| `defaultValue` | `any[]` | — | The items pressed at first, when uncontrolled. |
-| `value` | `any[]` | — | The controlled pressed items. Pass it with `onValueChange`. |
-| `onValueChange` | `(value: any[]) => void` | — | Called when the pressed items change. |
-| `disabled` | `boolean` | `false` | Disables every item. |
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline"` | `"default"` | Styles every item: borderless `default`, or `outline` with a border. |
-| `size` | `"default" \| "sm" \| "lg"` | `"default"` | Sets the height and padding of every item. |
-| `spacing` | `number` | `2` | Sets the gap between items on the spacing scale; `0` attaches them, or makes a segmented control with the `default` variant. |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays items out in a row or a column, and sets which arrow keys move focus. |
-| `type` | `"single" \| "multiple"` | — | Required. Allows one pressed item or several. |
-| `defaultValue` | `string \| string[]` | — | The item or items pressed at first, when uncontrolled. A string with `"single"`, an array with `"multiple"`. |
-| `value` | `string \| string[]` | — | The controlled pressed item or items. Pass it with `onValueChange`. |
-| `onValueChange` | `(value: string \| string[]) => void` | — | Called when the pressed items change. |
-| `disabled` | `boolean` | `false` | Disables every item. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline"` | `"default"` | Styles every item: borderless `default`, or `outline` with a border. |
-| `size` | `"default" \| "sm" \| "lg"` | `"default"` | Sets the height and padding of every item. |
-| `spacing` | `number` | `2` | Sets the gap between items on the spacing scale; `0` attaches them, or makes a segmented control with the `default` variant. |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays items out in a row or a column, and sets which arrow keys move focus. |
-| `selectionMode` | `"single" \| "multiple"` | `"single"` | Allows one pressed item or several. |
-| `defaultSelectedKeys` | `Iterable<Key>` | — | The items pressed at first, when uncontrolled. |
-| `selectedKeys` | `Iterable<Key>` | — | The controlled pressed items. Pass it with `onSelectionChange`. |
-| `onSelectionChange` | `(keys: Set<Key>) => void` | — | Called when the pressed items change. |
-| `isDisabled` | `boolean` | `false` | Disables every item. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ToggleGroupItem
-
 <OnlyBase base="base radix">
 
-A toggle button within the group, identified by its `value`.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | — | Identifies the item in the group's value. |
-| `disabled` | `boolean` | `false` | Disables this item. |
+Set `disabled` on the group to disable every item.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-A toggle button within the group, identified by its `id`.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | `Key` | — | Identifies the item in the group's selection. |
-| `isDisabled` | `boolean` | `false` | Disables this item. |
+Set `isDisabled` on the group to disable every item.
 
 </OnlyBase>
 
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
+<ComponentPreview name="toggle-group-disabled" />
 
 ## Accessibility
 
@@ -306,25 +228,123 @@ Also accepts the props of the primitive part it wraps.
 
 </OnlyBase>
 
-## Notes
+## API Reference
 
-- The segmented indicator appears only when exactly one item is pressed. Its position is set through `--active-toggle-left`, `--active-toggle-top`, `--active-toggle-width` and `--active-toggle-height`.
-- `variant` and `size` set on a `ToggleGroupItem` are overridden by the group's values.
+### ToggleGroup
 
-<OnlyBase base="base radix">
+The container that holds the pressed values and shared styles.
 
-- The group sets `data-variant`, `data-size`, `data-spacing` and `data-orientation`.
+<OnlyBase base="base">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline"` | `"default"` |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` |
+| `spacing` | `number` | `2` |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
+| `multiple` | `boolean` | `false` |
+| `defaultValue` | `any[]` | — |
+| `value` | `any[]` | — |
+| `onValueChange` | `(value: any[]) => void` | — |
+| `disabled` | `boolean` | `false` |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline"` | `"default"` |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` |
+| `spacing` | `number` | `2` |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
+| `type` | `"single" \| "multiple"` | — |
+| `defaultValue` | `string \| string[]` | — |
+| `value` | `string \| string[]` | — |
+| `onValueChange` | `(value: string \| string[]) => void` | — |
+| `disabled` | `boolean` | `false` |
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-- The group sets `data-variant`, `data-size` and `data-spacing`, plus `data-horizontal` or `data-vertical`.
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline"` | `"default"` |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` |
+| `spacing` | `number` | `2` |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
+| `selectionMode` | `"single" \| "multiple"` | `"single"` |
+| `defaultSelectedKeys` | `Iterable<Key>` | — |
+| `selectedKeys` | `Iterable<Key>` | — |
+| `onSelectionChange` | `(keys: Set<Key>) => void` | — |
+| `isDisabled` | `boolean` | `false` |
 
 </OnlyBase>
 
-- Parts use the `toggle-group`, `toggle-group-item` and `toggle-group-indicator` slots.
-- The segmented track uses `bg-secondary` and the pill uses `bg-card`. Its animation is removed when reduced motion is preferred.
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base">
+
+The group's value is an array of item values. Use `defaultValue` for an uncontrolled group, or `value` with `onValueChange` to control it. Set `multiple` to let several items be pressed at once; without it, pressing an item releases the others.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `type` to `"single"` or `"multiple"`; it is required. With `"single"` the value is one item value, and pressing an item releases the others. With `"multiple"` it is an array of item values. Use `defaultValue` for an uncontrolled group, or `value` with `onValueChange` to control it.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The selection is a set of item ids. Use `defaultSelectedKeys` for an uncontrolled group, or `selectedKeys` with `onSelectionChange` to control it. Set `selectionMode="multiple"` to let several items be pressed at once; the default, `"single"`, releases the others when an item is pressed.
+
+</OnlyBase>
+
+`variant` and `size` style every item; values set on a `ToggleGroupItem` are overridden by the group's. `spacing` sets the gap between items on the spacing scale. `orientation` also sets which arrow keys move focus.
+
+The segmented indicator's position is set through `--active-toggle-left`, `--active-toggle-top`, `--active-toggle-width` and `--active-toggle-height`. Its animation is removed when reduced motion is preferred.
+
+<OnlyBase base="base radix">
+
+The group sets `data-variant`, `data-size`, `data-spacing` and `data-orientation`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The group sets `data-variant`, `data-size` and `data-spacing`, plus `data-horizontal` or `data-vertical`.
+
+</OnlyBase>
+
+### ToggleGroupItem
+
+<OnlyBase base="base radix">
+
+A toggle button within the group, identified by its `value`.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | — |
+| `disabled` | `boolean` | `false` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+A toggle button within the group, identified by its `id`.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `id` | `Key` | — |
+| `isDisabled` | `boolean` | `false` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+Each part sets a `data-slot`, such as `toggle-group-item` or `toggle-group-indicator`, for styling.
 
 </Only>
 
@@ -334,13 +354,17 @@ Also accepts the props of the primitive part it wraps.
 
 <Only platform="rn">
 
-`ToggleGroup` is built on the toggle group primitive and lays out `ToggleGroupItem` toggles in a row or a column. Items take the same `variant` and `size` styles as Toggle. The `spacing` prop sets the gap between items in steps of 4 points.
+`ToggleGroup` is built on the toggle group primitive and lays out `ToggleGroupItem` toggles in a row or a column.
 
-With `spacing={0}`, the group changes shape: the `default` variant becomes a segmented control on a `bg-secondary` track, and the `outline` variant joins items into one bordered strip. In a single-selection segmented control, the selected item is marked by a raised indicator that slides to the new item when the selection changes, like Tabs. In a `multiple` segmented control, each pressed item is raised on its own. Use the segmented style for switching views and the spaced style for toolbars.
+With `spacing={0}`, the `default` variant becomes a segmented control and the `outline` variant joins items into one bordered strip. Use the segmented style for switching views and the spaced style for toolbars.
 
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -390,7 +414,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -398,7 +424,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn react-native-reanimated react-native-worklets
@@ -426,17 +452,17 @@ npx expo install class-variance-authority cn react-native-reanimated react-nativ
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/toggle-group.tsx`:
+4. Copy and paste the following code into `components/ui/toggle-group.tsx`:
 
 <ComponentSource path="uniwind/components/ui/toggle-group.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn react-native-reanimated react-native-worklets
@@ -464,17 +490,17 @@ npx expo install class-variance-authority cn react-native-reanimated react-nativ
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/toggle-group.tsx`:
+4. Copy and paste the following code into `components/ui/toggle-group.tsx`:
 
 <ComponentSource path="nativewind/components/ui/toggle-group.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -502,11 +528,11 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/toggle-group.tsx`:
+4. Copy and paste the following code into `components/ui/toggle-group.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/toggle-group.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -605,6 +631,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -757,14 +787,6 @@ fun ToggleGroupFormatting(
 
 </Only>
 
-<Only platform="rn">
-
-The value is always an array of strings. Use `value` and `onValueChange` for controlled use, or `defaultValue`. Set `multiple` to allow more than one pressed item; without it, pressing an item replaces the selection.
-
-Give each `ToggleGroupItem` a `value`. Put icons in a `ToggleGroupIcon`, which sizes them to 16 points, and give icon-only items an `accessibilityLabel`. `orientation` switches between a row and a column, and `disabled` on the group turns off every item.
-
-</Only>
-
 ## Examples
 
 ### Outline
@@ -793,6 +815,12 @@ The `sm`, `default` and `lg` sizes.
 
 A single-selection segmented control for calendar views.
 
+<Only platform="rn">
+
+With `spacing={0}`, the `default` variant becomes a segmented control on a `bg-secondary` track. The selected item is marked by a raised indicator that slides to the new item when the selection changes, over 300 ms. The indicator respects the system reduce motion setting and is hidden when the selected item is disabled.
+
+</Only>
+
 <NativeExample name="toggle-group-segmented" />
 
 ### Segmented vertical
@@ -803,7 +831,7 @@ The segmented control in a vertical orientation.
 
 ### Segmented multiple
 
-A segmented control that allows several selected items.
+A segmented control that allows several selected items. With `multiple`, each pressed item is raised on its own.
 
 <NativeExample name="toggle-group-segmented-multiple" />
 
@@ -831,130 +859,6 @@ A disabled group.
 
 <NativeExample name="toggle-group-disabled" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### ToggleGroup
-
-Container that holds the shared value.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `spacing` | `number` | `2` | Gap between items in steps of 4 points. `0` joins the items. Defaults to `2`. |
-
-Also accepts the props of `React.ComponentProps<typeof ToggleGroupPrimitive>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ToggleGroupItem
-
-One toggle in the group.
-
-Also accepts the props of `React.ComponentProps<typeof TogglePrimitive>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ToggleGroupIcon
-
-Icon sized for a toggle group item.
-
-Also accepts the props of `React.ComponentProps<typeof Icon>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### ToggleGroup
-
-Container that holds the shared value.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selection` | `Binding<Value?>` | - | The selected value. |
-| `variant` | `ToggleVariant` | `.default` | Styles every item: borderless `default`, or `outline` with a border. |
-| `size` | `ToggleSize` | `.default` | Sets the height and padding of every item. |
-| `spacing` | `Int` | `2` | Gap between items in steps of 4 points. `0` joins the items. |
-| `orientation` | `Axis` | `.horizontal` | Lays items out in a row or a column, and sets which arrow keys move focus. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ToggleGroupItem
-
-One toggle in the group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Value` | - | Identifies the item in the group's value. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(value:label:)`, `init(_:value:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### ToggleGroup
-
-Container that holds the shared value.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String?` | - | The controlled pressed items. Pass it with `onValueChange`. |
-| `onValueChange` | `(String?) -> Unit` | - | Called when the pressed items change. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `ToggleVariant` | `ToggleVariant.Default` | Styles every item: borderless `default`, or `outline` with a border. |
-| `size` | `ToggleSize` | `ToggleSize.Default` | Sets the height and padding of every item. |
-| `spacing` | `Int` | `2` | Gap between items in steps of 4 points. `0` joins the items. |
-| `orientation` | `Orientation` | `Orientation.Horizontal` | Lays items out in a row or a column, and sets which arrow keys move focus. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-| `values` | `Set<String>` | - | - |
-| `onValuesChange` | `(Set<String>) -> Unit` | - | - |
-
-Overloads: `ToggleGroup(value, onValueChange, content)`, `ToggleGroup(values, onValuesChange, content)`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ToggleGroupItem
-
-One toggle in the group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | Identifies the item in the group's value. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `interactionSource` | `MutableInteractionSource?` | `null` | - |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `ToggleGroupItem(value, interactionSource, content)`, `ToggleGroupItem(text, value)`.
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -965,11 +869,107 @@ Overloads: `ToggleGroupItem(value, interactionSource, content)`, `ToggleGroupIte
 - The sliding segmented indicator is hidden from VoiceOver and TalkBack.
 - Icon-only items need an `accessibilityLabel`; label the group itself with `accessibilityLabel` when its purpose is not clear from context.
 
-## Notes
+</Only>
 
-- Pressed items use `bg-accent` and `text-primary`; the segmented indicator and pressed segmented items use `bg-card` with a small shadow in light mode and `bg-border` in dark mode.
-- The indicator slides over 300 ms and respects the system reduce motion setting. It is hidden when the selected item is disabled.
-- Colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### ToggleGroup
+
+Container that holds the shared value.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `spacing` | `number` | `2` |
+
+Also accepts the props of `React.ComponentProps<typeof ToggleGroupPrimitive>`.
+
+The value is always an array of strings. Use `value` and `onValueChange` for controlled use, or `defaultValue`. Set `multiple` to allow more than one pressed item; without it, pressing an item replaces the selection. `spacing` sets the gap between items in steps of 4 points, and `0` joins them. `orientation` switches between a row and a column, and `disabled` on the group turns off every item.
+
+### ToggleGroupItem
+
+One toggle in the group.
+
+Also accepts the props of `React.ComponentProps<typeof TogglePrimitive>`.
+
+Give each item a `value`. Items take the same `variant` and `size` styles as Toggle. Give icon-only items an `accessibilityLabel`.
+
+### ToggleGroupIcon
+
+Icon sized for a toggle group item.
+
+Also accepts the props of `React.ComponentProps<typeof Icon>`.
+
+Sizes the icon to 16 points.
+
+</Only>
+
+<Only platform="swift">
+
+### ToggleGroup
+
+Container that holds the shared value.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `selection` | `Binding<Value?>` | - |
+| `variant` | `ToggleVariant` | `.default` |
+| `size` | `ToggleSize` | `.default` |
+| `spacing` | `Int` | `2` |
+| `orientation` | `Axis` | `.horizontal` |
+| `content` | `() -> Content` | - |
+
+### ToggleGroupItem
+
+One toggle in the group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Value` | - |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(value:label:)`, `init(_:value:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### ToggleGroup
+
+Container that holds the shared value.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String?` | - |
+| `onValueChange` | `(String?) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `ToggleVariant` | `ToggleVariant.Default` |
+| `size` | `ToggleSize` | `ToggleSize.Default` |
+| `spacing` | `Int` | `2` |
+| `orientation` | `Orientation` | `Orientation.Horizontal` |
+| `enabled` | `Boolean` | `true` |
+| `content` | `@Composable () -> Unit` | - |
+| `values` | `Set<String>` | - |
+| `onValuesChange` | `(Set<String>) -> Unit` | - |
+
+Overloads: `ToggleGroup(value, onValueChange, content)`, `ToggleGroup(values, onValuesChange, content)`.
+
+### ToggleGroupItem
+
+One toggle in the group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `true` |
+| `interactionSource` | `MutableInteractionSource?` | `null` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `ToggleGroupItem(value, interactionSource, content)`, `ToggleGroupItem(text, value)`.
 
 </Only>
 

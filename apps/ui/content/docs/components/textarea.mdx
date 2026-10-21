@@ -15,7 +15,9 @@ Set `resizable` to give it a fixed height and a custom handle that people drag t
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/textarea
@@ -27,15 +29,21 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add textarea
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
-2. Copy the source into `components/ui/textarea.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/textarea.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -49,63 +57,43 @@ import { Textarea } from "@/components/ui/textarea"
 </div>
 ```
 
-`Textarea` passes its props to the native element, so use `value` with `onChange` to control it, or `defaultValue` for an uncontrolled field. Pair it with a `Label` through `htmlFor` and `id`, and link hint text with `aria-describedby`.
-
-With `resizable`, the textarea and its handle are wrapped in a relative container. Double-click the handle to reset the height.
-
 ## Examples
 
 ### With value
 
-Starts with a default value.
+Set `defaultValue` to start the field with text.
 
 <ComponentPreview name="textarea-with-value" />
 
 ### With label
 
-Names the textarea with a `Label`.
+Pair the textarea with a `Label` through `htmlFor` and `id`, and link hint text with `aria-describedby`.
 
 <ComponentPreview name="textarea-with-label" />
 
 ### Resizable
 
-Adds a resize handle inside the bottom corner of the field.
+Set `resizable="inside"` to add a resize handle inside the bottom corner of the field. Double-click the handle to reset the height.
 
 <ComponentPreview name="textarea-resizable" />
 
 ### Resizable outside
 
-Places the resize handle just outside the bottom corner of the field.
+Set `resizable="outside"` to place the handle just outside the bottom corner of the field.
 
 <ComponentPreview name="textarea-resizable-outside" />
 
 ### Disabled
 
-Disables the textarea so it can't be edited.
+Set `disabled` so the textarea can't be edited. The resize handle is hidden while it is disabled.
 
 <ComponentPreview name="textarea-disabled" />
 
 ### Invalid
 
-Marks the textarea with `aria-invalid` to show an error state.
+Set `aria-invalid` to show an error state with a destructive border.
 
 <ComponentPreview name="textarea-invalid" />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### Textarea
-
-The multi-line text field, with an optional resize handle.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `resizable` | `"inside" \| "outside"` | - | Adds a vertical resize handle, placed `inside` or `outside` the field's bottom corner, and turns off automatic growth. |
-
-Also accepts the props of `React.ComponentProps<"textarea">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -113,12 +101,23 @@ Also accepts the props of `React.ComponentProps<"textarea">`.
 - The resize handle is hidden from assistive technologies and works with a pointer only.
 - An invalid field is exposed through `aria-invalid`.
 
-## Notes
+## API Reference
 
-- Uses `data-slot="textarea"` and sets `data-resizable` when resizable; the wrapper and handle use `textarea-container` and `textarea-handle`.
-- A resizable textarea starts at a minimum height of `6rem`, and dragging never shrinks it below its minimum height.
-- The handle is hidden while the textarea is disabled, and mirrors in right-to-left layouts.
-- The caret uses the `primary` color; invalid fields use the `destructive` color.
+### Textarea
+
+The multi-line text field, with an optional resize handle.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `resizable` | `"inside" \| "outside"` | - |
+
+Also accepts the props of `React.ComponentProps<"textarea">`.
+
+`Textarea` passes its props to the native element, so use `value` with `onChange` to control it, or `defaultValue` for an uncontrolled field.
+
+`resizable` adds a vertical resize handle, placed `inside` or `outside` the field's bottom corner, and turns off automatic growth. The textarea and its handle are then wrapped in a relative container. A resizable textarea starts at a minimum height of `6rem`, dragging never shrinks it below its minimum height, and the handle mirrors in right-to-left layouts.
+
+The textarea uses `data-slot="textarea"` and sets `data-resizable` when resizable; the wrapper and handle use `textarea-container` and `textarea-handle`.
 
 </Only>
 
@@ -130,9 +129,15 @@ Also accepts the props of `React.ComponentProps<"textarea">`.
 
 `Textarea` is the multi-line version of `Input`. It wraps a `TextInput` through the same field control primitive, defaults to `multiline` with `numberOfLines={8}`, aligns text to the top and has a minimum height. It shows a focus border while editing, a destructive border and tint when invalid, and 50% opacity when disabled.
 
+Use it for comments, messages and other free-form text. Use `Input` for single-line values.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -176,7 +181,9 @@ npx @esuiss/ui@latest add textarea --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -184,7 +191,7 @@ npx @esuiss/ui@latest add textarea --platform kotlin
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -214,17 +221,17 @@ npx expo install cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/textarea.tsx`:
+3. Copy and paste the following code into `components/ui/textarea.tsx`:
 
 <ComponentSource path="uniwind/components/ui/textarea.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn nativewind
@@ -254,11 +261,11 @@ npx expo install cn nativewind
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/textarea.tsx`:
+3. Copy and paste the following code into `components/ui/textarea.tsx`:
 
 <ComponentSource path="nativewind/components/ui/textarea.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -288,11 +295,11 @@ npx expo install cn nativewind
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-2. Copy the source into `components/ui/textarea.tsx`:
+2. Copy and paste the following code into `components/ui/textarea.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/textarea.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -373,6 +380,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -437,16 +448,6 @@ fun TextareaDemo(
 
 </Only>
 
-<Only platform="rn">
-
-Use it for comments, messages and other free-form text. Use `Input` for single-line values.
-
-The value works controlled with `value` and `onValueChange(value, details)`, or uncontrolled with `defaultValue`. Inside a `Field`, the textarea picks up the field's label, description, invalid and disabled state.
-
-Override `numberOfLines` or set a height through `className` to change the visible size.
-
-</Only>
-
 ## Examples
 
 ### With value
@@ -467,76 +468,21 @@ A textarea that starts with a value.
 
 ### With label
 
-A textarea inside a `Field` with a label and description.
+A textarea inside a `Field`, which gives it the field's label and description.
 
 <NativeExample name="textarea-with-label" />
 
 ### Disabled
 
-A disabled textarea.
+A disabled textarea that can't be edited.
 
 <NativeExample name="textarea-disabled" />
 
 ### Invalid
 
-A textarea inside an invalid `Field` with an error message.
+A textarea inside an invalid `Field`, which gives it a destructive border and an error message.
 
 <NativeExample name="textarea-invalid" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Textarea
-
-Also accepts the props of `React.ComponentProps<typeof InputPrimitive.Root>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .textFieldStyle(.textarea)
-
-Style that creates `TextareaStyle`.
-
-Takes no parameters.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Textarea
-
-The multi-line text field, with an optional resize handle.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | The current value. |
-| `onValueChange` | `(String) -> Unit` | - | Called when the value changes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
-| `readOnly` | `Boolean` | `false` | - |
-| `invalid` | `Boolean` | `LocalFieldState.current.invalid` | - |
-| `placeholder` | `String?` | `null` | Text shown while it is empty. |
-| `minLines` | `Int` | `1` | - |
-| `maxLines` | `Int` | `Int.MAX_VALUE` | - |
-| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` | - |
-| `keyboardActions` | `KeyboardActions` | `KeyboardActions.Default` | - |
-| `interactionSource` | `MutableInteractionSource?` | `null` | - |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -546,12 +492,52 @@ The multi-line text field, with an optional resize handle.
 - `disabled` is set in `accessibilityState` and makes the textarea non-editable.
 - Outside a `Field`, give it an `accessibilityLabel`.
 
-## Notes
+</Only>
 
-- Uses the `bg-secondary`, `border-ring` and `border-destructive` tokens, with `opacity-50` when disabled.
-- In Uniwind and NativeWind, a focused field also draws the `ring-3 ring-ring/50` focus ring.
-- Placeholder, cursor and selection colors come from the `muted-foreground` and `primary` tokens.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Textarea
+
+The multi-line text field.
+
+Also accepts the props of `React.ComponentProps<typeof InputPrimitive.Root>`.
+
+The value works controlled with `value` and `onValueChange(value, details)`, or uncontrolled with `defaultValue`. Inside a `Field`, the textarea picks up the field's label, description, invalid and disabled state. Override `numberOfLines` or set a height through `className` to change the visible size. In Uniwind and NativeWind, a focused field also draws the `ring-3 ring-ring/50` focus ring.
+
+</Only>
+
+<Only platform="swift">
+
+### .textFieldStyle(.textarea)
+
+Style that creates `TextareaStyle`.
+
+Takes no parameters.
+
+</Only>
+
+<Only platform="kotlin">
+
+### Textarea
+
+The multi-line text field.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `onValueChange` | `(String) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` |
+| `readOnly` | `Boolean` | `false` |
+| `invalid` | `Boolean` | `LocalFieldState.current.invalid` |
+| `placeholder` | `String?` | `null` |
+| `minLines` | `Int` | `1` |
+| `maxLines` | `Int` | `Int.MAX_VALUE` |
+| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` |
+| `keyboardActions` | `KeyboardActions` | `KeyboardActions.Default` |
+| `interactionSource` | `MutableInteractionSource?` | `null` |
 
 </Only>
 

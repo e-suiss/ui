@@ -11,29 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 `Badge` is a single element that renders a `span` by default and can render as another element, such as a link. Badges can hold text and an icon on either side.
 
-<OnlyBase base="base">
-
-Use the `render` prop to render the badge as another element: `render={<a href="/" />}`.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Set `asChild` and pass the element as the only child to render the badge as it.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Pass a `render` function that returns the element; spread the props it receives onto it.
-
-</OnlyBase>
-
 Use a badge to tag content with a short status or category. For actions, use Button instead.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/badge
@@ -45,19 +29,25 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add badge
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react class-variance-authority
 ```
 
-2. Copy the source into `components/ui/badge.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/badge.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -66,68 +56,69 @@ import { Badge } from "@/components/ui/badge"
 ```
 
 ```tsx
-<Badge>Badge</Badge>
+<Badge variant="default | secondary | destructive | outline | ghost | link">
+  Badge
+</Badge>
 ```
-
-Mark icons with `data-icon="inline-start"` or `data-icon="inline-end"` so the `outline` and `ghost` variants tighten their padding on that side. Icons are sized to `size-3`.
-
-<OnlyBase base="base">
-
-Pass `render` with an anchor element, for example an `a` with an `href`, to make the badge a link. Linked badges get hover styles that depend on the variant.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Set `asChild` and pass an anchor element, for example an `a` with an `href`, as the child to make the badge a link. Linked badges get hover styles that depend on the variant.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Pass a `render` function that returns an anchor element, for example an `a` with an `href`, to make the badge a link. Linked badges get hover styles that depend on the variant.
-
-</OnlyBase>
-
-To use a custom color, override the text color with a `className` such as `text-green-600 dark:text-green-400`.
 
 ## Examples
 
 ### Variants
 
-Shows the `default`, `secondary`, `destructive`, `outline`, `ghost` and `link` variants.
+Use the `variant` prop to change the look of the badge. `default`, `secondary`, `destructive` and `link` are text only, `outline` adds a border and `ghost` adds horizontal padding.
 
 <ComponentPreview name="badge-variants" />
 
 ### With icon
 
-Places icons before and after the label with `data-icon`.
+Mark an icon with `data-icon="inline-start"` or `data-icon="inline-end"` so the `outline` and `ghost` variants tighten their padding on that side. Icons are sized to `size-3`.
 
 <ComponentPreview name="badge-with-icon" />
 
 ### As link
 
-Renders the badge as a link.
+<OnlyBase base="base">
+
+Use the `render` prop to render the badge as a link: `render={<a href="/" />}`. Linked badges get hover styles that depend on the variant.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` and pass a link as the only child to render the badge as a link. Linked badges get hover styles that depend on the variant.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function that returns a link and spread the props it receives onto it. Linked badges get hover styles that depend on the variant.
+
+</OnlyBase>
 
 <ComponentPreview name="badge-as-link" />
 
 ### Custom color
 
-Overrides the text color with utility classes.
+Override the text color with a `className` such as `text-green-600 dark:text-green-400`.
 
 <ComponentPreview name="badge-custom-color" />
 
-## API Reference
+## Accessibility
 
-<ApiPart index={1}>
+- A badge is static text by default and is not focusable.
+- When rendered as a link, it shows a focus ring on keyboard focus.
+- `aria-invalid` adds a `border-destructive` border.
+
+## API Reference
 
 ### Badge
 
-The inline label element.
+The `Badge` component displays a short inline label.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "secondary" \| "destructive" \| "outline" \| "ghost" \| "link"` | `"default"` | Visual style. `default`, `secondary`, `destructive` and `link` are text-only; `outline` adds a border and `ghost` adds horizontal padding. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "secondary" \| "destructive" \| "outline" \| "ghost" \| "link"` | `"default"` |
+| `className` | `string` | - |
 
 <OnlyBase base="base">
 
@@ -137,9 +128,9 @@ Also accepts the props of `useRender.ComponentProps<"span">`.
 
 <OnlyBase base="radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element, such as a link, instead of a `span`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
 
 Also accepts the props of `React.ComponentProps<"span">`.
 
@@ -147,27 +138,15 @@ Also accepts the props of `React.ComponentProps<"span">`.
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | — | Renders your own element, such as a link, with the badge's props. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | - |
 
 Also accepts the props of `React.ComponentProps<"span">`.
 
 </OnlyBase>
 
-</ApiPart>
-
-## Accessibility
-
-- A badge is static text by default and is not focusable.
-- When rendered as a link, it shows a focus ring on keyboard focus.
-- `aria-invalid` adds a `border-destructive` border.
-
-## Notes
-
-- Styling hook: `data-slot="badge"`, plus `data-variant`.
-- The `destructive` variant also tints the focus ring with `ring-destructive/20` (`ring-destructive/40` in dark mode).
-- Badges are a fixed `h-5` with fully rounded corners and do not wrap text.
+Badges are a fixed `h-5` with fully rounded corners and do not wrap text. The `destructive` variant also tints the focus ring. Style a badge through `data-slot="badge"` and `data-variant`.
 
 </Only>
 
@@ -184,6 +163,10 @@ Also accepts the props of `React.ComponentProps<"span">`.
 Use `default` for highlighted labels, `secondary` for neutral metadata, `destructive` for errors and `outline` when the badge needs a visible edge.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -233,7 +216,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -241,7 +226,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -259,17 +244,17 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/badge.tsx`:
+4. Copy and paste the following code into `components/ui/badge.tsx`:
 
 <ComponentSource path="uniwind/components/ui/badge.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -287,11 +272,11 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/badge.tsx`:
+4. Copy and paste the following code into `components/ui/badge.tsx`:
 
 <ComponentSource path="nativewind/components/ui/badge.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -309,11 +294,11 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/badge.tsx`:
+3. Copy and paste the following code into `components/ui/badge.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/badge.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -387,6 +372,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -454,14 +443,6 @@ fun BadgeDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-Put the label in a `Text` and icons in an `Icon`. Use `render` to render the badge as a different component, such as a `Pressable`, while keeping its styles.
-
-`badgeVariants` and `badgeTextVariants` are also exported if you need the classes on another element.
-
-</Only>
-
 ## Examples
 
 ### Variants
@@ -476,75 +457,6 @@ Badges with a leading icon.
 
 <NativeExample name="badge-with-icon" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Badge
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "secondary" \| "destructive" \| "outline" \| "ghost" \| "link"` | `"default"` | Visual style. |
-| `render` | `RenderProp` | - | Renders the badge as another element. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### Badge
-
-The inline label element.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `Variant`: `.default` \| `.secondary` \| `.destructive` \| `.outline` \| `.ghost` \| `.link` | `.default` | Visual style. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `variant` | `Variant`: `.default` \| `.secondary` \| `.destructive` \| `.outline` \| `.ghost` \| `.link` | `.default` | Visual style. |
-
-Overloads: `init(_:label:)`, `init(_:variant:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### BadgeVariant
-
-Values: `Default`, `Secondary`, `Destructive`, `Outline`, `Ghost`, `Link`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Badge
-
-The inline label element.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `BadgeVariant`: `Default` \| `Secondary` \| `Destructive` \| `Outline` \| `Ghost` \| `Link` | `BadgeVariant.Default` | Visual style. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `Badge(content)`, `Badge(text)`.
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -552,9 +464,62 @@ Overloads: `Badge(content)`, `Badge(text)`.
 - The badge adds no role; it is read as plain text.
 - If you render it as a pressable element, give that element a role and label.
 
-## Notes
+</Only>
 
-- Text colors come from `text-primary`, `text-muted-foreground`, `text-destructive` and `text-foreground`; light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Badge
+
+The `Badge` component displays a short inline label.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "secondary" \| "destructive" \| "outline" \| "ghost" \| "link"` | `"default"` |
+| `render` | `RenderProp` | - |
+
+Also accepts the props of `ViewProps`.
+
+Put the label in a `Text` and icons in an `Icon`. Use `render` to render the badge as another component, such as a `Pressable`, while keeping its styles. `badgeVariants` and `badgeTextVariants` are also exported if you need the classes on another element. Text colors come from `text-primary`, `text-muted-foreground`, `text-destructive` and `text-foreground`.
+
+</Only>
+
+<Only platform="swift">
+
+### Badge
+
+The `Badge` component displays a short inline label.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `Variant`: `.default` \| `.secondary` \| `.destructive` \| `.outline` \| `.ghost` \| `.link` | `.default` |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+| `variant` | `Variant`: `.default` \| `.secondary` \| `.destructive` \| `.outline` \| `.ghost` \| `.link` | `.default` |
+
+Overloads: `init(_:label:)`, `init(_:variant:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### BadgeVariant
+
+Values: `Default`, `Secondary`, `Destructive`, `Outline`, `Ghost`, `Link`.
+
+### Badge
+
+The `Badge` component displays a short inline label.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `BadgeVariant`: `Default` \| `Secondary` \| `Destructive` \| `Outline` \| `Ghost` \| `Link` | `BadgeVariant.Default` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `Badge(content)`, `Badge(text)`.
 
 </Only>
 

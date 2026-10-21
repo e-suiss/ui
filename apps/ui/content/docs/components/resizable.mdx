@@ -15,7 +15,9 @@ The `cards` variant renders each panel as a rounded card with a pill-shaped grip
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/resizable
@@ -27,24 +29,30 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add resizable
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install react-resizable-panels
 ```
 
-2. Copy the source into `components/ui/resizable.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/resizable.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable"
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
 ```
 
 ```tsx
@@ -59,21 +67,27 @@ import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/componen
 </ResizablePanelGroup>
 ```
 
-Set `orientation` on the group to `horizontal` (default) or `vertical`. Size panels with `defaultSize`, `minSize` and `maxSize`, for example `"30%"`. Make a panel `collapsible` with a `collapsedSize` to let it collapse when dragged past its minimum.
+## Composition
 
-Use `onLayoutChange` on the group to read the current sizes, keyed by each panel's `id`.
+Use the following composition to build a `ResizablePanelGroup`:
+
+```text
+ResizablePanelGroup
+├── ResizablePanel
+└── ResizableHandle
+```
 
 ## Examples
 
 ### With handle
 
-A sidebar and content split with a visible grip and a minimum sidebar size.
+A sidebar and content split with a minimum sidebar size. Set `withHandle` on `ResizableHandle` to show a visible grip.
 
 <ComponentPreview name="resizable-with-handle" />
 
 ### Vertical
 
-Panels stacked vertically and resized with the up and down arrow keys.
+Set `orientation="vertical"` on the group to stack the panels. Resize them with the up and down arrow keys.
 
 <ComponentPreview name="resizable-vertical" />
 
@@ -85,7 +99,7 @@ A vertical group nested inside a horizontal group to create three panes.
 
 ### Cards
 
-The `cards` variant with two collapsible panels that report their share of the space.
+Set `variant="cards"` to render each panel as a rounded card with a pill-shaped grip. Both panels are collapsible and report their share of the space.
 
 <ComponentPreview name="resizable-cards" />
 
@@ -95,31 +109,25 @@ The `cards` variant in a vertical orientation.
 
 <ComponentPreview name="resizable-cards-vertical" />
 
+## Accessibility
+
+- Each handle has the `separator` role with `aria-valuenow` and `aria-orientation`, and is focusable with Tab.
+- Arrow keys resize the adjacent panels; Home and End move the handle to its minimum and maximum.
+- A panel that collapses to zero width or height becomes `inert`, so its content leaves the tab order.
+
 ## API Reference
-
-<Anatomy>
-
-- [ResizablePanelGroup](#resizablepanelgroup)
-  - [ResizablePanel](#resizablepanel)
-  - [ResizableHandle](#resizablehandle)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### ResizablePanelGroup
 
 The container that arranges panels and handles and tracks the layout.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "cards"` | `"default"` | Sets the visual style: `default` for flat panels with thin dividers, or `cards` for rounded panels with pill grips. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "cards"` | `"default"` |
 
 Also accepts the props of `GroupProps` from `react-resizable-panels`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+Set `orientation` to `horizontal` (default) or `vertical`. `variant` is `default` for flat panels with thin dividers, or `cards` for rounded panels with pill grips. Use `onLayoutChange` to read the current sizes, keyed by each panel's `id`. Large layout jumps, such as collapsing or expanding a panel, animate unless the user prefers reduced motion.
 
 ### ResizablePanel
 
@@ -127,33 +135,20 @@ One resizable section of the layout.
 
 Also accepts the props of `PanelProps` from `react-resizable-panels`.
 
-</ApiPart>
-
-<ApiPart index={3}>
+Size panels with `defaultSize`, `minSize` and `maxSize`, for example `"30%"`. Make a panel `collapsible` with a `collapsedSize` to let it collapse when dragged past its minimum. Collapsed panels expose `data-empty`.
 
 ### ResizableHandle
 
 The draggable divider between two panels.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `withHandle` | `boolean` | - | Shows a visible grip on the divider. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `withHandle` | `boolean` | - |
 
 Also accepts the props of `SeparatorProps` from `react-resizable-panels`.
 
-</ApiPart>
+`withHandle` shows a visible grip on the divider. A handle next to a collapsed panel gets `data-collapsed` set to `start` or `end`, and its grip appears on hover.
 
-## Accessibility
-
-- Each handle has the `separator` role with `aria-valuenow` and `aria-orientation`, and is focusable with Tab.
-- Arrow keys resize the adjacent panels; Home and End move the handle to its minimum and maximum.
-- A panel that collapses to zero width or height becomes `inert`, so its content leaves the tab order.
-
-## Notes
-
-- Styling hooks: `data-slot` values `resizable-panel-group`, `resizable-panel` and `resizable-handle`. The group exposes `data-variant`, and collapsed panels expose `data-empty`.
-- A handle next to a collapsed panel gets `data-collapsed` set to `start` or `end`, and its grip appears on hover.
-- Large layout jumps, such as collapsing or expanding a panel, animate unless the user prefers reduced motion.
-- Uses the `border`, `muted` and `muted-foreground` colors.
+Each part sets a `data-slot`, such as `resizable-panel-group`, for styling. The group also exposes `data-variant`.
 
 </Only>

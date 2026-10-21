@@ -11,29 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 `Collapsible` wraps the collapsible primitive of the chosen base. The `Collapsible` root holds the open state, a `CollapsibleTrigger` toggles it, and `CollapsibleContent` holds the content that is shown or hidden. The parts are unstyled, so you control layout and appearance with `className`, or render the trigger as another component such as `Button`.
 
-<OnlyBase base="base">
-
-Render the trigger as another component with the `render` prop.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Set `asChild` on `CollapsibleTrigger` to render another component as the trigger.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Any `Button` with `slot="trigger"` inside `Collapsible` toggles it.
-
-</OnlyBase>
-
 Use a collapsible for a single disclosure region. For a set of related, stacked sections, use an accordion instead.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/collapsible
@@ -45,19 +29,25 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add collapsible
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @base-ui/react
 ```
 
-2. Copy the source into `components/ui/collapsible.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/collapsible.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -173,17 +163,15 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/component
 
 </OnlyBase>
 
-<OnlyBase base="base radix">
+## Composition
 
-The root is uncontrolled by default; set `defaultOpen` to start expanded. To control it, pass `open` and `onOpenChange`. Set `disabled` on the root to prevent toggling. While collapsed, the content is removed from the page.
+Use the following composition to build a `Collapsible`:
 
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-The root is uncontrolled by default; set `defaultExpanded` to start expanded. To control it, pass `isExpanded` and `onExpandedChange`. Set `isDisabled` on the root to prevent toggling. While collapsed, the content's children are not rendered.
-
-</OnlyBase>
+```text
+Collapsible
+├── CollapsibleTrigger
+└── CollapsibleContent
+```
 
 ## Examples
 
@@ -191,13 +179,13 @@ The root is uncontrolled by default; set `defaultExpanded` to start expanded. To
 
 <OnlyBase base="base radix">
 
-A collapsible that starts expanded using `defaultOpen`.
+Set `defaultOpen` to start the collapsible expanded.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-A collapsible that starts expanded using `defaultExpanded`.
+Set `defaultExpanded` to start the collapsible expanded.
 
 </OnlyBase>
 
@@ -205,71 +193,19 @@ A collapsible that starts expanded using `defaultExpanded`.
 
 ### Disabled
 
-A disabled collapsible whose trigger does not toggle the content.
-
-<ComponentPreview name="collapsible-disabled" layout="top" />
-
-## API Reference
-
-<Anatomy>
-
-- [Collapsible](#collapsible)
-  - [CollapsibleTrigger](#collapsibletrigger)
-  - [CollapsibleContent](#collapsiblecontent)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Collapsible
-
-The root that holds the open state and groups the trigger and content.
-
 <OnlyBase base="base radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | — | The controlled open state. Pass it with `onOpenChange`. |
-| `defaultOpen` | `boolean` | `false` | Whether the content starts open. |
-| `onOpenChange` | `(open: boolean) => void` | — | Called when the open state changes. |
-| `disabled` | `boolean` | `false` | Stops the trigger from toggling the content. |
+Set `disabled` on the root so the trigger does not toggle the content.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isExpanded` | `boolean` | — | The controlled open state. Pass it with `onExpandedChange`. |
-| `defaultExpanded` | `boolean` | `false` | Whether the content starts open. |
-| `onExpandedChange` | `(isExpanded: boolean) => void` | — | Called when the open state changes. |
-| `isDisabled` | `boolean` | `false` | Stops the trigger from toggling the content. |
+Set `isDisabled` on the root so the trigger does not toggle the content.
 
 </OnlyBase>
 
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### CollapsibleTrigger
-
-The button that toggles the content open and closed.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### CollapsibleContent
-
-The panel that is shown when the collapsible is open.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
+<ComponentPreview name="collapsible-disabled" layout="top" />
 
 ## Accessibility
 
@@ -277,11 +213,91 @@ Also accepts the props of the primitive part it wraps.
 - The trigger toggles on click, and with Enter or Space when focused.
 - Give an icon-only trigger an accessible name with `aria-label`.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot="collapsible"`, `data-slot="collapsible-trigger"` and `data-slot="collapsible-content"`.
-- The primitive sets state attributes on the parts, which you can use for styling and animation.
-- No styles are applied by default.
+### Collapsible
+
+The root that holds the open state and groups the trigger and content.
+
+<OnlyBase base="base radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | — |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean) => void` | — |
+| `disabled` | `boolean` | `false` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `isExpanded` | `boolean` | — |
+| `defaultExpanded` | `boolean` | `false` |
+| `onExpandedChange` | `(isExpanded: boolean) => void` | — |
+| `isDisabled` | `boolean` | `false` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base radix">
+
+The root is uncontrolled by default; set `defaultOpen` to start expanded, or control it with `open` and `onOpenChange`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The root is uncontrolled by default; set `defaultExpanded` to start expanded, or control it with `isExpanded` and `onExpandedChange`.
+
+</OnlyBase>
+
+### CollapsibleTrigger
+
+The button that toggles the content open and closed.
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base">
+
+Render the trigger as another component, such as `Button`, with the `render` prop.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` to render another component, such as `Button`, as the trigger.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Any `Button` with `slot="trigger"` inside `Collapsible` toggles it.
+
+</OnlyBase>
+
+### CollapsibleContent
+
+The panel that is shown when the collapsible is open.
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base radix">
+
+While collapsed, the content is removed from the page.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+While collapsed, the content's children are not rendered.
+
+</OnlyBase>
+
+No styles are applied by default. Each part sets a `data-slot`, such as `collapsible-trigger`, and the primitive sets state attributes you can use for styling and animation.
 
 </Only>
 
@@ -294,6 +310,10 @@ Also accepts the props of the primitive part it wraps.
 Use it for a single show-more section. For a list of sections where opening one can close another, use Accordion.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -337,7 +357,9 @@ npx @esuiss/ui@latest add collapsible --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -361,11 +383,11 @@ npx @esuiss/ui@latest add collapsible --platform kotlin
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-2. Copy the source into `components/ui/collapsible.tsx`:
+2. Copy and paste the following code into `components/ui/collapsible.tsx`:
 
 <ComponentSource path="uniwind/components/ui/collapsible.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -387,11 +409,11 @@ npx @esuiss/ui@latest add collapsible --platform kotlin
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-2. Copy the source into `components/ui/collapsible.tsx`:
+2. Copy and paste the following code into `components/ui/collapsible.tsx`:
 
 <ComponentSource path="nativewind/components/ui/collapsible.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -413,11 +435,11 @@ npx @esuiss/ui@latest add collapsible --platform kotlin
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-2. Copy the source into `components/ui/collapsible.tsx`:
+2. Copy and paste the following code into `components/ui/collapsible.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/collapsible.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -492,6 +514,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -779,14 +805,6 @@ fun CollapsibleDemo(initialOpen: Boolean = false, disabled: Boolean = false) {
 
 </Only>
 
-<Only platform="rn">
-
-Put any content in `CollapsibleTrigger`, for example a `Text` and a caret `Icon`, and use `render` to render it as a `Button`. Use `open` with `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled.
-
-Set `keepMounted` on `CollapsibleContent` to keep the content mounted while closed.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -799,158 +817,128 @@ A disabled collapsible whose trigger cannot toggle it.
 
 <NativeExample name="collapsible-disabled" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Collapsible
-
-Root that holds the open state.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | The controlled open state. Pass it with `onOpenChange`. |
-| `defaultOpen` | `boolean` | `false` | Whether it starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean, details) => void` | - | Called when it opens or closes. |
-| `disabled` | `boolean` | `false` | Whether the trigger ignores presses. |
-| `render` | `React.ReactElement \| ((props, state) => React.ReactElement)` | - | Element to render in place of the default `View`. |
-
-Also accepts the props of `View`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### CollapsibleTrigger
-
-Pressable that opens and closes the content.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `React.ReactElement \| ((props, state) => React.ReactElement)` | - | Element to render in place of the default `Pressable`. |
-
-Also accepts the props of `Pressable`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### CollapsibleContent
-
-The content shown while open.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `keepMounted` | `boolean` | `false` | Keeps the content mounted while closed. |
-| `render` | `React.ReactElement \| ((props, state) => React.ReactElement)` | - | Element to render in place of the default `View`. |
-
-Also accepts the props of `View`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### Collapsible
-
-Root that holds the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isExpanded` | `Binding<Bool>` | - | - |
-| `spacing` | `CGFloat` | `0` | - |
-| `content` | `() -> Content` | - | The content. |
-
-Overloads: `init(isExpanded:spacing:content:)`, `init(spacing:content:)`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### CollapsibleTrigger
-
-The button that toggles the content open and closed.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(label:)`, `init(_:)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### CollapsibleContent
-
-The content shown while open.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Collapsible
-
-Root that holds the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `expanded` | `Boolean` | - | - |
-| `onExpandedChange` | `(Boolean) -> Unit` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### CollapsibleTrigger
-
-The button that toggles the content open and closed.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### CollapsibleContent
-
-The content shown while open.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
 
 - The trigger has the `button` role with `expanded` and `disabled` state.
 - Closed content is hidden from VoiceOver and TalkBack.
+
+</Only>
+
+## API Reference
+
+<Only platform="rn">
+
+### Collapsible
+
+Root that holds the open state.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean, details) => void` | - |
+| `disabled` | `boolean` | `false` |
+| `render` | `React.ReactElement \| ((props, state) => React.ReactElement)` | - |
+
+Also accepts the props of `View`.
+
+Use `open` with `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled. `render` replaces the default `View`.
+
+### CollapsibleTrigger
+
+Pressable that opens and closes the content.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `React.ReactElement \| ((props, state) => React.ReactElement)` | - |
+
+Also accepts the props of `Pressable`.
+
+Put any content in the trigger, for example a `Text` and a caret `Icon`. Use `render` to render it as another element, such as a `Button`, in place of the default `Pressable`.
+
+### CollapsibleContent
+
+The content shown while open.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `keepMounted` | `boolean` | `false` |
+| `render` | `React.ReactElement \| ((props, state) => React.ReactElement)` | - |
+
+Also accepts the props of `View`.
+
+Set `keepMounted` to keep the content mounted while closed. `render` replaces the default `View`.
+
+</Only>
+
+<Only platform="swift">
+
+### Collapsible
+
+Root that holds the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isExpanded` | `Binding<Bool>` | - |
+| `spacing` | `CGFloat` | `0` |
+| `content` | `() -> Content` | - |
+
+Overloads: `init(isExpanded:spacing:content:)`, `init(spacing:content:)`.
+
+### CollapsibleTrigger
+
+The button that toggles the content open and closed.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(label:)`, `init(_:)`.
+
+### CollapsibleContent
+
+The content shown while open.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### Collapsible
+
+Root that holds the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `expanded` | `Boolean` | - |
+| `onExpandedChange` | `(Boolean) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `true` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### CollapsibleTrigger
+
+The button that toggles the content open and closed.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+
+### CollapsibleContent
+
+The content shown while open.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
 
 </Only>
 

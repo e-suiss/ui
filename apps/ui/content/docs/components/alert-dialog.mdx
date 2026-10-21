@@ -15,7 +15,9 @@ Use it when a decision must be made before continuing, such as signing out or de
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/alert-dialog
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add alert-dialog
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react
@@ -37,16 +41,33 @@ npm install @base-ui/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), `use-scrollbar-gap`.
 
-3. Copy the source into `components/ui/alert-dialog.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/alert-dialog.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { AlertDialog, AlertDialogTrigger, AlertDialogPortal, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogMedia, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogOverlay,
+  AlertDialogPortal,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 ```
 
@@ -120,9 +141,51 @@ import { Button } from "@/components/ui/button"
 
 </OnlyBase>
 
-`AlertDialogContent` already includes `AlertDialogPortal` and `AlertDialogOverlay`, so you rarely use those parts directly.
+## Composition
 
-`AlertDialogAction` and `AlertDialogCancel` both close the dialog and render a `Button`; pass `variant` and `size` to style them. Cancel defaults to the `secondary` variant and Action to `default`. Use `variant="destructive"` on the action for irreversible operations.
+Use the following composition to build a `AlertDialog`:
+
+```text
+AlertDialog
+├── AlertDialogTrigger
+└── AlertDialogContent
+    ├── AlertDialogHeader
+    │   ├── AlertDialogTitle
+    │   ├── AlertDialogDescription
+    │   └── AlertDialogMedia
+    └── AlertDialogFooter
+        ├── AlertDialogCancel
+        └── AlertDialogAction
+```
+
+## Examples
+
+### Small
+
+Set `size="sm"` on `AlertDialogContent` for a narrower dialog. This one also has a destructive action.
+
+<ComponentPreview name="alert-dialog-small" />
+
+### With media
+
+Add an `AlertDialogMedia` to the header to show an icon above the title.
+
+<ComponentPreview name="alert-dialog-with-media" />
+
+## Accessibility
+
+- The popup has the `alertdialog` role, named by `AlertDialogTitle` and described by `AlertDialogDescription`.
+- Opening moves focus into the dialog; closing returns focus to the trigger.
+- `Escape` closes the dialog.
+- Clicking the overlay does not close it; a choice must be made with a footer button or `Escape`.
+
+## API Reference
+
+### AlertDialog
+
+The root that manages the open state.
+
+Also accepts the props of the primitive part it wraps.
 
 <OnlyBase base="base radix">
 
@@ -136,58 +199,11 @@ The dialog is uncontrolled by default; use `defaultOpen`, or control it with `is
 
 </OnlyBase>
 
-## Examples
-
-### Small
-
-A narrower dialog using `size="sm"` with a destructive action.
-
-<ComponentPreview name="alert-dialog-small" />
-
-### With media
-
-Adds an icon above the title with `AlertDialogMedia`.
-
-<ComponentPreview name="alert-dialog-with-media" />
-
-## API Reference
-
-<Anatomy>
-
-- [AlertDialog](#alertdialog)
-  - [AlertDialogTrigger](#alertdialogtrigger)
-  - [AlertDialogContent](#alertdialogcontent)
-    - [AlertDialogHeader](#alertdialogheader)
-      - [AlertDialogTitle](#alertdialogtitle)
-      - [AlertDialogDescription](#alertdialogdescription)
-      - [AlertDialogMedia](#alertdialogmedia)
-    - [AlertDialogFooter](#alertdialogfooter)
-      - [AlertDialogCancel](#alertdialogcancel)
-      - [AlertDialogAction](#alertdialogaction)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### AlertDialog
-
-The root that manages the open state.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### AlertDialogTrigger
 
 The control that opens the dialog.
 
 Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### AlertDialogPortal
 
@@ -195,42 +211,52 @@ Renders the dialog into a portal outside the DOM hierarchy.
 
 Also accepts the props of the primitive part it wraps.
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### AlertDialogOverlay
 
 The full-screen scrim behind the dialog.
 
 Also accepts the props of the primitive part it wraps.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### AlertDialogContent
 
 The dialog surface, rendered with its own portal and overlay.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"default" \| "sm"` | `"default"` | Maximum width of the dialog. `sm` is narrower than `default`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"default" \| "sm"` | `"default"` |
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isDismissable` | `boolean` | `false` | Closes the dialog on a press outside it. |
-| `isKeyboardDismissDisabled` | `boolean` | - | Stops Escape from closing the dialog. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `isDismissable` | `boolean` | `false` |
+| `isKeyboardDismissDisabled` | `boolean` | - |
+
+`isDismissable` closes the dialog on a press outside it, and `isKeyboardDismissDisabled` stops Escape from closing it.
 
 </OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 
-</ApiPart>
+`AlertDialogContent` already includes `AlertDialogPortal` and `AlertDialogOverlay`, so you rarely use those parts directly. `size` sets the maximum width; `sm` is narrower than `default`.
 
-<ApiPart index={6}>
+<OnlyBase base="base">
+
+Enter and exit use fade and zoom animations keyed to `data-open` and `data-closed`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Enter and exit use fade and zoom animations keyed to `data-state="open"` and `data-state="closed"`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Enter and exit use fade and zoom animations keyed to `data-entering` and `data-exiting`.
+
+</OnlyBase>
 
 ### AlertDialogHeader
 
@@ -238,19 +264,11 @@ A centered layout wrapper for the media, title and description.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={7}>
-
 ### AlertDialogFooter
 
 A two-column grid for the cancel and action buttons.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={8}>
 
 ### AlertDialogMedia
 
@@ -258,19 +276,11 @@ A circular container for an icon or image above the title.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={9}>
-
 ### AlertDialogTitle
 
 The heading that names the dialog.
 
 Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={10}>
 
 ### AlertDialogDescription
 
@@ -278,18 +288,14 @@ Supporting text that describes the dialog.
 
 Also accepts the props of the primitive part it wraps.
 
-</ApiPart>
-
-<ApiPart index={11}>
-
 ### AlertDialogAction
 
 A button that confirms and closes the dialog.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` | The `Button` variant. |
-| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | The `Button` size. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` |
 
 <OnlyBase base="base radix">
 
@@ -303,18 +309,16 @@ Also accepts the props of [Button](/docs/components/button).
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={12}>
+`variant` and `size` are the `Button` variant and size. Use `variant="destructive"` for irreversible operations.
 
 ### AlertDialogCancel
 
 A button that dismisses the dialog without acting.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"secondary"` | The `Button` variant. |
-| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | The `Button` size. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"secondary"` |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` |
 
 <OnlyBase base="base radix">
 
@@ -328,37 +332,7 @@ Also accepts the props of [Button](/docs/components/button).
 
 </OnlyBase>
 
-</ApiPart>
-
-## Accessibility
-
-- The popup has the `alertdialog` role, named by `AlertDialogTitle` and described by `AlertDialogDescription`.
-- Opening moves focus into the dialog; closing returns focus to the trigger.
-- `Escape` closes the dialog.
-- Clicking the overlay does not close it; a choice must be made with a footer button or `Escape`.
-
-## Notes
-
-- Styling hooks: `data-slot` values from `alert-dialog` through `alert-dialog-cancel`; the content also sets `data-size`.
-- Surface tokens: `bg-popover` for the dialog, `bg-black/50` for the overlay and `bg-muted` for media.
-
-<OnlyBase base="base">
-
-- Enter and exit use fade and zoom animations keyed to `data-open` and `data-closed`.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-- Enter and exit use fade and zoom animations keyed to `data-state="open"` and `data-state="closed"`.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-- Enter and exit use fade and zoom animations keyed to `data-entering` and `data-exiting`.
-
-</OnlyBase>
+Both `AlertDialogCancel` and `AlertDialogAction` close the dialog and render a `Button`, styled with the `Button` `variant` and `size`. Each part sets a `data-slot`, such as `alert-dialog-content` or `alert-dialog-cancel`, for styling, and the content also sets `data-size`.
 
 </Only>
 
@@ -375,6 +349,10 @@ Also accepts the props of [Button](/docs/components/button).
 Use it for confirmations that need an explicit choice, such as deleting data. For less critical content that can be dismissed freely, use Dialog; for a list of choices anchored to the bottom of the screen, use Alert Sheet.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -424,7 +402,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -432,7 +412,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-screens react-native-worklets
@@ -468,17 +448,17 @@ npx expo install cn react-native-reanimated react-native-screens react-native-wo
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/alert-dialog.tsx`:
+5. Copy and paste the following code into `components/ui/alert-dialog.tsx`:
 
 <ComponentSource path="uniwind/components/ui/alert-dialog.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-screens react-native-worklets
@@ -514,17 +494,17 @@ npx expo install cn react-native-reanimated react-native-screens react-native-wo
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/alert-dialog.tsx`:
+5. Copy and paste the following code into `components/ui/alert-dialog.tsx`:
 
 <ComponentSource path="nativewind/components/ui/alert-dialog.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-screens react-native-worklets
@@ -560,11 +540,11 @@ npx expo install react-native-reanimated react-native-screens react-native-workl
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/alert-dialog.tsx`:
+5. Copy and paste the following code into `components/ui/alert-dialog.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/alert-dialog.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -651,6 +631,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -856,16 +840,6 @@ fun AlertDialogDefault(defaultOpen: Boolean) {
 
 </Only>
 
-<Only platform="rn">
-
-Compose `AlertDialogTrigger`, then `AlertDialogContent` with an `AlertDialogHeader` (`AlertDialogTitle`, `AlertDialogDescription`) and an `AlertDialogFooter` holding `AlertDialogCancel` and `AlertDialogAction`. Both footer buttons close the dialog and stretch to equal widths inside the footer.
-
-`AlertDialogAction` and `AlertDialogCancel` accept Button's `variant` and `size`; use `variant="destructive"` for destructive confirmations. Add `AlertDialogMedia` above the title for an icon badge.
-
-Use `open` and `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled. Pass `portalHost` to render into a named portal host.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -874,395 +848,21 @@ Use `open` and `onOpenChange` for controlled state, or `defaultOpen` for uncontr
 
 ### Small
 
-The narrower `sm` content size.
+Set `size` to `sm` for a narrower dialog.
 
 <NativeExample name="alert-dialog-small" />
 
 ### With media
 
-An icon badge above the title with `AlertDialogMedia`.
+Add an `AlertDialogMedia` above the title to show an icon badge.
 
 <NativeExample name="alert-dialog-with-media" />
 
 ### Destructive
 
-A destructive action button for an irreversible confirmation.
+Set the action's `variant` to `destructive` for an irreversible confirmation.
 
 <NativeExample name="alert-dialog-destructive" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### AlertDialog
-
-The root that manages the open state.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Whether the dialog is open, for controlled use. |
-| `defaultOpen` | `boolean` | `false` | Whether the dialog starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the dialog opens or closes. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AlertDialogOverlay
-
-Dimmed scrim behind the dialog.
-
-Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Backdrop>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AlertDialogContent
-
-Centered card with scale and fade transitions.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `portalHost` | `string` | - | Name of the portal host to render into. |
-| `size` | `"default" \| "sm"` | `"default"` | `default` or `sm` maximum width. |
-
-Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Popup>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AlertDialogHeader
-
-Centered column for the title and description.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### AlertDialogFooter
-
-Row of actions with equal-width buttons.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### AlertDialogMedia
-
-Round badge for an icon above the title.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### AlertDialogTitle
-
-Dialog heading.
-
-Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Title>`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### AlertDialogDescription
-
-Supporting text below the title.
-
-Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Description>`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### AlertDialogAction
-
-Button that confirms and closes the dialog.
-
-Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Close>`, `React.ComponentProps<typeof Button>`.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### AlertDialogCancel
-
-Secondary button that closes the dialog.
-
-Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Close>`, `React.ComponentProps<typeof Button>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .alertDialog
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AlertDialogContent
-
-Centered card with scale and fade transitions.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `Size`: `.default` \| `.sm` | `.default` | `default` or `sm` maximum width. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AlertDialogHeader
-
-Centered column for the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AlertDialogMedia
-
-Round badge for an icon above the title.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### AlertDialogTitle
-
-Dialog heading.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `verbatim` | `String` | - | The title text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### AlertDialogDescription
-
-Supporting text below the title.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ description` | `LocalizedStringKey` | - | The supporting text. |
-| `verbatim` | `String` | - | The supporting text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### AlertDialogFooter
-
-Row of actions with equal-width buttons.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### AlertDialogAction
-
-Button that confirms and closes the dialog.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `VariantButtonStyle.Variant` | `.default` | The `Button` variant. |
-| `size` | `VariantButtonStyle.Size` | `.default` | `default` or `sm` maximum width. |
-| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(variant:size:action:label:)`, `init(_:variant:size:action:)`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### AlertDialogCancel
-
-Secondary button that closes the dialog.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `VariantButtonStyle.Variant` | `.secondary` | The `Button` variant. |
-| `size` | `VariantButtonStyle.Size` | `.default` | `default` or `sm` maximum width. |
-| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | `"Cancel"` | The title text. |
-
-Overloads: `init(variant:size:action:label:)`, `init(_:variant:size:action:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### AlertDialogSize
-
-Values: `Default`, `Sm`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AlertDialog
-
-The root that manages the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `Boolean` | - | Whether the dialog is open, for controlled use. |
-| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the dialog opens or closes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `size` | `AlertDialogSize`: `Default` \| `Sm` | `AlertDialogSize.Default` | `default` or `sm` maximum width. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AlertDialogHeader
-
-Centered column for the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AlertDialogMedia
-
-Round badge for an icon above the title.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### AlertDialogTitle
-
-Dialog heading.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### AlertDialogDescription
-
-Supporting text below the title.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### AlertDialogFooter
-
-Row of actions with equal-width buttons.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### AlertDialogAction
-
-Button that confirms and closes the dialog.
-
-Receiver: `RowScope`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `onClick` | `() -> Unit` | - | Called when it is tapped. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `ButtonVariant` | `ButtonVariant.Default` | The `Button` variant. |
-| `size` | `ButtonSize` | `ButtonSize.Default` | `default` or `sm` maximum width. |
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### AlertDialogCancel
-
-Secondary button that closes the dialog.
-
-Receiver: `RowScope`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `onClick` | `() -> Unit` | `{}` | Called when it is tapped. |
-| `variant` | `ButtonVariant` | `ButtonVariant.Secondary` | The `Button` variant. |
-| `size` | `ButtonSize` | `ButtonSize.Default` | `default` or `sm` maximum width. |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -1273,11 +873,275 @@ Receiver: `RowScope`.
 - Tapping the scrim does not close it; the Android back button and the VoiceOver escape gesture do.
 - The title has the `heading` role, and the action buttons have the `button` role.
 
-## Notes
+</Only>
 
-- On iOS the content is wrapped in a full-window overlay so it appears above native navigation.
-- Enter and exit animations respect the system Reduce Motion setting.
-- Uses `bg-popover`, `bg-black/50`, `text-foreground` and `text-muted-foreground` tokens; light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### AlertDialog
+
+The root that manages the open state.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean, details) => void` | - |
+
+Use `open` and `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled. `onOpenChange` is called when the dialog opens or closes.
+
+### AlertDialogOverlay
+
+Dimmed scrim behind the dialog.
+
+Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Backdrop>`.
+
+### AlertDialogContent
+
+Centered card with scale and fade transitions.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `portalHost` | `string` | - |
+| `size` | `"default" \| "sm"` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Popup>`.
+
+`size` sets the maximum width; `sm` is narrower than `default`. Pass `portalHost` to render into a named portal host. On iOS the content is wrapped in a full-window overlay so it appears above native navigation. Enter and exit animations respect the system Reduce Motion setting.
+
+### AlertDialogHeader
+
+Centered column for the title and description.
+
+Also accepts the props of `ViewProps`.
+
+### AlertDialogFooter
+
+Row of actions with equal-width buttons.
+
+Also accepts the props of `ViewProps`.
+
+Both footer buttons close the dialog and stretch to equal widths.
+
+### AlertDialogMedia
+
+Round badge for an icon above the title.
+
+Also accepts the props of `ViewProps`.
+
+### AlertDialogTitle
+
+Dialog heading.
+
+Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Title>`.
+
+### AlertDialogDescription
+
+Supporting text below the title.
+
+Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Description>`.
+
+### AlertDialogAction
+
+Button that confirms and closes the dialog.
+
+Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Close>`, `React.ComponentProps<typeof Button>`.
+
+### AlertDialogCancel
+
+Secondary button that closes the dialog.
+
+Also accepts the props of `React.ComponentProps<typeof AlertDialogPrimitive.Close>`, `React.ComponentProps<typeof Button>`.
+
+`AlertDialogAction` and `AlertDialogCancel` accept the `Button` `variant` and `size`. Use `variant="destructive"` on the action for destructive confirmations.
+
+</Only>
+
+<Only platform="swift">
+
+### .alertDialog
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - |
+| `content` | `() -> Content` | - |
+
+### AlertDialogContent
+
+Centered card with scale and fade transitions.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `size` | `Size`: `.default` \| `.sm` | `.default` |
+| `content` | `() -> Content` | - |
+
+### AlertDialogHeader
+
+Centered column for the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### AlertDialogMedia
+
+Round badge for an icon above the title.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### AlertDialogTitle
+
+Dialog heading.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### AlertDialogDescription
+
+Supporting text below the title.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### AlertDialogFooter
+
+Row of actions with equal-width buttons.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### AlertDialogAction
+
+Button that confirms and closes the dialog.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `variant` | `VariantButtonStyle.Variant` | `.default` |
+| `size` | `VariantButtonStyle.Size` | `.default` |
+| `action` | `(() -> Void)?` | `nil` |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(variant:size:action:label:)`, `init(_:variant:size:action:)`.
+
+### AlertDialogCancel
+
+Secondary button that closes the dialog.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `variant` | `VariantButtonStyle.Variant` | `.secondary` |
+| `size` | `VariantButtonStyle.Size` | `.default` |
+| `action` | `(() -> Void)?` | `nil` |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | `"Cancel"` |
+
+Overloads: `init(variant:size:action:label:)`, `init(_:variant:size:action:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### AlertDialogSize
+
+Values: `Default`, `Sm`.
+
+### AlertDialog
+
+The root that manages the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `open` | `Boolean` | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `size` | `AlertDialogSize`: `Default` \| `Sm` | `AlertDialogSize.Default` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### AlertDialogHeader
+
+Centered column for the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### AlertDialogMedia
+
+Round badge for an icon above the title.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable BoxScope.() -> Unit` | - |
+
+### AlertDialogTitle
+
+Dialog heading.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### AlertDialogDescription
+
+Supporting text below the title.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### AlertDialogFooter
+
+Row of actions with equal-width buttons.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+
+### AlertDialogAction
+
+Button that confirms and closes the dialog.
+
+Receiver: `RowScope`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `onClick` | `() -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `ButtonVariant` | `ButtonVariant.Default` |
+| `size` | `ButtonSize` | `ButtonSize.Default` |
+
+### AlertDialogCancel
+
+Secondary button that closes the dialog.
+
+Receiver: `RowScope`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `onClick` | `() -> Unit` | `{}` |
+| `variant` | `ButtonVariant` | `ButtonVariant.Secondary` |
+| `size` | `ButtonSize` | `ButtonSize.Default` |
 
 </Only>
 

@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A full pie split into five slices separated by thin gaps, with a tooltip for each slice. Use it for a quick part-to-whole view of a small number of categories.
 
+Give each record a category key, a value and a `fill` that references its color, and add a label and color for every key to `chartConfig`. Point `dataKey` and `nameKey` on the `Pie` at your value and category fields. Pies work best with about five slices or fewer; group the rest into an Other slice.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/pie-chart-default
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts pie-chart-default
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/pie-chart-default.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/pie-chart-default.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { PieChartDefault } from "@/components/charts/pie-chart-default"
 ```tsx
 <PieChartDefault />
 ```
-
-Give each record a category key, a value and a `fill` that references its color, then add a label and color for every key in `chartConfig`. Point `dataKey` and `nameKey` on the `Pie` at your value and category fields.
-
-## Notes
-
-Pies work best with about five slices or fewer; group the long tail into an Other slice.
 
 </Only>
 
@@ -77,7 +81,17 @@ The simplest `PieChart`: one `Pie` inside a `Card`, with slices separated by a t
 
 </Only>
 
+<Only platform="rn">
+
+Replace `chartData` with your records and keep `dataKey` and `nameKey` in step with your field names. Add one entry per slice to `chartConfig` with its label and color; the component takes no props.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +141,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +153,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/pie-chart-default.tsx`:
+2. Copy and paste the following code into `components/charts/pie-chart-default.tsx`:
 
 <ComponentSource path="uniwind/components/charts/pie-chart-default.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +165,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/pie-chart-default.tsx`:
+2. Copy and paste the following code into `components/charts/pie-chart-default.tsx`:
 
 <ComponentSource path="nativewind/components/charts/pie-chart-default.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +177,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/pie-chart-default.tsx`:
+2. Copy and paste the following code into `components/charts/pie-chart-default.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/pie-chart-default.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +264,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +307,6 @@ fun PieExample() {
     PieChartDefault()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your records and keep `dataKey` and `nameKey` in step with your field names. Add one entry per slice to `chartConfig` with its label and color; the component takes no props.
 
 </Only>
 

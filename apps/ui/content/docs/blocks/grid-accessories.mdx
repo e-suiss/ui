@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A product grid with category filter chips and an add button on each card that turns into an In bag pill. A bag icon in the header shows the running count. Cards sit two per row on mobile and fill the width with auto-sized columns on desktop. Use it for accessory, add-on or catalog listings where shoppers add items straight from the grid.
 
+Edit `filters` for the chips and `accessories` for the products; each product has a name, a category matching one of the filters, a formatted price and an image. Replace the local bag toggle with your cart logic.
+
+The bag count is announced, and each add button names its product and exposes its pressed state. Product photos are Unsplash placeholders.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/grid-accessories
@@ -25,9 +31,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks grid-accessories
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +43,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Toggle Group](/docs/components/toggle-group).
 
-3. Copy the source into `components/blocks/grid-accessories.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/grid-accessories.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +62,6 @@ import { GridAccessories } from "@/components/blocks/grid-accessories"
 ```tsx
 <GridAccessories />
 ```
-
-Edit `filters` for the chips and `accessories` for the products; each product has a name, a category matching one of the filters, a formatted price and an image. Replace the local bag toggle with your cart logic.
-
-## Notes
-
-The bag count is announced, and each add button names its product and exposes its pressed state. Product photos are Unsplash placeholders.
 
 </Only>
 
@@ -75,9 +81,15 @@ The bag count is announced, and each add button names its product and exposes it
 
 Composes `Screen`, `Chip` filters, `Button`, `Icon` and `Text`. Category chips filter the grid, and each card's plus button expands into an In bag state while a badge on the bag icon shows the item count.
 
+Replace `ACCESSORIES` and `FILTERS` with your catalog. Pass `onAddToBag`, `onRemoveFromBag` and `onFilterChange` to sync with your cart.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +139,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +149,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Chip](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -147,17 +161,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/grid-accessories.tsx`:
+4. Copy and paste the following code into `components/blocks/grid-accessories.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/grid-accessories.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -169,17 +183,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/grid-accessories.tsx`:
+4. Copy and paste the following code into `components/blocks/grid-accessories.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/grid-accessories.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -191,11 +205,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/grid-accessories.tsx`:
+4. Copy and paste the following code into `components/blocks/grid-accessories.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/grid-accessories.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -315,6 +329,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -354,12 +372,6 @@ fun GridAccessoriesExample() {
     GridAccessories()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `ACCESSORIES` and `FILTERS` with your catalog. Pass `onAddToBag`, `onRemoveFromBag` and `onFilterChange` to sync with your cart.
 
 </Only>
 

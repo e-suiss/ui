@@ -9,13 +9,15 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="preview-demo" layout="fullscreen" responsive />
 
-`Preview` reveals extra information about a link, such as a profile or page summary, without navigating. On desktop it renders a suiss/ui `HoverCard` that opens when the trigger is hovered or focused. On mobile (below `48rem`, via `useIsMobile`), where hover is not available, it renders a `Drawer` with a swipe handle that opens when the trigger is tapped. The drawer floats inset from the screen edges by default.
+`Preview` reveals extra information about a link, such as a profile or page summary, without navigating. On desktop it renders a suiss/ui `HoverCard` that opens when the trigger is hovered or focused. On mobile (below `48rem`, via `useIsMobile`), where hover is not available, it renders a `Drawer` with a swipe handle that opens when the trigger is tapped.
 
 Use it for supplementary content that people can skip. Keep essential information and actions out of the preview, because the hover card opens only on hover or focus.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/preview
@@ -27,17 +29,23 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns preview
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
 2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Hover Card](/docs/components/hover-card), `use-mobile`.
 
-3. Copy the source into `components/patterns/preview.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/preview.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -58,66 +66,65 @@ import { Preview, PreviewTrigger, PreviewContent } from "@/components/patterns/p
 </div>
 ```
 
-- Place `PreviewTrigger` and `PreviewContent` inside `Preview`. The parts throw when used outside it.
-- Open state is uncontrolled by default; use `defaultOpen`, or `open` with `onOpenChange` to control it.
-- On desktop the trigger is a link that uses `href`; on mobile it is a button that opens the drawer, so the link target is not followed.
-- `align`, `alignOffset`, `side` and `sideOffset` position the desktop card. `showCloseButton` and `closeLabel` apply only to the mobile drawer.
+## Composition
+
+Use the following composition to build a `Preview`:
+
+```text
+Preview
+├── PreviewTrigger
+└── PreviewContent
+```
 
 ## Examples
 
 ### With close button
 
-Adds a close button to the mobile drawer with `showCloseButton`.
+Set `showCloseButton` to add a close button to the mobile drawer. `PreviewContent` then adds end padding so content does not sit under it.
 
 <ComponentPreview name="preview-with-close-button" layout="fullscreen" responsive />
 
 ### With close label
 
-Uses a Done text button for the mobile close button through `closeLabel`.
+Set `closeLabel` to use a Done text button for the mobile close button in place of the icon.
 
 <ComponentPreview name="preview-with-close-label" layout="fullscreen" responsive />
 
 ### Attached
 
-Sets `floating` to `false` so the mobile drawer sits on the screen edges.
+The mobile drawer floats inset from the screen edges by default. Set `floating` to `false` so it sits on the screen edges.
 
 <ComponentPreview name="preview-attached" layout="fullscreen" responsive />
 
+## Accessibility
+
+- On desktop the trigger is a link; the card opens on hover and on keyboard focus, and closes when the pointer leaves.
+- On mobile the trigger is a button that opens the drawer.
+- The trigger shows a focus ring when focused with the keyboard.
+
 ## API Reference
-
-<Anatomy>
-
-- [Preview](#preview)
-  - [PreviewTrigger](#previewtrigger)
-  - [PreviewContent](#previewcontent)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### Preview
 
 The root that chooses HoverCard or Drawer and holds the open state.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Whether the preview is open, for controlled use. |
-| `defaultOpen` | `boolean` | - | Whether the preview starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called with the new open state when the preview opens or closes. |
-| `floating` | `boolean` | `true` | Insets the mobile drawer from the screen edges. Has no effect on desktop. |
-| `children` | `React.ReactNode` | - | The trigger and content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | - |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `floating` | `boolean` | `true` |
+| `children` | `React.ReactNode` | - |
 
-</ApiPart>
-
-<ApiPart index={2}>
+Open state is uncontrolled by default; use `defaultOpen`, or `open` with `onOpenChange` to control it. Place `PreviewTrigger` and `PreviewContent` inside `Preview`; the parts throw when used outside it. `floating` has no effect on desktop.
 
 ### PreviewTrigger
 
 The link-styled element that opens the preview.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `href` | `string` | - | The link destination on desktop. Ignored on mobile. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `href` | `string` | - |
 
 <OnlyBase base="base radix">
 
@@ -131,18 +138,16 @@ Also accepts `className`, `children`, `id` and `aria-label`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={3}>
+On desktop the trigger is a link that uses `href`. On mobile it is a button that opens the drawer, so the link target is not followed.
 
 ### PreviewContent
 
 The card or drawer that holds the preview.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton` | `boolean` | - | Shows a close button in the mobile drawer. |
-| `closeLabel` | `string` | - | Text for the mobile close button in place of the icon. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `showCloseButton` | `boolean` | - |
+| `closeLabel` | `string` | - |
 
 <OnlyBase base="base radix">
 
@@ -156,17 +161,7 @@ Also accepts `align`, `alignOffset`, `side` and `sideOffset` from `HoverCardCont
 
 </OnlyBase>
 
-</ApiPart>
-
-## Accessibility
-
-- On desktop the trigger is a link; the card opens on hover and on keyboard focus, and closes when the pointer leaves.
-- On mobile the trigger is a button that opens the drawer.
-- The trigger shows a focus ring when focused with the keyboard.
-
-## Notes
-
-Styling hooks: `data-slot="preview"`, `preview-trigger` and `preview-content`. On mobile, `className` on `PreviewContent` applies to an inner padded wrapper, which adds end padding to clear the close button when it is shown.
+`showCloseButton` and `closeLabel` apply only to the mobile drawer. On mobile, `className` applies to an inner padded wrapper. Each part sets a `data-slot`, such as `preview-trigger` or `preview-content`, for styling.
 
 </Only>
 
@@ -183,6 +178,10 @@ Styling hooks: `data-slot="preview"`, `preview-trigger` and `preview-content`. O
 Use it to show a summary of a person, place or item from a mention or link without leaving the screen.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -232,7 +231,9 @@ The CLI also adds what it builds on: [Drawer](/docs/components/drawer), [Text](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -240,7 +241,7 @@ The CLI also adds what it builds on: [Drawer](/docs/components/drawer), [Text](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -258,17 +259,17 @@ npx expo install cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/patterns/preview.tsx`:
+4. Copy and paste the following code into `components/patterns/preview.tsx`:
 
 <ComponentSource path="uniwind/components/patterns/preview.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -286,11 +287,11 @@ npx expo install cn
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/patterns/preview.tsx`:
+4. Copy and paste the following code into `components/patterns/preview.tsx`:
 
 <ComponentSource path="nativewind/components/patterns/preview.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -308,11 +309,11 @@ npx expo install cn
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/patterns/preview.tsx`:
+3. Copy and paste the following code into `components/patterns/preview.tsx`:
 
 <ComponentSource path="stylesheet/components/patterns/preview.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -407,6 +408,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -724,14 +729,6 @@ fun PreviewDemo(
 
 </Only>
 
-<Only platform="rn">
-
-Put a `PreviewTrigger` and a `PreviewContent` inside `Preview`. A string or number child of the trigger is wrapped in `Text`.
-
-The preview can be uncontrolled or controlled with `open`, `defaultOpen` and `onOpenChange`. `PreviewContent` pads its children and adds end padding when a close button is shown, so content does not sit under it.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -770,27 +767,31 @@ The React Native tab shows 1 more example.
 
 </Only>
 
+<Only platform="rn">
+
+## Accessibility
+
+- Give `PreviewContent` an `accessibilityLabel` that names what is previewed.
+
+</Only>
+
 ## API Reference
 
 <Only platform="rn">
-
-<ApiPart index={1}>
 
 ### Preview
 
 The root drawer, floating by default.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Controls whether the preview is open. |
-| `defaultOpen` | `boolean` | - | Whether the preview starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when the preview opens or closes. |
-| `floating` | `boolean` | `true` | Insets the drawer from the screen edges. Defaults to `true`. |
-| `children` | `React.ReactNode` | - | The content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | - |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `floating` | `boolean` | `true` |
+| `children` | `React.ReactNode` | - |
 
-</ApiPart>
-
-<ApiPart index={2}>
+Put a `PreviewTrigger` and a `PreviewContent` inside `Preview`. The preview can be uncontrolled or controlled with `open`, `defaultOpen` and `onOpenChange`.
 
 ### PreviewTrigger
 
@@ -798,114 +799,80 @@ The link-styled element that opens the preview.
 
 Also accepts the props of `React.ComponentProps<typeof DrawerTrigger>`.
 
-</ApiPart>
-
-<ApiPart index={3}>
+A string or number child is wrapped in `Text`.
 
 ### PreviewContent
 
 The drawer content with padding for the preview.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Classes merged onto the root element. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | - |
 
 Also accepts the props of `React.ComponentProps<typeof DrawerContent>`.
 
-</ApiPart>
+It pads its children and adds end padding when a close button is shown, so content does not sit under it.
 
 </Only>
 
 <Only platform="swift">
 
-<ApiPart index={1}>
-
 ### .preview
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
-| `arrowEdge` | `Edge` | `.top` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - |
+| `arrowEdge` | `Edge` | `.top` |
+| `content` | `() -> Content` | - |
 
 ### PreviewContent
 
 The drawer content with padding for the preview.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton` | `Bool` | `false` | Shows a close button in the mobile drawer. |
-| `closeLabel` | `LocalizedStringKey?` | `nil` | Text for the mobile close button in place of the icon. |
-| `width` | `CGFloat?` | `256` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `showCloseButton` | `Bool` | `false` |
+| `closeLabel` | `LocalizedStringKey?` | `nil` |
+| `width` | `CGFloat?` | `256` |
+| `content` | `() -> Content` | - |
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### Preview
 
 The root drawer, floating by default.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `Boolean` | - | Controls whether the preview is open. |
-| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the preview opens or closes. |
-| `floating` | `Boolean` | `true` | Insets the drawer from the screen edges. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `open` | `Boolean` | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - |
+| `floating` | `Boolean` | `true` |
+| `content` | `@Composable () -> Unit` | - |
 
 ### PreviewTrigger
 
 The link-styled element that opens the preview.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable BoxScope.() -> Unit` | - |
+| `text` | `String` | - |
 
 Overloads: `PreviewTrigger(content)`, `PreviewTrigger(text)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### PreviewContent
 
 The drawer content with padding for the preview.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `showCloseButton` | `Boolean` | `false` | Shows a close button in the mobile drawer. |
-| `closeLabel` | `String?` | `null` | Text for the mobile close button in place of the icon. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- Give `PreviewContent` an `accessibilityLabel` that names what is previewed.
-
-## Notes
-
-- The trigger uses the `text-primary` color.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `showCloseButton` | `Boolean` | `false` |
+| `closeLabel` | `String?` | `null` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
 
 </Only>
 

@@ -9,13 +9,15 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="search-picker-demo" responsive />
 
-`SearchPicker` lets the user find and choose one item from a long list. On desktop it renders a suiss/ui `Combobox`: the field itself is the search input, and the list filters as the user types. On mobile (below `48rem`, via `useIsMobile`) it renders a field-style button that shows the selected label. Tapping it opens a `Drawer` with a swipe handle and a `Command` menu whose search input receives focus. Choosing an item closes the drawer.
+`SearchPicker` lets the user find and choose one item from a long list. On desktop it renders a suiss/ui `Combobox`: the field itself is the search input, and the list filters as the user types. On mobile (below `48rem`, via `useIsMobile`) it renders a field-style button that opens a `Drawer` with a swipe handle and a searchable `Command` menu. Choosing an item closes the drawer.
 
-Items are passed as data. When any item has a `group`, items are listed under group headings in both presentations. Use it for countries, cities, users and other lists too long to scan; for short lists, use `Picker`.
+Use it for countries, cities, users and other lists too long to scan; for short lists, use `Picker`.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/search-picker
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns search-picker
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -37,11 +41,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Combobox](/docs/components/combobox), [Command](/docs/components/command), [Drawer](/docs/components/drawer), `use-mobile`.
 
-3. Copy the source into `components/patterns/search-picker.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/search-picker.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -53,96 +61,61 @@ import { SearchPicker } from "@/components/patterns/search-picker"
 <SearchPicker items={frameworks} placeholder="Select a framework" searchPlaceholder="Search frameworks..." emptyText="No framework found." aria-label="Framework" className="w-56" />
 ```
 
-- Each item in `items` has a `value`, a `label`, and an optional `group` and `disabled` flag. The `SearchPickerItem` type is exported.
-- The value is uncontrolled by default; use `defaultValue`, or `value` with `onValueChange` to control it. The value is `null` when nothing is selected.
-- `searchPlaceholder`, `title`, `floating`, `showCloseButton` and `closeLabel` affect only the mobile drawer. On desktop the field shows `placeholder`.
-- Mobile search matches against each item's label.
-
 ## Examples
 
 ### With value
 
-Starts with a selected item through `defaultValue`.
+Set `defaultValue` to start with a selected item.
 
 <ComponentPreview name="search-picker-with-value" responsive />
 
 ### Grouped
 
-Lists cities under group headings and filters across groups.
+Give items a `group` to list them under group headings in both presentations. Search filters across groups.
 
 <ComponentPreview name="search-picker-grouped" responsive />
 
 ### With title
 
-Shows a visible title at the top of the mobile drawer.
+Set `title` to show a visible heading at the top of the mobile drawer. Without it, the drawer title is visually hidden.
 
 <ComponentPreview name="search-picker-with-title" responsive />
 
 ### With close button
 
-Adds a close button to the mobile drawer.
+Set `showCloseButton` to add a close button to the mobile drawer.
 
 <ComponentPreview name="search-picker-with-close-button" responsive />
 
 ### With close label
 
-Uses a Cancel text button for the mobile close button.
+Set `closeLabel` to use a Cancel text button for the mobile close button in place of the icon.
 
 <ComponentPreview name="search-picker-with-close-label" responsive />
 
 ### Disabled
 
-Disables the field.
+Set `disabled` to disable the field.
 
 <ComponentPreview name="search-picker-disabled" responsive />
 
 ### Invalid
 
-Shows the invalid style through `aria-invalid`.
+Set `aria-invalid` to mark the field invalid and apply the error style.
 
 <ComponentPreview name="search-picker-invalid" responsive />
 
 ### Controlled
 
-Owns the value in state with `value` and `onValueChange`.
+Control the value with `value` and `onValueChange`.
 
 <ComponentPreview name="search-picker-controlled" responsive />
 
 ### Floating
 
-Insets the mobile drawer from the screen edges.
+Set `floating` to inset the mobile drawer from the screen edges.
 
 <ComponentPreview name="search-picker-floating" responsive />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### SearchPicker
-
-The complete searchable picker, rendered from the `items` array.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `SearchPickerItem[]` | Required | The items to choose from, each with a `value`, `label`, and optional `group` and `disabled`. |
-| `value` | `string \| null` | - | The selected value when controlled, or `null` for no selection. |
-| `defaultValue` | `string \| null` | - | The initially selected value when uncontrolled. |
-| `onValueChange` | `(value: string \| null) => void` | - | Called with the new value, or `null`, when the selection changes. |
-| `placeholder` | `string` | - | Text shown when nothing is selected. |
-| `searchPlaceholder` | `string` | `"Search..."` | Placeholder of the search input in the mobile drawer. |
-| `emptyText` | `string` | `"No results found."` | Text shown when no item matches the search. |
-| `title` | `string` | - | A visible heading for the mobile drawer. When omitted, the drawer title is visually hidden and falls back to `placeholder` or `aria-label`. |
-| `disabled` | `boolean` | - | Disables the field. |
-| `floating` | `boolean` | - | Insets the mobile drawer from the screen edges. |
-| `showCloseButton` | `boolean` | `false` | Shows a close button in the mobile drawer. |
-| `closeLabel` | `string` | - | Text for the mobile close button in place of the icon. |
-| `id` | `string` | - | The ID of the input on desktop or the trigger button on mobile. |
-| `className` | `string` | - | Classes applied to the input on desktop or the trigger button on mobile. |
-| `aria-invalid` | `boolean` | - | Marks the field as invalid and applies the error style. |
-| `aria-label` | `string` | - | The accessible name of the field. |
-| `aria-describedby` | `string` | - | The ID of an element that describes the field. |
-
-</ApiPart>
 
 ## Accessibility
 
@@ -150,9 +123,37 @@ The complete searchable picker, rendered from the `items` array.
 - Escape closes the desktop list.
 - On mobile, the drawer is titled by `title`, `placeholder` or `aria-label`, and focus moves to the search input when it opens.
 
-## Notes
+## API Reference
 
-Styling hooks: `data-slot="search-picker"`, `search-picker-trigger` (mobile) and `search-picker-content`. The mobile trigger has `data-placeholder` while nothing is selected, and the selected command item has `data-checked`.
+### SearchPicker
+
+The complete searchable picker, rendered from the `items` array.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `items` | `SearchPickerItem[]` | Required |
+| `value` | `string \| null` | - |
+| `defaultValue` | `string \| null` | - |
+| `onValueChange` | `(value: string \| null) => void` | - |
+| `placeholder` | `string` | - |
+| `searchPlaceholder` | `string` | `"Search..."` |
+| `emptyText` | `string` | `"No results found."` |
+| `title` | `string` | - |
+| `disabled` | `boolean` | - |
+| `floating` | `boolean` | - |
+| `showCloseButton` | `boolean` | `false` |
+| `closeLabel` | `string` | - |
+| `id` | `string` | - |
+| `className` | `string` | - |
+| `aria-invalid` | `boolean` | - |
+| `aria-label` | `string` | - |
+| `aria-describedby` | `string` | - |
+
+Each item in `items` has a `value`, a `label`, and an optional `group` and `disabled` flag; the `SearchPickerItem` type is exported. The value is uncontrolled by default; use `defaultValue`, or `value` with `onValueChange` to control it. The value is `null` when nothing is selected.
+
+`searchPlaceholder`, `title`, `floating`, `showCloseButton` and `closeLabel` affect only the mobile drawer. On desktop the field itself is the search input and shows `placeholder`. Mobile search matches against each item's label. `id` and `className` go to the input on desktop and to the trigger button on mobile.
+
+The parts set `data-slot="search-picker"`, `search-picker-trigger` (mobile) and `search-picker-content` for styling. The mobile trigger has `data-placeholder` while nothing is selected, and the selected command item has `data-checked`.
 
 </Only>
 
@@ -169,6 +170,10 @@ Styling hooks: `data-slot="search-picker"`, `search-picker-trigger` (mobile) and
 Typing filters options by label, case-insensitively. Options with a `group` are shown under a group heading. Choosing an option selects it, closes the drawer and clears the search. Use it when the list is too long to scan, such as countries, cities or frameworks.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -218,7 +223,9 @@ The CLI also adds what it builds on: [Drawer](/docs/components/drawer), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -226,7 +233,7 @@ The CLI also adds what it builds on: [Drawer](/docs/components/drawer), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -234,17 +241,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/patterns/search-picker.tsx`:
+3. Copy and paste the following code into `components/patterns/search-picker.tsx`:
 
 <ComponentSource path="uniwind/components/patterns/search-picker.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn nativewind phosphor-react-native react-native-svg
@@ -252,17 +259,17 @@ npx expo install cn nativewind phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/patterns/search-picker.tsx`:
+3. Copy and paste the following code into `components/patterns/search-picker.tsx`:
 
 <ComponentSource path="nativewind/components/patterns/search-picker.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-svg
@@ -270,11 +277,11 @@ npx expo install phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/patterns/search-picker.tsx`:
+3. Copy and paste the following code into `components/patterns/search-picker.tsx`:
 
 <ComponentSource path="stylesheet/components/patterns/search-picker.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -385,6 +392,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -540,14 +551,6 @@ fun SearchPickerDemo(
 
 </Only>
 
-<Only platform="rn">
-
-Pass `items` as an array of `{ value, label, group?, disabled? }`. The `SearchPickerItem` type is exported.
-
-Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`; the value is a string or `null`. `emptyText` shows when nothing matches.
-
-</Only>
-
 ## Examples
 
 ### With value
@@ -628,122 +631,6 @@ The React Native tab shows 1 more example.
 
 </Only>
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### SearchPicker
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `SearchPickerItem[]` | Required | The options, each with `value`, `label` and optional `group` and `disabled`. |
-| `value` | `string \| null` | - | The selected value when controlled, or `null`. |
-| `defaultValue` | `string \| null` | - | The initial value when uncontrolled. |
-| `onValueChange` | `(value: string \| null) => void` | - | Called with the chosen value. |
-| `placeholder` | `string` | - | Text shown in the field when nothing is selected. |
-| `searchPlaceholder` | `string` | `"Search..."` | Placeholder and label of the search input. Defaults to `Search...`. |
-| `emptyText` | `string` | `"No results found."` | Text shown when no option matches. Defaults to `No results found.`. |
-| `title` | `string` | - | Heading shown at the top of the drawer. |
-| `disabled` | `boolean` | - | Prevents opening and dims the field. |
-| `floating` | `boolean` | - | Insets the drawer from the screen edges. |
-| `showCloseButton` | `boolean` | `false` | Shows a close button in the drawer. Defaults to `false`. |
-| `closeLabel` | `string` | - | Label of the close button. |
-| `invalid` | `boolean` | - | Applies the error border and background. |
-| `className` | `string` | - | Classes merged onto the root element. |
-| `accessibilityLabel` | `string` | - | Label for the field. |
-| `accessibilityLabelledBy` | `string` | - | Links the field to a visible label. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### SearchPickerItem
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | - |
-| `label` | `String` | - | - |
-| `group` | `String?` | `nil` | - |
-| `disabled` | `Bool` | `false` | - |
-
-| Property | Type |
-| --- | --- |
-| `value` | `String` |
-| `label` | `String` |
-| `group` | `String?` |
-| `disabled` | `Bool` |
-| `id` | `String` |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SearchPicker
-
-The complete searchable picker, rendered from the `items` array.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `[SearchPickerItem]` | - | The options, each with `value`, `label` and optional `group` and `disabled`. |
-| `selection` | `Binding<String?>` | - | The selected value. |
-| `placeholder` | `LocalizedStringKey?` | `nil` | Text shown in the field when nothing is selected. |
-| `searchPlaceholder` | `LocalizedStringKey` | `"Search..."` | Placeholder and label of the search input. |
-| `emptyText` | `LocalizedStringKey` | `"No results found."` | Text shown when no option matches. |
-| `title` | `LocalizedStringKey?` | `nil` | Heading shown at the top of the drawer. |
-| `showCloseButton` | `Bool` | `false` | Shows a close button in the drawer. |
-| `closeLabel` | `LocalizedStringKey?` | `nil` | Label of the close button. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### SearchPickerItem
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | - |
-| `label` | `String` | - | - |
-| `group` | `String?` | `null` | - |
-| `enabled` | `Boolean` | `true` | - |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SearchPicker
-
-The complete searchable picker, rendered from the `items` array.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `List<SearchPickerItem>` | - | The options, each with `value`, `label` and optional `group` and `disabled`. |
-| `value` | `String?` | - | The selected value when controlled, or `null`. |
-| `onValueChange` | `(String) -> Unit` | - | Called with the chosen value. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `placeholder` | `String` | `""` | Text shown in the field when nothing is selected. |
-| `searchPlaceholder` | `String` | `"Search..."` | Placeholder and label of the search input. |
-| `emptyText` | `String` | `"No results found."` | Text shown when no option matches. |
-| `title` | `String?` | `null` | Heading shown at the top of the drawer. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `invalid` | `Boolean?` | `null` | Applies the error border and background. |
-| `floating` | `Boolean` | `false` | Insets the drawer from the screen edges. |
-| `showCloseButton` | `Boolean` | `false` | Shows a close button in the drawer. |
-| `closeLabel` | `String?` | `null` | Label of the close button. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -753,11 +640,105 @@ The complete searchable picker, rendered from the `items` array.
 - The search input is labelled by `searchPlaceholder`.
 - Without a `title`, the drawer is labelled by the placeholder or `accessibilityLabel`.
 
-## Notes
+</Only>
 
-- The list stays between 40% and 60% of the window height, and taps work while the keyboard is open.
-- The field uses `bg-secondary`, `border-destructive` with a `bg-destructive` tint when invalid, and `opacity-50` when disabled; the tint is stronger in dark mode.
-- The search input disables autocorrect and autocapitalization.
+## API Reference
+
+<Only platform="rn">
+
+### SearchPicker
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `items` | `SearchPickerItem[]` | Required |
+| `value` | `string \| null` | - |
+| `defaultValue` | `string \| null` | - |
+| `onValueChange` | `(value: string \| null) => void` | - |
+| `placeholder` | `string` | - |
+| `searchPlaceholder` | `string` | `"Search..."` |
+| `emptyText` | `string` | `"No results found."` |
+| `title` | `string` | - |
+| `disabled` | `boolean` | - |
+| `floating` | `boolean` | - |
+| `showCloseButton` | `boolean` | `false` |
+| `closeLabel` | `string` | - |
+| `invalid` | `boolean` | - |
+| `className` | `string` | - |
+| `accessibilityLabel` | `string` | - |
+| `accessibilityLabelledBy` | `string` | - |
+
+Pass `items` as an array of `{ value, label, group?, disabled? }`; the `SearchPickerItem` type is exported. Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`; the value is a string or `null`. `emptyText` shows when nothing matches.
+
+`searchPlaceholder` is also the label of the search input, which disables autocorrect and autocapitalization. The list stays between 40% and 60% of the window height, and taps work while the keyboard is open.
+
+</Only>
+
+<Only platform="swift">
+
+### SearchPickerItem
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `label` | `String` | - |
+| `group` | `String?` | `nil` |
+| `disabled` | `Bool` | `false` |
+
+| Property | Type |
+| --- | --- |
+| `value` | `String` |
+| `label` | `String` |
+| `group` | `String?` |
+| `disabled` | `Bool` |
+| `id` | `String` |
+
+### SearchPicker
+
+The complete searchable picker, rendered from the `items` array.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `items` | `[SearchPickerItem]` | - |
+| `selection` | `Binding<String?>` | - |
+| `placeholder` | `LocalizedStringKey?` | `nil` |
+| `searchPlaceholder` | `LocalizedStringKey` | `"Search..."` |
+| `emptyText` | `LocalizedStringKey` | `"No results found."` |
+| `title` | `LocalizedStringKey?` | `nil` |
+| `showCloseButton` | `Bool` | `false` |
+| `closeLabel` | `LocalizedStringKey?` | `nil` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### SearchPickerItem
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `label` | `String` | - |
+| `group` | `String?` | `null` |
+| `enabled` | `Boolean` | `true` |
+
+### SearchPicker
+
+The complete searchable picker, rendered from the `items` array.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `items` | `List<SearchPickerItem>` | - |
+| `value` | `String?` | - |
+| `onValueChange` | `(String) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `placeholder` | `String` | `""` |
+| `searchPlaceholder` | `String` | `"Search..."` |
+| `emptyText` | `String` | `"No results found."` |
+| `title` | `String?` | `null` |
+| `enabled` | `Boolean` | `true` |
+| `invalid` | `Boolean?` | `null` |
+| `floating` | `Boolean` | `false` |
+| `showCloseButton` | `Boolean` | `false` |
+| `closeLabel` | `String?` | `null` |
 
 </Only>
 

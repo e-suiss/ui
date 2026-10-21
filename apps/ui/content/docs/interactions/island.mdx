@@ -15,7 +15,9 @@ A live activity is an `IslandCompact` and `IslandExpanded` pair rendered inside 
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/island
@@ -27,20 +29,33 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add interactions island
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
-2. Copy the source into `components/interactions/island.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/interactions/island.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { IslandProvider, Island, IslandCompact, IslandExpanded, IslandRing, useIsland } from "@/components/interactions/island"
+import {
+  Island,
+  IslandCompact,
+  IslandExpanded,
+  IslandProvider,
+  IslandRing,
+  useIsland,
+} from "@/components/interactions/island"
 import { Button } from "@/components/ui/button"
 ```
 
@@ -71,10 +86,17 @@ function NotifyButton() {
 }
 ```
 
-- Wrap the app, or the part of it that posts notifications, in `IslandProvider`. `Island`, `IslandCompact`, `IslandExpanded`, and `useIsland` throw outside of it.
-- Render a single `Island`. Mount `IslandCompact` and `IslandExpanded` as its children only while an activity is running; unmounting the compact part hides the pill and collapses it.
-- Call `notify({ icon, title, description, duration })` from `useIsland` to show a notice. It replaces any current notice and dismisses itself after `duration` milliseconds (4000 by default). Call `dismiss` to remove it early.
-- `useIsland` also exposes `view`, `expanded`, and `setExpanded` for custom controls.
+## Composition
+
+Use the following composition to build a `IslandProvider`:
+
+```text
+IslandProvider
+└── Island
+    ├── IslandCompact
+    │   └── IslandRing
+    └── IslandExpanded
+```
 
 ## Examples
 
@@ -90,74 +112,6 @@ A notification temporarily replaces a running live activity, which returns once 
 
 <ComponentPreview name="island-activity-with-notifications" responsive />
 
-## API Reference
-
-<Anatomy>
-
-- [IslandProvider](#islandprovider)
-  - [Island](#island)
-    - [IslandCompact](#islandcompact)
-      - [IslandRing](#islandring)
-    - [IslandExpanded](#islandexpanded)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### IslandProvider
-
-Holds the island state and provides `notify`, `dismiss`, and the expanded state to everything inside it.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content that can render the island and post notifications. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Island
-
-The fixed pill that sizes itself to the active view and renders the built-in notice.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### IslandCompact
-
-The button shown in the collapsed pill; tapping it expands the island.
-
-Also accepts the props of `React.ComponentProps<"button">`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### IslandExpanded
-
-The detailed view shown when the island is expanded.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### IslandRing
-
-A small circular progress ring for the compact pill.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `number` | Required | Progress from `0` to `1`; values outside the range are clamped. |
-
-Also accepts the props of `React.ComponentProps<"svg">`.
-
-</ApiPart>
-
 ## Accessibility
 
 - `IslandCompact` is a button with `aria-expanded` reflecting the expanded state; give it an `aria-label` that describes the activity.
@@ -166,10 +120,51 @@ Also accepts the props of `React.ComponentProps<"svg">`.
 - Notices render as a button that dismisses on press, and their title and description are announced through a polite live region.
 - Inactive parts are removed from the tab order. `IslandRing` is `aria-hidden`.
 
-## Notes
+## API Reference
 
-- The root exposes `data-slot="island"` and `data-view` with the current view. Parts use `data-slot` values `island-compact`, `island-expanded`, `island-notice`, and `island-ring`, and carry `data-active` while shown.
-- Animations are disabled under `prefers-reduced-motion`.
+### IslandProvider
+
+Holds the island state and provides `notify`, `dismiss`, and the expanded state to everything inside it.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+
+Wrap the app, or the part of it that posts notifications, in `IslandProvider`. `Island`, `IslandCompact`, `IslandExpanded` and `useIsland` throw outside of it.
+
+Call `notify({ icon, title, description, duration })` from `useIsland` to show a notice. It replaces any current notice and dismisses itself after `duration` milliseconds (4000 by default). Call `dismiss` to remove it early. `useIsland` also exposes `view`, `expanded` and `setExpanded` for custom controls.
+
+### Island
+
+The fixed pill that sizes itself to the active view and renders the built-in notice.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Render a single `Island`. Mount `IslandCompact` and `IslandExpanded` as its children only while an activity is running; unmounting the compact part hides the pill and collapses it. The root sets `data-slot="island"` and `data-view` with the current view. Each part sets a `data-slot`, such as `island-compact`, and carries `data-active` while shown. Animations are disabled under `prefers-reduced-motion`.
+
+### IslandCompact
+
+The button shown in the collapsed pill; tapping it expands the island.
+
+Also accepts the props of `React.ComponentProps<"button">`.
+
+### IslandExpanded
+
+The detailed view shown when the island is expanded.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### IslandRing
+
+A small circular progress ring for the compact pill.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `number` | Required |
+
+Also accepts the props of `React.ComponentProps<"svg">`.
+
+`value` is progress from `0` to `1`; values outside the range are clamped.
 
 </Only>
 
@@ -186,6 +181,10 @@ Content is passed through slots. `compactLeading` and `compactTrailing` sit at t
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -235,7 +234,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -243,7 +244,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
@@ -263,17 +264,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="uniwind/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/island.tsx`:
+5. Copy and paste the following code into `components/interactions/island.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/island.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
@@ -293,17 +294,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="nativewind/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/island.tsx`:
+5. Copy and paste the following code into `components/interactions/island.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/island.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
@@ -323,11 +324,11 @@ npx expo install phosphor-react-native react-native-gesture-handler react-native
 
 <ComponentSource path="stylesheet/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/island.tsx`:
+5. Copy and paste the following code into `components/interactions/island.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/island.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -394,6 +395,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -1052,31 +1057,19 @@ fun IslandDownloads(initial: Float? = null, start: IslandStart = IslandStart.Com
 
 </Only>
 
-<Only platform="rn kotlin">
-
-Wrap the app in `IslandProvider` and render one `Island`. Pass `compactLeading`, `compactTrailing` and `minimal` only while there is activity to show, and add `IslandExpandedRegion`s as children with a `region` of `leading`, `trailing`, `center` or `bottom`. Leading, center and trailing form a top row; bottom regions stack below it at full width. If only one of the compact and minimal slots is given, the island uses it for both views.
-
-</Only>
-
-<Only platform="rn">
-
-`useIsland` returns `view`, `notice`, `expand`, `collapse`, `minimize`, `notify` and `dismiss`. A notice is `{ icon?, title, description?, duration? }`; pass a `duration` of `0` or `Infinity` to keep it until dismissed. Dragging the island pauses the notice timer. Use `IslandRing` for circular progress. The `IslandNotice`, `IslandRegion` and `IslandView` types are exported.
-
-</Only>
-
 ## Examples
 
 <Only platform="rn kotlin">
 
 ### Expanded
 
-Starts with the island expanded to show download details.
+Starts with the island expanded to show download details. Add `IslandExpandedRegion`s with a `region` of `leading`, `trailing`, `center` or `bottom`: leading, center and trailing form a top row, and bottom regions stack below it at full width.
 
 <NativeExample name="island-expanded" />
 
 ### Minimal
 
-Starts in the minimal view with only the progress ring.
+Starts in the minimal view with only the progress ring. If only one of the compact and minimal slots is given, the island uses it for both views.
 
 <NativeExample name="island-minimal" />
 
@@ -1100,244 +1093,6 @@ The React Native tab shows 3 more examples.
 
 </Only>
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### IslandProvider
-
-Holds the island mode, the notice and the notice timer.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### IslandExpandedRegion
-
-A region of the expanded view.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `region` | `"leading" \| "trailing" \| "center" \| "bottom"` | Required | Where the content sits in the expanded view. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### Island
-
-The floating pill, rendered in a portal, with slots for the compact and minimal views.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Classes merged onto the root element. |
-| `compactLeading` | `React.ReactNode` | - | Content at the start of the compact pill. |
-| `compactTrailing` | `React.ReactNode` | - | Content at the end of the compact pill. |
-| `minimal` | `React.ReactNode` | - | Content of the minimal view. |
-| `portalHost` | `string` | - | Name of a portal host to render into. |
-
-Also accepts the props of `React.ComponentProps<typeof View>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### IslandRing
-
-A small circular progress ring.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `number` | Required | Progress from `0` to `1`. |
-| `className` | `string` | - | Classes merged onto the root element. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### IslandRing
-
-A small circular progress ring.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Double` | - | Progress from `0` to `1`. |
-| `color` | `Color` | `EsuissColor.primary` | - |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### IslandView
-
-Values: `Hidden`, `Compact`, `Minimal`, `Expanded`, `Notice`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### IslandRegion
-
-Values: `Leading`, `Trailing`, `Center`, `Bottom`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### IslandNotice
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String` | - | - |
-| `description` | `String?` | `null` | - |
-| `duration` | `Long` | `IslandNoticeDuration` | - |
-| `icon` | `(@Composable () -> Unit)?` | `null` | - |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### IslandState
-
-| Property | Type |
-| --- | --- |
-| `expanded` | `Boolean` |
-| `view` | `IslandView` |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### IslandState.expand
-
-Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### IslandState.collapse
-
-Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### IslandState.minimize
-
-Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### IslandState.notify
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `notice` | `IslandNotice` | - | - |
-| `title` | `String` | - | - |
-| `description` | `String?` | `null` | - |
-| `duration` | `Long` | `IslandNoticeDuration` | - |
-| `icon` | `(@Composable () -> Unit)?` | `null` | - |
-
-Overloads: `notify(notice)`, `notify(title, description, duration, icon)`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### IslandState.dismiss
-
-Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### useIsland
-
-Takes no parameters.
-
-Returns `IslandState`.
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### IslandProvider
-
-Holds the island mode, the notice and the notice timer.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### Island
-
-The floating pill, rendered in a portal, with slots for the compact and minimal views.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `compactLeading` | `(@Composable RowScope.() -> Unit)?` | `null` | Content at the start of the compact pill. |
-| `compactTrailing` | `(@Composable RowScope.() -> Unit)?` | `null` | Content at the end of the compact pill. |
-| `minimal` | `(@Composable () -> Unit)?` | `null` | Content of the minimal view. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `expanded` | `@Composable IslandExpandedScope.() -> Unit` | `{}` | - |
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### IslandExpandedScope.IslandExpandedRegion
-
-A region of the expanded view.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `region` | `IslandRegion`: `Leading` \| `Trailing` \| `Center` \| `Bottom` | - | Where the content sits in the expanded view. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={14}>
-
-### IslandRing
-
-A small circular progress ring.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Float` | - | Progress from `0` to `1`. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `color` | `Color` | `EsuissTheme.colors.primary` | - |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1348,11 +1103,173 @@ A small circular progress ring.
 - The notice is a button with `activate` and `dismiss` actions.
 - Inactive views and the progress ring are hidden from screen readers.
 
-## Notes
+</Only>
 
-- The island uses `bg-black` with `text-white`.
-- Expanded and notice views are up to 384 points wide.
-- Size and fade animations respect the system reduce motion setting.
+## API Reference
+
+<Only platform="rn">
+
+### IslandProvider
+
+Holds the island mode, the notice and the notice timer.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+
+Wrap the app in `IslandProvider`. `useIsland` returns `view`, `notice`, `expand`, `collapse`, `minimize`, `notify` and `dismiss`. A notice is `{ icon?, title, description?, duration? }`; pass a `duration` of `0` or `Infinity` to keep it until dismissed. Dragging the island pauses the notice timer. The `IslandNotice`, `IslandRegion` and `IslandView` types are exported.
+
+### IslandExpandedRegion
+
+A region of the expanded view.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `region` | `"leading" \| "trailing" \| "center" \| "bottom"` | Required |
+
+Also accepts the props of `ViewProps`.
+
+### Island
+
+The floating pill, rendered in a portal, with slots for the compact and minimal views.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | - |
+| `compactLeading` | `React.ReactNode` | - |
+| `compactTrailing` | `React.ReactNode` | - |
+| `minimal` | `React.ReactNode` | - |
+| `portalHost` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
+
+Render one `Island`. Pass `compactLeading`, `compactTrailing` and `minimal` only while there is activity to show, and add `IslandExpandedRegion`s as children. `compactLeading` and `compactTrailing` sit at the start and end of the compact pill. `portalHost` names a portal host to render into. Expanded and notice views are up to 384 points wide, and size and fade animations respect the system reduce motion setting.
+
+### IslandRing
+
+A small circular progress ring.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `number` | Required |
+| `className` | `string` | - |
+
+`value` is progress from `0` to `1`.
+
+</Only>
+
+<Only platform="swift">
+
+### IslandRing
+
+A small circular progress ring.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Double` | - |
+| `color` | `Color` | `EsuissColor.primary` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### IslandView
+
+Values: `Hidden`, `Compact`, `Minimal`, `Expanded`, `Notice`.
+
+### IslandRegion
+
+Values: `Leading`, `Trailing`, `Center`, `Bottom`.
+
+### IslandNotice
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String` | - |
+| `description` | `String?` | `null` |
+| `duration` | `Long` | `IslandNoticeDuration` |
+| `icon` | `(@Composable () -> Unit)?` | `null` |
+
+### IslandState
+
+| Property | Type |
+| --- | --- |
+| `expanded` | `Boolean` |
+| `view` | `IslandView` |
+
+### IslandState.expand
+
+Takes no parameters.
+
+### IslandState.collapse
+
+Takes no parameters.
+
+### IslandState.minimize
+
+Takes no parameters.
+
+### IslandState.notify
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `notice` | `IslandNotice` | - |
+| `title` | `String` | - |
+| `description` | `String?` | `null` |
+| `duration` | `Long` | `IslandNoticeDuration` |
+| `icon` | `(@Composable () -> Unit)?` | `null` |
+
+Overloads: `notify(notice)`, `notify(title, description, duration, icon)`.
+
+### IslandState.dismiss
+
+Takes no parameters.
+
+### useIsland
+
+Takes no parameters.
+
+Returns `IslandState`.
+
+### IslandProvider
+
+Holds the island mode, the notice and the notice timer.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `@Composable () -> Unit` | - |
+
+### Island
+
+The floating pill, rendered in a portal, with slots for the compact and minimal views.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `compactLeading` | `(@Composable RowScope.() -> Unit)?` | `null` |
+| `compactTrailing` | `(@Composable RowScope.() -> Unit)?` | `null` |
+| `minimal` | `(@Composable () -> Unit)?` | `null` |
+| `modifier` | `Modifier` | `Modifier` |
+| `expanded` | `@Composable IslandExpandedScope.() -> Unit` | `{}` |
+
+### IslandExpandedScope.IslandExpandedRegion
+
+A region of the expanded view.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `region` | `IslandRegion`: `Leading` \| `Trailing` \| `Center` \| `Bottom` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### IslandRing
+
+A small circular progress ring.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Float` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `color` | `Color` | `EsuissTheme.colors.primary` |
 
 </Only>
 

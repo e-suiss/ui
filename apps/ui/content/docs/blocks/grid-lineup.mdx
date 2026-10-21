@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A side-by-side model comparison where each model shows a photo, finish swatches, a name and tagline, a starting price, a Buy button and a Learn more link. Models sit two per row, or four on large screens, and the text blocks keep a fixed height so prices line up. Use it for a product family page or any plan or tier lineup.
 
+Edit `models`; each has a name, tagline, formatted price, optional kicker, image, alt text and a list of finishes with a label and color. Picking a swatch changes only the selection, not the photo, so add per-finish images if you need them. Give Buy a handler and point the `#learn` links at real pages.
+
+Swatches are labeled with their finish names and have enlarged hit areas. Photos are Unsplash placeholders.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/grid-lineup
@@ -25,15 +31,21 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks grid-lineup
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the pieces it builds on: [Button](/docs/components/button), [Toggle Group](/docs/components/toggle-group).
 
-2. Copy the source into `components/blocks/grid-lineup.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/grid-lineup.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -44,12 +56,6 @@ import { GridLineup } from "@/components/blocks/grid-lineup"
 ```tsx
 <GridLineup />
 ```
-
-Edit `models`; each has a name, tagline, formatted price, optional kicker, image, alt text and a list of finishes with a label and color. Picking a swatch changes only the selection, not the photo, so add per-finish images if you need them. Give Buy a handler and point the `#learn` links at real pages.
-
-## Notes
-
-Swatches are labeled with their finish names and have enlarged hit areas. Photos are Unsplash placeholders.
 
 </Only>
 
@@ -69,9 +75,15 @@ Swatches are labeled with their finish names and have enlarged hit areas. Photos
 
 Composes `Screen`, `ToggleGroup` color swatches, `Button` and `Text`. Each model keeps its own selected finish, which is passed along when Buy is pressed.
 
+Replace `MODELS` with your lineup. Pass `onBuy` to receive the model name and finish, and `onLearnMore` for the Learn more link.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -121,7 +133,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Screen]
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -129,7 +143,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Screen]
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
@@ -141,17 +155,17 @@ npx expo install cn react-native-reanimated react-native-worklets
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/grid-lineup.tsx`:
+4. Copy and paste the following code into `components/blocks/grid-lineup.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/grid-lineup.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
@@ -163,17 +177,17 @@ npx expo install cn react-native-reanimated react-native-worklets
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/grid-lineup.tsx`:
+4. Copy and paste the following code into `components/blocks/grid-lineup.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/grid-lineup.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -185,11 +199,11 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/grid-lineup.tsx`:
+4. Copy and paste the following code into `components/blocks/grid-lineup.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/grid-lineup.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -273,6 +287,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -312,12 +330,6 @@ fun GridLineupExample() {
     GridLineup()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `MODELS` with your lineup. Pass `onBuy` to receive the model name and finish, and `onLearnMore` for the Learn more link.
 
 </Only>
 

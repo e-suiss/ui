@@ -15,7 +15,9 @@ The provider does not set the `dir` attribute on the page. Set `dir` on the `htm
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/direction
@@ -27,19 +29,25 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add direction
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @base-ui/react
 ```
 
-2. Copy the source into `components/ui/direction.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/direction.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -55,8 +63,6 @@ import { DirectionProvider, useDirection } from "@/components/ui/direction"
 </div>
 ```
 
-Wrap your app, or a subtree, in `DirectionProvider` with the same direction you set in the `dir` attribute. Read the value with `useDirection` when a component needs to adapt, for example to pass it to a `dir` attribute or to rotate a directional icon:
-
 ```tsx
 function Card() {
   const direction = useDirection()
@@ -69,13 +75,11 @@ function Card() {
 
 ### Right to left
 
-The same card rendered with `direction` set to `rtl`, so its footer buttons appear in reversed order.
+Set `direction` to `rtl` on the provider. The card reads it with `useDirection` and passes it to its `dir` attribute, so its footer buttons appear in reversed order.
 
 <ComponentPreview name="direction-right-to-left" />
 
 ## API Reference
-
-<ApiPart index={1}>
 
 ### DirectionProvider
 
@@ -83,43 +87,40 @@ Makes the direction available to the components below it.
 
 <OnlyBase base="base">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `direction` | `"ltr" \| "rtl"` | `"ltr"` | The reading direction. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `direction` | `"ltr" \| "rtl"` | `"ltr"` |
 
 </OnlyBase>
 
 <OnlyBase base="radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `direction` | `"ltr" \| "rtl"` | `"ltr"` | The reading direction. |
-| `dir` | `"ltr" \| "rtl"` | - | Radix's name for the same prop. `direction` wins when both are set. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `direction` | `"ltr" \| "rtl"` | `"ltr"` |
+| `dir` | `"ltr" \| "rtl"` | - |
+
+`dir` is the Radix name for the same prop. `direction` wins when both are set.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `direction` | `"ltr" \| "rtl"` | `"ltr"` | The reading direction. |
-| `locale` | `string` | - | The locale passed to React Aria's `I18nProvider`. When unset, the current locale is used with an Arabic script for `rtl` and a Latin script for `ltr`, so React Aria components follow `direction`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `direction` | `"ltr" \| "rtl"` | `"ltr"` |
+| `locale` | `string` | - |
+
+`locale` is passed to the `I18nProvider` of React Aria. When it is unset, the current locale is used with an Arabic script for `rtl` and a Latin script for `ltr`, so React Aria components follow `direction`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={2}>
+Wrap your app, or a subtree, in `DirectionProvider` with the same direction you set in the `dir` attribute. Many components in the library use logical properties such as `ps-`, `pe-`, `ms-` and `me-`, which flip automatically under `dir="rtl"`.
 
 ### useDirection
 
 Returns the current direction, `"ltr"` or `"rtl"`, from the nearest `DirectionProvider`.
 
-</ApiPart>
-
-## Notes
-
-- Pair directional icons with the `rtl:` Tailwind variant, for example `rtl:rotate-180`, so arrows point the right way.
-- Many components in the library use logical properties such as `ps-`, `pe-`, `ms-` and `me-`, which flip automatically under `dir="rtl"`.
+Read the value with `useDirection` when a component needs to adapt, for example to pass it to a `dir` attribute or to rotate a directional icon. For icons you can also use the `rtl:` Tailwind variant, for example `rtl:rotate-180`, so arrows point the right way.
 
 </Only>

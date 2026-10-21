@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 One series joined by straight segments instead of a smoothed curve. Prefer it to the default when smoothing would imply values between readings that were never measured.
 
+Replace `chartData`, point each `dataKey` at your fields and set the label and color in `chartConfig`. Focus the chart and use the arrow keys to move the tooltip between months.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/line-chart-linear
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts line-chart-linear
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/line-chart-linear.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/line-chart-linear.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { LineChartLinear } from "@/components/charts/line-chart-linear"
 ```tsx
 <LineChartLinear />
 ```
-
-Replace `chartData`, update each `dataKey` and set the label and color in `chartConfig`. Everything else matches the default line chart.
-
-## Notes
-
-Keyboard users can focus the chart and move between points with the arrow keys.
 
 </Only>
 
@@ -75,9 +79,15 @@ Keyboard users can focus the chart and move between points with the arrow keys.
 
 One series with `type="linear"`, so each month connects to the next with a straight segment. It has a month axis, a dashed grid and a tooltip.
 
+Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color in `chartConfig`. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +149,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/line-chart-linear.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-linear.tsx`:
 
 <ComponentSource path="uniwind/components/charts/line-chart-linear.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +161,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/line-chart-linear.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-linear.tsx`:
 
 <ComponentSource path="nativewind/components/charts/line-chart-linear.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +173,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/line-chart-linear.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-linear.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/line-chart-linear.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +260,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +303,6 @@ fun LineLinearExample() {
     LineChartLinear()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color in `chartConfig`. The component takes no props.
 
 </Only>
 

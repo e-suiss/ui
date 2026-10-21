@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 Nightly sleep plotted against a dashed goal line, with each dot colored green if the goal was met and orange if not. Pick it over the plain goal chart when readers should spot hits and misses at a glance.
 
+Replace `chartData` and set `GOAL` to your target; the dot colors follow the comparison. Adjust the value axis `domain` and `ticks`, and change the two dot colors in the custom `dot` renderer. The headline figure is static text, so wire it up to real values. Color alone marks a hit or miss on the chart, so keep a text explanation like the one in the header.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/line-chart-goal-dots
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts line-chart-goal-dots
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/line-chart-goal-dots.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/line-chart-goal-dots.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { LineChartGoalDots } from "@/components/charts/line-chart-goal-dots"
 ```tsx
 <LineChartGoalDots />
 ```
-
-Replace `chartData` and set `GOAL` to your target; dot colors update from the comparison automatically. Adjust the value axis `domain` and `ticks` to your range, and change the two dot colors in the custom `dot` renderer.
-
-## Notes
-
-The headline figure is hard-coded text, not computed from the data, so wire it up when you plug in real values. Color alone marks hit or miss on the chart, so keep a text explanation like the one in the header.
 
 </Only>
 
@@ -75,9 +79,15 @@ The headline figure is hard-coded text, not computed from the data, so wire it u
 
 Seven nights of sleep drawn as a monotone line. The `dot` prop is a function that colors each point by comparing it with `GOAL`, and a dashed green `ReferenceLine` marks the goal itself. The tooltip formats values as hours and minutes.
 
+Replace `chartData` with your nightly hours and set `GOAL`. The header average is static text, so update it with your own value. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +149,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/line-chart-goal-dots.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-goal-dots.tsx`:
 
 <ComponentSource path="uniwind/components/charts/line-chart-goal-dots.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +161,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/line-chart-goal-dots.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-goal-dots.tsx`:
 
 <ComponentSource path="nativewind/components/charts/line-chart-goal-dots.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +173,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/line-chart-goal-dots.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-goal-dots.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/line-chart-goal-dots.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +260,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +303,6 @@ fun LineGoalDotsExample() {
     LineChartGoalDots()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your nightly hours and set `GOAL`. The header average is static text, so update it with your own value. The component takes no props.
 
 </Only>
 

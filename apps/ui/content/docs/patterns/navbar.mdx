@@ -9,13 +9,15 @@ platforms: [web]
 
 <ComponentPreview name="navbar-demo" layout="fullscreen" responsive />
 
-`Navbar` builds a `header` from an `items` array. On wide screens it renders a `NavigationMenu`: plain links appear inline, groups open a dropdown of links with optional icons and descriptions, and mega items open multi-column panels. The `brand` sits at the start and `actions` at the end.
+`Navbar` builds a `header` from an `items` array. On wide screens it renders a `NavigationMenu` with the `brand` at the start and `actions` at the end. When space runs out, the items move into a `FullscreenMenu` opened by a menu button.
 
-The navbar switches to a compact layout below the `48rem` breakpoint, and also on wider screens whenever its contents overflow the header; it measures itself with a `ResizeObserver` and returns to the full menu once there is room again. In the compact layout the items move into a `FullscreenMenu` opened by a menu button, with plain links in the first group and each group or mega column as a labelled section. Use it as the primary navigation of a marketing site or documentation site.
+Use it as the primary navigation of a marketing site or documentation site.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/navbar
@@ -27,17 +29,23 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns navbar
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
 2. Add the pieces it builds on: [Fullscreen Menu](/docs/components/fullscreen-menu), [Navigation Menu](/docs/components/navigation-menu), `use-mobile`.
 
-3. Copy the source into `components/patterns/navbar.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/navbar.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,8 +58,6 @@ import { Navbar } from "@/components/patterns/navbar"
   <Navbar items={items} brand={brand} />
 </div>
 ```
-
-Each `NavbarItem` is one of three shapes: a link with `label` and `href` (plus optional `description`, `icon` and `active`), a group with `label` and `items`, or a mega item with `label` and `columns`. Each column has a `label`, `links` and an optional `featured` flag that sets its links in a large type size. Pass `render` to route links through your framework's link component; it receives `href` and the link content.
 
 ## Examples
 
@@ -69,7 +75,7 @@ Uses only plain links and marks the current page with `active`.
 
 ### Crowded
 
-Shows nine links in a narrow frame, folding them into the menu until the frame is wide enough.
+Shows nine links in a narrow frame. The navbar measures itself with a `ResizeObserver` and folds the links into the fullscreen menu whenever they overflow the header, then returns to the full menu once there is room again.
 
 <ComponentPreview name="navbar-crowded" layout="fullscreen" responsive />
 
@@ -81,46 +87,9 @@ Labels the fullscreen menu's close button Done with `closeLabel`.
 
 ### Mega panel
 
-Uses `layout="panel"` with a mega item whose columns open in a full-width panel.
+Set `layout="panel"` so a mega item's columns open in a full-width panel anchored to the header instead of a dropdown beneath the trigger.
 
 <ComponentPreview name="navbar-mega-panel" layout="fullscreen" responsive />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### Navbar
-
-The header that renders the brand, navigation items and actions.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `NavbarItem[]` | Required | The navigation items: links, groups of links, or mega items with columns. |
-| `brand` | `React.ReactNode` | - | Content shown at the start of the header, such as a logo. |
-| `actions` | `React.ReactNode` | - | Content shown at the end of the header, such as a sign-in button; it stays visible in the compact layout. |
-| `menuLabel` | `string` | `"Menu"` | Accessible label of the compact menu button and title of the fullscreen menu. |
-| `closeLabel` | `string` | - | Text for the fullscreen menu's close button. |
-| `layout` | `"popover" \| "panel"` | `"popover"` | With `popover`, dropdowns float beneath their trigger; with `panel`, they open as a full-width panel anchored to the header. |
-
-<OnlyBase base="base radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `React.ReactElement` | A plain `a` | The element used for every link; replace it with your router's link component. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `(props: React.ComponentProps<"a">) => React.ReactNode` | A plain `a` | Renders every link from the props it receives; return your router's link component. |
-
-</OnlyBase>
-
-Also accepts the props of `React.ComponentProps<"header">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -128,8 +97,55 @@ Also accepts the props of `React.ComponentProps<"header">`.
 - Links marked `active` have `aria-current="page"`.
 - In the compact layout, the menu button is labelled by `menuLabel`.
 
-## Notes
+## API Reference
 
-The header carries `data-slot="navbar"`, `data-layout`, and `data-compact` while the fullscreen menu is in use. The brand and actions wrappers use `data-slot="navbar-brand"` and `data-slot="navbar-actions"`, and mega columns use `data-slot="navbar-column"` with `data-featured`. With `layout="panel"` the header gains `relative` positioning and `z-50` so the panel can anchor to it.
+### Navbar
+
+The header that renders the brand, navigation items and actions.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `items` | `NavbarItem[]` | Required |
+| `brand` | `React.ReactNode` | - |
+| `actions` | `React.ReactNode` | - |
+| `menuLabel` | `string` | `"Menu"` |
+| `closeLabel` | `string` | - |
+| `layout` | `"popover" \| "panel"` | `"popover"` |
+
+<OnlyBase base="base radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `React.ReactElement` | A plain `a` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `(props: React.ComponentProps<"a">) => React.ReactNode` | A plain `a` |
+
+</OnlyBase>
+
+Also accepts the props of `React.ComponentProps<"header">`.
+
+Each `NavbarItem` is one of three shapes: a link with `label` and `href` (plus optional `description`, `icon` and `active`), a group with `label` and `items`, or a mega item with `label` and `columns`. Each column has a `label`, `links` and an optional `featured` flag that sets its links in a large type size.
+
+The navbar switches to the compact layout below the `48rem` breakpoint, and on wider screens whenever its contents overflow. There, plain links form the first group and each group or mega column becomes a labelled section. `actions` stay visible in the compact layout. `menuLabel` labels the menu button and titles the fullscreen menu, and `closeLabel` sets the text of its close button.
+
+<OnlyBase base="base radix">
+
+Replace `render` with your router's link component to route every link through it; it receives `href` and the link content.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function that returns your router's link component; it receives the link props, including `href` and the link content.
+
+</OnlyBase>
+
+The header sets `data-slot="navbar"`, `data-layout`, and `data-compact` while the fullscreen menu is in use. Each part sets a `data-slot`, such as `navbar-brand` or `navbar-column`, for styling, and featured columns set `data-featured`. With `layout="panel"` the header gains `relative` positioning and `z-50` so the panel can anchor to it.
 
 </Only>

@@ -15,7 +15,9 @@ Because it uses the platform picker, it works well on touch devices and in plain
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/native-select
@@ -27,24 +29,34 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add native-select
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
 ```
 
-2. Copy the source into `components/ui/native-select.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/native-select.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { NativeSelect, NativeSelectOption, NativeSelectOptGroup } from "@/components/ui/native-select"
+import {
+  NativeSelect,
+  NativeSelectOptGroup,
+  NativeSelectOption,
+} from "@/components/ui/native-select"
 ```
 
 ```tsx
@@ -59,15 +71,22 @@ import { NativeSelect, NativeSelectOption, NativeSelectOptGroup } from "@/compon
 </NativeSelect>
 ```
 
-All standard `select` attributes, such as `value`, `defaultValue`, `onChange`, `name`, `disabled` and `required`, pass through to the `select` element. `className` is applied to the wrapper, not the `select`.
+## Composition
 
-To show a placeholder, add a first option with `value=""` and `disabled`; while it is selected, the text uses `text-muted-foreground`.
+Use the following composition to build a `NativeSelect`:
+
+```text
+NativeSelect
+├── NativeSelectOption
+└── NativeSelectOptGroup
+    └── NativeSelectOption
+```
 
 ## Examples
 
 ### Sizes
 
-The `sm` and `default` sizes side by side.
+Use the `size` prop to set the height: `default` is 44px tall and `sm` is 36px tall.
 
 <ComponentPreview name="native-select-sizes" />
 
@@ -79,60 +98,15 @@ Options organized under labelled `NativeSelectOptGroup` headings.
 
 ### Disabled
 
-A select with `disabled` set, dimmed to 50% opacity.
+Set `disabled` to dim the select to 50% opacity and block input.
 
 <ComponentPreview name="native-select-disabled" />
 
 ### Invalid
 
-A select with `aria-invalid` set, shown with the destructive border and ring.
+Set `aria-invalid` to show the destructive border and ring.
 
 <ComponentPreview name="native-select-invalid" />
-
-## API Reference
-
-<Anatomy>
-
-- [NativeSelect](#nativeselect)
-  - [NativeSelectOption](#nativeselectoption)
-  - [NativeSelectOptGroup](#nativeselectoptgroup)
-    - [NativeSelectOption](#nativeselectoption)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### NativeSelect
-
-The wrapper and native `select` element, with a decorative caret icon.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"sm" \| "default"` | `"default"` | The control height. |
-
-Also accepts the props of `Omit<React.ComponentProps<"select">, "size">`. They go to the `select` element, except `className`, which goes to the wrapper.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### NativeSelectOption
-
-A single choice, rendered as an `option` element.
-
-Also accepts the props of `React.ComponentProps<"option">`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### NativeSelectOptGroup
-
-A labelled group of options, rendered as an `optgroup` element.
-
-Also accepts the props of `React.ComponentProps<"optgroup">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -142,11 +116,32 @@ Also accepts the props of `React.ComponentProps<"optgroup">`.
 - Set `aria-invalid` to communicate a validation error; it also applies the invalid styling.
 - The caret icon is `aria-hidden`.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values `native-select-wrapper`, `native-select`, `native-select-icon`, `native-select-option` and `native-select-optgroup`. The wrapper and `select` both expose `data-size`.
-- The `size` prop accepts `default` (44px tall) or `sm` (36px tall) and replaces the native `size` attribute.
-- Options and groups use the `Canvas` and `CanvasText` system colors so the native popup stays legible in light and dark modes.
-- Uses the `secondary`, `destructive` and `muted-foreground` colors, and `opacity-50` when disabled.
+### NativeSelect
+
+The wrapper and native `select` element, with a decorative caret icon.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"sm" \| "default"` | `"default"` |
+
+Also accepts the props of `Omit<React.ComponentProps<"select">, "size">`. They go to the `select` element, except `className`, which goes to the wrapper.
+
+Standard attributes such as `value`, `defaultValue`, `onChange`, `name` and `required` work as on a plain `select`. The `size` prop replaces the native `size` attribute. To show a placeholder, add a first option with `value=""` and `disabled`; while it is selected, the text uses `text-muted-foreground`.
+
+### NativeSelectOption
+
+A single choice, rendered as an `option` element.
+
+Also accepts the props of `React.ComponentProps<"option">`.
+
+### NativeSelectOptGroup
+
+A labelled group of options, rendered as an `optgroup` element.
+
+Also accepts the props of `React.ComponentProps<"optgroup">`.
+
+Options and groups use the `Canvas` and `CanvasText` system colors so the native popup stays legible in light and dark modes. Each part sets a `data-slot`, such as `native-select-wrapper` or `native-select-option`, for styling. The wrapper and `select` both set `data-size`.
 
 </Only>

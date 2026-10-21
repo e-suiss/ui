@@ -15,7 +15,9 @@ Pass a string to `CodeBlockContent` for plain output, or a list of `CodeBlockLin
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/code-block
@@ -27,7 +29,9 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add code-block
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Install the dependencies, add the [`cn` helper](/docs/installation#the-cn-helper) and the [Button](/docs/components/button) component:
 
@@ -35,7 +39,7 @@ npx @esuiss/ui@latest add code-block
 npm install @phosphor-icons/react class-variance-authority shiki
 ```
 
-2. Copy the source into `components/ui/code-block.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/code-block.tsx" />
 
@@ -47,7 +51,11 @@ npm install @phosphor-icons/react class-variance-authority shiki
 
 <ComponentSource path="hooks/use-highlighted-code.ts" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -76,7 +84,20 @@ import {
 </CodeBlock>
 ```
 
-A string child renders as a single text node, so streamed output stays cheap. Line numbers and diff markers are left out of a selection, and the content always reads left to right, while the header follows the page direction.
+## Composition
+
+Use the following composition to build a `CodeBlock`:
+
+```text
+CodeBlock
+├── CodeBlockHeader
+│   ├── CodeBlockTitle
+│   └── CodeBlockActions
+│       └── CodeBlockCopyButton
+├── CodeBlockContent
+│   └── CodeBlockLine
+└── CodeBlockFooter
+```
 
 ## Examples
 
@@ -248,37 +269,30 @@ export async function ServerCode({ code }: { code: string }) {
 }
 ```
 
+## Accessibility
+
+- `CodeBlockContent` renders a `pre` with a `code` element and always sets `dir="ltr"`, so code reads left to right on a right-to-left page.
+- The content has `tabIndex={0}` so keyboard users can focus and scroll it. Pass `tabIndex={-1}` to remove the tab stop.
+- Floating actions appear when focus is inside the block, not only on hover.
+- Line numbers are hidden from screen readers.
+- Added and removed lines carry a `+` or `−` marker as well as a tint, so the change does not rely on color.
+- `CodeBlockCopyButton` is labelled "Copy" and announces "Copied" after a successful copy.
+- Give a wrap toggle `aria-pressed`, and a Show more button `aria-expanded` with `aria-controls` pointing at the content `id`.
+
 ## API Reference
-
-<Anatomy>
-
-- [CodeBlock](#codeblock)
-  - [CodeBlockHeader](#codeblockheader)
-    - [CodeBlockTitle](#codeblocktitle)
-    - [CodeBlockActions](#codeblockactions)
-      - [CodeBlockCopyButton](#codeblockcopybutton)
-  - [CodeBlockContent](#codeblockcontent)
-    - [CodeBlockLine](#codeblockline)
-  - [CodeBlockFooter](#codeblockfooter)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### CodeBlock
 
 The surface that holds the header, the content and the footer.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | `"default"` | The tone of the block. |
-| `size` | `"default" \| "sm"` | `"default"` | `sm` uses tighter padding and `text-xs`, for tool output. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | `"default"` |
+| `size` | `"default" \| "sm"` | `"default"` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+`size="sm"` uses tighter padding and `text-xs`, for tool output. The root sets `data-variant` and `data-size`.
 
 ### CodeBlockHeader
 
@@ -286,19 +300,11 @@ A row above the content for a title and actions.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### CodeBlockTitle
 
 A filename or label with an optional icon. It truncates.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={4}>
 
 ### CodeBlockActions
 
@@ -306,63 +312,51 @@ Buttons at the end of the header. As a direct child of `CodeBlock`, it floats ov
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### CodeBlockCopyButton
 
 A ghost icon button that copies `value` and announces "Copied" in a polite live region.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | - | Required. The text to copy. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | - |
 
 Also accepts the props of [`Button`](/docs/components/button).
 
-</ApiPart>
-
-<ApiPart index={6}>
+`value` is required.
 
 ### CodeBlockContent
 
 The `pre` and `code` pair that scrolls or wraps.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | A string, or a list of `CodeBlockLine`. |
-| `wrap` | `boolean` | `false` | Wraps long lines instead of scrolling. |
-| `lineNumbers` | `boolean` | `false` | Numbers each line. A string child is split into lines. |
-| `startLine` | `number` | `1` | The number of the first line when `lineNumbers` is set. |
-| `tabIndex` | `number` | `0` | Keeps the content focusable so it scrolls by keyboard. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+| `wrap` | `boolean` | `false` |
+| `lineNumbers` | `boolean` | `false` |
+| `startLine` | `number` | `1` |
+| `tabIndex` | `number` | `0` |
 
 Also accepts the props of `React.ComponentProps<"pre">`.
 
-</ApiPart>
-
-<ApiPart index={7}>
+Pass a string or a list of `CodeBlockLine`. A string child renders as a single text node, so streamed output stays cheap; with `lineNumbers` it is split into lines. `startLine` is the number of the first line when `lineNumbers` is set. `tabIndex` keeps the content focusable so it scrolls by keyboard. Line numbers and diff markers are left out of a selection, and the content always reads left to right, while the header follows the page direction.
 
 ### CodeBlockLine
 
 One line of code.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "added" \| "removed" \| "highlighted"` | `"default"` | The state of the line. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "added" \| "removed" \| "highlighted"` | `"default"` |
 
 Also accepts the props of `React.ComponentProps<"span">`.
 
-</ApiPart>
-
-<ApiPart index={8}>
+Each line sets `data-variant`.
 
 ### CodeBlockFooter
 
 A row below the content, such as for a Show more button.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
 
 ### useHighlightedCode
 
@@ -377,19 +371,7 @@ Returns one React node per line. Until the first pass finishes, and for a langua
 | `code` | `string` | The code to highlight. A trailing newline is ignored. |
 | `language` | `string` | A language or alias from `lib/highlighter.tsx`, or `"ansi"`. |
 
-## Accessibility
-
-- `CodeBlockContent` renders a `pre` with a `code` element and always sets `dir="ltr"`, so code reads left to right on a right-to-left page.
-- The content has `tabIndex={0}` so keyboard users can focus and scroll it. Pass `tabIndex={-1}` to remove the tab stop.
-- Floating actions appear when focus is inside the block, not only on hover.
-- Line numbers are hidden from screen readers.
-- Added and removed lines carry a `+` or `−` marker as well as a tint, so the change does not rely on color.
-- `CodeBlockCopyButton` is labelled "Copy" and announces "Copied" after a successful copy.
-- Give a wrap toggle `aria-pressed`, and a Show more button `aria-expanded` with `aria-controls` pointing at the content `id`.
-
-## Notes
-
-- Styling hooks: `data-slot="code-block"`, `code-block-header`, `code-block-title`, `code-block-actions`, `code-block-copy-button`, `code-block-content`, `code-block-code`, `code-block-line` and `code-block-footer`. The root exposes `data-variant` and `data-size`, and each line exposes `data-variant`.
+Each part sets a `data-slot`, such as `code-block-content` or `code-block-line`, for styling.
 
 </Only>
 
@@ -402,6 +384,10 @@ A `CodeBlock` shows code in a rounded, muted surface. Put a `CodeBlockTitle` and
 `CodeBlockContent` takes a string or `CodeBlockLine` children. Long lines scroll sideways unless you set `wrap`. Pass `language` to color keywords, strings, numbers and comments with a small built-in highlighter that uses the theme colors, so it follows light and dark mode and every style.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -451,7 +437,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -459,7 +447,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn expo-clipboard phosphor-react-native react-native-svg
@@ -467,17 +455,17 @@ npx expo install class-variance-authority cn expo-clipboard phosphor-react-nativ
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/code-block.tsx`:
+3. Copy and paste the following code into `components/ui/code-block.tsx`:
 
 <ComponentSource path="uniwind/components/ui/code-block.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn expo-clipboard phosphor-react-native react-native-svg
@@ -485,17 +473,17 @@ npx expo install class-variance-authority cn expo-clipboard phosphor-react-nativ
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/code-block.tsx`:
+3. Copy and paste the following code into `components/ui/code-block.tsx`:
 
 <ComponentSource path="nativewind/components/ui/code-block.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install expo-clipboard phosphor-react-native react-native-svg
@@ -503,11 +491,11 @@ npx expo install expo-clipboard phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/code-block.tsx`:
+3. Copy and paste the following code into `components/ui/code-block.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/code-block.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -582,6 +570,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -669,24 +661,6 @@ fun CodeBlockDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-The copy button uses `expo-clipboard`.
-
-</Only>
-
-<Only platform="swift">
-
-Pass the code as a string or a list of `CodeBlockLine` values to `CodeBlockContent`. The copy button uses `UIPasteboard`.
-
-</Only>
-
-<Only platform="kotlin">
-
-Pass the code as a string or a list of `CodeBlockLine` values to `CodeBlockContent`. The copy button uses the Compose clipboard.
-
-</Only>
-
 ## Examples
 
 ### Basic
@@ -753,132 +727,103 @@ A `CodeBlockFooter` with secondary text below the code.
 
 <NativeExample name="code-block-footer" />
 
+<Only platform="rn">
+
+## Accessibility
+
+- The copy button has the label Copy, and Copied after a copy.
+- Line numbers and diff markers are hidden from assistive technology.
+
+</Only>
+
 ## API Reference
 
 <Only platform="rn">
-
-<ApiPart index={1}>
 
 ### CodeBlock
 
 The surface that holds the header, code and footer.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | `"default"` | Muted surface or a destructive tint for errors. |
-| `size` | `"default" \| "sm"` | `"default"` | Text size, padding and corner radius. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | `"default"` |
+| `size` | `"default" \| "sm"` | `"default"` |
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+`variant` switches between the muted surface and a destructive tint for errors. `size` sets the text size, padding and corner radius.
 
 ### CodeBlockHeader
 
 A row above the code for an icon, a title and actions.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### CodeBlockTitle
 
 One line of text that truncates, usually a file name.
-
-</ApiPart>
-
-<ApiPart index={4}>
 
 ### CodeBlockActions
 
 Holds buttons at the end of the header.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### CodeBlockCopyButton
 
 Copies `value` and shows a check for two seconds.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | - | The text to copy. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | - |
 
-</ApiPart>
-
-<ApiPart index={6}>
+The copy button uses `expo-clipboard`.
 
 ### CodeBlockContent
 
 The code, from a string or `CodeBlockLine` children.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `language` | `string` | - | Colors the code: `ts`, `tsx`, `js`, `json`, `bash`, `python`, `swift`, `kotlin` and their aliases. |
-| `wrap` | `boolean` | `false` | Wraps long lines instead of scrolling sideways. |
-| `lineNumbers` | `boolean` | `false` | Shows a number before each line. |
-| `startLine` | `number` | `1` | The number of the first line. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `language` | `string` | - |
+| `wrap` | `boolean` | `false` |
+| `lineNumbers` | `boolean` | `false` |
+| `startLine` | `number` | `1` |
 
-</ApiPart>
-
-<ApiPart index={7}>
+`language` colors the code: `ts`, `tsx`, `js`, `json`, `bash`, `python`, `swift`, `kotlin` and their aliases.
 
 ### CodeBlockLine
 
 One line of code.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "added" \| "removed" \| "highlighted"` | `"default"` | Tints the line and adds a + or − marker for diffs. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "added" \| "removed" \| "highlighted"` | `"default"` |
 
-</ApiPart>
-
-<ApiPart index={8}>
+`added` and `removed` tint the line and add a + or − marker.
 
 ### CodeBlockFooter
 
 Secondary text below the code.
 
-</ApiPart>
-
 </Only>
 
 <Only platform="swift">
-
-<ApiPart index={1}>
 
 ### CodeBlockVariant
 
 Values: `.default`, `.destructive`.
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### CodeBlockSize
 
 Values: `.default`, `.sm`.
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### CodeBlockLineVariant
 
 Values: `.default`, `.added`, `.removed`, `.highlighted`.
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### CodeBlockLine
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ text` | `String` | - | - |
-| `variant` | `CodeBlockLineVariant`: `.default` \| `.added` \| `.removed` \| `.highlighted` | `.default` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ text` | `String` | - |
+| `variant` | `CodeBlockLineVariant`: `.default` \| `.added` \| `.removed` \| `.highlighted` | `.default` |
 
 | Property | Type |
 | --- | --- |
@@ -886,172 +831,116 @@ Values: `.default`, `.added`, `.removed`, `.highlighted`.
 | `text` | `String` |
 | `variant` | `CodeBlockLineVariant` |
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### CodeBlock
 
 The surface that holds the header, code and footer.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `CodeBlockVariant`: `.default` \| `.destructive` | `.default` | Muted surface or a destructive tint for errors. |
-| `size` | `CodeBlockSize`: `.default` \| `.sm` | `.default` | Text size, padding and corner radius. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `CodeBlockVariant`: `.default` \| `.destructive` | `.default` |
+| `size` | `CodeBlockSize`: `.default` \| `.sm` | `.default` |
+| `content` | `() -> Content` | - |
 
 ### CodeBlockHeader
 
 A row above the code for an icon, a title and actions.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={7}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
 
 ### CodeBlockTitle
 
 One line of text that truncates, usually a file name.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `verbatim` | `String` | - | The title text. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
 
 Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={8}>
 
 ### CodeBlockActions
 
 Holds buttons at the end of the header.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={9}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
 
 ### CodeBlockCopyButton
 
 Copies `value` and shows a check for two seconds.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | The text to copy. |
-
-</ApiPart>
-
-<ApiPart index={10}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
 
 ### CodeBlockContent
 
 The code, from a string or `CodeBlockLine` children.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ code` | `String` | - | The code to highlight. A trailing newline is ignored. |
-| `language` | `String?` | `nil` | Colors the code: `ts`, `tsx`, `js`, `json`, `bash`, `python`, `swift`, `kotlin` and their aliases. |
-| `wrap` | `Bool` | `false` | Wraps long lines instead of scrolling sideways. |
-| `lineNumbers` | `Bool` | `false` | Shows a number before each line. |
-| `startLine` | `Int` | `1` | The number of the first line. |
-| `lines` | `[CodeBlockLine]` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ code` | `String` | - |
+| `language` | `String?` | `nil` |
+| `wrap` | `Bool` | `false` |
+| `lineNumbers` | `Bool` | `false` |
+| `startLine` | `Int` | `1` |
+| `lines` | `[CodeBlockLine]` | - |
 
 Overloads: `init(_:language:wrap:lineNumbers:startLine:)`, `init(lines:language:wrap:lineNumbers:startLine:)`.
-
-</ApiPart>
-
-<ApiPart index={11}>
 
 ### CodeBlockFooter
 
 Secondary text below the code.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### CodeBlockVariant
 
 Values: `Default`, `Destructive`.
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### CodeBlockSize
 
 Values: `Default`, `Sm`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### CodeBlockLineVariant
 
 Values: `Default`, `Added`, `Removed`, `Highlighted`.
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### CodeBlockLine
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | - |
-| `variant` | `CodeBlockLineVariant`: `Default` \| `Added` \| `Removed` \| `Highlighted` | `CodeBlockLineVariant.Default` | - |
-
-</ApiPart>
-
-<ApiPart index={5}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `variant` | `CodeBlockLineVariant`: `Default` \| `Added` \| `Removed` \| `Highlighted` | `CodeBlockLineVariant.Default` |
 
 ### CodeBlock
 
 The surface that holds the header, code and footer.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `CodeBlockVariant`: `Default` \| `Destructive` | `CodeBlockVariant.Default` | Muted surface or a destructive tint for errors. |
-| `size` | `CodeBlockSize`: `Default` \| `Sm` | `CodeBlockSize.Default` | Text size, padding and corner radius. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `CodeBlockVariant`: `Default` \| `Destructive` | `CodeBlockVariant.Default` |
+| `size` | `CodeBlockSize`: `Default` \| `Sm` | `CodeBlockSize.Default` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
 
 ### CodeBlockHeader
 
 A row above the code for an icon, a title and actions.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={7}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
 
 ### CodeBlockTitle
 
@@ -1059,14 +948,10 @@ One line of text that truncates, usually a file name.
 
 Receiver: `RowScope`.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={8}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
 
 ### CodeBlockActions
 
@@ -1074,67 +959,44 @@ Holds buttons at the end of the header.
 
 Receiver: `RowScope`.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={9}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
 
 ### CodeBlockCopyButton
 
 Copies `value` and shows a check for two seconds.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | The text to copy. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={10}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
 
 ### CodeBlockContent
 
 The code, from a string or `CodeBlockLine` children.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `code` | `String` | - | The code to highlight. A trailing newline is ignored. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `language` | `String?` | `null` | Colors the code: `ts`, `tsx`, `js`, `json`, `bash`, `python`, `swift`, `kotlin` and their aliases. |
-| `wrap` | `Boolean` | `false` | Wraps long lines instead of scrolling sideways. |
-| `lineNumbers` | `Boolean` | `false` | Shows a number before each line. |
-| `startLine` | `Int` | `1` | The number of the first line. |
-| `lines` | `List<CodeBlockLine>` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `code` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `language` | `String?` | `null` |
+| `wrap` | `Boolean` | `false` |
+| `lineNumbers` | `Boolean` | `false` |
+| `startLine` | `Int` | `1` |
+| `lines` | `List<CodeBlockLine>` | - |
 
 Overloads: `CodeBlockContent(code)`, `CodeBlockContent(lines)`.
-
-</ApiPart>
-
-<ApiPart index={11}>
 
 ### CodeBlockFooter
 
 Secondary text below the code.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- The copy button has the label Copy, and Copied after a copy.
-- Line numbers and diff markers are hidden from assistive technology.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
 
 </Only>
 

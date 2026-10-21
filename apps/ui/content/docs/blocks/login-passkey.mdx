@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A passwordless sign-in screen with an account chip, a Continue with passkey button and a fallback link to sign in with a password. Starting the flow opens a small dialog with a scanning animation that turns into a check mark, then the screen welcomes the user. Use it as the front door for passkey or biometric login.
 
+The scan is faked with timers in `start`; replace it with a WebAuthn call such as `navigator.credentials.get` and move to the welcome state when it resolves. Replace the account email, initials and welcome name, and point the `#change` and `#password` links at your routes.
+
+Closing the dialog cancels the pending timers; abort your WebAuthn request the same way when the user cancels.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/login-passkey
@@ -25,9 +31,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks login-passkey
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +43,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Dialog](/docs/components/dialog).
 
-3. Copy the source into `components/blocks/login-passkey.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/login-passkey.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +62,6 @@ import { LoginPasskey } from "@/components/blocks/login-passkey"
 ```tsx
 <LoginPasskey />
 ```
-
-The scan is faked with timers in `start`; replace it with a WebAuthn call such as `navigator.credentials.get` and move to the welcome state when it resolves. Replace the account email, initials and welcome name, and point the `#change` and `#password` links at your routes.
-
-## Notes
-
-Closing the dialog cancels the pending timers; abort your WebAuthn request the same way when the user cancels.
 
 </Only>
 
@@ -78,6 +84,10 @@ A sign-in screen that shows the account with an `Avatar`, a Change link, a Conti
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +147,7 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -147,17 +159,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/login-passkey.tsx`:
+4. Copy and paste the following code into `components/blocks/login-passkey.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/login-passkey.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -169,17 +181,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/login-passkey.tsx`:
+4. Copy and paste the following code into `components/blocks/login-passkey.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/login-passkey.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -191,11 +203,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/login-passkey.tsx`:
+4. Copy and paste the following code into `components/blocks/login-passkey.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/login-passkey.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -294,6 +306,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 

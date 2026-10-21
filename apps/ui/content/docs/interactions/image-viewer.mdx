@@ -19,6 +19,10 @@ Swipe sideways to page between images, with resistance at the first and last ima
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -67,7 +71,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -75,7 +81,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
@@ -107,17 +113,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/interactions/image-viewer.tsx`:
+5. Copy and paste the following code into `components/interactions/image-viewer.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/image-viewer.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
@@ -149,17 +155,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/interactions/image-viewer.tsx`:
+5. Copy and paste the following code into `components/interactions/image-viewer.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/image-viewer.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
@@ -191,11 +197,11 @@ npx expo install phosphor-react-native react-native-gesture-handler react-native
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/interactions/image-viewer.tsx`:
+5. Copy and paste the following code into `components/interactions/image-viewer.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/image-viewer.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -280,6 +286,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -725,128 +735,11 @@ fun ImageViewerGallery(defaultOpen: Boolean, defaultIndex: Int) {
 
 </Only>
 
-<Only platform="rn">
-
-Pass `images` to `ImageViewer`, wrap each thumbnail in an `ImageViewerTrigger` with its `index`, and render one `ImageViewerContent`. Give each image an `accessibilityLabel`. The `ImageViewerImage` type is exported.
-
-Open state and the current image can be uncontrolled with `defaultOpen` and `defaultIndex`, or controlled with `open`, `onOpenChange`, `index` and `onIndexChange`. `useImageViewer` returns `open`, `index`, `count` and `images`.
-
-</Only>
-
 ## Examples
 
 ### Default
 
 <NativeExample name="image-viewer-demo" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### ImageViewer
-
-The root that holds the images, open state and current index.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when the viewer opens or closes. |
-| `onIndexChange` | `(index: number) => void` | - | Called with the new index after paging. |
-
-Also accepts the props of `React.ComponentProps<typeof ImageViewerPrimitive.Root>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ImageViewerTrigger
-
-A pressable thumbnail that opens the viewer at its `index`.
-
-Also accepts the props of `React.ComponentProps<typeof ImageViewerPrimitive.Trigger>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ImageViewerContent
-
-The full-screen viewer with the pages, counter and close button.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `portalHost` | `string` | - | Name of a portal host to render into. |
-| `closeLabel` | `string` | `"Close"` | Accessibility label of the close button. Defaults to `Close`. |
-| `indexLabel` | `(index: number, count: number) => string` | `defaultIndexLabel` | Formats the counter from the index and count. Defaults to `n of count`. |
-| `className` | `string` | - | Classes merged onto the root element. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .imageViewer
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
-| `images` | `[Image]` | - | - |
-| `index` | `Binding<Int>` | - | - |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ImageViewer
-
-The root that holds the images, open state and current index.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `images` | `[Image]` | - | - |
-| `index` | `Binding<Int>` | - | - |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### ImageViewerImage
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `painter` | `Painter` | - | - |
-| `contentDescription` | `String?` | `null` | - |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ImageViewer
-
-The root that holds the images, open state and current index.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `Boolean` | - | - |
-| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the viewer opens or closes. |
-| `images` | `List<ImageViewerImage>` | - | - |
-| `index` | `Int` | - | - |
-| `onIndexChange` | `(Int) -> Unit` | - | Called with the new index after paging. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `closeLabel` | `String` | `"Close"` | Accessibility label of the close button. |
-| `indexLabel` | `(index: Int, count: Int) -> String` | `{ current, count -> "${current + 1} of $count" }` | Formats the counter from the index and count. |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -856,11 +749,92 @@ The root that holds the images, open state and current index.
 - The current page is `adjustable`: swiping up or down with a screen reader moves between images. It is labelled by the image's `accessibilityLabel`, or `Image n`, with the counter as its value.
 - Triggers have the `button` role and expose their `expanded` state.
 
-## Notes
+</Only>
 
-- The viewer fades in and out, and paging and zoom animations respect the system reduce motion setting.
-- Colors use the `bg-black` and `text-white` tokens, so the viewer stays dark in light mode.
-- On iOS the viewer renders in a full-window overlay so it appears above native screens.
+## API Reference
+
+<Only platform="rn">
+
+### ImageViewer
+
+The root that holds the images, open state and current index.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `onIndexChange` | `(index: number) => void` | - |
+
+Also accepts the props of `React.ComponentProps<typeof ImageViewerPrimitive.Root>`.
+
+Pass `images` to `ImageViewer`, wrap each thumbnail in an `ImageViewerTrigger` with its `index`, and render one `ImageViewerContent`. Give each image an `accessibilityLabel`. The `ImageViewerImage` type is exported.
+
+Open state and the current image can be uncontrolled with `defaultOpen` and `defaultIndex`, or controlled with `open`, `onOpenChange`, `index` and `onIndexChange`. `onIndexChange` is called with the new index after paging. `useImageViewer` returns `open`, `index`, `count` and `images`.
+
+### ImageViewerTrigger
+
+A pressable thumbnail that opens the viewer at its `index`.
+
+Also accepts the props of `React.ComponentProps<typeof ImageViewerPrimitive.Trigger>`.
+
+### ImageViewerContent
+
+The full-screen viewer with the pages, counter and close button.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `portalHost` | `string` | - |
+| `closeLabel` | `string` | `"Close"` |
+| `indexLabel` | `(index: number, count: number) => string` | `defaultIndexLabel` |
+| `className` | `string` | - |
+
+`portalHost` names a portal host to render into. `closeLabel` is the accessibility label of the close button, and `indexLabel` formats the counter from the index and count, as `n of count` by default. The viewer fades in and out, and paging and zoom animations respect the system reduce motion setting. It stays dark in light mode. On iOS it renders in a full-window overlay so it appears above native screens.
+
+</Only>
+
+<Only platform="swift">
+
+### .imageViewer
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - |
+| `images` | `[Image]` | - |
+| `index` | `Binding<Int>` | - |
+
+### ImageViewer
+
+The root that holds the images, open state and current index.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `images` | `[Image]` | - |
+| `index` | `Binding<Int>` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### ImageViewerImage
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `painter` | `Painter` | - |
+| `contentDescription` | `String?` | `null` |
+
+### ImageViewer
+
+The root that holds the images, open state and current index.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `open` | `Boolean` | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - |
+| `images` | `List<ImageViewerImage>` | - |
+| `index` | `Int` | - |
+| `onIndexChange` | `(Int) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `closeLabel` | `String` | `"Close"` |
+| `indexLabel` | `(index: Int, count: Int) -> String` | `{ current, count -> "${current + 1} of $count" }` |
 
 </Only>
 

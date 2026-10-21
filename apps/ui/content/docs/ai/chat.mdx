@@ -32,7 +32,14 @@ npx @esuiss/ui@latest add message-scroller message bubble trace code-block input
 ```tsx
 import { Bubble, BubbleContent } from "@/components/ui/bubble"
 import { Message, MessageContent } from "@/components/ui/message"
-import { MessageScroller, MessageScrollerButton, MessageScrollerContent, MessageScrollerItem, MessageScrollerProvider, MessageScrollerViewport } from "@/components/ui/message-scroller"
+import {
+  MessageScroller,
+  MessageScrollerButton,
+  MessageScrollerContent,
+  MessageScrollerItem,
+  MessageScrollerProvider,
+  MessageScrollerViewport,
+} from "@/components/ui/message-scroller"
 ```
 
 ```tsx
@@ -56,8 +63,6 @@ import { MessageScroller, MessageScrollerButton, MessageScrollerContent, Message
 </MessageScrollerProvider>
 ```
 
-Set `scrollAnchor` on the person's turn. `autoScroll` follows the reply while the person stays at the live edge, and `MessageScrollerButton` jumps back down when they scroll away.
-
 ## AI SDK
 
 Render each message from `useChat`. The person's turn is a bubble. The agent's turn maps its reasoning and tool parts to Trace rows, then shows the text.
@@ -80,15 +85,17 @@ const { messages, sendMessage, status } = useChat()
 
 Set `aria-busy` on `MessageScrollerContent` while `status` is `submitted` or `streaming`.
 
-## API Reference
-
-See [Message Scroller](/docs/components/message-scroller#api-reference), [Message](/docs/components/message#api-reference), [Trace](/docs/components/trace#api-reference) and [Input Group](/docs/components/input-group#api-reference).
-
 ## Accessibility
 
 - Give the textarea an accessible name such as "Message", since the placeholder is not a label.
 - Give icon-only buttons, such as reset, add context and send, an `aria-label`.
 - Enter sends the message and Shift+Enter adds a new line.
+
+## API Reference
+
+See [Message Scroller](/docs/components/message-scroller#api-reference), [Message](/docs/components/message#api-reference), [Trace](/docs/components/trace#api-reference) and [Input Group](/docs/components/input-group#api-reference).
+
+Set `scrollAnchor` on the person's turn. `autoScroll` follows the reply while the person stays at the live edge, and `MessageScrollerButton` jumps back down when they scroll away.
 
 </Only>
 

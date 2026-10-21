@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A single line drawn as flat steps that hold each value until the next reading. It fits values that change in discrete jumps, like prices, plan tiers or headcount.
 
+Replace `chartData`, point each `dataKey` at your fields and set the label and color in `chartConfig`. Set the curve type to `stepAfter` or `stepBefore` to move where each jump happens. Focus the chart and use the arrow keys to move the tooltip between months.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/line-chart-step
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts line-chart-step
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/line-chart-step.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/line-chart-step.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { LineChartStep } from "@/components/charts/line-chart-step"
 ```tsx
 <LineChartStep />
 ```
-
-Replace `chartData`, point each `dataKey` at your fields and set the label and color in `chartConfig`. Use `stepAfter` or `stepBefore` as the curve type to move where each jump happens.
-
-## Notes
-
-The tooltip follows the cursor, or the arrow keys once the chart has focus.
 
 </Only>
 
@@ -75,9 +79,15 @@ The tooltip follows the cursor, or the arrow keys once the chart has focus.
 
 One series with `type="step"`, which draws flat runs and vertical jumps instead of slopes. Use it for values that change at discrete moments. It has a month axis, a dashed grid and a tooltip.
 
+Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color in `chartConfig`. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +149,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/line-chart-step.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-step.tsx`:
 
 <ComponentSource path="uniwind/components/charts/line-chart-step.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +161,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/line-chart-step.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-step.tsx`:
 
 <ComponentSource path="nativewind/components/charts/line-chart-step.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +173,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/line-chart-step.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-step.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/line-chart-step.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +260,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +303,6 @@ fun LineStepExample() {
     LineChartStep()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your records and change each `dataKey` to match your fields. Set the label and color in `chartConfig`. The component takes no props.
 
 </Only>
 

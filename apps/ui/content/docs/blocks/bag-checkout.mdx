@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A checkout that walks the shopper through delivery, payment and review one step at a time, with the order summary and running total alongside. Finished steps collapse to a short summary with an Edit button, and placing the order swaps the form for a confirmation. The summary sits beside the steps on desktop and stacks into a single column on mobile. Use it as the base for any multi-step purchase or booking flow.
 
+Swap the `items` array for your cart lines, each with a name, variant, price and image. The delivery and payment options and the express surcharge are hard-coded in the component, so drive them from your shipping and payment providers. Wire Place Order to your order API; today it only shows a confirmation with the fixed order number W1049.
+
+Collapsed steps are `inert`, so keyboard users only reach the open step, and the total is announced when it changes. Product photos are Unsplash placeholders.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/bag-checkout
@@ -25,9 +31,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks bag-checkout
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +43,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Label](/docs/components/label), [Radio Group](/docs/components/radio-group).
 
-3. Copy the source into `components/blocks/bag-checkout.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/bag-checkout.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +62,6 @@ import { BagCheckout } from "@/components/blocks/bag-checkout"
 ```tsx
 <BagCheckout />
 ```
-
-Swap the `items` array for your cart lines, each with a name, variant, price and image. The delivery and payment options and the express surcharge are hard-coded in the component, so drive them from your shipping and payment providers. Wire Place Order to your order API; today it only shows a confirmation with the fixed order number W1049.
-
-## Notes
-
-Collapsed steps are `inert`, so keyboard users only reach the open step, and the total is announced when it changes. Product photos are Unsplash placeholders.
 
 </Only>
 
@@ -77,7 +83,17 @@ A checkout built from `Screen`, `Header` with a collapsing large title, `RadioGr
 
 </Only>
 
+<Only platform="rn">
+
+Replace `ITEMS`, `SHIPPING` and `PAYMENT` with your cart lines and options. Pass `onPlaceOrder` to receive the chosen shipping, payment and total, and `onStartOver` to react when the confirmation is dismissed.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +143,9 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +153,7 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -147,17 +165,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/bag-checkout.tsx`:
+4. Copy and paste the following code into `components/blocks/bag-checkout.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/bag-checkout.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -169,17 +187,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/bag-checkout.tsx`:
+4. Copy and paste the following code into `components/blocks/bag-checkout.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/bag-checkout.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -191,11 +209,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/bag-checkout.tsx`:
+4. Copy and paste the following code into `components/blocks/bag-checkout.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/bag-checkout.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -321,6 +339,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -360,12 +382,6 @@ fun BagCheckoutExample() {
     BagCheckout()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `ITEMS`, `SHIPPING` and `PAYMENT` with your cart lines and options. Pass `onPlaceOrder` to receive the chosen shipping, payment and total, and `onStartOver` to react when the confirmation is dismissed.
 
 </Only>
 

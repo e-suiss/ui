@@ -19,6 +19,10 @@ Use it for PIN entry, amounts and other numeric input where the system keyboard 
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -67,7 +71,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -75,7 +81,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -83,17 +89,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/keypad.tsx`:
+3. Copy and paste the following code into `components/ui/keypad.tsx`:
 
 <ComponentSource path="uniwind/components/ui/keypad.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -101,17 +107,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/keypad.tsx`:
+3. Copy and paste the following code into `components/ui/keypad.tsx`:
 
 <ComponentSource path="nativewind/components/ui/keypad.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-svg
@@ -119,11 +125,11 @@ npx expo install phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/keypad.tsx`:
+3. Copy and paste the following code into `components/ui/keypad.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/keypad.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -208,6 +214,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -408,27 +418,29 @@ fun KeypadKeyLog(accessory: KeypadAccessory, enabled: Boolean = true) {
 
 </Only>
 
-<Only platform="rn">
-
-Handle input in `onKeyPress`, which receives a digit string (`"0"` to `"9"`), `"decimal"`, `"delete"` or `"biometric"`. The keypad holds no value of its own.
-
-Set `accessoryKey` to `decimal` or `biometric` to fill the bottom-left slot; otherwise it stays empty. Change the decimal character with `decimalSeparator` and the biometric icon with `biometricIcon`.
-
-Use `deleteDisabled` to turn off only the delete key, for example when the value is empty. `KeypadKey` is exported for custom layouts, along with the `KeypadDigit`, `KeypadKeyValue` and `KeypadAccessoryKey` types.
-
-</Only>
-
 ## Examples
 
 ### Decimal
 
-A keypad with a decimal separator key.
+A keypad with a decimal separator key in the bottom-left slot.
+
+<Only platform="rn">
+
+Set `accessoryKey` to `decimal` to show it.
+
+</Only>
 
 <NativeExample name="keypad-decimal" />
 
 ### Biometric
 
-A keypad with a biometric key.
+A keypad with a biometric key in the bottom-left slot.
+
+<Only platform="rn">
+
+Set `accessoryKey` to `biometric` to show it.
+
+</Only>
 
 <NativeExample name="keypad-biometric" />
 
@@ -436,56 +448,70 @@ A keypad with a biometric key.
 
 A fully disabled keypad.
 
+<Only platform="rn">
+
+Set `disabled` to turn off every key.
+
+</Only>
+
 <NativeExample name="keypad-disabled" />
+
+<Only platform="rn">
+
+## Accessibility
+
+- Every key has the `button` role and an `accessibilityLabel`: the digit itself, or `decimalLabel`, `biometricLabel` and `deleteLabel` for the other keys.
+- Disabled keys set `disabled` in their accessibility state and block presses.
+- Translate the default labels (`Decimal separator`, `Use biometrics`, `Delete`) for localized apps.
+
+</Only>
 
 ## API Reference
 
 <Only platform="rn">
 
-<ApiPart index={1}>
-
 ### KeypadKey
 
 A single round key that passes text and icon styles to its children.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "plain"` | `"default"` | `default` with a filled background, or `plain` without one. |
-| `className` | `string` | - | Classes merged onto the root element. |
-| `children` | `React.ReactNode` | - | The content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "plain"` | `"default"` |
+| `className` | `string` | - |
+| `children` | `React.ReactNode` | - |
 
 Also accepts the props of `React.ComponentProps<typeof Pressable>`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+The `default` variant has a filled `bg-secondary` background and the `plain` variant has none. Keys drop to `opacity-80` when pressed and `opacity-50` when disabled. Digits use `text-2xl` with tabular numbers. `KeypadKey` is exported for custom layouts.
 
 ### Keypad
 
 The full grid of keys.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onKeyPress` | `(key: KeypadKeyValue) => void` | - | Called with the pressed key value. |
-| `accessoryKey` | `KeypadAccessoryKey` | - | Bottom-left key: `decimal` or `biometric`. |
-| `decimalSeparator` | `string` | `"."` | Character shown on the decimal key. Defaults to `.`. |
-| `biometricIcon` | `PhosphorIcon` | `FingerprintIcon` | Phosphor icon for the biometric key. Defaults to `FingerprintIcon`. |
-| `biometricLabel` | `string` | `"Use biometrics"` | Accessibility label for the biometric key. |
-| `decimalLabel` | `string` | `"Decimal separator"` | Accessibility label for the decimal key. |
-| `deleteLabel` | `string` | `"Delete"` | Accessibility label for the delete key. |
-| `disabled` | `boolean` | `false` | Disables every key. |
-| `deleteDisabled` | `boolean` | `false` | Disables only the delete key. |
-| `keyClassName` | `string` | - | Extra classes applied to each key. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `onKeyPress` | `(key: KeypadKeyValue) => void` | - |
+| `accessoryKey` | `KeypadAccessoryKey` | - |
+| `decimalSeparator` | `string` | `"."` |
+| `biometricIcon` | `PhosphorIcon` | `FingerprintIcon` |
+| `biometricLabel` | `string` | `"Use biometrics"` |
+| `decimalLabel` | `string` | `"Decimal separator"` |
+| `deleteLabel` | `string` | `"Delete"` |
+| `disabled` | `boolean` | `false` |
+| `deleteDisabled` | `boolean` | `false` |
+| `keyClassName` | `string` | - |
 
 Also accepts the props of `React.ComponentProps<typeof View>`.
 
-</ApiPart>
+Handle input in `onKeyPress`, which receives a digit string (`"0"` to `"9"`), `"decimal"`, `"delete"` or `"biometric"`. The keypad holds no value of its own.
+
+Set `accessoryKey` to `decimal` or `biometric` to fill the bottom-left slot; otherwise it stays empty. Change the decimal character with `decimalSeparator` and the biometric Phosphor icon with `biometricIcon`. `biometricLabel`, `decimalLabel` and `deleteLabel` are the accessibility labels of those keys.
+
+Use `deleteDisabled` to turn off only the delete key, for example when the value is empty. `keyClassName` adds classes to each key. The `KeypadDigit`, `KeypadKeyValue` and `KeypadAccessoryKey` types are also exported.
 
 </Only>
 
 <Only platform="swift">
-
-<ApiPart index={1}>
 
 ### KeypadKey
 
@@ -496,10 +522,6 @@ Also accepts the props of `React.ComponentProps<typeof View>`.
 | `.delete` | - |
 | `.biometric` | - |
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### KeypadAccessory
 
 | Value | Parameters |
@@ -508,28 +530,20 @@ Also accepts the props of `React.ComponentProps<typeof View>`.
 | `.decimal` | `String`, `label: LocalizedStringKey = "Decimal separator"` |
 | `.biometric` | `Image`, `label: LocalizedStringKey = "Use biometrics"` |
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### Keypad
 
 The full grid of keys.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `accessory` | `KeypadAccessory` | `.none` | - |
-| `deleteLabel` | `LocalizedStringKey` | `"Delete"` | Accessibility label for the delete key. |
-| `deleteDisabled` | `Bool` | `false` | Disables only the delete key. |
-| `onKeyPress` | `(KeypadKey) -> Void` | - | Called with the pressed key value. |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `accessory` | `KeypadAccessory` | `.none` |
+| `deleteLabel` | `LocalizedStringKey` | `"Delete"` |
+| `deleteDisabled` | `Bool` | `false` |
+| `onKeyPress` | `(KeypadKey) -> Void` | - |
 
 </Only>
 
 <Only platform="kotlin">
-
-<ApiPart index={1}>
 
 ### KeypadKey
 
@@ -540,10 +554,6 @@ The full grid of keys.
 | `Biometric` | - |
 | `Delete` | - |
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### KeypadAccessory
 
 | Value | Parameters |
@@ -552,39 +562,17 @@ The full grid of keys.
 | `Decimal` | `separator: String = "."`, `label: String = "Decimal separator"` |
 | `Biometric` | `icon: ImageVector = PhosphorIcons.Regular.Fingerprint`, `label: String = "Use biometrics"` |
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### Keypad
 
 The full grid of keys.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onKeyPress` | `(KeypadKey) -> Unit` | - | Called with the pressed key value. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `accessory` | `KeypadAccessory` | `KeypadAccessory.None` | - |
-| `deleteLabel` | `String` | `"Delete"` | Accessibility label for the delete key. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- Every key has the `button` role and an `accessibilityLabel`: the digit itself, or `decimalLabel`, `biometricLabel` and `deleteLabel` for the other keys.
-- Disabled keys set `disabled` in their accessibility state and block presses.
-- Translate the default labels (`Decimal separator`, `Use biometrics`, `Delete`) for localized apps.
-
-## Notes
-
-- Filled keys use `bg-secondary`, `opacity-80` when pressed and `opacity-50` when disabled.
-- Digits use `text-2xl` with tabular numbers.
-- Light and dark colors follow the system appearance.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `onKeyPress` | `(KeypadKey) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `accessory` | `KeypadAccessory` | `KeypadAccessory.None` |
+| `deleteLabel` | `String` | `"Delete"` |
+| `enabled` | `Boolean` | `true` |
 
 </Only>
 

@@ -9,13 +9,15 @@ platforms: [web]
 
 <ComponentPreview name="kbd-demo" />
 
-`Kbd` renders a single key as a native `kbd` element in a small rounded box. Set `mod` to prepend the platform's primary modifier: `⌘` on Apple platforms, `Ctrl` elsewhere (`Ctrl+` when the key has children).
+`Kbd` renders a single key as a native `kbd` element in a small rounded box. Set `mod` to prepend the platform's primary modifier.
 
 Wrap several keys in `KbdGroup` to present a key combination. Use `Kbd` inline in text, in tooltips, or inside an input group addon to hint at a shortcut.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/kbd
@@ -27,17 +29,23 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add kbd
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
 2. Add the pieces it builds on: `use-platform`.
 
-3. Copy the source into `components/ui/kbd.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/kbd.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -49,7 +57,15 @@ import { Kbd, KbdGroup } from "@/components/ui/kbd"
 <Kbd mod>K</Kbd>
 ```
 
-Pass the key label as children. Use `mod` instead of hard-coding `⌘` or `Ctrl` so the hint matches the user's platform. Icons placed inside `Kbd` are sized to `size-3` unless they set their own `size-*` class.
+## Composition
+
+Use the following composition to build a `Kbd`:
+
+```text
+Kbd
+KbdGroup
+└── Kbd
+```
 
 ## Examples
 
@@ -67,49 +83,15 @@ Key combinations wrapped in `KbdGroup`, both inline in a sentence and on their o
 
 ### With icon
 
-Keys that use an icon instead of, or next to, a text label.
+Keys that use an icon instead of, or next to, a text label. Icons inside `Kbd` are sized to `size-3` unless they set their own `size-*` class.
 
 <ComponentPreview name="kbd-with-icon" />
 
 ### In input group
 
-A shortcut hint placed in the trailing addon of a search input group.
+A shortcut hint placed in the trailing addon of a search input group. Inside an input group or tooltip content, `Kbd` adapts its background and text colors.
 
 <ComponentPreview name="kbd-in-input-group" />
-
-## API Reference
-
-<Anatomy>
-
-- [Kbd](#kbd)
-- [KbdGroup](#kbdgroup)
-  - [Kbd](#kbd)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Kbd
-
-Renders one key as a `kbd` element, optionally prefixed with the platform modifier.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `mod` | `boolean` | - | Prepends the platform's primary modifier key: `⌘` on macOS and iOS, `Ctrl` on other platforms. |
-
-Also accepts the props of `React.ComponentProps<"kbd">`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### KbdGroup
-
-Groups several keys into a single inline key combination.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -117,11 +99,26 @@ Also accepts the props of `React.ComponentProps<"div">`.
 - `Kbd` and `KbdGroup` are hidden below the `md` breakpoint, so do not rely on them as the only place a shortcut is documented.
 - `Kbd` sets `pointer-events-none`; clicks pass through to the surrounding control, as in an input group addon.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot="kbd"` and `data-slot="kbd-group"`.
-- Platform detection reads `navigator` through `useSyncExternalStore`; during server rendering the non-Apple modifier is used.
-- Inside an input group or tooltip content, `Kbd` adapts its background and text colors automatically.
-- Uses the `muted`, `background` and `muted-foreground` colors.
+### Kbd
+
+Renders one key as a `kbd` element, optionally prefixed with the platform modifier.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `mod` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<"kbd">`.
+
+Pass the key label as children. `mod` prepends the platform's primary modifier: `⌘` on macOS and iOS, `Ctrl` on other platforms (`Ctrl+` when the key has children). Use it instead of hard-coding `⌘` or `Ctrl` so the hint matches the user's platform. Platform detection reads `navigator`, so server rendering uses the non-Apple modifier.
+
+### KbdGroup
+
+Groups several keys into a single inline key combination.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Both parts set a `data-slot`, `kbd` and `kbd-group`, for styling.
 
 </Only>

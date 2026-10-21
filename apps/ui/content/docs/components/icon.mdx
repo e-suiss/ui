@@ -25,6 +25,10 @@ SwiftUI has no `Icon` view to install. Use the images from the Phosphor Swift pa
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -69,9 +73,13 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 </Only>
 
-<Only platform="rn kotlin">
+</div>
 
-### Manual
+<div>
+
+<Only platform="swift">
+
+There is nothing to copy: the Phosphor Swift package from the Command tab is all SwiftUI needs.
 
 </Only>
 
@@ -81,7 +89,7 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg uniwind
@@ -89,17 +97,17 @@ npx expo install cn phosphor-react-native react-native-svg uniwind
 
 2. Add the pieces it builds on: [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/icon.tsx`:
+3. Copy and paste the following code into `components/ui/icon.tsx`:
 
 <ComponentSource path="uniwind/components/ui/icon.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn nativewind phosphor-react-native react-native-svg
@@ -107,17 +115,17 @@ npx expo install cn nativewind phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/icon.tsx`:
+3. Copy and paste the following code into `components/ui/icon.tsx`:
 
 <ComponentSource path="nativewind/components/ui/icon.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-svg
@@ -125,11 +133,11 @@ npx expo install phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/icon.tsx`:
+3. Copy and paste the following code into `components/ui/icon.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/icon.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -174,6 +182,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -249,21 +261,13 @@ fun IconDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-Pass the icon component, not an element: `<Icon as={HeartIcon} />`. Override the size and color with `className`, such as `size-6 text-destructive`. Other Phosphor props, such as `weight` and `mirrored`, are passed through.
-
-Wrap a subtree in `IconClassContext.Provider` to set default classes for the icons inside your own components.
-
-</Only>
-
 ## Examples
 
 ### Sizes
 
 <Only platform="rn">
 
-Icons at several `size-*` classes.
+Set the size with a `size-*` class in `className`, such as `size-6`.
 
 </Only>
 
@@ -289,6 +293,14 @@ The available Phosphor weights.
 
 <NativeExample name="icon-weights" />
 
+<Only platform="rn">
+
+## Accessibility
+
+- Icons have no label of their own. When an icon is the only content of a pressable, give the pressable an `accessibilityLabel`.
+
+</Only>
+
 <Only platform="rn kotlin">
 
 ## API Reference
@@ -297,51 +309,33 @@ The available Phosphor weights.
 
 <Only platform="rn">
 
-<ApiPart index={1}>
-
 ### Icon
 
 Styled Phosphor icon.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `as` | `PhosphorIcon` | Required | The Phosphor icon component to render. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `as` | `PhosphorIcon` | Required |
 
 Also accepts the props of `IconProps` from `phosphor-react-native`.
 
-</ApiPart>
+Pass the Phosphor icon component to render in `as`, not an element: `<Icon as={HeartIcon} />`. Override the size and color with `className`, such as `size-6 text-destructive`. Other Phosphor props, such as `weight` and `mirrored`, are passed through. The default color is the `text-foreground` token, so icons follow light and dark mode. Wrap a subtree in `IconClassContext.Provider` to set default classes for the icons inside your own components.
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### Icon
 
 Styled Phosphor icon.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `imageVector` | `ImageVector` | - | - |
-| `contentDescription` | `String?` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `size` | `Dp` | `LocalIconSize.current` | - |
-| `tint` | `Color` | `LocalContentColor.current.takeOrElse { EsuissTheme.colors.foreground }` | - |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- Icons have no label of their own. When an icon is the only content of a pressable, give the pressable an `accessibilityLabel`.
-
-## Notes
-
-- The default color is the `text-foreground` token, so icons follow light and dark mode with the system appearance.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `imageVector` | `ImageVector` | - |
+| `contentDescription` | `String?` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `size` | `Dp` | `LocalIconSize.current` |
+| `tint` | `Color` | `LocalContentColor.current.takeOrElse { EsuissTheme.colors.foreground }` |
 
 </Only>
 

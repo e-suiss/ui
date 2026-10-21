@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A stock-style price chart with range toggles from one day to five years. Scrubbing the plot updates the price, change and date in the header, and switching ranges morphs the line into its new shape. Use it as a starting point for financial or any time-series dashboard where readers drill into time ranges.
 
+Replace the seeded `generate` function with your own data per range, one price and one label per point, and edit `RANGES` to change the toggles. The stats row under the chart, including volume, is static. There is no floating tooltip: the header shows every readout and returns to the latest price when a touch ends. The line turns green or red as the price at the cursor is above or below the opening price, and the morph is skipped when reduced motion is preferred.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/area-chart-interactive
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts area-chart-interactive
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Toggle Group](/docs/components/toggle-group).
 
-3. Copy the source into `components/charts/area-chart-interactive.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/area-chart-interactive.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { AreaChartInteractive } from "@/components/charts/area-chart-interactive
 ```tsx
 <AreaChartInteractive />
 ```
-
-The demo generates prices from a seeded random series; replace the `generate` function with your own fetch or data per range, keeping one price and one label per point. Edit `RANGES` to change the available toggles and their captions. The stats row under the chart, including the volume figure, is static and should be wired to your data.
-
-## Notes
-
-The line turns green or red depending on whether the price at the cursor is above or below the opening price, so the color can flip while scrubbing. The morph animation is skipped when the user prefers reduced motion, and on touch devices the header returns to the latest price when the finger lifts. There is no floating tooltip; all readouts live in the header.
 
 </Only>
 
@@ -75,9 +79,15 @@ The line turns green or red depending on whether the price at the cursor is abov
 
 One price series drawn as a linear area with a fading gradient, a value axis on the right and a dashed `ReferenceLine` at the opening price. A `ToggleGroup` switches between 1D, 1W, 1M, 3M, 1Y and 5Y. Touching the plot reports the point through `onActiveIndexChange`, and the header updates the price, change and date for that point. The area turns green or red depending on whether the price is up or down, and open, high, low and volume sit below the chart. The area sets `isAnimationActive={false}`, so it draws without the enter animation and switches ranges instantly.
 
+Replace `generate()` with your price history for each range, and set the symbol, company name and `LAST_PRICE`. Volume values are hard-coded in `stats`. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +147,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -143,17 +155,17 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
-3. Copy the source into `components/charts/area-chart-interactive.tsx`:
+3. Copy and paste the following code into `components/charts/area-chart-interactive.tsx`:
 
 <ComponentSource path="uniwind/components/charts/area-chart-interactive.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -161,11 +173,11 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
-3. Copy the source into `components/charts/area-chart-interactive.tsx`:
+3. Copy and paste the following code into `components/charts/area-chart-interactive.tsx`:
 
 <ComponentSource path="nativewind/components/charts/area-chart-interactive.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -173,11 +185,11 @@ npx expo install cn
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle Group](/docs/components/toggle-group).
 
-2. Copy the source into `components/charts/area-chart-interactive.tsx`:
+2. Copy and paste the following code into `components/charts/area-chart-interactive.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/area-chart-interactive.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -291,6 +303,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -330,12 +346,6 @@ fun AreaInteractiveExample() {
     AreaChartInteractive()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `generate()` with your price history for each range, and set the symbol, company name and `LAST_PRICE`. Volume values are hard-coded in `stats`. The component takes no props.
 
 </Only>
 

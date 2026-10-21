@@ -19,6 +19,10 @@ On iOS the bar is a native `InputAccessoryView`, attached to the keyboard. On An
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -67,7 +71,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -75,7 +81,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -93,17 +99,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 <ComponentSource path="uniwind/components/primitives/portal.tsx" plain />
 
-4. Copy the source into `components/ui/input-accessory-bar.tsx`:
+4. Copy and paste the following code into `components/ui/input-accessory-bar.tsx`:
 
 <ComponentSource path="uniwind/components/ui/input-accessory-bar.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -121,17 +127,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 <ComponentSource path="nativewind/components/primitives/portal.tsx" plain />
 
-4. Copy the source into `components/ui/input-accessory-bar.tsx`:
+4. Copy and paste the following code into `components/ui/input-accessory-bar.tsx`:
 
 <ComponentSource path="nativewind/components/ui/input-accessory-bar.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-svg
@@ -149,11 +155,11 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="stylesheet/components/primitives/portal.tsx" plain />
 
-4. Copy the source into `components/ui/input-accessory-bar.tsx`:
+4. Copy and paste the following code into `components/ui/input-accessory-bar.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/input-accessory-bar.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -238,6 +244,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -469,16 +479,6 @@ fun InputAccessoryBarForm(
 
 </Only>
 
-<Only platform="rn">
-
-Wrap the form in `InputAccessoryBar` and use `InputAccessoryBarInput` in place of `Input`. Inputs are ordered by the order they mount. The return key reads "next" on every input but the last, which reads "done" and dismisses the keyboard.
-
-For other text inputs, such as a `Textarea`, call `useInputAccessoryBarInput()` and spread the returned props onto the input. Inside a Keyboard Scroll View, the focused input is scrolled into view.
-
-</Only>
-
-Use `previousLabel`, `nextLabel` and `doneLabel` to localize the buttons, and `onDone` to react when done is pressed.
-
 ## Examples
 
 ### Focused
@@ -489,7 +489,7 @@ The first input focused, so the bar is visible.
 
 ### Custom labels
 
-Custom labels for the previous, next and done buttons.
+Use `previousLabel`, `nextLabel` and `doneLabel` to localize the buttons, and `onDone` to react when done is pressed.
 
 <NativeExample name="input-accessory-bar-custom-labels" />
 
@@ -497,88 +497,83 @@ Custom labels for the previous, next and done buttons.
 
 <Only platform="rn">
 
-A textarea connected through `useInputAccessoryBarInput`.
+For other text inputs, such as a `Textarea`, call `useInputAccessoryBarInput()` and spread the returned props onto the input.
 
 </Only>
 
 <NativeExample name="input-accessory-bar-with-textarea" />
 
+<Only platform="rn">
+
+## Accessibility
+
+- The arrow buttons are labelled with `previousLabel` and `nextLabel` and are disabled at the first and last input.
+- The done button is a text button that dismisses the keyboard.
+
+</Only>
+
 ## API Reference
 
 <Only platform="rn">
-
-<ApiPart index={1}>
 
 ### InputAccessoryBar
 
 Provider that tracks the inputs and renders the bar.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `previousLabel` | `string` | `"Previous"` | Label for the previous button. Defaults to `"Previous"`. |
-| `nextLabel` | `string` | `"Next"` | Label for the next button. Defaults to `"Next"`. |
-| `doneLabel` | `React.ReactNode` | `"Done"` | Text or node for the done button. Defaults to `"Done"`. |
-| `onDone` | `() => void` | - | Called after the keyboard is dismissed with done. |
-| `portalHost` | `string` | - | Name of the portal host on Android. |
-| `className` | `string` | - | Classes merged onto the root element. |
-| `children` | `React.ReactNode` | - | The content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `previousLabel` | `string` | `"Previous"` |
+| `nextLabel` | `string` | `"Next"` |
+| `doneLabel` | `React.ReactNode` | `"Done"` |
+| `onDone` | `() => void` | - |
+| `portalHost` | `string` | - |
+| `className` | `string` | - |
+| `children` | `React.ReactNode` | - |
 
-</ApiPart>
-
-<ApiPart index={2}>
+Wrap the form in `InputAccessoryBar`. `doneLabel` can be text or a node, and `onDone` is called after the keyboard is dismissed. `portalHost` names the portal host the bar renders into on Android, where the bar also reserves its height so keyboard-aware layouts stay above it. Inside a Keyboard Scroll View, the focused input is scrolled into view.
 
 ### InputAccessoryBarInput
 
 `Input` connected to the bar.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `order` | `number` | - | Position in the previous and next order. Without it, inputs follow their place on screen. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `order` | `number` | - |
 
 Also accepts the props of `React.ComponentProps<typeof Input>`.
 
-</ApiPart>
+Use it in place of `Input`. `order` sets its position in the previous and next order; without it, inputs follow the order they mount. The return key reads "next" on every input but the last, which reads "done" and dismisses the keyboard.
 
 </Only>
 
 <Only platform="swift">
 
-<ApiPart index={1}>
-
 ### InputAccessoryBar
 
 Provider that tracks the inputs and renders the bar.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `previousLabel` | `LocalizedStringKey` | `"Previous"` | Label for the previous button. |
-| `nextLabel` | `LocalizedStringKey` | `"Next"` | Label for the next button. |
-| `doneLabel` | `LocalizedStringKey` | `"Done"` | - |
-| `onPrevious` | `(() -> Void)?` | `nil` | - |
-| `onNext` | `(() -> Void)?` | `nil` | - |
-| `onDone` | `() -> Void` | - | Called after the keyboard is dismissed with done. |
-
-</ApiPart>
-
-<ApiPart index={2}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `previousLabel` | `LocalizedStringKey` | `"Previous"` |
+| `nextLabel` | `LocalizedStringKey` | `"Next"` |
+| `doneLabel` | `LocalizedStringKey` | `"Done"` |
+| `onPrevious` | `(() -> Void)?` | `nil` |
+| `onNext` | `(() -> Void)?` | `nil` |
+| `onDone` | `() -> Void` | - |
 
 ### .inputAccessoryBar
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `focus` | `FocusState<Value?>.Binding` | - | - |
-| `order` | `[Value]` | - | Position in the previous and next order. Without it, inputs follow their place on screen. |
-| `previousLabel` | `LocalizedStringKey` | `"Previous"` | Label for the previous button. |
-| `nextLabel` | `LocalizedStringKey` | `"Next"` | Label for the next button. |
-| `doneLabel` | `LocalizedStringKey` | `"Done"` | - |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `focus` | `FocusState<Value?>.Binding` | - |
+| `order` | `[Value]` | - |
+| `previousLabel` | `LocalizedStringKey` | `"Previous"` |
+| `nextLabel` | `LocalizedStringKey` | `"Next"` |
+| `doneLabel` | `LocalizedStringKey` | `"Done"` |
 
 </Only>
 
 <Only platform="kotlin">
-
-<ApiPart index={1}>
 
 ### InputAccessoryState
 
@@ -589,25 +584,13 @@ Takes no parameters.
 | `hasPrevious` | `Boolean` |
 | `hasNext` | `Boolean` |
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### InputAccessoryState.previous
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### InputAccessoryState.next
 
 Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={4}>
 
 ### rememberInputAccessoryState
 
@@ -615,51 +598,27 @@ Takes no parameters.
 
 Returns `InputAccessoryState`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### Modifier.inputAccessory
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `state` | `InputAccessoryState` | - | - |
-| `index` | `Int` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `state` | `InputAccessoryState` | - |
+| `index` | `Int` | - |
 
 Returns `Modifier`.
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### InputAccessoryBar
 
 Provider that tracks the inputs and renders the bar.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `state` | `InputAccessoryState` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `previousLabel` | `String` | `"Previous"` | Label for the previous button. |
-| `nextLabel` | `String` | `"Next"` | Label for the next button. |
-| `doneLabel` | `String` | `"Done"` | - |
-| `onDone` | `(() -> Unit)?` | `null` | Called after the keyboard is dismissed with done. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- The arrow buttons are labelled with `previousLabel` and `nextLabel` and are disabled at the first and last input.
-- The done button is a text button that dismisses the keyboard.
-
-## Notes
-
-- iOS uses the native input accessory view; Android uses a portal and reserves the bar height so keyboard-aware layouts stay above it.
-- Uses `bg-card` (`bg-muted` in dark mode) and `border-border` tokens.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `state` | `InputAccessoryState` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `previousLabel` | `String` | `"Previous"` |
+| `nextLabel` | `String` | `"Next"` |
+| `doneLabel` | `String` | `"Done"` |
+| `onDone` | `(() -> Unit)?` | `null` |
 
 </Only>
 

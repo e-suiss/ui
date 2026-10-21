@@ -15,7 +15,9 @@ Use `Label` for standalone controls. Inside a `Field` layout, prefer the field's
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/label
@@ -27,15 +29,21 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add label
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
-2. Copy the source into `components/ui/label.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/label.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -47,19 +55,17 @@ import { Label } from "@/components/ui/label"
 <Label>Email address</Label>
 ```
 
-Give the control an `id` and pass the same value to `htmlFor`. Next to a checkbox, radio item or switch, the label automatically switches to regular weight.
-
 ## Examples
 
 ### With input
 
-A label linked to a text input; clicking the label focuses the input.
+Give the input an `id` and pass the same value to the label's `htmlFor`. Clicking the label focuses the input.
 
 <ComponentPreview name="label-with-input" />
 
 ### With checkbox
 
-A label placed after a checkbox; clicking the label toggles it.
+A label placed after a checkbox; clicking the label toggles it. Next to a checkbox, radio item or switch, the label switches to regular weight.
 
 <ComponentPreview name="label-with-checkbox" />
 
@@ -69,9 +75,12 @@ A label shown in its dimmed style inside a disabled group, above a disabled inpu
 
 <ComponentPreview name="label-disabled" />
 
-## API Reference
+## Accessibility
 
-<ApiPart index={1}>
+- The label text becomes the control's accessible name when linked with `htmlFor` or by nesting.
+- Clicking the label focuses a text input or toggles a checkbox, matching native `label` behavior.
+
+## API Reference
 
 ### Label
 
@@ -79,18 +88,7 @@ Renders a `label` element that names and activates its associated control.
 
 Also accepts the props of `React.ComponentProps<"label">`.
 
-</ApiPart>
-
-## Accessibility
-
-- The label text becomes the control's accessible name when linked with `htmlFor` or by nesting.
-- Clicking the label focuses a text input or toggles a checkbox, matching native `label` behavior.
-
-## Notes
-
-- Styling hook: `data-slot="label"`.
-- The label dims to `opacity-50` when it follows a disabled peer control, or when an ancestor with the `group` class has `data-disabled="true"`.
-- Font weight drops to normal when the label contains, or follows, a `checkbox`, `radio-group-item` or `switch` slot.
+Associate it with a control through `htmlFor`, or nest the control inside it. The label dims to `opacity-50` when it follows a disabled peer control, or when an ancestor with the `group` class has `data-disabled="true"`. Font weight drops to normal when the label contains, or follows, a `checkbox`, `radio-group-item` or `switch` slot. Style it through `data-slot="label"`.
 
 </Only>
 
@@ -105,6 +103,10 @@ Also accepts the props of `React.ComponentProps<"label">`.
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -148,7 +150,9 @@ npx @esuiss/ui@latest add label --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -156,7 +160,7 @@ npx @esuiss/ui@latest add label --platform kotlin
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -174,17 +178,17 @@ npx expo install cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/label.tsx`:
+3. Copy and paste the following code into `components/ui/label.tsx`:
 
 <ComponentSource path="uniwind/components/ui/label.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -202,11 +206,11 @@ npx expo install cn
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/label.tsx`:
+3. Copy and paste the following code into `components/ui/label.tsx`:
 
 <ComponentSource path="nativewind/components/ui/label.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -224,11 +228,11 @@ npx expo install cn
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-2. Copy the source into `components/ui/label.tsx`:
+2. Copy and paste the following code into `components/ui/label.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/label.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -295,6 +299,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -337,21 +345,13 @@ fun LabelExample() {
 
 </Only>
 
-<Only platform="rn">
-
-Set a `nativeID` on the label and point the control's `accessibilityLabelledBy` at it, so screen readers read the label with the control.
-
-For a checkbox or switch, pass an `onPress` that toggles the control, which gives a larger touch target. Inside a `Field`, use `FieldLabel` instead.
-
-</Only>
-
 ## Examples
 
 ### With input
 
 <Only platform="rn">
 
-A label linked to an input through `nativeID` and `accessibilityLabelledBy`.
+Set a `nativeID` on the label and point the input's `accessibilityLabelledBy` at it, so screen readers read the label with the input.
 
 </Only>
 
@@ -361,6 +361,12 @@ A label linked to an input through `nativeID` and `accessibilityLabelledBy`.
 
 A label next to a checkbox that toggles it when pressed.
 
+<Only platform="rn">
+
+Pass an `onPress` that toggles the control, which gives a larger touch target.
+
+</Only>
+
 <NativeExample name="label-with-checkbox" />
 
 ### Disabled
@@ -369,58 +375,6 @@ A disabled label.
 
 <NativeExample name="label-disabled" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Label
-
-Also accepts the props of `React.ComponentProps<typeof LabelPrimitive.Text>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### FieldLabel
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(content:)`, `init(_:)`, `init(_:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Label
-
-Renders a `label` element that names and activates its associated control.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `Label(content)`, `Label(text)`.
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -428,10 +382,47 @@ Overloads: `Label(content)`, `Label(text)`.
 - The label text reports its `disabled` state in `accessibilityState`.
 - Link it to its control with `nativeID` on the label and `accessibilityLabelledBy` on the control.
 
-## Notes
+</Only>
 
-- Text uses the `text-foreground` token, and `opacity-50` when disabled.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Label
+
+Also accepts the props of `React.ComponentProps<typeof LabelPrimitive.Text>`.
+
+Text uses the `text-foreground` token, and `opacity-50` when disabled. Inside a `Field`, use `FieldLabel` instead.
+
+</Only>
+
+<Only platform="swift">
+
+### FieldLabel
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(content:)`, `init(_:)`, `init(_:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### Label
+
+Renders a `label` element that names and activates its associated control.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `true` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `Label(content)`, `Label(text)`.
 
 </Only>
 

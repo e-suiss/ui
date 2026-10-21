@@ -11,11 +11,13 @@ platforms: [web]
 
 `Table` renders a native `table` inside a container that scrolls horizontally when the table is too wide. Build it from `TableHeader`, `TableBody` and `TableFooter`, each holding `TableRow` elements with `TableHead` or `TableCell` cells. `TableCaption` adds a caption below the table.
 
-The parts add spacing, hairline row dividers, hover and selection backgrounds, and tabular numbers in cells. They don't add sorting, pagination or selection logic; handle those in your own code.
+The parts add spacing, hairline row dividers, hover and selection backgrounds, and tabular numbers in cells.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/table
@@ -27,20 +29,35 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add table
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
-2. Copy the source into `components/ui/table.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/table.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption } from "@/components/ui/table"
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 ```
 
 ```tsx
@@ -77,35 +94,38 @@ import { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableC
 </div>
 ```
 
-Every part passes its props to the native element, so use standard attributes such as `colSpan`. Align numeric columns with `text-end` on both the `TableHead` and its cells. To highlight a row, set `data-selected` on `TableRow`.
+## Composition
+
+Use the following composition to build a `Table`:
+
+```text
+Table
+├── TableCaption
+├── TableHeader
+│   └── TableRow
+│       └── TableHead
+├── TableBody
+│   └── TableRow
+│       └── TableCell
+└── TableFooter
+    └── TableRow
+        └── TableCell
+```
 
 ## Examples
 
 ### Selected row
 
-Highlights one row with the `data-selected` attribute.
+Set `data-selected` on a `TableRow` to highlight it. The attribute is matched by presence, so leave it off unselected rows rather than setting it to `false`.
 
 <ComponentPreview name="table-selected-row" />
 
+## Accessibility
+
+- The parts render native table elements, so rows, column headers and cells keep their built-in roles.
+- `TableCaption` gives the table its accessible name.
+
 ## API Reference
-
-<Anatomy>
-
-- [Table](#table)
-  - [TableCaption](#tablecaption)
-  - [TableHeader](#tableheader)
-    - [TableRow](#tablerow)
-      - [TableHead](#tablehead)
-  - [TableBody](#tablebody)
-    - [TableRow](#tablerow)
-      - [TableCell](#tablecell)
-  - [TableFooter](#tablefooter)
-    - [TableRow](#tablerow)
-      - [TableCell](#tablecell)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### Table
 
@@ -113,9 +133,7 @@ The `table` element, wrapped in a horizontally scrolling container.
 
 Also accepts the props of `React.ComponentProps<"table">`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+Every part passes its props to the native element, so use standard attributes such as `colSpan`. Sorting, pagination and selection logic are not included; handle those in your own code. Each part sets a `data-slot`, such as `table-container` or `table-cell`, for styling.
 
 ### TableHeader
 
@@ -123,19 +141,11 @@ The `thead` section for column headings.
 
 Also accepts the props of `React.ComponentProps<"thead">`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### TableBody
 
 The `tbody` section for data rows.
 
 Also accepts the props of `React.ComponentProps<"tbody">`.
-
-</ApiPart>
-
-<ApiPart index={4}>
 
 ### TableFooter
 
@@ -143,19 +153,13 @@ The `tfoot` section, shaded and bold, for totals or summaries.
 
 Also accepts the props of `React.ComponentProps<"tfoot">`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### TableRow
 
 A `tr` row with a bottom divider and hover background.
 
 Also accepts the props of `React.ComponentProps<"tr">`.
 
-</ApiPart>
-
-<ApiPart index={6}>
+Set `data-selected` to give the row the selected background. A row that contains an element with `aria-expanded` also gets it.
 
 ### TableHead
 
@@ -163,9 +167,7 @@ A `th` column heading in small, secondary text.
 
 Also accepts the props of `React.ComponentProps<"th">`.
 
-</ApiPart>
-
-<ApiPart index={7}>
+Align numeric columns with `text-end` on both the `TableHead` and its cells. Header and data cells that contain a `role="checkbox"` drop their end padding.
 
 ### TableCell
 
@@ -173,29 +175,10 @@ A `td` data cell with tabular numbers.
 
 Also accepts the props of `React.ComponentProps<"td">`.
 
-</ApiPart>
-
-<ApiPart index={8}>
-
 ### TableCaption
 
 A `caption` shown below the table that also names it.
 
 Also accepts the props of `React.ComponentProps<"caption">`.
-
-</ApiPart>
-
-## Accessibility
-
-- The parts render native table elements, so rows, column headers and cells keep their built-in roles.
-- `TableCaption` gives the table its accessible name.
-
-## Notes
-
-- `data-selected` is matched by presence, so leave the attribute off unselected rows rather than setting it to `false`.
-- A `TableRow` that contains an element with `aria-expanded` also gets the selected background.
-- Header and data cells that contain a `role="checkbox"` drop their end padding.
-- Parts carry `data-slot` attributes such as `table-container`, `table`, `table-row` and `table-cell`.
-- Hover and selection use the `accent` color; the footer uses a tinted `muted`.
 
 </Only>

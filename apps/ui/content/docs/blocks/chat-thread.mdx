@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A single conversation in a phone frame, with a contact header, message bubbles, heart reactions and a composer. Double-clicking a bubble, or pressing Enter on it, toggles a heart. The frame appears from small tablets up while the smallest screens show the thread edge to edge, and on desktop a caption sits beside the phone. It works for showing off a chat feature on a marketing page or as the base of a one-to-one chat view.
 
+Replace `opening` with your initial messages, each with an id, sender, text and an optional liked flag. The `send` function fakes a typing indicator and a reply from `replies`, so wire it to your messaging backend instead. Update the contact name and initials, and point the `#contact` link at a real profile.
+
+Each bubble is a button whose label includes the message and how to toggle the heart, so reactions work from the keyboard.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/chat-thread
@@ -25,9 +31,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks chat-thread
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +43,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Input](/docs/components/input), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller).
 
-3. Copy the source into `components/blocks/chat-thread.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/chat-thread.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +62,6 @@ import { ChatThread } from "@/components/blocks/chat-thread"
 ```tsx
 <ChatThread />
 ```
-
-Replace `opening` with your initial messages, each with an id, sender, text and an optional liked flag. The `send` function fakes a typing indicator and a reply from `replies`, so wire it to your messaging backend instead. Update the contact name and initials, and point the `#contact` link at a real profile.
-
-## Notes
-
-Each bubble is a button whose label includes the message and how to toggle the heart, so reactions work from the keyboard.
 
 </Only>
 
@@ -77,7 +83,17 @@ Composes `Screen`, `Avatar`, `Message`, `Bubble` with `BubbleReactions`, `Messag
 
 </Only>
 
+<Only platform="rn">
+
+Replace `OPENING`, `REPLIES` and `PHOTO` with your messages and attachment source. Wire `onSend`, `onAttach`, `onOpenContact` and `onLikeChange` to your messaging backend.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +143,9 @@ The CLI also adds what it builds on: [Attachment](/docs/components/attachment), 
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +153,7 @@ The CLI also adds what it builds on: [Attachment](/docs/components/attachment), 
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -147,17 +165,17 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/chat-thread.tsx`:
+4. Copy and paste the following code into `components/blocks/chat-thread.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/chat-thread.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -169,17 +187,17 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/chat-thread.tsx`:
+4. Copy and paste the following code into `components/blocks/chat-thread.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/chat-thread.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -191,11 +209,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/chat-thread.tsx`:
+4. Copy and paste the following code into `components/blocks/chat-thread.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/chat-thread.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -327,6 +345,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -366,12 +388,6 @@ fun ChatThreadExample() {
     ChatThread()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `OPENING`, `REPLIES` and `PHOTO` with your messages and attachment source. Wire `onSend`, `onAttach`, `onOpenContact` and `onLikeChange` to your messaging backend.
 
 </Only>
 

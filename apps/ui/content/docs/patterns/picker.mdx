@@ -9,13 +9,15 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="picker-demo" responsive />
 
-`Picker` lets the user choose one option from a short list. On desktop it renders a suiss/ui `Select` with a trigger, a popup list, labelled groups and separators. On mobile (below `48rem`, via `useIsMobile`) it renders a `NativeSelect`, so the platform's own picker wheel or sheet appears; groups become `optgroup` elements and separators are omitted.
+`Picker` lets the user choose one option from a short list. On desktop it renders a suiss/ui `Select`. On mobile (below `48rem`, via `useIsMobile`) it renders a `NativeSelect`, so the platform's own picker wheel or sheet appears. The same `PickerItem` markup drives both presentations.
 
-You describe options once with `PickerItem`, `PickerGroup` and `PickerSeparator`, and the same markup drives both presentations. Use it for form fields where the options are known and do not need search; for long lists, use `SearchPicker`.
+Use it for form fields where the options are known and do not need search; for long lists, use `SearchPicker`.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/picker
@@ -27,15 +29,21 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns picker
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the pieces it builds on: [Native Select](/docs/components/native-select), [Select](/docs/components/select), `use-mobile`.
 
-2. Copy the source into `components/patterns/picker.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/picker.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -47,112 +55,54 @@ import { Picker, PickerGroup, PickerItem, PickerSeparator } from "@/components/p
 <Picker placeholder="Select a fruit" aria-label="Fruit" className="w-48">{fruitItems}</Picker>
 ```
 
-- The value is uncontrolled by default; use `defaultValue`, or `value` with `onValueChange` to control it.
-- `Picker` collects the value and label of each `PickerItem` from its children so the desktop trigger can show the selected label. Pass `items` only when options are not rendered as direct or nested `PickerItem` elements.
-- `PickerGroup`, `PickerItem` and `PickerSeparator` must be used inside `Picker`, or they throw.
-- Give the picker an accessible name with `aria-label` or a `Label` that points at its `id`.
+## Composition
+
+Use the following composition to build a `Picker`:
+
+```text
+Picker
+├── PickerGroup
+│   └── PickerItem
+└── PickerSeparator
+```
 
 ## Examples
 
 ### With value
 
-Starts with an initial value through `defaultValue`.
+Set `defaultValue` to start with an initial value.
 
 <ComponentPreview name="picker-with-value" responsive />
 
 ### Sizes
 
-Shows the `sm` and `default` sizes side by side.
+Use the `size` prop to set the control height to `sm` or `default`.
 
 <ComponentPreview name="picker-sizes" responsive />
 
 ### Grouped
 
-Organizes options under labelled groups with a separator and a disabled option.
+Wrap options in a `PickerGroup` with a `label` and divide groups with `PickerSeparator`. On mobile, groups become `optgroup` elements and separators are omitted. Set `disabled` on a `PickerItem` to disable one option.
 
 <ComponentPreview name="picker-grouped" responsive />
 
 ### Disabled
 
-Prevents opening and changing the value.
+Set `disabled` to prevent opening and changing the value.
 
 <ComponentPreview name="picker-disabled" responsive />
 
 ### Invalid
 
-Shows the invalid style through `aria-invalid`.
+Set `aria-invalid` to mark the field invalid and apply the error style.
 
 <ComponentPreview name="picker-invalid" responsive />
 
 ### Controlled
 
-Owns the value in state with `value` and `onValueChange`.
+Control the value with `value` and `onValueChange`.
 
 <ComponentPreview name="picker-controlled" responsive />
-
-## API Reference
-
-<Anatomy>
-
-- [Picker](#picker)
-  - [PickerGroup](#pickergroup)
-    - [PickerItem](#pickeritem)
-  - PickerSeparator
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Picker
-
-The root that renders the Select or native select and holds the value.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | - | The selected value when controlled. |
-| `defaultValue` | `string` | - | The initially selected value when uncontrolled. |
-| `onValueChange` | `(value: string) => void` | - | Called with the new value when the user picks an option. |
-| `placeholder` | `string` | - | Text shown when no value is selected; on mobile it is a disabled first option. |
-| `items` | `PickerItemData[]` | - | Value and label pairs used to display the selected label; collected from `PickerItem` children when omitted. |
-| `size` | `"sm" \| "default"` | `"default"` | The control height. |
-| `id` | `string` | - | The ID of the trigger on desktop or the native select on mobile. |
-| `name` | `string` | - | The field name submitted with a form. |
-| `disabled` | `boolean` | - | Disables the picker. |
-| `required` | `boolean` | - | Marks the field as required for form validation. |
-| `className` | `string` | - | Classes applied to the trigger on desktop or the native select on mobile. |
-| `children` | `React.ReactNode` | - | The `PickerItem`, `PickerGroup` and `PickerSeparator` elements. |
-| `aria-invalid` | `boolean` | - | Marks the field as invalid and applies the error style. |
-| `aria-label` | `string` | - | The accessible name of the control. |
-| `aria-describedby` | `string` | - | The ID of an element that describes the control. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### PickerGroup
-
-Groups related options under an optional label.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `string` | - | The group's heading; becomes the `optgroup` label on mobile. |
-| `children` | `React.ReactNode` | - | The options in the group. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### PickerItem
-
-A selectable option.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The value selected by this option. |
-| `disabled` | `boolean` | - | Prevents selecting this option. |
-| `children` | `React.ReactNode` | - | The option's label. |
-
-</ApiPart>
 
 ## Accessibility
 
@@ -161,9 +111,52 @@ A selectable option.
 - Escape closes the desktop list without changing the value.
 - On mobile the control is a native `select`, with the platform's built-in keyboard and screen reader support.
 
-## Notes
+## API Reference
 
-Styling hooks: `data-slot="picker"`, `picker-group`, `picker-item` and `picker-separator`.
+### Picker
+
+The root that renders the Select or native select and holds the value.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | - |
+| `defaultValue` | `string` | - |
+| `onValueChange` | `(value: string) => void` | - |
+| `placeholder` | `string` | - |
+| `items` | `PickerItemData[]` | - |
+| `size` | `"sm" \| "default"` | `"default"` |
+| `id` | `string` | - |
+| `name` | `string` | - |
+| `disabled` | `boolean` | - |
+| `required` | `boolean` | - |
+| `className` | `string` | - |
+| `children` | `React.ReactNode` | - |
+| `aria-invalid` | `boolean` | - |
+| `aria-label` | `string` | - |
+| `aria-describedby` | `string` | - |
+
+The value is uncontrolled by default; use `defaultValue`, or `value` with `onValueChange` to control it. On mobile, `placeholder` is a disabled first option. `id` and `className` go to the trigger on desktop and to the native select on mobile. Give the picker an accessible name with `aria-label` or a `Label` that points at its `id`.
+
+`Picker` collects the value and label of each `PickerItem` from its children so the desktop trigger can show the selected label. Pass `items` only when options are not rendered as direct or nested `PickerItem` elements. `PickerGroup`, `PickerItem` and `PickerSeparator` must be used inside `Picker`, or they throw. Each part sets a `data-slot`, such as `picker` or `picker-item`, for styling.
+
+### PickerGroup
+
+Groups related options under an optional label.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `label` | `string` | - |
+| `children` | `React.ReactNode` | - |
+
+### PickerItem
+
+A selectable option.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | Required |
+| `disabled` | `boolean` | - |
+| `children` | `React.ReactNode` | - |
 
 </Only>
 
@@ -180,6 +173,10 @@ Styling hooks: `data-slot="picker"`, `picker-group`, `picker-item` and `picker-s
 Use it to choose one value from a short or grouped list in a form.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -229,7 +226,9 @@ The CLI also adds what it builds on: [Select](/docs/components/select).
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -239,11 +238,11 @@ The CLI also adds what it builds on: [Select](/docs/components/select).
 
 1. Add the pieces it builds on: [Select](/docs/components/select).
 
-2. Copy the source into `components/patterns/picker.tsx`:
+2. Copy and paste the following code into `components/patterns/picker.tsx`:
 
 <ComponentSource path="uniwind/components/patterns/picker.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -251,11 +250,11 @@ The CLI also adds what it builds on: [Select](/docs/components/select).
 
 1. Add the pieces it builds on: [Select](/docs/components/select).
 
-2. Copy the source into `components/patterns/picker.tsx`:
+2. Copy and paste the following code into `components/patterns/picker.tsx`:
 
 <ComponentSource path="nativewind/components/patterns/picker.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -263,11 +262,11 @@ The CLI also adds what it builds on: [Select](/docs/components/select).
 
 1. Add the pieces it builds on: [Select](/docs/components/select).
 
-2. Copy the source into `components/patterns/picker.tsx`:
+2. Copy and paste the following code into `components/patterns/picker.tsx`:
 
 <ComponentSource path="stylesheet/components/patterns/picker.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -370,6 +369,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -561,18 +564,6 @@ fun PickerDefault() {
 
 </Only>
 
-<Only platform="rn kotlin">
-
-List `PickerItem`s as children, optionally inside `PickerGroup`s separated by `PickerSeparator`. The picker collects the items from its children to show the selected label, or you can pass `items` directly.
-
-</Only>
-
-<Only platform="rn">
-
-Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. `placeholder` shows while nothing is selected.
-
-</Only>
-
 ## Examples
 
 ### States
@@ -581,196 +572,146 @@ A small picker with a value, an invalid picker and a disabled picker.
 
 <NativeExample name="picker-states" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Picker
-
-The root that renders the trigger and the options popup.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | - | The selected value when controlled. |
-| `defaultValue` | `string` | - | The initial value when uncontrolled. |
-| `onValueChange` | `(value: string) => void` | - | Called with the new value when an option is chosen. |
-| `placeholder` | `string` | - | Text shown when no value is selected. |
-| `items` | `PickerItemData[]` | - | `{ value, label }` pairs used to show the selected label; collected from children when omitted. |
-| `size` | `"sm" \| "default"` | `"default"` | Trigger height: `sm` or `default`. |
-| `disabled` | `boolean` | - | Prevents opening the list. |
-| `invalid` | `boolean` | - | Applies the error style to the trigger. |
-| `className` | `string` | - | Classes merged onto the root element. |
-| `accessibilityLabel` | `string` | - | Label for the trigger. |
-| `accessibilityLabelledBy` | `string` | - | Links the trigger to a visible label. |
-| `children` | `React.ReactNode` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### PickerGroup
-
-Groups options under an optional label.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `string` | - | Heading shown above the group. |
-| `children` | `React.ReactNode` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### PickerItem
-
-One selectable option.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The value this option selects. |
-| `disabled` | `boolean` | - | Prevents choosing this option. |
-| `children` | `React.ReactNode` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### OptionPicker
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selection` | `Binding<Value?>` | - | The selected value. |
-| `placeholder` | `LocalizedStringKey` | `"Select"` | Text shown when no value is selected. |
-| `size` | `Size` | `.default` | Trigger height: `sm` or `default`. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### OptionPickerItem
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `value` | `Value` | - | The selected value when controlled. |
-| `verbatim` | `String` | - | The title text. |
-
-Overloads: `init(_:value:)`, `init(verbatim:value:)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### OptionPickerGroup
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ label` | `LocalizedStringKey?` | `nil` | Heading shown above the group. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### OptionPickerSeparator
-
-Takes no parameters.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### PickerItemData
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | - |
-| `label` | `String` | - | - |
-| `enabled` | `Boolean` | `true` | - |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Picker
-
-The root that renders the trigger and the options popup.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String?` | - | The selected value when controlled. |
-| `onValueChange` | `(String) -> Unit` | - | Called with the new value when an option is chosen. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `items` | `List<PickerItemData>` | `emptyList()` | - |
-| `placeholder` | `String` | `""` | Text shown when no value is selected. |
-| `size` | `SelectSize` | `SelectSize.Default` | Trigger height: `sm` or `default`. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `invalid` | `Boolean?` | `null` | Applies the error style to the trigger. |
-| `content` | `(@Composable ColumnScope.() -> Unit)?` | `null` | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### PickerGroup
-
-Groups options under an optional label.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `String?` | `null` | Heading shown above the group. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### PickerItem
-
-One selectable option.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | The value this option selects. |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### PickerSeparator
-
-Takes no parameters.
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
 
 - Give the picker an `accessibilityLabel` or `accessibilityLabelledBy`, since the trigger shows only the value.
 
-## Notes
+</Only>
 
-- The popup uses `bg-popover` with a subtle border that is stronger in dark mode.
-- The popup fades in and out, and respects the system reduce motion setting.
-- On iOS the popup renders in a full-window overlay so it appears above native screens.
+## API Reference
+
+<Only platform="rn">
+
+### Picker
+
+The root that renders the trigger and the options popup.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | - |
+| `defaultValue` | `string` | - |
+| `onValueChange` | `(value: string) => void` | - |
+| `placeholder` | `string` | - |
+| `items` | `PickerItemData[]` | - |
+| `size` | `"sm" \| "default"` | `"default"` |
+| `disabled` | `boolean` | - |
+| `invalid` | `boolean` | - |
+| `className` | `string` | - |
+| `accessibilityLabel` | `string` | - |
+| `accessibilityLabelledBy` | `string` | - |
+| `children` | `React.ReactNode` | - |
+
+Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. `placeholder` shows while nothing is selected. List `PickerItem`s as children, optionally inside `PickerGroup`s separated by `PickerSeparator`. The picker collects the items from its children to show the selected label, or you can pass `items` directly as `{ value, label }` pairs.
+
+The popup fades in and out and respects the system reduce motion setting. On iOS it renders in a full-window overlay so it appears above native screens.
+
+### PickerGroup
+
+Groups options under an optional label.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `label` | `string` | - |
+| `children` | `React.ReactNode` | - |
+
+### PickerItem
+
+One selectable option.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | Required |
+| `disabled` | `boolean` | - |
+| `children` | `React.ReactNode` | - |
+
+</Only>
+
+<Only platform="swift">
+
+### OptionPicker
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `selection` | `Binding<Value?>` | - |
+| `placeholder` | `LocalizedStringKey` | `"Select"` |
+| `size` | `Size` | `.default` |
+| `content` | `() -> Content` | - |
+
+### OptionPickerItem
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `value` | `Value` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:value:)`, `init(verbatim:value:)`.
+
+### OptionPickerGroup
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ label` | `LocalizedStringKey?` | `nil` |
+| `content` | `() -> Content` | - |
+
+### OptionPickerSeparator
+
+Takes no parameters.
+
+</Only>
+
+<Only platform="kotlin">
+
+### PickerItemData
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `label` | `String` | - |
+| `enabled` | `Boolean` | `true` |
+
+### Picker
+
+The root that renders the trigger and the options popup.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String?` | - |
+| `onValueChange` | `(String) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `items` | `List<PickerItemData>` | `emptyList()` |
+| `placeholder` | `String` | `""` |
+| `size` | `SelectSize` | `SelectSize.Default` |
+| `enabled` | `Boolean` | `true` |
+| `invalid` | `Boolean?` | `null` |
+| `content` | `(@Composable ColumnScope.() -> Unit)?` | `null` |
+
+### PickerGroup
+
+Groups options under an optional label.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `label` | `String?` | `null` |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### PickerItem
+
+One selectable option.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `true` |
+
+### PickerSeparator
+
+Takes no parameters.
 
 </Only>
 

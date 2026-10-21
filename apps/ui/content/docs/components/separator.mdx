@@ -15,7 +15,9 @@ Use it between groups of content or between inline items. Inside menus and selec
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/separator
@@ -27,19 +29,25 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add separator
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react
 ```
 
-2. Copy the source into `components/ui/separator.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/separator.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -66,25 +74,25 @@ import { Separator } from "@/components/ui/separator"
 </div>
 ```
 
-`orientation` defaults to `horizontal`. Set `orientation="vertical"` inside a flex row; the line stretches to the row's height, so give the row a height.
-
 ## Examples
 
 ### Horizontal
 
-Divides two stacked lines of text.
+The default `horizontal` orientation divides two stacked lines of text.
 
 <ComponentPreview name="separator-horizontal" />
 
 ### Vertical
 
-Divides inline links in a row.
+Set `orientation="vertical"` inside a flex row to divide inline links. The line stretches to the row's height, so give the row a height.
 
 <ComponentPreview name="separator-vertical" />
 
-## API Reference
+## Accessibility
 
-<ApiPart index={1}>
+- Renders with the `separator` role and an `aria-orientation` that matches `orientation`.
+
+## API Reference
 
 ### Separator
 
@@ -92,16 +100,7 @@ Draws the dividing line.
 
 Also accepts the props of the primitive part it wraps.
 
-</ApiPart>
-
-## Accessibility
-
-- Renders with the `separator` role and an `aria-orientation` that matches `orientation`.
-
-## Notes
-
-- Uses `data-slot="separator"`, and the primitive's orientation attributes set its size.
-- The color comes from the `bg-border` token.
+`orientation` defaults to `horizontal`. The separator sets `data-slot="separator"`, and the primitive's orientation attributes set its size.
 
 </Only>
 
@@ -116,6 +115,10 @@ Also accepts the props of the primitive part it wraps.
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -159,7 +162,9 @@ npx @esuiss/ui@latest add separator --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -167,7 +172,7 @@ npx @esuiss/ui@latest add separator --platform kotlin
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -185,17 +190,17 @@ npx expo install cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/separator.tsx`:
+3. Copy and paste the following code into `components/ui/separator.tsx`:
 
 <ComponentSource path="uniwind/components/ui/separator.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -213,11 +218,11 @@ npx expo install cn
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/separator.tsx`:
+3. Copy and paste the following code into `components/ui/separator.tsx`:
 
 <ComponentSource path="nativewind/components/ui/separator.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -235,11 +240,11 @@ npx expo install cn
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-2. Copy the source into `components/ui/separator.tsx`:
+2. Copy and paste the following code into `components/ui/separator.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/separator.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -299,6 +304,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -452,12 +461,6 @@ fun SeparatorDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-Use the default `horizontal` orientation between stacked blocks, and `orientation="vertical"` between items in a row. Add spacing with `className`, such as `my-4`.
-
-</Only>
-
 ## Examples
 
 ### Horizontal
@@ -472,63 +475,50 @@ A vertical separator between two items in a row.
 
 <NativeExample name="separator-vertical" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Separator
-
-Also accepts the props of `React.ComponentProps<typeof SeparatorPrimitive>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### Separator
-
-Draws the dividing line.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ orientation` | `Axis` | `.horizontal` | - |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Separator
-
-Draws the dividing line.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `orientation` | `Orientation` | `Orientation.Horizontal` | - |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
 
 - The separator is decorative and hidden from VoiceOver and TalkBack.
 
-## Notes
+</Only>
 
-- Uses the `bg-border` token.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Separator
+
+Draws the dividing line.
+
+Also accepts the props of `React.ComponentProps<typeof SeparatorPrimitive>`.
+
+Use the default `horizontal` orientation between stacked blocks, and `orientation="vertical"` between items in a row. Add spacing with `className`, such as `my-4`.
+
+</Only>
+
+<Only platform="swift">
+
+### Separator
+
+Draws the dividing line.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ orientation` | `Axis` | `.horizontal` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### Separator
+
+Draws the dividing line.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `orientation` | `Orientation` | `Orientation.Horizontal` |
 
 </Only>
 

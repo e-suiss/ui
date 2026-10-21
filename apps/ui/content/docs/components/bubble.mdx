@@ -15,7 +15,9 @@ Align bubbles to the `start` or `end` of the conversation. The tail appears only
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/bubble
@@ -27,24 +29,35 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add bubble
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react class-variance-authority
 ```
 
-2. Copy the source into `components/ui/bubble.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/bubble.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from "@/components/ui/bubble"
+import {
+  Bubble,
+  BubbleContent,
+  BubbleGroup,
+  BubbleReactions,
+} from "@/components/ui/bubble"
 ```
 
 ```tsx
@@ -55,70 +68,52 @@ import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from "@/component
 </div>
 ```
 
-Set `align="end"` for messages sent by the current user and leave the default `start` for incoming messages.
+## Composition
 
-`BubbleContent` renders a `div` by default. Render it as a `button` or `a` for tappable bubbles, such as suggested replies; these get hover and focus styles.
+Use the following composition to build a `Bubble`:
 
-<OnlyBase base="base">
-
-Use the `render` prop of `BubbleContent` to change its element.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Set `asChild` on `BubbleContent` and pass the `button` or `a` as its child.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Pass a `render` function to `BubbleContent` that returns the `button` or `a` with the props it receives.
-
-</OnlyBase>
-
-`BubbleReactions` defaults to the bottom-end corner. The bubble adds margin on that side so reactions do not overlap neighboring bubbles.
+```text
+Bubble
+└── BubbleContent
+BubbleGroup
+└── Bubble
+    ├── BubbleContent
+    └── BubbleReactions
+```
 
 ## Examples
 
 ### Variants
 
-Shows every variant, from `default` to `destructive`.
+Use the `variant` prop to set the background and text color. This shows every variant, from `default` to `destructive`.
 
 <ComponentPreview name="bubble-variants" />
 
 ### Conversation
 
-An exchange of incoming `muted` and outgoing `end`-aligned bubbles.
+An exchange of incoming `muted` and outgoing bubbles. Set `align="end"` for messages sent by the current user and leave the default `start` for incoming messages.
 
 <ComponentPreview name="bubble-conversation" />
 
 ### With reactions
 
-Pins reactions to different corners with `side` and `align`.
+Pin reactions to different corners with the `side` and `align` props of `BubbleReactions`. They default to the bottom-end corner.
 
 <ComponentPreview name="bubble-with-reactions" />
 
 ### Interactive
 
-Renders the content as a `button`.
+Render `BubbleContent` as a `button` or `a` for tappable bubbles, such as suggested replies; these get hover and focus styles.
 
 <ComponentPreview name="bubble-interactive" />
 
+## Accessibility
+
+- Bubbles are static content by default and contribute no focusable elements.
+- When `BubbleContent` renders a `button` or `a`, it is in the tab order and shows a focus ring.
+- Reactions are plain content; if they are emoji, consider adding text that screen readers can announce.
+
 ## API Reference
-
-<Anatomy>
-
-- [Bubble](#bubble)
-  - [BubbleContent](#bubblecontent)
-- [BubbleGroup](#bubblegroup)
-  - [Bubble](#bubble)
-    - [BubbleContent](#bubblecontent)
-    - [BubbleReactions](#bubblereactions)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### BubbleGroup
 
@@ -126,24 +121,18 @@ A vertical stack of bubbles.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### Bubble
 
 The positioned wrapper that sets variant and alignment.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "secondary" \| "muted" \| "tinted" \| "outline" \| "ghost" \| "destructive"` | `"default"` | Background and text color: `default` (primary), `secondary`, `muted`, `tinted`, `outline`, `ghost` (no background or padding) or `destructive`. |
-| `align` | `"start" \| "end"` | `"start"` | Which side of the conversation the bubble sits on: `start` or `end`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "secondary" \| "muted" \| "tinted" \| "outline" \| "ghost" \| "destructive"` | `"default"` |
+| `align` | `"start" \| "end"` | `"start"` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={3}>
+The `ghost` variant has no background or padding. The tail appears only on the last bubble in a run with the same alignment, and never on `outline` or `ghost`. Bubbles are capped at 80% of the container width, except `ghost`. Bubbles also align to `end` when inside a `message` slot with `data-align="end"`. The background is set through the `--bubble-bg` custom property; set `--bubble-surface` when bubbles sit on a surface other than `--background`, so the tail and reaction ring blend in.
 
 ### BubbleContent
 
@@ -157,9 +146,9 @@ Also accepts the props of `useRender.ComponentProps<"div">`.
 
 <OnlyBase base="radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element instead of a `div`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
@@ -167,43 +156,46 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | — | Renders your own element with the bubble's props. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | — |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
 </OnlyBase>
 
-</ApiPart>
+<OnlyBase base="base">
 
-<ApiPart index={4}>
+Renders a `div` by default. Use the `render` prop to render it as a `button` or `a`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Renders a `div` by default. Set `asChild` and pass a `button` or `a` as its child to render that element instead.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Renders a `div` by default. Pass a `render` function that returns a `button` or `a` with the props it receives.
+
+</OnlyBase>
 
 ### BubbleReactions
 
 A small pill for reactions, overlapping the bubble's edge.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `align` | `"start" \| "end"` | `"end"` | Horizontal position along the bubble edge: `start` or `end`. |
-| `side` | `"top" \| "bottom"` | `"bottom"` | Which edge of the bubble the reactions overlap: `top` or `bottom`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `align` | `"start" \| "end"` | `"end"` |
+| `side` | `"top" \| "bottom"` | `"bottom"` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
+`side` picks the edge the pill overlaps and `align` its position along that edge. The bubble adds margin on that side so reactions do not overlap neighboring bubbles.
 
-## Accessibility
-
-- Bubbles are static content by default and contribute no focusable elements.
-- When `BubbleContent` renders a `button` or `a`, it is in the tab order and shows a focus ring.
-- Reactions are plain content; if they are emoji, consider adding text that screen readers can announce.
-
-## Notes
-
-- Styling hooks: `data-slot="bubble"`, `"bubble-content"`, `"bubble-group"` and `"bubble-reactions"`, plus `data-variant` and `data-align` on the bubble and `data-side` and `data-align` on reactions.
-- The background is set through the `--bubble-bg` custom property. Set `--bubble-surface` when bubbles sit on a surface other than `--background`, so the tail and reaction ring blend in.
-- Bubbles are capped at 80% of the container width, except the `ghost` variant.
-- Bubbles also align to `end` when inside a `message` slot with `data-align="end"`.
+Each part sets a `data-slot`, such as `bubble-content`, for styling. The bubble also sets `data-variant` and `data-align`, and reactions set `data-side` and `data-align`.
 
 </Only>
 
@@ -220,6 +212,10 @@ Also accepts the props of `React.ComponentProps<"div">`.
 `BubbleGroup` stacks messages and shows the tail only on the last bubble of each run from the same side, so consecutive messages read as one block. `BubbleReactions` pins a small reaction pill to the top or bottom edge of a bubble.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -269,7 +265,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -277,7 +275,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -295,17 +293,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/bubble.tsx`:
+4. Copy and paste the following code into `components/ui/bubble.tsx`:
 
 <ComponentSource path="uniwind/components/ui/bubble.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -323,17 +321,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/bubble.tsx`:
+4. Copy and paste the following code into `components/ui/bubble.tsx`:
 
 <ComponentSource path="nativewind/components/ui/bubble.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-svg
@@ -351,11 +349,11 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/bubble.tsx`:
+4. Copy and paste the following code into `components/ui/bubble.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/bubble.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -438,6 +436,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -487,21 +489,17 @@ fun BubbleDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-Wrap each message in `Bubble` and put its text in `BubbleContent`; plain strings are wrapped in `Text`. Set `align="end"` for messages from the current user, or provide a default through `BubbleAlignContext`.
-
-`BubbleContent` becomes a `Pressable` when you pass `onPress`, `onLongPress` or `render`, and it fades to 80% opacity while pressed. Use `render` to attach it to a trigger such as a context menu.
-
-</Only>
-
-`BubbleReactions` takes `side` (`top` or `bottom`) and `align` (`start` or `end`), and the bubble adds margin so the pill does not overlap its neighbors.
-
 ## Examples
 
 ### Variants
 
 All seven variants.
+
+<Only platform="rn">
+
+Use the `variant` prop to set the colors.
+
+</Only>
 
 <NativeExample name="bubble-variants" />
 
@@ -509,13 +507,19 @@ All seven variants.
 
 A `BubbleGroup` with messages from both sides and merged tails.
 
+<Only platform="rn">
+
+Set `align="end"` for messages from the current user.
+
+</Only>
+
 <NativeExample name="bubble-conversation" />
 
 ### With reactions
 
 <Only platform="rn">
 
-Reaction pills on the bottom and top edges.
+Reaction pills on the bottom and top edges, placed with the `side` and `align` props of `BubbleReactions`.
 
 </Only>
 
@@ -541,249 +545,13 @@ A pressable `outline` bubble with `onClick`.
 
 A bubble that opens a context menu on long press.
 
-<NativeExample name="bubble-long-press-actions" />
-
-## API Reference
-
 <Only platform="rn">
 
-<ApiPart index={1}>
-
-### BubbleGroup
-
-Column that decides which bubbles show a tail.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Bubble
-
-One message, aligned to the start or end.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `BubbleVariant` | `"default"` | `default`, `secondary`, `muted`, `tinted`, `outline`, `ghost` or `destructive`. |
-| `align` | `BubbleAlign` | - | `start` or `end`. Defaults to `start`. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### BubbleContent
-
-The bubble itself, optionally pressable.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `RenderProp<Record<string, unknown>, Record<string, never>>` | - | Element to render instead of the default view or pressable. |
-
-Also accepts the props of `React.ComponentProps<typeof Pressable>`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### BubbleReactions
-
-Reaction pill on the edge of a bubble.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `align` | `BubbleAlign` | `"end"` | `start` or `end` along the bubble. Defaults to `end`. |
-| `side` | `"top" \| "bottom"` | `"bottom"` | `top` or `bottom`. Defaults to `bottom`. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
+Use `render` on `BubbleContent` to attach it to the trigger.
 
 </Only>
 
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### BubbleVariant
-
-Values: `.default`, `.secondary`, `.muted`, `.tinted`, `.outline`, `.ghost`, `.destructive`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### BubbleAlign
-
-Values: `.start`, `.end`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### BubbleReactionsSide
-
-Values: `.top`, `.bottom`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### BubbleGroup
-
-Column that decides which bubbles show a tail.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### Bubble
-
-One message, aligned to the start or end.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `Variant`: `.default` \| `.secondary` \| `.muted` \| `.tinted` \| `.outline` \| `.ghost` \| `.destructive` | `.default` | Background and text color: `default` (primary), `secondary`, `muted`, `tinted`, `outline`, `ghost` (no background or padding) or `destructive`. |
-| `align` | `Align`: `.start` \| `.end` | `.start` | Which side of the conversation the bubble sits on: `start` or `end`. |
-| `onLongPress` | `(() -> Void)?` | `nil` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### BubbleContent
-
-The bubble itself, optionally pressable.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-| `action` | `() -> Void` | - | Called when it is tapped. |
-| `_ text` | `LocalizedStringKey` | - | The text. |
-| `verbatim` | `String` | - | The text. |
-
-Overloads: `init(content:)`, `init(action:content:)`, `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### BubbleReactions
-
-A small pill for reactions, overlapping the bubble's edge.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `BubbleReactionsSide`: `.top` \| `.bottom` | `.bottom` | Which edge of the bubble the reactions overlap: `top` or `bottom`. |
-| `align` | `BubbleAlign`: `.start` \| `.end` | `.end` | `start` or `end` along the bubble. |
-| `content` | `() -> Content` | - | The content. |
-| `_ text` | `LocalizedStringKey` | - | The text. |
-| `verbatim` | `String` | - | The text. |
-
-Overloads: `init(side:align:content:)`, `init(_:side:align:)`, `init(verbatim:side:align:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### BubbleVariant
-
-Values: `Default`, `Secondary`, `Muted`, `Tinted`, `Outline`, `Ghost`, `Destructive`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### BubbleAlign
-
-Values: `Start`, `End`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### BubbleReactionsSide
-
-Values: `Top`, `Bottom`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### BubbleGroup
-
-Column that decides which bubbles show a tail.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### Bubble
-
-One message, aligned to the start or end.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `BubbleVariant`: `Default` \| `Secondary` \| `Muted` \| `Tinted` \| `Outline` \| `Ghost` \| `Destructive` | `BubbleVariant.Default` | Background and text color: `default` (primary), `secondary`, `muted`, `tinted`, `outline`, `ghost` (no background or padding) or `destructive`. |
-| `align` | `BubbleAlign`: `Start` \| `End` | `LocalBubbleAlign.current` | Which side of the conversation the bubble sits on: `start` or `end`. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### BubbleContent
-
-The bubble itself, optionally pressable.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `onClick` | `(() -> Unit)?` | `null` | Called when it is tapped. |
-| `onLongPress` | `(() -> Unit)?` | `null` | - |
-| `content` | `@Composable () -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `BubbleContent(content)`, `BubbleContent(text)`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### BubbleReactions
-
-A small pill for reactions, overlapping the bubble's edge.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `side` | `BubbleReactionsSide`: `Top` \| `Bottom` | `BubbleReactionsSide.Bottom` | Which edge of the bubble the reactions overlap: `top` or `bottom`. |
-| `align` | `BubbleAlign`: `Start` \| `End` | `BubbleAlign.End` | `start` or `end` along the bubble. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `BubbleReactions(content)`, `BubbleReactions(text)`.
-
-</ApiPart>
-
-</Only>
+<NativeExample name="bubble-long-press-actions" />
 
 <Only platform="rn">
 
@@ -793,10 +561,181 @@ Overloads: `BubbleReactions(content)`, `BubbleReactions(text)`.
 - The tail is hidden from VoiceOver and TalkBack.
 - Give long-press bubbles an `accessibilityLabel` that says who sent the message.
 
-## Notes
+</Only>
 
-- The tail mirrors itself for `end` alignment and in right-to-left layouts.
-- Uses `bg-primary`, `bg-secondary`, `bg-muted` and `bg-destructive/10 dark:bg-destructive/20` tokens, with `opacity-80` while pressed; light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### BubbleGroup
+
+Column that decides which bubbles show a tail.
+
+Also accepts the props of `ViewProps`.
+
+### Bubble
+
+One message, aligned to the start or end.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `BubbleVariant` | `"default"` |
+| `align` | `BubbleAlign` | - |
+
+Also accepts the props of `ViewProps`.
+
+`align` is `start` or `end` and defaults to `start`; you can also provide a default through `BubbleAlignContext`. The tail mirrors itself for `end` alignment and in right-to-left layouts. Colors follow the system appearance.
+
+### BubbleContent
+
+The bubble itself, optionally pressable.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `RenderProp<Record<string, unknown>, Record<string, never>>` | - |
+
+Also accepts the props of `React.ComponentProps<typeof Pressable>`, `React.RefAttributes<View>`.
+
+Plain strings are wrapped in `Text`. `BubbleContent` becomes a `Pressable` when you pass `onPress`, `onLongPress` or `render`, and it fades to 80% opacity while pressed. `render` sets the element to render instead of the default view or pressable.
+
+### BubbleReactions
+
+Reaction pill on the edge of a bubble.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `align` | `BubbleAlign` | `"end"` |
+| `side` | `"top" \| "bottom"` | `"bottom"` |
+
+Also accepts the props of `ViewProps`.
+
+The bubble adds margin on the reaction side so the pill does not overlap its neighbors.
+
+</Only>
+
+<Only platform="swift">
+
+### BubbleVariant
+
+Values: `.default`, `.secondary`, `.muted`, `.tinted`, `.outline`, `.ghost`, `.destructive`.
+
+### BubbleAlign
+
+Values: `.start`, `.end`.
+
+### BubbleReactionsSide
+
+Values: `.top`, `.bottom`.
+
+### BubbleGroup
+
+Column that decides which bubbles show a tail.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### Bubble
+
+One message, aligned to the start or end.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `variant` | `Variant`: `.default` \| `.secondary` \| `.muted` \| `.tinted` \| `.outline` \| `.ghost` \| `.destructive` | `.default` |
+| `align` | `Align`: `.start` \| `.end` | `.start` |
+| `onLongPress` | `(() -> Void)?` | `nil` |
+| `content` | `() -> Content` | - |
+
+### BubbleContent
+
+The bubble itself, optionally pressable.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+| `action` | `() -> Void` | - |
+| `_ text` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(content:)`, `init(action:content:)`, `init(_:)`, `init(verbatim:)`.
+
+### BubbleReactions
+
+A small pill for reactions, overlapping the bubble's edge.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `side` | `BubbleReactionsSide`: `.top` \| `.bottom` | `.bottom` |
+| `align` | `BubbleAlign`: `.start` \| `.end` | `.end` |
+| `content` | `() -> Content` | - |
+| `_ text` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(side:align:content:)`, `init(_:side:align:)`, `init(verbatim:side:align:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### BubbleVariant
+
+Values: `Default`, `Secondary`, `Muted`, `Tinted`, `Outline`, `Ghost`, `Destructive`.
+
+### BubbleAlign
+
+Values: `Start`, `End`.
+
+### BubbleReactionsSide
+
+Values: `Top`, `Bottom`.
+
+### BubbleGroup
+
+Column that decides which bubbles show a tail.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
+
+### Bubble
+
+One message, aligned to the start or end.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `BubbleVariant`: `Default` \| `Secondary` \| `Muted` \| `Tinted` \| `Outline` \| `Ghost` \| `Destructive` | `BubbleVariant.Default` |
+| `align` | `BubbleAlign`: `Start` \| `End` | `LocalBubbleAlign.current` |
+| `content` | `@Composable () -> Unit` | - |
+
+### BubbleContent
+
+The bubble itself, optionally pressable.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `onClick` | `(() -> Unit)?` | `null` |
+| `onLongPress` | `(() -> Unit)?` | `null` |
+| `content` | `@Composable () -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `BubbleContent(content)`, `BubbleContent(text)`.
+
+### BubbleReactions
+
+A small pill for reactions, overlapping the bubble's edge.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `side` | `BubbleReactionsSide`: `Top` \| `Bottom` | `BubbleReactionsSide.Bottom` |
+| `align` | `BubbleAlign`: `Start` \| `End` | `BubbleAlign.End` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `BubbleReactions(content)`, `BubbleReactions(text)`.
 
 </Only>
 

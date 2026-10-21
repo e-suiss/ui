@@ -15,7 +15,9 @@ The spinner stays visible for at least 600 ms so fast refreshes still read clear
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/pull-to-refresh
@@ -27,17 +29,23 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add interactions pull-to-refresh
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
 2. Add the pieces it builds on: [Spinner](/docs/components/spinner).
 
-3. Copy the source into `components/interactions/pull-to-refresh.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/interactions/pull-to-refresh.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -55,10 +63,6 @@ import { PullToRefresh } from "@/components/interactions/pull-to-refresh"
 </PullToRefresh>
 ```
 
-- Give `PullToRefresh` a bounded height so its content scrolls inside it.
-- `onRefresh` can return a promise; the container stays in the refreshing state until it settles, whether it resolves or rejects.
-- Pulls only start at the top of the scroll position and are ignored while a refresh is in progress.
-
 ## Examples
 
 ### Empty list
@@ -67,33 +71,27 @@ An empty inbox refreshes from a trackpad pull and fills in with the first messag
 
 <ComponentPreview name="pull-to-refresh-empty-list" responsive />
 
-## API Reference
-
-<ApiPart index={1}>
-
-### PullToRefresh
-
-The scroll container that tracks the pull and shows the refresh indicator.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onRefresh` | `() => Promise<unknown> \| unknown` | Required | Called when the user releases past the threshold; may return a promise. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
 ## Accessibility
 
 - The container sets `aria-busy` while refreshing.
 - The spinner is labelled `Refreshing`; the pull indicator is `aria-hidden`.
 - Pulling requires touch or a scroll gesture, so offer another way to refresh where it matters, such as a button.
 
-## Notes
+## API Reference
 
-- The root exposes `data-slot="pull-to-refresh"` and `data-phase` (`idle`, `pulling`, `refreshing`, `settling`). The indicator and content use `pull-to-refresh-indicator` and `pull-to-refresh-content`.
-- The `--pull` and `--pull-progress` custom properties track the pull distance and progress toward the threshold.
-- Transitions are disabled under `prefers-reduced-motion`.
+### PullToRefresh
+
+The scroll container that tracks the pull and shows the refresh indicator.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `onRefresh` | `() => Promise<unknown> \| unknown` | Required |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Give `PullToRefresh` a bounded height so its content scrolls inside it. `onRefresh` is called when the user releases past the threshold and can return a promise; the container stays in the refreshing state until it settles, whether it resolves or rejects. Pulls only start at the top of the scroll position and are ignored while a refresh is in progress.
+
+The root sets `data-slot="pull-to-refresh"` and `data-phase` (`idle`, `pulling`, `refreshing`, `settling`). The `--pull` and `--pull-progress` custom properties track the pull distance and progress toward the threshold. Transitions are disabled under `prefers-reduced-motion`.
 
 </Only>
 
@@ -110,6 +108,10 @@ The spinner stays for at least 600 ms, even when `onRefresh` resolves sooner, so
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -153,7 +155,9 @@ npx @esuiss/ui@latest add interactions pull-to-refresh --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -161,7 +165,7 @@ npx @esuiss/ui@latest add interactions pull-to-refresh --platform kotlin
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn uniwind
@@ -171,17 +175,17 @@ npx expo install cn uniwind
 
 <ComponentSource path="uniwind/components/primitives/haptics.tsx" plain />
 
-3. Copy the source into `components/interactions/pull-to-refresh.tsx`:
+3. Copy and paste the following code into `components/interactions/pull-to-refresh.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/pull-to-refresh.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn nativewind
@@ -191,11 +195,11 @@ npx expo install cn nativewind
 
 <ComponentSource path="nativewind/components/primitives/haptics.tsx" plain />
 
-3. Copy the source into `components/interactions/pull-to-refresh.tsx`:
+3. Copy and paste the following code into `components/interactions/pull-to-refresh.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/pull-to-refresh.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -205,11 +209,11 @@ npx expo install cn nativewind
 
 <ComponentSource path="stylesheet/components/primitives/haptics.tsx" plain />
 
-2. Copy the source into `components/interactions/pull-to-refresh.tsx`:
+2. Copy and paste the following code into `components/interactions/pull-to-refresh.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/pull-to-refresh.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -279,6 +283,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -502,14 +510,6 @@ fun PullToRefreshFeed() {
 
 </Only>
 
-<Only platform="rn">
-
-Pass an `onRefresh` that returns a promise, or nothing for synchronous work. All other `ScrollView` props pass through to `PullToRefresh`.
-
-For lists, pass `<PullToRefreshControl onRefresh={...} />` as the list's `refreshControl`. It manages its own refreshing state; pass `refreshing` to override it. Other `RefreshControl` props pass through.
-
-</Only>
-
 ## Examples
 
 ### With flat list
@@ -522,99 +522,6 @@ Uses `PullToRefreshControl` as the `refreshControl` of a `FlatList`.
 
 <NativeExample name="pull-to-refresh-with-flat-list" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### PullToRefreshControl
-
-A `RefreshControl` for any list or scroll view.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onRefresh` | `RefreshHandler` | Required | Called when the user pulls to refresh; the spinner waits for the returned promise. |
-| `refreshing` | `boolean` | - | Overrides the internal refreshing state. |
-
-Also accepts the props of `RefreshControlProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### PullToRefresh
-
-A `ScrollView` with built-in pull to refresh.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onRefresh` | `RefreshHandler` | Required | Called when the user pulls to refresh; the spinner waits for the returned promise. |
-
-Also accepts the props of `React.ComponentProps<typeof ScrollView>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### PullToRefresh
-
-A `ScrollView` with built-in pull to refresh.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onRefresh` | `() async -> Void` | - | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### .pullToRefresh
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ action` | `() async -> Void` | - | Called when it is tapped. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### PullToRefreshPhase
-
-Values: `Idle`, `Pulling`, `Refreshing`, `Settling`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### PullToRefresh
-
-A `ScrollView` with built-in pull to refresh.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onRefresh` | `suspend () -> Unit` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `refreshLabel` | `String` | `"Refresh"` | - |
-| `content` | `@Composable () -> Unit` | - | The content. |
-| `refreshing` | `Boolean` | - | Overrides the internal refreshing state. |
-
-Overloads: `PullToRefresh(onRefresh, content)`, `PullToRefresh(refreshing, onRefresh, content)`.
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -622,10 +529,78 @@ Overloads: `PullToRefresh(onRefresh, content)`, `PullToRefresh(refreshing, onRef
 - `PullToRefresh` exposes a `busy` state while refreshing.
 - `PullToRefreshControl` is labelled `Refreshing` while active.
 
-## Notes
+</Only>
 
-- The haptic plays only if the app provides an adapter through `HapticsProvider`.
-- The spinner uses the `muted-foreground` color, and on Android its background uses `card`, so both follow light and dark mode.
+## API Reference
+
+<Only platform="rn">
+
+### PullToRefreshControl
+
+A `RefreshControl` for any list or scroll view.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `onRefresh` | `RefreshHandler` | Required |
+| `refreshing` | `boolean` | - |
+
+Also accepts the props of `RefreshControlProps`.
+
+For lists, pass `<PullToRefreshControl onRefresh={...} />` as the list's `refreshControl`. It manages its own refreshing state; pass `refreshing` to override it. The spinner waits for the promise `onRefresh` returns.
+
+### PullToRefresh
+
+A `ScrollView` with built-in pull to refresh.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `onRefresh` | `RefreshHandler` | Required |
+
+Also accepts the props of `React.ComponentProps<typeof ScrollView>`.
+
+Pass an `onRefresh` that returns a promise, or nothing for synchronous work; the spinner waits for the promise. The haptic plays only if the app provides an adapter through `HapticsProvider`.
+
+</Only>
+
+<Only platform="swift">
+
+### PullToRefresh
+
+A `ScrollView` with built-in pull to refresh.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `onRefresh` | `() async -> Void` | - |
+| `content` | `() -> Content` | - |
+
+### .pullToRefresh
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ action` | `() async -> Void` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### PullToRefreshPhase
+
+Values: `Idle`, `Pulling`, `Refreshing`, `Settling`.
+
+### PullToRefresh
+
+A `ScrollView` with built-in pull to refresh.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `onRefresh` | `suspend () -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `true` |
+| `refreshLabel` | `String` | `"Refresh"` |
+| `content` | `@Composable () -> Unit` | - |
+| `refreshing` | `Boolean` | - |
+
+Overloads: `PullToRefresh(onRefresh, content)`, `PullToRefresh(refreshing, onRefresh, content)`.
 
 </Only>
 

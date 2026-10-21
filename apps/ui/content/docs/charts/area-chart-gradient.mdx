@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 Two overlapping series whose fills fade to transparent toward the baseline, so the lower series stays visible through the upper one. Reach for it over the flat-filled default when you compare two series that cross each other.
 
+Replace `chartData` and rename the two series keys in the data, the areas and `chartConfig`. Each series needs its own gradient in the `defs` block, and the top stop's `stopOpacity` sets the strength of the fill. Areas are drawn in source order, so the last `Area` sits on top. Focus the chart and use the arrow keys to move the tooltip between months.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/area-chart-gradient
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts area-chart-gradient
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/area-chart-gradient.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/area-chart-gradient.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { AreaChartGradient } from "@/components/charts/area-chart-gradient"
 ```tsx
 <AreaChartGradient />
 ```
-
-Replace `chartData` and rename the two series keys consistently across the data, the areas and `chartConfig`. Each series needs its own gradient in the `defs` block, so add or rename one when you add a series. Raise or lower the top stop's `stopOpacity` to make the fill stronger or subtler.
-
-## Notes
-
-The series are drawn in source order, so the last `Area` sits on top. Focus the plot and use the arrow keys to move the tooltip between months.
 
 </Only>
 
@@ -73,7 +77,17 @@ The series are drawn in source order, so the last `Area` sits on top. Focus the 
 
 Two series, desktop and mobile, drawn as natural curves on the same axis. Both use a shared gradient fill that fades out toward the baseline, so the overlap stays readable. A month axis, a dashed grid and a tooltip listing both values complete the chart.
 
+<Only platform="rn">
+
+Replace `chartData` with your records and change each `dataKey` to match your fields. Add or rename series in `chartConfig`, and change the `fade` stops to make the gradient stronger or lighter. The component takes no props.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -123,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -133,11 +149,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/area-chart-gradient.tsx`:
+2. Copy and paste the following code into `components/charts/area-chart-gradient.tsx`:
 
 <ComponentSource path="uniwind/components/charts/area-chart-gradient.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -145,11 +161,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/area-chart-gradient.tsx`:
+2. Copy and paste the following code into `components/charts/area-chart-gradient.tsx`:
 
 <ComponentSource path="nativewind/components/charts/area-chart-gradient.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -157,11 +173,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/area-chart-gradient.tsx`:
+2. Copy and paste the following code into `components/charts/area-chart-gradient.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/area-chart-gradient.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -244,6 +260,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -283,12 +303,6 @@ fun AreaGradientExample() {
     AreaChartGradient()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your records and change each `dataKey` to match your fields. Add or rename series in `chartConfig`, and change the `fade` stops to make the gradient stronger or lighter. The component takes no props.
 
 </Only>
 

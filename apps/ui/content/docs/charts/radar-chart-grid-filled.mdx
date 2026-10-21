@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A borderless radar shape over shaded circular bands, separated by lines in the card's background color (`muted`). Choose it for a quieter, more graphic look where the grid reads as tinted rings rather than lines.
 
+Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. The `fill` and opacity on `PolarGrid` set the band shading, and the opacity on `Radar` the strength of the shape. The gaps between bands use the card's background color, so place the chart on that surface or change the grid stroke to match.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/radar-chart-grid-filled
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts radar-chart-grid-filled
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/radar-chart-grid-filled.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/radar-chart-grid-filled.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { RadarChartGridFilled } from "@/components/charts/radar-chart-grid-fille
 ```tsx
 <RadarChartGridFilled />
 ```
-
-Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Adjust the band shading through the `fill` and opacity on `PolarGrid`, and the shape's strength through the opacity on `Radar`.
-
-## Notes
-
-The gaps between bands use the card's background color, so place this chart on that same surface or update the grid stroke to match.
 
 </Only>
 
@@ -73,7 +77,17 @@ The gaps between bands use the card's background color, so place this chart on t
 
 A `RadarChart` whose circular `PolarGrid` is filled with the `secondary` color and separated by strokes in the card color. The single `Radar` series has no stroke. `chartData` has one record per axis (`skill`) with `thisMonth` and `lastMonth` scores. Pressing the chart shows a tooltip.
 
+<Only platform="rn">
+
+Replace `chartData` with your records, set `PolarAngleAxis` `dataKey` to your axis field, and rename the series in `chartConfig`. The component takes no props.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -123,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -133,11 +149,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/radar-chart-grid-filled.tsx`:
+2. Copy and paste the following code into `components/charts/radar-chart-grid-filled.tsx`:
 
 <ComponentSource path="uniwind/components/charts/radar-chart-grid-filled.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -145,11 +161,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/radar-chart-grid-filled.tsx`:
+2. Copy and paste the following code into `components/charts/radar-chart-grid-filled.tsx`:
 
 <ComponentSource path="nativewind/components/charts/radar-chart-grid-filled.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -157,11 +173,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/radar-chart-grid-filled.tsx`:
+2. Copy and paste the following code into `components/charts/radar-chart-grid-filled.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/radar-chart-grid-filled.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -244,6 +260,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -283,12 +303,6 @@ fun RadarGridFilledExample() {
     RadarChartGridFilled()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your records, set `PolarAngleAxis` `dataKey` to your axis field, and rename the series in `chartConfig`. The component takes no props.
 
 </Only>
 

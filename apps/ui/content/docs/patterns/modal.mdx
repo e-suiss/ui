@@ -9,13 +9,15 @@ platforms: [web]
 
 <ComponentPreview name="modal-demo" layout="fullscreen" responsive />
 
-`Modal` presents focused content that blocks the rest of the page, such as a form or a share sheet. On desktop it renders a `Dialog`. Below the `48rem` breakpoint it renders a bottom `Drawer` with a swipe handle, and each part switches to its drawer counterpart: the header, title, description and close map to the drawer's parts, `ModalBody` gains padding, and `ModalFooter` stacks its buttons in reverse order so the primary action sits on top.
+`Modal` presents focused content that blocks the rest of the page, such as a form or a share sheet. On desktop it renders a `Dialog`. Below the `48rem` breakpoint it renders a bottom `Drawer` with a swipe handle, and each part switches to its drawer counterpart.
 
 Use it for tasks that need the user's full attention before returning to the page.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/modal
@@ -27,22 +29,38 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns modal
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
 2. Add the pieces it builds on: [Dialog](/docs/components/dialog), [Drawer](/docs/components/drawer), `use-mobile`.
 
-3. Copy the source into `components/patterns/modal.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/modal.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalTitle, ModalDescription, ModalClose } from "@/components/patterns/modal"
+import {
+  Modal,
+  ModalBody,
+  ModalClose,
+  ModalContent,
+  ModalDescription,
+  ModalFooter,
+  ModalHeader,
+  ModalTitle,
+  ModalTrigger,
+} from "@/components/patterns/modal"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -124,81 +142,71 @@ import { Label } from "@/components/ui/label"
 
 </OnlyBase>
 
-`ModalContent` shows a close button by default; set `showCloseButton` to `false` to hide it, or pass `closeLabel` to show text instead of the icon.
+## Composition
 
-<OnlyBase base="base aria">
+Use the following composition to build a `Modal`:
 
-The modal can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`. Pass `render` to `ModalTrigger` or `ModalClose` to use your own `Button`.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-The modal can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`. Set `asChild` on `ModalTrigger` or `ModalClose` to use your own `Button`.
-
-</OnlyBase>
+```text
+Modal
+├── ModalTrigger
+└── ModalContent
+    ├── ModalHeader
+    │   ├── ModalTitle
+    │   └── ModalDescription
+    ├── ModalBody
+    └── ModalFooter
+        └── ModalClose
+```
 
 ## Examples
 
 ### With close button
 
-Relies on the default corner close button as the only way to dismiss besides `Escape`.
+`ModalContent` shows a corner close button by default; here it is the only way to dismiss besides `Escape`. Set `showCloseButton` to `false` to hide it.
 
 <ComponentPreview name="modal-with-close-button" layout="fullscreen" responsive />
 
 ### With close label
 
-Replaces the close icon with a text button using `closeLabel`.
+Set `closeLabel` to show a text button instead of the close icon.
 
 <ComponentPreview name="modal-with-close-label" layout="fullscreen" responsive />
 
 ### Floating
 
-Insets the mobile drawer from the screen edges with `floating`.
+Set `floating` to inset the mobile drawer from the screen edges with fully rounded corners.
 
 <ComponentPreview name="modal-floating" layout="fullscreen" responsive />
 
+## Accessibility
+
+- The popup has the `dialog` role, named by `ModalTitle` and described by `ModalDescription`.
+- `Escape` closes the modal and returns focus to the trigger.
+- The default close button is labelled Close.
+
 ## API Reference
-
-<Anatomy>
-
-- [Modal](#modal)
-  - [ModalTrigger](#modaltrigger)
-  - [ModalContent](#modalcontent)
-    - [ModalHeader](#modalheader)
-      - [ModalTitle](#modaltitle)
-      - [ModalDescription](#modaldescription)
-    - [ModalBody](#modalbody)
-    - [ModalFooter](#modalfooter)
-      - [ModalClose](#modalclose)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### Modal
 
 The root that renders a `Dialog` on desktop and a `Drawer` on mobile.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Whether the modal is open, for controlled use. |
-| `defaultOpen` | `boolean` | - | Whether the modal starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when the modal opens or closes. |
-| `floating` | `boolean` | - | Insets the mobile drawer from the screen edges with fully rounded corners. |
-| `children` | `React.ReactNode` | - | The trigger and content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | - |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `floating` | `boolean` | - |
+| `children` | `React.ReactNode` | - |
 
-</ApiPart>
-
-<ApiPart index={2}>
+The modal can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`.
 
 ### ModalTrigger
 
 The button that opens the modal.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Classes applied to the trigger. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | - |
 
 <OnlyBase base="base radix">
 
@@ -208,22 +216,30 @@ Also accepts the props of `React.ComponentProps<typeof DialogTrigger>`.
 
 <OnlyBase base="aria">
 
-Pass `render` to replace the button with your own element, such as a `Button`. Also accepts `className`, `children`, `id` and `aria-label`.
+Also accepts `className`, `children`, `id` and `aria-label`.
 
 </OnlyBase>
 
-</ApiPart>
+<OnlyBase base="base aria">
 
-<ApiPart index={3}>
+Pass `render` to replace the button with your own element, such as a `Button`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` to use your own element, such as a `Button`.
+
+</OnlyBase>
 
 ### ModalContent
 
 The popup window, with a close button by default.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Classes applied to the dialog or drawer popup. |
-| `style` | `React.CSSProperties` | - | Inline styles applied to the dialog or drawer popup. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | - |
+| `style` | `React.CSSProperties` | - |
 
 <OnlyBase base="base radix">
 
@@ -237,9 +253,7 @@ Also accepts `showCloseButton`, `closeLabel`, `children`, `id` and `aria-label`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={4}>
+`className` and `style` apply to the dialog or drawer popup. They are plain values only, because the same props are forwarded to either popup.
 
 ### ModalHeader
 
@@ -247,19 +261,11 @@ Groups the title and description.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### ModalBody
 
 The main content area, padded on mobile.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### ModalFooter
 
@@ -267,9 +273,7 @@ Holds the modal's actions; stacked with the primary action on top on mobile.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={7}>
+On mobile it stacks its buttons in reverse order so the primary action sits on top.
 
 ### ModalTitle
 
@@ -287,10 +291,6 @@ Also accepts `className`, `children` and `id`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={8}>
-
 ### ModalDescription
 
 Supporting text, used as the modal's accessible description.
@@ -307,10 +307,6 @@ Also accepts `className`, `children` and `id`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={9}>
-
 ### ModalClose
 
 A button that closes the modal.
@@ -323,20 +319,22 @@ Also accepts the props of `React.ComponentProps<typeof DialogClose>`.
 
 <OnlyBase base="aria">
 
-Pass `render` to replace the button with your own element, such as a `Button`. Also accepts `className`, `children`, `id` and `aria-label`.
+Also accepts `className`, `children`, `id` and `aria-label`.
 
 </OnlyBase>
 
-</ApiPart>
+<OnlyBase base="base aria">
 
-## Accessibility
+Pass `render` to replace the button with your own element, such as a `Button`.
 
-- The popup has the `dialog` role, named by `ModalTitle` and described by `ModalDescription`.
-- `Escape` closes the modal and returns focus to the trigger.
-- The default close button is labelled Close.
+</OnlyBase>
 
-## Notes
+<OnlyBase base="radix">
 
-Parts carry `data-slot` values from `modal` through `modal-close`. `ModalContent` accepts `className` and `style` as plain values only, because the same props are forwarded to either the dialog or the drawer popup.
+Set `asChild` to use your own element, such as a `Button`.
+
+</OnlyBase>
+
+Each part sets a `data-slot`, such as `modal-content` or `modal-close`, for styling.
 
 </Only>

@@ -15,7 +15,9 @@ For compact toolbars, `PaginationGroup` joins arrow links into one segmented con
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/pagination
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add pagination
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react class-variance-authority
@@ -37,16 +41,33 @@ npm install @phosphor-icons/react class-variance-authority
 
 2. Add the pieces it builds on: [Button](/docs/components/button).
 
-3. Copy the source into `components/ui/pagination.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/pagination.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationFirst, PaginationLast, PaginationEllipsis, PaginationSummary, PaginationGroup, PaginationInput } from "@/components/ui/pagination"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationFirst,
+  PaginationGroup,
+  PaginationInput,
+  PaginationItem,
+  PaginationLast,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationSummary,
+} from "@/components/ui/pagination"
 ```
 
 ```tsx
@@ -76,207 +97,58 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 </Pagination>
 ```
 
-Links render as `a` elements, so pass `href` for real routes, or `href="#"` with an `onClick` that calls `preventDefault()` for client-side state. Mark the current page with `isActive` on `PaginationLink`. To disable an edge link, set `aria-disabled` on it; it becomes non-interactive and dimmed.
+## Composition
 
-`PaginationLink` takes a `size` from the Button sizes and defaults to `icon-sm`. Set `text=""` on `PaginationPrevious` or `PaginationNext` for icon-only arrows.
+Use the following composition to build a `Pagination`:
+
+```text
+Pagination
+├── PaginationContent
+│   └── PaginationItem
+│       ├── PaginationPrevious
+│       ├── PaginationLink
+│       ├── PaginationEllipsis
+│       └── PaginationNext
+├── PaginationSummary
+├── PaginationInput
+└── PaginationGroup
+    ├── PaginationFirst
+    ├── PaginationPrevious
+    ├── PaginationNext
+    └── PaginationLast
+```
 
 ## Examples
 
 ### Compact
 
-A page number input with joined previous and next arrows in a `PaginationGroup`, clamping typed values to the valid range.
+A `PaginationInput` for the page number with previous and next arrows joined in a `PaginationGroup`. Set `text=""` on `PaginationPrevious` or `PaginationNext` for icon-only arrows. The example clamps typed values to the valid range.
 
 <ComponentPreview name="pagination-compact" />
 
 ### Rows per page
 
-A rows-per-page select, a range summary, and first, previous, next and last arrows.
+A rows-per-page select, a `PaginationSummary` with the current range, and `PaginationFirst`, `PaginationPrevious`, `PaginationNext` and `PaginationLast` arrows.
 
 <ComponentPreview name="pagination-rows-per-page" />
 
 ### With ellipsis
 
-A long page range shortened with ellipses on both sides of the current page.
+Use `PaginationEllipsis` on both sides of the current page to shorten a long page range.
 
 <ComponentPreview name="pagination-with-ellipsis" />
 
 ### Custom labels
 
-Previous and next links relabelled `Newer` and `Older`.
+Use the `text` prop to relabel the previous and next links `Newer` and `Older`.
 
 <ComponentPreview name="pagination-custom-labels" />
 
 ### Large links
 
-Page links using the larger `icon` button size.
+Set `size="icon"` on `PaginationLink` for larger page links.
 
 <ComponentPreview name="pagination-large-links" />
-
-## API Reference
-
-<Anatomy>
-
-- [Pagination](#pagination)
-  - [PaginationContent](#paginationcontent)
-    - [PaginationItem](#paginationitem)
-      - [PaginationPrevious](#paginationprevious)
-      - [PaginationLink](#paginationlink)
-      - [PaginationEllipsis](#paginationellipsis)
-      - [PaginationNext](#paginationnext)
-  - [PaginationSummary](#paginationsummary)
-  - [PaginationInput](#paginationinput)
-  - [PaginationGroup](#paginationgroup)
-    - [PaginationFirst](#paginationfirst)
-    - [PaginationPrevious](#paginationprevious)
-    - [PaginationNext](#paginationnext)
-    - [PaginationLast](#paginationlast)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Pagination
-
-The `nav` landmark that contains the pagination controls.
-
-Also accepts the props of `React.ComponentProps<"nav">`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### PaginationContent
-
-The list that holds the pagination items.
-
-Also accepts the props of `React.ComponentProps<"ul">`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### PaginationItem
-
-A list item wrapper for one link or ellipsis.
-
-Also accepts the props of `React.ComponentProps<"li">`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### PaginationLink
-
-A page link styled as a button, highlighted when active.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isActive` | `boolean` | - | Marks the link as the current page with `aria-current="page"`. |
-| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"icon-sm"` | The `Button` size. |
-
-Also accepts the props of `React.ComponentProps<"a">`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### PaginationPrevious
-
-A link to the previous page with a leading caret.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `string` | `"Previous"` | The visible label. A custom value also becomes the accessible name; an empty string renders an icon-only link. |
-| `isActive` | `boolean` | - | Marks the link as the current page with `aria-current="page"`. |
-| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"sm"` | The `Button` size. Defaults to `"icon-sm"` when `text` is empty. |
-
-Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### PaginationNext
-
-A link to the next page with a trailing caret.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `string` | `"Next"` | The visible label. A custom value also becomes the accessible name; an empty string renders an icon-only link. |
-| `isActive` | `boolean` | - | Marks the link as the current page with `aria-current="page"`. |
-| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"sm"` | The `Button` size. Defaults to `"icon-sm"` when `text` is empty. |
-
-Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### PaginationFirst
-
-An icon link to the first page.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isActive` | `boolean` | - | Marks the link as the current page with `aria-current="page"`. |
-
-Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### PaginationLast
-
-An icon link to the last page.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isActive` | `boolean` | - | Marks the link as the current page with `aria-current="page"`. |
-
-Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### PaginationEllipsis
-
-A placeholder that indicates skipped pages.
-
-Also accepts the props of `React.ComponentProps<"span">`.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### PaginationSummary
-
-Secondary text that summarizes the current range.
-
-Also accepts the props of `React.ComponentProps<"p">`.
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### PaginationGroup
-
-Joins several links into one segmented control.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### PaginationInput
-
-A numeric text field for jumping to a page.
-
-Also accepts the props of `React.ComponentProps<"input">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -287,11 +159,113 @@ Also accepts the props of `React.ComponentProps<"input">`.
 - `PaginationGroup` has `role="group"`.
 - `PaginationInput` has no built-in label; associate one with `htmlFor` or `aria-label`.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values `pagination`, `pagination-content`, `pagination-item`, `pagination-link`, `pagination-ellipsis`, `pagination-summary`, `pagination-group` and `pagination-input`. Active links expose `data-active`.
-- Active links use the `secondary` button variant and others use `ghost`.
-- Previous and next text is hidden below the `sm` breakpoint, and the carets flip in right-to-left layouts.
-- `PaginationInput` uses `inputMode="numeric"` to show a number keypad on touch devices.
+### Pagination
+
+The `nav` landmark that contains the pagination controls.
+
+Also accepts the props of `React.ComponentProps<"nav">`.
+
+### PaginationContent
+
+The list that holds the pagination items.
+
+Also accepts the props of `React.ComponentProps<"ul">`.
+
+### PaginationItem
+
+A list item wrapper for one link or ellipsis.
+
+Also accepts the props of `React.ComponentProps<"li">`.
+
+### PaginationLink
+
+A page link styled as a button, highlighted when active.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `isActive` | `boolean` | - |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"icon-sm"` |
+
+Also accepts the props of `React.ComponentProps<"a">`.
+
+Links render as `a` elements, so pass `href` for real routes, or `href="#"` with an `onClick` that calls `preventDefault()` for client-side state. `isActive` marks the current page with `aria-current="page"` and the `secondary` button variant; other links use `ghost`. `size` takes a Button size. To disable a link, set `aria-disabled` on it; it becomes non-interactive and dimmed.
+
+### PaginationPrevious
+
+A link to the previous page with a leading caret.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `text` | `string` | `"Previous"` |
+| `isActive` | `boolean` | - |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"sm"` |
+
+Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
+
+A custom `text` also becomes the accessible name. An empty string renders an icon-only link, and `size` then defaults to `"icon-sm"`. The text is hidden below the `sm` breakpoint, and the caret flips in right-to-left layouts.
+
+### PaginationNext
+
+A link to the next page with a trailing caret.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `text` | `string` | `"Next"` |
+| `isActive` | `boolean` | - |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"sm"` |
+
+Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
+
+Works like `PaginationPrevious`, with a trailing caret.
+
+### PaginationFirst
+
+An icon link to the first page.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `isActive` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
+
+### PaginationLast
+
+An icon link to the last page.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `isActive` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof PaginationLink>`.
+
+### PaginationEllipsis
+
+A placeholder that indicates skipped pages.
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+### PaginationSummary
+
+Secondary text that summarizes the current range.
+
+Also accepts the props of `React.ComponentProps<"p">`.
+
+### PaginationGroup
+
+Joins several links into one segmented control.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### PaginationInput
+
+A numeric text field for jumping to a page.
+
+Also accepts the props of `React.ComponentProps<"input">`.
+
+`PaginationInput` uses `inputMode="numeric"` to show a number keypad on touch devices.
+
+Each part sets a `data-slot`, such as `pagination-link` or `pagination-input`, for styling. Active links set `data-active`.
 
 </Only>

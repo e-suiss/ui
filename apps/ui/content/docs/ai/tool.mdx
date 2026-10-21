@@ -68,7 +68,7 @@ import {
 
 ### States
 
-A finished call, a failed call, a denied call and a running call.
+Shows a finished call, a failed call, a denied call and a running call.
 
 <ComponentPreview name="tool-states" />
 
@@ -195,15 +195,15 @@ if (part.state === "approval-requested") {
 
 Pass `sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithApprovalResponses` to `useChat` so the chat continues once every approval has an answer. A tool that runs on the client stays `input-available` after the chat stops until you call `addToolOutput`; treat it as waiting, not failed.
 
-## API Reference
-
-See [Trace](/docs/components/trace#api-reference), [Code Block](/docs/components/code-block#api-reference), [Item](/docs/components/item#api-reference) and [Sheet](/docs/components/sheet#api-reference).
-
 ## Accessibility
 
 - A call with output is a button with `aria-expanded`; a call in a sheet takes the sheet trigger's focus and Escape behavior.
 - Write the state into the title, such as "Failed to run pnpm dev", so it does not rely on color.
 - The approval buttons are regular buttons with visible labels, and they are not inside the `Trace` row.
+
+## API Reference
+
+See [Trace](/docs/components/trace#api-reference), [Code Block](/docs/components/code-block#api-reference), [Item](/docs/components/item#api-reference) and [Sheet](/docs/components/sheet#api-reference).
 
 </Only>
 

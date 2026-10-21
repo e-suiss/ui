@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A week of step counts where one bar is selected at a time: the chosen day stays solid, the rest dim, and the header shows its value. Use it when a bar chart doubles as a picker for the detail shown above it.
 
+Replace `chartData` and rename `steps` in the data, the `Bar` and `chartConfig`. The `selected` state sets the first selected bar, and the opacity of the dimmed bars sets the contrast. There is no tooltip: keyboard users move between bars with the arrow keys and select with Return or Space, and the header value is announced through a live region.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/bar-chart-active
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts bar-chart-active
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/bar-chart-active.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/bar-chart-active.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { BarChartActive } from "@/components/charts/bar-chart-active"
 ```tsx
 <BarChartActive />
 ```
-
-Replace `chartData` with your own days and values, and rename `steps` in the data, the `Bar` and `chartConfig`. Set the initially selected bar through the `selected` state, and change the unit text and number format in the header. Lower or raise the opacity of the dimmed bars to tune the contrast.
-
-## Notes
-
-Keyboard users move between bars with the arrow keys and select with Return or Space, and the header value is announced through a live region. There is no tooltip; the header is the only readout.
 
 </Only>
 
@@ -75,9 +79,15 @@ Keyboard users move between bars with the arrow keys and select with Return or S
 
 Seven bars, one per day, with the selected bar at full opacity and the others dimmed. The `BarChart` reports the touched bar through `onActiveIndexChange`, which updates local state and the header. The header is a live region, so screen readers announce the new step count. The bars set `isAnimationActive={false}` and draw without the enter animation.
 
+Replace `chartData` with your daily values and update the `day` and `steps` keys to match. The initial selection is set by the `useState` default. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +149,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/bar-chart-active.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-active.tsx`:
 
 <ComponentSource path="uniwind/components/charts/bar-chart-active.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +161,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/bar-chart-active.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-active.tsx`:
 
 <ComponentSource path="nativewind/components/charts/bar-chart-active.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +173,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/bar-chart-active.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-active.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/bar-chart-active.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +260,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +303,6 @@ fun BarActiveExample() {
     BarChartActive()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your daily values and update the `day` and `steps` keys to match. The initial selection is set by the `useState` default. The component takes no props.
 
 </Only>
 

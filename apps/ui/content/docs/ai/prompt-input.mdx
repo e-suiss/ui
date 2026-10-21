@@ -71,12 +71,6 @@ import {
 </form>
 ```
 
-The attach button opens a hidden file input. Show each file as an `Attachment` in an addon with `align="block-start"`, with a button to remove it.
-
-Put the two [Model Selector](/docs/ai/model-selector) menus in the `block-end` addon, between the attach and send buttons. Move `ms-auto` from the send button to the first menu trigger, so both menus sit next to the send button.
-
-Enter sends the message and Shift+Enter adds a new line:
-
 ```tsx
 onKeyDown={(event) => {
   if (event.key === "Enter" && !event.shiftKey) {
@@ -96,15 +90,21 @@ sendMessage({ text, files })
 
 The route streams the reply with `result.toUIMessageStreamResponse()`.
 
-## API Reference
-
-See [Input Group](/docs/components/input-group#api-reference), [Attachment](/docs/components/attachment#api-reference) and [Dropdown Menu](/docs/components/dropdown-menu#api-reference).
-
 ## Accessibility
 
 - Give the textarea an accessible name such as "Message", since the placeholder is not a label.
 - Name each remove button after its file, such as "Remove settings-page.tsx".
 - Disable the send button while the field is empty.
+
+## API Reference
+
+See [Input Group](/docs/components/input-group#api-reference), [Attachment](/docs/components/attachment#api-reference) and [Dropdown Menu](/docs/components/dropdown-menu#api-reference).
+
+The attach button opens a hidden file input. Show each file as an `Attachment` in an addon with `align="block-start"`, with a button to remove it.
+
+Put the two [Model Selector](/docs/ai/model-selector) menus in the `block-end` addon, between the attach and send buttons. Move `ms-auto` from the send button to the first menu trigger, so both menus sit next to the send button.
+
+Enter sends the message and Shift+Enter adds a new line with the `onKeyDown` handler in Usage.
 
 </Only>
 

@@ -32,8 +32,6 @@ import { Button } from "@/components/ui/button"
 import { Marker, MarkerContent } from "@/components/ui/marker"
 ```
 
-Render a marker after the turn, with a button that restores it.
-
 <OnlyBase base="base radix">
 
 ```tsx
@@ -64,8 +62,6 @@ Render a marker after the turn, with a button that restores it.
 
 </OnlyBase>
 
-Show the button only on checkpoints that have turns after them.
-
 ## AI SDK
 
 Restore replaces the thread with the messages up to and including that turn. Every later turn is removed. Send a new message to continue from there.
@@ -85,13 +81,15 @@ writer.write({
 })
 ```
 
+## Accessibility
+
+- Name each Restore button after its checkpoint with `aria-label`, such as "Restore to Button renamed", so several buttons can be told apart.
+
 ## API Reference
 
 See [Marker](/docs/components/marker#api-reference) and [Button](/docs/components/button#api-reference).
 
-## Accessibility
-
-- Name each Restore button after its checkpoint with `aria-label`, such as "Restore to Button renamed", so several buttons can be told apart.
+Render a marker after the turn, with a button that restores it. Show the button only on checkpoints that have turns after them.
 
 </Only>
 

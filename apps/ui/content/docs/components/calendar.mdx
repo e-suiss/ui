@@ -15,7 +15,9 @@ Use a calendar when people need to see dates in context, such as availability or
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/calendar
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add calendar
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react react-day-picker
@@ -37,11 +41,15 @@ npm install @phosphor-icons/react react-day-picker
 
 2. Add the pieces it builds on: [Button](/docs/components/button).
 
-3. Copy the source into `components/ui/calendar.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/calendar.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -63,72 +71,37 @@ const [date, setDate] = React.useState<Date | undefined>(new Date())
 />
 ```
 
-Set `mode` to `single`, `multiple` or `range`, and control the selection with `selected` and `onSelect`. For ranges, `numberOfMonths={2}` shows two months side by side on wider screens.
-
-Set `captionLayout` to `dropdown`, `dropdown-months` or `dropdown-years` to let people jump to a month or year directly; the default is `label`.
-
-Unlike the `DayPicker` default, outside days are hidden unless you pass `showOutsideDays`. The default `locale` is `enUS`. Pass `disabled` with a matcher, such as `{ dayOfWeek: [0, 6] }`, to block days.
-
-Use `CalendarDayButton` when you supply your own `components` and still want the library's day styling.
-
 ## Examples
 
 ### Sizes
 
-Compares the `sm`, `default` and `lg` sizes.
+Use the `size` prop to change the cell size and type scale. This compares the `sm`, `default` and `lg` sizes.
 
 <ComponentPreview name="calendar-sizes" />
 
 ### Range
 
-Selects a seven-day range across two months with `mode="range"`.
+Set `mode="range"` to select a range. This selects seven days across two months; `numberOfMonths={2}` shows two months side by side on wider screens.
 
 <ComponentPreview name="calendar-range" />
 
 ### Dropdown caption
 
-Replaces the month label with month and year dropdowns.
+Set `captionLayout` to `dropdown`, `dropdown-months` or `dropdown-years` to let people jump to a month or year directly. The default is `label`.
 
 <ComponentPreview name="calendar-dropdown-caption" />
 
 ### Week numbers
 
-Shows the week number at the start of each row.
+Set `showWeekNumber` to show the week number at the start of each row.
 
 <ComponentPreview name="calendar-week-numbers" />
 
 ### Disabled days
 
-Disables weekends with a `dayOfWeek` matcher.
+Pass `disabled` with a matcher, such as `{ dayOfWeek: [0, 6] }`, to block days. This disables weekends.
 
 <ComponentPreview name="calendar-disabled-days" />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### Calendar
-
-The date grid, with month navigation and caption.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `buttonVariant` | `React.ComponentProps<typeof Button>["variant"]` | `"plain"` | `Button` variant used for the previous and next month buttons. Defaults to `plain`. |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Cell size and type scale: `sm`, `default` or `lg`. |
-
-Also accepts the props of `DayPicker` from `react-day-picker`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### CalendarDayButton
-
-The button rendered for each day, styled by its selection state.
-
-Also accepts the props of `DayButtonProps` from `react-day-picker`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -138,13 +111,30 @@ Also accepts the props of `DayButtonProps` from `react-day-picker`.
 - Disabled days render disabled buttons.
 - Caption dropdowns are native `select` elements labelled for month and year.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot="calendar"` and `data-size` on the root; day buttons expose `data-day`, `data-today`, `data-selected-single`, `data-range-start`, `data-range-middle` and `data-range-end`.
-- Cell size and radius come from the `--cell-size` and `--cell-radius` custom properties, which `size` adjusts.
-- Pass `classNames` to override any `react-day-picker` class key; your values replace the defaults for that key.
-- Navigation chevrons flip in right-to-left layouts.
-- The calendar reads today's date while it renders, and so does `new Date()` in your own state. In a Next.js app with `cacheComponents`, that stops the prerender of the page: wrap the calendar in `<Suspense>`, or pass `today` and fixed dates.
+### Calendar
+
+The date grid, with month navigation and caption.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `buttonVariant` | `React.ComponentProps<typeof Button>["variant"]` | `"plain"` |
+| `size` | `"sm" \| "default" \| "lg"` | `"default"` |
+
+Also accepts the props of `DayPicker` from `react-day-picker`.
+
+Set `mode` to `single`, `multiple` or `range`, and control the selection with `selected` and `onSelect`. `buttonVariant` is the `Button` variant of the previous and next month buttons. `size` sets the `--cell-size` and `--cell-radius` custom properties. Unlike the `DayPicker` default, outside days are hidden unless you pass `showOutsideDays`, and the default `locale` is `enUS`. Pass `classNames` to override any `react-day-picker` class key; your values replace the defaults for that key. Navigation chevrons flip in right-to-left layouts.
+
+The calendar reads today's date while it renders, and so does `new Date()` in your own state. In a Next.js app with `cacheComponents`, that stops the prerender of the page: wrap the calendar in `<Suspense>`, or pass `today` and fixed dates.
+
+### CalendarDayButton
+
+The button rendered for each day, styled by its selection state.
+
+Also accepts the props of `DayButtonProps` from `react-day-picker`.
+
+Use `CalendarDayButton` when you supply your own `components` and still want the library's day styling. Day buttons expose `data-day`, `data-today`, `data-selected-single`, `data-range-start`, `data-range-middle` and `data-range-end`; the root sets `data-slot="calendar"` and `data-size`.
 
 </Only>
 
@@ -161,6 +151,10 @@ Also accepts the props of `DayButtonProps` from `react-day-picker`.
 Three sizes are available: `sm`, `default` and `lg`. The caption can be a plain label or month and year dropdowns built on Select, which suits birth dates and other dates far from today.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -210,7 +204,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -218,7 +214,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -240,17 +236,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/calendar.tsx`:
+4. Copy and paste the following code into `components/ui/calendar.tsx`:
 
 <ComponentSource path="uniwind/components/ui/calendar.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -272,17 +268,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/calendar.tsx`:
+4. Copy and paste the following code into `components/ui/calendar.tsx`:
 
 <ComponentSource path="nativewind/components/ui/calendar.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-svg
@@ -304,11 +300,11 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/calendar.tsx`:
+4. Copy and paste the following code into `components/ui/calendar.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/calendar.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -411,6 +407,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -607,20 +607,6 @@ fun CalendarSingle(
 
 </Only>
 
-<Only platform="rn">
-
-Pass `mode`, `selected` and `onSelect` to control the selection; `selected` is a `Date`, a `Date[]` or a `{ from, to }` range depending on the mode. Use `month`, `defaultMonth` and `onMonthChange` to control the visible month, and `numberOfMonths` to show several months.
-
-Use `disabled` with date matchers, such as `{ dayOfWeek: [0, 6] }`, to block days. Limit navigation with `startMonth` and `endMonth`; with a year dropdown they default to the last 100 years.
-
-</Only>
-
-<Only platform="rn kotlin">
-
-Set `locale` for month and weekday names, and `weekStartsOn` to change the first day of the week. `CalendarDayButton` is exported for custom day rendering.
-
-</Only>
-
 ## Examples
 
 ### Sizes
@@ -631,7 +617,7 @@ The `sm`, `default` and `lg` sizes.
 
 ### Range
 
-Range selection across two months.
+Range selection across two months. Use `numberOfMonths` to show several months.
 
 <NativeExample name="calendar-range" />
 
@@ -647,13 +633,13 @@ Several separate dates selected with `mode="multiple"`.
 
 ### Dropdown caption
 
-Month and year dropdowns in the caption.
+Month and year dropdowns in the caption, set with `captionLayout`.
 
 <NativeExample name="calendar-dropdown-caption" />
 
 ### Week numbers
 
-Week numbers in a leading column.
+Week numbers in a leading column, shown with `showWeekNumber`.
 
 <NativeExample name="calendar-week-numbers" />
 
@@ -661,7 +647,7 @@ Week numbers in a leading column.
 
 <Only platform="rn">
 
-Weekends disabled with a `dayOfWeek` matcher.
+Use `disabled` with date matchers, such as `{ dayOfWeek: [0, 6] }`, to block days. This disables weekends.
 
 </Only>
 
@@ -675,7 +661,7 @@ Days from adjacent months shown with `showOutsideDays`.
 
 ### Button variants
 
-Navigation buttons in the `ghost`, `secondary` and `tinted` variants.
+Use `buttonVariant` to set the variant of the navigation buttons. This shows `ghost`, `secondary` and `tinted`.
 
 <NativeExample name="calendar-button-variants" />
 
@@ -687,13 +673,28 @@ Turkish month and weekday names with `locale="tr-TR"`.
 
 </Only>
 
+<Only platform="rn kotlin">
+
+Set `locale` for month and weekday names, and `weekStartsOn` to change the first day of the week.
+
+</Only>
+
 <NativeExample name="calendar-locale" />
+
+<Only platform="rn">
+
+## Accessibility
+
+- Each month is a `grid` labelled with its caption.
+- Day cells have the `button` role, a full date label, and `selected` and `disabled` state.
+- On React Native and Android, the previous and next buttons are labelled with the relative month in the calendar's locale, such as "Last month" and "Next month" in English. On iOS they are labelled "Previous month" and "Next month".
+- Caption dropdowns are labelled "Choose the Month" and "Choose the Year".
+
+</Only>
 
 ## API Reference
 
 <Only platform="rn">
-
-<ApiPart index={1}>
 
 ### CalendarDayButton
 
@@ -701,72 +702,60 @@ Pressable day cell styled for each selection state.
 
 Also accepts the props of `React.ComponentProps<typeof CalendarPrimitive.DayButton>`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+Use it for custom day rendering.
 
 ### Calendar
 
 Month grids with caption and navigation.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `buttonVariant` | `ButtonProps["variant"]` | `"plain"` | Button variant for the navigation buttons. Defaults to `plain`. |
-| `size` | `CalendarSize` | `"default"` | `sm`, `default` or `lg`. |
-| `captionLayout` | `CaptionLayout` | `"label"` | `label`, `dropdown`, `dropdown-months` or `dropdown-years`. |
-| `showWeekNumber` | `boolean` | `false` | Shows week numbers. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `buttonVariant` | `ButtonProps["variant"]` | `"plain"` |
+| `size` | `CalendarSize` | `"default"` |
+| `captionLayout` | `CaptionLayout` | `"label"` |
+| `showWeekNumber` | `boolean` | `false` |
 
 Also accepts the props of `React.ComponentProps<typeof CalendarPrimitive.Root>`.
 
-</ApiPart>
+Pass `mode` (`single`, `multiple` or `range`), `selected` and `onSelect` to control the selection; `selected` is a `Date`, a `Date[]` or a `{ from, to }` range depending on the mode. Use `month`, `defaultMonth` and `onMonthChange` to control the visible month, and `numberOfMonths` to show several months. Limit navigation with `startMonth` and `endMonth`; with a year dropdown they default to the last 100 years. `buttonVariant` sets the variant of the navigation buttons, and `captionLayout` is `label`, `dropdown`, `dropdown-months` or `dropdown-years`. Navigation arrows swap in right-to-left layouts, and colors follow the system appearance.
 
 </Only>
 
 <Only platform="swift">
 
-<ApiPart index={1}>
-
 ### DateRange
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `from` | `Date` | - | - |
-| `to` | `Date?` | `nil` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `from` | `Date` | - |
+| `to` | `Date?` | `nil` |
 
 | Property | Type |
 | --- | --- |
 | `from` | `Date` |
 | `to` | `Date?` |
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### DateRange.adding
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ day` | `Date` | - | - |
-| `to` | `DateRange?` | - | - |
-| `calendar` | `Foundation.Calendar` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ day` | `Date` | - |
+| `to` | `DateRange?` | - |
+| `calendar` | `Foundation.Calendar` | - |
 
 Returns `DateRange?`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### CalendarDayModifiers
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `today` | `Bool` | `false` | - |
-| `selected` | `Bool` | `false` | - |
-| `rangeStart` | `Bool` | `false` | - |
-| `rangeMiddle` | `Bool` | `false` | - |
-| `rangeEnd` | `Bool` | `false` | - |
-| `outside` | `Bool` | `false` | - |
-| `disabled` | `Bool` | `false` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `today` | `Bool` | `false` |
+| `selected` | `Bool` | `false` |
+| `rangeStart` | `Bool` | `false` |
+| `rangeMiddle` | `Bool` | `false` |
+| `rangeEnd` | `Bool` | `false` |
+| `outside` | `Bool` | `false` |
+| `disabled` | `Bool` | `false` |
 
 | Property | Type |
 | --- | --- |
@@ -778,150 +767,100 @@ Returns `DateRange?`.
 | `outside` | `Bool` |
 | `disabled` | `Bool` |
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### DateCalendar
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selection` | `Binding<Date?>` | - | The selected value. |
-| `month` | `Binding<Date>?` | `nil` | - |
-| `size` | `Size`: `.sm` \| `.default` \| `.lg` | `.default` | Cell size and type scale: `sm`, `default` or `lg`. |
-| `buttonVariant` | `VariantButtonStyle.Variant` | `.plain` | Button variant for the navigation buttons. |
-| `captionLayout` | `CaptionLayout`: `.label` \| `.dropdown` \| `.dropdownMonths` \| `.dropdownYears` | `.label` | - |
-| `numberOfMonths` | `Int` | `1` | - |
-| `showOutsideDays` | `Bool` | `false` | - |
-| `showWeekNumber` | `Bool` | `false` | Shows week numbers. |
-| `startMonth` | `Date?` | `nil` | - |
-| `endMonth` | `Date?` | `nil` | - |
-| `isDisabled` | `(Date) -> Bool` | `{ _ in false }` | - |
-
-</ApiPart>
-
-<ApiPart index={5}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `selection` | `Binding<Date?>` | - |
+| `month` | `Binding<Date>?` | `nil` |
+| `size` | `Size`: `.sm` \| `.default` \| `.lg` | `.default` |
+| `buttonVariant` | `VariantButtonStyle.Variant` | `.plain` |
+| `captionLayout` | `CaptionLayout`: `.label` \| `.dropdown` \| `.dropdownMonths` \| `.dropdownYears` | `.label` |
+| `numberOfMonths` | `Int` | `1` |
+| `showOutsideDays` | `Bool` | `false` |
+| `showWeekNumber` | `Bool` | `false` |
+| `startMonth` | `Date?` | `nil` |
+| `endMonth` | `Date?` | `nil` |
+| `isDisabled` | `(Date) -> Bool` | `{ _ in false }` |
 
 ### CalendarDayButton
 
 The button rendered for each day, styled by its selection state.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `date` | `Date` | - | - |
-| `modifiers` | `CalendarDayModifiers` | - | - |
-| `size` | `DateCalendar.Size`: `.sm` \| `.default` \| `.lg` | `.default` | Cell size and type scale: `sm`, `default` or `lg`. |
-| `action` | `() -> Void` | - | Called when it is tapped. |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `date` | `Date` | - |
+| `modifiers` | `CalendarDayModifiers` | - |
+| `size` | `DateCalendar.Size`: `.sm` \| `.default` \| `.lg` | `.default` |
+| `action` | `() -> Void` | - |
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### CalendarSize
 
 Values: `Sm`, `Default`, `Lg`.
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### CalendarCaptionLayout
 
 Values: `Label`, `Dropdown`, `DropdownMonths`, `DropdownYears`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### DateRange
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `from` | `Date?` | - | - |
-| `to` | `Date?` | `null` | - |
-
-</ApiPart>
-
-<ApiPart index={4}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `from` | `Date?` | - |
+| `to` | `Date?` | `null` |
 
 ### CalendarDayState
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selected` | `Boolean` | `false` | - |
-| `today` | `Boolean` | `false` | - |
-| `rangeStart` | `Boolean` | `false` | - |
-| `rangeMiddle` | `Boolean` | `false` | - |
-| `rangeEnd` | `Boolean` | `false` | - |
-| `outside` | `Boolean` | `false` | - |
-| `disabled` | `Boolean` | `false` | - |
-
-</ApiPart>
-
-<ApiPart index={5}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `selected` | `Boolean` | `false` |
+| `today` | `Boolean` | `false` |
+| `rangeStart` | `Boolean` | `false` |
+| `rangeMiddle` | `Boolean` | `false` |
+| `rangeEnd` | `Boolean` | `false` |
+| `outside` | `Boolean` | `false` |
+| `disabled` | `Boolean` | `false` |
 
 ### Calendar
 
 Month grids with caption and navigation.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selected` | `Date?` | - | - |
-| `onSelect` | `(Date?) -> Unit` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `defaultMonth` | `Date?` | `null` | - |
-| `numberOfMonths` | `Int` | `1` | - |
-| `startMonth` | `Date?` | `null` | - |
-| `endMonth` | `Date?` | `null` | - |
-| `showOutsideDays` | `Boolean` | `false` | - |
-| `showWeekNumber` | `Boolean` | `false` | Shows week numbers. |
-| `weekStartsOn` | `Int?` | `null` | - |
-| `disabled` | `(Date) -> Boolean` | `{ false }` | - |
-| `today` | `Date` | `remember { Date() }` | - |
-| `locale` | `Locale` | `Locale.getDefault()` | - |
-| `buttonVariant` | `ButtonVariant` | `ButtonVariant.Plain` | Button variant for the navigation buttons. |
-| `size` | `CalendarSize`: `Sm` \| `Default` \| `Lg` | `CalendarSize.Default` | Cell size and type scale: `sm`, `default` or `lg`. |
-| `captionLayout` | `CalendarCaptionLayout`: `Label` \| `Dropdown` \| `DropdownMonths` \| `DropdownYears` | `CalendarCaptionLayout.Label` | - |
-| `dayButton` | `CalendarDayButtonSlot?` | `null` | - |
-
-</ApiPart>
-
-<ApiPart index={6}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `selected` | `Date?` | - |
+| `onSelect` | `(Date?) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `defaultMonth` | `Date?` | `null` |
+| `numberOfMonths` | `Int` | `1` |
+| `startMonth` | `Date?` | `null` |
+| `endMonth` | `Date?` | `null` |
+| `showOutsideDays` | `Boolean` | `false` |
+| `showWeekNumber` | `Boolean` | `false` |
+| `weekStartsOn` | `Int?` | `null` |
+| `disabled` | `(Date) -> Boolean` | `{ false }` |
+| `today` | `Date` | `remember { Date() }` |
+| `locale` | `Locale` | `Locale.getDefault()` |
+| `buttonVariant` | `ButtonVariant` | `ButtonVariant.Plain` |
+| `size` | `CalendarSize`: `Sm` \| `Default` \| `Lg` | `CalendarSize.Default` |
+| `captionLayout` | `CalendarCaptionLayout`: `Label` \| `Dropdown` \| `DropdownMonths` \| `DropdownYears` | `CalendarCaptionLayout.Label` |
+| `dayButton` | `CalendarDayButtonSlot?` | `null` |
 
 ### CalendarDayButton
 
 The button rendered for each day, styled by its selection state.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `date` | `Date` | - | - |
-| `state` | `CalendarDayState` | - | - |
-| `onClick` | `() -> Unit` | - | Called when it is tapped. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `size` | `CalendarSize`: `Sm` \| `Default` \| `Lg` | `CalendarSize.Default` | Cell size and type scale: `sm`, `default` or `lg`. |
-| `locale` | `Locale` | `Locale.getDefault()` | - |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- Each month is a `grid` labelled with its caption.
-- Day cells have the `button` role, a full date label, and `selected` and `disabled` state.
-- On React Native and Android, the previous and next buttons are labelled with the relative month in the calendar's locale, such as "Last month" and "Next month" in English. On iOS they are labelled "Previous month" and "Next month".
-- Caption dropdowns are labelled "Choose the Month" and "Choose the Year".
-
-## Notes
-
-- Navigation arrows swap in right-to-left layouts.
-- Uses `bg-primary`, `bg-primary/10 dark:bg-primary/20`, `bg-muted` and `text-primary` tokens; light and dark follow the system appearance.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `date` | `Date` | - |
+| `state` | `CalendarDayState` | - |
+| `onClick` | `() -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `size` | `CalendarSize`: `Sm` \| `Default` \| `Lg` | `CalendarSize.Default` |
+| `locale` | `Locale` | `Locale.getDefault()` |
 
 </Only>
 

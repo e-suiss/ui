@@ -15,7 +15,9 @@ Use a checkbox for independent options that people can select in any combination
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/checkbox
@@ -27,19 +29,25 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add checkbox
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
 ```
 
-2. Copy the source into `components/ui/checkbox.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/checkbox.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -51,31 +59,29 @@ import { Checkbox } from "@/components/ui/checkbox"
 <Checkbox aria-label="Accept terms" />
 ```
 
-Leave the checkbox uncontrolled with `defaultChecked`, or control it with `checked` and `onCheckedChange`. Pair it with a visible `Label`: wrapping the checkbox in `Label` makes the whole label text clickable. To add supporting text, give the checkbox an `id` and an `aria-describedby` that points to the description element.
-
 ## Examples
 
 ### Checked
 
-A checkbox that starts checked using `defaultChecked`.
+Use `defaultChecked` to start the checkbox checked.
 
 <ComponentPreview name="checkbox-checked" />
 
 ### With label
 
-A checkbox wrapped in a `Label`, so clicking the text toggles it.
+Wrap the checkbox in a `Label` so that clicking the label text toggles it.
 
 <ComponentPreview name="checkbox-with-label" />
 
 ### With description
 
-A checkbox labelled with `htmlFor` and described by supporting text through `aria-describedby`.
+Give the checkbox an `id` that a `Label` points to with `htmlFor`, and an `aria-describedby` that points to the description element.
 
 <ComponentPreview name="checkbox-with-description" />
 
 ### Disabled
 
-Disabled checkboxes, both unchecked and checked, that ignore clicks and are skipped by Tab.
+Set `disabled` to make a checkbox, unchecked or checked, ignore clicks and leave the Tab order.
 
 <ComponentPreview name="checkbox-disabled" />
 
@@ -83,40 +89,17 @@ Disabled checkboxes, both unchecked and checked, that ignore clicks and are skip
 
 <OnlyBase base="base radix">
 
-A checkbox marked with `aria-invalid` to show a validation error.
+Set `aria-invalid` to show a validation error.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-A checkbox marked with `isInvalid` to show a validation error.
+Set `isInvalid` to show a validation error.
 
 </OnlyBase>
 
 <ComponentPreview name="checkbox-invalid" />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### Checkbox
-
-The checkbox control, rendering the box and its check indicator.
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `checked` | `boolean` | — | Used as `isSelected`, the controlled checked state. |
-| `defaultChecked` | `boolean` | — | Used as `defaultSelected`, the checked state on first render. |
-| `onCheckedChange` | `(checked: boolean) => void` | — | Called with the new checked state, alongside `onChange`. |
-| `disabled` | `boolean` | — | Used as `isDisabled`. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -137,12 +120,34 @@ Also accepts the props of the primitive part it wraps.
 
 </OnlyBase>
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot="checkbox"` on the root and `data-slot="checkbox-indicator"` on the indicator.
-- State attributes set by the primitive drive the checked and disabled styles.
-- Uses the `primary`, `primary-foreground`, `background` and `border` colors, and `opacity-50` when disabled.
-- The hit area extends beyond the visible box through an `after` pseudo-element, making the small control easier to tap.
+### Checkbox
+
+The checkbox control, rendering the box and its check indicator.
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `checked` | `boolean` | — |
+| `defaultChecked` | `boolean` | — |
+| `onCheckedChange` | `(checked: boolean) => void` | — |
+| `disabled` | `boolean` | — |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+Leave the checkbox uncontrolled with `defaultChecked`, or control it with `checked` and `onCheckedChange`.
+
+<OnlyBase base="aria">
+
+The props map to React Aria: `checked` to `isSelected`, `defaultChecked` to `defaultSelected` and `disabled` to `isDisabled`. `onCheckedChange` is called with the new checked state, alongside `onChange`.
+
+</OnlyBase>
+
+The hit area extends beyond the visible box through an `after` pseudo-element, so the small control is easier to tap. The root sets `data-slot="checkbox"` and the indicator `data-slot="checkbox-indicator"` for styling.
 
 </Only>
 
@@ -159,6 +164,10 @@ Also accepts the props of the primitive part it wraps.
 Use it for options that can be combined, such as terms acceptance or multi-select lists. For a single on/off setting that applies right away, use Switch.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -208,7 +217,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -216,7 +227,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -244,17 +255,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/checkbox.tsx`:
+4. Copy and paste the following code into `components/ui/checkbox.tsx`:
 
 <ComponentSource path="uniwind/components/ui/checkbox.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -282,17 +293,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/checkbox.tsx`:
+4. Copy and paste the following code into `components/ui/checkbox.tsx`:
 
 <ComponentSource path="nativewind/components/ui/checkbox.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-svg
@@ -320,11 +331,11 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/checkbox.tsx`:
+4. Copy and paste the following code into `components/ui/checkbox.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/checkbox.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -412,6 +423,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -488,14 +503,6 @@ fun CheckboxDemo(initial: Boolean) {
 
 </Only>
 
-<Only platform="rn">
-
-Use `checked` with `onCheckedChange` for controlled state, or `defaultChecked` for uncontrolled. Set `indeterminate` for a parent checkbox whose children are partly selected.
-
-Pair the checkbox with a `Label`: give the label a `nativeID` and the checkbox a matching `accessibilityLabelledBy`, and toggle the value from the label's `onPress`. Set `invalid` to show a destructive border.
-
-</Only>
-
 ## Examples
 
 ### Checked
@@ -506,7 +513,13 @@ Starts checked.
 
 ### With label
 
-<Only platform="rn kotlin">
+<Only platform="rn">
+
+Give the label a `nativeID` and the checkbox a matching `accessibilityLabelledBy`, and toggle the value from the label's `onPress`.
+
+</Only>
+
+<Only platform="kotlin">
 
 Linked to a `Label` that also toggles it.
 
@@ -528,84 +541,15 @@ Disabled checkboxes in both states.
 
 ### Indeterminate
 
-A select-all checkbox in the indeterminate state.
+A select-all checkbox in the indeterminate state, for a parent whose children are partly selected.
 
 <NativeExample name="checkbox-indeterminate" />
 
 ### Invalid
 
-A required checkbox with the `invalid` border.
+Set `invalid` to show a destructive border on a required checkbox.
 
 <NativeExample name="checkbox-invalid" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Checkbox
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `iconClassName` | `string` | - | Extra classes for the check icon. |
-| `invalid` | `boolean` | - | Shows a destructive border. |
-
-Also accepts the props of `React.ComponentProps<typeof CheckboxPrimitive.Root>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .toggleStyle(.checkbox)
-
-Style that creates `CheckboxStyle`.
-
-Takes no parameters.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Checkbox
-
-The checkbox control, rendering the box and its check indicator.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `checked` | `Boolean` | - | - |
-| `onCheckedChange` | `((Boolean) -> Unit)?` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
-| `invalid` | `Boolean` | `LocalFieldState.current.invalid` | Shows a destructive border. |
-| `interactionSource` | `MutableInteractionSource?` | `null` | - |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### TriStateCheckbox
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `state` | `ToggleableState` | - | - |
-| `onClick` | `(() -> Unit)?` | - | Called when it is tapped. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
-| `invalid` | `Boolean` | `LocalFieldState.current.invalid` | Shows a destructive border. |
-| `interactionSource` | `MutableInteractionSource?` | `null` | - |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -614,10 +558,62 @@ The checkbox control, rendering the box and its check indicator.
 - Has the `checkbox` role with `checked` (or `mixed` when indeterminate) and `disabled` state.
 - Link it to a visible label with `accessibilityLabelledBy`, or give it an `accessibilityLabel`.
 
-## Notes
+</Only>
 
-- Uses `bg-primary` when checked and `bg-background` with a translucent border when unchecked; in dark mode the unchecked box is filled instead of outlined.
-- Light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Checkbox
+
+The checkbox control, rendering the box and its check indicator.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `iconClassName` | `string` | - |
+| `invalid` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof CheckboxPrimitive.Root>`.
+
+Use `checked` with `onCheckedChange` for controlled state, or `defaultChecked` for uncontrolled. Set `indeterminate` for a parent checkbox whose children are partly selected. `iconClassName` adds classes to the check icon, and `invalid` shows a destructive border. In dark mode the unchecked box is filled instead of outlined.
+
+</Only>
+
+<Only platform="swift">
+
+### .toggleStyle(.checkbox)
+
+Style that creates `CheckboxStyle`.
+
+Takes no parameters.
+
+</Only>
+
+<Only platform="kotlin">
+
+### Checkbox
+
+The checkbox control, rendering the box and its check indicator.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `checked` | `Boolean` | - |
+| `onCheckedChange` | `((Boolean) -> Unit)?` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` |
+| `invalid` | `Boolean` | `LocalFieldState.current.invalid` |
+| `interactionSource` | `MutableInteractionSource?` | `null` |
+
+### TriStateCheckbox
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `state` | `ToggleableState` | - |
+| `onClick` | `(() -> Unit)?` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` |
+| `invalid` | `Boolean` | `LocalFieldState.current.invalid` |
+| `interactionSource` | `MutableInteractionSource?` | `null` |
 
 </Only>
 

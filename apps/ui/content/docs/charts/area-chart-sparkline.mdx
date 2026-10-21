@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A watchlist where each row pairs a stock's name and price with a tiny gradient area chart, tinted green when rising and red when falling. Use sparklines like these inside lists and tables where a full chart would be too much.
 
+Replace the `stocks` array and the demo `series` generator with your own symbols and price history. The tint follows the sign of each row's `change`, with both colors in `chartConfig`, and the class names on `ChartContainer` set the size. Sparklines are hidden from assistive technology and have no tooltip or keyboard support, so keep the price and percentage text next to them. Animation is off so long lists render without motion.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/area-chart-sparkline
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts area-chart-sparkline
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/area-chart-sparkline.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/area-chart-sparkline.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { AreaChartSparkline } from "@/components/charts/area-chart-sparkline"
 ```tsx
 <AreaChartSparkline />
 ```
-
-Replace the `stocks` array and the demo `series` generator with your own symbols and price history. The tint follows the sign of each row's `change`, and the two colors live in `chartConfig`. Resize the sparkline through the class names on its `ChartContainer`.
-
-## Notes
-
-Sparklines are hidden from assistive technology and have no tooltip or keyboard support, so keep the price and percentage text next to them. Animation is off so long lists render without motion.
 
 </Only>
 
@@ -75,9 +79,15 @@ Sparklines are hidden from assistive technology and have no tooltip or keyboard 
 
 Each row shows a symbol and company name, a tiny area chart without axes, the price and a colored badge with the percentage change. The sparkline turns green when the change is positive and red when it is negative, using the `up` and `down` colors in `chartConfig`. The charts are hidden from screen readers because the row text already carries the values. Each sparkline sets `isAnimationActive={false}` and draws without the enter animation.
 
+Replace the `stocks` array with your own symbols, prices and changes, and swap the generated `series` data for real price history. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +147,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -143,17 +155,17 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-3. Copy the source into `components/charts/area-chart-sparkline.tsx`:
+3. Copy and paste the following code into `components/charts/area-chart-sparkline.tsx`:
 
 <ComponentSource path="uniwind/components/charts/area-chart-sparkline.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -161,11 +173,11 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-3. Copy the source into `components/charts/area-chart-sparkline.tsx`:
+3. Copy and paste the following code into `components/charts/area-chart-sparkline.tsx`:
 
 <ComponentSource path="nativewind/components/charts/area-chart-sparkline.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -173,11 +185,11 @@ npx expo install cn
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/area-chart-sparkline.tsx`:
+2. Copy and paste the following code into `components/charts/area-chart-sparkline.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/area-chart-sparkline.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -262,6 +274,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -301,12 +317,6 @@ fun AreaSparklineExample() {
     AreaChartSparkline()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace the `stocks` array with your own symbols, prices and changes, and swap the generated `series` data for real price history. The component takes no props.
 
 </Only>
 

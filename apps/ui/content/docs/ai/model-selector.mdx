@@ -28,7 +28,15 @@ npx @esuiss/ui@latest add dropdown-menu input-group
 ## Usage
 
 ```tsx
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { InputGroupButton } from "@/components/ui/input-group"
 ```
 
@@ -52,8 +60,6 @@ import { InputGroupButton } from "@/components/ui/input-group"
   </DropdownMenuContent>
 </DropdownMenu>
 ```
-
-Set `closeOnClick` on each radio item so the menu closes once a model is picked.
 
 </OnlyBase>
 
@@ -80,8 +86,6 @@ Set `closeOnClick` on each radio item so the menu closes once a model is picked.
 </DropdownMenu>
 ```
 
-Set `closeOnClick` on each radio item so the menu closes once a model is picked.
-
 </OnlyBase>
 
 <OnlyBase base="aria">
@@ -103,11 +107,7 @@ Set `closeOnClick` on each radio item so the menu closes once a model is picked.
 </DropdownMenu>
 ```
 
-Use one radio group per provider, and set `shouldCloseOnSelect` on each radio item so the menu closes once a model is picked.
-
 </OnlyBase>
-
-Give each trigger an `aria-label` that includes the current choice, such as "Model: Claude Opus 5.5", so the value is announced along with what the menu changes.
 
 ## AI SDK
 
@@ -154,6 +154,20 @@ Each provider reads its own key in `providerOptions` and ignores the rest.
 ## API Reference
 
 See [Dropdown Menu](/docs/components/dropdown-menu#api-reference) and [Input Group](/docs/components/input-group#api-reference).
+
+Give each trigger an `aria-label` that includes the current choice, such as "Model: Claude Opus 5.5", so the value is announced along with what the menu changes.
+
+<OnlyBase base="base radix">
+
+Set `closeOnClick` on each radio item so the menu closes once a model is picked.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Use one radio group per provider, and set `shouldCloseOnSelect` on each radio item so the menu closes once a model is picked.
+
+</OnlyBase>
 
 </Only>
 

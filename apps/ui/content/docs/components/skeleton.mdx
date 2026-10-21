@@ -15,7 +15,9 @@ Combine several skeletons to sketch a layout, such as an avatar with two lines o
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/skeleton
@@ -27,15 +29,21 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add skeleton
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
-2. Copy the source into `components/ui/skeleton.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/skeleton.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -47,13 +55,11 @@ import { Skeleton } from "@/components/ui/skeleton"
 <Skeleton className="h-4 w-48" />
 ```
 
-Size every skeleton with classes such as `h-4 w-48`. Use `rounded-full` for avatars and other rounded shapes to override the default `rounded-md`.
-
 ## Examples
 
 ### Profile
 
-Sketches an avatar beside two lines of text.
+Sketches an avatar beside two lines of text. The avatar uses `rounded-full` to override the default `rounded-md`.
 
 <ComponentPreview name="skeleton-profile" />
 
@@ -69,9 +75,11 @@ Sketches a list of rows, each with an icon and two lines of text.
 
 <ComponentPreview name="skeleton-list" />
 
-## API Reference
+## Accessibility
 
-<ApiPart index={1}>
+- `Skeleton` renders an empty `div` with no role or text, so it isn't announced. Let assistive technologies know content is loading another way, for example with `aria-busy` on the region that's loading.
+
+## API Reference
 
 ### Skeleton
 
@@ -79,15 +87,7 @@ A pulsing placeholder block.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-## Accessibility
-
-- `Skeleton` renders an empty `div` with no role or text, so it isn't announced. Let assistive technologies know content is loading another way, for example with `aria-busy` on the region that's loading.
-
-## Notes
-
-- Uses `data-slot="skeleton"`, the `animate-pulse` animation and the `bg-muted` token.
+Size every skeleton with classes such as `h-4 w-48`. The skeleton sets `data-slot="skeleton"` and uses the `animate-pulse` animation.
 
 </Only>
 
@@ -102,6 +102,10 @@ Also accepts the props of `React.ComponentProps<"div">`.
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -145,7 +149,9 @@ npx @esuiss/ui@latest add skeleton --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -153,49 +159,49 @@ npx @esuiss/ui@latest add skeleton --platform kotlin
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
 ```
 
-2. Copy the source into `components/ui/skeleton.tsx`:
+2. Copy and paste the following code into `components/ui/skeleton.tsx`:
 
 <ComponentSource path="uniwind/components/ui/skeleton.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
 ```
 
-2. Copy the source into `components/ui/skeleton.tsx`:
+2. Copy and paste the following code into `components/ui/skeleton.tsx`:
 
 <ComponentSource path="nativewind/components/ui/skeleton.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
 ```
 
-2. Copy the source into `components/ui/skeleton.tsx`:
+2. Copy and paste the following code into `components/ui/skeleton.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/skeleton.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -258,6 +264,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -317,12 +327,6 @@ fun SkeletonExample() {
 
 </Only>
 
-<Only platform="rn">
-
-Set width, height and radius through `className`, for example `h-4 w-48` for a line of text or `size-12 rounded-full` for an avatar. Compose several skeletons to mirror the layout of the loaded content, then swap them for the real content once it arrives.
-
-</Only>
-
 ## Examples
 
 ### Profile
@@ -343,64 +347,50 @@ Rows with a thumbnail and two lines of text.
 
 <NativeExample name="skeleton-list" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Skeleton
-
-Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### Skeleton
-
-A pulsing placeholder block.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `cornerRadius` | `CGFloat` | `Radius.md` | - |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Skeleton
-
-A pulsing placeholder block.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `shape` | `Shape` | `RoundedCornerShape(Radius.md)` | - |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
 
 - The skeleton is a plain view with no role or label. If loading state matters to the user, announce it elsewhere, for example with a `Spinner` that has an `accessibilityLabel`.
 
-## Notes
+</Only>
 
-- Uses the `bg-muted` token.
-- The pulse runs on the UI thread through Reanimated, with a 1000 ms cycle.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Skeleton
+
+A pulsing placeholder block.
+
+Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
+
+Set width, height and radius through `className`, for example `h-4 w-48` for a line of text or `size-12 rounded-full` for an avatar. Compose several skeletons to mirror the layout of the loaded content, then swap them for the real content once it arrives. The pulse runs on the UI thread through Reanimated, with a 1000 ms cycle.
+
+</Only>
+
+<Only platform="swift">
+
+### Skeleton
+
+A pulsing placeholder block.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `cornerRadius` | `CGFloat` | `Radius.md` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### Skeleton
+
+A pulsing placeholder block.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `shape` | `Shape` | `RoundedCornerShape(Radius.md)` |
 
 </Only>
 

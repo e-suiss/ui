@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A mobile app welcome screen whose Sign in with suiss button slides up a bottom sheet, where users choose to share or hide their email before continuing. Completing the flow greets the user with a Sign out link. From small tablets up the screen sits in a phone frame; on the smallest screens it fills the section. Use it for third-party sign-in or any consent step shown as a bottom sheet.
 
+Replace `proceed`, which fakes a one-second request, with your identity provider's sign-in, and send the chosen email option along. Update the Trail Routes app name, tagline and account details, and give Continue with email a handler.
+
+The sheet behaves as a modal dialog: focus moves into it, Escape or a click on the scrim closes it, and focus returns to the trigger.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/login-sheet
@@ -25,9 +31,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks login-sheet
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +43,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Label](/docs/components/label), [Radio Group](/docs/components/radio-group), [Spinner](/docs/components/spinner).
 
-3. Copy the source into `components/blocks/login-sheet.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/login-sheet.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +62,6 @@ import { LoginSheet } from "@/components/blocks/login-sheet"
 ```tsx
 <LoginSheet />
 ```
-
-Replace `proceed`, which fakes a one-second request, with your identity provider's sign-in, and send the chosen email option along. Update the Trail Routes app name, tagline and account details, and give Continue with email a handler.
-
-## Notes
-
-The sheet behaves as a modal dialog: focus moves into it, Escape or a click on the scrim closes it, and focus returns to the trigger.
 
 </Only>
 
@@ -77,7 +83,17 @@ An app welcome screen with two buttons: Sign in with suiss and Continue with ema
 
 </Only>
 
+<Only platform="rn">
+
+Edit `EMAIL_OPTIONS` to change the email choices. Wire `onContinue` (receives `share` or `hide`) to your sign-in flow and `onContinueWithEmail` to your email sign-up screen.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +143,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Drawer]
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +153,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Drawer]
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -143,17 +161,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
 
-3. Copy the source into `components/blocks/login-sheet.tsx`:
+3. Copy and paste the following code into `components/blocks/login-sheet.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/login-sheet.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -161,17 +179,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
 
-3. Copy the source into `components/blocks/login-sheet.tsx`:
+3. Copy and paste the following code into `components/blocks/login-sheet.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/login-sheet.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-svg
@@ -179,11 +197,11 @@ npx expo install phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Radio Group](/docs/components/radio-group), [Screen](/docs/components/screen), [Spinner](/docs/components/spinner), [Text](/docs/components/text).
 
-3. Copy the source into `components/blocks/login-sheet.tsx`:
+3. Copy and paste the following code into `components/blocks/login-sheet.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/login-sheet.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -317,6 +335,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -356,12 +378,6 @@ fun LoginSheetExample() {
     LoginSheet()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Edit `EMAIL_OPTIONS` to change the email choices. Wire `onContinue` (receives `share` or `hide`) to your sign-in flow and `onContinueWithEmail` to your email sign-up screen.
 
 </Only>
 

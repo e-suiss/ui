@@ -17,7 +17,17 @@ On release the row springs into its new slot and `onValueChange` receives the ne
 
 </Only>
 
+<Only platform="kotlin">
+
+`ReorderList` is controlled: pass `value` as an array of item keys and update it in `onValueChange`. Give each `ReorderListItem` a `value` matching its key, and place a `ReorderListHandle` anywhere inside it, at the start or end. Place the list inside an `ItemGroup` with the `inset` variant for a rounded group; the lifted row then keeps the group's shape.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -67,7 +77,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Item](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -75,7 +87,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Item](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
@@ -91,17 +103,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="uniwind/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/interactions/reorder-list.tsx`:
+5. Copy and paste the following code into `components/interactions/reorder-list.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/reorder-list.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
@@ -117,17 +129,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="nativewind/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/interactions/reorder-list.tsx`:
+5. Copy and paste the following code into `components/interactions/reorder-list.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/reorder-list.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
@@ -143,11 +155,11 @@ npx expo install phosphor-react-native react-native-gesture-handler react-native
 
 <ComponentSource path="stylesheet/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/interactions/reorder-list.tsx`:
+5. Copy and paste the following code into `components/interactions/reorder-list.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/reorder-list.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -236,6 +248,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -465,19 +481,11 @@ fun ReorderListDemo(inset: Boolean) {
 
 </Only>
 
-<Only platform="rn kotlin">
-
-`ReorderList` is controlled: pass `value` as an array of item keys and update it in `onValueChange`. Give each `ReorderListItem` a `value` matching its key, and place a `ReorderListHandle` anywhere inside it, at the start or end. Place the list inside an `ItemGroup` with the `inset` variant for a rounded group; the lifted row then keeps the group's shape.
-
-</Only>
-
-Only the handle starts a drag, so the rest of the row can still be pressed or scrolled.
-
 ## Examples
 
 ### Inset
 
-Rows inside an inset `ItemGroup`.
+Place the list inside an `ItemGroup` with the `inset` variant for a rounded group. The lifted row keeps the group's shape and does not grow.
 
 <NativeExample name="reorder-list-inset" />
 
@@ -485,7 +493,7 @@ Rows inside an inset `ItemGroup`.
 
 ### Leading handle
 
-Places the handle at the start of each row.
+Place the `ReorderListHandle` at the start of each row instead of the end.
 
 <NativeExample name="reorder-list-leading-handle" />
 
@@ -497,42 +505,45 @@ The React Native tab shows 1 more example.
 
 </Only>
 
+<Only platform="rn">
+
+## Accessibility
+
+- The handle has the `button` role and offers `moveUp` and `moveDown` accessibility actions, so screen reader users can reorder without dragging.
+- Move up is omitted on the first row and move down on the last.
+
+</Only>
+
 ## API Reference
 
 <Only platform="rn">
-
-<ApiPart index={1}>
 
 ### ReorderList
 
 The root that renders items in `value` order.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string[]` | Required | Item keys in their current order. |
-| `onValueChange` | `(value: string[]) => void` | Required | Called with the new order after a move. |
-| `moveUpLabel` | `string` | `"Move up"` | Label of the move up accessibility action. Defaults to `Move up`. |
-| `moveDownLabel` | `string` | `"Move down"` | Label of the move down accessibility action. Defaults to `Move down`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string[]` | Required |
+| `onValueChange` | `(value: string[]) => void` | Required |
+| `moveUpLabel` | `string` | `"Move up"` |
+| `moveDownLabel` | `string` | `"Move down"` |
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+`ReorderList` is controlled: pass `value` as an array of item keys and update it in `onValueChange`, which is called with the new order after a move. `moveUpLabel` and `moveDownLabel` label the move accessibility actions and default to `Move up` and `Move down`. Haptics play when the drag starts (medium impact), each time the target slot changes (selection) and on release (light impact), if the app provides an adapter through `HapticsProvider`. The lift scale is skipped when reduce motion is on, and springs respect the system reduce motion setting.
 
 ### ReorderListItem
 
 One row, keyed by its `value`.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The key of this item. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | Required |
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
-
-<ApiPart index={3}>
+Give each `ReorderListItem` a `value` matching its key in the list's `value`.
 
 ### ReorderListHandle
 
@@ -540,30 +551,24 @@ The grip that starts a drag.
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
+Place the handle anywhere inside an item, at the start or end. Only the handle starts a drag, so the rest of the row can still be pressed or scrolled.
 
 </Only>
 
 <Only platform="swift">
 
-<ApiPart index={1}>
-
 ### ReorderList
 
 The root that renders items in `value` order.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ value` | `Binding<[Value]>` | - | Item keys in their current order. |
-| `row` | `(Value) -> Row` | - | - |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ value` | `Binding<[Value]>` | - |
+| `row` | `(Value) -> Row` | - |
 
 </Only>
 
 <Only platform="kotlin">
-
-<ApiPart index={1}>
 
 ### ReorderListScope
 
@@ -573,65 +578,36 @@ The root that renders items in `value` order.
 | `index` | `Int` |
 | `dragging` | `Boolean` |
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### ReorderList
 
 The root that renders items in `value` order.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `List<String>` | - | Item keys in their current order. |
-| `onValueChange` | `(List<String>) -> Unit` | - | Called with the new order after a move. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `moveUpLabel` | `String` | `"Move up"` | Label of the move up accessibility action. |
-| `moveDownLabel` | `String` | `"Move down"` | Label of the move down accessibility action. |
-| `item` | `@Composable ReorderListScope.(String) -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `List<String>` | - |
+| `onValueChange` | `(List<String>) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `moveUpLabel` | `String` | `"Move up"` |
+| `moveDownLabel` | `String` | `"Move down"` |
+| `item` | `@Composable ReorderListScope.(String) -> Unit` | - |
 
 ### ReorderListItem
 
 One row, keyed by its `value`.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
 
 ### ReorderListHandle
 
 The grip that starts a drag.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `contentDescription` | `String` | `"Reorder"` | - |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- The handle has the `button` role and offers `moveUp` and `moveDown` accessibility actions, so screen reader users can reorder without dragging.
-- Move up is omitted on the first row and move down on the last.
-
-## Notes
-
-- Haptics play when the drag starts (medium impact), each time the target slot changes (selection) and on release (light impact), if the app provides an adapter through `HapticsProvider`.
-- The dragged row shows a `bg-card` layer with a shadow, rounded inside an inset group.
-- The lift scale is skipped inside an inset group and when reduce motion is on; springs respect the system reduce motion setting.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `contentDescription` | `String` | `"Reorder"` |
 
 </Only>
 

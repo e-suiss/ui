@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A three-quarter arc tracking progress toward a goal, with the count shown in the center. Use it for goals with a clear finish line, like a reading challenge or a savings target.
 
+Set the progress as a percentage in `chartData`, or set the `domain` on `PolarAngleAxis` to your goal and pass the raw count. The center text and caption are static, so update them with the value, and set the color in `chartConfig`. There is no tooltip.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/radial-chart-progress
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts radial-chart-progress
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/radial-chart-progress.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/radial-chart-progress.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { RadialChartProgress } from "@/components/charts/radial-chart-progress"
 ```tsx
 <RadialChartProgress />
 ```
-
-Set the progress as a percentage in `chartData`, or change the `domain` on `PolarAngleAxis` to your goal and pass the raw count. Update the center text and caption, and set the color in `chartConfig`.
-
-## Notes
-
-The center text is hard-coded and not derived from the value, so update both together. There is no tooltip.
 
 </Only>
 
@@ -77,7 +81,17 @@ A `RadialBarChart` drawn from 225 to -45 degrees, with one value on a 0 to 100 `
 
 </Only>
 
+<Only platform="rn">
+
+Change the `value` in `chartData` (0 to 100) and the centered text to match it; the label and color live in `chartConfig`. The component takes no props.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +141,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +153,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/radial-chart-progress.tsx`:
+2. Copy and paste the following code into `components/charts/radial-chart-progress.tsx`:
 
 <ComponentSource path="uniwind/components/charts/radial-chart-progress.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +165,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/radial-chart-progress.tsx`:
+2. Copy and paste the following code into `components/charts/radial-chart-progress.tsx`:
 
 <ComponentSource path="nativewind/components/charts/radial-chart-progress.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +177,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/radial-chart-progress.tsx`:
+2. Copy and paste the following code into `components/charts/radial-chart-progress.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/radial-chart-progress.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +264,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +307,6 @@ fun RadialProgressExample() {
     RadialChartProgress()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Change the `value` in `chartData` (0 to 100) and the centered text to match it; the label and color live in `chartConfig`. The component takes no props.
 
 </Only>
 

@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A shopping bag page that leads with the order total, then lists each item with a photo, a quantity stepper, its price and a Remove link, followed by subtotal, shipping and total. Line items use a compact two-column layout on mobile and a four-column row on desktop. Removing everything turns the headline into an empty-bag message. Reach for it for any cart or order review screen.
 
+Replace `initialItems` with your cart lines, each with a name, variant, price, image and quantity. Persist quantity changes and removals to your cart service, and connect both Check Out buttons to your checkout. The product links point to `#details`, and the free delivery and shipping copy is placeholder text. In the empty state, Continue Shopping restores the sample items, so point it at your catalog instead.
+
+Quantities are limited to 1–10, and each stepper and Remove button is labeled with the product name. Product photos are Unsplash placeholders.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/bag-review
@@ -25,15 +31,21 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks bag-review
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the pieces it builds on: [Button](/docs/components/button), [Stepper](/docs/interactions/stepper).
 
-2. Copy the source into `components/blocks/bag-review.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/bag-review.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -44,12 +56,6 @@ import { BagReview } from "@/components/blocks/bag-review"
 ```tsx
 <BagReview />
 ```
-
-Replace `initialItems` with your cart lines, each with a name, variant, price, image and quantity. Persist quantity changes and removals to your cart service, and connect both Check Out buttons to your checkout. The product links point to `#details`, and the free delivery and shipping copy is placeholder text. In the empty state, Continue Shopping restores the sample items, so point it at your catalog instead.
-
-## Notes
-
-Quantities are limited to 1–10, and each stepper and Remove button is labeled with the product name. Product photos are Unsplash placeholders.
 
 </Only>
 
@@ -69,9 +75,15 @@ Quantities are limited to 1–10, and each stepper and Remove button is labeled 
 
 Composes `Screen`, `Stepper` from the interactions, `Button`, `Text` and `BottomBar`. Each compact row shows a thumbnail, the product name with its line price, the variant, a quantity stepper and a Remove link; tapping the thumbnail or the name opens the product details. The heading and totals update as the bag changes, and removing every item shows an empty state with a Continue Shopping button.
 
+Replace `INITIAL_ITEMS` with your cart lines. Wire `onCheckout`, `onShowDetails`, `onContinueShopping`, `onQuantityChange` and `onRemove` to your cart logic.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -121,7 +133,9 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -129,7 +143,7 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -141,17 +155,17 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/bag-review.tsx`:
+4. Copy and paste the following code into `components/blocks/bag-review.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/bag-review.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -163,17 +177,17 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/bag-review.tsx`:
+4. Copy and paste the following code into `components/blocks/bag-review.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/bag-review.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -185,11 +199,11 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/bag-review.tsx`:
+4. Copy and paste the following code into `components/blocks/bag-review.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/bag-review.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -295,6 +309,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -334,12 +352,6 @@ fun BagReviewExample() {
     BagReview()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `INITIAL_ITEMS` with your cart lines. Wire `onCheckout`, `onShowDetails`, `onContinueShopping`, `onQuantityChange` and `onRemove` to your cart logic.
 
 </Only>
 

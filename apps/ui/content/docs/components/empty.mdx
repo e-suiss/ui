@@ -15,7 +15,9 @@ Use it when a list, folder, search or page has nothing to show. Keep the title s
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/empty
@@ -27,24 +29,37 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add empty
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install class-variance-authority
 ```
 
-2. Copy the source into `components/ui/empty.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/empty.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from "@/components/ui/empty"
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty"
 import { Button } from "@/components/ui/button"
 ```
 
@@ -75,43 +90,46 @@ import { Button } from "@/components/ui/button"
 </div>
 ```
 
-`Empty` has a dashed border style but no border width by default; add `border` through `className` to show an outline. Set `EmptyMedia` to `variant="icon"` for a small icon in a tinted tile, or keep the default to render media such as a large icon or illustration as is. Links placed directly inside `EmptyDescription` are underlined.
+## Composition
+
+Use the following composition to build a `Empty`:
+
+```text
+Empty
+├── EmptyHeader
+│   ├── EmptyMedia
+│   ├── EmptyTitle
+│   └── EmptyDescription
+└── EmptyContent
+    └── EmptyDescription
+```
 
 ## Examples
 
 ### Outline
 
-An empty state with a visible dashed outline, added through `className="border"`.
+`Empty` has a dashed border style but no border width by default. Add `className="border"` to show the outline.
 
 <ComponentPreview name="empty-outline" />
 
 ### Default media
 
-An empty state with a large icon in `EmptyMedia` using the default variant.
+Keep the default `variant` of `EmptyMedia` to render media, such as a large icon or an illustration, as is.
 
 <ComponentPreview name="empty-default-media" />
 
 ### With search
 
-A not-found state with an `InputGroup` search field and a support link in `EmptyContent`.
+Put an `InputGroup` search field and a support link in `EmptyContent` for a not-found state.
 
 <ComponentPreview name="empty-with-search" />
 
+## Accessibility
+
+- `EmptyTitle` renders a `div`, not a heading. If the empty state should appear in the document outline, render a heading element inside it or pass the appropriate role and level.
+- Give interactive elements in `EmptyContent` clear accessible names.
+
 ## API Reference
-
-<Anatomy>
-
-- [Empty](#empty)
-  - [EmptyHeader](#emptyheader)
-    - [EmptyMedia](#emptymedia)
-    - [EmptyTitle](#emptytitle)
-    - [EmptyDescription](#emptydescription)
-  - [EmptyContent](#emptycontent)
-    - [EmptyDescription](#emptydescription)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### Empty
 
@@ -119,33 +137,23 @@ The centered container for the empty state.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### EmptyHeader
 
 Groups the media, title and description.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### EmptyMedia
 
 Holds an icon or image above the title.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "icon"` | `"default"` | `icon` places the icon in a small rounded `bg-muted` tile; `default` renders the media without a background. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "icon"` | `"default"` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={4}>
+`icon` places the icon in a small rounded `bg-muted` tile; `default` renders the media without a background. `EmptyMedia` sets `data-variant`.
 
 ### EmptyTitle
 
@@ -153,19 +161,13 @@ The short heading of the empty state.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### EmptyDescription
 
 Supporting text that explains the state or suggests a next step.
 
 Also accepts the props of `React.ComponentProps<"p">`.
 
-</ApiPart>
-
-<ApiPart index={6}>
+It renders a `div` element even though it accepts paragraph props. Links placed directly inside it are underlined.
 
 ### EmptyContent
 
@@ -173,19 +175,7 @@ Holds actions such as buttons, inputs or links.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-## Accessibility
-
-- `EmptyTitle` renders a `div`, not a heading. If the empty state should appear in the document outline, render a heading element inside it or pass the appropriate role and level.
-- Give interactive elements in `EmptyContent` clear accessible names.
-
-## Notes
-
-- Styling hooks: `data-slot` values `empty`, `empty-header`, `empty-icon` (on `EmptyMedia`), `empty-title`, `empty-description` and `empty-content`.
-- `EmptyMedia` also sets `data-variant`.
-- `EmptyDescription` renders a `div` element even though it accepts paragraph props.
-- Uses the `muted`, `foreground`, `muted-foreground` and `primary` tokens.
+Each part sets a `data-slot`, such as `empty-header` or `empty-content`, for styling. `EmptyMedia` uses `empty-icon`.
 
 </Only>
 
@@ -197,7 +187,17 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 Use it for empty lists, search results with no matches and first-run screens.
 
+<Only platform="rn kotlin">
+
+`EmptyMedia` has two variants: `default` shows its child as is, such as an illustration, and `icon` puts an `Icon` in a small rounded tile. Put buttons or links in `EmptyContent`.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -247,7 +247,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -255,7 +257,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -263,17 +265,17 @@ npx expo install class-variance-authority cn
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/empty.tsx`:
+3. Copy and paste the following code into `components/ui/empty.tsx`:
 
 <ComponentSource path="uniwind/components/ui/empty.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -281,11 +283,11 @@ npx expo install class-variance-authority cn
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/empty.tsx`:
+3. Copy and paste the following code into `components/ui/empty.tsx`:
 
 <ComponentSource path="nativewind/components/ui/empty.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -293,11 +295,11 @@ npx expo install class-variance-authority cn
 
 1. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-2. Copy the source into `components/ui/empty.tsx`:
+2. Copy and paste the following code into `components/ui/empty.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/empty.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -368,6 +370,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -471,11 +477,11 @@ fun EmptyDefault() {
 
 </Only>
 
-<Only platform="rn kotlin">
+## Examples
 
-`EmptyMedia` has two variants: `default` shows its child as is, such as an illustration, and `icon` puts an `Icon` in a small rounded tile. Put buttons or links in `EmptyContent`.
+### Muted
 
-</Only>
+A filled panel with only a title and description.
 
 <Only platform="rn">
 
@@ -483,265 +489,7 @@ Add a background class such as `bg-muted` to `Empty` for a filled panel.
 
 </Only>
 
-## Examples
-
-### Muted
-
-A filled panel with only a title and description.
-
 <NativeExample name="empty-muted" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Empty
-
-Centered container.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### EmptyHeader
-
-Column for media, title and description.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### EmptyMedia
-
-Decorative icon or illustration.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "icon"` | `"default"` | `default` or `icon`. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### EmptyTitle
-
-Heading.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### EmptyDescription
-
-Supporting text.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### EmptyContent
-
-Area for actions.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### Empty
-
-Centered container.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### EmptyHeader
-
-Column for media, title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### EmptyMediaVariant
-
-Values: `.default`, `.icon`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### EmptyMedia
-
-Decorative icon or illustration.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `EmptyMediaVariant`: `.default` \| `.icon` | `.default` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### EmptyTitle
-
-Heading.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `verbatim` | `String` | - | The title text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### EmptyDescription
-
-Supporting text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ description` | `LocalizedStringKey` | - | The supporting text. |
-| `verbatim` | `String` | - | The supporting text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### EmptyContent
-
-Area for actions.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### EmptyMediaVariant
-
-Values: `Default`, `Icon`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Empty
-
-Centered container.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### EmptyHeader
-
-Column for media, title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### EmptyMedia
-
-Decorative icon or illustration.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `EmptyMediaVariant`: `Default` \| `Icon` | `EmptyMediaVariant.Default` | - |
-| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### EmptyTitle
-
-Heading.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### EmptyDescription
-
-Supporting text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### EmptyContent
-
-Area for actions.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -750,9 +498,177 @@ Area for actions.
 - `EmptyTitle` has the `heading` role.
 - `EmptyMedia` is hidden from screen readers, so the title and description must carry the message.
 
-## Notes
+</Only>
 
-- Uses `bg-muted`, `text-foreground` and `text-muted-foreground` tokens; light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Empty
+
+Centered container.
+
+Also accepts the props of `ViewProps`.
+
+### EmptyHeader
+
+Column for media, title and description.
+
+Also accepts the props of `ViewProps`.
+
+### EmptyMedia
+
+Decorative icon or illustration.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "icon"` | `"default"` |
+
+Also accepts the props of `ViewProps`.
+
+### EmptyTitle
+
+Heading.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+### EmptyDescription
+
+Supporting text.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+### EmptyContent
+
+Area for actions.
+
+Also accepts the props of `ViewProps`.
+
+</Only>
+
+<Only platform="swift">
+
+### Empty
+
+Centered container.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### EmptyHeader
+
+Column for media, title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### EmptyMediaVariant
+
+Values: `.default`, `.icon`.
+
+### EmptyMedia
+
+Decorative icon or illustration.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `EmptyMediaVariant`: `.default` \| `.icon` | `.default` |
+| `content` | `() -> Content` | - |
+
+### EmptyTitle
+
+Heading.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### EmptyDescription
+
+Supporting text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### EmptyContent
+
+Area for actions.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### EmptyMediaVariant
+
+Values: `Default`, `Icon`.
+
+### Empty
+
+Centered container.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### EmptyHeader
+
+Column for media, title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### EmptyMedia
+
+Decorative icon or illustration.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `EmptyMediaVariant`: `Default` \| `Icon` | `EmptyMediaVariant.Default` |
+| `content` | `@Composable BoxScope.() -> Unit` | - |
+
+### EmptyTitle
+
+Heading.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### EmptyDescription
+
+Supporting text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### EmptyContent
+
+Area for actions.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
 
 </Only>
 

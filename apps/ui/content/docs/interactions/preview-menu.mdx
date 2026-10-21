@@ -15,7 +15,9 @@ By default, the preview shows the trigger's own content. Pass `preview` to `Prev
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/preview-menu
@@ -27,24 +29,36 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add interactions preview-menu
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react
 ```
 
-2. Copy the source into `components/interactions/preview-menu.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/interactions/preview-menu.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { PreviewMenu, PreviewMenuTrigger, PreviewMenuContent, PreviewMenuItem, PreviewMenuSeparator } from "@/components/interactions/preview-menu"
+import {
+  PreviewMenu,
+  PreviewMenuContent,
+  PreviewMenuItem,
+  PreviewMenuSeparator,
+  PreviewMenuTrigger,
+} from "@/components/interactions/preview-menu"
 ```
 
 ```tsx
@@ -70,10 +84,16 @@ import { PreviewMenu, PreviewMenuTrigger, PreviewMenuContent, PreviewMenuItem, P
 </PreviewMenu>
 ```
 
-- Compose `PreviewMenuTrigger` and `PreviewMenuContent` inside `PreviewMenu`, with `PreviewMenuItem` and `PreviewMenuSeparator` inside the content.
-- The menu is uncontrolled by default; pass `open` and `onOpenChange` to control it.
-- Set `aspectRatio` when a custom `preview` has a different shape than the trigger; otherwise the preview keeps the trigger's proportions.
-- Handle actions with `onClick` on each item. Items close the menu when chosen.
+## Composition
+
+Use the following composition to build a `PreviewMenu`:
+
+```text
+PreviewMenu
+├── PreviewMenuTrigger
+└── PreviewMenuContent
+    └── PreviewMenuItem
+```
 
 ## Examples
 
@@ -85,101 +105,9 @@ A disabled item is announced as unavailable and does not act, while the other it
 
 ### Custom preview
 
-A compact album row opens a larger custom preview through the `preview` prop and `aspectRatio`.
+A compact album row opens a larger custom preview through the `preview` prop. Set `aspectRatio` when a custom `preview` has a different shape than the trigger; otherwise the preview keeps the trigger's proportions.
 
 <ComponentPreview name="preview-menu-custom-preview" layout="padded" responsive />
-
-## API Reference
-
-<Anatomy>
-
-- [PreviewMenu](#previewmenu)
-  - [PreviewMenuTrigger](#previewmenutrigger)
-  - [PreviewMenuContent](#previewmenucontent)
-    - [PreviewMenuItem](#previewmenuitem)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### PreviewMenu
-
-The root that manages open state and measures the preview frame.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Whether the menu is open, for controlled use. |
-| `defaultOpen` | `boolean` | `false` | Whether the menu starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when the menu opens or closes. |
-| `aspectRatio` | `number` | - | The width-to-height ratio of the preview; defaults to the trigger's ratio. |
-| `children` | `React.ReactNode` | - | The trigger and content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### PreviewMenuTrigger
-
-The element that opens the menu on touch and hold or right-click.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### PreviewMenuContent
-
-The backdrop, lifted preview, and popup that holds the menu items.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `preview` | `React.ReactNode` | - | Custom content to show in the preview instead of the trigger's content. |
-| `previewClassName` | `string` | - | Classes for the clipped preview container. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### PreviewMenuItem
-
-An action in the menu.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | `"default"` | The item style; `destructive` renders the label in the destructive color. |
-
-<OnlyBase base="base radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `disabled` | `boolean` | - | Prevents the item from being chosen. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isDisabled` | `boolean` | - | Prevents the item from being chosen. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### PreviewMenuSeparator
-
-A thick divider between groups of items.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -188,11 +116,78 @@ Also accepts the props of the primitive part it wraps.
 - Disabled items set `aria-disabled` and cannot be chosen.
 - The lifted preview is `aria-hidden`, so assistive technologies read the trigger and menu only.
 
-## Notes
+## API Reference
 
-- Parts use `data-slot` values `preview-menu-trigger`, `preview-menu-backdrop`, `preview-menu-preview`, `preview-menu-content`, `preview-menu-item`, and `preview-menu-separator`. Items set `data-variant`.
-- The trigger carries `data-previewing` while open and `data-lifted` until the closing animation ends, and is invisible during that time.
-- The trigger disables text selection and the iOS touch callout so long presses open the menu.
+### PreviewMenu
+
+The root that manages open state and measures the preview frame.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `aspectRatio` | `number` | - |
+| `children` | `React.ReactNode` | - |
+
+Compose `PreviewMenuTrigger` and `PreviewMenuContent` inside `PreviewMenu`, with `PreviewMenuItem` and `PreviewMenuSeparator` inside the content. The menu is uncontrolled by default; pass `open` and `onOpenChange` to control it. `aspectRatio` is the width-to-height ratio of the preview and defaults to the trigger's ratio.
+
+### PreviewMenuTrigger
+
+The element that opens the menu on touch and hold or right-click.
+
+Also accepts the props of the primitive part it wraps.
+
+The trigger carries `data-previewing` while open and `data-lifted` until the closing animation ends, and is invisible during that time. It disables text selection and the touch callout so long presses open the menu.
+
+### PreviewMenuContent
+
+The backdrop, lifted preview, and popup that holds the menu items.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `preview` | `React.ReactNode` | - |
+| `previewClassName` | `string` | - |
+
+Also accepts the props of the primitive part it wraps.
+
+`preview` shows custom content in the preview instead of the trigger's content. `previewClassName` styles the clipped preview container.
+
+### PreviewMenuItem
+
+An action in the menu.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | `"default"` |
+
+<OnlyBase base="base radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `disabled` | `boolean` | - |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `isDisabled` | `boolean` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+Handle actions with `onClick` on each item. Items close the menu when chosen. The `destructive` variant renders the label in the destructive color.
+
+### PreviewMenuSeparator
+
+A thick divider between groups of items.
+
+Also accepts the props of the primitive part it wraps.
+
+Each part sets a `data-slot`, such as `preview-menu-content`, for styling. Items set `data-variant`.
 
 </Only>
 
@@ -209,6 +204,10 @@ Long pressing a `PreviewMenuTrigger` measures it and the menu, then animates its
 The original trigger is hidden while lifted, so the preview appears to rise out of it. With custom `preview` content, the trigger's content cross-fades into it as it grows. Pressing outside closes the menu and the preview and menu shrink back into the trigger. Use it for photos, messages or cards that benefit from a closer look before acting.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -258,7 +257,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -266,7 +267,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets
@@ -304,17 +305,17 @@ npx expo install cn react-native-reanimated react-native-safe-area-context react
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/interactions/preview-menu.tsx`:
+5. Copy and paste the following code into `components/interactions/preview-menu.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/preview-menu.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets
@@ -352,17 +353,17 @@ npx expo install cn react-native-reanimated react-native-safe-area-context react
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/interactions/preview-menu.tsx`:
+5. Copy and paste the following code into `components/interactions/preview-menu.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/preview-menu.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets
@@ -400,11 +401,11 @@ npx expo install react-native-reanimated react-native-safe-area-context react-na
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/interactions/preview-menu.tsx`:
+5. Copy and paste the following code into `components/interactions/preview-menu.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/preview-menu.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -503,6 +504,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -844,14 +849,6 @@ fun PreviewMenuPhotoGrid(withDisabled: Boolean = false, openIndex: Int? = null) 
 
 </Only>
 
-<Only platform="rn">
-
-Put a `PreviewMenuTrigger` with the element and a `PreviewMenuContent` with `PreviewMenuItem`s inside `PreviewMenu`. By default the preview repeats the trigger's children; pass `preview` to show different content, such as a larger image.
-
-Set `aspectRatio` to size the preview, for example `4 / 3`. The menu can be uncontrolled or controlled with `open`, `defaultOpen` and `onOpenChange`. `usePreviewMenu` returns `open`, `lifted` and `frame`.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -880,190 +877,6 @@ The custom preview, open on first render.
 
 <NativeExample name="preview-menu-custom-preview-open" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### PreviewMenu
-
-The root that owns the open state and preview size.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Controls whether the preview is open. |
-| `defaultOpen` | `boolean` | - | Whether the preview starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when the preview opens or closes. |
-| `aspectRatio` | `number` | - | Width-to-height ratio of the lifted preview. |
-| `children` | `React.ReactNode` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### PreviewMenuTrigger
-
-The element that opens the preview on long press.
-
-Also accepts the props of `React.ComponentProps<typeof PreviewMenuPrimitive.Trigger>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### PreviewMenuContent
-
-The scrim, the lifted preview and the menu.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `preview` | `React.ReactNode` | - | Content to show in the preview instead of the trigger's children. |
-| `previewClassName` | `string` | - | Classes for the preview container. |
-| `portalHost` | `string` | - | Name of a portal host to render into. |
-
-Also accepts the props of `React.ComponentProps<typeof PreviewMenuPrimitive.Popup>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### PreviewMenuItem
-
-A menu action.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | `"default"` | `default` or `destructive`, which uses `text-destructive`. |
-| `children` | `React.ReactNode` | - | The content. |
-
-Also accepts the props of `React.ComponentProps<typeof PreviewMenuPrimitive.Item>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### PreviewMenuSeparator
-
-A thick divider between groups of items.
-
-Also accepts the props of `React.ComponentProps<typeof PreviewMenuPrimitive.Separator>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### PreviewMenuItemVariant
-
-Values: `.default`, `.destructive`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### .previewMenu
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isPresented` | `Binding<Bool>?` | `nil` | Whether it is shown. |
-| `aspectRatio` | `CGFloat?` | `nil` | Width-to-height ratio of the lifted preview. |
-| `items` | `() -> Items` | - | - |
-| `preview` | `() -> Preview` | - | Custom content to show in the preview instead of the trigger's content. |
-
-Overloads: `previewMenu(isPresented:aspectRatio:items:)`, `previewMenu(isPresented:aspectRatio:items:preview:)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### PreviewMenuItem
-
-A menu action.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `Variant`: `.default` \| `.destructive` | `.default` | The item style; `destructive` renders the label in the destructive color. |
-| `icon` | `Image?` | `nil` | The icon. |
-| `action` | `() -> Void` | - | Called when it is tapped. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `verbatim` | `String` | - | The title text. |
-
-Overloads: `init(variant:icon:action:label:)`, `init(_:icon:variant:action:)`, `init(verbatim:icon:variant:action:)`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### PreviewMenuSeparator
-
-A thick divider between groups of items.
-
-Takes no parameters.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### PreviewMenu
-
-The root that owns the open state and preview size.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `Boolean` | - | Controls whether the preview is open. |
-| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the preview opens or closes. |
-| `trigger` | `@Composable () -> Unit` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `preview` | `(@Composable () -> Unit)?` | `null` | Custom content to show in the preview instead of the trigger's content. |
-| `aspectRatio` | `Float?` | `null` | Width-to-height ratio of the lifted preview. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### PreviewMenuItem
-
-A menu action.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onClick` | `() -> Unit` | - | Called when it is tapped. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `MenuItemVariant` | `MenuItemVariant.Default` | The item style; `destructive` renders the label in the destructive color. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-| `icon` | `ImageVector?` | `null` | The icon. |
-
-Overloads: `PreviewMenuItem(onClick, content)`, `PreviewMenuItem(text, onClick, icon)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### PreviewMenuSeparator
-
-A thick divider between groups of items.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1072,13 +885,145 @@ A thick divider between groups of items.
 - The trigger exposes `expanded` and `disabled` states.
 - The preview is hidden from screen readers; focus goes to the menu.
 
-## Notes
+</Only>
 
-- A medium impact haptic plays when the menu opens, if the app provides an adapter through `HapticsProvider`.
-- The menu uses `bg-popover` with a border that is stronger in dark mode, and the backdrop uses `bg-black/50`.
-- The preview stays within the top and bottom safe areas and leaves room for the measured height of the menu.
-- Animations respect the system reduce motion setting.
-- On iOS the content renders in a full-window overlay so it appears above native screens.
+## API Reference
+
+<Only platform="rn">
+
+### PreviewMenu
+
+The root that owns the open state and preview size.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | - |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `aspectRatio` | `number` | - |
+| `children` | `React.ReactNode` | - |
+
+Put a `PreviewMenuTrigger` with the element and a `PreviewMenuContent` with `PreviewMenuItem`s inside `PreviewMenu`. The menu can be uncontrolled or controlled with `open`, `defaultOpen` and `onOpenChange`. Set `aspectRatio` to size the preview, for example `4 / 3`. `usePreviewMenu` returns `open`, `lifted` and `frame`. A medium impact haptic plays when the menu opens, if the app provides an adapter through `HapticsProvider`.
+
+### PreviewMenuTrigger
+
+The element that opens the preview on long press.
+
+Also accepts the props of `React.ComponentProps<typeof PreviewMenuPrimitive.Trigger>`.
+
+### PreviewMenuContent
+
+The scrim, the lifted preview and the menu.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `preview` | `React.ReactNode` | - |
+| `previewClassName` | `string` | - |
+| `portalHost` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof PreviewMenuPrimitive.Popup>`.
+
+By default the preview repeats the trigger's children; pass `preview` to show different content, such as a larger image. `previewClassName` styles the preview container, and `portalHost` names a portal host to render into. The preview stays within the top and bottom safe areas and leaves room for the measured height of the menu. Animations respect the system reduce motion setting. On iOS the content renders in a full-window overlay so it appears above native screens.
+
+### PreviewMenuItem
+
+A menu action.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | `"default"` |
+| `children` | `React.ReactNode` | - |
+
+Also accepts the props of `React.ComponentProps<typeof PreviewMenuPrimitive.Item>`.
+
+### PreviewMenuSeparator
+
+A thick divider between groups of items.
+
+Also accepts the props of `React.ComponentProps<typeof PreviewMenuPrimitive.Separator>`.
+
+</Only>
+
+<Only platform="swift">
+
+### PreviewMenuItemVariant
+
+Values: `.default`, `.destructive`.
+
+### .previewMenu
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isPresented` | `Binding<Bool>?` | `nil` |
+| `aspectRatio` | `CGFloat?` | `nil` |
+| `items` | `() -> Items` | - |
+| `preview` | `() -> Preview` | - |
+
+Overloads: `previewMenu(isPresented:aspectRatio:items:)`, `previewMenu(isPresented:aspectRatio:items:preview:)`.
+
+### PreviewMenuItem
+
+A menu action.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `variant` | `Variant`: `.default` \| `.destructive` | `.default` |
+| `icon` | `Image?` | `nil` |
+| `action` | `() -> Void` | - |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(variant:icon:action:label:)`, `init(_:icon:variant:action:)`, `init(verbatim:icon:variant:action:)`.
+
+### PreviewMenuSeparator
+
+A thick divider between groups of items.
+
+Takes no parameters.
+
+</Only>
+
+<Only platform="kotlin">
+
+### PreviewMenu
+
+The root that owns the open state and preview size.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `open` | `Boolean` | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - |
+| `trigger` | `@Composable () -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `preview` | `(@Composable () -> Unit)?` | `null` |
+| `aspectRatio` | `Float?` | `null` |
+| `enabled` | `Boolean` | `true` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### PreviewMenuItem
+
+A menu action.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `onClick` | `() -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `MenuItemVariant` | `MenuItemVariant.Default` |
+| `enabled` | `Boolean` | `true` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+| `icon` | `ImageVector?` | `null` |
+
+Overloads: `PreviewMenuItem(onClick, content)`, `PreviewMenuItem(text, onClick, icon)`.
+
+### PreviewMenuSeparator
+
+A thick divider between groups of items.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
 
 </Only>
 

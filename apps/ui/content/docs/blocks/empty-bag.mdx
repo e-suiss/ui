@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 An empty shopping bag state with a short message, Sign In and Continue Shopping buttons and a row of recommended products. Adding a recommendation updates the bag icon's count and switches the message and primary action to a checkout state. Recommendations sit in one column on mobile and three on larger screens. Use it for empty carts, wish lists or saved-items screens.
 
+Replace `recommended` with products from your recommendation service, each with a name, formatted price and image. Swap the local add toggle for your cart logic, and connect Sign In, Check Out and Continue Shopping to your routes.
+
+Add buttons expose their pressed state and name the product. Product photos are Unsplash placeholders.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/empty-bag
@@ -25,9 +31,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks empty-bag
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +43,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty).
 
-3. Copy the source into `components/blocks/empty-bag.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/empty-bag.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +62,6 @@ import { EmptyBag } from "@/components/blocks/empty-bag"
 ```tsx
 <EmptyBag />
 ```
-
-Replace `recommended` with products from your recommendation service, each with a name, formatted price and image. Swap the local add toggle for your cart logic, and connect Sign In, Check Out and Continue Shopping to your routes.
-
-## Notes
-
-Add buttons expose their pressed state and name the product. Product photos are Unsplash placeholders.
 
 </Only>
 
@@ -75,9 +81,15 @@ Add buttons expose their pressed state and name the product. Product photos are 
 
 Composes `Screen`, `Empty`, `Button`, `Icon` and `Text`. Adding a recommended product with its plus button increments a badge on the bag icon and changes the title and primary button to a checkout prompt.
 
+Replace `RECOMMENDED` with your products. The component takes no props, so wire the Sign In, Check Out and Continue Shopping buttons to your own navigation.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +139,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Empty](
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +149,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Empty](
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -147,17 +161,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/empty-bag.tsx`:
+4. Copy and paste the following code into `components/blocks/empty-bag.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/empty-bag.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -169,17 +183,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/empty-bag.tsx`:
+4. Copy and paste the following code into `components/blocks/empty-bag.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/empty-bag.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -191,11 +205,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/empty-bag.tsx`:
+4. Copy and paste the following code into `components/blocks/empty-bag.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/empty-bag.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -285,6 +299,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -324,12 +342,6 @@ fun EmptyBagExample() {
     EmptyBag()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `RECOMMENDED` with your products. The component takes no props, so wire the Sign In, Check Out and Continue Shopping buttons to your own navigation.
 
 </Only>
 

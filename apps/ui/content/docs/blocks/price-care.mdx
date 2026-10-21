@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A protection plan picker: choose a device, pick a payment option for it and, for some devices, add theft and loss cover, with a live total and an Add to Bag button. A photo of the selected device sits beside the options on desktop and above them on mobile. Use it for warranties, insurance add-ons or any per-product plan.
 
+Edit `devices`; each has a name, photo, alt text and payment options with a label, price and optional theft surcharge. The theft switch only appears for Phone Pro, so change that check if other devices offer it. Give Add to Bag a handler.
+
+The total is announced when it changes. Photos are Unsplash placeholders.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/price-care
@@ -25,15 +31,21 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks price-care
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the pieces it builds on: [Button](/docs/components/button), [Label](/docs/components/label), [Radio Group](/docs/components/radio-group), [Switch](/docs/components/switch), [Toggle Group](/docs/components/toggle-group).
 
-2. Copy the source into `components/blocks/price-care.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/price-care.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -44,12 +56,6 @@ import { PriceCare } from "@/components/blocks/price-care"
 ```tsx
 <PriceCare />
 ```
-
-Edit `devices`; each has a name, photo, alt text and payment options with a label, price and optional theft surcharge. The theft switch only appears for Phone Pro, so change that check if other devices offer it. Give Add to Bag a handler.
-
-## Notes
-
-The total is announced when it changes. Photos are Unsplash placeholders.
 
 </Only>
 
@@ -71,7 +77,17 @@ A product screen with a hero photo per device, a `ToggleGroup` to pick the devic
 
 </Only>
 
+<Only platform="rn">
+
+Replace `DEVICES` with your products, options and prices. Wire `onAddToBag`, which receives the device, option, theft add-on and total. The photos are Unsplash placeholders.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -121,7 +137,9 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -129,7 +147,7 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
@@ -141,17 +159,17 @@ npx expo install cn react-native-reanimated react-native-worklets
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/price-care.tsx`:
+4. Copy and paste the following code into `components/blocks/price-care.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/price-care.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
@@ -163,17 +181,17 @@ npx expo install cn react-native-reanimated react-native-worklets
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/price-care.tsx`:
+4. Copy and paste the following code into `components/blocks/price-care.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/price-care.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -185,11 +203,11 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/price-care.tsx`:
+4. Copy and paste the following code into `components/blocks/price-care.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/price-care.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -323,6 +341,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -362,12 +384,6 @@ fun PriceCareExample() {
     PriceCare()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `DEVICES` with your products, options and prices. Wire `onAddToBag`, which receives the device, option, theft add-on and total. The photos are Unsplash placeholders.
 
 </Only>
 

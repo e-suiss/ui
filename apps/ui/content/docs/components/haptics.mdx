@@ -13,11 +13,13 @@ platforms: [rn, swift, kotlin]
 
 Components such as Amount Input, Chart and Context Menu play haptic feedback through `useHaptics()`. By default nothing happens: `HapticsProvider` lets you plug in an adapter that calls the haptics library of your choice, so the components stay free of a native dependency.
 
-The adapter has three methods: `impact(style)` with `light`, `medium`, `heavy`, `soft` or `rigid`; `selection()`; and `notification(type)` with `success`, `warning` or `error`.
-
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -61,7 +63,9 @@ npx @esuiss/ui@latest add haptics --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -73,11 +77,11 @@ npx @esuiss/ui@latest add haptics --platform kotlin
 
 <ComponentSource path="uniwind/components/primitives/haptics.tsx" plain />
 
-2. Copy the source into `components/ui/haptics.tsx`:
+2. Copy and paste the following code into `components/ui/haptics.tsx`:
 
 <ComponentSource path="uniwind/components/ui/haptics.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -87,11 +91,11 @@ npx @esuiss/ui@latest add haptics --platform kotlin
 
 <ComponentSource path="nativewind/components/primitives/haptics.tsx" plain />
 
-2. Copy the source into `components/ui/haptics.tsx`:
+2. Copy and paste the following code into `components/ui/haptics.tsx`:
 
 <ComponentSource path="nativewind/components/ui/haptics.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -101,11 +105,11 @@ npx @esuiss/ui@latest add haptics --platform kotlin
 
 <ComponentSource path="stylesheet/components/primitives/haptics.tsx" plain />
 
-2. Copy the source into `components/ui/haptics.tsx`:
+2. Copy and paste the following code into `components/ui/haptics.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/haptics.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -165,6 +169,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -642,14 +650,6 @@ fun HapticsControlsDemo(enabled: Boolean) {
 
 </Only>
 
-<Only platform="rn">
-
-Wrap your app in `HapticsProvider` and pass an `adapter` object that implements `impact`, `selection` and `notification`. Set `enabled={false}` to turn all feedback off, for example from a user setting.
-
-Call `useHaptics()` in your own components to get the same methods. Without a provider, or when disabled, they do nothing.
-
-</Only>
-
 ## Examples
 
 <Only platform="rn swift">
@@ -672,6 +672,12 @@ Feedback while dragging items in a reorder list.
 
 The same controls with haptics turned off.
 
+<Only platform="rn">
+
+Set `enabled={false}` on `HapticsProvider` to turn all feedback off, for example from a user setting.
+
+</Only>
+
 <NativeExample name="haptics-disabled" />
 
 <Only platform="kotlin">
@@ -684,57 +690,40 @@ The React Native tab shows 1 more example.
 
 <Only platform="rn">
 
-<ApiPart index={1}>
-
 ### HapticsProvider
 
 Supplies the adapter to every component below it.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `adapter` | `HapticsAdapter \| null` | - | Object with `impact`, `selection` and `notification` methods. |
-| `enabled` | `boolean` | `true` | Turns feedback on or off. Defaults to `true`. |
-| `children` | `React.ReactNode` | - | The content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `adapter` | `HapticsAdapter \| null` | - |
+| `enabled` | `boolean` | `true` |
+| `children` | `React.ReactNode` | - |
 
-</ApiPart>
+Wrap your app in `HapticsProvider` and pass an `adapter` object that calls your haptics library. The adapter has three methods: `impact(style)` with `light`, `medium`, `heavy`, `soft` or `rigid`; `selection()`; and `notification(type)` with `success`, `warning` or `error`. The types `HapticsAdapter`, `HapticsImpactStyle` and `HapticsNotificationType` are exported for typing your adapter.
+
+Call `useHaptics()` in your own components to get the same methods. Without a provider, or when disabled, they do nothing. Haptics have no visual output; pair important feedback with a visible change.
 
 </Only>
 
 <Only platform="swift">
 
-<ApiPart index={1}>
-
 ### .haptics
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ enabled` | `Bool` | - | Turns feedback on or off. |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ enabled` | `Bool` | - |
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### ProvideHaptics
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `enabled` | `Boolean` | - | Turns feedback on or off. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Notes
-
-- The types `HapticsAdapter`, `HapticsImpactStyle` and `HapticsNotificationType` are exported for typing your adapter.
-- Haptics have no visual output; pair important feedback with a visible change.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `enabled` | `Boolean` | - |
+| `content` | `@Composable () -> Unit` | - |
 
 </Only>
 

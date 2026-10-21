@@ -73,8 +73,6 @@ const [error, ...frames] = stack.split("\n").map((line) => line.trim())
 </Trace>
 ```
 
-The title truncates, so repeat the full error at the top of the content. Frames from `node_modules` stay muted, so your own frames stand out.
-
 ## Examples
 
 ### Frame links
@@ -111,6 +109,8 @@ Map the other tool states as in [Tool](/docs/ai/tool).
 ## API Reference
 
 See [Trace](/docs/components/trace) and [Code Block](/docs/components/code-block).
+
+The title truncates, so repeat the full error at the top of the content. Frames from `node_modules` stay muted, so your own frames stand out.
 
 </Only>
 

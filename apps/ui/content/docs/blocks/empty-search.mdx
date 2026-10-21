@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A search page that lists matching suggestions as you type, and shows a no-results message with suggested queries when nothing matches. An empty field shows an idle prompt instead. Use it for site search, command search or any search screen that needs a helpful empty state.
 
+Replace the `suggestions` array and the `matches` computation with results from your search API; the demo only matches queries that start with book. The query starts as book neo so the no-results state shows on load, so start it empty in your app.
+
+The clear button returns focus to the field, and the empty-state message is announced when it changes.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/empty-search
@@ -25,9 +31,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks empty-search
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +43,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty).
 
-3. Copy the source into `components/blocks/empty-search.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/empty-search.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +62,6 @@ import { EmptySearch } from "@/components/blocks/empty-search"
 ```tsx
 <EmptySearch />
 ```
-
-Replace the `suggestions` array and the `matches` computation with results from your search API; the demo only matches queries that start with book. The query starts as book neo so the no-results state shows on load, so start it empty in your app.
-
-## Notes
-
-The clear button returns focus to the field, and the empty-state message is announced when it changes.
 
 </Only>
 
@@ -75,9 +81,15 @@ The clear button returns focus to the field, and the empty-state message is anno
 
 Composes `Screen`, `Input`, `Empty`, `Button`, `Icon` and `Text`. Typing filters the suggestions list, the clear button empties the field and refocuses it, and when nothing matches the screen shows a no-results message with suggestion buttons that fill in the query.
 
+Replace `SUGGESTIONS` and the prefix matching with results from your search service. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +139,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Empty](
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +149,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Empty](
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -147,17 +161,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/empty-search.tsx`:
+4. Copy and paste the following code into `components/blocks/empty-search.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/empty-search.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -169,17 +183,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/empty-search.tsx`:
+4. Copy and paste the following code into `components/blocks/empty-search.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/empty-search.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -191,11 +205,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/empty-search.tsx`:
+4. Copy and paste the following code into `components/blocks/empty-search.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/empty-search.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -297,6 +311,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -336,12 +354,6 @@ fun EmptySearchExample() {
     EmptySearch()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `SUGGESTIONS` and the prefix matching with results from your search service. The component takes no props.
 
 </Only>
 

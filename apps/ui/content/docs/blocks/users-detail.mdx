@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A user directory with members on the left and the selected user's profile, sessions and security settings on the right, switched with tabs. Admins can change a role, sign out sessions, toggle security options and send a password reset link. It combines `Sidebar` navigation with a `SplitView`, so on mobile the list and detail show one at a time. Use it for team members, customers or any record with tabbed details.
 
+Replace `users`, `roles` and `initialSessions` with your data. In the sample every user shares one session list, and Department and Joined are hard-coded, so load these per user. Connect the role change, session sign-outs, security switches and reset button to your user management API.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/users-detail
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks users-detail
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +41,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Item](/docs/components/item), [Select](/docs/components/select), [Sidebar](/docs/components/sidebar), [Split View](/docs/patterns/split-view), [Switch](/docs/components/switch), [Toggle Group](/docs/components/toggle-group).
 
-3. Copy the source into `components/blocks/users-detail.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/users-detail.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,8 +60,6 @@ import { UsersDetail } from "@/components/blocks/users-detail"
 ```tsx
 <UsersDetail />
 ```
-
-Replace `users`, `roles` and `initialSessions` with your data. In the sample every user shares one session list, and Department and Joined are hard-coded, so load these per user. Connect the role change, session sign-outs, security switches and reset button to your user management API.
 
 </Only>
 
@@ -71,9 +79,15 @@ Replace `users`, `roles` and `initialSessions` with your data. In the sample eve
 
 A `SplitView` lists users with an `Avatar` and status, and the detail pane shows the selected user's header and a `ToggleGroup` for Profile, Sessions and Security. Profile lists details with a role `Picker`, Sessions lets you sign out one device or all others, and Security has `Switch` rows and a password reset `Button`. The admin `TabBar` switches sections.
 
+Replace `USERS`, `ROLES` and `INITIAL_SESSIONS` with your data. Use `onRoleChange`, `onSignOut`, `onSignOutAll`, `onSecurityChange`, `onSendPasswordReset` and `onNavigate` to call your API.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -123,7 +137,9 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -131,7 +147,7 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -143,17 +159,17 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/users-detail.tsx`:
+4. Copy and paste the following code into `components/blocks/users-detail.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/users-detail.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -165,17 +181,17 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/users-detail.tsx`:
+4. Copy and paste the following code into `components/blocks/users-detail.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/users-detail.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -187,11 +203,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/users-detail.tsx`:
+4. Copy and paste the following code into `components/blocks/users-detail.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/users-detail.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -343,6 +359,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -382,12 +402,6 @@ fun UsersDetailExample() {
     UsersDetail()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `USERS`, `ROLES` and `INITIAL_SESSIONS` with your data. Use `onRoleChange`, `onSignOut`, `onSignOutAll`, `onSecurityChange`, `onSendPasswordReset` and `onNavigate` to call your API.
 
 </Only>
 

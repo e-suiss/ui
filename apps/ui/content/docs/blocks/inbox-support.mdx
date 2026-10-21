@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A help desk inbox with Open, Pending, Solved and All views and live counts, a ticket list with priority badges and a detail pane for replying or marking a ticket solved. Sending a reply moves the ticket to Pending. On mobile the panes show one at a time with a back button. A good base for support queues, moderation queues or any triage workflow.
 
+Replace `initialTickets` with your tickets, each with an id, title, device, status, priority, requester and avatar hue; `priorityClass` maps priorities to badge colors. Connect the reply and Mark as solved actions to your help desk API. Every ticket shows the same hard-coded customer message and timestamp, so load the real conversation.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/inbox-support
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks inbox-support
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +41,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Split View](/docs/patterns/split-view), [Textarea](/docs/components/textarea), [Toggle Group](/docs/components/toggle-group).
 
-3. Copy the source into `components/blocks/inbox-support.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/inbox-support.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,8 +60,6 @@ import { InboxSupport } from "@/components/blocks/inbox-support"
 ```tsx
 <InboxSupport />
 ```
-
-Replace `initialTickets` with your tickets, each with an id, title, device, status, priority, requester and avatar hue; `priorityClass` maps priorities to badge colors. Connect the reply and Mark as solved actions to your help desk API. Every ticket shows the same hard-coded customer message and timestamp, so load the real conversation.
 
 </Only>
 
@@ -71,9 +79,15 @@ Replace `initialTickets` with your tickets, each with an id, title, device, stat
 
 A help desk screen built on `SplitView`, with a sidebar of queues, a list of tickets showing the requester `Avatar`, priority and device, and a detail view. In the detail view a `ToggleGroup` changes the ticket status, a `Textarea` takes a reply, Send and set pending sends it and moves the ticket to Pending, and Mark as solved closes it.
 
+Replace `INITIAL_TICKETS` with your tickets. Wire `onViewChange`, `onStatusChange` and `onReply` to your help desk backend; the screen also updates its own ticket list.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -123,7 +137,9 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -131,7 +147,7 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -143,17 +159,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/inbox-support.tsx`:
+4. Copy and paste the following code into `components/blocks/inbox-support.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/inbox-support.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -165,17 +181,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/inbox-support.tsx`:
+4. Copy and paste the following code into `components/blocks/inbox-support.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/inbox-support.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -187,11 +203,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/inbox-support.tsx`:
+4. Copy and paste the following code into `components/blocks/inbox-support.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/inbox-support.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -325,6 +341,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -364,12 +384,6 @@ fun InboxSupportExample() {
     InboxSupport()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `INITIAL_TICKETS` with your tickets. Wire `onViewChange`, `onStatusChange` and `onReply` to your help desk backend; the screen also updates its own ticket list.
 
 </Only>
 

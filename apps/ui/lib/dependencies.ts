@@ -67,7 +67,7 @@ function piece(name: string): Piece {
 }
 
 const INSTALL_COMMAND =
-  /^\d+\. Install the dependencies and add the [^\n]*\n+```bash title="Terminal"\n(npm install[^\n]*)$/m
+  /^\d+\. Install the following dependencies and add the [^\n]*\n+```bash title="Terminal"\n(npm install[^\n]*)$/m
 
 async function installCommand(text: () => Promise<string>) {
   return (await text()).match(INSTALL_COMMAND)?.[1]

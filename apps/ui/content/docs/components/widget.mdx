@@ -15,7 +15,9 @@ With `resizable`, a corner handle lets people drag the widget to another size. W
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/widget
@@ -27,20 +29,36 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add widget
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
-2. Copy the source into `components/ui/widget.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/widget.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Widget, WidgetHeader, WidgetIcon, WidgetTitle, WidgetAction, WidgetDescription, WidgetValue, WidgetContent, WidgetFooter } from "@/components/ui/widget"
+import {
+  Widget,
+  WidgetAction,
+  WidgetContent,
+  WidgetDescription,
+  WidgetFooter,
+  WidgetHeader,
+  WidgetIcon,
+  WidgetTitle,
+  WidgetValue,
+} from "@/components/ui/widget"
 ```
 
 ```tsx
@@ -59,47 +77,59 @@ import { Widget, WidgetHeader, WidgetIcon, WidgetTitle, WidgetAction, WidgetDesc
 </Widget>
 ```
 
-Use `size` with `onSizeChange` to control the size, or `defaultSize` to set where an uncontrolled widget starts. Without either, a resizable widget starts `small` and a fixed widget is `auto`. Limit the sizes a drag can snap to with `sizes`.
+## Composition
 
-Set `resizable="free"` to follow the pointer without snapping; the widget stays between the smallest size and the largest allowed size. Double-click the handle to return to the starting size.
+Use the following composition to build a `Widget`:
 
-Adapt the content to the current size with the `group/widget` group and `data-size`, for example `group-data-[size=small]/widget:hidden`.
+```text
+Widget
+├── WidgetHeader
+│   ├── WidgetIcon
+│   ├── WidgetTitle
+│   └── WidgetAction
+├── WidgetContent
+│   ├── WidgetValue
+│   └── WidgetDescription
+├── WidgetFooter
+├── WidgetValue
+└── WidgetDescription
+```
 
 ## Examples
 
 ### Sales
 
-Shows a resizable widget whose chart and list adapt to each size.
+Shows a resizable widget whose chart and list adapt to each size. Adapt the content to the current size with the `group/widget` group and `data-size`, for example `group-data-[size=small]/widget:hidden`.
 
 <ComponentPreview name="widget-sales" />
 
 ### Kitchen
 
-Places the resize handle inside the widget's corner.
+Set `handle="inside"` to place the resize handle inside the widget's corner.
 
 <ComponentPreview name="widget-kitchen" />
 
 ### Reservations
 
-Limits resizing to the `small` and `medium` sizes.
+Use the `sizes` prop to limit resizing to the `small` and `medium` sizes.
 
 <ComponentPreview name="widget-reservations" />
 
 ### Weekly report
 
-Starts at `extra-large` and reveals extra content only at that size.
+Starts at `extra-large` with `defaultSize` and reveals extra content only at that size.
 
 <ComponentPreview name="widget-weekly-report" layout="padded" />
 
 ### Free resize
 
-Resizes freely with the pointer instead of snapping to sizes.
+Set `resizable="free"` to follow the pointer without snapping. The widget stays between the smallest size and the largest allowed size.
 
 <ComponentPreview name="widget-free-resize" layout="padded" />
 
 ### Auto resize
 
-Fills its parent with `auto`, and snaps to fixed sizes when dragged.
+Set `size` to `auto` to fill the parent. The widget still snaps to fixed sizes when dragged.
 
 <ComponentPreview name="widget-auto-resize" layout="padded" />
 
@@ -111,7 +141,7 @@ Centers the icon, title and description with `align="center"`.
 
 ### Sizes
 
-Shows each fixed size side by side.
+Shows each fixed `size` side by side.
 
 <ComponentPreview name="widget-sizes" layout="padded" />
 
@@ -121,47 +151,36 @@ Arranges fixed widgets in a grid as a dashboard.
 
 <ComponentPreview name="widget-dashboard" layout="padded" />
 
+## Accessibility
+
+- `WidgetIcon` is hidden from assistive technologies, so make sure the title conveys its meaning.
+- The resize handle is hidden from assistive technologies and works with a pointer only. Offer another way to change the size, such as a control that sets `size`, if it matters.
+
 ## API Reference
-
-<Anatomy>
-
-- [Widget](#widget)
-  - [WidgetHeader](#widgetheader)
-    - [WidgetIcon](#widgeticon)
-    - [WidgetTitle](#widgettitle)
-    - [WidgetAction](#widgetaction)
-  - [WidgetContent](#widgetcontent)
-    - [WidgetValue](#widgetvalue)
-    - [WidgetDescription](#widgetdescription)
-  - [WidgetFooter](#widgetfooter)
-  - [WidgetValue](#widgetvalue)
-  - [WidgetDescription](#widgetdescription)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### Widget
 
 The rounded card that sets the size, alignment and resize behavior.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `WidgetSize \| "auto"` | - | Controls the current size, or `auto` to fill the parent. |
-| `defaultSize` | `WidgetSize \| "auto"` | - | Sets the starting size when uncontrolled; double-clicking the handle also returns to it. |
-| `onSizeChange` | `(size: WidgetSize \| "auto") => void` | - | Called with the new size when a drag snaps to a different size or the size is reset. |
-| `sizes` | `WidgetSize[]` | `["small", "medium", "large", "extra-large"]` | Lists the sizes a drag can snap to; the largest also caps free resizing. |
-| `resizable` | `boolean \| "free"` | `false` | Adds a resize handle; `true` snaps to `sizes`, and `free` follows the pointer. |
-| `handle` | `"inside" \| "outside"` | `"outside"` | Places the resize handle `inside` or `outside` the bottom corner. |
-| `align` | `"start" \| "center"` | `"start"` | Centers the content horizontally and vertically when set to `center`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `WidgetSize \| "auto"` | - |
+| `defaultSize` | `WidgetSize \| "auto"` | - |
+| `onSizeChange` | `(size: WidgetSize \| "auto") => void` | - |
+| `sizes` | `WidgetSize[]` | `["small", "medium", "large", "extra-large"]` |
+| `resizable` | `boolean \| "free"` | `false` |
+| `handle` | `"inside" \| "outside"` | `"outside"` |
+| `align` | `"start" \| "center"` | `"start"` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
 `WidgetSize` is `"small" | "medium" | "large" | "extra-large"`, exported from `@/components/ui/widget`.
 
-</ApiPart>
+Use `size` with `onSizeChange` to control the size, or `defaultSize` to set where an uncontrolled widget starts. Without either, a resizable widget starts `small` and a fixed widget is `auto`. `onSizeChange` is called with the new size when a drag snaps to a different size or the size is reset. `sizes` lists the sizes a drag can snap to; the largest also caps free resizing.
 
-<ApiPart index={2}>
+`resizable` adds a resize handle: `true` snaps to `sizes`, and `free` follows the pointer. Double-click the handle to return to the starting size. The handle is visible on hover and always visible on touch screens, and it mirrors in right-to-left layouts. Size changes animate over `500ms`, and the animation is removed when reduced motion is preferred. `align="center"` centers the content horizontally and vertically.
+
+`Widget` sets `data-size` and `data-align`, and `data-resizing` while dragging. It's also a `@container/widget` container for container queries. Each part sets a `data-slot`, such as `widget-handle` or `widget-header`, for styling.
 
 ### WidgetHeader
 
@@ -169,23 +188,17 @@ A row that holds the icon, title and action.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### WidgetIcon
 
 A decorative icon, shown on a tile in the `default` and `lg` sizes.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"default" \| "sm" \| "lg"` | `"default"` | Sets the icon size: `sm` without a tile, or `default` and `lg` on a rounded tile. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` |
 
 Also accepts the props of `React.ComponentProps<"span">`.
 
-</ApiPart>
-
-<ApiPart index={4}>
+`sm` shows the icon without a tile.
 
 ### WidgetTitle
 
@@ -193,19 +206,11 @@ The widget's title, truncated to one line.
 
 Also accepts the props of `React.ComponentProps<"p">`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### WidgetAction
 
 A slot at the end of the header for a control; hidden when centered.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### WidgetDescription
 
@@ -213,19 +218,11 @@ Secondary text that explains the content.
 
 Also accepts the props of `React.ComponentProps<"p">`.
 
-</ApiPart>
-
-<ApiPart index={7}>
-
 ### WidgetValue
 
 A large figure in tabular numbers, such as a total or temperature.
 
 Also accepts the props of `React.ComponentProps<"p">`.
-
-</ApiPart>
-
-<ApiPart index={8}>
 
 ### WidgetContent
 
@@ -233,29 +230,11 @@ A flexible column that fills the remaining space.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={9}>
-
 ### WidgetFooter
 
 Small secondary text pinned to the bottom of the widget.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-## Accessibility
-
-- `WidgetIcon` is hidden from assistive technologies, so make sure the title conveys its meaning.
-- The resize handle is hidden from assistive technologies and works with a pointer only. Offer another way to change the size, such as a control that sets `size`, if it matters.
-
-## Notes
-
-- `Widget` sets `data-size` and `data-align`, and `data-resizing` while dragging. It's also a `@container/widget` container for container queries.
-- Parts carry `data-slot` attributes such as `widget`, `widget-container`, `widget-handle`, `widget-preview` and `widget-header`.
-- The handle is visible on hover and always visible on touch screens. It mirrors in right-to-left layouts.
-- Size changes animate over `500ms`, and the animation is removed when reduced motion is preferred.
 
 </Only>
 
@@ -271,7 +250,17 @@ With `resizable`, a corner handle lets the user drag the widget between sizes: a
 
 </Only>
 
+<Only platform="swift">
+
+Compose the content from `WidgetHeader` (with `WidgetIcon`, `WidgetTitle` and `WidgetAction`), then `WidgetValue`, `WidgetDescription` or `WidgetContent`, and `WidgetFooter`, which sticks to the bottom. Plain strings passed to `WidgetContent` and `WidgetFooter` are wrapped in `Text`.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -321,7 +310,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -329,7 +320,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
@@ -345,17 +336,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="uniwind/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/ui/widget.tsx`:
+5. Copy and paste the following code into `components/ui/widget.tsx`:
 
 <ComponentSource path="uniwind/components/ui/widget.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
@@ -371,17 +362,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="nativewind/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/ui/widget.tsx`:
+5. Copy and paste the following code into `components/ui/widget.tsx`:
 
 <ComponentSource path="nativewind/components/ui/widget.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
@@ -397,11 +388,11 @@ npx expo install phosphor-react-native react-native-gesture-handler react-native
 
 <ComponentSource path="stylesheet/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/ui/widget.tsx`:
+5. Copy and paste the following code into `components/ui/widget.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/widget.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -492,6 +483,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -612,24 +607,6 @@ fun WidgetWeather() {
 
 </Only>
 
-<Only platform="rn swift">
-
-Compose the content from `WidgetHeader` (with `WidgetIcon`, `WidgetTitle` and `WidgetAction`), then `WidgetValue`, `WidgetDescription` or `WidgetContent`, and `WidgetFooter`, which sticks to the bottom. Plain strings passed to `WidgetContent` and `WidgetFooter` are wrapped in `Text`.
-
-</Only>
-
-<Only platform="rn kotlin">
-
-The size is uncontrolled with `defaultSize`, or controlled with `size` and `onSizeChange`. Use `sizes` to limit which sizes the user can pick. A non-resizable widget defaults to `auto`; a resizable one defaults to `small`.
-
-</Only>
-
-<Only platform="rn">
-
-`useWidget` returns the current `size` and `align` so custom content can adapt to the widget size.
-
-</Only>
-
 ## Examples
 
 ### Sizes
@@ -652,7 +629,7 @@ A resizable widget with the handle drawn inside the corner.
 
 ### Limited sizes
 
-Resizing limited to `small` and `medium`.
+Use `sizes` to limit resizing to `small` and `medium`.
 
 <NativeExample name="widget-limited-sizes" />
 
@@ -660,7 +637,7 @@ Resizing limited to `small` and `medium`.
 
 <Only platform="rn kotlin">
 
-Controls the size with `size` and `onSizeChange`.
+Controls the size with `size` and `onSizeChange`. Without them the size is uncontrolled, starting at `defaultSize`; a non-resizable widget defaults to `auto` and a resizable one to `small`.
 
 </Only>
 
@@ -692,474 +669,6 @@ Several auto-sized widgets arranged in a grid.
 
 <NativeExample name="widget-dashboard" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Widget
-
-The card surface and optional resize handle.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Classes merged onto the root element. |
-| `size` | `WidgetSize \| "auto"` | - | Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`. |
-| `defaultSize` | `WidgetSize \| "auto"` | - | Initial size when uncontrolled. |
-| `onSizeChange` | `(size: WidgetSize \| "auto") => void` | - | Called with the new size after a resize. |
-| `sizes` | `WidgetSize[]` | `ALL_SIZES` | Sizes the user can resize to. Defaults to all four. |
-| `resizable` | `boolean` | `false` | Shows a drag handle for resizing. |
-| `handle` | `WidgetHandlePlacement` | `"outside"` | Handle placement: `outside` the corner or `inside` it. Defaults to `outside`. |
-| `align` | `WidgetAlign` | `"start"` | `start` or `center` content alignment. |
-| `resizeLabel` | `string` | `"Resize widget"` | Accessibility label for the handle. Defaults to "Resize widget". |
-
-Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### WidgetHeader
-
-Row for the icon, title and action.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Classes merged onto the root element. |
-
-Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### WidgetIcon
-
-Icon frame in `default`, `sm` or `lg` size.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Classes merged onto the root element. |
-| `iconClassName` | `string` | - | Classes applied to the icon inside. |
-| `size` | `"default" \| "sm" \| "lg"` | `"default"` | `default`, `sm` or `lg`. |
-
-Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### WidgetTitle
-
-Single-line heading.
-
-Also accepts the props of `Text`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### WidgetAction
-
-Trailing slot in the header; hidden when centered.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Classes merged onto the root element. |
-
-Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### WidgetDescription
-
-Secondary text.
-
-Also accepts the props of `Text`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### WidgetValue
-
-Large number with tabular figures.
-
-Also accepts the props of `Text`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### WidgetContent
-
-Flexible body area that clips overflow.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Classes merged onto the root element. |
-
-Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### WidgetFooter
-
-Small secondary text and icons pinned to the bottom.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Classes merged onto the root element. |
-
-Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### WidgetSize
-
-Values: `.small`, `.medium`, `.large`, `.extraLarge`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### WidgetAlign
-
-Values: `.start`, `.center`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### WidgetHandlePlacement
-
-Values: `.inside`, `.outside`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### Widget
-
-The card surface and optional resize handle.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ size` | `WidgetSize?`: `.small` \| `.medium` \| `.large` \| `.extraLarge` | `.small` | Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`. |
-| `align` | `WidgetAlign`: `.start` \| `.center` | `.start` | `start` or `center` content alignment. |
-| `content` | `() -> Content` | - | The content. |
-| `size` | `Binding<WidgetSize>` | - | Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`. |
-| `sizes` | `[WidgetSize]` | `WidgetSize.allCases` | Sizes the user can resize to. |
-| `editing` | `Bool` | - | - |
-| `handle` | `WidgetHandlePlacement`: `.inside` \| `.outside` | `.outside` | Handle placement: `outside` the corner or `inside` it. |
-| `resetSize` | `WidgetSize?`: `.small` \| `.medium` \| `.large` \| `.extraLarge` | `nil` | - |
-
-Overloads: `init(_:align:content:)`, `init(size:sizes:editing:handle:align:resetSize:content:)`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### WidgetHeader
-
-Row for the icon, title and action.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### WidgetIconSize
-
-Values: `.default`, `.sm`, `.lg`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### WidgetIcon
-
-Icon frame in `default`, `sm` or `lg` size.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `WidgetIconSize`: `.default` \| `.sm` \| `.lg` | `.default` | Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### WidgetTitle
-
-Single-line heading.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `verbatim` | `String` | - | The title text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### WidgetAction
-
-Trailing slot in the header; hidden when centered.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### WidgetDescription
-
-Secondary text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ description` | `LocalizedStringKey` | - | The supporting text. |
-| `verbatim` | `String` | - | The supporting text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### WidgetValue
-
-Large number with tabular figures.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ value` | `LocalizedStringKey` | - | The current value. |
-| `verbatim` | `String` | - | The current value. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### WidgetContent
-
-Flexible body area that clips overflow.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### WidgetFooter
-
-Small secondary text and icons pinned to the bottom.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-| `_ text` | `LocalizedStringKey` | - | The text. |
-| `verbatim` | `String` | - | The text. |
-
-Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### WidgetSize
-
-Values: `Auto`, `Small`, `Medium`, `Large`, `ExtraLarge`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### WidgetHandlePlacement
-
-Values: `Inside`, `Outside`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### WidgetAlign
-
-Values: `Start`, `Center`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### WidgetIconSize
-
-Values: `Default`, `Sm`, `Lg`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### WidgetScope
-
-| Property | Type |
-| --- | --- |
-| `size` | `WidgetSize` |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### Widget
-
-The card surface and optional resize handle.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `size` | `WidgetSize?`: `Auto` \| `Small` \| `Medium` \| `Large` \| `ExtraLarge` | `null` | Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`. |
-| `defaultSize` | `WidgetSize?`: `Auto` \| `Small` \| `Medium` \| `Large` \| `ExtraLarge` | `null` | Initial size when uncontrolled. |
-| `onSizeChange` | `((WidgetSize) -> Unit)?` | `null` | Called with the new size after a resize. |
-| `sizes` | `List<WidgetSize>` | `DefaultWidgetSizes` | Sizes the user can resize to. |
-| `resizable` | `Boolean` | `false` | Shows a drag handle for resizing. |
-| `handle` | `WidgetHandlePlacement`: `Inside` \| `Outside` | `WidgetHandlePlacement.Outside` | Handle placement: `outside` the corner or `inside` it. |
-| `align` | `WidgetAlign`: `Start` \| `Center` | `WidgetAlign.Start` | `start` or `center` content alignment. |
-| `content` | `@Composable WidgetScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### WidgetHeader
-
-Row for the icon, title and action.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### WidgetIcon
-
-Icon frame in `default`, `sm` or `lg` size.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `size` | `WidgetIconSize`: `Default` \| `Sm` \| `Lg` | `WidgetIconSize.Default` | Controlled size: `small`, `medium`, `large`, `extra-large` or `auto`. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### WidgetTitle
-
-Single-line heading.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### WidgetAction
-
-Trailing slot in the header; hidden when centered.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### WidgetDescription
-
-Secondary text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### WidgetValue
-
-Large number with tabular figures.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### WidgetContent
-
-Flexible body area that clips overflow.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={14}>
-
-### WidgetFooter
-
-Small secondary text and icons pinned to the bottom.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1169,11 +678,333 @@ Small secondary text and icons pinned to the bottom.
 - `WidgetIcon` and the resize preview outline are hidden from assistive technology.
 - Size animations respect the system reduce motion setting.
 
-## Notes
+</Only>
 
-- Uses `bg-muted` for the surface, `bg-secondary` for icon frames, and `text-muted-foreground/50` for the handle, which turns `text-primary` while dragging.
-- The handle and drag direction mirror in right-to-left layouts.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Widget
+
+The card surface and optional resize handle.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | - |
+| `size` | `WidgetSize \| "auto"` | - |
+| `defaultSize` | `WidgetSize \| "auto"` | - |
+| `onSizeChange` | `(size: WidgetSize \| "auto") => void` | - |
+| `sizes` | `WidgetSize[]` | `ALL_SIZES` |
+| `resizable` | `boolean` | `false` |
+| `handle` | `WidgetHandlePlacement` | `"outside"` |
+| `align` | `WidgetAlign` | `"start"` |
+| `resizeLabel` | `string` | `"Resize widget"` |
+
+Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
+
+`resizeLabel` is the accessibility label of the handle. The handle and drag direction mirror in right-to-left layouts. `useWidget` returns the current `size` and `align` so custom content can adapt to the widget size.
+
+### WidgetHeader
+
+Row for the icon, title and action.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | - |
+
+Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
+
+### WidgetIcon
+
+Icon frame in `default`, `sm` or `lg` size.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | - |
+| `iconClassName` | `string` | - |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` |
+
+Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
+
+### WidgetTitle
+
+Single-line heading.
+
+Also accepts the props of `Text`.
+
+### WidgetAction
+
+Trailing slot in the header; hidden when centered.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | - |
+
+Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
+
+### WidgetDescription
+
+Secondary text.
+
+Also accepts the props of `Text`.
+
+### WidgetValue
+
+Large number with tabular figures.
+
+Also accepts the props of `Text`.
+
+### WidgetContent
+
+Flexible body area that clips overflow.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | - |
+
+Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
+
+Plain strings passed to `WidgetContent` and `WidgetFooter` are wrapped in `Text`.
+
+### WidgetFooter
+
+Small secondary text and icons pinned to the bottom.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | - |
+
+Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
+
+</Only>
+
+<Only platform="swift">
+
+### WidgetSize
+
+Values: `.small`, `.medium`, `.large`, `.extraLarge`.
+
+### WidgetAlign
+
+Values: `.start`, `.center`.
+
+### WidgetHandlePlacement
+
+Values: `.inside`, `.outside`.
+
+### Widget
+
+The card surface and optional resize handle.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ size` | `WidgetSize?`: `.small` \| `.medium` \| `.large` \| `.extraLarge` | `.small` |
+| `align` | `WidgetAlign`: `.start` \| `.center` | `.start` |
+| `content` | `() -> Content` | - |
+| `size` | `Binding<WidgetSize>` | - |
+| `sizes` | `[WidgetSize]` | `WidgetSize.allCases` |
+| `editing` | `Bool` | - |
+| `handle` | `WidgetHandlePlacement`: `.inside` \| `.outside` | `.outside` |
+| `resetSize` | `WidgetSize?`: `.small` \| `.medium` \| `.large` \| `.extraLarge` | `nil` |
+
+Overloads: `init(_:align:content:)`, `init(size:sizes:editing:handle:align:resetSize:content:)`.
+
+### WidgetHeader
+
+Row for the icon, title and action.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### WidgetIconSize
+
+Values: `.default`, `.sm`, `.lg`.
+
+### WidgetIcon
+
+Icon frame in `default`, `sm` or `lg` size.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `size` | `WidgetIconSize`: `.default` \| `.sm` \| `.lg` | `.default` |
+| `content` | `() -> Content` | - |
+
+### WidgetTitle
+
+Single-line heading.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### WidgetAction
+
+Trailing slot in the header; hidden when centered.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### WidgetDescription
+
+Secondary text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### WidgetValue
+
+Large number with tabular figures.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ value` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### WidgetContent
+
+Flexible body area that clips overflow.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### WidgetFooter
+
+Small secondary text and icons pinned to the bottom.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+| `_ text` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### WidgetSize
+
+Values: `Auto`, `Small`, `Medium`, `Large`, `ExtraLarge`.
+
+### WidgetHandlePlacement
+
+Values: `Inside`, `Outside`.
+
+### WidgetAlign
+
+Values: `Start`, `Center`.
+
+### WidgetIconSize
+
+Values: `Default`, `Sm`, `Lg`.
+
+### WidgetScope
+
+| Property | Type |
+| --- | --- |
+| `size` | `WidgetSize` |
+
+### Widget
+
+The card surface and optional resize handle.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `size` | `WidgetSize?`: `Auto` \| `Small` \| `Medium` \| `Large` \| `ExtraLarge` | `null` |
+| `defaultSize` | `WidgetSize?`: `Auto` \| `Small` \| `Medium` \| `Large` \| `ExtraLarge` | `null` |
+| `onSizeChange` | `((WidgetSize) -> Unit)?` | `null` |
+| `sizes` | `List<WidgetSize>` | `DefaultWidgetSizes` |
+| `resizable` | `Boolean` | `false` |
+| `handle` | `WidgetHandlePlacement`: `Inside` \| `Outside` | `WidgetHandlePlacement.Outside` |
+| `align` | `WidgetAlign`: `Start` \| `Center` | `WidgetAlign.Start` |
+| `content` | `@Composable WidgetScope.() -> Unit` | - |
+
+### WidgetHeader
+
+Row for the icon, title and action.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
+
+### WidgetIcon
+
+Icon frame in `default`, `sm` or `lg` size.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `size` | `WidgetIconSize`: `Default` \| `Sm` \| `Lg` | `WidgetIconSize.Default` |
+| `content` | `@Composable () -> Unit` | - |
+
+### WidgetTitle
+
+Single-line heading.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### WidgetAction
+
+Trailing slot in the header; hidden when centered.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
+
+### WidgetDescription
+
+Secondary text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### WidgetValue
+
+Large number with tabular figures.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### WidgetContent
+
+Flexible body area that clips overflow.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
+
+### WidgetFooter
+
+Small secondary text and icons pinned to the bottom.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
 
 </Only>
 

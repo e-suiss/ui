@@ -9,13 +9,15 @@ platforms: [web]
 
 <ComponentPreview name="segment-picker-demo" responsive />
 
-`SegmentPicker` presents a small set of mutually exclusive options, such as a time period or a view mode. On desktop it renders a suiss/ui `ToggleGroup` in which exactly one segment stays pressed; clicking the pressed segment keeps it selected. On mobile (below `48rem`, via `useIsMobile`) it renders a `NativeSelect` so the choice fits narrow screens and uses the platform picker.
+`SegmentPicker` presents a small set of mutually exclusive options, such as a time period or a view mode. On desktop it renders a suiss/ui `ToggleGroup` in which exactly one segment stays pressed. On mobile it renders a `NativeSelect` so the choice fits narrow screens and uses the platform picker.
 
-Each `SegmentPickerItem` becomes a toggle on desktop and an `option` on mobile. Use it for two to five short options that change how content is displayed.
+Use it for two to five short options that change how content is displayed.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/segment-picker
@@ -27,15 +29,21 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns segment-picker
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the pieces it builds on: [Native Select](/docs/components/native-select), [Toggle Group](/docs/components/toggle-group), `use-mobile`.
 
-2. Copy the source into `components/patterns/segment-picker.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/segment-picker.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -47,117 +55,70 @@ import { SegmentPicker, SegmentPickerItem } from "@/components/patterns/segment-
 <SegmentPicker defaultValue="week" aria-label="Period">{periods}</SegmentPicker>
 ```
 
-- The value is uncontrolled by default; use `defaultValue`, or `value` with `onValueChange` to control it. `onValueChange` fires only when the selection changes.
-- Without a value, no segment is pressed and the mobile select shows an empty disabled option.
-- On mobile each option shows `label`, then `aria-label`, then string children, then `value`. Give icon-only segments an `aria-label`, and segments with mixed content a `label`.
-- `variant` and `spacing` apply only on desktop. On mobile, `lg` falls back to the default size.
-- With `name`, desktop renders a hidden input so the value is submitted with a form.
+## Composition
+
+Use the following composition to build a `SegmentPicker`:
+
+```text
+SegmentPicker
+└── SegmentPickerItem
+```
 
 ## Examples
 
 ### Without value
 
-Starts with no segment pressed.
+Omit `value` and `defaultValue` to start with no segment pressed. The mobile select then shows an empty disabled option.
 
 <ComponentPreview name="segment-picker-without-value" responsive />
 
 ### Outline
 
-Uses the `outline` variant.
+Set `variant="outline"` to give the desktop segments a border.
 
 <ComponentPreview name="segment-picker-outline" responsive />
 
 ### Spaced
 
-Separates the segments with `spacing`.
+Set `spacing` to put a gap between the desktop segments; `0` joins them.
 
 <ComponentPreview name="segment-picker-spaced" responsive />
 
 ### Sizes
 
-Shows the `sm`, `default` and `lg` sizes.
+Use the `size` prop to choose `sm`, `default` or `lg`. On mobile, `lg` falls back to the default size.
 
 <ComponentPreview name="segment-picker-sizes" responsive />
 
 ### With icons
 
-Uses icon-only segments named by `aria-label`.
+Give icon-only segments an `aria-label`. It names the segment and is also used as the mobile option text.
 
 <ComponentPreview name="segment-picker-with-icons" responsive />
 
 ### With icons and text
 
-Combines icons and text, with `label` for the mobile option text.
+Combines icons and text. Set `label` on segments with mixed content to give the mobile option its text.
 
 <ComponentPreview name="segment-picker-with-icons-and-text" responsive />
 
 ### Disabled item
 
-Disables a single segment.
+Set `disabled` on a `SegmentPickerItem` to prevent selecting that segment.
 
 <ComponentPreview name="segment-picker-disabled-item" responsive />
 
 ### Disabled
 
-Disables every segment.
+Set `disabled` on `SegmentPicker` to disable every segment.
 
 <ComponentPreview name="segment-picker-disabled" responsive />
 
 ### Controlled
 
-Owns the value in state with `value` and `onValueChange`.
+Control the value with `value` and `onValueChange`. `onValueChange` fires only when the selection changes; clicking the pressed segment keeps it selected.
 
 <ComponentPreview name="segment-picker-controlled" responsive />
-
-## API Reference
-
-<Anatomy>
-
-- [SegmentPicker](#segmentpicker)
-  - [SegmentPickerItem](#segmentpickeritem)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### SegmentPicker
-
-The root that renders the toggle group or native select and holds the value.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | - | The selected value when controlled. |
-| `defaultValue` | `string` | - | The initially selected value when uncontrolled. |
-| `onValueChange` | `(value: string) => void` | - | Called with the new value when the user selects a different segment. |
-| `variant` | `"default" \| "outline"` | `"default"` | The visual style of the desktop segments. |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | The control size; `lg` maps to the default size on mobile. |
-| `spacing` | `number` | `0` | The gap between desktop segments; `0` joins them. |
-| `id` | `string` | - | The ID of the group on desktop or the select on mobile. |
-| `name` | `string` | - | The field name submitted with a form. |
-| `disabled` | `boolean` | - | Disables every segment. |
-| `className` | `string` | - | Classes applied to the group on desktop or the select on mobile. |
-| `children` | `React.ReactNode` | - | The `SegmentPickerItem` elements. |
-| `aria-label` | `string` | - | The accessible name of the control. |
-| `aria-describedby` | `string` | - | The ID of an element that describes the control. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SegmentPickerItem
-
-One option, rendered as a toggle on desktop and an `option` on mobile.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The value selected by this segment. |
-| `label` | `string` | - | Text for the mobile option, and the desktop content when there are no children. |
-| `disabled` | `boolean` | - | Prevents selecting this segment. |
-| `className` | `string` | - | Classes applied to the desktop toggle. |
-| `children` | `React.ReactNode` | - | The desktop segment content, such as text or an icon. |
-| `aria-label` | `string` | - | The accessible name of the segment, also used as mobile option text. |
-
-</ApiPart>
 
 ## Accessibility
 
@@ -165,8 +126,45 @@ One option, rendered as a toggle on desktop and an `option` on mobile.
 - Disabled segments are disabled buttons and cannot be selected.
 - On mobile the control is a native `select`.
 
-## Notes
+## API Reference
 
-Styling hooks: `data-slot="segment-picker"` and `segment-picker-item`. `SegmentPickerItem` throws when used outside `SegmentPicker`.
+### SegmentPicker
+
+The root that renders the toggle group or native select and holds the value.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | - |
+| `defaultValue` | `string` | - |
+| `onValueChange` | `(value: string) => void` | - |
+| `variant` | `"default" \| "outline"` | `"default"` |
+| `size` | `"sm" \| "default" \| "lg"` | `"default"` |
+| `spacing` | `number` | `0` |
+| `id` | `string` | - |
+| `name` | `string` | - |
+| `disabled` | `boolean` | - |
+| `className` | `string` | - |
+| `children` | `React.ReactNode` | - |
+| `aria-label` | `string` | - |
+| `aria-describedby` | `string` | - |
+
+The value is uncontrolled by default; use `defaultValue`, or `value` with `onValueChange` to control it. `variant` and `spacing` apply only on desktop. `id` and `className` go to the group on desktop and to the select on mobile. With `name`, desktop renders a hidden input so the value is submitted with a form.
+
+The picker switches to the native select below `48rem`, via `useIsMobile`. It sets `data-slot="segment-picker"`, and each item sets `data-slot="segment-picker-item"`, for styling.
+
+### SegmentPickerItem
+
+One option, rendered as a toggle on desktop and an `option` on mobile.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | Required |
+| `label` | `string` | - |
+| `disabled` | `boolean` | - |
+| `className` | `string` | - |
+| `children` | `React.ReactNode` | - |
+| `aria-label` | `string` | - |
+
+On mobile each option shows `label`, then `aria-label`, then string children, then `value`. On desktop, `label` is the segment content when there are no children, and `className` goes to the toggle. `SegmentPickerItem` throws when used outside `SegmentPicker`.
 
 </Only>

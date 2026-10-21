@@ -15,7 +15,9 @@ Use it to reserve space for images, video or embeds so the layout does not shift
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/aspect-ratio
@@ -27,15 +29,21 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add aspect-ratio
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
-2. Copy the source into `components/ui/aspect-ratio.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/aspect-ratio.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -55,48 +63,39 @@ import { AspectRatio } from "@/components/ui/aspect-ratio"
 </div>
 ```
 
-Pass `ratio` as a number, typically written as a division such as `16 / 9`, `4 / 3` or `1`. Give media inside it `className="size-full object-cover"` to fill the frame. Add `overflow-hidden` and a radius class to clip the content to rounded corners.
-
 ## Examples
 
 ### Square
 
-A `1:1` frame using `ratio={1}`.
+Set `ratio={1}` for a `1:1` frame.
 
 <ComponentPreview name="aspect-ratio-square" />
 
 ### Portrait
 
-A taller-than-wide frame using `ratio={3 / 4}`.
+Set `ratio={3 / 4}` for a frame that is taller than it is wide.
 
 <ComponentPreview name="aspect-ratio-portrait" />
 
 ### Placeholder
 
-A `4:3` frame holding centered placeholder text instead of an image.
+A `4:3` frame that holds centered placeholder text instead of an image.
 
 <ComponentPreview name="aspect-ratio-placeholder" />
 
 ## API Reference
 
-<ApiPart index={1}>
-
 ### AspectRatio
 
 The ratio-locked container.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ratio` | `number` | Required | Width divided by height, for example `16 / 9`. Required. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `ratio` | `number` | Required |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-## Notes
-
-- Styling hook: `data-slot="aspect-ratio"`.
-- The ratio is passed through the `--ratio` CSS custom property and applied with the Tailwind class `aspect-(--ratio)`.
+Pass `ratio` as width divided by height, typically written as a division such as `16 / 9`, `4 / 3` or `1`. The ratio is passed through the `--ratio` CSS custom property and applied with the `aspect-(--ratio)` class. Give media inside it `className="size-full object-cover"` to fill the frame, and add `overflow-hidden` and a radius class to clip the content to rounded corners. Style it through `data-slot="aspect-ratio"`.
 
 </Only>
 
@@ -113,6 +112,10 @@ Also accepts the props of `React.ComponentProps<"div">`.
 Use it for images, video thumbnails and placeholders that must not stretch.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -156,7 +159,9 @@ npx @esuiss/ui@latest add aspect-ratio --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -176,11 +181,11 @@ npx @esuiss/ui@latest add aspect-ratio --platform kotlin
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-2. Copy the source into `components/ui/aspect-ratio.tsx`:
+2. Copy and paste the following code into `components/ui/aspect-ratio.tsx`:
 
 <ComponentSource path="uniwind/components/ui/aspect-ratio.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -198,11 +203,11 @@ npx @esuiss/ui@latest add aspect-ratio --platform kotlin
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-2. Copy the source into `components/ui/aspect-ratio.tsx`:
+2. Copy and paste the following code into `components/ui/aspect-ratio.tsx`:
 
 <ComponentSource path="nativewind/components/ui/aspect-ratio.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -220,11 +225,11 @@ npx @esuiss/ui@latest add aspect-ratio --platform kotlin
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-2. Copy the source into `components/ui/aspect-ratio.tsx`:
+2. Copy and paste the following code into `components/ui/aspect-ratio.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/aspect-ratio.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -291,6 +296,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -407,19 +416,13 @@ fun AspectRatioPhoto(width: Dp?, ratio: Float) {
 
 </Only>
 
-<Only platform="rn">
-
-Pass `ratio` as width divided by height, such as `16 / 9`. It defaults to `1`. Size the content inside with `h-full w-full`, and put rounding or clipping on a parent view.
-
-</Only>
-
 ## Examples
 
 ### Square
 
 <Only platform="rn">
 
-A square image with `ratio={1}`.
+Set `ratio={1}` for a square image.
 
 </Only>
 
@@ -429,7 +432,7 @@ A square image with `ratio={1}`.
 
 <Only platform="rn">
 
-A tall image with `ratio={9 / 16}`.
+Set `ratio={9 / 16}` for a tall image.
 
 </Only>
 
@@ -441,67 +444,57 @@ A placeholder surface with an icon instead of an image.
 
 <NativeExample name="aspect-ratio-placeholder" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### AspectRatio
-
-A view that keeps its width and height at a fixed ratio.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ratio` | `number` | `1` | Width divided by height, such as `16 / 9`. |
-| `render` | `React.ReactElement \| ((props, state) => React.ReactElement)` | - | Element to render in place of the default `View`. |
-
-Also accepts the props of `View`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### AspectRatio
-
-A view that keeps its width and height at a fixed ratio.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ratio` | `CGFloat` | `1` | Width divided by height, such as `16 / 9`. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### AspectRatio
-
-A view that keeps its width and height at a fixed ratio.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ratio` | `Float` | - | Width divided by height, such as `16 / 9`. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
 
 - The view adds no role; give images their own `accessibilityLabel`.
+
+</Only>
+
+## API Reference
+
+<Only platform="rn">
+
+### AspectRatio
+
+A view that keeps its width and height at a fixed ratio.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `ratio` | `number` | `1` |
+| `render` | `React.ReactElement \| ((props, state) => React.ReactElement)` | - |
+
+Also accepts the props of `View`.
+
+Pass `ratio` as width divided by height, such as `16 / 9`. Size the content inside with `h-full w-full`, and put rounding or clipping on a parent view. Use `render` to render another element in place of the default `View`.
+
+</Only>
+
+<Only platform="swift">
+
+### AspectRatio
+
+A view that keeps its width and height at a fixed ratio.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `ratio` | `CGFloat` | `1` |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### AspectRatio
+
+A view that keeps its width and height at a fixed ratio.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `ratio` | `Float` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable BoxScope.() -> Unit` | - |
 
 </Only>
 

@@ -15,7 +15,9 @@ Use an accordion to shorten long pages of related content, such as FAQs or setti
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/accordion
@@ -27,24 +29,35 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add accordion
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react class-variance-authority
 ```
 
-2. Copy the source into `components/ui/accordion.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/accordion.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 ```
 
 <OnlyBase base="base">
@@ -61,10 +74,6 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
   </Accordion>
 </div>
 ```
-
-Give each `AccordionItem` a unique `value`. By default only one panel is open at a time; opening another closes the previous one. Set `multiple` on `Accordion` to let several panels stay open.
-
-The open state is an array of item values. Use `defaultValue` (for example `["shipping"]`) for uncontrolled use, or `value` with `onValueChange` to control it.
 
 </OnlyBase>
 
@@ -83,10 +92,6 @@ The open state is an array of item values. Use `defaultValue` (for example `["sh
 </div>
 ```
 
-Give each `AccordionItem` a unique `value`. Set `type` on `Accordion`: `"single"` keeps one panel open at a time, and `"multiple"` lets several stay open. With `"single"`, add `collapsible` so the open panel can be closed again.
-
-With `type="single"` the open state is one item value; with `type="multiple"` it is an array. Use `defaultValue` (for example `"shipping"` or `["shipping"]`) for uncontrolled use, or `value` with `onValueChange` to control it.
-
 </OnlyBase>
 
 <OnlyBase base="aria">
@@ -104,17 +109,24 @@ With `type="single"` the open state is one item value; with `type="multiple"` it
 </div>
 ```
 
-Give each `AccordionItem` a unique `id`. By default only one panel is open at a time; opening another closes the previous one. Set `allowsMultipleExpanded` on `Accordion` to let several panels stay open.
-
-The open state is a set of item ids. Use `defaultExpandedKeys` (for example `["shipping"]`) for uncontrolled use, or `expandedKeys` with `onExpandedChange` to control it.
-
 </OnlyBase>
+
+## Composition
+
+Use the following composition to build a `Accordion`:
+
+```text
+Accordion
+└── AccordionItem
+    ├── AccordionTrigger
+    └── AccordionContent
+```
 
 ## Examples
 
 ### Filled
 
-The `filled` variant places the items on a rounded `bg-muted` surface.
+Set `variant="filled"` to place the items on a rounded `bg-muted` surface.
 
 <ComponentPreview name="accordion-filled" layout="top" />
 
@@ -122,13 +134,13 @@ The `filled` variant places the items on a rounded `bg-muted` surface.
 
 <OnlyBase base="base radix">
 
-Opens an item on first render with `defaultValue`.
+Use `defaultValue` to open an item on first render.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-Opens an item on first render with `defaultExpandedKeys`.
+Use `defaultExpandedKeys` to open an item on first render.
 
 </OnlyBase>
 
@@ -138,141 +150,23 @@ Opens an item on first render with `defaultExpandedKeys`.
 
 <OnlyBase base="base">
 
-Keeps several panels open at once with `multiple`.
+Set `multiple` to keep several panels open at once.
 
 </OnlyBase>
 
 <OnlyBase base="radix">
 
-Keeps several panels open at once with `type="multiple"`.
+Set `type="multiple"` to keep several panels open at once.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-Keeps several panels open at once with `allowsMultipleExpanded`.
+Set `allowsMultipleExpanded` to keep several panels open at once.
 
 </OnlyBase>
 
 <ComponentPreview name="accordion-multiple" layout="top" />
-
-## API Reference
-
-<Anatomy>
-
-- [Accordion](#accordion)
-  - [AccordionItem](#accordionitem)
-    - [AccordionTrigger](#accordiontrigger)
-    - [AccordionContent](#accordioncontent)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Accordion
-
-The root that groups items and manages which panels are open.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "filled"` | `"default"` | Visual style. `default` is plain with dividers; `filled` adds a rounded `bg-muted` container. |
-
-<OnlyBase base="base">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `multiple` | `boolean` | `false` | Lets several panels stay open at once. |
-| `defaultValue` | `any[]` | — | The values of the items open on first render. |
-| `value` | `any[]` | — | The controlled open items. Pass it with `onValueChange`. |
-| `onValueChange` | `(value: any[]) => void` | — | Called when an item opens or closes. |
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type` | `"single" \| "multiple"` | — | Required. Whether one or several panels can be open at once. |
-| `collapsible` | `boolean` | `false` | With `type="single"`, lets the open panel close again. |
-| `defaultValue` | `string \| string[]` | — | The open item on first render: a value for `"single"`, an array for `"multiple"`. |
-| `value` | `string \| string[]` | — | The controlled open item or items. Pass it with `onValueChange`. |
-| `onValueChange` | `(value: string \| string[]) => void` | — | Called when an item opens or closes. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `allowsMultipleExpanded` | `boolean` | `false` | Lets several panels stay open at once. |
-| `defaultExpandedKeys` | `Iterable<Key>` | — | The ids of the items open on first render. |
-| `expandedKeys` | `Iterable<Key>` | — | The controlled open items. Pass it with `onExpandedChange`. |
-| `onExpandedChange` | `(keys: Set<Key>) => void` | — | Called when an item opens or closes. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AccordionItem
-
-A single section that pairs a trigger with its panel.
-
-<OnlyBase base="base">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `any` | — | Identifies the item in the open state. |
-| `disabled` | `boolean` | `false` | Stops the item from opening or closing. |
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | — | Required. Identifies the item in the open state. |
-| `disabled` | `boolean` | `false` | Stops the item from opening or closing. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | `Key` | `value` | Identifies the item in the expanded keys. |
-| `value` | `string` | — | Used as the `id` when `id` is not set. |
-| `isDisabled` | `boolean` | `disabled` | Stops the item from opening or closing. |
-| `disabled` | `boolean` | — | Used as `isDisabled` when it is not set. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AccordionTrigger
-
-The button, inside a heading, that toggles its item's panel and shows the caret indicator.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AccordionContent
-
-The collapsible panel holding the item's content.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -281,29 +175,158 @@ Also accepts the props of the primitive part it wraps.
 - Triggers are reachable with Tab; `Enter` and `Space` toggle the focused panel.
 - Disabled triggers receive `aria-disabled` and are dimmed with `opacity-50`.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot="accordion"`, `"accordion-item"`, `"accordion-trigger"`, `"accordion-trigger-icon"` and `"accordion-content"`.
+### Accordion
+
+The root that groups items and manages which panels are open.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "filled"` | `"default"` |
 
 <OnlyBase base="base">
 
-- The panel animates with `animate-accordion-down` and `animate-accordion-up` on `data-open` and `data-closed`.
+| Prop | Type | Default |
+| --- | --- | --- |
+| `multiple` | `boolean` | `false` |
+| `defaultValue` | `any[]` | — |
+| `value` | `any[]` | — |
+| `onValueChange` | `(value: any[]) => void` | — |
 
 </OnlyBase>
 
 <OnlyBase base="radix">
 
-- The panel animates with `animate-accordion-down` and `animate-accordion-up` on `data-state="open"` and `data-state="closed"`.
+| Prop | Type | Default |
+| --- | --- | --- |
+| `type` | `"single" \| "multiple"` | — |
+| `collapsible` | `boolean` | `false` |
+| `defaultValue` | `string \| string[]` | — |
+| `value` | `string \| string[]` | — |
+| `onValueChange` | `(value: string \| string[]) => void` | — |
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-- The panel animates open with `animate-accordion-down` inside an expanded item, and renders its content only while the item is expanded.
+| Prop | Type | Default |
+| --- | --- | --- |
+| `allowsMultipleExpanded` | `boolean` | `false` |
+| `defaultExpandedKeys` | `Iterable<Key>` | — |
+| `expandedKeys` | `Iterable<Key>` | — |
+| `onExpandedChange` | `(keys: Set<Key>) => void` | — |
 
 </OnlyBase>
 
-- `className` on `AccordionContent` applies to the inner padded wrapper, not the animated panel.
+Also accepts the props of the primitive part it wraps.
+
+The `default` variant is plain with dividers; `filled` adds a rounded `bg-muted` container.
+
+<OnlyBase base="base">
+
+Only one panel is open at a time by default, and opening another closes the previous one. The open state is an array of item values. Use `defaultValue`, such as `["shipping"]`, for uncontrolled use, or `value` with `onValueChange` to control it. `onValueChange` is called when an item opens or closes.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+`type` is required: `"single"` keeps one panel open at a time, and `"multiple"` lets several stay open. With `"single"`, add `collapsible` so the open panel can be closed again. The open state is one item value with `"single"` and an array with `"multiple"`. Use `defaultValue`, such as `"shipping"` or `["shipping"]`, for uncontrolled use, or `value` with `onValueChange` to control it. `onValueChange` is called when an item opens or closes.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Only one panel is open at a time by default, and opening another closes the previous one. The open state is a set of item ids. Use `defaultExpandedKeys`, such as `["shipping"]`, for uncontrolled use, or `expandedKeys` with `onExpandedChange` to control it. `onExpandedChange` is called when an item opens or closes.
+
+</OnlyBase>
+
+### AccordionItem
+
+A single section that pairs a trigger with its panel.
+
+<OnlyBase base="base">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `any` | — |
+| `disabled` | `boolean` | `false` |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | — |
+| `disabled` | `boolean` | `false` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `id` | `Key` | `value` |
+| `value` | `string` | — |
+| `isDisabled` | `boolean` | `disabled` |
+| `disabled` | `boolean` | — |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base">
+
+Give each item a unique `value`; it identifies the item in the open state. `disabled` stops the item from opening or closing.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Each item needs a unique `value`; it identifies the item in the open state. `disabled` stops the item from opening or closing.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Give each item a unique `id`; it identifies the item in the expanded keys. `value` is used as the `id` when `id` is not set, and `disabled` as `isDisabled`. `isDisabled` stops the item from opening or closing.
+
+</OnlyBase>
+
+### AccordionTrigger
+
+The button, inside a heading, that toggles its item's panel and shows the caret indicator.
+
+Also accepts the props of the primitive part it wraps.
+
+### AccordionContent
+
+The collapsible panel holding the item's content.
+
+Also accepts the props of the primitive part it wraps.
+
+`className` applies to the inner padded wrapper, not the animated panel.
+
+<OnlyBase base="base">
+
+The panel animates with `animate-accordion-down` and `animate-accordion-up` on `data-open` and `data-closed`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+The panel animates with `animate-accordion-down` and `animate-accordion-up` on `data-state="open"` and `data-state="closed"`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The panel animates open with `animate-accordion-down` inside an expanded item, and renders its content only while the item is expanded.
+
+</OnlyBase>
+
+Each part sets a `data-slot`, such as `accordion-item` or `accordion-trigger-icon`, for styling.
 
 </Only>
 
@@ -320,6 +343,10 @@ The `default` variant draws items on the page background separated by hairlines.
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -369,7 +396,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -377,7 +406,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -401,17 +430,17 @@ npx expo install class-variance-authority cn phosphor-react-native react-native-
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/accordion.tsx`:
+4. Copy and paste the following code into `components/ui/accordion.tsx`:
 
 <ComponentSource path="uniwind/components/ui/accordion.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -435,17 +464,17 @@ npx expo install class-variance-authority cn phosphor-react-native react-native-
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/accordion.tsx`:
+4. Copy and paste the following code into `components/ui/accordion.tsx`:
 
 <ComponentSource path="nativewind/components/ui/accordion.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -469,11 +498,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/accordion.tsx`:
+4. Copy and paste the following code into `components/ui/accordion.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/accordion.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -548,6 +577,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -694,20 +727,6 @@ fun AccordionSingle(variant: AccordionVariant, defaultValue: String) {
 
 </Only>
 
-<Only platform="rn swift">
-
-Give each `AccordionItem` a `value`. By default only one item is open at a time; set `multiple` to let several stay open.
-
-</Only>
-
-<Only platform="rn">
-
-Use `defaultValue` (an array of item values) for uncontrolled state, or `value` with `onValueChange` to control it. Set `disabled` on the root or on a single item to block toggling, and `keepMounted` to keep closed panels mounted.
-
-`accordionVariants` is also exported if you need the classes elsewhere.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -718,7 +737,7 @@ Use `defaultValue` (an array of item values) for uncontrolled state, or `value` 
 
 <Only platform="rn">
 
-The `filled` variant on a rounded `bg-muted` surface.
+Set `variant="filled"` to put the list on a rounded `bg-muted` surface.
 
 </Only>
 
@@ -728,149 +747,11 @@ The `filled` variant on a rounded `bg-muted` surface.
 
 <Only platform="rn swift">
 
-A controlled accordion with `multiple`, so several items stay open.
+Only one item is open at a time by default. Set `multiple` so several items stay open; this example is controlled.
 
 </Only>
 
 <NativeExample name="accordion-multiple" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Accordion
-
-Root that holds the open state and lays out the items.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "filled"` | `"default"` | `default` or `filled`. |
-
-Also accepts the props of `React.ComponentProps<typeof AccordionPrimitive.Root>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AccordionItem
-
-One section, separated from the previous one by a hairline.
-
-Also accepts the props of `React.ComponentProps<typeof AccordionPrimitive.Item>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AccordionTrigger
-
-Pressable heading row with a rotating caret.
-
-Also accepts the props of `React.ComponentProps<typeof AccordionPrimitive.Trigger>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AccordionContent
-
-Panel shown while the item is open; fades out upward on close.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Classes merged onto the root element. |
-
-Also accepts the props of `React.ComponentProps<typeof AccordionPrimitive.Panel>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### Accordion
-
-Root that holds the open state and lays out the items.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `Variant`: `.default` \| `.filled` | `.default` | - |
-| `multiple` | `Bool` | `false` | Lets several panels stay open at once. |
-| `content` | `() -> Content` | - | The content. |
-| `expanded` | `Binding<Set<Value>>` | - | - |
-
-Overloads: `init(_:multiple:content:)`, `init(_:expanded:multiple:content:)`, `init(_:expanded:content:)`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AccordionItem
-
-One section, separated from the previous one by a hairline.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Value` | - | Identifies the item in the open state. |
-| `content` | `() -> Content` | - | The content. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(value:content:label:)`, `init(_:value:content:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### AccordionVariant
-
-Values: `Default`, `Filled`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Accordion
-
-Root that holds the open state and lays out the items.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `AccordionVariant`: `Default` \| `Filled` | `AccordionVariant.Default` | - |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AccordionItem
-
-One section, separated from the previous one by a hairline.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `expanded` | `Boolean` | - | - |
-| `onExpandedChange` | `(Boolean) -> Unit` | - | - |
-| `title` | `String` | - | The title text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-| `trigger` | `@Composable RowScope.() -> Unit` | - | - |
-
-Overloads: `AccordionItem(expanded, onExpandedChange, title, content)`, `AccordionItem(expanded, onExpandedChange, trigger, content)`.
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -880,11 +761,113 @@ Overloads: `AccordionItem(expanded, onExpandedChange, title, content)`, `Accordi
 - Closed panels are hidden from VoiceOver and TalkBack.
 - A disabled trigger is shown at 50% opacity.
 
-## Notes
+</Only>
 
-- The trigger label underlines while pressed.
-- Animations respect the system Reduce Motion setting.
-- Uses `bg-muted`, `border-border` and `text-foreground` tokens; light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Accordion
+
+Root that holds the open state and lays out the items.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "filled"` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<typeof AccordionPrimitive.Root>`.
+
+Give each `AccordionItem` a `value`. Use `defaultValue`, an array of item values, for uncontrolled state, or `value` with `onValueChange` to control it. Set `multiple` to let several items stay open, `disabled` on the root or on a single item to block toggling, and `keepMounted` to keep closed panels mounted. Animations respect the system Reduce Motion setting. `accordionVariants` is also exported if you need the classes elsewhere.
+
+### AccordionItem
+
+One section, separated from the previous one by a hairline.
+
+Also accepts the props of `React.ComponentProps<typeof AccordionPrimitive.Item>`.
+
+### AccordionTrigger
+
+Pressable heading row with a rotating caret.
+
+Also accepts the props of `React.ComponentProps<typeof AccordionPrimitive.Trigger>`.
+
+The trigger label underlines while pressed.
+
+### AccordionContent
+
+Panel shown while the item is open; fades out upward on close.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof AccordionPrimitive.Panel>`.
+
+`className` is merged onto the root element.
+
+</Only>
+
+<Only platform="swift">
+
+### Accordion
+
+Root that holds the open state and lays out the items.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `Variant`: `.default` \| `.filled` | `.default` |
+| `multiple` | `Bool` | `false` |
+| `content` | `() -> Content` | - |
+| `expanded` | `Binding<Set<Value>>` | - |
+
+Overloads: `init(_:multiple:content:)`, `init(_:expanded:multiple:content:)`, `init(_:expanded:content:)`.
+
+### AccordionItem
+
+One section, separated from the previous one by a hairline.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Value` | - |
+| `content` | `() -> Content` | - |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(value:content:label:)`, `init(_:value:content:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### AccordionVariant
+
+Values: `Default`, `Filled`.
+
+### Accordion
+
+Root that holds the open state and lays out the items.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `AccordionVariant`: `Default` \| `Filled` | `AccordionVariant.Default` |
+| `content` | `@Composable () -> Unit` | - |
+
+### AccordionItem
+
+One section, separated from the previous one by a hairline.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `expanded` | `Boolean` | - |
+| `onExpandedChange` | `(Boolean) -> Unit` | - |
+| `title` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `true` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+| `trigger` | `@Composable RowScope.() -> Unit` | - |
+
+Overloads: `AccordionItem(expanded, onExpandedChange, title, content)`, `AccordionItem(expanded, onExpandedChange, trigger, content)`.
 
 </Only>
 

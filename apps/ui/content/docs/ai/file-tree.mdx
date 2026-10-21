@@ -32,8 +32,6 @@ import { Button } from "@/components/ui/button"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 ```
 
-Render nodes recursively, and nest each folder's children in its `CollapsibleContent`.
-
 <OnlyBase base="base">
 
 ```tsx
@@ -128,8 +126,6 @@ if (node.type === "folder") {
 
 </OnlyBase>
 
-A file is a ghost button that selects it. Set `aria-current` on the selected file.
-
 ```tsx
 <Button
   variant="ghost"
@@ -142,15 +138,19 @@ A file is a ghost button that selects it. Set `aria-current` on the selected fil
 </Button>
 ```
 
-## API Reference
-
-See [Collapsible](/docs/components/collapsible#api-reference) and [Button](/docs/components/button#api-reference).
-
 ## Accessibility
 
 - Each folder is a button with `aria-expanded`, and opens and closes with Enter or Space.
 - Mark the selected file with `aria-current` as well as a background, so the selection is announced.
 - The chevron and the folder and file icons are decorative; the name is the accessible label.
+
+## API Reference
+
+See [Collapsible](/docs/components/collapsible#api-reference) and [Button](/docs/components/button#api-reference).
+
+Render nodes recursively, and nest each folder's children in its `CollapsibleContent`.
+
+A file is a ghost button that selects it. Set `aria-current` on the selected file.
 
 </Only>
 

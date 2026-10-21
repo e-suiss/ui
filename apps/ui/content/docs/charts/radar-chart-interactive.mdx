@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A phone comparison where chips select up to three models; their shapes grow into or shrink out of the radar, and side cards show each model's overall score or the score on the hovered axis. Use it as a template for comparing a handful of items across shared criteria.
 
+Replace `AXES` with your criteria and `SCORES` with one array per item in the same order, and add each item's label and color to `chartConfig`. `MAX_SELECTED` sets how many items show at once and the `selected` state which ones start visible; selecting past the limit drops the oldest, and the last one can't be turned off. The scale is fixed from 0 to 100, so rescale your scores or change the radius axis domain. The score cards are a live region, and the grow animation is skipped when reduced motion is preferred.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/radar-chart-interactive
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts radar-chart-interactive
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Toggle](/docs/components/toggle).
 
-3. Copy the source into `components/charts/radar-chart-interactive.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/radar-chart-interactive.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { RadarChartInteractive } from "@/components/charts/radar-chart-interacti
 ```tsx
 <RadarChartInteractive />
 ```
-
-Replace `AXES` with your criteria and `SCORES` with one array per item in the same order, then add each item's label and color to `chartConfig`. Change `MAX_SELECTED` to allow more or fewer items at once and the initial `selected` state to pick which ones start visible.
-
-## Notes
-
-The scale is fixed from 0 to 100, so rescale your scores or change the radius axis domain. Selecting past the limit drops the oldest selection, and the last model can't be turned off. The score cards are a live region, and the grow animation is skipped when reduced motion is preferred.
 
 </Only>
 
@@ -75,9 +79,15 @@ The scale is fixed from 0 to 100, so rescale your scores or change the radius ax
 
 A `Card` with a row of `Toggle` chips, a `RadarChart` and a summary card per model. Scores live in `SCORES`, one array per model, in the order of `AXES`. Up to three models can be selected; picking a fourth drops the oldest, and the last one cannot be cleared. Pressing an axis bolds its label and switches each summary from the overall average to that axis score; a tooltip lists the values. Each radar sets `isAnimationActive={false}` and draws without the enter animation.
 
+Replace `AXES` and `SCORES` with your attributes and items, and add a matching entry to `chartConfig` and `SWATCH` for each. Change `MAX_SELECTED` to allow more series. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +147,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -143,17 +155,17 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle).
 
-3. Copy the source into `components/charts/radar-chart-interactive.tsx`:
+3. Copy and paste the following code into `components/charts/radar-chart-interactive.tsx`:
 
 <ComponentSource path="uniwind/components/charts/radar-chart-interactive.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -161,11 +173,11 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle).
 
-3. Copy the source into `components/charts/radar-chart-interactive.tsx`:
+3. Copy and paste the following code into `components/charts/radar-chart-interactive.tsx`:
 
 <ComponentSource path="nativewind/components/charts/radar-chart-interactive.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -173,11 +185,11 @@ npx expo install cn
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text), [Toggle](/docs/components/toggle).
 
-2. Copy the source into `components/charts/radar-chart-interactive.tsx`:
+2. Copy and paste the following code into `components/charts/radar-chart-interactive.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/radar-chart-interactive.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -270,6 +282,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -309,12 +325,6 @@ fun RadarInteractiveExample() {
     RadarChartInteractive()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `AXES` and `SCORES` with your attributes and items, and add a matching entry to `chartConfig` and `SWATCH` for each. Change `MAX_SELECTED` to allow more series. The component takes no props.
 
 </Only>
 

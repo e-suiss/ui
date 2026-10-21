@@ -19,6 +19,10 @@ platforms: [rn, swift, kotlin]
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -67,7 +71,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -75,7 +81,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn phosphor-react-native react-native-svg
@@ -103,17 +109,17 @@ npx expo install class-variance-authority cn phosphor-react-native react-native-
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/chip.tsx`:
+4. Copy and paste the following code into `components/ui/chip.tsx`:
 
 <ComponentSource path="uniwind/components/ui/chip.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn phosphor-react-native react-native-svg
@@ -141,17 +147,17 @@ npx expo install class-variance-authority cn phosphor-react-native react-native-
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/chip.tsx`:
+4. Copy and paste the following code into `components/ui/chip.tsx`:
 
 <ComponentSource path="nativewind/components/ui/chip.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-svg
@@ -179,11 +185,11 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/chip.tsx`:
+4. Copy and paste the following code into `components/ui/chip.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/chip.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -293,6 +299,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -392,24 +402,6 @@ fun ChipDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-Use `selected` with `onSelectedChange`, or `defaultSelected`, on a standalone chip. Inside a `ChipGroup`, give each chip a `value` and control the group with `value`, `defaultValue` and `onValueChange` (arrays of values).
-
-</Only>
-
-<Only platform="rn kotlin">
-
-The group's `size` is passed to every chip unless a chip sets its own. Use `removeLabel` to localize the remove button's label.
-
-</Only>
-
-<Only platform="rn">
-
-`chipVariants` is also exported if you need the classes elsewhere.
-
-</Only>
-
 ## Examples
 
 ### States
@@ -420,19 +412,31 @@ Unselected, selected and disabled chips.
 
 ### Sizes
 
-The `default` and `sm` sizes.
+The `default` and `sm` sizes, set with `size`.
+
+<Only platform="rn kotlin">
+
+The group's `size` is passed to every chip unless a chip sets its own.
+
+</Only>
 
 <NativeExample name="chip-sizes" />
 
 ### With icon
 
-Chips with a leading icon.
+Pass an `icon` to show it before the label.
 
 <NativeExample name="chip-with-icon" />
 
 ### Removable
 
-Chips with a remove button through `onRemove`.
+Set `onRemove` to show a remove button. It is called when the button is pressed.
+
+<Only platform="rn kotlin">
+
+Use `removeLabel` to localize the remove button's label.
+
+</Only>
 
 <NativeExample name="chip-removable" />
 
@@ -448,13 +452,13 @@ A chip controlled with `selected` and `onSelectedChange`.
 
 ### Group single
 
-A group that allows one selected chip.
+A `ChipGroup` allows one selected chip by default.
 
 <NativeExample name="chip-group-single" />
 
 ### Group multiple
 
-A group with `multiple` selection.
+Set `multiple` to let people select several chips.
 
 <NativeExample name="chip-group-multiple" />
 
@@ -476,7 +480,7 @@ A group that starts with a selection.
 
 ### Group scrollable
 
-A single scrolling row with `scrollable`.
+Set `scrollable` to lay the chips out in a single horizontal scrolling row.
 
 <NativeExample name="chip-group-scrollable" />
 
@@ -486,152 +490,6 @@ A disabled group.
 
 <NativeExample name="chip-group-disabled" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Chip
-
-Selectable pill.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selected` | `boolean` | - | Whether the chip is selected, for controlled use. |
-| `defaultSelected` | `boolean` | - | Whether the chip starts selected when uncontrolled. |
-| `onSelectedChange` | `(selected: boolean, details) => void` | - | Called when the chip is toggled. |
-| `size` | `"default" \| "sm"` | `"default"` | The chip height; inherited from a surrounding group. |
-| `icon` | `PhosphorIcon` | - | An icon shown before the label. |
-| `onRemove` | `() => void` | - | Shows a remove button and is called when it is pressed. |
-| `removeLabel` | `string` | `"Remove"` | Accessibility label of the remove button. |
-
-Also accepts the props of `React.ComponentProps<typeof TogglePrimitive>`, except `pressed`, `defaultPressed` and `onPressedChange`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ChipGroup
-
-Manages selection and layout for several chips.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `ChipSize` | `"default"` | Size passed to every chip. |
-| `scrollable` | `boolean` | `false` | Shows chips in a horizontal scroll view instead of wrapping. |
-
-Also accepts the props of `React.ComponentProps<typeof ToggleGroupPrimitive>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### ChipSize
-
-Values: `.sm`, `.default`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ChipGroup
-
-Manages selection and layout for several chips.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selection` | `Binding<Value?>` | - | The selected value. |
-| `size` | `ChipSize`: `.sm` \| `.default` | `.default` | Size passed to every chip. |
-| `scrollable` | `Bool` | `false` | Shows chips in a horizontal scroll view instead of wrapping. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### Chip
-
-Selectable pill.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isSelected` | `Binding<Bool>?` | `nil` | - |
-| `size` | `ChipSize?`: `.sm` \| `.default` | `nil` | The chip height; inherited from a surrounding group. |
-| `icon` | `Image?` | `nil` | An icon shown before the label. |
-| `onRemove` | `(() -> Void)?` | `nil` | Shows a remove button and is called when it is pressed. |
-| `label` | `() -> Label` | - | The label. |
-| `value` | `Value` | - | The current value. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(isSelected:size:icon:onRemove:label:)`, `init(value:size:icon:onRemove:label:)`, `init(_:isSelected:size:icon:onRemove:)`, `init(_:value:size:icon:onRemove:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### ChipSize
-
-Values: `Default`, `Sm`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ChipGroup
-
-Manages selection and layout for several chips.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String?` | - | The current value. |
-| `onValueChange` | `(String?) -> Unit` | - | Called when the value changes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `size` | `ChipSize`: `Default` \| `Sm` | `ChipSize.Default` | Size passed to every chip. |
-| `scrollable` | `Boolean` | `false` | Shows chips in a horizontal scroll view instead of wrapping. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `contentPadding` | `PaddingValues` | `PaddingValues(0.dp)` | - |
-| `content` | `@Composable () -> Unit` | - | The content. |
-| `values` | `Set<String>` | - | - |
-| `onValuesChange` | `(Set<String>) -> Unit` | - | - |
-
-Overloads: `ChipGroup(value, onValueChange, content)`, `ChipGroup(values, onValuesChange, content)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### Chip
-
-Selectable pill.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `value` | `String` | - | The current value. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `icon` | `ImageVector?` | `null` | An icon shown before the label. |
-| `onRemove` | `(() -> Unit)?` | `null` | Shows a remove button and is called when it is pressed. |
-| `removeLabel` | `String` | `"Remove $text"` | Accessibility label of the remove button. |
-| `selected` | `Boolean` | - | Whether the chip is selected, for controlled use. |
-| `onSelectedChange` | `(Boolean) -> Unit` | - | Called when the chip is toggled. |
-| `size` | `ChipSize`: `Default` \| `Sm` | `LocalChipGroupState.current?.size ?: ChipSize.Default` | The chip height; inherited from a surrounding group. |
-
-Overloads: `Chip(text, value)`, `Chip(text, selected, onSelectedChange, size)`.
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -640,9 +498,123 @@ Overloads: `Chip(text, value)`, `Chip(text, selected, onSelectedChange, size)`.
 - A group has the `radiogroup` role for single selection and `group` for multiple.
 - With `onRemove`, the chip exposes a `remove` accessibility action, and the remove button has its own `button` role and label.
 
-## Notes
+</Only>
 
-- Uses `bg-secondary`, `bg-foreground` and `text-background` tokens, with `opacity-80` while pressed and `opacity-50` when disabled; light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Chip
+
+Selectable pill.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `selected` | `boolean` | - |
+| `defaultSelected` | `boolean` | - |
+| `onSelectedChange` | `(selected: boolean, details) => void` | - |
+| `size` | `"default" \| "sm"` | `"default"` |
+| `icon` | `PhosphorIcon` | - |
+| `onRemove` | `() => void` | - |
+| `removeLabel` | `string` | `"Remove"` |
+
+Also accepts the props of `React.ComponentProps<typeof TogglePrimitive>`, except `pressed`, `defaultPressed` and `onPressedChange`.
+
+Use `selected` with `onSelectedChange`, or `defaultSelected`, on a standalone chip. Inside a group, give each chip a `value`; its `size` is then inherited from the group. `icon` is shown before the label, and `removeLabel` is the accessibility label of the remove button. While pressed the chip drops to `opacity-80`. `chipVariants` is also exported if you need the classes elsewhere.
+
+### ChipGroup
+
+Manages selection and layout for several chips.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `ChipSize` | `"default"` |
+| `scrollable` | `boolean` | `false` |
+
+Also accepts the props of `React.ComponentProps<typeof ToggleGroupPrimitive>`.
+
+Control the group with `value`, `defaultValue` and `onValueChange`, which take arrays of values. `scrollable` shows the chips in a horizontal scroll view instead of wrapping them.
+
+</Only>
+
+<Only platform="swift">
+
+### ChipSize
+
+Values: `.sm`, `.default`.
+
+### ChipGroup
+
+Manages selection and layout for several chips.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `selection` | `Binding<Value?>` | - |
+| `size` | `ChipSize`: `.sm` \| `.default` | `.default` |
+| `scrollable` | `Bool` | `false` |
+| `content` | `() -> Content` | - |
+
+### Chip
+
+Selectable pill.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isSelected` | `Binding<Bool>?` | `nil` |
+| `size` | `ChipSize?`: `.sm` \| `.default` | `nil` |
+| `icon` | `Image?` | `nil` |
+| `onRemove` | `(() -> Void)?` | `nil` |
+| `label` | `() -> Label` | - |
+| `value` | `Value` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(isSelected:size:icon:onRemove:label:)`, `init(value:size:icon:onRemove:label:)`, `init(_:isSelected:size:icon:onRemove:)`, `init(_:value:size:icon:onRemove:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### ChipSize
+
+Values: `Default`, `Sm`.
+
+### ChipGroup
+
+Manages selection and layout for several chips.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String?` | - |
+| `onValueChange` | `(String?) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `size` | `ChipSize`: `Default` \| `Sm` | `ChipSize.Default` |
+| `scrollable` | `Boolean` | `false` |
+| `enabled` | `Boolean` | `true` |
+| `contentPadding` | `PaddingValues` | `PaddingValues(0.dp)` |
+| `content` | `@Composable () -> Unit` | - |
+| `values` | `Set<String>` | - |
+| `onValuesChange` | `(Set<String>) -> Unit` | - |
+
+Overloads: `ChipGroup(value, onValueChange, content)`, `ChipGroup(values, onValuesChange, content)`.
+
+### Chip
+
+Selectable pill.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `value` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `true` |
+| `icon` | `ImageVector?` | `null` |
+| `onRemove` | `(() -> Unit)?` | `null` |
+| `removeLabel` | `String` | `"Remove $text"` |
+| `selected` | `Boolean` | - |
+| `onSelectedChange` | `(Boolean) -> Unit` | - |
+| `size` | `ChipSize`: `Default` \| `Sm` | `LocalChipGroupState.current?.size ?: ChipSize.Default` |
+
+Overloads: `Chip(text, value)`, `Chip(text, selected, onSelectedChange, size)`.
 
 </Only>
 

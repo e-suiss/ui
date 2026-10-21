@@ -40,7 +40,8 @@ const BLOCK_COMMENT = /\/\*[\s\S]*?\*\//g
 const LINE_COMMENT = /(^|[^:"])\/\/.*$/gm
 const CLI_ALSO = "The CLI also adds what it builds on"
 const RN_ALSO = "On React Native it also adds"
-const MANUAL_HEADING = "### Manual"
+const INSTALL_TABS = '<Tabs items={["Command","Manual"]}>'
+const PANEL_BREAK = "\n</div>\n\n<div>\n"
 const DEFAULT_EXAMPLE = /-(?:demo|chart-default)$/
 const SOURCE_EXTENSION = /\.tsx?$/
 const SLUG = /\.mdx$/
@@ -647,7 +648,7 @@ async function rnTab(styling, root, registries, pages) {
   const steps = []
   if (packages.length)
     steps.push(
-      `Install the dependencies:\n\n\`\`\`bash title="Terminal"\nnpx expo install ${packages.join(" ")}\n\`\`\``
+      `Install the following dependencies:\n\n\`\`\`bash title="Terminal"\nnpx expo install ${packages.join(" ")}\n\`\`\``
     )
   if (pieces.length)
     steps.push(
@@ -670,13 +671,20 @@ async function rnTab(styling, root, registries, pages) {
     )
   }
   for (const file of item.files ?? [])
-    steps.push(`Copy the source into \`${rnTarget(file)}\`:\n\n${source(file)}`)
-  steps.push("Update the import paths to match your project.")
+    steps.push(
+      `Copy and paste the following code into \`${rnTarget(file)}\`:\n\n${source(file)}`
+    )
+  steps.push("Update the import paths to match your project setup.")
   return steps.map((step, index) => `${index + 1}. ${step}`).join("\n\n")
 }
 
+function manualStart(native) {
+  const tabs = native.indexOf(INSTALL_TABS)
+  return tabs < 0 ? -1 : native.indexOf(PANEL_BREAK, tabs)
+}
+
 async function rnManual(native, registries, pages) {
-  const start = native.indexOf(`\n${MANUAL_HEADING}\n`)
+  const start = manualStart(native)
   if (start < 0) return native
   const open = '<Only platform="rn">'
   const from = native.indexOf(open, start)
@@ -705,7 +713,7 @@ async function rnManual(native, registries, pages) {
 }
 
 async function manual(native, items, registry, examples) {
-  const start = native.indexOf(`\n${MANUAL_HEADING}\n`)
+  const start = manualStart(native)
   if (start < 0 || !items.length) return native
   let result = native
   for (const platform of NATIVE) {

@@ -15,7 +15,9 @@ Use it to offer a short list of actions tied to the current context, especially 
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/alert-sheet
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add alert-sheet
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react class-variance-authority
@@ -37,16 +41,32 @@ npm install @base-ui/react class-variance-authority
 
 2. Add the pieces it builds on: `use-scrollbar-gap`.
 
-3. Copy the source into `components/ui/alert-sheet.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/alert-sheet.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { AlertSheet, AlertSheetTrigger, AlertSheetPortal, AlertSheetOverlay, AlertSheetContent, AlertSheetGroup, AlertSheetHeader, AlertSheetTitle, AlertSheetDescription, AlertSheetAction, AlertSheetCancel } from "@/components/ui/alert-sheet"
+import {
+  AlertSheet,
+  AlertSheetAction,
+  AlertSheetCancel,
+  AlertSheetContent,
+  AlertSheetDescription,
+  AlertSheetGroup,
+  AlertSheetHeader,
+  AlertSheetOverlay,
+  AlertSheetPortal,
+  AlertSheetTitle,
+  AlertSheetTrigger,
+} from "@/components/ui/alert-sheet"
 import { Button } from "@/components/ui/button"
 ```
 
@@ -135,181 +155,41 @@ import { Button } from "@/components/ui/button"
 
 </OnlyBase>
 
-Every sheet needs an `AlertSheetTitle` for its accessible name. If the title should not be visible, hide it with `className="sr-only"`.
+## Composition
 
-By default the sheet is `dismissible` and behaves like a regular dialog. Set `dismissible={false}` to render it as an alert dialog instead.
+Use the following composition to build a `AlertSheet`:
 
-<OnlyBase base="base">
-
-When the sheet opens, focus moves to `AlertSheetCancel` unless you pass your own `initialFocus` to `AlertSheetContent`. Every action and the cancel button close the sheet. Control the open state with `open` and `onOpenChange`, or use `defaultOpen`.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-When the sheet opens, focus moves to `AlertSheetCancel` unless your `onOpenAutoFocus` on `AlertSheetContent` calls `event.preventDefault()`. Every action and the cancel button close the sheet. Control the open state with `open` and `onOpenChange`, or use `defaultOpen`.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-When the sheet opens, focus moves to `AlertSheetCancel`, which sets `autoFocus` by default. Every action and the cancel button close the sheet. Control the open state with `isOpen` and `onOpenChange`, or use `defaultOpen`.
-
-</OnlyBase>
+```text
+AlertSheet
+├── AlertSheetTrigger
+└── AlertSheetContent
+    ├── AlertSheetGroup
+    │   ├── AlertSheetHeader
+    │   │   ├── AlertSheetTitle
+    │   │   └── AlertSheetDescription
+    │   └── AlertSheetAction
+    └── AlertSheetCancel
+```
 
 ## Examples
 
 ### With title
 
-Shows a visible title above the description.
+Leave `AlertSheetTitle` visible to show a title above the description.
 
 <ComponentPreview name="alert-sheet-with-title" layout="fullscreen" />
 
 ### Multiple actions
 
-Offers a default and a destructive action in one group.
+Put several `AlertSheetAction` rows in one group. Set `variant="destructive"` on the one that deletes.
 
 <ComponentPreview name="alert-sheet-multiple-actions" layout="fullscreen" />
 
 ### Not dismissible
 
-With `dismissible={false}` the sheet is an alert dialog: pressing outside does not close it, so one of the choices has to be made.
+Set `dismissible={false}` to make the sheet an alert dialog: pressing outside does not close it, so one of the choices has to be made.
 
 <ComponentPreview name="alert-sheet-not-dismissible" layout="fullscreen" />
-
-## API Reference
-
-<Anatomy>
-
-- [AlertSheet](#alertsheet)
-  - [AlertSheetTrigger](#alertsheettrigger)
-  - [AlertSheetContent](#alertsheetcontent)
-    - [AlertSheetGroup](#alertsheetgroup)
-      - [AlertSheetHeader](#alertsheetheader)
-        - [AlertSheetTitle](#alertsheettitle)
-        - [AlertSheetDescription](#alertsheetdescription)
-      - [AlertSheetAction](#alertsheetaction)
-    - [AlertSheetCancel](#alertsheetcancel)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### AlertSheet
-
-The root that manages the open state and dismissal behavior.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `dismissible` | `boolean` | `true` | When `true`, renders as a dialog; when `false`, renders as an alert dialog. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AlertSheetTrigger
-
-The control that opens the sheet.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AlertSheetPortal
-
-Renders the sheet into a portal outside the DOM hierarchy.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AlertSheetOverlay
-
-The full-screen scrim behind the sheet.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### AlertSheetContent
-
-The bottom-anchored container, rendered with its own portal and overlay.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### AlertSheetGroup
-
-A rounded surface that stacks the header and actions with dividers.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### AlertSheetHeader
-
-A padded wrapper for the title and description.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### AlertSheetTitle
-
-The heading that names the sheet.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### AlertSheetDescription
-
-Supporting text that describes the sheet.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### AlertSheetAction
-
-A full-width row button that performs an action and closes the sheet.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | `"default"` | Text color of the action. `default` uses `text-primary`; `destructive` uses `text-destructive`. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### AlertSheetCancel
-
-A separate, bold button that dismisses the sheet.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -318,11 +198,123 @@ Also accepts the props of the primitive part it wraps.
 - Focus moves to the cancel button on open and returns to the trigger on close.
 - `Escape` closes the sheet.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values from `alert-sheet` through `alert-sheet-cancel`.
-- The sheet slides up from `translate-y-full` as it opens and back down as it closes, and its bottom padding respects `env(safe-area-inset-bottom)`.
-- When an action contains an icon, the group switches to a grid so icons and labels align across rows.
+### AlertSheet
+
+The root that manages the open state and dismissal behavior.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `dismissible` | `boolean` | `true` |
+
+Also accepts the props of the primitive part it wraps.
+
+By default the sheet is `dismissible` and behaves like a regular dialog. Set `dismissible={false}` to render it as an alert dialog instead. Every action and the cancel button close the sheet.
+
+<OnlyBase base="base radix">
+
+Control the open state with `open` and `onOpenChange`, or use `defaultOpen`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Control the open state with `isOpen` and `onOpenChange`, or use `defaultOpen`.
+
+</OnlyBase>
+
+### AlertSheetTrigger
+
+The control that opens the sheet.
+
+Also accepts the props of the primitive part it wraps.
+
+### AlertSheetPortal
+
+Renders the sheet into a portal outside the DOM hierarchy.
+
+Also accepts the props of the primitive part it wraps.
+
+### AlertSheetOverlay
+
+The full-screen scrim behind the sheet.
+
+Also accepts the props of the primitive part it wraps.
+
+### AlertSheetContent
+
+The bottom-anchored container, rendered with its own portal and overlay.
+
+Also accepts the props of the primitive part it wraps.
+
+The sheet slides up from `translate-y-full` as it opens and back down as it closes, and its bottom padding respects `env(safe-area-inset-bottom)`.
+
+<OnlyBase base="base">
+
+When the sheet opens, focus moves to `AlertSheetCancel` unless you pass your own `initialFocus`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+When the sheet opens, focus moves to `AlertSheetCancel` unless your `onOpenAutoFocus` calls `event.preventDefault()`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+When the sheet opens, focus moves to `AlertSheetCancel`, which sets `autoFocus` by default.
+
+</OnlyBase>
+
+### AlertSheetGroup
+
+A rounded surface that stacks the header and actions with dividers.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+When an action contains an icon, the group switches to a grid so icons and labels align across rows.
+
+### AlertSheetHeader
+
+A padded wrapper for the title and description.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### AlertSheetTitle
+
+The heading that names the sheet.
+
+Also accepts the props of the primitive part it wraps.
+
+Every sheet needs an `AlertSheetTitle` for its accessible name. If the title should not be visible, hide it with `className="sr-only"`.
+
+### AlertSheetDescription
+
+Supporting text that describes the sheet.
+
+Also accepts the props of the primitive part it wraps.
+
+### AlertSheetAction
+
+A full-width row button that performs an action and closes the sheet.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | `"default"` |
+
+Also accepts the props of the primitive part it wraps.
+
+`variant` sets the text color: `default` uses `text-primary` and `destructive` uses `text-destructive`.
+
+### AlertSheetCancel
+
+A separate, bold button that dismisses the sheet.
+
+Also accepts the props of the primitive part it wraps.
+
+Each part sets a `data-slot`, such as `alert-sheet-group` or `alert-sheet-cancel`, for styling.
 
 </Only>
 
@@ -339,6 +331,10 @@ Also accepts the props of the primitive part it wraps.
 Actions sit in an `AlertSheetGroup`, a rounded card that draws a hairline between each child, and `AlertSheetCancel` sits below it as its own card with bold text. Use it for two to a few actions; for a single decision that needs confirmation, use Alert Dialog.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -388,7 +384,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -396,7 +394,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets
@@ -432,17 +430,17 @@ npx expo install class-variance-authority cn react-native-reanimated react-nativ
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/alert-sheet.tsx`:
+5. Copy and paste the following code into `components/ui/alert-sheet.tsx`:
 
 <ComponentSource path="uniwind/components/ui/alert-sheet.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets
@@ -478,17 +476,17 @@ npx expo install class-variance-authority cn react-native-reanimated react-nativ
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/alert-sheet.tsx`:
+5. Copy and paste the following code into `components/ui/alert-sheet.tsx`:
 
 <ComponentSource path="nativewind/components/ui/alert-sheet.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-safe-area-context react-native-screens react-native-worklets
@@ -524,11 +522,11 @@ npx expo install react-native-reanimated react-native-safe-area-context react-na
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/alert-sheet.tsx`:
+5. Copy and paste the following code into `components/ui/alert-sheet.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/alert-sheet.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -613,6 +611,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -809,16 +811,6 @@ fun AlertSheetDefault(defaultOpen: Boolean) {
 
 </Only>
 
-<Only platform="rn">
-
-Compose `AlertSheetTrigger` and `AlertSheetContent`. Inside the content, put an `AlertSheetGroup` with an optional `AlertSheetHeader` (`AlertSheetTitle`, `AlertSheetDescription`) followed by `AlertSheetAction`s, then an `AlertSheetCancel`.
-
-Every action closes the sheet when pressed. String children are wrapped in `Text` automatically. Use `variant="destructive"` on an action that deletes or removes, and `disabled` to dim and block it.
-
-By default the sheet is dismissible and a tap on the scrim closes it. Set `dismissible={false}` to require an explicit choice.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -829,354 +821,11 @@ By default the sheet is dismissible and a tap on the scrim closes it. Set `dismi
 
 <Only platform="rn">
 
-`dismissible={false}` with a destructive and a disabled action.
+Set `dismissible={false}` so a tap on the scrim does not close the sheet. This example also has a destructive and a disabled action.
 
 </Only>
 
 <NativeExample name="alert-sheet-not-dismissible" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### AlertSheet
-
-Root that holds the open state.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `dismissible` | `boolean` | `true` | When `false`, the scrim no longer closes the sheet. Defaults to `true`. |
-
-Also accepts the props of `AlertSheetPrimitive.RootProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AlertSheetOverlay
-
-Dimmed scrim behind the sheet.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Backdrop>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AlertSheetContent
-
-Bottom-anchored container that slides in and out.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `portalHost` | `string` | - | Name of the portal host to render into. |
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Popup>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AlertSheetGroup
-
-Rounded card that separates its children with hairlines.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### AlertSheetHeader
-
-Centered block for the title and description.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### AlertSheetTitle
-
-Small, bold heading for the sheet.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Title>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### AlertSheetDescription
-
-Supporting text below the title.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Description>`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### AlertSheetAction
-
-Full-width action row that closes the sheet.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | `"default"` | Text color of the action. |
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Close>`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### AlertSheetCancel
-
-Separate cancel card with bold text.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Close>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .alertSheet
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
-| `dismissible` | `Bool` | `true` | When `false`, the scrim no longer closes the sheet. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AlertSheetContent
-
-Bottom-anchored container that slides in and out.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AlertSheetGroup
-
-Rounded card that separates its children with hairlines.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AlertSheetHeader
-
-Centered block for the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### AlertSheetTitle
-
-Small, bold heading for the sheet.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `verbatim` | `String` | - | The title text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### AlertSheetDescription
-
-Supporting text below the title.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ description` | `LocalizedStringKey` | - | The supporting text. |
-| `verbatim` | `String` | - | The supporting text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### AlertSheetActionVariant
-
-Values: `.default`, `.destructive`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### AlertSheetAction
-
-Full-width action row that closes the sheet.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `AlertSheetActionVariant`: `.default` \| `.destructive` | `.default` | Text color of the action. |
-| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `icon` | `Image` | - | The icon. |
-
-Overloads: `init(variant:action:label:)`, `init(_:variant:action:)`, `init(_:icon:variant:action:)`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### AlertSheetCancel
-
-Separate cancel card with bold text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | `"Cancel"` | The title text. |
-
-Overloads: `init(action:label:)`, `init(_:action:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### AlertSheetActionVariant
-
-Values: `Default`, `Destructive`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AlertSheet
-
-Root that holds the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `Boolean` | - | - |
-| `onOpenChange` | `(Boolean) -> Unit` | - | Called when it opens or closes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `dismissible` | `Boolean` | `true` | When `false`, the scrim no longer closes the sheet. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AlertSheetGroup
-
-Rounded card that separates its children with hairlines.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AlertSheetHeader
-
-Centered block for the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### AlertSheetTitle
-
-Small, bold heading for the sheet.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### AlertSheetDescription
-
-Supporting text below the title.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### AlertSheetAction
-
-Full-width action row that closes the sheet.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `onClick` | `() -> Unit` | - | Called when it is tapped. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `AlertSheetActionVariant`: `Default` \| `Destructive` | `AlertSheetActionVariant.Default` | Text color of the action. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `icon` | `ImageVector?` | `null` | The icon. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### AlertSheetCancel
-
-Separate cancel card with bold text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | `"Cancel"` | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `onClick` | `() -> Unit` | `{}` | Called when it is tapped. |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -1187,12 +836,250 @@ Separate cancel card with bold text.
 - Actions have the `button` role with a `disabled` state.
 - Separators between actions are hidden from screen readers.
 
-## Notes
+</Only>
 
-- Padding uses the bottom and side safe-area insets, with a minimum of 8 points.
-- On iOS the content is wrapped in a full-window overlay.
-- Animations respect the system Reduce Motion setting.
-- Uses `bg-popover`, `text-primary` and `text-destructive` tokens, with `opacity-80` while pressed; light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### AlertSheet
+
+Root that holds the open state.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `dismissible` | `boolean` | `true` |
+
+Also accepts the props of `AlertSheetPrimitive.RootProps`.
+
+By default the sheet is dismissible and a tap on the scrim closes it. Set `dismissible={false}` to require an explicit choice.
+
+### AlertSheetOverlay
+
+Dimmed scrim behind the sheet.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Backdrop>`.
+
+### AlertSheetContent
+
+Bottom-anchored container that slides in and out.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `portalHost` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Popup>`.
+
+Put an `AlertSheetGroup` inside, with an optional `AlertSheetHeader` and the `AlertSheetAction` rows, then an `AlertSheetCancel`. Pass `portalHost` to render into a named portal host. Padding uses the bottom and side safe-area insets, with a minimum of 8 points. On iOS the content is wrapped in a full-window overlay. Animations respect the system Reduce Motion setting.
+
+### AlertSheetGroup
+
+Rounded card that separates its children with hairlines.
+
+Also accepts the props of `ViewProps`.
+
+### AlertSheetHeader
+
+Centered block for the title and description.
+
+Also accepts the props of `ViewProps`.
+
+### AlertSheetTitle
+
+Small, bold heading for the sheet.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Title>`.
+
+### AlertSheetDescription
+
+Supporting text below the title.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Description>`.
+
+### AlertSheetAction
+
+Full-width action row that closes the sheet.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Close>`.
+
+Every action closes the sheet when pressed, and string children are wrapped in `Text` automatically. `variant` sets the text color; use `destructive` on an action that deletes or removes. Set `disabled` to dim and block an action. Actions show `opacity-80` while pressed.
+
+### AlertSheetCancel
+
+Separate cancel card with bold text.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetPrimitive.Close>`.
+
+</Only>
+
+<Only platform="swift">
+
+### .alertSheet
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - |
+| `dismissible` | `Bool` | `true` |
+| `content` | `() -> Content` | - |
+
+### AlertSheetContent
+
+Bottom-anchored container that slides in and out.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### AlertSheetGroup
+
+Rounded card that separates its children with hairlines.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### AlertSheetHeader
+
+Centered block for the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### AlertSheetTitle
+
+Small, bold heading for the sheet.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### AlertSheetDescription
+
+Supporting text below the title.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### AlertSheetActionVariant
+
+Values: `.default`, `.destructive`.
+
+### AlertSheetAction
+
+Full-width action row that closes the sheet.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `variant` | `AlertSheetActionVariant`: `.default` \| `.destructive` | `.default` |
+| `action` | `(() -> Void)?` | `nil` |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+| `icon` | `Image` | - |
+
+Overloads: `init(variant:action:label:)`, `init(_:variant:action:)`, `init(_:icon:variant:action:)`.
+
+### AlertSheetCancel
+
+Separate cancel card with bold text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `action` | `(() -> Void)?` | `nil` |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | `"Cancel"` |
+
+Overloads: `init(action:label:)`, `init(_:action:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### AlertSheetActionVariant
+
+Values: `Default`, `Destructive`.
+
+### AlertSheet
+
+Root that holds the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `open` | `Boolean` | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `dismissible` | `Boolean` | `true` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### AlertSheetGroup
+
+Rounded card that separates its children with hairlines.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
+
+### AlertSheetHeader
+
+Centered block for the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### AlertSheetTitle
+
+Small, bold heading for the sheet.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### AlertSheetDescription
+
+Supporting text below the title.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### AlertSheetAction
+
+Full-width action row that closes the sheet.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `onClick` | `() -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `AlertSheetActionVariant`: `Default` \| `Destructive` | `AlertSheetActionVariant.Default` |
+| `enabled` | `Boolean` | `true` |
+| `icon` | `ImageVector?` | `null` |
+
+### AlertSheetCancel
+
+Separate cancel card with bold text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | `"Cancel"` |
+| `modifier` | `Modifier` | `Modifier` |
+| `onClick` | `() -> Unit` | `{}` |
 
 </Only>
 

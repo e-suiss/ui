@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A full account creation form with name, country, birthday, email and a password with confirmation, grouped into labeled sections. A checklist of password rules appears as the user types, and mismatched passwords turn the fields red. Submitting a valid form shows a success view. Use it when you need more than an email and password at signup.
 
+Replace the success branch with your registration API call. Edit `rules` for the password checklist and the country list inline. The birthday is free text and is never parsed, so swap in a date picker or validate it before sending.
+
+Every text field has an autocomplete value so browsers and password managers can fill it, and the form runs its own validation instead of the browser's.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/signup-form
@@ -25,9 +31,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks signup-form
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +43,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Input](/docs/components/input), [Native Select](/docs/components/native-select).
 
-3. Copy the source into `components/blocks/signup-form.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/signup-form.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +62,6 @@ import { SignupForm } from "@/components/blocks/signup-form"
 ```tsx
 <SignupForm />
 ```
-
-Replace the success branch with your registration API call. Edit `rules` for the password checklist and the country list inline. The birthday is free text and is never parsed, so swap in a date picker or validate it before sending.
-
-## Notes
-
-Every text field has an autocomplete value so browsers and password managers can fill it, and the form runs its own validation instead of the browser's.
 
 </Only>
 
@@ -73,7 +79,17 @@ Every text field has an autocomplete value so browsers and password managers can
 
 Fields are grouped under short legends inside an `InputAccessoryBar` with a `KeyboardScrollView`, and the country uses a `Picker`. The password fields show a live checklist of password rules, and pressing Continue in the `BottomBar` validates every field, shows an error line if any fail, and swaps the form for a confirmation screen.
 
+<Only platform="rn">
+
+Replace `COUNTRIES` and `RULES` to match your requirements. `onSubmit` receives the form values (typed as `SignupFormValues`), and `onLearnMore` handles the info link.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -123,7 +139,9 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -131,7 +149,7 @@ The CLI also adds what it builds on: [Bottom Bar](/docs/components/bottom-bar), 
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -143,17 +161,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/signup-form.tsx`:
+4. Copy and paste the following code into `components/blocks/signup-form.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/signup-form.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -165,17 +183,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/signup-form.tsx`:
+4. Copy and paste the following code into `components/blocks/signup-form.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/signup-form.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -187,11 +205,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/signup-form.tsx`:
+4. Copy and paste the following code into `components/blocks/signup-form.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/signup-form.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -329,6 +347,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -368,12 +390,6 @@ fun SignupFormExample() {
     SignupForm()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `COUNTRIES` and `RULES` to match your requirements. `onSubmit` receives the form values (typed as `SignupFormValues`), and `onLearnMore` handles the info link.
 
 </Only>
 

@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 Concentric radial bars with each category name printed at the start of its bar. Pick it over the default radial chart when you want readers to identify bars without a legend or tooltip.
 
+Replace `chartData` and add each category key with its label and color to `chartConfig`; the bar labels read from there. `startAngle` and `endAngle` set how far the longest bar sweeps, and `barSize` makes room for longer names. Labels sit inside the bars, so very short bars may not fit their name.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/radial-chart-label
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts radial-chart-label
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/radial-chart-label.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/radial-chart-label.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { RadialChartLabel } from "@/components/charts/radial-chart-label"
 ```tsx
 <RadialChartLabel />
 ```
-
-Replace `chartData` and add each category key with its label and color to `chartConfig`; the bar labels read from there. Change `startAngle` and `endAngle` to set how far the longest bar sweeps, and `barSize` to fit longer names.
-
-## Notes
-
-Labels sit inside the bars in a light color, so very short bars may not have room for their name.
 
 </Only>
 
@@ -75,9 +79,15 @@ Labels sit inside the bars in a light color, so very short bars may not have roo
 
 A `RadialBarChart` with one bar per record in `chartData`, sweeping from 90 to -200 degrees. Bars are colored through `Cell` and labeled with a `LabelList` that reads names from `chartConfig`. Pressing a bar shows a tooltip.
 
+Replace `chartData` with your records and add a matching entry per item to `chartConfig`, whose colors the `Cell` children read. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +149,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/radial-chart-label.tsx`:
+2. Copy and paste the following code into `components/charts/radial-chart-label.tsx`:
 
 <ComponentSource path="uniwind/components/charts/radial-chart-label.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +161,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/radial-chart-label.tsx`:
+2. Copy and paste the following code into `components/charts/radial-chart-label.tsx`:
 
 <ComponentSource path="nativewind/components/charts/radial-chart-label.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +173,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/radial-chart-label.tsx`:
+2. Copy and paste the following code into `components/charts/radial-chart-label.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/radial-chart-label.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -258,6 +270,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -297,12 +313,6 @@ fun RadialLabelExample() {
     RadialChartLabel()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your records and add a matching entry per item to `chartConfig`, whose colors the `Cell` children read. The component takes no props.
 
 </Only>
 

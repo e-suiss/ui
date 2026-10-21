@@ -42,7 +42,7 @@ Layout:
    - `<ComponentSource path="components/ui/button.tsx" />` for the source to copy under Manual installation. Mobile sources use paths such as `uniwind/components/ui/button.tsx`, `swift/Components/Button.swift` and `kotlin/components/Button.kt`.
    - `<NativeExample name="button-variants" />` for a mobile example. Mobile examples live in `packages/mobile/examples/`, one file per example with a single default-exported component, named like the web ones: `button-demo.tsx` for the first one, then `button-variants.tsx` and so on. The React Native code shown is the example file. The SwiftUI and Compose code comes from the catalog apps, matched by section, title and story name (`Components` / `Button` / `variants` is `button-variants`), and the preview of an example without a web twin from `apps/ui/public/previews/<name>.light.webp` and `.dark.webp` (or `.mp4`).
    - `<Only platform="web">` and `<Only platform="rn swift kotlin">` around the parts for each platform, with `platforms` in the frontmatter listing the tabs the page has.
-   - Plain Markdown tables for the API reference, inside `<ApiPart index={1}>`, and `<Anatomy>` around a nested list of the parts.
+   - The sections Installation (a `<Tabs items={["Command","Manual"]}>` with a Command and a Manual panel), Usage (the import and one snippet), Composition (a `text` tree of the parts, for components with several parts), Examples, Accessibility and API Reference. Each part in the API reference has a `### Part` heading, one summary sentence, a `| Prop | Type | Default |` table and short prose for anything the table does not say.
 
 ## Compatibility check
 

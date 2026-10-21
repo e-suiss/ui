@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 An offline state for a content app, with a Wi-Fi icon, an explanation and Try Again and Downloads buttons. Try Again shows a spinner while reconnecting, then reveals an album grid. Use it as the no-connection screen for media, feeds or any app that can fall back to cached content.
 
+Replace `albums` with your content. The demo fakes reconnecting with a timer; drive the offline, loading and online states from your network status or a refetch instead, and remove the Disconnect link from the online view. Give the Downloads button a handler. Album artwork is an Unsplash placeholder.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/empty-offline
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks empty-offline
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +41,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Empty](/docs/components/empty), [Spinner](/docs/components/spinner).
 
-3. Copy the source into `components/blocks/empty-offline.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/empty-offline.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { EmptyOffline } from "@/components/blocks/empty-offline"
 ```tsx
 <EmptyOffline />
 ```
-
-Replace `albums` with your content. The demo fakes reconnecting with a timer; drive the offline, loading and online states from your network status or a refetch instead, and remove the Disconnect link from the online view. Give the Downloads button a handler.
-
-## Notes
-
-Album artwork is an Unsplash placeholder.
 
 </Only>
 
@@ -75,9 +79,15 @@ Album artwork is an Unsplash placeholder.
 
 Composes `Screen`, `Empty`, `Button`, `Spinner`, `Icon` and `Text`. Try Again shows a loading state for a moment and then switches to the online content, which has a Disconnect link back to the offline state.
 
+Replace `ALBUMS` with your content and the timed retry with a real connectivity check. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Empty](
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +147,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Empty](
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -147,17 +159,17 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/empty-offline.tsx`:
+4. Copy and paste the following code into `components/blocks/empty-offline.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/empty-offline.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -169,17 +181,17 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/empty-offline.tsx`:
+4. Copy and paste the following code into `components/blocks/empty-offline.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/empty-offline.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -191,11 +203,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/empty-offline.tsx`:
+4. Copy and paste the following code into `components/blocks/empty-offline.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/empty-offline.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -291,6 +303,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -330,12 +346,6 @@ fun EmptyOfflineExample() {
     EmptyOffline()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `ALBUMS` with your content and the timed retry with a real connectivity check. The component takes no props.
 
 </Only>
 

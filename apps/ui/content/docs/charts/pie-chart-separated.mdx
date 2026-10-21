@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A donut whose slices are pushed apart with wide gaps and rounded corners, giving each segment a tile-like look. Choose it for a softer, more decorative style than the standard donut.
 
+Replace `chartData` and add each category to `chartConfig`. `paddingAngle` sets the spacing and `cornerRadius` the rounding; large values squeeze thin slices, so this style suits data without tiny values.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/pie-chart-separated
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts pie-chart-separated
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/pie-chart-separated.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/pie-chart-separated.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { PieChartSeparated } from "@/components/charts/pie-chart-separated"
 ```tsx
 <PieChartSeparated />
 ```
-
-Replace `chartData` and add each category to `chartConfig`. Tune the spacing with `paddingAngle` and the rounding with `cornerRadius`; large values for either make small slices hard to see.
-
-## Notes
-
-The wide gaps and rounded corners squeeze very thin slices, so this style suits data without tiny values.
 
 </Only>
 
@@ -77,7 +81,17 @@ A `PieChart` donut with `paddingAngle` and `cornerRadius` set so each slice stan
 
 </Only>
 
+<Only platform="rn">
+
+Replace `chartData` with your records and keep `dataKey` and `nameKey` in step with your field names. Add one entry per slice to `chartConfig` with its label and color; the component takes no props.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +141,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +153,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/pie-chart-separated.tsx`:
+2. Copy and paste the following code into `components/charts/pie-chart-separated.tsx`:
 
 <ComponentSource path="uniwind/components/charts/pie-chart-separated.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +165,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/pie-chart-separated.tsx`:
+2. Copy and paste the following code into `components/charts/pie-chart-separated.tsx`:
 
 <ComponentSource path="nativewind/components/charts/pie-chart-separated.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +177,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/pie-chart-separated.tsx`:
+2. Copy and paste the following code into `components/charts/pie-chart-separated.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/pie-chart-separated.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +264,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +307,6 @@ fun PieSeparatedExample() {
     PieChartSeparated()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your records and keep `dataKey` and `nameKey` in step with your field names. Add one entry per slice to `chartConfig` with its label and color; the component takes no props.
 
 </Only>
 

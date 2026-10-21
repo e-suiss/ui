@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 An account settings page with a profile header and a sidebar of sections. Only Sign-In and Security is filled in: email and phone cards that expand into an inline edit form, a Passkeys switch, a two-factor row and a confirmation after each save, while the other sections show a placeholder. It uses a `Sidebar` that slides off canvas. Use it as the frame for any account or profile settings.
 
+Load the email, phone and profile details from the signed-in user, and replace the `onSave` handler with your account API. Add content for the remaining sections listed in `items`. The profile name, email and initials in the header are hard-coded.
+
+Collapsed edit forms are `inert`, focus moves to the input when a card opens, and save confirmations are announced.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/settings-account
@@ -25,9 +31,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks settings-account
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +43,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Input](/docs/components/input), [Sidebar](/docs/components/sidebar), [Switch](/docs/components/switch).
 
-3. Copy the source into `components/blocks/settings-account.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/settings-account.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +62,6 @@ import { SettingsAccount } from "@/components/blocks/settings-account"
 ```tsx
 <SettingsAccount />
 ```
-
-Load the email, phone and profile details from the signed-in user, and replace the `onSave` handler with your account API. Add content for the remaining sections listed in `items`. The profile name, email and initials in the header are hard-coded.
-
-## Notes
-
-Collapsed edit forms are `inert`, focus moves to the input when a card opens, and save confirmations are announced.
 
 </Only>
 
@@ -77,7 +83,17 @@ The main page shows an `Avatar` and name above an inset `ItemGroup` of account s
 
 </Only>
 
+<Only platform="rn">
+
+Replace `ITEMS` and the initial email and phone values with your account data. Use `onSave`, which receives the field and new value, to persist edits.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +143,9 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +153,7 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -147,17 +165,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/settings-account.tsx`:
+4. Copy and paste the following code into `components/blocks/settings-account.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/settings-account.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -169,17 +187,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/settings-account.tsx`:
+4. Copy and paste the following code into `components/blocks/settings-account.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/settings-account.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -191,11 +209,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/settings-account.tsx`:
+4. Copy and paste the following code into `components/blocks/settings-account.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/settings-account.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -321,6 +339,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -360,12 +382,6 @@ fun SettingsAccountExample() {
     SettingsAccount()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `ITEMS` and the initial email and phone values with your account data. Use `onSave`, which receives the field and new value, to persist edits.
 
 </Only>
 

@@ -15,7 +15,9 @@ A column selects the item that comes to rest in the center after scrolling, or t
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/wheel-picker
@@ -27,15 +29,21 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add wheel-picker
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
-2. Copy the source into `components/ui/wheel-picker.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/wheel-picker.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -57,74 +65,29 @@ import { WheelPicker, WheelPickerColumn, WheelPickerItem } from "@/components/ui
 </div>
 ```
 
-Each column manages its own value. Use `defaultValue` on `WheelPickerColumn` for an uncontrolled column, or `value` with `onValueChange` to control it. Give every `WheelPickerItem` a unique string `value`; its children are the visible label.
+## Composition
 
-Set `disabled` on items that can't be chosen. Scrolling skips past them to the nearest enabled item, and the keyboard steps over them.
+Use the following composition to build a `WheelPicker`:
+
+```text
+WheelPicker
+└── WheelPickerColumn
+    └── WheelPickerItem
+```
 
 ## Examples
 
 ### Disabled items
 
-Disables booked time slots so scrolling, keys and clicks skip them.
+Set `disabled` on items that can't be chosen, here booked time slots. Scrolling skips past them to the nearest enabled item, and the keyboard and clicks skip them too.
 
 <ComponentPreview name="wheel-picker-disabled-items" />
 
 ### Date time
 
-Combines controlled day, hour and minute columns into a date and time picker.
+Combines controlled day, hour and minute columns into a date and time picker. Each column takes `value` and `onValueChange`.
 
 <ComponentPreview name="wheel-picker-date-time" />
-
-## API Reference
-
-<Anatomy>
-
-- [WheelPicker](#wheelpicker)
-  - [WheelPickerColumn](#wheelpickercolumn)
-    - [WheelPickerItem](#wheelpickeritem)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### WheelPicker
-
-The frame that holds the columns and draws the selection band.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### WheelPickerColumn
-
-A scrolling, snapping wheel that holds one selected value.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | - | The selected value, for controlled use. |
-| `defaultValue` | `string` | - | The initial value when uncontrolled. |
-| `onValueChange` | `(value: string) => void` | - | Called when the column settles on a new value. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### WheelPickerItem
-
-A single option in a column.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The string value this item selects; it must be unique in its column. |
-| `disabled` | `boolean` | `false` | Prevents the item from being selected. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -133,12 +96,44 @@ Also accepts the props of `React.ComponentProps<"div">`.
 - Disabled items set `aria-disabled` and ignore clicks.
 - When reduced motion is preferred, the column scrolls to new values without smooth scrolling.
 
-## Notes
+## API Reference
 
-- Row height comes from `--wheel-picker-item-height` (`--spacing(8)` by default), set on `WheelPicker`; the column shows about seven rows.
-- The curve is driven by scroll-driven animations where `ViewTimeline` is supported, and by a scroll handler elsewhere.
-- Parts carry `data-slot` attributes: `wheel-picker`, `wheel-picker-column` and `wheel-picker-item`. Items set `data-value`, `data-selected` and `data-disabled`.
-- The selection band uses `bg-secondary`.
+### WheelPicker
+
+The frame that holds the columns and draws the selection band.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Row height comes from `--wheel-picker-item-height` (`--spacing(8)` by default), set on `WheelPicker`; the column shows about seven rows. The curve is driven by scroll-driven animations where `ViewTimeline` is supported, and by a scroll handler elsewhere.
+
+### WheelPickerColumn
+
+A scrolling, snapping wheel that holds one selected value.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | - |
+| `defaultValue` | `string` | - |
+| `onValueChange` | `(value: string) => void` | - |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Each column manages its own value. Use `defaultValue` for an uncontrolled column, or `value` with `onValueChange` to control it. `onValueChange` fires when the column settles on a new value: the item that comes to rest in the center after scrolling, or the item that's clicked.
+
+### WheelPickerItem
+
+A single option in a column.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | Required |
+| `disabled` | `boolean` | `false` |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Give every item a string `value` that is unique in its column; its children are the visible label.
+
+Each part sets a `data-slot`, such as `wheel-picker-column`, for styling. Items also set `data-value`, `data-selected` and `data-disabled`.
 
 </Only>
 
@@ -155,6 +150,10 @@ Also accepts the props of `React.ComponentProps<"div">`.
 Use it for times, dates and other values picked from a short, ordered list, often in a sheet or popover.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -204,7 +203,9 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -212,7 +213,7 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -238,17 +239,17 @@ npx expo install cn
 
 <ComponentSource path="uniwind/components/primitives/wheel-picker.tsx" plain />
 
-4. Copy the source into `components/ui/wheel-picker.tsx`:
+4. Copy and paste the following code into `components/ui/wheel-picker.tsx`:
 
 <ComponentSource path="uniwind/components/ui/wheel-picker.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -274,11 +275,11 @@ npx expo install cn
 
 <ComponentSource path="nativewind/components/primitives/wheel-picker.tsx" plain />
 
-4. Copy the source into `components/ui/wheel-picker.tsx`:
+4. Copy and paste the following code into `components/ui/wheel-picker.tsx`:
 
 <ComponentSource path="nativewind/components/ui/wheel-picker.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -304,11 +305,11 @@ npx expo install cn
 
 <ComponentSource path="stylesheet/components/primitives/wheel-picker.tsx" plain />
 
-3. Copy the source into `components/ui/wheel-picker.tsx`:
+3. Copy and paste the following code into `components/ui/wheel-picker.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/wheel-picker.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -396,6 +397,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -554,168 +559,19 @@ fun WheelPickerFruits() {
 
 </Only>
 
-<Only platform="rn">
-
-Give each column a `defaultValue`, or `value` with `onValueChange`, and fill it with `WheelPickerItem` components that each have a unique `value`. Plain string or number children are wrapped in single-line `Text`.
-
-</Only>
-
-The value is set when scrolling settles or when an item is pressed. Disabled items are skipped: if the wheel stops on one, it moves to the nearest enabled item.
-
-<Only platform="rn">
-
-Combine several columns for compound values such as day, hour and minute, and use `className` on columns and items to control width and alignment. Set `itemHeight` on `WheelPicker` to change the row height.
-
-</Only>
-
 ## Examples
 
 ### Disabled items
 
-A time list where booked slots are disabled and skipped.
+A time list where booked slots are disabled. Disabled items are skipped: if the wheel stops on one, it moves to the nearest enabled item.
 
 <NativeExample name="wheel-picker-disabled-items" />
 
 ### Date time
 
-Controlled day, hour and minute columns combined into one value.
+Controlled day, hour and minute columns combined into one value. The value is set when scrolling settles or when an item is pressed.
 
 <NativeExample name="wheel-picker-date-time" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### WheelPicker
-
-Root row of columns with the selection highlight.
-
-Also accepts the props of `React.ComponentProps<typeof WheelPickerPrimitive.Root>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### WheelPickerColumn
-
-Snapping scroll column that holds one value.
-
-Also accepts the props of `React.ComponentProps<typeof WheelPickerPrimitive.Column>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### WheelPickerItem
-
-Single row in a column.
-
-Also accepts the props of `React.ComponentProps<typeof WheelPickerPrimitive.Item>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### WheelPicker
-
-Root row of columns with the selection highlight.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `spacing` | `CGFloat` | `0` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### WheelPickerColumn
-
-Snapping scroll column that holds one value.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selection` | `Binding<Value>` | - | The selected value. |
-| `alignment` | `HorizontalAlignment` | `.center` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### WheelPickerItem
-
-Single row in a column.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Value` | - | The selected value, for controlled use. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `verbatim` | `String` | - | The title text. |
-
-Overloads: `init(value:label:)`, `init(_:value:)`, `init(verbatim:value:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### WheelPickerColumnScope.WheelPickerItem
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | - |
-| `enabled` | `Boolean` | `true` | - |
-| `content` | `@Composable () -> Unit` | - | - |
-| `text` | `String` | - | - |
-
-Overloads: `WheelPickerItem(value, content)`, `WheelPickerItem(value, text)`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### WheelPicker
-
-Root row of columns with the selection highlight.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `horizontalArrangement` | `Arrangement.Horizontal` | `Arrangement.Center` | - |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### WheelPickerColumn
-
-Snapping scroll column that holds one value.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String?` | - | The selected value, for controlled use. |
-| `onValueChange` | `(String) -> Unit` | - | Called when the column settles on a new value. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `label` | `String?` | `null` | The label. |
-| `horizontalAlignment` | `Alignment.Horizontal` | `Alignment.CenterHorizontally` | - |
-| `itemPadding` | `Dp` | `12.dp` | - |
-| `content` | `WheelPickerColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -726,11 +582,110 @@ Snapping scroll column that holds one value.
 - Give each column an `accessibilityLabel`, such as `Hour` or `Minute`.
 - The highlight band is hidden from screen readers.
 
-## Notes
+</Only>
 
-- A selection haptic plays when the value changes, if a haptics adapter is provided through the haptics context.
-- The highlight uses `bg-secondary`; items use `text-xl text-foreground` with tabular numbers and `text-muted-foreground` when disabled.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### WheelPicker
+
+Root row of columns with the selection highlight.
+
+Also accepts the props of `React.ComponentProps<typeof WheelPickerPrimitive.Root>`.
+
+Set `itemHeight` to change the row height. A selection haptic plays when the value changes, if a haptics adapter is provided through the haptics context.
+
+### WheelPickerColumn
+
+Snapping scroll column that holds one value.
+
+Also accepts the props of `React.ComponentProps<typeof WheelPickerPrimitive.Column>`.
+
+Give each column a `defaultValue`, or `value` with `onValueChange`. Combine several columns for compound values such as day, hour and minute, and use `className` on columns and items to control width and alignment.
+
+### WheelPickerItem
+
+Single row in a column.
+
+Also accepts the props of `React.ComponentProps<typeof WheelPickerPrimitive.Item>`.
+
+Give each item a unique `value`. Plain string or number children are wrapped in single-line `Text`.
+
+</Only>
+
+<Only platform="swift">
+
+### WheelPicker
+
+Root row of columns with the selection highlight.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `spacing` | `CGFloat` | `0` |
+| `content` | `() -> Content` | - |
+
+### WheelPickerColumn
+
+Snapping scroll column that holds one value.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `selection` | `Binding<Value>` | - |
+| `alignment` | `HorizontalAlignment` | `.center` |
+| `content` | `() -> Content` | - |
+
+### WheelPickerItem
+
+Single row in a column.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Value` | - |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(value:label:)`, `init(_:value:)`, `init(verbatim:value:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### WheelPickerColumnScope.WheelPickerItem
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `enabled` | `Boolean` | `true` |
+| `content` | `@Composable () -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `WheelPickerItem(value, content)`, `WheelPickerItem(value, text)`.
+
+### WheelPicker
+
+Root row of columns with the selection highlight.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `horizontalArrangement` | `Arrangement.Horizontal` | `Arrangement.Center` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+
+### WheelPickerColumn
+
+Snapping scroll column that holds one value.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String?` | - |
+| `onValueChange` | `(String) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `label` | `String?` | `null` |
+| `horizontalAlignment` | `Alignment.Horizontal` | `Alignment.CenterHorizontally` |
+| `itemPadding` | `Dp` | `12.dp` |
+| `content` | `WheelPickerColumnScope.() -> Unit` | - |
 
 </Only>
 

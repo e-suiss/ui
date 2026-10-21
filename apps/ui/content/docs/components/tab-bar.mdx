@@ -15,7 +15,9 @@ The list measures itself and moves items that don't fit into the expanded conten
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/tab-bar
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add tab-bar
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
@@ -37,16 +41,29 @@ npm install @base-ui/react @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button).
 
-3. Copy the source into `components/ui/tab-bar.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/tab-bar.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { TabBar, TabBarList, TabBarItem, TabBarTrigger, TabBarContent, TabBarSection, TabBarSectionTitle, TabBarLink } from "@/components/ui/tab-bar"
+import {
+  TabBar,
+  TabBarContent,
+  TabBarItem,
+  TabBarLink,
+  TabBarList,
+  TabBarSection,
+  TabBarSectionTitle,
+  TabBarTrigger,
+} from "@/components/ui/tab-bar"
 ```
 
 ```tsx
@@ -78,33 +95,26 @@ import { TabBar, TabBarList, TabBarItem, TabBarTrigger, TabBarContent, TabBarSec
 </TabBar>
 ```
 
-Use `defaultOpen` on `TabBar` for an uncontrolled bar, or `open` with `onOpenChange` to control it. Give the `nav` a name with `aria-label`.
+## Composition
 
-Mark the current destination with `isActive` on a `TabBarItem` or `TabBarLink`. A `TabBarItem` can render as a link or router link. Choosing a `TabBarLink` or an overflowed item closes the bar. Child components can read the bar's state with the `useTabBar` hook.
+Use the following composition to build a `TabBar`:
 
-<OnlyBase base="base">
-
-Use the `render` prop to render a `TabBarItem` as a link or router link.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Set `asChild` on a `TabBarItem` and pass a link or router link as the child.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Pass a `render` function to a `TabBarItem` that returns a link or router link with the props it receives.
-
-</OnlyBase>
+```text
+TabBar
+├── TabBarList
+│   └── TabBarItem
+├── TabBarContent
+│   └── TabBarSection
+│       ├── TabBarSectionTitle
+│       └── TabBarLink
+└── TabBarTrigger
+```
 
 ## Examples
 
 ### Open
 
-Renders with the sections expanded on mount; an outside click closes them.
+Set `defaultOpen` on `TabBar` to render with the sections expanded on mount; an outside click closes them.
 
 <ComponentPreview name="tab-bar-open" layout="fullscreen" />
 
@@ -116,54 +126,62 @@ Hides the More button because every item fits and there are no sections.
 
 ### Overflow into more
 
-Holds more items than fit, so the extra items move behind More.
+Holds more items than fit, so the extra items move behind More and appear there as links. Choosing an overflowed item closes the bar.
 
 <ComponentPreview name="tab-bar-overflow-into-more" layout="fullscreen" />
 
 ### Links
 
-Renders each item as a link, with the active one marked as the current page.
+<OnlyBase base="base">
+
+Use the `render` prop to render a `TabBarItem` as a link or router link. Set `isActive` to mark the current page.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `asChild` on a `TabBarItem` and pass a link or router link as the child. Set `isActive` to mark the current page.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function to a `TabBarItem` that returns a link or router link with the props it receives. Set `isActive` to mark the current page.
+
+</OnlyBase>
 
 <ComponentPreview name="tab-bar-links" layout="fullscreen" />
 
 ### Disabled item
 
-Disables one item in the list.
+Set `disabled` on a `TabBarItem` to disable one item in the list.
 
 <ComponentPreview name="tab-bar-disabled-item" layout="fullscreen" />
 
+## Accessibility
+
+- `TabBar` is a `navigation` landmark; name it with `aria-label`.
+- Active items and links set `aria-current="page"`.
+- The More button sets `aria-expanded` and `aria-controls` to point to the content.
+- `Escape` closes the open bar and returns focus to the More button. A pointer press outside the bar also closes it.
+- While open, the list is `inert`. Items moved into the overflow are hidden from assistive technologies and removed from the tab order in the list, and appear as links in the content instead.
+- When the More button isn't needed, it's hidden and removed from the tab order.
+
 ## API Reference
-
-<Anatomy>
-
-- [TabBar](#tabbar)
-  - [TabBarList](#tabbarlist)
-    - [TabBarItem](#tabbaritem)
-  - [TabBarContent](#tabbarcontent)
-    - [TabBarSection](#tabbarsection)
-      - [TabBarSectionTitle](#tabbarsectiontitle)
-      - [TabBarLink](#tabbarlink)
-  - [TabBarTrigger](#tabbartrigger)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### TabBar
 
 The floating `nav` container that holds the open state.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Whether the More panel is open, for controlled use. |
-| `defaultOpen` | `boolean` | `false` | Whether the More panel starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when the More panel opens or closes. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean) => void` | - |
 
 Also accepts the props of `React.ComponentProps<"nav">`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+Use `defaultOpen` for an uncontrolled bar, or `open` with `onOpenChange` to control it; `onOpenChange` is called when the More panel opens or closes. Give the `nav` a name with `aria-label`. The bar sits above the safe-area inset at the bottom of the screen, and animations are removed when reduced motion is preferred. Child components can read the bar's state with the `useTabBar` hook, which throws if it's used outside a `TabBar`.
 
 ### TabBarList
 
@@ -171,17 +189,13 @@ The row of primary items; items that don't fit move into the content.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### TabBarItem
 
 A primary destination in the list, rendered as a button by default.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isActive` | `boolean` | `false` | Marks the item as the current page with `aria-current="page"`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `isActive` | `boolean` | `false` |
 
 <OnlyBase base="base">
 
@@ -201,9 +215,7 @@ Also accepts the props of `React.ComponentProps<"button">`, plus a `render` func
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={4}>
+`isActive` marks the item as the current page with `aria-current="page"`. An item can render as a link or router link, as in the Links example.
 
 ### TabBarTrigger
 
@@ -211,19 +223,11 @@ The More button that expands and collapses the content.
 
 Also accepts the props of `React.ComponentProps<typeof Button>`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### TabBarContent
 
 The expandable area above the list that holds overflowed items and sections.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### TabBarSection
 
@@ -231,27 +235,19 @@ A column of related links in the content.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={7}>
-
 ### TabBarSectionTitle
 
 The heading of a section, marked with a small dot.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={8}>
-
 ### TabBarLink
 
 A link inside a section that closes the bar when chosen.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isActive` | `boolean` | `false` | Marks the link as the current page with `aria-current="page"`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `isActive` | `boolean` | `false` |
 
 <OnlyBase base="base">
 
@@ -271,24 +267,9 @@ Also accepts the props of `React.ComponentProps<"a">`, plus a `render` function.
 
 </OnlyBase>
 
-</ApiPart>
+`isActive` marks the link as the current page with `aria-current="page"`.
 
-## Accessibility
-
-- `TabBar` is a `navigation` landmark; name it with `aria-label`.
-- Active items and links set `aria-current="page"`.
-- The More button sets `aria-expanded` and `aria-controls` to point to the content.
-- `Escape` closes the open bar and returns focus to the More button. A pointer press outside the bar also closes it.
-- While open, the list is `inert`. Items moved into the overflow are hidden from assistive technologies and removed from the tab order in the list, and appear as links in the content instead.
-- When the More button isn't needed, it's hidden and removed from the tab order.
-
-## Notes
-
-- `TabBar` sets `data-open`, `data-overflowing` and `data-sections` for styling. The trigger sets `data-idle` when it's hidden, and items and links set `data-active`.
-- Parts carry `data-slot` attributes such as `tab-bar`, `tab-bar-list`, `tab-bar-item`, `tab-bar-trigger` and `tab-bar-content`.
-- The bar sits above the safe-area inset at the bottom of the screen and uses a `card` background with a thin border and a shadow. The active item gets a `secondary` fill and `primary` text.
-- Animations are removed when reduced motion is preferred.
-- `useTabBar` throws if it's used outside a `TabBar`.
+Each part sets a `data-slot`, such as `tab-bar-item` or `tab-bar-content`, for styling. `TabBar` sets `data-open`, `data-overflowing` and `data-sections`, the trigger sets `data-idle` when it's hidden, and items and links set `data-active`.
 
 </Only>
 
@@ -305,6 +286,10 @@ Also accepts the props of `React.ComponentProps<"a">`, plus a `render` function.
 Use it for switching between the top-level sections of an app. For switching views within a screen, use Tabs.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -354,7 +339,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Screen](/do
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -362,7 +349,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Screen](/do
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-safe-area-context react-native-svg
@@ -388,17 +375,17 @@ npx expo install cn phosphor-react-native react-native-safe-area-context react-n
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/tab-bar.tsx`:
+4. Copy and paste the following code into `components/ui/tab-bar.tsx`:
 
 <ComponentSource path="uniwind/components/ui/tab-bar.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-safe-area-context react-native-svg
@@ -424,17 +411,17 @@ npx expo install cn phosphor-react-native react-native-safe-area-context react-n
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/tab-bar.tsx`:
+4. Copy and paste the following code into `components/ui/tab-bar.tsx`:
 
 <ComponentSource path="nativewind/components/ui/tab-bar.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-safe-area-context react-native-svg
@@ -460,11 +447,11 @@ npx expo install phosphor-react-native react-native-safe-area-context react-nati
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/tab-bar.tsx`:
+4. Copy and paste the following code into `components/ui/tab-bar.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/tab-bar.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -559,6 +546,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -862,16 +853,6 @@ fun TabBarExample(badges: Boolean = true, disabled: String? = null) {
 
 </Only>
 
-<Only platform="rn">
-
-Put `TabBarItem` entries inside a `TabBarList`, inside `TabBar`. Give each item a `value`, an `icon` and a label as children. Control the active tab with `value` and `onValueChange`, or set `defaultValue`.
-
-The `badge` prop shows a count, text or a dot: numbers above 99 show as `99+`, `0` and empty strings show nothing, and `true` shows a small dot. A selection haptic plays whenever the tab changes, when a haptics adapter is provided through `HapticsContext`.
-
-The `TabBarBadgeValue` type is also exported.
-
-</Only>
-
 ## Examples
 
 ### Without badges
@@ -884,7 +865,7 @@ The tab bar without badges.
 
 <Only platform="rn">
 
-A count above 99 shown as `99+` and a text badge.
+Set `badge` to a number or text. A count above 99 shows as `99+`, and a string shows as a text badge.
 
 </Only>
 
@@ -896,11 +877,19 @@ A tab bar with one disabled tab.
 
 <NativeExample name="tab-bar-disabled-item" />
 
+<Only platform="rn">
+
+## Accessibility
+
+- The list has the `tablist` role and each item has the `tab` role, with selected and disabled states.
+- A badge with a count or text is exposed as the tab's accessibility value, so VoiceOver and TalkBack read it after the label.
+- A dot badge is visual only and is not announced.
+
+</Only>
+
 ## API Reference
 
 <Only platform="rn">
-
-<ApiPart index={1}>
 
 ### TabBar
 
@@ -908,9 +897,7 @@ Root that holds the active tab, the side inset and the safe area padding.
 
 Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.Root>`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+Control the active tab with `value` and `onValueChange`, or set `defaultValue`. A selection haptic plays whenever the tab changes, when a haptics adapter is provided through `HapticsContext`. The bottom padding is the remaining safe area inset minus 8 points, and never less than 12 points.
 
 ### TabBarList
 
@@ -918,28 +905,24 @@ Capsule that holds the tabs.
 
 Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.List>`.
 
-</ApiPart>
-
-<ApiPart index={3}>
+Put `TabBarItem` entries inside a `TabBarList`, inside `TabBar`.
 
 ### TabBarItem
 
 One tab with an icon, a label and an optional badge.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon` | `PhosphorIcon` | - | Phosphor icon shown above the label. Uses the fill weight when active. |
-| `badge` | `TabBarBadgeValue` | - | Number, text or `true` for a dot, shown on the icon's corner. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `icon` | `PhosphorIcon` | - |
+| `badge` | `TabBarBadgeValue` | - |
 
 Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.Tab>`.
 
-</ApiPart>
+Give each item a `value`, an `icon` and a label as children. The Phosphor `icon` sits above the label and uses the fill weight when active. `badge` sits on the icon's corner and takes a number, text or `true`: numbers above 99 show as `99+`, `0` and empty strings show nothing, and `true` shows a small dot. The `TabBarBadgeValue` type is also exported.
 
 </Only>
 
 <Only platform="swift">
-
-<ApiPart index={1}>
 
 ### TabBarBadge
 
@@ -949,60 +932,44 @@ Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.Tab>`.
 | `.count` | `Int` |
 | `.text` | `String` |
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### TabBar
 
 Root that holds the active tab, the side inset and the safe area padding.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selection` | `Binding<Value>` | - | The selected value. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `selection` | `Binding<Value>` | - |
+| `content` | `() -> Content` | - |
 
 ### TabBarItem
 
 One tab with an icon, a label and an optional badge.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `value` | `Value` | - | The current value. |
-| `icon` | `Image` | - | Phosphor icon shown above the label. Uses the fill weight when active. |
-| `activeIcon` | `Image?` | `nil` | - |
-| `badge` | `TabBarBadge?` | `nil` | - |
-| `verbatim` | `String` | - | The title text. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `value` | `Value` | - |
+| `icon` | `Image` | - |
+| `activeIcon` | `Image?` | `nil` |
+| `badge` | `TabBarBadge?` | `nil` |
+| `verbatim` | `String` | - |
 
 Overloads: `init(_:value:icon:activeIcon:badge:)`, `init(verbatim:value:icon:activeIcon:badge:)`.
-
-</ApiPart>
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### TabBar
 
 Root that holds the active tab, the side inset and the safe area padding.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | The current value. |
-| `onValueChange` | `(String) -> Unit` | - | Called when the value changes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `onValueChange` | `(String) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
 
 ### TabBarItem
 
@@ -1010,32 +977,15 @@ One tab with an icon, a label and an optional badge.
 
 Receiver: `RowScope`.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | The current value. |
-| `label` | `String` | - | The label. |
-| `icon` | `ImageVector` | - | Phosphor icon shown above the label. Uses the fill weight when active. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `selectedIcon` | `ImageVector?` | `null` | - |
-| `badge` | `String?` | `null` | - |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- The list has the `tablist` role and each item has the `tab` role, with selected and disabled states.
-- A badge with a count or text is exposed as the tab's accessibility value, so VoiceOver and TalkBack read it after the label.
-- A dot badge is visual only and is not announced.
-
-## Notes
-
-- The capsule uses `bg-card` with a `border-foreground/5` border (`border-foreground/10` in dark mode) and a large shadow. The active tab uses `bg-secondary` and `text-primary`, and badges use `bg-destructive`; colors follow the system appearance.
-- The bottom padding is the remaining safe area inset minus 8 points, and never less than 12 points.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `label` | `String` | - |
+| `icon` | `ImageVector` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `selectedIcon` | `ImageVector?` | `null` |
+| `badge` | `String?` | `null` |
+| `enabled` | `Boolean` | `true` |
 
 </Only>
 

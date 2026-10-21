@@ -15,7 +15,9 @@ platforms: [web, rn, swift, kotlin]
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/message
@@ -27,20 +29,33 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add message
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
-2. Copy the source into `components/ui/message.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/message.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { MessageGroup, Message, MessageAvatar, MessageContent, MessageHeader, MessageFooter } from "@/components/ui/message"
+import {
+  Message,
+  MessageAvatar,
+  MessageContent,
+  MessageFooter,
+  MessageGroup,
+  MessageHeader,
+} from "@/components/ui/message"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Bubble, BubbleContent } from "@/components/ui/bubble"
 ```
@@ -62,19 +77,34 @@ import { Bubble, BubbleContent } from "@/components/ui/bubble"
 </div>
 ```
 
-Set `align="end"` for messages sent by the current user. The row reverses, so the avatar moves to the end, and the content's children and the footer align to the end edge.
+## Composition
+
+Use the following composition to build a `Message`:
+
+```text
+Message
+├── MessageAvatar
+└── MessageContent
+    ├── MessageHeader
+    └── MessageFooter
+MessageGroup
+└── Message
+    ├── MessageAvatar
+    └── MessageContent
+        └── MessageFooter
+```
 
 ## Examples
 
 ### Align end
 
-A message aligned to the end, as used for outgoing messages.
+Set `align="end"` on `Message` for messages sent by the current user. The row reverses, so the avatar moves to the end.
 
 <ComponentPreview name="message-align-end" />
 
 ### With header and footer
 
-A message with a sender name above the bubble and a timestamp below it.
+Put a `MessageHeader` above the bubble for the sender name and a `MessageFooter` below it for a timestamp. When a footer is present, the avatar shifts up to line up with the last bubble.
 
 <ComponentPreview name="message-with-header-and-footer" />
 
@@ -86,46 +116,23 @@ A `MessageGroup` with an incoming message of two bubbles and an outgoing reply.
 
 ## API Reference
 
-<Anatomy>
-
-- [Message](#message)
-  - [MessageAvatar](#messageavatar)
-  - [MessageContent](#messagecontent)
-    - [MessageHeader](#messageheader)
-    - [MessageFooter](#messagefooter)
-- [MessageGroup](#messagegroup)
-  - [Message](#message)
-    - [MessageAvatar](#messageavatar)
-    - [MessageContent](#messagecontent)
-      - [MessageFooter](#messagefooter)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
 ### MessageGroup
 
 Stacks several messages vertically.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### Message
 
 The row for one message that sets its alignment.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `align` | `"start" \| "end"` | `"start"` | Aligns the message to the `start` or `end` edge; `end` reverses the row for outgoing messages. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `align` | `"start" \| "end"` | `"start"` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={3}>
+`align="end"` reverses the row for outgoing messages, so the avatar moves to the end and the content's children and the footer align to the end edge.
 
 ### MessageAvatar
 
@@ -133,19 +140,11 @@ A round container for the sender's avatar, aligned to the bottom of the row.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### MessageContent
 
 The column that holds the header, bubbles and footer.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={5}>
 
 ### MessageHeader
 
@@ -153,24 +152,15 @@ Small secondary text above the bubbles, such as the sender name.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={6}>
-
 ### MessageFooter
 
 Small secondary text below the bubbles, such as a timestamp.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
+The header and footer drop their horizontal padding when the message contains an element with `data-variant="ghost"`.
 
-## Notes
-
-- Styling hooks: `data-slot` values `message-group`, `message`, `message-avatar`, `message-content`, `message-header` and `message-footer`. `Message` also sets `data-align`.
-- When a footer is present, the avatar shifts up to line up with the last bubble rather than the footer.
-- Header and footer drop their horizontal padding when the message contains an element with `data-variant="ghost"`.
-- Header and footer text uses the `muted-foreground` color; the avatar background uses `muted`.
+Each part sets a `data-slot`, such as `message` or `message-footer`, for styling. `Message` also sets `data-align`.
 
 </Only>
 
@@ -184,9 +174,13 @@ Also accepts the props of `React.ComponentProps<"div">`.
 
 </Only>
 
-`MessageGroup` stacks several messages into a conversation. `MessageHeader` and `MessageFooter` hold small secondary text, such as a sender name or a timestamp.
+`MessageGroup` stacks several messages into a conversation. `MessageHeader` and `MessageFooter` hold small secondary text, such as a sender name or a timestamp. Put a `MessageAvatar` and a `MessageContent` inside each `Message`, and place `Bubble` components, a `MessageHeader` and a `MessageFooter` in `MessageContent`.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -236,7 +230,9 @@ The CLI also adds what it builds on: [Bubble](/docs/components/bubble), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -244,7 +240,7 @@ The CLI also adds what it builds on: [Bubble](/docs/components/bubble), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -252,17 +248,17 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Bubble](/docs/components/bubble), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/message.tsx`:
+3. Copy and paste the following code into `components/ui/message.tsx`:
 
 <ComponentSource path="uniwind/components/ui/message.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -270,11 +266,11 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Bubble](/docs/components/bubble), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/message.tsx`:
+3. Copy and paste the following code into `components/ui/message.tsx`:
 
 <ComponentSource path="nativewind/components/ui/message.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -282,11 +278,11 @@ npx expo install cn
 
 1. Add the pieces it builds on: [Bubble](/docs/components/bubble), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-2. Copy the source into `components/ui/message.tsx`:
+2. Copy and paste the following code into `components/ui/message.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/message.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -376,6 +372,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -463,16 +463,6 @@ fun MessageDefault() {
 
 </Only>
 
-Put a `MessageAvatar` and a `MessageContent` inside each `Message`, and place `Bubble` components, a `MessageHeader` and a `MessageFooter` in `MessageContent`.
-
-<Only platform="rn">
-
-Plain strings in `MessageHeader` and `MessageFooter` are wrapped in `Text` for you, so you can pass text directly or mix it with an `Icon`.
-
-</Only>
-
-When `MessageContent` contains a `MessageFooter`, the avatar shifts up so it lines up with the last bubble instead of the footer.
-
 ## Examples
 
 ### Align end
@@ -483,7 +473,7 @@ A message aligned to the trailing side, as for the current user.
 
 ### With header and footer
 
-A message with a sender name above and a timestamp below.
+A message with a sender name in `MessageHeader` and a timestamp in `MessageFooter`. When `MessageContent` contains a footer, the avatar shifts up to line up with the last bubble.
 
 <NativeExample name="message-with-header-and-footer" />
 
@@ -493,259 +483,6 @@ A `MessageGroup` with an incoming and an outgoing message, including a read rece
 
 <NativeExample name="message-conversation" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### MessageGroup
-
-Vertical stack of messages.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Message
-
-Row that holds the avatar and content and sets the alignment.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `align` | `MessageAlign` | `"start"` | Side of the row: `start` (default) or `end`. Also aligns nested bubbles and the footer. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### MessageAvatar
-
-Round slot for an avatar, pinned to the bottom of the row.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### MessageContent
-
-Column of bubbles built on `BubbleGroup`.
-
-Also accepts the props of `React.ComponentProps<typeof BubbleGroup>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### MessageHeader
-
-Small secondary text above the bubbles.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### MessageFooter
-
-Small secondary text below the bubbles, aligned with the message side.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### MessageGroup
-
-Vertical stack of messages.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `spacing` | `CGFloat` | `8` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Message
-
-Row that holds the avatar and content and sets the alignment.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `align` | `Align` | `.start` | Side of the row: `start` (default) or `end`. Also aligns nested bubbles and the footer. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### MessageAvatar
-
-Round slot for an avatar, pinned to the bottom of the row.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### MessageContent
-
-Column of bubbles built on `BubbleGroup`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### MessageHeader
-
-Small secondary text above the bubbles.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-| `_ text` | `LocalizedStringKey` | - | The text. |
-| `verbatim` | `String` | - | The text. |
-
-Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### MessageFooter
-
-Small secondary text below the bubbles, aligned with the message side.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-| `_ text` | `LocalizedStringKey` | - | The text. |
-| `verbatim` | `String` | - | The text. |
-
-Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### MessageAlign
-
-Values: `Start`, `End`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### MessageGroup
-
-Vertical stack of messages.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### Message
-
-Row that holds the avatar and content and sets the alignment.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `align` | `MessageAlign`: `Start` \| `End` | `MessageAlign.Start` | Side of the row: `start` (default) or `end`. Also aligns nested bubbles and the footer. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### MessageAvatar
-
-Round slot for an avatar, pinned to the bottom of the row.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### MessageContent
-
-Column of bubbles built on `BubbleGroup`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### MessageHeader
-
-Small secondary text above the bubbles.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `MessageHeader(content)`, `MessageHeader(text)`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### MessageFooter
-
-Small secondary text below the bubbles, aligned with the message side.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `MessageFooter(content)`, `MessageFooter(text)`.
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -753,11 +490,186 @@ Overloads: `MessageFooter(content)`, `MessageFooter(text)`.
 - Messages are plain `View` and `Text` elements, so screen readers read the header, bubble text and footer in order.
 - Give avatars without visible text, such as images, an `accessibilityLabel`.
 
-## Notes
+</Only>
 
-- Header and footer text use `text-xs text-muted-foreground`, with icons at `size-3.5`.
-- The avatar slot uses `bg-muted`.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### MessageGroup
+
+Vertical stack of messages.
+
+Also accepts the props of `ViewProps`.
+
+### Message
+
+Row that holds the avatar and content and sets the alignment.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `align` | `MessageAlign` | `"start"` |
+
+Also accepts the props of `ViewProps`.
+
+`align` also passes the side to nested bubbles and the footer through context.
+
+### MessageAvatar
+
+Round slot for an avatar, pinned to the bottom of the row.
+
+Also accepts the props of `ViewProps`.
+
+### MessageContent
+
+Column of bubbles built on `BubbleGroup`.
+
+Also accepts the props of `React.ComponentProps<typeof BubbleGroup>`.
+
+### MessageHeader
+
+Small secondary text above the bubbles.
+
+Also accepts the props of `ViewProps`.
+
+Plain strings in `MessageHeader` and `MessageFooter` are wrapped in `Text` for you, so you can pass text directly or mix it with an `Icon`.
+
+### MessageFooter
+
+Small secondary text below the bubbles, aligned with the message side.
+
+Also accepts the props of `ViewProps`.
+
+</Only>
+
+<Only platform="swift">
+
+### MessageGroup
+
+Vertical stack of messages.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `spacing` | `CGFloat` | `8` |
+| `content` | `() -> Content` | - |
+
+### Message
+
+Row that holds the avatar and content and sets the alignment.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `align` | `Align` | `.start` |
+| `content` | `() -> Content` | - |
+
+### MessageAvatar
+
+Round slot for an avatar, pinned to the bottom of the row.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### MessageContent
+
+Column of bubbles built on `BubbleGroup`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### MessageHeader
+
+Small secondary text above the bubbles.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+| `_ text` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
+
+### MessageFooter
+
+Small secondary text below the bubbles, aligned with the message side.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+| `_ text` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### MessageAlign
+
+Values: `Start`, `End`.
+
+### MessageGroup
+
+Vertical stack of messages.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### Message
+
+Row that holds the avatar and content and sets the alignment.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `align` | `MessageAlign`: `Start` \| `End` | `MessageAlign.Start` |
+| `content` | `@Composable () -> Unit` | - |
+
+### MessageAvatar
+
+Round slot for an avatar, pinned to the bottom of the row.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable BoxScope.() -> Unit` | - |
+
+### MessageContent
+
+Column of bubbles built on `BubbleGroup`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
+
+### MessageHeader
+
+Small secondary text above the bubbles.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `MessageHeader(content)`, `MessageHeader(text)`.
+
+### MessageFooter
+
+Small secondary text below the bubbles, aligned with the message side.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `MessageFooter(content)`, `MessageFooter(text)`.
 
 </Only>
 

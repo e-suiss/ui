@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A health summary in the style of a phone health app, with cards for pinned metrics such as Move, Steps and Sleep, each showing its value and a small sparkline or bar chart. Edit mode lets users pin and unpin cards, and each category page lists all its metrics for the last seven days. Navigation is a `Sidebar` that collapses to icons on desktop and opens as a sheet from the trigger on mobile. Use it for fitness, wellness or any personal metrics dashboard.
 
+Edit `categories` for names, icons and colors, and `metrics` for the cards; each metric has a category, label, value, optional unit, color and seven data points. Store the pinned list per user instead of in local state. Card links point to anchors built from each label, and the 9:41 time and JR avatar are hard-coded.
+
+Sparklines are hidden from assistive technology because each value is also shown as text, and pin buttons are labeled with the metric name.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/dash-health
@@ -25,9 +31,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks dash-health
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +43,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Sidebar](/docs/components/sidebar).
 
-3. Copy the source into `components/blocks/dash-health.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/dash-health.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +62,6 @@ import { DashHealth } from "@/components/blocks/dash-health"
 ```tsx
 <DashHealth />
 ```
-
-Edit `categories` for names, icons and colors, and `metrics` for the cards; each metric has a category, label, value, optional unit, color and seven data points. Store the pinned list per user instead of in local state. Card links point to anchors built from each label, and the 9:41 time and JR avatar are hard-coded.
-
-## Notes
-
-Sparklines are hidden from assistive technology because each value is also shown as text, and pin buttons are labeled with the metric name.
 
 </Only>
 
@@ -75,9 +81,15 @@ Sparklines are hidden from assistive technology because each value is also shown
 
 Composes `Screen`, `Header` with a back button, `Avatar`, `Button`, `Icon` and `Item` groups, with sparklines drawn using `react-native-svg`. The list opens a section of metric cards, and the Summary section has an Edit mode for pinning and unpinning cards.
 
+Replace `METRICS` and `CATEGORIES` with your own readings. Pass `onMetricPress` to open a metric and `onPinnedChange` to store the pinned list.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +139,9 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +149,7 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -147,17 +161,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/dash-health.tsx`:
+4. Copy and paste the following code into `components/blocks/dash-health.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/dash-health.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -169,17 +183,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/dash-health.tsx`:
+4. Copy and paste the following code into `components/blocks/dash-health.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/dash-health.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -191,11 +205,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/dash-health.tsx`:
+4. Copy and paste the following code into `components/blocks/dash-health.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/dash-health.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -297,6 +311,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -336,12 +354,6 @@ fun DashHealthExample() {
     DashHealth()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `METRICS` and `CATEGORIES` with your own readings. Pass `onMetricPress` to open a metric and `onPinnedChange` to store the pinned list.
 
 </Only>
 

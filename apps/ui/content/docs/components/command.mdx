@@ -15,7 +15,9 @@ Command is built on cmdk. The `Command` root filters and orders its items as peo
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/command
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add command
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react cmdk
@@ -37,16 +41,30 @@ npm install @phosphor-icons/react cmdk
 
 2. Add the pieces it builds on: [Dialog](/docs/components/dialog), `use-platform`.
 
-3. Copy the source into `components/ui/command.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/command.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Command, CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandSeparator, CommandItem, CommandShortcut } from "@/components/ui/command"
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from "@/components/ui/command"
 ```
 
 ```tsx
@@ -78,31 +96,33 @@ import { Command, CommandDialog, CommandInput, CommandList, CommandEmpty, Comman
 </div>
 ```
 
-<OnlyBase base="base radix">
+## Composition
 
-Compose `CommandInput` and `CommandList` inside `Command`, and put groups and items in the list. For a palette, wrap the `Command` in `CommandDialog` and control it with `open` and `onOpenChange`. Respond to a chosen item with its `onSelect` callback, and set `disabled` on items that are unavailable.
+Use the following composition to build a `CommandDialog`:
 
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Compose `CommandInput` and `CommandList` inside `Command`, and put groups and items in the list. For a palette, wrap the `Command` in `CommandDialog` and control it with `isOpen` and `onOpenChange`. Respond to a chosen item with its `onSelect` callback, and set `disabled` on items that are unavailable.
-
-</OnlyBase>
-
-Set `mod` on `CommandShortcut` to prefix the shortcut with the platform modifier key: `⌘` on Apple platforms and `Ctrl+` elsewhere.
+```text
+CommandDialog
+└── Command
+    ├── CommandInput
+    └── CommandList
+        ├── CommandEmpty
+        ├── CommandGroup
+        │   └── CommandItem
+        │       └── CommandShortcut
+        └── CommandSeparator
+```
 
 ## Examples
 
 ### Empty
 
-A command menu with no items that always shows its empty message.
+A command menu with no items. `CommandEmpty` shows its message because nothing matches.
 
 <ComponentPreview name="command-empty" />
 
 ### Dialog
 
-A command palette in a dialog, opened from a button, that closes with Escape and returns focus to the button.
+Wrap the `Command` in `CommandDialog` for a command palette opened from a button. It closes with Escape and returns focus to the button.
 
 <ComponentPreview name="command-dialog" />
 
@@ -112,124 +132,6 @@ A command palette that is open when the page loads.
 
 <ComponentPreview name="command-dialog-open" />
 
-## API Reference
-
-<Anatomy>
-
-- [CommandDialog](#commanddialog)
-  - [Command](#command)
-    - [CommandInput](#commandinput)
-    - [CommandList](#commandlist)
-      - [CommandEmpty](#commandempty)
-      - [CommandGroup](#commandgroup)
-        - [CommandItem](#commanditem)
-          - [CommandShortcut](#commandshortcut)
-      - [CommandSeparator](#commandseparator)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Command
-
-The root that filters and manages the items.
-
-Also accepts the props of `React.ComponentProps<typeof CommandPrimitive>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### CommandDialog
-
-A modal dialog that presents a command menu as a palette.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `string` | `"Command Palette"` | The dialog's accessible title. It is visually hidden. |
-| `description` | `string` | `"Search for a command to run..."` | The dialog's accessible description. It is visually hidden. |
-| `className` | `string` | - | Classes applied to the dialog's content panel. |
-| `showCloseButton` | `boolean` | `false` | Shows the dialog's close button. |
-| `children` | `React.ReactNode` | Required | The dialog's content, typically a `Command`. |
-
-Also accepts the props of [Dialog](/docs/components/dialog).
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### CommandInput
-
-The search field, shown with a magnifying glass icon.
-
-Also accepts the props of `React.ComponentProps<typeof CommandPrimitive.Input>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### CommandList
-
-The scrollable container for results.
-
-Also accepts the props of `React.ComponentProps<typeof CommandPrimitive.List>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### CommandEmpty
-
-Content shown when no items match the search.
-
-Also accepts the props of `React.ComponentProps<typeof CommandPrimitive.Empty>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### CommandGroup
-
-A section of related items with an optional heading.
-
-Also accepts the props of `React.ComponentProps<typeof CommandPrimitive.Group>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### CommandSeparator
-
-A divider between groups.
-
-Also accepts the props of `React.ComponentProps<typeof CommandPrimitive.Separator>`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### CommandItem
-
-A selectable command.
-
-Also accepts the props of `React.ComponentProps<typeof CommandPrimitive.Item>`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### CommandShortcut
-
-Displays a keyboard shortcut at the end of an item.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `mod` | `boolean` | - | Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere. |
-
-Also accepts the props of `React.ComponentProps<"span">`.
-
-</ApiPart>
-
 ## Accessibility
 
 - The input has the `combobox` role and items have the `option` role. The highlighted item sets `aria-selected` and disabled items set `aria-disabled`.
@@ -237,11 +139,94 @@ Also accepts the props of `React.ComponentProps<"span">`.
 - `CommandDialog` renders a `dialog` named by its `title`, moves focus inside when it opens, closes with Escape, and returns focus to the element that opened it.
 - `CommandShortcut` is hidden on small screens.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values `command`, `command-input-wrapper`, `command-input`, `command-list`, `command-empty`, `command-group`, `command-separator`, `command-item` and `command-shortcut`.
-- The highlighted item gets `data-selected` and is filled with the `primary` color. Disabled items get `data-disabled="true"`.
-- An item with `data-checked="true"` shows a check mark, unless it contains a `CommandShortcut`.
-- Inside a dialog, `Command` drops its own background and rounded corners. The palette uses a translucent, blurred `popover` background.
+### Command
+
+The root that filters and manages the items.
+
+Also accepts the props of `React.ComponentProps<typeof CommandPrimitive>`.
+
+Compose `CommandInput` and `CommandList` inside `Command`, and put groups and items in the list. Inside a dialog, `Command` drops its own background and rounded corners.
+
+### CommandDialog
+
+A modal dialog that presents a command menu as a palette.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `title` | `string` | `"Command Palette"` |
+| `description` | `string` | `"Search for a command to run..."` |
+| `className` | `string` | - |
+| `showCloseButton` | `boolean` | `false` |
+| `children` | `React.ReactNode` | Required |
+
+Also accepts the props of [Dialog](/docs/components/dialog).
+
+<OnlyBase base="base radix">
+
+Control the palette with `open` and `onOpenChange`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Control the palette with `isOpen` and `onOpenChange`.
+
+</OnlyBase>
+
+`title` and `description` name and describe the dialog for assistive technology and are visually hidden. `className` applies to the dialog's content panel. Pass a `Command` as the children. The palette uses a translucent, blurred `popover` background.
+
+### CommandInput
+
+The search field, shown with a magnifying glass icon.
+
+Also accepts the props of `React.ComponentProps<typeof CommandPrimitive.Input>`.
+
+### CommandList
+
+The scrollable container for results.
+
+Also accepts the props of `React.ComponentProps<typeof CommandPrimitive.List>`.
+
+### CommandEmpty
+
+Content shown when no items match the search.
+
+Also accepts the props of `React.ComponentProps<typeof CommandPrimitive.Empty>`.
+
+### CommandGroup
+
+A section of related items with an optional heading.
+
+Also accepts the props of `React.ComponentProps<typeof CommandPrimitive.Group>`.
+
+### CommandSeparator
+
+A divider between groups.
+
+Also accepts the props of `React.ComponentProps<typeof CommandPrimitive.Separator>`.
+
+### CommandItem
+
+A selectable command.
+
+Also accepts the props of `React.ComponentProps<typeof CommandPrimitive.Item>`.
+
+Respond to a chosen item with its `onSelect` callback, and set `disabled` on items that are unavailable. The highlighted item gets `data-selected` and is filled with the `primary` color, and disabled items get `data-disabled="true"`. An item with `data-checked="true"` shows a check mark, unless it contains a `CommandShortcut`.
+
+### CommandShortcut
+
+Displays a keyboard shortcut at the end of an item.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `mod` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+Set `mod` to prefix the shortcut with the platform modifier key: `⌘` on Apple platforms and `Ctrl+` elsewhere.
+
+Each part sets a `data-slot`, such as `command-item` or `command-input-wrapper`, for styling.
 
 </Only>

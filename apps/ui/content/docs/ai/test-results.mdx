@@ -84,12 +84,6 @@ import {
 </Trace>
 ```
 
-<OnlyBase base="aria">
-
-With React Aria, use `defaultExpanded` on `TraceCollapsible` in place of `defaultOpen`.
-
-</OnlyBase>
-
 ## Examples
 
 ### Suites
@@ -123,14 +117,20 @@ return (
 )
 ```
 
-## API Reference
-
-See [Trace](/docs/components/trace) and [Code Block](/docs/components/code-block).
-
 ## Accessibility
 
 - Put the counts in the summary title, such as "Ran 8 tests, 2 failed", so the result is read before the row is opened.
 - A failed run, suite or test sets `status="error"`, and its title names what failed, so the state is not shown by color alone.
+
+## API Reference
+
+See [Trace](/docs/components/trace) and [Code Block](/docs/components/code-block).
+
+<OnlyBase base="aria">
+
+With React Aria, use `defaultExpanded` on `TraceCollapsible` in place of `defaultOpen`.
+
+</OnlyBase>
 
 </Only>
 

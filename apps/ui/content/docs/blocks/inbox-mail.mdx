@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A three-pane mail client: mailboxes on the left, a searchable message list in the middle and the open message with a reply box on the right. On small screens the panes collapse into a single view with a back button. Start from it for any inbox-style screen, such as support tickets or notifications.
 
+Replace `initialMail` with your messages, each with a sender, subject, body, time, avatar hue and unread and starred flags, and `mailboxes` with your folders. Only Starred actually filters the list, so load each folder from your mail backend. Archive and Delete both remove the message, the reply form only clears on submit, and New message has no handler.
+
+Search runs in the browser over sender, subject and body, so move it server-side for real mailboxes. The reply box receives focus when it opens.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/inbox-mail
@@ -25,9 +31,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks inbox-mail
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +43,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Button](/docs/components/button), [Input Group](/docs/components/input-group), [Split View](/docs/patterns/split-view), [Textarea](/docs/components/textarea).
 
-3. Copy the source into `components/blocks/inbox-mail.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/inbox-mail.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +62,6 @@ import { InboxMail } from "@/components/blocks/inbox-mail"
 ```tsx
 <InboxMail />
 ```
-
-Replace `initialMail` with your messages, each with a sender, subject, body, time, avatar hue and unread and starred flags, and `mailboxes` with your folders. Only Starred actually filters the list, so load each folder from your mail backend. Archive and Delete both remove the message, the reply form only clears on submit, and New message has no handler.
-
-## Notes
-
-Search runs in the browser over sender, subject and body, so move it server-side for real mailboxes. The reply box receives focus when it opens.
 
 </Only>
 
@@ -75,9 +81,15 @@ Search runs in the browser over sender, subject and body, so move it server-side
 
 A three-column mail screen built on `SplitView`: a sidebar of mailboxes (Inbox, Starred, Sent, Archive, Trash), a message list with a search field made from `InputGroup`, and a reader. On phones each column opens in turn. Rows use `Avatar` and support `SwipeActions` to archive or delete, and searching filters by sender, subject and body. The reader has Reply, Star, Archive and Delete buttons, and Reply opens a `Textarea`.
 
+Replace `INITIAL_MAIL` with your messages and `MAILBOXES` with your folders. Wire `onMailboxChange`, `onNewMessage`, `onReply`, `onStarChange`, `onArchive` and `onDelete` to your mail service.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +139,9 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +149,7 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Button]
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -147,17 +161,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/inbox-mail.tsx`:
+4. Copy and paste the following code into `components/blocks/inbox-mail.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/inbox-mail.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -169,17 +183,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/inbox-mail.tsx`:
+4. Copy and paste the following code into `components/blocks/inbox-mail.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/inbox-mail.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -191,11 +205,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/inbox-mail.tsx`:
+4. Copy and paste the following code into `components/blocks/inbox-mail.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/inbox-mail.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -323,6 +337,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -362,12 +380,6 @@ fun InboxMailExample() {
     InboxMail()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `INITIAL_MAIL` with your messages and `MAILBOXES` with your folders. Wire `onMailboxChange`, `onNewMessage`, `onReply`, `onStarChange`, `onArchive` and `onDelete` to your mail service.
 
 </Only>
 

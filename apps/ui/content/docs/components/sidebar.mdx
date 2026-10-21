@@ -15,7 +15,9 @@ platforms: [web]
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/sidebar
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add sidebar
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react class-variance-authority
@@ -37,16 +41,34 @@ npm install @base-ui/react @phosphor-icons/react class-variance-authority
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Direction](/docs/components/direction), [Input](/docs/components/input), [Separator](/docs/components/separator), [Sheet](/docs/components/sheet), [Skeleton](/docs/components/skeleton), [Tooltip](/docs/components/tooltip), `use-mobile`, `use-platform`.
 
-3. Copy the source into `components/ui/sidebar.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/sidebar.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInset, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarRail, SidebarTrigger } from "@/components/ui/sidebar"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 ```
 
 ```tsx
@@ -81,101 +103,82 @@ import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGrou
 </SidebarProvider>
 ```
 
-Use `defaultOpen` on `SidebarProvider` for an uncontrolled sidebar, or `open` with `onOpenChange` to control it. Read and change state from any child with the `useSidebar` hook, which returns `state`, `open`, `setOpen`, `openMobile`, `setOpenMobile`, `isMobile` and `toggleSidebar`.
-
-Set `collapsible="icon"` to shrink the sidebar to a rail of icons when collapsed, `offcanvas` to slide it out of view, or `none` to keep it fixed. Give each `SidebarMenuButton` a `tooltip` so its label stays available while collapsed to icons.
-
-<OnlyBase base="base">
-
-Use the `render` prop on `SidebarMenuButton` to render it as a link.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Set `asChild` on `SidebarMenuButton` and pass a link as the child to render it as a link.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Pass a `render` function to `SidebarMenuButton` that returns a link with the props it receives.
-
-</OnlyBase>
-
 ## Examples
 
 ### Floating
 
-Uses the `floating` variant, a rounded panel with a shadow.
+Set `variant="floating"` on `Sidebar` for a rounded panel with a shadow.
 
 <ComponentPreview name="sidebar-floating" layout="fullscreen" />
 
 ### Inset
 
-Uses the `inset` variant, which also raises the main content into a rounded card.
+Set `variant="inset"` to also raise the main content into a rounded card.
 
 <ComponentPreview name="sidebar-inset" layout="fullscreen" />
 
 ### Collapsed
 
-Starts collapsed to icons and expands from the rail.
+Set `collapsible="icon"` and `defaultOpen={false}` to start collapsed to a rail of icons. Click the rail to expand it. Give each `SidebarMenuButton` a `tooltip` so its label stays available while collapsed.
 
 <ComponentPreview name="sidebar-collapsed" layout="fullscreen" />
 
 ### Offcanvas
 
-Slides the sidebar fully out of view when collapsed.
+Set `collapsible="offcanvas"` to slide the sidebar fully out of view when collapsed.
 
 <ComponentPreview name="sidebar-offcanvas" layout="fullscreen" />
 
 ### Right side
 
-Places the sidebar on the right edge.
+Set `side="right"` to place the sidebar on the right edge.
 
 <ComponentPreview name="sidebar-right-side" layout="fullscreen" />
 
 ### Loading
 
-Shows `SidebarMenuSkeleton` placeholders while items load.
+Show `SidebarMenuSkeleton` placeholders while items load. Set `showIcon` to add a square placeholder for an icon.
 
 <ComponentPreview name="sidebar-loading" layout="fullscreen" />
 
-## API Reference
+## Accessibility
 
-<ApiPart index={1}>
+- `SidebarTrigger` and `SidebarRail` are labelled `Toggle Sidebar`. The rail is removed from the tab order, so keep a `SidebarTrigger` in reach of keyboard users.
+- Press `Command-B` on Apple platforms, or `Ctrl+B` elsewhere, to toggle the sidebar.
+- On mobile, the sidebar is a dialog with a visually hidden title, `Sidebar`; `Escape` closes it.
+- Menu-button tooltips appear only while the sidebar is collapsed, so labels stay available when only icons show.
+
+## API Reference
 
 ### SidebarProvider
 
 Holds the open state, provides it through context and wraps the layout.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `defaultOpen` | `boolean` | `true` | Sets whether the sidebar starts expanded when uncontrolled. |
-| `open` | `boolean` | - | Controls whether the sidebar is expanded. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called with the new state when the sidebar expands or collapses. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `defaultOpen` | `boolean` | `true` |
+| `open` | `boolean` | - |
+| `onOpenChange` | `(open: boolean) => void` | - |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
+Use `defaultOpen` for an uncontrolled sidebar, or `open` with `onOpenChange` to control it. Every toggle writes the state to a `sidebar_state` cookie for 7 days; read it on the server to set `defaultOpen` and avoid a flash on load. Widths come from `--sidebar-width` (`16rem`) and `--sidebar-width-icon` (`3rem`), set on `SidebarProvider`; override them through its `style`.
 
-<ApiPart index={2}>
+Read and change the state from any child with the `useSidebar` hook, which returns `state`, `open`, `setOpen`, `openMobile`, `setOpenMobile`, `isMobile` and `toggleSidebar`. It throws when used outside a `SidebarProvider`.
 
 ### Sidebar
 
 The sidebar panel; a sheet on mobile.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"left" \| "right"` | `"left"` | Places the sidebar on the left or right edge. |
-| `variant` | `"sidebar" \| "floating" \| "inset"` | `"sidebar"` | Chooses a full-height `sidebar`, a rounded `floating` panel, or an `inset` layout. |
-| `collapsible` | `"offcanvas" \| "icon" \| "none"` | `"offcanvas"` | Sets how the sidebar collapses: off canvas, to icons, or not at all. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"left" \| "right"` | `"left"` |
+| `variant` | `"sidebar" \| "floating" \| "inset"` | `"sidebar"` |
+| `collapsible` | `"offcanvas" \| "icon" \| "none"` | `"offcanvas"` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={3}>
+`variant` chooses a full-height `sidebar`, a rounded `floating` panel or an `inset` layout. Set `collapsible="icon"` to shrink the sidebar to a rail of icons when collapsed, `offcanvas` to slide it out of view, or `none` to keep it fixed. On screens narrower than `48rem` the sidebar renders inside a `Sheet`. The sidebar element sets `data-state` (`expanded` or `collapsed`), `data-collapsible`, `data-variant` and `data-side` for styling. The panel uses the `sidebar-*` color variables; change them to style it apart from the page.
 
 ### SidebarTrigger
 
@@ -183,19 +186,11 @@ An icon button that toggles the sidebar.
 
 Also accepts the props of `React.ComponentProps<typeof Button>`.
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### SidebarRail
 
 A thin hit area along the sidebar's edge that toggles it on click.
 
 Also accepts the props of `React.ComponentProps<"button">`.
-
-</ApiPart>
-
-<ApiPart index={5}>
 
 ### SidebarInset
 
@@ -203,19 +198,11 @@ The `main` element for page content next to the sidebar.
 
 Also accepts the props of `React.ComponentProps<"main">`.
 
-</ApiPart>
-
-<ApiPart index={6}>
-
 ### SidebarInput
 
 A compact `Input` styled for use in the sidebar.
 
 Also accepts the props of `React.ComponentProps<typeof Input>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
 
 ### SidebarHeader
 
@@ -223,19 +210,11 @@ The top area, above the scrolling content.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={8}>
-
 ### SidebarFooter
 
 The bottom area, below the scrolling content.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={9}>
 
 ### SidebarSeparator
 
@@ -243,29 +222,17 @@ A divider between sidebar sections.
 
 Also accepts the props of `React.ComponentProps<typeof Separator>`.
 
-</ApiPart>
-
-<ApiPart index={10}>
-
 ### SidebarContent
 
 The scrolling region that holds the groups.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={11}>
-
 ### SidebarGroup
 
 A section of related content.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={12}>
 
 ### SidebarGroupLabel
 
@@ -289,10 +256,6 @@ Also accepts the props of `React.ComponentProps<"div">`, plus a `render` functio
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={13}>
-
 ### SidebarGroupAction
 
 A small button in the corner of a group, such as an add button.
@@ -315,19 +278,11 @@ Also accepts the props of `React.ComponentProps<"button">`, plus a `render` func
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={14}>
-
 ### SidebarGroupContent
 
 The body of a group.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={15}>
 
 ### SidebarMenu
 
@@ -335,34 +290,28 @@ A list of menu items.
 
 Also accepts the props of `React.ComponentProps<"ul">`.
 
-</ApiPart>
-
-<ApiPart index={16}>
-
 ### SidebarMenuItem
 
 A list item that holds a menu button and its extras.
 
 Also accepts the props of `React.ComponentProps<"li">`.
 
-</ApiPart>
-
-<ApiPart index={17}>
-
 ### SidebarMenuButton
 
 The clickable row for a destination or command.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isActive` | `boolean` | `false` | Marks the button as the current item. |
-| `tooltip` | `string \| React.ComponentProps<typeof TooltipContent>` | - | Text or `TooltipContent` props for a tooltip shown only while collapsed on desktop. |
-| `variant` | `"default" \| "outline"` | `"default"` | Uses a plain style or an `outline` style with a background and border. |
-| `size` | `"default" \| "sm" \| "lg"` | `"default"` | Sets the row height: `sm`, `default` or `lg`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `isActive` | `boolean` | `false` |
+| `tooltip` | `string \| React.ComponentProps<typeof TooltipContent>` | - |
+| `variant` | `"default" \| "outline"` | `"default"` |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` |
 
 <OnlyBase base="base">
 
 Also accepts the props of `useRender.ComponentProps<"button">`, `React.ComponentProps<"button">`.
+
+Use the `render` prop to render the button as a link.
 
 </OnlyBase>
 
@@ -370,25 +319,29 @@ Also accepts the props of `useRender.ComponentProps<"button">`, `React.Component
 
 Also accepts the props of `React.ComponentProps<"button">`, plus `asChild`.
 
+Set `asChild` and pass a link as the child to render the button as a link.
+
 </OnlyBase>
 
 <OnlyBase base="aria">
 
 Also accepts the props of `React.ComponentProps<"button">`, plus a `render` function.
 
+Pass a `render` function that returns a link with the props it receives to render the button as a link.
+
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={18}>
+`isActive` marks the current item. `tooltip` takes text or `TooltipContent` props for a tooltip shown only while collapsed on desktop. The `outline` variant adds a background and border, and `size` sets the row height. Menu buttons set `data-active` and `data-size`.
 
 ### SidebarMenuAction
 
 A small button at the end of a menu item, such as a more button.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showOnHover` | `boolean` | `false` | On desktop, hides the action until its item is hovered or focused. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `showOnHover` | `boolean` | `false` |
+
+On desktop, `showOnHover` hides the action until its item is hovered or focused.
 
 <OnlyBase base="base">
 
@@ -407,10 +360,6 @@ Also accepts the props of `React.ComponentProps<"button">`, plus `asChild`.
 Also accepts the props of `React.ComponentProps<"button">`, plus a `render` function.
 
 </OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={19}>
 
 ### SidebarMenuBadge
 
@@ -418,23 +367,15 @@ A count or label shown at the end of a menu item.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={20}>
-
 ### SidebarMenuSkeleton
 
 A loading placeholder shaped like a menu item.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showIcon` | `boolean` | `false` | Adds a square placeholder for an icon. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `showIcon` | `boolean` | `false` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={21}>
 
 ### SidebarMenuSub
 
@@ -442,28 +383,22 @@ A nested list of sub-items, indented with a leading line.
 
 Also accepts the props of `React.ComponentProps<"ul">`.
 
-</ApiPart>
-
-<ApiPart index={22}>
-
 ### SidebarMenuSubItem
 
 A list item inside a sub-menu.
 
 Also accepts the props of `React.ComponentProps<"li">`.
 
-</ApiPart>
-
-<ApiPart index={23}>
-
 ### SidebarMenuSubButton
 
 The clickable row of a sub-item, rendered as a link by default.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"sm" \| "md"` | `"md"` | Sets the text size: `sm` or `md`. |
-| `isActive` | `boolean` | `false` | Marks the sub-item as the current page. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"sm" \| "md"` | `"md"` |
+| `isActive` | `boolean` | `false` |
+
+`size` sets the text size, and `isActive` marks the sub-item as the current page.
 
 <OnlyBase base="base">
 
@@ -482,22 +417,5 @@ Also accepts the props of `React.ComponentProps<"a">`, plus `asChild`.
 Also accepts the props of `React.ComponentProps<"a">`, plus a `render` function.
 
 </OnlyBase>
-
-</ApiPart>
-
-## Accessibility
-
-- `SidebarTrigger` and `SidebarRail` are labelled `Toggle Sidebar`. The rail is removed from the tab order, so keep a `SidebarTrigger` in reach of keyboard users.
-- Press `Command-B` on Apple platforms, or `Ctrl+B` elsewhere, to toggle the sidebar.
-- On mobile, the sidebar is a dialog with a visually hidden title, `Sidebar`; `Escape` closes it.
-- Menu-button tooltips appear only while the sidebar is collapsed, so labels stay available when only icons show.
-
-## Notes
-
-- Every toggle writes the state to a `sidebar_state` cookie for 7 days. Read it on the server to set `defaultOpen` and avoid a flash on load.
-- Widths come from `--sidebar-width` (`16rem`) and `--sidebar-width-icon` (`3rem`), set on `SidebarProvider`; override them through its `style`.
-- The sidebar element exposes `data-state` (`expanded` or `collapsed`), `data-collapsible`, `data-variant` and `data-side` for styling. Menu buttons set `data-active` and `data-size`.
-- `useSidebar` throws if it's used outside a `SidebarProvider`.
-- The panel uses `bg-sidebar`; active items use `bg-sidebar-accent` with a `text-sidebar-primary` icon. Change the `sidebar-*` variables to style it apart from the page.
 
 </Only>

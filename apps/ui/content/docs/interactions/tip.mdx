@@ -15,7 +15,9 @@ Wrap several tips in `TipGroup` to show them one at a time, in the order they mo
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/tip
@@ -27,24 +29,41 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add interactions tip
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
 ```
 
-2. Copy the source into `components/interactions/tip.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/interactions/tip.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { TipGroup, Tip, TipCard, TipAnchor, TipPopover, TipIcon, TipContent, TipTitle, TipDescription, TipClose } from "@/components/interactions/tip"
+import {
+  Tip,
+  TipAnchor,
+  TipCard,
+  TipClose,
+  TipContent,
+  TipDescription,
+  TipGroup,
+  TipIcon,
+  TipPopover,
+  TipTitle,
+} from "@/components/interactions/tip"
 import { Button } from "@/components/ui/button"
 ```
 
@@ -81,41 +100,36 @@ import { Button } from "@/components/ui/button"
 </TipGroup>
 ```
 
-- Give every `Tip` a stable, unique `id`. Place either a `TipCard`, or a `TipAnchor` with a `TipPopover`, inside it.
-- Build the content with `TipIcon`, `TipContent`, `TipTitle`, `TipDescription`, and `TipClose`.
-- `TipPopover` accepts `side`, `align`, and `sideOffset` for positioning, defaulting to `bottom`, `center`, and `10`.
-- Call `resetTips` with a list of ids to clear their dismissed state, for example from a Show tips again control.
+## Accessibility
+
+- `TipCard` renders with `role="note"`.
+- `TipPopover` is labelled by `TipTitle` and described by `TipDescription`. It does not move focus when it opens or closes, and pressing `Escape` or outside dismisses it.
+- `TipClose` is labelled `Dismiss tip`. `TipIcon` is `aria-hidden`.
 
 ## API Reference
-
-<ApiPart index={1}>
 
 ### TipGroup
 
 Shows the tips inside it one at a time, in order.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The tips to show in sequence. |
-
-</ApiPart>
-
-<ApiPart index={2}>
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
 
 ### Tip
 
 Holds a single tip's visibility and dismissed state.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | Required | The unique key used to remember that the tip was dismissed. |
-| `delay` | `number` | `0` | Milliseconds to wait before showing the tip. |
-| `onDismiss` | `() => void` | - | Called when the tip is dismissed. |
-| `children` | `React.ReactNode` | - | The card or anchored popover for the tip. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `id` | `string` | Required |
+| `delay` | `number` | `0` |
+| `onDismiss` | `() => void` | - |
+| `children` | `React.ReactNode` | - |
 
-</ApiPart>
+Give every `Tip` a stable, unique `id`; it is the key used to remember that the tip was dismissed. Place either a `TipCard`, or a `TipAnchor` with a `TipPopover`, inside it, and build the content with `TipIcon`, `TipContent`, `TipTitle`, `TipDescription` and `TipClose`. `delay` is the number of milliseconds to wait before showing the tip.
 
-<ApiPart index={3}>
+Dismissed tips are stored under `tip:` followed by the id in `localStorage`. When storage is unavailable, tips still dismiss for the current session. Call `resetTips` with a list of ids to clear their dismissed state, for example from a Show tips again control.
 
 ### TipCard
 
@@ -123,19 +137,11 @@ An inline card that expands into the layout while the tip is visible.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### TipAnchor
 
 Wraps the control that a popover tip points to.
 
 Also accepts the props of `React.ComponentProps<"span">`.
-
-</ApiPart>
-
-<ApiPart index={5}>
 
 ### TipPopover
 
@@ -143,19 +149,17 @@ A popover with an arrow, positioned against `TipAnchor`.
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"bottom"` | The side of the anchor the popover appears on. |
-| `align` | `"start" \| "center" \| "end"` | `"center"` | How the popover lines up with the anchor. |
-| `sideOffset` | `number` | `10` | Distance from the anchor in pixels. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"bottom"` |
+| `align` | `"start" \| "center" \| "end"` | `"center"` |
+| `sideOffset` | `number` | `10` |
 
 </OnlyBase>
 
 Also accepts the props of the primitive parts it wraps.
 
-</ApiPart>
-
-<ApiPart index={6}>
+Position the popover with `side`, `align` and `sideOffset`, which default to `bottom`, `center` and `10` pixels.
 
 ### TipIcon
 
@@ -163,19 +167,11 @@ The leading icon of the tip.
 
 Also accepts the props of `React.ComponentProps<"span">`.
 
-</ApiPart>
-
-<ApiPart index={7}>
-
 ### TipContent
 
 The container for the title and description.
 
 Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={8}>
 
 ### TipTitle
 
@@ -183,19 +179,11 @@ The tip's title.
 
 Also accepts the props of `React.ComponentProps<"p">`.
 
-</ApiPart>
-
-<ApiPart index={9}>
-
 ### TipDescription
 
 The tip's supporting text.
 
 Also accepts the props of `React.ComponentProps<"p">`.
-
-</ApiPart>
-
-<ApiPart index={10}>
 
 ### TipClose
 
@@ -203,18 +191,7 @@ The button that dismisses the tip.
 
 Also accepts the props of `React.ComponentProps<"button">`.
 
-</ApiPart>
-
-## Accessibility
-
-- `TipCard` renders with `role="note"`.
-- `TipPopover` is labelled by `TipTitle` and described by `TipDescription`. It does not move focus when it opens or closes, and pressing `Escape` or outside dismisses it.
-- `TipClose` is labelled `Dismiss tip`. `TipIcon` is `aria-hidden`.
-
-## Notes
-
-- Dismissed tips are stored under `tip:` followed by the id in `localStorage`. When storage is unavailable, tips still dismiss for the current session.
-- Parts use `data-slot` values `tip-card-frame`, `tip-card`, `tip-anchor`, `tip-popover`, `tip-icon`, `tip-content`, `tip-title`, `tip-description`, and `tip-close`.
+Each part sets a `data-slot`, such as `tip-card` or `tip-popover`, for styling.
 
 </Only>
 
@@ -231,6 +208,10 @@ Also accepts the props of `React.ComponentProps<"button">`.
 `TipGroup` shows several tips one at a time in the order they mount, moving to the next when one is dismissed. Use tips to introduce a feature or gesture the user may not discover.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -280,7 +261,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -288,7 +271,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -324,17 +307,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/interactions/tip.tsx`:
+5. Copy and paste the following code into `components/interactions/tip.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/tip.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -370,17 +353,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/interactions/tip.tsx`:
+5. Copy and paste the following code into `components/interactions/tip.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/tip.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -416,11 +399,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-scre
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/interactions/tip.tsx`:
+5. Copy and paste the following code into `components/interactions/tip.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/tip.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -499,6 +482,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -1011,493 +998,13 @@ fun TipExample() {
 
 </Only>
 
-<Only platform="rn kotlin">
-
-Give each `Tip` a stable `id`. Compose `TipIcon`, `TipContent` with `TipTitle` and `TipDescription`, and `TipClose` inside a `TipCard` or `TipPopover`. For a popover, wrap the target in `TipAnchor` inside the same `Tip`.
-
-</Only>
-
-<Only platform="rn">
-
-By default dismissals are kept in memory and reset when the app restarts. To persist them, pass a `storage` adapter to `TipGroup` with `getItem` and `setItem`, sync or async, such as one backed by your app's key-value store. Keys are prefixed with `tip:`. `resetTips(ids, storage)` clears dismissals, and `useTip` returns `visible` and `dismiss`. The `TipStorage` type is exported.
-
-</Only>
-
 ## Examples
 
 ### Card
 
-An inline card tip with an icon, title, description and close button.
+An inline card tip with a `TipIcon`, `TipTitle`, `TipDescription` and `TipClose` inside a `TipCard`.
 
 <NativeExample name="tip-card" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### TipGroup
-
-Shows its tips one at a time and supplies the storage.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `storage` | `TipStorage` | `memoryStorage` | Adapter with `getItem` and `setItem` for remembering dismissals. Defaults to in-memory storage. |
-| `children` | `React.ReactNode` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Tip
-
-One hint, identified by `id`.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | Required | Stable key used to remember the dismissal. |
-| `delay` | `number` | `0` | Milliseconds to wait before showing. Defaults to `0`. |
-| `onDismiss` | `() => void` | - | Called when the tip is dismissed. |
-| `children` | `React.ReactNode` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### TipCard
-
-Renders the tip inline as a card.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### TipAnchor
-
-The element the popover points at.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### TipPopover
-
-Renders the tip as a popover next to the anchor.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `Side` | `"bottom"` | Side of the anchor to show on. Defaults to `bottom`. |
-| `align` | `Align` | `"center"` | Alignment against the anchor. Defaults to `center`. |
-| `sideOffset` | `number` | `10` | Gap from the anchor. Defaults to `10`. |
-| `portalHost` | `string` | - | Name of a portal host to render into. |
-
-Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Popup>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### TipIcon
-
-A decorative icon slot.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### TipContent
-
-Holds the title and description.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### TipTitle
-
-The tip's heading.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### TipDescription
-
-The tip's supporting text.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### TipClose
-
-A button that dismisses the tip.
-
-Also accepts the props of `React.ComponentProps<typeof Pressable>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### TipStorage.getItem
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ key` | `String` | - | - |
-
-Returns `String?`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### TipStorage.setItem
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ key` | `String` | - | - |
-| `_ value` | `String?` | - | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### InMemoryTipStorage
-
-Takes no parameters.
-
-| Property | Type |
-| --- | --- |
-| `static shared` | `InMemoryTipStorage` |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### resetTips
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ ids` | `[String]` | - | - |
-| `storage` | `any TipStorage` | `InMemoryTipStorage.shared` | - |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### TipGroup
-
-Shows its tips one at a time and supplies the storage.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `storage` | `any TipStorage` | `InMemoryTipStorage.shared` | Adapter with `getItem` and `setItem` for remembering dismissals. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### Tip
-
-One hint, identified by `id`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | `String` | - | Stable key used to remember the dismissal. |
-| `delay` | `Duration` | `.zero` | - |
-| `storage` | `(any TipStorage)?` | `nil` | Adapter with `getItem` and `setItem` for remembering dismissals. |
-| `onDismiss` | `(() -> Void)?` | `nil` | Called when the tip is dismissed. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### TipCard
-
-Renders the tip inline as a card.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### .tipPopover
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `Edge` | `.bottom` | Side of the anchor to show on. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### TipIcon
-
-A decorative icon slot.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### TipContent
-
-Holds the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### TipTitle
-
-The tip's heading.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `verbatim` | `String` | - | The title text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### TipDescription
-
-The tip's supporting text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ description` | `LocalizedStringKey` | - | The supporting text. |
-| `verbatim` | `String` | - | The supporting text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### TipClose
-
-A button that dismisses the tip.
-
-Takes no parameters.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### TipStorage.getItem
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `key` | `String` | - | - |
-
-Returns `String?`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### TipStorage.setItem
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `key` | `String` | - | - |
-| `value` | `String` | - | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### MemoryTipStorage
-
-Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### resetTips
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ids` | `List<String>` | - | - |
-| `storage` | `TipStorage` | `DefaultTipStorage` | - |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### TipGroup
-
-Shows its tips one at a time and supplies the storage.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `storage` | `TipStorage` | `LocalTipStorage.current` | Adapter with `getItem` and `setItem` for remembering dismissals. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### Tip
-
-One hint, identified by `id`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | `String` | - | Stable key used to remember the dismissal. |
-| `delayMillis` | `Long` | `0` | - |
-| `onDismiss` | `() -> Unit` | `{}` | Called when the tip is dismissed. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### TipCard
-
-Renders the tip inline as a card.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### TipAnchor
-
-The element the popover points at.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### TipPopover
-
-Renders the tip as a popover next to the anchor.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `side` | `PopupSide` | `PopupSide.Bottom` | Side of the anchor to show on. |
-| `align` | `PopupAlign` | `PopupAlign.Center` | Alignment against the anchor. |
-| `sideOffset` | `Dp` | `10.dp` | Gap from the anchor. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### TipIcon
-
-A decorative icon slot.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### TipContent
-
-Holds the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### TipTitle
-
-The tip's heading.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### TipDescription
-
-The tip's supporting text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={14}>
-
-### TipClose
-
-A button that dismisses the tip.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `contentDescription` | `String` | `"Dismiss tip"` | - |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -1508,11 +1015,331 @@ A button that dismisses the tip.
 - `TipClose` is labelled `Dismiss tip`.
 - The icon is hidden from screen readers.
 
-## Notes
+</Only>
 
-- Cards use `bg-muted`; popovers use `bg-popover` with a border that is stronger in dark mode, and are up to 320 points wide.
-- Animations respect the system reduce motion setting.
-- On iOS the popover renders in a full-window overlay so it appears above native screens.
+## API Reference
+
+<Only platform="rn">
+
+### TipGroup
+
+Shows its tips one at a time and supplies the storage.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `storage` | `TipStorage` | `memoryStorage` |
+| `children` | `React.ReactNode` | - |
+
+By default dismissals are kept in memory and reset when the app restarts. To persist them, pass a `storage` adapter with `getItem` and `setItem`, sync or async, such as one backed by your app's key-value store. Keys are prefixed with `tip:`. `resetTips(ids, storage)` clears dismissals. The `TipStorage` type is exported.
+
+### Tip
+
+One hint, identified by `id`.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `id` | `string` | Required |
+| `delay` | `number` | `0` |
+| `onDismiss` | `() => void` | - |
+| `children` | `React.ReactNode` | - |
+
+Give each `Tip` a stable `id`, the key used to remember the dismissal. Compose `TipIcon`, `TipContent` with `TipTitle` and `TipDescription`, and `TipClose` inside a `TipCard` or `TipPopover`. For a popover, wrap the target in `TipAnchor` inside the same `Tip`. `delay` is the number of milliseconds to wait before showing. `useTip` returns `visible` and `dismiss`.
+
+### TipCard
+
+Renders the tip inline as a card.
+
+Also accepts the props of `ViewProps`.
+
+### TipAnchor
+
+The element the popover points at.
+
+Also accepts the props of `ViewProps`.
+
+### TipPopover
+
+Renders the tip as a popover next to the anchor.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `Side` | `"bottom"` |
+| `align` | `Align` | `"center"` |
+| `sideOffset` | `number` | `10` |
+| `portalHost` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Popup>`.
+
+`sideOffset` is the gap from the anchor. `portalHost` names a portal host to render into. Popovers are up to 320 points wide, and animations respect the system reduce motion setting. On iOS the popover renders in a full-window overlay so it appears above native screens.
+
+### TipIcon
+
+A decorative icon slot.
+
+Also accepts the props of `ViewProps`.
+
+### TipContent
+
+Holds the title and description.
+
+Also accepts the props of `ViewProps`.
+
+### TipTitle
+
+The tip's heading.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+### TipDescription
+
+The tip's supporting text.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+### TipClose
+
+A button that dismisses the tip.
+
+Also accepts the props of `React.ComponentProps<typeof Pressable>`.
+
+</Only>
+
+<Only platform="swift">
+
+### TipStorage.getItem
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ key` | `String` | - |
+
+Returns `String?`.
+
+### TipStorage.setItem
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ key` | `String` | - |
+| `_ value` | `String?` | - |
+
+### InMemoryTipStorage
+
+Takes no parameters.
+
+| Property | Type |
+| --- | --- |
+| `static shared` | `InMemoryTipStorage` |
+
+### resetTips
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ ids` | `[String]` | - |
+| `storage` | `any TipStorage` | `InMemoryTipStorage.shared` |
+
+### TipGroup
+
+Shows its tips one at a time and supplies the storage.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `storage` | `any TipStorage` | `InMemoryTipStorage.shared` |
+| `content` | `() -> Content` | - |
+
+### Tip
+
+One hint, identified by `id`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `id` | `String` | - |
+| `delay` | `Duration` | `.zero` |
+| `storage` | `(any TipStorage)?` | `nil` |
+| `onDismiss` | `(() -> Void)?` | `nil` |
+| `content` | `() -> Content` | - |
+
+### TipCard
+
+Renders the tip inline as a card.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### .tipPopover
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `side` | `Edge` | `.bottom` |
+| `content` | `() -> Content` | - |
+
+### TipIcon
+
+A decorative icon slot.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### TipContent
+
+Holds the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### TipTitle
+
+The tip's heading.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### TipDescription
+
+The tip's supporting text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### TipClose
+
+A button that dismisses the tip.
+
+Takes no parameters.
+
+</Only>
+
+<Only platform="kotlin">
+
+### TipStorage.getItem
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `key` | `String` | - |
+
+Returns `String?`.
+
+### TipStorage.setItem
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `key` | `String` | - |
+| `value` | `String` | - |
+
+### MemoryTipStorage
+
+Takes no parameters.
+
+### resetTips
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `ids` | `List<String>` | - |
+| `storage` | `TipStorage` | `DefaultTipStorage` |
+
+### TipGroup
+
+Shows its tips one at a time and supplies the storage.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `storage` | `TipStorage` | `LocalTipStorage.current` |
+| `content` | `@Composable () -> Unit` | - |
+
+### Tip
+
+One hint, identified by `id`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `id` | `String` | - |
+| `delayMillis` | `Long` | `0` |
+| `onDismiss` | `() -> Unit` | `{}` |
+| `content` | `@Composable () -> Unit` | - |
+
+### TipCard
+
+Renders the tip inline as a card.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
+
+### TipAnchor
+
+The element the popover points at.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
+
+### TipPopover
+
+Renders the tip as a popover next to the anchor.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `side` | `PopupSide` | `PopupSide.Bottom` |
+| `align` | `PopupAlign` | `PopupAlign.Center` |
+| `sideOffset` | `Dp` | `10.dp` |
+| `content` | `@Composable () -> Unit` | - |
+
+### TipIcon
+
+A decorative icon slot.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
+
+### TipContent
+
+Holds the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### TipTitle
+
+The tip's heading.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### TipDescription
+
+The tip's supporting text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### TipClose
+
+A button that dismisses the tip.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `contentDescription` | `String` | `"Dismiss tip"` |
 
 </Only>
 

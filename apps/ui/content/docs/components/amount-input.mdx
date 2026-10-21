@@ -19,6 +19,10 @@ The decimal key appears only when the currency allows fractions, using the local
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -67,7 +71,9 @@ The CLI also adds what it builds on: [Keypad](/docs/components/keypad), [Text](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -75,7 +81,7 @@ The CLI also adds what it builds on: [Keypad](/docs/components/keypad), [Text](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
@@ -91,17 +97,17 @@ npx expo install cn react-native-reanimated react-native-worklets
 
 <ComponentSource path="uniwind/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/ui/amount-input.tsx`:
+5. Copy and paste the following code into `components/ui/amount-input.tsx`:
 
 <ComponentSource path="uniwind/components/ui/amount-input.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
@@ -117,17 +123,17 @@ npx expo install cn react-native-reanimated react-native-worklets
 
 <ComponentSource path="nativewind/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/ui/amount-input.tsx`:
+5. Copy and paste the following code into `components/ui/amount-input.tsx`:
 
 <ComponentSource path="nativewind/components/ui/amount-input.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -143,11 +149,11 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="stylesheet/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/ui/amount-input.tsx`:
+5. Copy and paste the following code into `components/ui/amount-input.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/amount-input.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -239,6 +245,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -328,23 +338,13 @@ fun AmountInputStory(
 
 </Only>
 
-<Only platform="rn">
-
-The value is a plain numeric string such as `"1250.5"`. Use `defaultValue` for uncontrolled state, or `value` with `onValueChange`, which receives the string and the parsed number.
-
-</Only>
-
-Fraction digits default to the currency's own precision (for example 0 for JPY); override with `maxFractionDigits`. Use `max` to cap the amount. Input is limited to 15 digits.
-
-Pass `deleteLabel` and `decimalLabel` to localize the keypad's spoken labels.
-
 ## Examples
 
 ### Filled
 
 <Only platform="rn kotlin">
 
-Starts with a value through `defaultValue`.
+Use `defaultValue` to start with a value.
 
 </Only>
 
@@ -358,13 +358,13 @@ Starts with a value.
 
 ### Controlled
 
-Controlled with `value` and `onValueChange`.
+Pass `value` and `onValueChange` to control the amount.
 
 <NativeExample name="amount-input-controlled" />
 
 ### Long amount
 
-A long amount that shrinks to fit.
+The font size steps down as the number gets longer. Input is limited to 15 digits.
 
 <NativeExample name="amount-input-long-amount" />
 
@@ -390,98 +390,21 @@ TRY in the `tr-TR` locale.
 
 ### Yen
 
-JPY, which has no decimal key.
+Fraction digits default to the currency's own precision, so JPY has no decimal key. Override the precision with `maxFractionDigits`.
 
 <NativeExample name="amount-input-yen" />
 
 ### With max
 
-Capped at 500 with `max`; larger entries are rejected.
+Use `max` to cap the amount, here at 500. Larger entries are rejected.
 
 <NativeExample name="amount-input-with-max" />
 
 ### Disabled
 
-A disabled input with a dimmed amount and keypad.
+Disable the input to dim the amount and the keypad.
 
 <NativeExample name="amount-input-disabled" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### AmountInput
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | - | Controlled numeric string. |
-| `defaultValue` | `string` | `""` | Initial numeric string when uncontrolled. |
-| `onValueChange` | `(value: string, amount: number) => void` | - | Called with the new string and its numeric amount. |
-| `currency` | `string` | - | ISO currency code used for formatting. |
-| `locale` | `string` | - | Locale used for formatting and the decimal separator. |
-| `maxFractionDigits` | `number` | - | Maximum digits after the decimal separator. |
-| `max` | `number` | - | Largest allowed amount. |
-| `placeholder` | `string` | `"0"` | Shown in place of the integer when empty. Defaults to `"0"`. |
-| `disabled` | `boolean` | `false` | Dims the amount and disables the keypad. |
-| `deleteLabel` | `string` | - | Accessibility label for the delete key. |
-| `decimalLabel` | `string` | - | Accessibility label for the decimal key. |
-| `amountClassName` | `string` | - | Extra classes for the amount text. |
-| `keypadClassName` | `string` | - | Extra classes for the keypad. |
-
-Also accepts the props of `React.ComponentProps<typeof View>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### AmountInput
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Binding<String>` | - | Controlled numeric string. |
-| `currency` | `String?` | `nil` | ISO currency code used for formatting. |
-| `maxFractionDigits` | `Int?` | `nil` | Maximum digits after the decimal separator. |
-| `max` | `Double?` | `nil` | Largest allowed amount. |
-| `placeholder` | `String` | `"0"` | Shown in place of the integer when empty. |
-| `label` | `LocalizedStringKey` | `"Amount"` | The label. |
-| `deleteLabel` | `LocalizedStringKey` | `"Delete"` | Accessibility label for the delete key. |
-| `decimalLabel` | `LocalizedStringKey` | `"Decimal separator"` | Accessibility label for the decimal key. |
-| `onValueChange` | `((String, Double) -> Void)?` | `nil` | Called with the new string and its numeric amount. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### AmountInput
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `value` | `String?` | `null` | Controlled numeric string. |
-| `onValueChange` | `((value: String, amount: Double) -> Unit)?` | `null` | Called with the new string and its numeric amount. |
-| `defaultValue` | `String` | `""` | Initial numeric string when uncontrolled. |
-| `currency` | `String?` | `null` | ISO currency code used for formatting. |
-| `locale` | `Locale` | `Locale.getDefault()` | Locale used for formatting and the decimal separator. |
-| `maxFractionDigits` | `Int?` | `null` | Maximum digits after the decimal separator. |
-| `max` | `Double?` | `null` | Largest allowed amount. |
-| `placeholder` | `String` | `"0"` | Shown in place of the integer when empty. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `decimalLabel` | `String` | `"Decimal separator"` | Accessibility label for the decimal key. |
-| `deleteLabel` | `String` | `"Delete"` | Accessibility label for the delete key. |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -491,11 +414,78 @@ Also accepts the props of `React.ComponentProps<typeof View>`.
 - Its label is the formatted amount, prefixed with `accessibilityLabel` when given.
 - Keypad keys announce their digit; the delete key is disabled while the value is empty.
 
-## Notes
+</Only>
 
-- The shake animation respects the system Reduce Motion setting.
-- Uses tabular numerals so digits do not shift as they change.
-- Uses `text-foreground` and `text-muted-foreground` tokens; light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### AmountInput
+
+A formatted amount with a keypad for entering it.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | - |
+| `defaultValue` | `string` | `""` |
+| `onValueChange` | `(value: string, amount: number) => void` | - |
+| `currency` | `string` | - |
+| `locale` | `string` | - |
+| `maxFractionDigits` | `number` | - |
+| `max` | `number` | - |
+| `placeholder` | `string` | `"0"` |
+| `disabled` | `boolean` | `false` |
+| `deleteLabel` | `string` | - |
+| `decimalLabel` | `string` | - |
+| `amountClassName` | `string` | - |
+| `keypadClassName` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
+
+The value is a plain numeric string such as `"1250.5"`. Use `defaultValue` for uncontrolled state, or `value` with `onValueChange`, which receives the string and the parsed number. `currency` is an ISO currency code, and `locale` sets the formatting and the decimal separator. `placeholder` is shown in place of the integer when the value is empty. Pass `deleteLabel` and `decimalLabel` to localize the keypad's spoken labels. `amountClassName` and `keypadClassName` style the amount text and the keypad. The amount uses tabular numerals so digits do not shift as they change, and the shake animation respects the system Reduce Motion setting.
+
+</Only>
+
+<Only platform="swift">
+
+### AmountInput
+
+A formatted amount with a keypad for entering it.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Binding<String>` | - |
+| `currency` | `String?` | `nil` |
+| `maxFractionDigits` | `Int?` | `nil` |
+| `max` | `Double?` | `nil` |
+| `placeholder` | `String` | `"0"` |
+| `label` | `LocalizedStringKey` | `"Amount"` |
+| `deleteLabel` | `LocalizedStringKey` | `"Delete"` |
+| `decimalLabel` | `LocalizedStringKey` | `"Decimal separator"` |
+| `onValueChange` | `((String, Double) -> Void)?` | `nil` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### AmountInput
+
+A formatted amount with a keypad for entering it.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `value` | `String?` | `null` |
+| `onValueChange` | `((value: String, amount: Double) -> Unit)?` | `null` |
+| `defaultValue` | `String` | `""` |
+| `currency` | `String?` | `null` |
+| `locale` | `Locale` | `Locale.getDefault()` |
+| `maxFractionDigits` | `Int?` | `null` |
+| `max` | `Double?` | `null` |
+| `placeholder` | `String` | `"0"` |
+| `enabled` | `Boolean` | `true` |
+| `decimalLabel` | `String` | `"Decimal separator"` |
+| `deleteLabel` | `String` | `"Delete"` |
 
 </Only>
 

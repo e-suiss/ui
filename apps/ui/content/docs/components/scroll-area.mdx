@@ -15,7 +15,9 @@ Use Scroll Area to give overflowing content a consistent scrollbar across platfo
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/scroll-area
@@ -27,19 +29,25 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add scroll-area
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react
 ```
 
-2. Copy the source into `components/ui/scroll-area.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/scroll-area.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -62,82 +70,28 @@ import { Separator } from "@/components/ui/separator"
 </ScrollArea>
 ```
 
-Give `ScrollArea` a fixed height or width with `className` so its content can overflow. Children render inside the viewport.
+## Composition
 
-<OnlyBase base="base radix">
+Use the following composition to build a `ScrollArea`:
 
-For horizontal scrolling, make the content wider than the area (for example with `w-max`) and include `ScrollBar` with `orientation="horizontal"`.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-The viewport scrolls natively and shows the browser's thin scrollbars, tinted with the `border` color. For horizontal scrolling, make the content wider than the area (for example with `w-max`). `ScrollBar` renders nothing in this base; it is kept so code written for the other bases still compiles.
-
-</OnlyBase>
+```text
+ScrollArea
+└── ScrollBar
+```
 
 ## Examples
 
 ### Horizontal
 
-A row of album covers that scrolls sideways with a horizontal scrollbar.
+A row of album covers that scrolls sideways. Make the content wider than the area, for example with `w-max`.
+
+<OnlyBase base="base radix">
+
+Include a `ScrollBar` with `orientation="horizontal"` to show the horizontal scrollbar.
+
+</OnlyBase>
 
 <ComponentPreview name="scroll-area-horizontal" />
-
-## API Reference
-
-<Anatomy>
-
-- [ScrollArea](#scrollarea)
-  - [ScrollBar](#scrollbar)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### ScrollArea
-
-<OnlyBase base="base radix">
-
-The root that renders the viewport, the vertical scrollbar and the corner.
-
-Also accepts the props of the primitive part it wraps.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-The root that renders a natively scrolling viewport.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ScrollBar
-
-<OnlyBase base="base radix">
-
-A scrollbar track and thumb for one orientation, vertical by default.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `orientation` | `"vertical" \| "horizontal"` | `"vertical"` | The direction the scrollbar controls. |
-
-Also accepts the props of the primitive part it wraps.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Renders nothing. The viewport uses the browser's native scrollbars.
-
-</OnlyBase>
-
-</ApiPart>
 
 ## Accessibility
 
@@ -161,22 +115,62 @@ Renders nothing. The viewport uses the browser's native scrollbars.
 
 </OnlyBase>
 
-## Notes
+## API Reference
+
+### ScrollArea
 
 <OnlyBase base="base radix">
 
-- Styling hooks: `data-slot` values `scroll-area`, `scroll-area-viewport`, `scroll-area-scrollbar` and `scroll-area-thumb`. Scrollbars expose `data-orientation`.
-- The thumb uses the `border` color.
+The root that renders the viewport, the vertical scrollbar and the corner.
+
+Also accepts the props of the primitive part it wraps.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-- Styling hooks: `data-slot` values `scroll-area` and `scroll-area-viewport`.
-- The native scrollbar thumb uses the `border` color.
+The root that renders a natively scrolling viewport.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+The viewport scrolls natively and shows the browser's thin scrollbars, tinted with the `border` color.
 
 </OnlyBase>
 
-- The viewport inherits the root's border radius, so rounded containers clip their content.
+Give `ScrollArea` a fixed height or width with `className` so its content can overflow. Children render inside the viewport, which inherits the root's border radius, so rounded containers clip their content.
+
+### ScrollBar
+
+<OnlyBase base="base radix">
+
+A scrollbar track and thumb for one orientation, vertical by default.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `orientation` | `"vertical" \| "horizontal"` | `"vertical"` |
+
+Also accepts the props of the primitive part it wraps.
+
+`orientation` sets the direction the scrollbar controls. Scrollbars expose `data-orientation`, and the thumb uses the `border` color.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Renders nothing. The viewport uses the browser's native scrollbars. `ScrollBar` is kept so code written for the other bases still compiles.
+
+</OnlyBase>
+
+<OnlyBase base="base radix">
+
+Each part sets a `data-slot`, such as `scroll-area-viewport` or `scroll-area-thumb`, for styling.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Each part sets a `data-slot`, `scroll-area` or `scroll-area-viewport`, for styling.
+
+</OnlyBase>
 
 </Only>

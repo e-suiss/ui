@@ -15,7 +15,9 @@ platforms: [web, rn, swift, kotlin]
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/search-reveal
@@ -27,19 +29,25 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add interactions search-reveal
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
 ```
 
-2. Copy the source into `components/interactions/search-reveal.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/interactions/search-reveal.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -66,55 +74,13 @@ const results = notes.filter((note) =>
 </SearchReveal>
 ```
 
-- Place `SearchRevealField` first and `SearchRevealContent` after it inside `SearchReveal`, and give the container a bounded height.
-- The field is controlled: pass `value` and update it in `onValueChange`. Filter the content from that value.
-- `SearchRevealContent` fills at least the container's height, so the field can hide even when the list is short.
-- `placeholder` defaults to `Search` and also labels the input.
-
 ## Examples
 
 ### Short list
 
-A short list still hides the field above it and reveals it on focus.
+A short list still hides the field above it and reveals it on focus, because `SearchRevealContent` fills at least the container's height.
 
 <ComponentPreview name="search-reveal-short-list" responsive />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### SearchReveal
-
-The scroll container that hides, reveals, and snaps the search field.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SearchRevealField
-
-The search input with a clear button.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The current query. |
-| `onValueChange` | `(value: string) => void` | Required | Called with the new query when the user types or clears the field. |
-
-Also accepts the props of `React.ComponentProps<"input">`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SearchRevealContent
-
-The scrolling content below the field.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -122,10 +88,34 @@ Also accepts the props of `React.ComponentProps<"div">`.
 - The clear button is labelled `Clear search` and returns focus to the input.
 - Focusing the field, including with the keyboard, scrolls it into view.
 
-## Notes
+## API Reference
 
-- Parts use `data-slot` values `search-reveal`, `search-reveal-field`, `search-reveal-input`, and `search-reveal-content`.
-- The `--search-reveal` custom property runs from `0` to `1` as the field is revealed and drives its opacity.
+### SearchReveal
+
+The scroll container that hides, reveals, and snaps the search field.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Place `SearchRevealField` first and `SearchRevealContent` after it inside `SearchReveal`, and give the container a bounded height. Each part sets a `data-slot`, such as `search-reveal-field`, for styling. The `--search-reveal` custom property runs from `0` to `1` as the field is revealed and drives its opacity.
+
+### SearchRevealField
+
+The search input with a clear button.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | Required |
+| `onValueChange` | `(value: string) => void` | Required |
+
+Also accepts the props of `React.ComponentProps<"input">`.
+
+The field is controlled: pass `value` and update it in `onValueChange`, which is called when the user types or clears the field. Filter the content from that value. `placeholder` defaults to `Search` and also labels the input.
+
+### SearchRevealContent
+
+The scrolling content below the field.
+
+Also accepts the props of `React.ComponentProps<"div">`.
 
 </Only>
 
@@ -138,6 +128,10 @@ Also accepts the props of `React.ComponentProps<"div">`.
 Focusing the field scrolls it into view. While there is a query, snapping is turned off so the field stays visible. Use it for notes, mail or settings lists where search should be close but not take space.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -187,7 +181,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon).
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -195,7 +191,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon).
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -203,17 +199,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon).
 
-3. Copy the source into `components/interactions/search-reveal.tsx`:
+3. Copy and paste the following code into `components/interactions/search-reveal.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/search-reveal.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn nativewind phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -221,17 +217,17 @@ npx expo install cn nativewind phosphor-react-native react-native-reanimated rea
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon).
 
-3. Copy the source into `components/interactions/search-reveal.tsx`:
+3. Copy and paste the following code into `components/interactions/search-reveal.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/search-reveal.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -239,11 +235,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon).
 
-3. Copy the source into `components/interactions/search-reveal.tsx`:
+3. Copy and paste the following code into `components/interactions/search-reveal.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/search-reveal.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -314,6 +310,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -689,23 +689,11 @@ fun SearchRevealRow(note: SearchRevealNote) {
 
 </Only>
 
-<Only platform="rn kotlin">
-
-Put a `SearchRevealField` first, then the list inside a `SearchRevealContent`, all inside `SearchReveal`. The field is controlled: pass `value` and update it in `onValueChange`, then filter your list with it.
-
-</Only>
-
-<Only platform="rn">
-
-`SearchRevealContent` is at least as tall as the scroll view, so the field can be hidden even when the list is short. Other `ScrollView` props, except `onScroll`, pass through to `SearchReveal`, and other `TextInput` props pass through to the field.
-
-</Only>
-
 ## Examples
 
 ### Short list
 
-A three-item list that still hides the field.
+A three-item list that still hides the field, because `SearchRevealContent` is at least as tall as the scroll view.
 
 <NativeExample name="search-reveal-short-list" />
 
@@ -713,135 +701,13 @@ A three-item list that still hides the field.
 
 Starts with a query, so the field is visible and the list is filtered.
 
+<Only platform="rn kotlin">
+
+The field is controlled: pass `value` and update it in `onValueChange`, then filter the list with it.
+
+</Only>
+
 <NativeExample name="search-reveal-with-query" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### SearchReveal
-
-The scroll view that hides and reveals the field.
-
-Also accepts the props of `ScrollViewProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SearchRevealField
-
-The search input with a clear button.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The current query. |
-| `onValueChange` | `(value: string) => void` | Required | Called with the new query. |
-
-Also accepts the props of `React.ComponentProps<typeof TextInput>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SearchRevealContent
-
-The list area, at least one screen tall.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### SearchReveal
-
-The scroll view that hides and reveals the field.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SearchRevealField
-
-The search input with a clear button.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `Binding<String>` | - | The text. |
-| `placeholder` | `LocalizedStringKey` | `"Search"` | Text shown while it is empty. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SearchRevealContent
-
-The list area, at least one screen tall.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### SearchReveal
-
-The scroll view that hides and reveals the field.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SearchRevealField
-
-The search input with a clear button.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | The current query. |
-| `onValueChange` | `(String) -> Unit` | - | Called with the new query. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `placeholder` | `String` | `"Search"` | Text shown while it is empty. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SearchRevealContent
-
-The list area, at least one screen tall.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -850,11 +716,101 @@ The list area, at least one screen tall.
 - The input has the `searchbox` role and is labelled by `placeholder`.
 - The clear button is labelled `Clear search` and returns focus to the input.
 
-## Notes
+</Only>
 
-- The field uses `bg-secondary` with `muted-foreground` placeholder and icons.
-- Autocorrect and autocapitalization are off, and the return key reads `search`.
-- Taps on the list work while the keyboard is open.
+## API Reference
+
+<Only platform="rn">
+
+### SearchReveal
+
+The scroll view that hides and reveals the field.
+
+Also accepts the props of `ScrollViewProps`.
+
+Put a `SearchRevealField` first, then the list inside a `SearchRevealContent`, all inside `SearchReveal`. `onScroll` is the one `ScrollView` prop that does not pass through. Taps on the list work while the keyboard is open.
+
+### SearchRevealField
+
+The search input with a clear button.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | Required |
+| `onValueChange` | `(value: string) => void` | Required |
+
+Also accepts the props of `React.ComponentProps<typeof TextInput>`.
+
+Pass `value` and update it in `onValueChange`. Autocorrect and autocapitalization are off, and the return key reads `search`.
+
+### SearchRevealContent
+
+The list area, at least one screen tall.
+
+Also accepts the props of `ViewProps`.
+
+</Only>
+
+<Only platform="swift">
+
+### SearchReveal
+
+The scroll view that hides and reveals the field.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### SearchRevealField
+
+The search input with a clear button.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `Binding<String>` | - |
+| `placeholder` | `LocalizedStringKey` | `"Search"` |
+
+### SearchRevealContent
+
+The list area, at least one screen tall.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### SearchReveal
+
+The scroll view that hides and reveals the field.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### SearchRevealField
+
+The search input with a clear button.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `onValueChange` | `(String) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `placeholder` | `String` | `"Search"` |
+| `enabled` | `Boolean` | `true` |
+
+### SearchRevealContent
+
+The list area, at least one screen tall.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
 
 </Only>
 

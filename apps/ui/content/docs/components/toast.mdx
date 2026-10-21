@@ -11,11 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 Toasts are built on the Base UI Toast primitive. `Toaster` is the ready-made setup: it combines `ToastProvider`, `ToastPortal` and `ToastViewport`, and renders each queued toast as a `Toast` with a `ToastContent` row holding a status icon, `ToastTitle`, `ToastDescription`, `ToastAction` and `ToastClose`.
 
-New toasts stack at the bottom of the screen, with older ones scaled down behind, and expand into a list on hover or focus. A toast's `type` adds a colored icon: `success`, `info`, `warning` or `error`, or a progress ring for `loading`. Use toasts for short confirmations and background results; for messages that need a decision, use `AlertDialog`.
+New toasts stack at the bottom of the screen, with older ones scaled down behind, and expand into a list on hover or focus. Use toasts for short confirmations and background results; for messages that need a decision, use `AlertDialog`.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/toast
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add toast
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
@@ -37,11 +41,15 @@ npm install @base-ui/react @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button).
 
-3. Copy the source into `components/ui/toast.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/toast.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -66,17 +74,11 @@ import { Toaster, toast } from "@/components/ui/toast"
 </Toaster>
 ```
 
-Render `Toaster` once near the root of your app, wrapping the content that shows toasts. Call `toast.add({ title, description, type })` from anywhere, or read the manager inside the tree with `useToastManager()`. `add` returns an id that you can pass to `close`; `close()` with no id closes every toast.
-
-Pass `actionProps` to show a `ToastAction` button, and `timeout` in milliseconds to change how long a toast stays; `0` keeps it until it's closed. `toast.promise(promise, { loading, success, error })` shows a loading toast that turns into the success or error toast when the promise settles.
-
-`Toaster` uses the shared `toast` manager by default. Pass `toastManager` to use one created with `createToastManager()` instead. Use the individual parts only to build a custom toast list.
-
 ## Examples
 
 ### Types
 
-Shows each toast `type` with its icon and color.
+Set `type` to `success`, `info`, `warning` or `error` to add a colored status icon, or to `loading` for a progress ring.
 
 <ComponentPreview name="toast-types" />
 
@@ -88,19 +90,19 @@ Shows a toast with a title and no description.
 
 ### With action
 
-Adds an `Undo` action button that closes the toast.
+Pass `actionProps` to show a `ToastAction` button. This one is an `Undo` action that closes the toast.
 
 <ComponentPreview name="toast-with-action" />
 
 ### Timeout
 
-Compares a short `timeout` with a persistent toast that stays until closed.
+Set `timeout` in milliseconds to change how long a toast stays; `0` keeps it until it is closed.
 
 <ComponentPreview name="toast-timeout" />
 
 ### Promise toast
 
-Uses `toast.promise` to move from loading to success.
+`toast.promise(promise, { loading, success, error })` shows a loading toast that turns into the success toast when the promise resolves.
 
 <ComponentPreview name="toast-promise-toast" />
 
@@ -110,128 +112,6 @@ Uses `toast.promise` to move from loading to an error when the promise rejects.
 
 <ComponentPreview name="toast-promise-rejected" />
 
-## API Reference
-
-<ApiPart index={1}>
-
-### ToastProvider
-
-Provides a toast manager to the parts inside it.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ToastPortal
-
-Renders the viewport into a portal.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ToastViewport
-
-The fixed region at the bottom of the screen that holds the stack.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### Toast
-
-A single toast in the stack, positioned and animated by its index.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ToastContent
-
-The row that lays out a toast's icon, text and buttons.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### ToastTitle
-
-The toast's title, which names it.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### ToastDescription
-
-Supporting text, which describes the toast.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### ToastAction
-
-An optional action button, rendered as a small outline `Button`.
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element in place of the default button. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### ToastClose
-
-An icon button that dismisses the toast.
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element in place of the default button. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### Toaster
-
-The complete setup: provider, portal, viewport and the rendered toasts.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `toastManager` | `ReturnType<typeof createToastManager>` | `toast` | The manager whose toasts it shows. Defaults to the shared `toast` manager; pass one from `createToastManager()` to keep a separate stack. |
-
-Also accepts the props of `ToastProvider`.
-
-</ApiPart>
-
 ## Accessibility
 
 - The viewport is a `region` landmark named `Notifications`.
@@ -239,12 +119,97 @@ Also accepts the props of `ToastProvider`.
 - `ToastClose` has the accessible name `Close toast`.
 - Prefer an action that can also be reached elsewhere, since toasts dismiss themselves after their timeout.
 
-## Notes
+## API Reference
 
-- On small screens the stack is centered at the bottom, inset from the edges and up to `max-w-sm` wide; from the `sm` breakpoint it sits in the bottom end corner, up to `max-w-sm` wide.
-- Toasts can be swiped away; the exit animation follows the swipe direction.
-- Parts carry `data-slot` attributes such as `toast-viewport`, `toast`, `toast-content`, `toast-icon` and `toast-close`.
-- Status icons are solid circles filled with `fill-green-500`, `fill-primary`, `fill-orange-500` and `fill-destructive`, with a white glyph (`text-primary-foreground` on the info icon); the loading ring uses `stroke-primary`. The ring's progress animation is removed when reduced motion is preferred.
+### ToastProvider
+
+Provides a toast manager to the parts inside it.
+
+Also accepts the props of the primitive part it wraps.
+
+### ToastPortal
+
+Renders the viewport into a portal.
+
+Also accepts the props of the primitive part it wraps.
+
+### ToastViewport
+
+The fixed region at the bottom of the screen that holds the stack.
+
+Also accepts the props of the primitive part it wraps.
+
+On small screens the stack is centered at the bottom, inset from the edges and up to `max-w-sm` wide; from the `sm` breakpoint it sits in the bottom end corner.
+
+### Toast
+
+A single toast in the stack, positioned and animated by its index.
+
+Also accepts the props of the primitive part it wraps.
+
+Toasts can be swiped away; the exit animation follows the swipe direction.
+
+### ToastContent
+
+The row that lays out a toast's icon, text and buttons.
+
+Also accepts the props of the primitive part it wraps.
+
+### ToastTitle
+
+The toast's title, which names it.
+
+Also accepts the props of the primitive part it wraps.
+
+### ToastDescription
+
+Supporting text, which describes the toast.
+
+Also accepts the props of the primitive part it wraps.
+
+### ToastAction
+
+An optional action button, rendered as a small outline `Button`.
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+### ToastClose
+
+An icon button that dismisses the toast.
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+### Toaster
+
+The complete setup: provider, portal, viewport and the rendered toasts.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `toastManager` | `ReturnType<typeof createToastManager>` | `toast` |
+
+Also accepts the props of `ToastProvider`.
+
+Render `Toaster` once near the root of your app, wrapping the content that shows toasts. Call `toast.add({ title, description, type })` from anywhere, or read the manager inside the tree with `useToastManager()`. `add` returns an id that you can pass to `close`; `close()` with no id closes every toast.
+
+`Toaster` uses the shared `toast` manager by default. Pass `toastManager` a manager from `createToastManager()` to keep a separate stack. Use the individual parts only to build a custom toast list.
+
+Each part sets a `data-slot`, such as `toast-viewport` or `toast-close`, for styling. The loading ring's progress animation is removed when reduced motion is preferred.
 
 </Only>
 
@@ -258,13 +223,19 @@ Also accepts the props of `ToastProvider`.
 
 <Only platform="swift">
 
-`.toaster()` overlays the toast stack at the bottom of a view and shows the toasts of its `ToastManager`.
+Add `.toaster()` once near the root. It overlays the toast stack at the bottom of the view and puts its `ToastManager` in the environment as `toastManager`. Call `show`, `success`, `info`, `warning`, `error` or `loading` to add a toast, `update` to change it and `dismiss` to remove it.
 
 </Only>
 
 <Only platform="rn kotlin">
 
 `Toaster` wraps your app in a toast provider and renders the queue into a full-screen viewport. Each toast slides in from the bottom edge, fades out downward, and is capped at 384 points wide.
+
+</Only>
+
+<Only platform="kotlin">
+
+Create the state with `rememberToastState()` and wrap your content in `Toaster`. Call `show`, `success`, `info`, `warning`, `error` or `loading` on the state to add a toast, `update` to change it and `dismiss` to remove it.
 
 </Only>
 
@@ -277,6 +248,10 @@ The viewport renders through a portal. On iOS it sits inside a `FullWindowOverla
 Visible toasts stack with a small peek and shrink behind the frontmost one. Touching the stack expands it; it collapses again three seconds after the touch ends. Each toast shows an icon for its `type` (`success`, `info`, `warning`, `error`, or a spinner for `loading`), a title, a description, an optional action button and a close button.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -326,7 +301,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -334,7 +311,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
@@ -362,17 +339,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/toast.tsx`:
+5. Copy and paste the following code into `components/ui/toast.tsx`:
 
 <ComponentSource path="uniwind/components/ui/toast.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn nativewind phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
@@ -400,17 +377,17 @@ npx expo install cn nativewind phosphor-react-native react-native-gesture-handle
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/toast.tsx`:
+5. Copy and paste the following code into `components/ui/toast.tsx`:
 
 <ComponentSource path="nativewind/components/ui/toast.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-screens react-native-svg react-native-worklets
@@ -438,11 +415,11 @@ npx expo install phosphor-react-native react-native-gesture-handler react-native
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/toast.tsx`:
+5. Copy and paste the following code into `components/ui/toast.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/toast.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -521,6 +498,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -716,19 +697,9 @@ export function ToastExample() {
 
 </OnlyStyling>
 
-Render `Toaster` once near the root, then call the exported `toast` manager from anywhere: `toast.add({ title, description, type })` returns an id, `toast.update(id, updates)` changes a toast, and `toast.close(id)` removes it (or all toasts when called without an id).
-
-`toast.promise(promise, { loading, success, error })` shows a loading toast and replaces it with the success or error state when the promise settles.
-
-Pass `actionProps` (for example `{ children: "Undo", onPress }`) to show an action button. Set `priority: "high"` for urgent messages and `timeout` to override the provider default; `loading` toasts stay until updated.
-
-Use `createToastManager` to create a separate manager and pass it to `Toaster` as `toastManager`, and `useToastManager` to read the current toasts and actions inside the provider. The lower-level parts are exported for building a custom toast layout.
-
 </Only>
 
 <Only platform="swift">
-
-Add `.toaster()` once near the root. It overlays the toast stack at the bottom of the view and puts its `ToastManager` in the environment as `toastManager`. Call `show`, `success`, `info`, `warning`, `error` or `loading` to add a toast, `update` to change it and `dismiss` to remove it.
 
 ```swift
 import SwiftUI
@@ -749,8 +720,6 @@ struct ContentView: View {
 </Only>
 
 <Only platform="kotlin">
-
-Create the state with `rememberToastState()` and wrap your content in `Toaster`. Call `show`, `success`, `info`, `warning`, `error` or `loading` on the state to add a toast, `update` to change it and `dismiss` to remove it.
 
 ```kotlin
 import androidx.compose.runtime.Composable
@@ -796,11 +765,22 @@ The React Native tab shows 1 more example.
 
 </Only>
 
+<Only platform="rn">
+
+## Accessibility
+
+- Each toast has the `alert` role and a live region that is `polite`, or `assertive` for `priority: "high"`.
+- New toasts are announced with their title and description; high-priority announcements are not queued.
+- A `dismiss` accessibility action and the escape gesture close the toast.
+- Toasts stacked behind the front one are hidden from VoiceOver and TalkBack.
+- The close button has the label "Close toast" and the type icon is hidden from assistive technology.
+- Animations respect the system reduce motion setting.
+
+</Only>
+
 ## API Reference
 
 <Only platform="rn">
-
-<ApiPart index={1}>
 
 ### ToastProvider
 
@@ -808,19 +788,11 @@ Holds the toast queue, default timeout and visible limit.
 
 Also accepts the props of `ToastPrimitive.ProviderProps`.
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### ToastPortal
 
 Renders its children into a portal host.
 
 Also accepts the props of `ToastPrimitive.PortalProps`.
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### ToastViewport
 
@@ -828,19 +800,11 @@ Full-screen layer that holds the stack and expands it on touch.
 
 Also accepts the props of `React.ComponentProps<typeof ToastPrimitive.Viewport>`.
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### Toast
 
 One animated, swipeable toast in the stack.
 
 Also accepts the props of `React.ComponentProps<typeof ToastPrimitive.Root>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
 
 ### ToastContent
 
@@ -848,19 +812,11 @@ Row layout for the icon, text, action and close button.
 
 Also accepts the props of `React.ComponentProps<typeof ToastPrimitive.Content>`.
 
-</ApiPart>
-
-<ApiPart index={6}>
-
 ### ToastTitle
 
 The toast title, read from the toast object.
 
 Also accepts the props of `React.ComponentProps<typeof ToastPrimitive.Title>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
 
 ### ToastDescription
 
@@ -868,19 +824,11 @@ Secondary text under the title.
 
 Also accepts the props of `React.ComponentProps<typeof ToastPrimitive.Description>`.
 
-</ApiPart>
-
-<ApiPart index={8}>
-
 ### ToastAction
 
 Outline button rendered from `actionProps`.
 
 Also accepts the props of `React.ComponentProps<typeof ToastPrimitive.Action>`.
-
-</ApiPart>
-
-<ApiPart index={9}>
 
 ### ToastClose
 
@@ -888,51 +836,43 @@ Icon button that dismisses the toast.
 
 Also accepts the props of `React.ComponentProps<typeof ToastPrimitive.Close>`.
 
-</ApiPart>
-
-<ApiPart index={10}>
-
 ### Toaster
 
 Provider, portal and viewport that render the default toast list.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `portalHost` | `string` | - | Name of the portal host to render into. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `portalHost` | `string` | - |
 
 Also accepts the props of `ToastPrimitive.ProviderProps`.
 
-</ApiPart>
+Render `Toaster` once near the root, then call the exported `toast` manager from anywhere: `toast.add({ title, description, type })` returns an id, `toast.update(id, updates)` changes a toast, and `toast.close(id)` removes it (or all toasts when called without an id). `toast.promise(promise, { loading, success, error })` shows a loading toast and replaces it with the success or error state when the promise settles.
+
+Pass `actionProps` (for example `{ children: "Undo", onPress }`) to show an action button. Set `priority: "high"` for urgent messages and `timeout` to override the provider default; `loading` toasts stay until updated.
+
+Use `createToastManager` to create a separate manager and pass it to `Toaster` as `toastManager`, and `useToastManager` to read the current toasts and actions inside the provider. The lower-level parts are exported for building a custom toast layout. `portalHost` names the portal host to render into.
+
+Toasts respect the bottom safe area inset. `FullWindowOverlay` is used on iOS only; Android renders the viewport directly. In dark mode the toast has no border.
 
 </Only>
 
 <Only platform="swift">
 
-<ApiPart index={1}>
-
 ### ToastType
 
 Values: `.default`, `.success`, `.info`, `.warning`, `.error`, `.loading`.
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### ToastAction
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringResource` | - | - |
-| `action` | `() -> Void` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - |
+| `action` | `() -> Void` | - |
 
 | Property | Type |
 | --- | --- |
 | `title` | `LocalizedStringResource` |
 | `action` | `@MainActor @Sendable () -> Void` |
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### ToastItem
 
@@ -945,10 +885,6 @@ Values: `.default`, `.success`, `.info`, `.warning`, `.error`, `.loading`.
 | `action` | `ToastAction?` |
 | `duration` | `Duration?` |
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### ToastManager
 
 Takes no parameters.
@@ -959,337 +895,219 @@ Takes no parameters.
 | `toasts` | `[ToastItem]` |
 | `limit` | `Int` |
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### ToastManager.show
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringResource` | - | - |
-| `description` | `LocalizedStringResource?` | `nil` | - |
-| `type` | `ToastType`: `.default` \| `.success` \| `.info` \| `.warning` \| `.error` \| `.loading` | `.default` | - |
-| `action` | `ToastAction?` | `nil` | - |
-| `duration` | `Duration?` | `.seconds(5)` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - |
+| `description` | `LocalizedStringResource?` | `nil` |
+| `type` | `ToastType`: `.default` \| `.success` \| `.info` \| `.warning` \| `.error` \| `.loading` | `.default` |
+| `action` | `ToastAction?` | `nil` |
+| `duration` | `Duration?` | `.seconds(5)` |
 
 Returns `UUID`.
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### ToastManager.success
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringResource` | - | - |
-| `description` | `LocalizedStringResource?` | `nil` | - |
-| `action` | `ToastAction?` | `nil` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - |
+| `description` | `LocalizedStringResource?` | `nil` |
+| `action` | `ToastAction?` | `nil` |
 
 Returns `UUID`.
-
-</ApiPart>
-
-<ApiPart index={7}>
 
 ### ToastManager.info
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringResource` | - | - |
-| `description` | `LocalizedStringResource?` | `nil` | - |
-| `action` | `ToastAction?` | `nil` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - |
+| `description` | `LocalizedStringResource?` | `nil` |
+| `action` | `ToastAction?` | `nil` |
 
 Returns `UUID`.
-
-</ApiPart>
-
-<ApiPart index={8}>
 
 ### ToastManager.warning
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringResource` | - | - |
-| `description` | `LocalizedStringResource?` | `nil` | - |
-| `action` | `ToastAction?` | `nil` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - |
+| `description` | `LocalizedStringResource?` | `nil` |
+| `action` | `ToastAction?` | `nil` |
 
 Returns `UUID`.
-
-</ApiPart>
-
-<ApiPart index={9}>
 
 ### ToastManager.error
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringResource` | - | - |
-| `description` | `LocalizedStringResource?` | `nil` | - |
-| `action` | `ToastAction?` | `nil` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - |
+| `description` | `LocalizedStringResource?` | `nil` |
+| `action` | `ToastAction?` | `nil` |
 
 Returns `UUID`.
-
-</ApiPart>
-
-<ApiPart index={10}>
 
 ### ToastManager.loading
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringResource` | - | - |
-| `description` | `LocalizedStringResource?` | `nil` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - |
+| `description` | `LocalizedStringResource?` | `nil` |
 
 Returns `UUID`.
 
-</ApiPart>
-
-<ApiPart index={11}>
-
 ### ToastManager.update
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ id` | `UUID` | - | - |
-| `title` | `LocalizedStringResource?` | `nil` | - |
-| `description` | `LocalizedStringResource?` | `nil` | - |
-| `type` | `ToastType?`: `.default` \| `.success` \| `.info` \| `.warning` \| `.error` \| `.loading` | `nil` | - |
-| `duration` | `Duration?` | `.seconds(5)` | - |
-
-</ApiPart>
-
-<ApiPart index={12}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ id` | `UUID` | - |
+| `title` | `LocalizedStringResource?` | `nil` |
+| `description` | `LocalizedStringResource?` | `nil` |
+| `type` | `ToastType?`: `.default` \| `.success` \| `.info` \| `.warning` \| `.error` \| `.loading` | `nil` |
+| `duration` | `Duration?` | `.seconds(5)` |
 
 ### ToastManager.dismiss
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ id` | `UUID` | - | - |
-
-</ApiPart>
-
-<ApiPart index={13}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ id` | `UUID` | - |
 
 ### ToastManager.dismissAll
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={14}>
-
 ### .toaster
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ manager` | `ToastManager` | `.shared` | - |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ manager` | `ToastManager` | `.shared` |
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### ToastType
 
 Values: `Default`, `Success`, `Info`, `Warning`, `Error`, `Loading`.
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### ToastAction
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `String` | - | - |
-| `onClick` | `() -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `label` | `String` | - |
+| `onClick` | `() -> Unit` | - |
 
 ### ToastState
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `limit` | `Int` | `3` | - |
-| `defaultDurationMillis` | `Long` | `5000` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `limit` | `Int` | `3` |
+| `defaultDurationMillis` | `Long` | `5000` |
 
 | Property | Type |
 | --- | --- |
 | `toasts` | `List<ToastData>` |
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### ToastState.show
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String` | - | - |
-| `description` | `String?` | `null` | - |
-| `type` | `ToastType`: `Default` \| `Success` \| `Info` \| `Warning` \| `Error` \| `Loading` | `ToastType.Default` | - |
-| `action` | `ToastAction?` | `null` | - |
-| `durationMillis` | `Long` | `if (type == ToastType.Loading) 0 else defaultDurationMillis` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String` | - |
+| `description` | `String?` | `null` |
+| `type` | `ToastType`: `Default` \| `Success` \| `Info` \| `Warning` \| `Error` \| `Loading` | `ToastType.Default` |
+| `action` | `ToastAction?` | `null` |
+| `durationMillis` | `Long` | `if (type == ToastType.Loading) 0 else defaultDurationMillis` |
 
 Returns `Long`.
-
-</ApiPart>
-
-<ApiPart index={5}>
 
 ### ToastState.success
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String` | - | - |
-| `description` | `String?` | `null` | - |
-| `action` | `ToastAction?` | `null` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String` | - |
+| `description` | `String?` | `null` |
+| `action` | `ToastAction?` | `null` |
 
 Returns `Long`.
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### ToastState.info
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String` | - | - |
-| `description` | `String?` | `null` | - |
-| `action` | `ToastAction?` | `null` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String` | - |
+| `description` | `String?` | `null` |
+| `action` | `ToastAction?` | `null` |
 
 Returns `Long`.
-
-</ApiPart>
-
-<ApiPart index={7}>
 
 ### ToastState.warning
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String` | - | - |
-| `description` | `String?` | `null` | - |
-| `action` | `ToastAction?` | `null` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String` | - |
+| `description` | `String?` | `null` |
+| `action` | `ToastAction?` | `null` |
 
 Returns `Long`.
-
-</ApiPart>
-
-<ApiPart index={8}>
 
 ### ToastState.error
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String` | - | - |
-| `description` | `String?` | `null` | - |
-| `action` | `ToastAction?` | `null` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String` | - |
+| `description` | `String?` | `null` |
+| `action` | `ToastAction?` | `null` |
 
 Returns `Long`.
-
-</ApiPart>
-
-<ApiPart index={9}>
 
 ### ToastState.loading
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String` | - | - |
-| `description` | `String?` | `null` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String` | - |
+| `description` | `String?` | `null` |
 
 Returns `Long`.
 
-</ApiPart>
-
-<ApiPart index={10}>
-
 ### ToastState.update
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | `Long` | - | - |
-| `title` | `String?` | `null` | - |
-| `description` | `String?` | `null` | - |
-| `type` | `ToastType?`: `Default` \| `Success` \| `Info` \| `Warning` \| `Error` \| `Loading` | `null` | - |
-| `action` | `ToastAction?` | `null` | - |
-| `durationMillis` | `Long?` | `null` | - |
-
-</ApiPart>
-
-<ApiPart index={11}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `id` | `Long` | - |
+| `title` | `String?` | `null` |
+| `description` | `String?` | `null` |
+| `type` | `ToastType?`: `Default` \| `Success` \| `Info` \| `Warning` \| `Error` \| `Loading` | `null` |
+| `action` | `ToastAction?` | `null` |
+| `durationMillis` | `Long?` | `null` |
 
 ### ToastState.dismiss
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | `Long` | - | - |
-
-</ApiPart>
-
-<ApiPart index={12}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `id` | `Long` | - |
 
 ### ToastState.dismissAll
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={13}>
-
 ### rememberToastState
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `limit` | `Int` | `3` | - |
-| `defaultDurationMillis` | `Long` | `5000` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `limit` | `Int` | `3` |
+| `defaultDurationMillis` | `Long` | `5000` |
 
 Returns `ToastState`.
-
-</ApiPart>
-
-<ApiPart index={14}>
 
 ### Toaster
 
 Provider, portal and viewport that render the default toast list.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `state` | `ToastState` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | `{}` | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- Each toast has the `alert` role and a live region that is `polite`, or `assertive` for `priority: "high"`.
-- New toasts are announced with their title and description; high-priority announcements are not queued.
-- A `dismiss` accessibility action and the escape gesture close the toast.
-- Toasts stacked behind the front one are hidden from VoiceOver and TalkBack.
-- The close button has the label "Close toast" and the type icon is hidden from assistive technology.
-- Animations respect the system reduce motion setting.
-
-## Notes
-
-- Uses `bg-popover`, `text-foreground`, `text-muted-foreground` and tint tokens `bg-green-500`, `bg-primary`, `bg-orange-500` and `bg-destructive` for the icons.
-- Light and dark colors follow the system appearance; dark mode drops the border.
-- Toasts respect the bottom safe area inset.
-- `FullWindowOverlay` is used on iOS only; Android renders the viewport directly.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `state` | `ToastState` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | `{}` |
 
 </Only>
 

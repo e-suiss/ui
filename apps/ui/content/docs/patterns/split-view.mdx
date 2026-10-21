@@ -9,13 +9,15 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="split-view-demo" layout="padded" responsive />
 
-`SplitView` arranges content in up to three columns, like Mail: a sidebar, a list and a detail pane. On desktop it places the panes in a horizontal suiss/ui `ResizablePanelGroup` with resize handles between them. The panes default to 20%, 32% and 48% of the width, with minimum sizes of 15%, 22% and 30%.
+`SplitView` arranges content in up to three columns, like Mail: a sidebar, a list and a detail pane. On desktop it places the panes in a horizontal suiss/ui `ResizablePanelGroup` with resize handles between them. On mobile (below `48rem`, via `useIsMobile`) only one column shows at a time, and tapping a `SplitViewItem` pushes the next column.
 
-On mobile (below `48rem`, via `useIsMobile`) only one column shows at a time. Tapping a `SplitViewItem` pushes the next column, and a back button labelled with the previous pane's title returns to it. After navigation, focus moves to the new pane's heading and the view scrolls into place. Use it for master-detail interfaces such as mail, settings or file browsers.
+Use it for master-detail interfaces such as mail, settings or file browsers.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/split-view
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns split-view
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
@@ -37,16 +41,26 @@ npm install @base-ui/react @phosphor-icons/react
 
 2. Add the pieces it builds on: [Resizable](/docs/components/resizable), `use-mobile`.
 
-3. Copy the source into `components/patterns/split-view.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/split-view.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { SplitView, SplitViewSidebar, SplitViewList, SplitViewDetail, SplitViewItem } from "@/components/patterns/split-view"
+import {
+  SplitView,
+  SplitViewDetail,
+  SplitViewItem,
+  SplitViewList,
+  SplitViewSidebar,
+} from "@/components/patterns/split-view"
 ```
 
 ```tsx
@@ -65,95 +79,83 @@ import { SplitView, SplitViewSidebar, SplitViewList, SplitViewDetail, SplitViewI
 </SplitView>
 ```
 
-- Place `SplitViewSidebar`, `SplitViewList` and `SplitViewDetail` as direct children of `SplitView`. Leave out the sidebar for a two-column layout.
-- The mobile column is uncontrolled by default and starts at `defaultColumn`. Use `column` with `onColumnChange` to control it.
-- `SplitViewItem` advances to the next column on click and runs your own `onClick` too. Set `isActive` on the current item.
-- The list pane shows a back button to the sidebar only when the sidebar has a `title`.
-- `useSplitView` returns `isMobile`, `column` and `setColumn` for custom navigation inside the view.
-
 ## Examples
 
 ### Two columns
 
-Leaves out the sidebar for a list and detail layout.
+Leave out `SplitViewSidebar` for a two-column list and detail layout.
 
 <ComponentPreview name="split-view-two-columns" layout="padded" responsive />
 
 ### Start on sidebar
 
-Starts on the sidebar column on mobile through `defaultColumn`.
+Set `defaultColumn="sidebar"` to start on the sidebar column on mobile.
 
 <ComponentPreview name="split-view-start-on-sidebar" layout="padded" responsive />
 
-## API Reference
+## Accessibility
 
-<ApiPart index={1}>
+- Each pane is a `section` labelled by its `title` heading, so titled panes are exposed as regions.
+- The active item has `aria-current="true"`.
+- On mobile, navigating moves focus to the new pane's heading. The back button's chevron is hidden from assistive technology.
+
+## API Reference
 
 ### SplitView
 
 The root that lays out the panes and tracks the visible mobile column.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `column` | `SplitViewColumn` | - | The visible mobile column when controlled: `sidebar`, `list` or `detail`. |
-| `defaultColumn` | `SplitViewColumn` | `"list"` | The mobile column shown first when uncontrolled. |
-| `onColumnChange` | `(column: SplitViewColumn) => void` | - | Called with the new column when navigation changes it. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `column` | `SplitViewColumn` | - |
+| `defaultColumn` | `SplitViewColumn` | `"list"` |
+| `onColumnChange` | `(column: SplitViewColumn) => void` | - |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+Place `SplitViewSidebar`, `SplitViewList` and `SplitViewDetail` as direct children. On desktop the panes default to 20%, 32% and 48% of the width, with minimum sizes of 15%, 22% and 30%. The mobile column is uncontrolled by default and starts at `defaultColumn`; use `column` with `onColumnChange` to control it. On mobile the root sets `data-column` to the visible column. `useSplitView` returns `isMobile`, `column` and `setColumn` for custom navigation inside the view.
 
 ### SplitViewSidebar
 
 The leading pane, usually for sources or categories.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `React.ReactNode` | - | The pane heading and accessible name; also labels the back button in the list pane. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `title` | `React.ReactNode` | - |
 
 Also accepts the props of `React.ComponentProps<"section">`.
 
-</ApiPart>
-
-<ApiPart index={3}>
+`title` is the pane heading and accessible name. It also labels the back button in the list pane, which shows a back button to the sidebar only when the sidebar has a `title`.
 
 ### SplitViewList
 
 The middle pane, usually a list of items.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `React.ReactNode` | - | The pane heading and accessible name; visually hidden on desktop and used for the back button in the detail pane. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `title` | `React.ReactNode` | - |
 
 Also accepts the props of `React.ComponentProps<"section">`.
 
-</ApiPart>
-
-<ApiPart index={4}>
+`title` is visually hidden on desktop and labels the back button in the detail pane.
 
 ### SplitViewDetail
 
 The trailing pane that shows the selected item.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `React.ReactNode` | - | The pane heading and accessible name. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `title` | `React.ReactNode` | - |
 
 Also accepts the props of `React.ComponentProps<"section">`.
-
-</ApiPart>
-
-<ApiPart index={5}>
 
 ### SplitViewItem
 
 A button row that marks the current selection and advances to the next column on mobile.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isActive` | `boolean` | `false` | Marks the item as the current selection with `aria-current` and `data-active`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `isActive` | `boolean` | `false` |
 
 <OnlyBase base="base">
 
@@ -163,9 +165,9 @@ Also accepts the props of `useRender.ComponentProps<"button">`.
 
 <OnlyBase base="radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element, such as a link, in place of the button. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
 
 Also accepts the props of `React.ComponentProps<"button">`.
 
@@ -173,43 +175,35 @@ Also accepts the props of `React.ComponentProps<"button">`.
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | - | Renders your own element, such as a link, with the props it receives. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | - |
 
 Also accepts the props of `React.ComponentProps<"button">`.
 
 </OnlyBase>
 
-</ApiPart>
-
-## Accessibility
-
-- Each pane is a `section` labelled by its `title` heading, so titled panes are exposed as regions.
-- The active item has `aria-current="true"`.
-- On mobile, navigating moves focus to the new pane's heading. The back button's chevron is hidden from assistive technology.
-
-## Notes
-
-Styling hooks: `data-slot="split-view"`, `split-view-sidebar`, `split-view-list`, `split-view-detail`, `split-view-back` and `split-view-item`; desktop panels use `split-view-sidebar-panel`, `split-view-list-panel` and `split-view-detail-panel`. On mobile the root has `data-column` set to the visible column.
+On mobile it advances to the next column on click and runs your own `onClick` too. Set `isActive` on the current item; it sets `aria-current` and `data-active`.
 
 <OnlyBase base="base">
 
-Use the `render` prop on `SplitViewItem` to render it as a link.
+Use the `render` prop to render it as a link.
 
 </OnlyBase>
 
 <OnlyBase base="radix">
 
-Set `asChild` on `SplitViewItem` and pass a link as the child to render it as a link.
+Set `asChild` and pass a link as the child to render it as a link.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-Pass a `render` function to `SplitViewItem` that returns a link with the props it receives.
+Pass a `render` function that returns a link with the props it receives.
 
 </OnlyBase>
+
+Each part sets a `data-slot`, such as `split-view-list`, `split-view-back` or `split-view-list-panel`, for styling.
 
 </Only>
 
@@ -232,6 +226,10 @@ On Android the hardware back button also returns to the previous column.
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -281,7 +279,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -289,7 +289,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -305,17 +305,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/primitives/hooks.ts" plain />
 
-5. Copy the source into `components/patterns/split-view.tsx`:
+5. Copy and paste the following code into `components/patterns/split-view.tsx`:
 
 <ComponentSource path="uniwind/components/patterns/split-view.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -331,17 +331,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/primitives/hooks.ts" plain />
 
-5. Copy the source into `components/patterns/split-view.tsx`:
+5. Copy and paste the following code into `components/patterns/split-view.tsx`:
 
 <ComponentSource path="nativewind/components/patterns/split-view.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -357,11 +357,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/primitives/hooks.ts" plain />
 
-5. Copy the source into `components/patterns/split-view.tsx`:
+5. Copy and paste the following code into `components/patterns/split-view.tsx`:
 
 <ComponentSource path="stylesheet/components/patterns/split-view.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -446,6 +446,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -869,14 +873,6 @@ fun SplitViewMail(withSidebar: Boolean = true, defaultColumn: SplitViewColumn = 
 
 </Only>
 
-<Only platform="rn">
-
-Give each pane a `title`; the back button only appears when the previous pane exists and has a title. Put `SplitViewItem`s in the sidebar and list panes, and use their `onPress` to set the selection in your own state.
-
-The current column is uncontrolled with `defaultColumn` (`list` by default) or controlled with `column` and `onColumnChange`. `useSplitView` returns `isCompact`, `column` and `setColumn` for custom navigation.
-
-</Only>
-
 ## Examples
 
 ### Detail column
@@ -897,255 +893,6 @@ Only list and detail panes, without a sidebar.
 
 <NativeExample name="split-view-two-columns" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### SplitView
-
-The root that tracks the current column and the layout mode.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `column` | `SplitViewColumn` | - | The visible column on phones when controlled: `sidebar`, `list` or `detail`. |
-| `defaultColumn` | `SplitViewColumn` | `"list"` | The initial column when uncontrolled. Defaults to `list`. |
-| `onColumnChange` | `(column: SplitViewColumn) => void` | - | Called with the new column. |
-| `breakpoint` | `number` | `768` | Window width at which the panes sit side by side. Defaults to `768`. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SplitViewSidebar
-
-The first pane, for top-level sections.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `React.ReactNode` | - | The title shown at the top of the column. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SplitViewList
-
-The middle pane, for the items in a section.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `React.ReactNode` | - | The title shown at the top of the column. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SplitViewDetail
-
-The last pane, for the selected item.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `React.ReactNode` | - | The title shown at the top of the column. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SplitViewItem
-
-A pressable row that moves to the next column.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isActive` | `boolean` | `false` | Highlights the row and marks it as selected. |
-| `children` | `React.ReactNode` | - | The content. |
-
-Also accepts the props of `React.ComponentProps<typeof Pressable>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### SplitViewColumn
-
-Values: `.sidebar`, `.list`, `.detail`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SplitView
-
-The root that tracks the current column and the layout mode.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `column` | `Binding<SplitViewColumn>` | - | The visible column on phones when controlled: `sidebar`, `list` or `detail`. |
-| `content` | `() -> Content` | - | The content. |
-| `defaultColumn` | `SplitViewColumn`: `.sidebar` \| `.list` \| `.detail` | `.list` | The initial column when uncontrolled. |
-
-Overloads: `init(column:content:)`, `init(defaultColumn:content:)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SplitViewSidebar
-
-The first pane, for top-level sections.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey?` | `nil` | The title shown at the top of the column. |
-| `content` | `() -> Content` | - | The content. |
-| `verbatim` | `String` | - | The title shown at the top of the column. |
-
-Overloads: `init(_:content:)`, `init(verbatim:content:)`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SplitViewList
-
-The middle pane, for the items in a section.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey?` | `nil` | The title shown at the top of the column. |
-| `content` | `() -> Content` | - | The content. |
-| `verbatim` | `String` | - | The title shown at the top of the column. |
-
-Overloads: `init(_:content:)`, `init(verbatim:content:)`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SplitViewDetail
-
-The last pane, for the selected item.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey?` | `nil` | The title shown at the top of the column. |
-| `content` | `() -> Content` | - | The content. |
-| `verbatim` | `String` | - | The title shown at the top of the column. |
-
-Overloads: `init(_:content:)`, `init(verbatim:content:)`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### SplitViewItem
-
-A pressable row that moves to the next column.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isActive` | `Bool` | `false` | Highlights the row and marks it as selected. |
-| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
-| `label` | `() -> Label` | - | The label. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### SplitViewColumn
-
-Values: `Sidebar`, `List`, `Detail`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SplitViewScope.SplitViewSidebar
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String?` | `null` | - |
-| `modifier` | `Modifier` | `Modifier` | - |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SplitViewScope.SplitViewList
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String?` | `null` | - |
-| `modifier` | `Modifier` | `Modifier` | - |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SplitViewScope.SplitViewDetail
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String?` | `null` | - |
-| `modifier` | `Modifier` | `Modifier` | - |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SplitView
-
-The root that tracks the current column and the layout mode.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `column` | `SplitViewColumn?`: `Sidebar` \| `List` \| `Detail` | `null` | The visible column on phones when controlled: `sidebar`, `list` or `detail`. |
-| `defaultColumn` | `SplitViewColumn`: `Sidebar` \| `List` \| `Detail` | `SplitViewColumn.List` | The initial column when uncontrolled. |
-| `onColumnChange` | `(SplitViewColumn) -> Unit` | `{}` | Called with the new column. |
-| `content` | `SplitViewScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### SplitViewItem
-
-A pressable row that moves to the next column.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `isActive` | `Boolean` | `false` | Highlights the row and marks it as selected. |
-| `onClick` | `() -> Unit` | `{}` | Called when it is tapped. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1155,10 +902,192 @@ A pressable row that moves to the next column.
 - `SplitViewItem` exposes its `selected` state.
 - Back and row chevrons mirror in right-to-left layouts.
 
-## Notes
+</Only>
 
-- On phones the new pane fades in, respecting the system reduce motion setting.
-- Active rows use `bg-muted`; panes are divided by `border-border`.
+## API Reference
+
+<Only platform="rn">
+
+### SplitView
+
+The root that tracks the current column and the layout mode.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `column` | `SplitViewColumn` | - |
+| `defaultColumn` | `SplitViewColumn` | `"list"` |
+| `onColumnChange` | `(column: SplitViewColumn) => void` | - |
+| `breakpoint` | `number` | `768` |
+
+Also accepts the props of `ViewProps`.
+
+The current column is uncontrolled with `defaultColumn` or controlled with `column` and `onColumnChange`. `breakpoint` is the window width at which the panes sit side by side. On phones the new pane fades in, respecting the system reduce motion setting. `useSplitView` returns `isCompact`, `column` and `setColumn` for custom navigation.
+
+### SplitViewSidebar
+
+The first pane, for top-level sections.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `title` | `React.ReactNode` | - |
+
+Also accepts the props of `ViewProps`.
+
+Give each pane a `title`; the back button only appears when the previous pane exists and has a title.
+
+### SplitViewList
+
+The middle pane, for the items in a section.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `title` | `React.ReactNode` | - |
+
+Also accepts the props of `ViewProps`.
+
+### SplitViewDetail
+
+The last pane, for the selected item.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `title` | `React.ReactNode` | - |
+
+Also accepts the props of `ViewProps`.
+
+### SplitViewItem
+
+A pressable row that moves to the next column.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `isActive` | `boolean` | `false` |
+| `children` | `React.ReactNode` | - |
+
+Also accepts the props of `React.ComponentProps<typeof Pressable>`.
+
+Put items in the sidebar and list panes, and use their `onPress` to set the selection in your own state. `isActive` highlights the row and marks it as selected.
+
+</Only>
+
+<Only platform="swift">
+
+### SplitViewColumn
+
+Values: `.sidebar`, `.list`, `.detail`.
+
+### SplitView
+
+The root that tracks the current column and the layout mode.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `column` | `Binding<SplitViewColumn>` | - |
+| `content` | `() -> Content` | - |
+| `defaultColumn` | `SplitViewColumn`: `.sidebar` \| `.list` \| `.detail` | `.list` |
+
+Overloads: `init(column:content:)`, `init(defaultColumn:content:)`.
+
+### SplitViewSidebar
+
+The first pane, for top-level sections.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey?` | `nil` |
+| `content` | `() -> Content` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:content:)`, `init(verbatim:content:)`.
+
+### SplitViewList
+
+The middle pane, for the items in a section.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey?` | `nil` |
+| `content` | `() -> Content` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:content:)`, `init(verbatim:content:)`.
+
+### SplitViewDetail
+
+The last pane, for the selected item.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey?` | `nil` |
+| `content` | `() -> Content` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:content:)`, `init(verbatim:content:)`.
+
+### SplitViewItem
+
+A pressable row that moves to the next column.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isActive` | `Bool` | `false` |
+| `action` | `(() -> Void)?` | `nil` |
+| `label` | `() -> Label` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### SplitViewColumn
+
+Values: `Sidebar`, `List`, `Detail`.
+
+### SplitViewScope.SplitViewSidebar
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String?` | `null` |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### SplitViewScope.SplitViewList
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String?` | `null` |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### SplitViewScope.SplitViewDetail
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String?` | `null` |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### SplitView
+
+The root that tracks the current column and the layout mode.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `column` | `SplitViewColumn?`: `Sidebar` \| `List` \| `Detail` | `null` |
+| `defaultColumn` | `SplitViewColumn`: `Sidebar` \| `List` \| `Detail` | `SplitViewColumn.List` |
+| `onColumnChange` | `(SplitViewColumn) -> Unit` | `{}` |
+| `content` | `SplitViewScope.() -> Unit` | - |
+
+### SplitViewItem
+
+A pressable row that moves to the next column.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `isActive` | `Boolean` | `false` |
+| `onClick` | `() -> Unit` | `{}` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
 
 </Only>
 

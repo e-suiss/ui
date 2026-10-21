@@ -19,6 +19,10 @@ When it has `FabAction` children, pressing it opens a speed dial: a scrim dims t
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -67,7 +71,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -75,7 +81,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
@@ -95,17 +101,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/ui/fab.tsx`:
+5. Copy and paste the following code into `components/ui/fab.tsx`:
 
 <ComponentSource path="uniwind/components/ui/fab.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
@@ -125,17 +131,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/ui/fab.tsx`:
+5. Copy and paste the following code into `components/ui/fab.tsx`:
 
 <ComponentSource path="nativewind/components/ui/fab.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
@@ -155,11 +161,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-safe
 
 <ComponentSource path="stylesheet/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/ui/fab.tsx`:
+5. Copy and paste the following code into `components/ui/fab.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/fab.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -244,6 +250,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -434,43 +444,35 @@ fun FabPage(log: String? = null, fab: @Composable () -> Unit) {
 
 </Only>
 
+## Examples
+
+### Large
+
+Set `size` to `lg`. This one also passes a custom icon.
+
 <Only platform="rn swift">
 
 Use the default plus icon or pass any Phosphor icon to `icon`. Give an icon-only button an `accessibilityLabel`.
 
 </Only>
 
-<Only platform="rn">
-
-For a speed dial, add `FabAction` children with an `icon` and an optional text label. Pressing an action calls its `onPress` and closes the dial. Tapping the scrim or pressing the Android back button also closes it. Use `open`, `defaultOpen` and `onOpenChange` to control it.
-
-Pass `portalHost` to render into a named portal host.
-
-</Only>
-
-## Examples
-
-### Large
-
-The `lg` size with a custom icon.
-
 <NativeExample name="fab-large" />
 
 ### Extended
 
-A label beside the icon.
+Pass a `label` to show text beside the icon and turn the button into a pill.
 
 <NativeExample name="fab-extended" />
 
 ### Large extended
 
-A large extended button.
+Combine the `lg` size with a `label`.
 
 <NativeExample name="fab-large-extended" />
 
 ### Speed dial open
 
-A speed dial that starts open.
+A speed dial that starts open. Each action rises above the button with its icon and label.
 
 <NativeExample name="fab-speed-dial-open" />
 
@@ -490,147 +492,6 @@ A speed dial controlled with `open` and `onOpenChange`.
 
 <NativeExample name="fab-controlled" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Fab
-
-Floating button that also hosts the speed dial.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `FabSize` | `"default"` | `default` or `lg`. |
-| `icon` | `PhosphorIcon` | `PlusIcon` | Phosphor icon component. Defaults to a plus. |
-| `label` | `React.ReactNode` | - | Text or node shown beside the icon. |
-| `open` | `boolean` | - | Controlled speed dial state. |
-| `defaultOpen` | `boolean` | `false` | Initial speed dial state. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when the speed dial opens or closes. |
-| `portalHost` | `string` | - | Name of the portal host to render into. |
-| `children` | `React.ReactNode` | - | The content. |
-
-Also accepts the props of `React.ComponentProps<typeof Pressable>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### FabAction
-
-One action in the speed dial, with an icon and optional label.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon` | `PhosphorIcon` | Required | Phosphor icon component for the action. |
-| `children` | `React.ReactNode` | - | The content. |
-
-Also accepts the props of `React.ComponentProps<typeof Pressable>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### FabSize
-
-Values: `.default`, `.lg`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Fab
-
-Floating button that also hosts the speed dial.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ label` | `LocalizedStringKey?` | `nil` | The label. |
-| `size` | `FabSize`: `.default` \| `.lg` | `.default` | - |
-| `isExpanded` | `Binding<Bool>?` | `nil` | - |
-| `icon` | `() -> Icon` | - | Phosphor icon component. |
-| `actions` | `() -> Actions` | - | - |
-| `accessibilityLabel` | `LocalizedStringKey` | - | - |
-| `action` | `() -> Void` | - | Called when it is tapped. |
-
-Overloads: `init(_:size:isExpanded:icon:actions:)`, `init(accessibilityLabel:size:isExpanded:icon:actions:)`, `init(_:size:action:icon:)`, `init(accessibilityLabel:size:action:icon:)`, `init(_:size:isExpanded:actions:)`, `init(accessibilityLabel:size:isExpanded:actions:)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### FabAction
-
-One action in the speed dial, with an icon and optional label.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `action` | `() -> Void` | - | Called when it is tapped. |
-| `icon` | `() -> Icon` | - | Phosphor icon component for the action. |
-| `verbatim` | `String` | - | The title text. |
-
-Overloads: `init(_:action:icon:)`, `init(verbatim:action:icon:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### FabSize
-
-Values: `Default`, `Lg`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Fab
-
-Floating button that also hosts the speed dial.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon` | `ImageVector` | - | Phosphor icon component. |
-| `contentDescription` | `String` | - | - |
-| `onClick` | `() -> Unit` | - | Called when it is tapped. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `size` | `FabSize`: `Default` \| `Lg` | `FabSize.Default` | - |
-| `label` | `String?` | `null` | The label. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `open` | `Boolean` | - | Controlled speed dial state. |
-| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the speed dial opens or closes. |
-| `actions` | `@Composable ColumnScope.() -> Unit` | - | - |
-
-Overloads: `Fab(icon, contentDescription, onClick)`, `Fab(icon, contentDescription, open, onOpenChange, actions)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### FabAction
-
-One action in the speed dial, with an icon and optional label.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon` | `ImageVector` | - | Phosphor icon component for the action. |
-| `label` | `String` | - | The label. |
-| `onClick` | `() -> Unit` | - | Called when it is tapped. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -640,11 +501,118 @@ One action in the speed dial, with an icon and optional label.
 - The VoiceOver escape gesture and the Android back button close the speed dial.
 - The scrim is hidden from screen readers.
 
-## Notes
+</Only>
 
-- Position follows the safe-area insets and flips sides in right-to-left layouts.
-- Animations respect the system Reduce Motion setting.
-- Uses `bg-primary`, `bg-card` and `bg-black/50` tokens; actions use `bg-muted` in dark mode.
+## API Reference
+
+<Only platform="rn">
+
+### Fab
+
+Floating button that also hosts the speed dial.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `FabSize` | `"default"` |
+| `icon` | `PhosphorIcon` | `PlusIcon` |
+| `label` | `React.ReactNode` | - |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `portalHost` | `string` | - |
+| `children` | `React.ReactNode` | - |
+
+Also accepts the props of `React.ComponentProps<typeof Pressable>`.
+
+`icon` defaults to a plus, and `label` can be text or a node. Add `FabAction` children to turn the button into a speed dial; tapping the scrim or pressing the Android back button closes it. Use `open`, `defaultOpen` and `onOpenChange` to control it, and pass `portalHost` to render into a named portal host. The position follows the safe-area insets and flips sides in right-to-left layouts. Animations respect the system Reduce Motion setting.
+
+### FabAction
+
+One action in the speed dial, with an icon and optional label.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `icon` | `PhosphorIcon` | Required |
+| `children` | `React.ReactNode` | - |
+
+Also accepts the props of `React.ComponentProps<typeof Pressable>`.
+
+Pass the optional text label as children. Pressing an action calls its `onPress` and closes the dial. Actions use `bg-muted` in dark mode.
+
+</Only>
+
+<Only platform="swift">
+
+### FabSize
+
+Values: `.default`, `.lg`.
+
+### Fab
+
+Floating button that also hosts the speed dial.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ label` | `LocalizedStringKey?` | `nil` |
+| `size` | `FabSize`: `.default` \| `.lg` | `.default` |
+| `isExpanded` | `Binding<Bool>?` | `nil` |
+| `icon` | `() -> Icon` | - |
+| `actions` | `() -> Actions` | - |
+| `accessibilityLabel` | `LocalizedStringKey` | - |
+| `action` | `() -> Void` | - |
+
+Overloads: `init(_:size:isExpanded:icon:actions:)`, `init(accessibilityLabel:size:isExpanded:icon:actions:)`, `init(_:size:action:icon:)`, `init(accessibilityLabel:size:action:icon:)`, `init(_:size:isExpanded:actions:)`, `init(accessibilityLabel:size:isExpanded:actions:)`.
+
+### FabAction
+
+One action in the speed dial, with an icon and optional label.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `action` | `() -> Void` | - |
+| `icon` | `() -> Icon` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:action:icon:)`, `init(verbatim:action:icon:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### FabSize
+
+Values: `Default`, `Lg`.
+
+### Fab
+
+Floating button that also hosts the speed dial.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `icon` | `ImageVector` | - |
+| `contentDescription` | `String` | - |
+| `onClick` | `() -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `size` | `FabSize`: `Default` \| `Lg` | `FabSize.Default` |
+| `label` | `String?` | `null` |
+| `enabled` | `Boolean` | `true` |
+| `open` | `Boolean` | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - |
+| `actions` | `@Composable ColumnScope.() -> Unit` | - |
+
+Overloads: `Fab(icon, contentDescription, onClick)`, `Fab(icon, contentDescription, open, onOpenChange, actions)`.
+
+### FabAction
+
+One action in the speed dial, with an icon and optional label.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `icon` | `ImageVector` | - |
+| `label` | `String` | - |
+| `onClick` | `() -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
 
 </Only>
 

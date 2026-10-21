@@ -19,6 +19,10 @@ Banners queue and appear one at a time, with a short pause between them. Swiping
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -67,7 +71,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -75,7 +81,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
@@ -93,17 +99,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="uniwind/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/top-banner.tsx`:
+5. Copy and paste the following code into `components/interactions/top-banner.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/top-banner.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
@@ -121,17 +127,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="nativewind/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/top-banner.tsx`:
+5. Copy and paste the following code into `components/interactions/top-banner.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/top-banner.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
@@ -149,11 +155,11 @@ npx expo install phosphor-react-native react-native-gesture-handler react-native
 
 <ComponentSource path="stylesheet/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/top-banner.tsx`:
+5. Copy and paste the following code into `components/interactions/top-banner.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/top-banner.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -234,6 +240,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -566,14 +576,6 @@ fun TopBannerTriggers(state: TopBannerState) {
 
 </Only>
 
-<Only platform="rn">
-
-Wrap the app in `TopBannerProvider`, then call `show({ title, description?, icon?, action?, timeout? })` from `useTopBanner`. `show` returns an id that you can pass to `dismiss`; calling `dismiss()` with no id dismisses the current banner.
-
-`icon` is a Phosphor icon component. `action` is `{ label, onPress }`; pressing it runs `onPress` and dismisses the banner. Pass a `timeout` of `0` or `Infinity` to keep a banner until dismissed.
-
-</Only>
-
 ## Examples
 
 ### Showing
@@ -586,11 +588,23 @@ A banner with a title and description, shown on mount.
 
 A banner with a leading icon.
 
+<Only platform="rn">
+
+Pass a Phosphor icon component as `icon`.
+
+</Only>
+
 <NativeExample name="top-banner-with-icon" />
 
 ### With action
 
 A banner with an action button.
+
+<Only platform="rn">
+
+Pass `action` as `{ label, onPress }`. Pressing it runs `onPress` and dismisses the banner.
+
+</Only>
 
 <NativeExample name="top-banner-with-action" />
 
@@ -600,46 +614,50 @@ A banner with only a title.
 
 <NativeExample name="top-banner-title-only" />
 
+<Only platform="rn">
+
+## Accessibility
+
+- The banner has the `alert` role and is a polite live region.
+- A string title is announced when the banner appears.
+- The banner has a `dismiss` accessibility action.
+
+</Only>
+
 ## API Reference
 
 <Only platform="rn">
-
-<ApiPart index={1}>
 
 ### TopBannerProvider
 
 Holds the banner queue and renders the current banner in a portal.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `timeout` | `number` | `4000` | Default time in milliseconds before a banner hides. Defaults to `4000`. |
-| `className` | `string` | - | Classes for the banner card. |
-| `portalHost` | `string` | - | Name of a portal host to render into. |
-| `children` | `React.ReactNode` | - | The content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `timeout` | `number` | `4000` |
+| `className` | `string` | - |
+| `portalHost` | `string` | - |
+| `children` | `React.ReactNode` | - |
 
-</ApiPart>
+Wrap the app in `TopBannerProvider`, then call `show({ title, description?, icon?, action?, timeout? })` from `useTopBanner`. `show` returns an id that you can pass to `dismiss`; calling `dismiss()` with no id dismisses the current banner.
+
+`timeout` is the default time in milliseconds before a banner hides. Pass a `timeout` of `0` or `Infinity` to `show` to keep a banner until dismissed. `className` styles the banner card, and `portalHost` names a portal host to render into. Banners are up to 384 points wide and centered, and slide animations respect the system reduce motion setting.
 
 </Only>
 
 <Only platform="swift">
 
-<ApiPart index={1}>
-
 ### TopBannerAction
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringResource` | - | - |
-| `action` | `() -> Void` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - |
+| `action` | `() -> Void` | - |
 
 | Property | Type |
 | --- | --- |
 | `title` | `LocalizedStringResource` |
 | `action` | `@MainActor @Sendable () -> Void` |
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### TopBannerItem
 
@@ -652,10 +670,6 @@ Holds the banner queue and renders the current banner in a portal.
 | `action` | `TopBannerAction?` |
 | `duration` | `Duration?` |
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### TopBannerManager
 
 Takes no parameters.
@@ -667,133 +681,79 @@ Takes no parameters.
 | `timeout` | `Duration` |
 | `current` | `TopBannerItem?` |
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### TopBannerManager.show
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringResource` | - | - |
-| `description` | `LocalizedStringResource?` | `nil` | - |
-| `icon` | `Image?` | `nil` | - |
-| `action` | `TopBannerAction?` | `nil` | - |
-| `duration` | `Duration?` | `nil` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringResource` | - |
+| `description` | `LocalizedStringResource?` | `nil` |
+| `icon` | `Image?` | `nil` |
+| `action` | `TopBannerAction?` | `nil` |
+| `duration` | `Duration?` | `nil` |
 
 Returns `UUID`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### TopBannerManager.dismiss
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ id` | `UUID?` | `nil` | - |
-
-</ApiPart>
-
-<ApiPart index={6}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ id` | `UUID?` | `nil` |
 
 ### TopBannerManager.dismissAll
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={7}>
-
 ### .topBanner
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ manager` | `TopBannerManager` | `.shared` | - |
-| `timeout` | `Duration` | `.seconds(4)` | - |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ manager` | `TopBannerManager` | `.shared` |
+| `timeout` | `Duration` | `.seconds(4)` |
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### TopBannerAction
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `String` | - | - |
-| `onClick` | `() -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={2}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `label` | `String` | - |
+| `onClick` | `() -> Unit` | - |
 
 ### TopBannerState.show
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String` | - | - |
-| `description` | `String?` | `null` | - |
-| `icon` | `ImageVector?` | `null` | - |
-| `action` | `TopBannerAction?` | `null` | - |
-| `timeoutMillis` | `Long` | `defaultTimeoutMillis` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String` | - |
+| `description` | `String?` | `null` |
+| `icon` | `ImageVector?` | `null` |
+| `action` | `TopBannerAction?` | `null` |
+| `timeoutMillis` | `Long` | `defaultTimeoutMillis` |
 
 Returns `Long`.
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### TopBannerState.dismiss
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### rememberTopBannerState
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `defaultTimeoutMillis` | `Long` | `4000` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `defaultTimeoutMillis` | `Long` | `4000` |
 
 Returns `TopBannerState`.
-
-</ApiPart>
-
-<ApiPart index={5}>
 
 ### TopBannerProvider
 
 Holds the banner queue and renders the current banner in a portal.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `state` | `TopBannerState` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- The banner has the `alert` role and is a polite live region.
-- A string title is announced when the banner appears.
-- The banner has a `dismiss` accessibility action.
-
-## Notes
-
-- Banners are up to 384 points wide and centered.
-- The card uses `bg-card`, or `bg-muted` in dark mode, with a `border-border` outline; the icon uses `text-primary`.
-- Slide animations respect the system reduce motion setting.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `state` | `TopBannerState` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
 
 </Only>
 

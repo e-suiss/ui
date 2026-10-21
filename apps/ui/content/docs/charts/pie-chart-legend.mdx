@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A donut with a legend underneath listing every category and its color. Pick it when a chart has enough slices that labels around the ring would get crowded.
 
+Replace `chartData` and add a label and color for each category to `chartConfig`; the legend reads both from there. Keep `nameKey` on the legend content set to your category field so the names resolve.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/pie-chart-legend
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts pie-chart-legend
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/pie-chart-legend.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/pie-chart-legend.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,8 +60,6 @@ import { PieChartLegend } from "@/components/charts/pie-chart-legend"
 ```tsx
 <PieChartLegend />
 ```
-
-Replace `chartData` and add a label and color for each category to `chartConfig`; the legend reads both from there. Keep `nameKey` on the legend content set to your category field so the names resolve.
 
 </Only>
 
@@ -73,7 +81,17 @@ A `PieChart` donut with a `ChartLegend` that lists every slice from `chartConfig
 
 </Only>
 
+<Only platform="rn">
+
+Replace `chartData` with your records and keep `dataKey` and `nameKey` in step with your field names. Add one entry per slice to `chartConfig` with its label and color; the component takes no props.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -123,7 +141,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -133,11 +153,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/pie-chart-legend.tsx`:
+2. Copy and paste the following code into `components/charts/pie-chart-legend.tsx`:
 
 <ComponentSource path="uniwind/components/charts/pie-chart-legend.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -145,11 +165,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/pie-chart-legend.tsx`:
+2. Copy and paste the following code into `components/charts/pie-chart-legend.tsx`:
 
 <ComponentSource path="nativewind/components/charts/pie-chart-legend.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -157,11 +177,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/pie-chart-legend.tsx`:
+2. Copy and paste the following code into `components/charts/pie-chart-legend.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/pie-chart-legend.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -244,6 +264,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -283,12 +307,6 @@ fun PieLegendExample() {
     PieChartLegend()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your records and keep `dataKey` and `nameKey` in step with your field names. Add one entry per slice to `chartConfig` with its label and color; the component takes no props.
 
 </Only>
 

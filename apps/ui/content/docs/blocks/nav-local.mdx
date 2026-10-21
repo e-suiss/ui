@@ -11,9 +11,13 @@ platforms: [web]
 
 A sticky product sub-navigation with the product name on the left and section links and a Buy button on the right, underlining the link for the section in view. The bar gains a blurred background once the page scrolls, and the links collapse into a full-screen menu when space runs out. It renders dark and comes with a sample page of three sections. Use it under a global nav on long product or feature pages.
 
+Edit `sections`; each `id` must match an element on your page, because an `IntersectionObserver` picks the active link from the section in view. Replace the sample sections, `highlights` and `images` with your own content, and give Buy a handler. Images are Unsplash placeholders.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/nav-local
@@ -25,15 +29,21 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks nav-local
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the pieces it builds on: [Button](/docs/components/button), [Navbar](/docs/patterns/navbar).
 
-2. Copy the source into `components/blocks/nav-local.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/nav-local.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -44,11 +54,5 @@ import { NavLocal } from "@/components/blocks/nav-local"
 ```tsx
 <NavLocal />
 ```
-
-Edit `sections`; each `id` must match an element on your page, because an `IntersectionObserver` picks the active link from the section in view. Replace the sample sections, `highlights` and `images` with your own content, and give Buy a handler.
-
-## Notes
-
-Images are Unsplash placeholders.
 
 </Only>

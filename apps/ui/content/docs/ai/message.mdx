@@ -53,15 +53,6 @@ import { Message, MessageContent, MessageFooter } from "@/components/ui/message"
 </Message>
 ```
 
-Put actions in `MessageFooter`. It follows the message alignment, so on the person's turn the actions sit at the end. Use ghost icon buttons with a tooltip for each:
-
-- **Copy** writes the reply to the clipboard and swaps to a check for two seconds.
-- **Good response** and **Bad response** are toggles. Set `aria-pressed` so screen readers announce the state.
-- **Retry** runs the turn again.
-- **Edit** on the person's turn puts the text back in the field.
-
-Render markdown replies with your markdown renderer of choice, and route fenced code to a [Code Block](/docs/components/code-block).
-
 ## AI SDK
 
 Branch on the message role. The person's turn is the bubble. The agent's turn is the reply, and `regenerate` with the message id runs it again.
@@ -100,15 +91,24 @@ return (
 )
 ```
 
-## API Reference
-
-See [Message](/docs/components/message#api-reference), [Bubble](/docs/components/bubble#api-reference) and [Tooltip](/docs/components/tooltip#api-reference).
-
 ## Accessibility
 
 - Every action is an icon button, so give each an `aria-label`; the tooltip repeats it for pointer users.
 - Change the label when the state changes, such as "Copy" to "Copied", so the change is announced.
 - Feedback buttons are toggles and set `aria-pressed`.
+
+## API Reference
+
+See [Message](/docs/components/message#api-reference), [Bubble](/docs/components/bubble#api-reference) and [Tooltip](/docs/components/tooltip#api-reference).
+
+Put actions in `MessageFooter`. It follows the message alignment, so on the person's turn the actions sit at the end. Use ghost icon buttons with a tooltip for each:
+
+- **Copy** writes the reply to the clipboard and swaps to a check for two seconds.
+- **Good response** and **Bad response** are toggles. Set `aria-pressed` so screen readers announce the state.
+- **Retry** runs the turn again.
+- **Edit** on the person's turn puts the text back in the field.
+
+Render markdown replies with your markdown renderer of choice, and route fenced code to a [Code Block](/docs/components/code-block).
 
 </Only>
 

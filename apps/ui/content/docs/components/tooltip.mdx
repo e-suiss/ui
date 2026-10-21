@@ -15,7 +15,9 @@ Use tooltips to name icon-only buttons or show a keyboard shortcut. Keep the tex
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/tooltip
@@ -27,24 +29,35 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add tooltip
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react
 ```
 
-2. Copy the source into `components/ui/tooltip.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/tooltip.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 ```
 
 <OnlyBase base="base">
@@ -96,7 +109,89 @@ import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/comp
 
 </OnlyBase>
 
-Set `side` on `TooltipContent` to place the tooltip on another side; it opens above the trigger by default, `4px` away. Place a `Kbd` inside `TooltipContent` to show a shortcut.
+## Composition
+
+Use the following composition to build a `TooltipProvider`:
+
+```text
+TooltipProvider
+└── Tooltip
+    ├── TooltipTrigger
+    └── TooltipContent
+```
+
+## Examples
+
+### Sides
+
+Set `side` on `TooltipContent` to place the tooltip on each of the four sides of its trigger.
+
+<ComponentPreview name="tooltip-sides" />
+
+### With shortcut
+
+Names an icon button and shows its keyboard shortcut by placing a `Kbd` inside `TooltipContent`.
+
+<ComponentPreview name="tooltip-with-shortcut" />
+
+## Accessibility
+
+- Tooltips open when the trigger is hovered or receives keyboard focus, and close when the pointer leaves.
+- `Escape` closes an open tooltip while focus stays on the trigger.
+- A tooltip doesn't name its trigger. Give icon-only triggers their own `aria-label`.
+
+## API Reference
+
+### TooltipProvider
+
+Shares delay timing across the tooltips inside it.
+
+<OnlyBase base="base">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `delay` | `number` | `0` |
+
+Also accepts the props of the primitive part it wraps.
+
+Wrap your app, or a toolbar of tooltips, in `TooltipProvider`. `delay` is how long to wait before opening a tooltip, in milliseconds. This wrapper sets it to `0`, so tooltips open without waiting.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `delayDuration` | `number` | `0` |
+
+Also accepts the props of the primitive part it wraps.
+
+Wrap your app, or a toolbar of tooltips, in `TooltipProvider`. `delayDuration` is how long to wait before opening a tooltip, in milliseconds. This wrapper sets it to `0`, so tooltips open without waiting. A `Tooltip` outside a `TooltipProvider` wraps itself in a provider with the default delay.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `delay` | `number` | `0` |
+| `closeDelay` | `number` | `0` |
+
+Wrap your app, or a toolbar of tooltips, in `TooltipProvider`. `delay` and `closeDelay` are how long to wait before opening and closing a tooltip, in milliseconds. This wrapper sets `delay` to `0`, so tooltips open without waiting.
+
+</OnlyBase>
+
+### Tooltip
+
+The root that holds a tooltip's open state.
+
+Also accepts the props of the primitive part it wraps.
+
+### TooltipTrigger
+
+The element that shows the tooltip on hover or focus.
+
+Also accepts the props of the primitive part it wraps.
 
 <OnlyBase base="base">
 
@@ -116,141 +211,36 @@ The `Button` placed first inside `Tooltip` is the trigger.
 
 </OnlyBase>
 
-<OnlyBase base="base aria">
-
-Wrap your app, or a toolbar of tooltips, in `TooltipProvider`. This wrapper sets the provider's `delay` to `0`, so tooltips open without waiting.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Wrap your app, or a toolbar of tooltips, in `TooltipProvider`. This wrapper sets the provider's `delayDuration` to `0`, so tooltips open without waiting. A `Tooltip` outside a `TooltipProvider` wraps itself in a provider with the default delay.
-
-</OnlyBase>
-
-## Examples
-
-### Sides
-
-Places tooltips on each of the four sides of their triggers.
-
-<ComponentPreview name="tooltip-sides" />
-
-### With shortcut
-
-Names an icon button and shows its keyboard shortcut with `Kbd`.
-
-<ComponentPreview name="tooltip-with-shortcut" />
-
-## API Reference
-
-<Anatomy>
-
-- [TooltipProvider](#tooltipprovider)
-  - [Tooltip](#tooltip)
-    - [TooltipTrigger](#tooltiptrigger)
-    - [TooltipContent](#tooltipcontent)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### TooltipProvider
-
-Shares delay timing across the tooltips inside it.
-
-<OnlyBase base="base">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `delay` | `number` | `0` | How long to wait before opening a tooltip, in milliseconds. |
-
-Also accepts the props of the primitive part it wraps.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `delayDuration` | `number` | `0` | How long to wait before opening a tooltip, in milliseconds. |
-
-Also accepts the props of the primitive part it wraps.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `delay` | `number` | `0` | How long to wait before opening a tooltip, in milliseconds. |
-| `closeDelay` | `number` | `0` | How long to wait before closing a tooltip, in milliseconds. |
-
-</OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Tooltip
-
-The root that holds a tooltip's open state.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### TooltipTrigger
-
-The element that shows the tooltip on hover or focus.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### TooltipContent
 
 The positioned label with its arrow, rendered in a portal.
 
 <OnlyBase base="base aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"top"` | The side of the trigger the tooltip opens on. |
-| `sideOffset` | `number` | `4` | The gap between the trigger and the tooltip, in pixels. |
-| `align` | `"start" \| "center" \| "end"` | `"center"` | How the tooltip lines up with the trigger along that side. |
-| `alignOffset` | `number` | `0` | Shifts the tooltip along the alignment axis, in pixels. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"top"` |
+| `sideOffset` | `number` | `4` |
+| `align` | `"start" \| "center" \| "end"` | `"center"` |
+| `alignOffset` | `number` | `0` |
 
 </OnlyBase>
 
 <OnlyBase base="radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"top"` | The side of the trigger the tooltip opens on. |
-| `sideOffset` | `number` | `4` | The gap between the trigger and the tooltip, in pixels. |
-| `align` | `"start" \| "center" \| "end"` | `"center"` | How the tooltip lines up with the trigger along that side. |
-| `alignOffset` | `number` | `0` | Shifts the tooltip along the alignment axis, in pixels. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"top"` |
+| `sideOffset` | `number` | `4` |
+| `align` | `"start" \| "center" \| "end"` | `"center"` |
+| `alignOffset` | `number` | `0` |
 
 </OnlyBase>
 
 Also accepts the props of the primitive parts it wraps.
 
-</ApiPart>
+The tooltip opens above the trigger by default, `4px` away. `sideOffset` and `alignOffset` are in pixels; `align` lines the tooltip up with the trigger along its side. The label uses `bg-foreground` with `text-background`, so it inverts against the page in both light and dark appearances.
 
-## Accessibility
-
-- Tooltips open when the trigger is hovered or receives keyboard focus, and close when the pointer leaves.
-- `Escape` closes an open tooltip while focus stays on the trigger.
-- A tooltip doesn't name its trigger. Give icon-only triggers their own `aria-label`.
-
-## Notes
-
-- Parts carry `data-slot` attributes such as `tooltip-trigger` and `tooltip-content`; the popup and arrow set `data-side`.
-- The label uses `bg-foreground` with `text-background`, so it inverts against the page in both light and dark appearances.
+Each part sets a `data-slot`, such as `tooltip-trigger` or `tooltip-content`, for styling. The popup and arrow set `data-side`.
 
 </Only>

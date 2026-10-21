@@ -9,13 +9,15 @@ platforms: [web]
 
 <ComponentPreview name="action-menu-demo" layout="fullscreen" responsive />
 
-`ActionMenu` renders a `DropdownMenu` on desktop and an `AlertSheet` below the `48rem` breakpoint (`useIsMobile`). Each part switches to its matching component: items become `DropdownMenuItem`s or `AlertSheetAction`s, and the label becomes a menu label or the sheet title. On mobile, the content wraps the items in a grouped card and appends a Cancel button.
+`ActionMenu` renders a `DropdownMenu` on desktop and an `AlertSheet` below the `48rem` breakpoint (`useIsMobile`). Each part switches to its matching component: items become `DropdownMenuItem`s or `AlertSheetAction`s, and the label becomes a menu label or the sheet title.
 
-Use it for a short set of actions on a single object, such as editing, sharing or deleting a record, where an iOS-style action sheet suits touch screens.
+Use it for a short set of actions on a single object, such as editing, sharing or deleting a record, where an action sheet suits touch screens.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/action-menu
@@ -27,20 +29,33 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns action-menu
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet), [Dropdown Menu](/docs/components/dropdown-menu), `use-mobile`.
 
-2. Copy the source into `components/patterns/action-menu.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/action-menu.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { ActionMenu, ActionMenuTrigger, ActionMenuContent, ActionMenuLabel, ActionMenuItem, ActionMenuSeparator } from "@/components/patterns/action-menu"
+import {
+  ActionMenu,
+  ActionMenuContent,
+  ActionMenuItem,
+  ActionMenuLabel,
+  ActionMenuSeparator,
+  ActionMenuTrigger,
+} from "@/components/patterns/action-menu"
 import { Button } from "@/components/ui/button"
 ```
 
@@ -108,70 +123,54 @@ import { Button } from "@/components/ui/button"
 
 </OnlyBase>
 
-`open`, `defaultOpen` and `onOpenChange` work on both layouts, so the menu can be controlled or uncontrolled.
+## Composition
 
-<OnlyBase base="base">
+Use the following composition to build a `ActionMenu`:
 
-Pass `render` to `ActionMenuTrigger` to use your own button, for example a `Button` with `variant="outline"`. `align`, `alignOffset`, `side` and `sideOffset` on `ActionMenuContent` position the desktop popup and are ignored on mobile.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Set `asChild` on `ActionMenuTrigger` to use your own button, for example a `Button` with `variant="outline"`. `align`, `alignOffset`, `side` and `sideOffset` on `ActionMenuContent` position the desktop popup and are ignored on mobile.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Place your own `Button` inside `ActionMenu` to open it. `placement`, `offset` and `crossOffset` on `ActionMenuContent` position the desktop popup and are ignored on mobile.
-
-</OnlyBase>
+```text
+ActionMenu
+├── ActionMenuTrigger
+└── ActionMenuContent
+    ├── ActionMenuLabel
+    ├── ActionMenuItem
+    └── ActionMenuSeparator
+```
 
 ## Examples
 
 ### With icons
 
-Places an icon before every action, including a destructive Delete item.
+Places an icon before every action. Set `variant="destructive"` on an item, here Delete, to style it as a destructive action.
 
 <ComponentPreview name="action-menu-with-icons" layout="fullscreen" responsive />
 
 ### Not dismissible
 
-Sets `dismissible` to `false` so the mobile sheet closes only through an action or Cancel.
+Set `dismissible` to `false` so the mobile sheet uses an alert dialog that closes only through an action or Cancel, not on an outside press.
 
 <ComponentPreview name="action-menu-not-dismissible" layout="fullscreen" responsive />
 
+## Accessibility
+
+- On desktop the popup has the `menu` role and each item has the `menuitem` role.
+- `ArrowDown` from the trigger opens the menu and focuses the first item; arrow keys move between items and `Enter` runs the focused one.
+- `Escape` closes the menu and returns focus to the trigger.
+
 ## API Reference
-
-<Anatomy>
-
-- [ActionMenu](#actionmenu)
-  - [ActionMenuTrigger](#actionmenutrigger)
-  - [ActionMenuContent](#actionmenucontent)
-    - [ActionMenuLabel](#actionmenulabel)
-    - [ActionMenuItem](#actionmenuitem)
-    - [ActionMenuSeparator](#actionmenuseparator)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### ActionMenu
 
 The root that renders a `DropdownMenu` on desktop and an `AlertSheet` on mobile.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Whether the menu or sheet is open, for controlled use. |
-| `defaultOpen` | `boolean` | - | Whether the menu or sheet starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when the menu or sheet opens or closes. |
-| `dismissible` | `boolean` | `true` | When `true`, the mobile sheet closes on an outside press; when `false`, it uses an alert dialog that closes only through an action or Cancel. |
-| `children` | `React.ReactNode` | - | The trigger and content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | - |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `dismissible` | `boolean` | `true` |
+| `children` | `React.ReactNode` | - |
 
-</ApiPart>
-
-<ApiPart index={2}>
+`open`, `defaultOpen` and `onOpenChange` work on both layouts, so the menu can be controlled or uncontrolled.
 
 ### ActionMenuTrigger
 
@@ -179,41 +178,43 @@ The button that opens the menu or sheet.
 
 <OnlyBase base="base">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `React.ReactElement` | - | Replaces the default button element with your own element, such as a `Button`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `React.ReactElement` | - |
 
 Also accepts the props of `DropdownMenuTrigger`.
+
+Use `render` to replace the default button with your own element, for example a `Button` with `variant="outline"`.
 
 </OnlyBase>
 
 <OnlyBase base="radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element, such as a `Button`, in place of the default button. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
 
 Also accepts the props of `DropdownMenuTrigger`.
+
+Set `asChild` to render your own button in place of the default one, for example a `Button` with `variant="outline"`.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-Also accepts the props of `DropdownMenuTrigger`. You can also leave it out and place a `Button` directly inside `ActionMenu`.
+Also accepts the props of `DropdownMenuTrigger`.
+
+You can also leave it out and place your own `Button` directly inside `ActionMenu` to open it.
 
 </OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### ActionMenuContent
 
 The popup holding the actions; on mobile it adds a Cancel button below them.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `cancelLabel` | `string` | `"Cancel"` | Text of the Cancel button shown below the actions on mobile. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `cancelLabel` | `string` | `"Cancel"` |
 
 <OnlyBase base="base radix">
 
@@ -227,9 +228,7 @@ Also accepts `placement`, `offset` and `crossOffset` from `DropdownMenuContent`,
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={4}>
+The positioning props are ignored on mobile, where the content wraps the items in a grouped card and appends a Cancel button labelled by `cancelLabel`.
 
 ### ActionMenuLabel
 
@@ -247,18 +246,14 @@ Also accepts `className`, `children` and `id`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### ActionMenuItem
 
 An actionable entry that closes the menu when chosen.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | - | Use `destructive` to style the item as a destructive action. |
-| `disabled` | `boolean` | - | Prevents the item from being chosen. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | - |
+| `disabled` | `boolean` | - |
 
 <OnlyBase base="base radix">
 
@@ -271,10 +266,6 @@ Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
 Respond to the item with `onAction`. Also accepts `className`, `children`, `id` and `aria-label`.
 
 </OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### ActionMenuSeparator
 
@@ -292,16 +283,6 @@ Also accepts `className`.
 
 </OnlyBase>
 
-</ApiPart>
-
-## Accessibility
-
-- On desktop the popup has the `menu` role and each item has the `menuitem` role.
-- `ArrowDown` from the trigger opens the menu and focuses the first item; arrow keys move between items and `Enter` runs the focused one.
-- `Escape` closes the menu and returns focus to the trigger.
-
-## Notes
-
-Parts carry `data-slot` values `action-menu`, `action-menu-trigger`, `action-menu-content`, `action-menu-label`, `action-menu-item` and `action-menu-separator`. `ActionMenuSeparator` renders nothing on mobile; the sheet groups items in a single card instead.
+`ActionMenuSeparator` renders nothing on mobile; the sheet groups items in a single card instead. Each part sets a `data-slot`, such as `action-menu-content` or `action-menu-item`, for styling.
 
 </Only>

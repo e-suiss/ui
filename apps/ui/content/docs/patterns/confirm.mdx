@@ -9,13 +9,15 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="confirm-demo" layout="fullscreen" responsive />
 
-`Confirm` asks the user to confirm or cancel an action. On desktop it renders an `AlertDialog` with a header and a footer of buttons. Below the `48rem` breakpoint it renders an `AlertSheet`: `ConfirmContent` lifts the buttons out of `ConfirmFooter`, places the title, description and actions in one grouped card, and moves `ConfirmCancel` into its own button below the card.
+`Confirm` asks the user to confirm or cancel an action. On desktop it renders an `AlertDialog` with a header and a footer of buttons. Below the `48rem` breakpoint it renders an `AlertSheet`, with the title, description and actions in one grouped card and Cancel in its own button below it.
 
 Use it before destructive or irreversible actions, such as deleting a record, where the user must make an explicit choice.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/confirm
@@ -27,20 +29,36 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns confirm
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the pieces it builds on: [Alert Dialog](/docs/components/alert-dialog), [Alert Sheet](/docs/components/alert-sheet), `use-mobile`.
 
-2. Copy the source into `components/patterns/confirm.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/confirm.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Confirm, ConfirmTrigger, ConfirmContent, ConfirmHeader, ConfirmFooter, ConfirmTitle, ConfirmDescription, ConfirmAction, ConfirmCancel } from "@/components/patterns/confirm"
+import {
+  Confirm,
+  ConfirmAction,
+  ConfirmCancel,
+  ConfirmContent,
+  ConfirmDescription,
+  ConfirmFooter,
+  ConfirmHeader,
+  ConfirmTitle,
+  ConfirmTrigger,
+} from "@/components/patterns/confirm"
 import { Button } from "@/components/ui/button"
 ```
 
@@ -123,7 +141,49 @@ import { Button } from "@/components/ui/button"
 
 </OnlyBase>
 
-Write the content once with the desktop structure: `ConfirmHeader` holding `ConfirmTitle` and `ConfirmDescription`, then `ConfirmFooter` holding `ConfirmCancel` and `ConfirmAction`. Keep `ConfirmCancel` and `ConfirmAction` as direct children of `ConfirmFooter` so the mobile layout can find them. The mobile sheet is not dismissible by default; pass `dismissible` to let an outside press close it.
+## Composition
+
+Use the following composition to build a `Confirm`:
+
+```text
+Confirm
+├── ConfirmTrigger
+└── ConfirmContent
+    ├── ConfirmHeader
+    │   ├── ConfirmTitle
+    │   └── ConfirmDescription
+    └── ConfirmFooter
+        ├── ConfirmCancel
+        └── ConfirmAction
+```
+
+## Examples
+
+### Dismissible
+
+Set `dismissible` so the mobile sheet also closes when the user presses outside it. The desktop dialog ignores it.
+
+<ComponentPreview name="confirm-dismissible" layout="fullscreen" responsive />
+
+## Accessibility
+
+- The popup has the `alertdialog` role, named by `ConfirmTitle` and described by `ConfirmDescription`. On mobile with `dismissible` set, it has the `dialog` role instead.
+- Opening moves focus into the dialog, and closing returns it to the trigger.
+- On desktop, pressing outside does not close the dialog; `Escape`, Cancel or an action does.
+
+## API Reference
+
+### Confirm
+
+The root that renders an `AlertDialog` on desktop and an `AlertSheet` on mobile.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `dismissible` | `boolean` | `false` |
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheet>`.
+
+The mobile sheet is not dismissible by default; set `dismissible` to let an outside press close it.
 
 <OnlyBase base="base radix">
 
@@ -137,55 +197,11 @@ Write the content once with the desktop structure: `ConfirmHeader` holding `Conf
 
 </OnlyBase>
 
-## Examples
-
-### Dismissible
-
-Sets `dismissible` so the mobile sheet also closes when the user presses outside it.
-
-<ComponentPreview name="confirm-dismissible" layout="fullscreen" responsive />
-
-## API Reference
-
-<Anatomy>
-
-- [Confirm](#confirm)
-  - [ConfirmTrigger](#confirmtrigger)
-  - [ConfirmContent](#confirmcontent)
-    - [ConfirmHeader](#confirmheader)
-      - [ConfirmTitle](#confirmtitle)
-      - [ConfirmDescription](#confirmdescription)
-    - [ConfirmFooter](#confirmfooter)
-      - [ConfirmCancel](#confirmcancel)
-      - [ConfirmAction](#confirmaction)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Confirm
-
-The root that renders an `AlertDialog` on desktop and an `AlertSheet` on mobile.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `dismissible` | `boolean` | `false` | Lets a press outside close the sheet. On the web only the mobile sheet uses it; the desktop dialog ignores it. |
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheet>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### ConfirmTrigger
 
 The button that opens the confirmation.
 
 Also accepts the props of `React.ComponentProps<typeof AlertDialogTrigger>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### ConfirmContent
 
@@ -193,9 +209,7 @@ The popup; on mobile it regroups the footer buttons into the sheet layout.
 
 Also accepts the props of `React.ComponentProps<typeof AlertDialogContent>`.
 
-</ApiPart>
-
-<ApiPart index={4}>
+Write the content once with the desktop structure: `ConfirmHeader` holding `ConfirmTitle` and `ConfirmDescription`, then `ConfirmFooter` holding `ConfirmCancel` and `ConfirmAction`. On mobile, `ConfirmContent` lifts the buttons out of `ConfirmFooter`. The `size` prop applies to the desktop `AlertDialogContent` only.
 
 ### ConfirmHeader
 
@@ -203,19 +217,13 @@ Groups the title and description.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### ConfirmFooter
 
 Holds the cancel and action buttons on desktop; on mobile its buttons are moved into the sheet.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={6}>
+Keep `ConfirmCancel` and `ConfirmAction` as direct children of `ConfirmFooter` so the mobile layout can find them.
 
 ### ConfirmTitle
 
@@ -223,19 +231,11 @@ The prompt's title, used as the dialog's accessible name.
 
 Also accepts the props of `React.ComponentProps<typeof AlertDialogTitle>`.
 
-</ApiPart>
-
-<ApiPart index={7}>
-
 ### ConfirmDescription
 
 Supporting text, used as the dialog's accessible description.
 
 Also accepts the props of `React.ComponentProps<typeof AlertDialogDescription>`.
-
-</ApiPart>
-
-<ApiPart index={8}>
 
 ### ConfirmAction
 
@@ -243,9 +243,7 @@ A button that performs the action and closes the prompt.
 
 Also accepts the props of `React.ComponentProps<typeof AlertSheetAction>`.
 
-</ApiPart>
-
-<ApiPart index={9}>
+Pass `variant="destructive"` for destructive actions.
 
 ### ConfirmCancel
 
@@ -253,17 +251,7 @@ A button that closes the prompt without acting; shown separately below the actio
 
 Also accepts the props of `React.ComponentProps<typeof AlertSheetCancel>`.
 
-</ApiPart>
-
-## Accessibility
-
-- The popup has the `alertdialog` role, named by `ConfirmTitle` and described by `ConfirmDescription`. On mobile with `dismissible` set, it has the `dialog` role instead.
-- Opening moves focus into the dialog, and closing returns it to the trigger.
-- On desktop, pressing outside does not close the dialog; `Escape`, Cancel or an action does.
-
-## Notes
-
-Parts carry `data-slot` values from `confirm` through `confirm-cancel`. Pass `variant="destructive"` to `ConfirmAction` for destructive actions. The `size` prop of `ConfirmContent` applies to the desktop `AlertDialogContent` only.
+Each part sets a `data-slot`, such as `confirm-content` or `confirm-cancel`, for styling.
 
 </Only>
 
@@ -279,11 +267,15 @@ Parts carry `data-slot` values from `confirm` through `confirm-cancel`. Pass `va
 
 <Only platform="rn swift">
 
-`ConfirmContent` rearranges its children: the header and every non-cancel button from `ConfirmFooter` go into one rounded group, and `ConfirmCancel` is placed below it as a separate button. Use it before destructive or irreversible actions.
+`ConfirmContent` places the header and every non-cancel button in one rounded group, and `ConfirmCancel` below it as a separate button. Use it before destructive or irreversible actions.
 
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -333,7 +325,9 @@ The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet)
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -341,7 +335,7 @@ The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet)
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -349,17 +343,17 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
 
-3. Copy the source into `components/patterns/confirm.tsx`:
+3. Copy and paste the following code into `components/patterns/confirm.tsx`:
 
 <ComponentSource path="uniwind/components/patterns/confirm.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -367,11 +361,11 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
 
-3. Copy the source into `components/patterns/confirm.tsx`:
+3. Copy and paste the following code into `components/patterns/confirm.tsx`:
 
 <ComponentSource path="nativewind/components/patterns/confirm.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -379,11 +373,11 @@ npx expo install cn
 
 1. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet).
 
-2. Copy the source into `components/patterns/confirm.tsx`:
+2. Copy and paste the following code into `components/patterns/confirm.tsx`:
 
 <ComponentSource path="stylesheet/components/patterns/confirm.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -478,6 +472,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -652,327 +650,11 @@ fun ConfirmDemo(defaultOpen: Boolean) {
 
 </Only>
 
-<Only platform="rn swift">
-
-Put `ConfirmTitle` and `ConfirmDescription` in a `ConfirmHeader`, and the buttons in a `ConfirmFooter` inside `ConfirmContent`. Any `ConfirmAction` goes into the group; `ConfirmCancel` is moved out of it.
-
-</Only>
-
-<Only platform="rn">
-
-The root accepts `open`, `defaultOpen` and `onOpenChange`. Pass `dismissible` to let outside presses close it. Set `variant="destructive"` on `ConfirmAction` for delete-style actions.
-
-</Only>
-
 ## Examples
 
 ### Default
 
 <NativeExample name="confirm-demo" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Confirm
-
-The root that owns the open state.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `dismissible` | `boolean` | `false` | Lets a press on the scrim close the sheet. |
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheet>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ConfirmTrigger
-
-The element that opens the sheet.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetTrigger>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ConfirmContent
-
-The sheet that groups the header and actions and places Cancel below.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetContent>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ConfirmHeader
-
-Holds the title and description.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetHeader>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ConfirmFooter
-
-Holds the action and cancel buttons.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### ConfirmTitle
-
-The question being asked.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetTitle>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### ConfirmDescription
-
-Supporting text about the consequences.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetDescription>`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### ConfirmAction
-
-A confirming action, rendered as an `AlertSheetAction`.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetAction>`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### ConfirmCancel
-
-The cancel button, shown separately below the group.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetCancel>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .confirm
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
-| `dismissible` | `Bool` | `false` | Lets a press on the scrim close the sheet. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ConfirmContent
-
-The sheet that groups the header and actions and places Cancel below.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `AlertDialogContent<Content>.Size` | `.default` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ConfirmHeader
-
-Holds the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ConfirmTitle
-
-The question being asked.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ConfirmDescription
-
-Supporting text about the consequences.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ description` | `LocalizedStringKey` | - | The supporting text. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### ConfirmFooter
-
-Holds the action and cancel buttons.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### ConfirmAction
-
-A confirming action, rendered as an `AlertSheetAction`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `variant` | `AlertSheetActionVariant` | `.default` | - |
-| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### ConfirmCancel
-
-The cancel button, shown separately below the group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | `"Cancel"` | The title text. |
-| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Confirm
-
-The root that owns the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `Boolean` | - | - |
-| `onOpenChange` | `(Boolean) -> Unit` | - | Called when it opens or closes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `dismissible` | `Boolean` | `false` | Lets a press on the scrim close the sheet. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ConfirmHeader
-
-Holds the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ConfirmTitle
-
-The question being asked.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ConfirmDescription
-
-Supporting text about the consequences.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ConfirmFooter
-
-Holds the action and cancel buttons.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### ConfirmAction
-
-A confirming action, rendered as an `AlertSheetAction`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `onClick` | `() -> Unit` | - | Called when it is tapped. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `AlertSheetActionVariant` | `AlertSheetActionVariant.Default` | - |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### ConfirmCancel
-
-The cancel button, shown separately below the group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | `"Cancel"` | The text. |
-| `onClick` | `() -> Unit` | `{}` | Called when it is tapped. |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -980,10 +662,219 @@ The cancel button, shown separately below the group.
 
 - With the default `dismissible={false}`, the sheet uses the alert dialog primitive, so it closes only through its buttons.
 
-## Notes
+</Only>
 
-- Action text uses `text-primary`, or `text-destructive` for the `destructive` variant.
-- On iOS the sheet renders in a full-window overlay so it appears above native screens.
+## API Reference
+
+<Only platform="rn">
+
+### Confirm
+
+The root that owns the open state.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `dismissible` | `boolean` | `false` |
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheet>`.
+
+The root accepts `open`, `defaultOpen` and `onOpenChange`. Set `dismissible` to let a press on the scrim close the sheet.
+
+### ConfirmTrigger
+
+The element that opens the sheet.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetTrigger>`.
+
+### ConfirmContent
+
+The sheet that groups the header and actions and places Cancel below.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetContent>`.
+
+Put `ConfirmTitle` and `ConfirmDescription` in a `ConfirmHeader`, and the buttons in a `ConfirmFooter` inside `ConfirmContent`. Any `ConfirmAction` goes into the group; `ConfirmCancel` is moved out of it. On iOS the sheet renders in a full-window overlay so it appears above native screens.
+
+### ConfirmHeader
+
+Holds the title and description.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetHeader>`.
+
+### ConfirmFooter
+
+Holds the action and cancel buttons.
+
+Also accepts the props of `ViewProps`.
+
+### ConfirmTitle
+
+The question being asked.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetTitle>`.
+
+### ConfirmDescription
+
+Supporting text about the consequences.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetDescription>`.
+
+### ConfirmAction
+
+A confirming action, rendered as an `AlertSheetAction`.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetAction>`.
+
+Set `variant="destructive"` for delete-style actions.
+
+### ConfirmCancel
+
+The cancel button, shown separately below the group.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetCancel>`.
+
+</Only>
+
+<Only platform="swift">
+
+### .confirm
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - |
+| `dismissible` | `Bool` | `false` |
+| `content` | `() -> Content` | - |
+
+### ConfirmContent
+
+The sheet that groups the header and actions and places Cancel below.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `size` | `AlertDialogContent<Content>.Size` | `.default` |
+| `content` | `() -> Content` | - |
+
+### ConfirmHeader
+
+Holds the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### ConfirmTitle
+
+The question being asked.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+
+### ConfirmDescription
+
+Supporting text about the consequences.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - |
+
+### ConfirmFooter
+
+Holds the action and cancel buttons.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### ConfirmAction
+
+A confirming action, rendered as an `AlertSheetAction`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `variant` | `AlertSheetActionVariant` | `.default` |
+| `action` | `(() -> Void)?` | `nil` |
+
+### ConfirmCancel
+
+The cancel button, shown separately below the group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | `"Cancel"` |
+| `action` | `(() -> Void)?` | `nil` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### Confirm
+
+The root that owns the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `open` | `Boolean` | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `dismissible` | `Boolean` | `false` |
+| `content` | `@Composable () -> Unit` | - |
+
+### ConfirmHeader
+
+Holds the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### ConfirmTitle
+
+The question being asked.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### ConfirmDescription
+
+Supporting text about the consequences.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### ConfirmFooter
+
+Holds the action and cancel buttons.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `@Composable () -> Unit` | - |
+
+### ConfirmAction
+
+A confirming action, rendered as an `AlertSheetAction`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `onClick` | `() -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `AlertSheetActionVariant` | `AlertSheetActionVariant.Default` |
+| `enabled` | `Boolean` | `true` |
+
+### ConfirmCancel
+
+The cancel button, shown separately below the group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | `"Cancel"` |
+| `onClick` | `() -> Unit` | `{}` |
 
 </Only>
 

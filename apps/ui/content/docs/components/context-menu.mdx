@@ -15,7 +15,9 @@ Use a context menu for secondary actions on an object. Because it is hidden unti
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/context-menu
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add context-menu
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
@@ -37,16 +41,36 @@ npm install @base-ui/react @phosphor-icons/react
 
 2. Add the pieces it builds on: `use-platform`.
 
-3. Copy the source into `components/ui/context-menu.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/context-menu.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { ContextMenu, ContextMenuPortal, ContextMenuTrigger, ContextMenuContent, ContextMenuGroup, ContextMenuLabel, ContextMenuItem, ContextMenuSub, ContextMenuSubTrigger, ContextMenuSubContent, ContextMenuCheckboxItem, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuShortcut } from "@/components/ui/context-menu"
+import {
+  ContextMenu,
+  ContextMenuCheckboxItem,
+  ContextMenuContent,
+  ContextMenuGroup,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuPortal,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu"
 ```
 
 <OnlyBase base="base radix">
@@ -167,301 +191,38 @@ import { ContextMenu, ContextMenuPortal, ContextMenuTrigger, ContextMenuContent,
 
 </OnlyBase>
 
-<OnlyBase base="base radix">
+## Composition
 
-Checkbox items are uncontrolled with `defaultChecked`, or controlled with `checked` and `onCheckedChange`. Radio groups take `defaultValue`, or `value` and `onValueChange`, and each radio item needs a `value`. Respond to an action with the item's `onClick`. Selecting a regular item closes the menu; checkbox and radio items keep it open.
+Use the following composition to build a `ContextMenu`:
 
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Checkbox items are uncontrolled with `defaultSelected`, or controlled with `isSelected` and `onChange`. Radio groups take `defaultValue`, or `value` and `onChange`, and each radio item needs a `value`. Respond to an action with the item's `onAction`. Selecting a regular item closes the menu; checkbox and radio items keep it open.
-
-</OnlyBase>
-
-Set `inset` on items and labels that have no icon so their text aligns with items that do, or with the indicators of checkbox and radio items. Set `variant="destructive"` on items that delete or remove something.
+```text
+ContextMenu
+├── ContextMenuTrigger
+└── ContextMenuContent
+    ├── ContextMenuGroup
+    │   ├── ContextMenuItem
+    │   │   └── ContextMenuShortcut
+    │   ├── ContextMenuCheckboxItem
+    │   └── ContextMenuLabel
+    ├── ContextMenuSeparator
+    ├── ContextMenuSub
+    │   ├── ContextMenuSubTrigger
+    │   └── ContextMenuSubContent
+    │       └── ContextMenuItem
+    ├── ContextMenuRadioGroup
+    │   ├── ContextMenuLabel
+    │   └── ContextMenuRadioItem
+    └── ContextMenuItem
+        └── ContextMenuShortcut
+```
 
 ## Examples
 
 ### Inset
 
-A file menu where `inset` aligns a label and items without icons, ending with a destructive item.
+Set `inset` on items and labels that have no icon so their text aligns with items that do, or with the indicators of checkbox and radio items. The last item uses `variant="destructive"`.
 
 <ComponentPreview name="context-menu-inset" />
-
-## API Reference
-
-<Anatomy>
-
-- [ContextMenu](#contextmenu)
-  - [ContextMenuTrigger](#contextmenutrigger)
-  - [ContextMenuContent](#contextmenucontent)
-    - [ContextMenuGroup](#contextmenugroup)
-      - [ContextMenuItem](#contextmenuitem)
-        - [ContextMenuShortcut](#contextmenushortcut)
-      - [ContextMenuCheckboxItem](#contextmenucheckboxitem)
-      - [ContextMenuLabel](#contextmenulabel)
-    - [ContextMenuSeparator](#contextmenuseparator)
-    - [ContextMenuSub](#contextmenusub)
-      - [ContextMenuSubTrigger](#contextmenusubtrigger)
-      - [ContextMenuSubContent](#contextmenusubcontent)
-        - [ContextMenuItem](#contextmenuitem)
-    - [ContextMenuRadioGroup](#contextmenuradiogroup)
-      - [ContextMenuLabel](#contextmenulabel)
-      - [ContextMenuRadioItem](#contextmenuradioitem)
-    - [ContextMenuItem](#contextmenuitem)
-      - [ContextMenuShortcut](#contextmenushortcut)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### ContextMenu
-
-The root that manages the menu's open state.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ContextMenuPortal
-
-Renders its children into a portal outside the current DOM hierarchy.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ContextMenuTrigger
-
-The area that opens the menu on right-click.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ContextMenuContent
-
-The menu panel, rendered in a portal at the pointer position.
-
-<OnlyBase base="base">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"inline-end"` | Which side of the pointer the menu opens on. |
-| `sideOffset` | `number` | `0` | Distance from the pointer in pixels. |
-| `align` | `"start" \| "center" \| "end"` | `"start"` | Alignment against the pointer. |
-| `alignOffset` | `number` | `4` | Offset along the alignment axis in pixels. |
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `alignOffset` | `number` | `4` | Offset along the alignment axis in pixels. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `placement` | `Placement` | `"bottom start"` | Where the menu opens relative to the pointer. |
-| `offset` | `number` | `0` | Distance from the pointer in pixels. |
-| `crossOffset` | `number` | `4` | Offset along the cross axis in pixels. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive parts it wraps.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ContextMenuGroup
-
-Groups related items.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### ContextMenuLabel
-
-A heading for a group of items.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Adds leading padding so the label aligns with items that have an icon or indicator. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### ContextMenuItem
-
-An action in the menu.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Adds leading padding so the item aligns with items that have an icon or indicator. |
-| `variant` | `"default" \| "destructive"` | `"default"` | `destructive` colors the item and its icon with the `destructive` color. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### ContextMenuSub
-
-The root of a nested submenu.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### ContextMenuSubTrigger
-
-The item that opens a submenu, shown with a trailing caret.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Adds leading padding so the trigger aligns with items that have an icon or indicator. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### ContextMenuSubContent
-
-The panel of a submenu, opened beside its trigger.
-
-Also accepts the props of `React.ComponentProps<typeof ContextMenuContent>`.
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### ContextMenuCheckboxItem
-
-An item that toggles a setting on or off and shows a check mark when on.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Adds leading padding so the item aligns with other inset items. |
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `defaultChecked` | `boolean` | `false` | Whether it starts checked when uncontrolled. |
-| `closeOnClick` | `boolean` | `false` | Closes the menu when the item is selected. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isSelected` | `boolean` | - | The controlled checked state. Pass it with `onChange`. |
-| `defaultSelected` | `boolean` | `false` | Whether it starts checked when uncontrolled. |
-| `onChange` | `(isSelected: boolean) => void` | - | Called when the item is checked or unchecked. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### ContextMenuRadioGroup
-
-Groups radio items so that only one can be selected.
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | - | The selected item's `value`, for controlled use. Pass it with `onChange`. |
-| `defaultValue` | `string` | - | The item selected at first when uncontrolled. |
-| `onChange` | `(value: string) => void` | - | Called with the `value` of the newly selected item. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### ContextMenuRadioItem
-
-An item in a radio group that shows a check mark when selected.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Adds leading padding so the item aligns with other inset items. |
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `closeOnClick` | `boolean` | `false` | Closes the menu when the item is selected. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | - | The value the group reports when this item is selected. Required. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={14}>
-
-### ContextMenuSeparator
-
-A divider between groups of items.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={15}>
-
-### ContextMenuShortcut
-
-Displays a keyboard shortcut at the end of an item.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `mod` | `boolean` | - | Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere. |
-
-Also accepts the props of `React.ComponentProps<"span">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -471,31 +232,286 @@ Also accepts the props of `React.ComponentProps<"span">`.
 - Escape closes the menu, and choosing a regular item closes it.
 - `ContextMenuShortcut` only displays a shortcut; it does not register one. It is hidden on small screens.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values such as `context-menu-content`, `context-menu-item`, `context-menu-checkbox-item`, `context-menu-radio-item`, `context-menu-sub-trigger`, `context-menu-label`, `context-menu-separator` and `context-menu-shortcut`.
-- Items set `data-inset` and `data-variant`, and disabled items get `data-disabled`.
+### ContextMenu
+
+The root that manages the menu's open state.
+
+Also accepts the props of the primitive part it wraps.
+
+### ContextMenuPortal
+
+Renders its children into a portal outside the current DOM hierarchy.
+
+Also accepts the props of the primitive part it wraps.
+
+### ContextMenuTrigger
+
+The area that opens the menu on right-click.
+
+Also accepts the props of the primitive part it wraps.
+
+The trigger sets `select-none` so long-pressing does not select its text.
+
+### ContextMenuContent
+
+The menu panel, rendered in a portal at the pointer position.
 
 <OnlyBase base="base">
 
-- An open submenu trigger gets `data-popup-open`.
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"inline-end"` |
+| `sideOffset` | `number` | `0` |
+| `align` | `"start" \| "center" \| "end"` | `"start"` |
+| `alignOffset` | `number` | `4` |
 
 </OnlyBase>
 
 <OnlyBase base="radix">
 
-- An open submenu trigger gets `data-state="open"`.
+| Prop | Type | Default |
+| --- | --- | --- |
+| `alignOffset` | `number` | `4` |
 
 </OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `placement` | `Placement` | `"bottom start"` |
+| `offset` | `number` | `0` |
+| `crossOffset` | `number` | `4` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive parts it wraps.
 
 <OnlyBase base="base">
 
-- By default the menu opens on the `inline-end` side of the pointer, aligned to `start`.
+`side` and `align` place the menu against the pointer; by default it opens on the `inline-end` side, aligned to `start`. `sideOffset` and `alignOffset` are in pixels.
 
 </OnlyBase>
 
-- The trigger sets `select-none` so long-pressing does not select its text.
-- Uses the `popover`, `accent`, `destructive` and `border` colors.
+<OnlyBase base="radix">
+
+`alignOffset` is the offset along the alignment axis, in pixels.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+`placement` sets where the menu opens relative to the pointer. `offset` and `crossOffset` are in pixels.
+
+</OnlyBase>
+
+### ContextMenuGroup
+
+Groups related items.
+
+Also accepts the props of the primitive part it wraps.
+
+### ContextMenuLabel
+
+A heading for a group of items.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+
+Also accepts the props of the primitive part it wraps.
+
+### ContextMenuItem
+
+An action in the menu.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+| `variant` | `"default" \| "destructive"` | `"default"` |
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base radix">
+
+Respond to an action with the item's `onClick`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Respond to an action with the item's `onAction`.
+
+</OnlyBase>
+
+Selecting a regular item closes the menu. `inset` adds leading padding so the item aligns with items that have an icon or indicator. `variant="destructive"` colors the item and its icon with the `destructive` color; use it on items that delete or remove something. Items set `data-inset` and `data-variant`, and disabled items get `data-disabled`.
+
+### ContextMenuSub
+
+The root of a nested submenu.
+
+Also accepts the props of the primitive part it wraps.
+
+### ContextMenuSubTrigger
+
+The item that opens a submenu, shown with a trailing caret.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base">
+
+An open submenu trigger gets `data-popup-open`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+An open submenu trigger gets `data-state="open"`.
+
+</OnlyBase>
+
+### ContextMenuSubContent
+
+The panel of a submenu, opened beside its trigger.
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuContent>`.
+
+### ContextMenuCheckboxItem
+
+An item that toggles a setting on or off and shows a check mark when on.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `defaultChecked` | `boolean` | `false` |
+| `closeOnClick` | `boolean` | `false` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `isSelected` | `boolean` | - |
+| `defaultSelected` | `boolean` | `false` |
+| `onChange` | `(isSelected: boolean) => void` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base radix">
+
+Checkbox items are uncontrolled with `defaultChecked`, or controlled with `checked` and `onCheckedChange`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Set `closeOnClick` to close the menu when the item is selected.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Checkbox items are uncontrolled with `defaultSelected`, or controlled with `isSelected` and `onChange`.
+
+</OnlyBase>
+
+Checkbox and radio items keep the menu open when selected.
+
+### ContextMenuRadioGroup
+
+Groups radio items so that only one can be selected.
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | - |
+| `defaultValue` | `string` | - |
+| `onChange` | `(value: string) => void` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base radix">
+
+Radio groups take `defaultValue`, or `value` and `onValueChange`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Radio groups take `defaultValue`, or `value` and `onChange`, which is called with the `value` of the newly selected item.
+
+</OnlyBase>
+
+### ContextMenuRadioItem
+
+An item in a radio group that shows a check mark when selected.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `closeOnClick` | `boolean` | `false` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+Each radio item needs a `value`, which the group reports when it is selected.
+
+<OnlyBase base="radix">
+
+Set `closeOnClick` to close the menu when the item is selected.
+
+</OnlyBase>
+
+### ContextMenuSeparator
+
+A divider between groups of items.
+
+Also accepts the props of the primitive part it wraps.
+
+### ContextMenuShortcut
+
+Displays a keyboard shortcut at the end of an item.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `mod` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+Set `mod` to prefix the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere.
+
+Each part sets a `data-slot`, such as `context-menu-item` or `context-menu-sub-trigger`, for styling.
 
 </Only>
 
@@ -516,6 +532,10 @@ Items can be plain actions, checkbox items, radio items in a group, or a submenu
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -565,7 +585,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -573,7 +595,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -611,17 +633,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/context-menu.tsx`:
+5. Copy and paste the following code into `components/ui/context-menu.tsx`:
 
 <ComponentSource path="uniwind/components/ui/context-menu.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -659,17 +681,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/context-menu.tsx`:
+5. Copy and paste the following code into `components/ui/context-menu.tsx`:
 
 <ComponentSource path="nativewind/components/ui/context-menu.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -707,11 +729,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-scre
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/context-menu.tsx`:
+5. Copy and paste the following code into `components/ui/context-menu.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/context-menu.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -816,6 +838,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -1153,16 +1179,6 @@ fun ContextMenuDemo(defaultOpen: Boolean) {
 
 </Only>
 
-<Only platform="rn">
-
-Wrap the long-pressable area in `ContextMenuTrigger` and list `ContextMenuItem`s in `ContextMenuContent`. Items close the menu when pressed unless `closeOnPress={false}`.
-
-Use `ContextMenuCheckboxItem` with `checked` and `onCheckedChange`, and `ContextMenuRadioItem` inside a `ContextMenuRadioGroup` with `value` and `onValueChange`. Group items with `ContextMenuGroup` and `ContextMenuLabel`, and divide sections with `ContextMenuSeparator`.
-
-Set `variant="destructive"` on an item that deletes or removes. Use `inset` on items without an icon to align them with items that have one.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -1175,175 +1191,6 @@ A short list of plain items.
 
 <NativeExample name="context-menu-simple" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### ContextMenu
-
-The root that manages the open state.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Whether the menu is open, for controlled use. |
-| `defaultOpen` | `boolean` | `false` | Whether the menu starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the menu opens or closes. |
-| `disabled` | `boolean` | `false` | Prevents the menu from opening. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ContextMenuContent
-
-Floating menu card.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `portalHost` | `string` | - | Name of the portal host to render into. |
-
-Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Popup>`, `PositionerProps`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ContextMenuSubTrigger
-
-Row that expands the submenu.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-| `iconClassName` | `string` | - | Extra classes for the caret icon. |
-| `inset` | `boolean` | - | Adds start padding. |
-
-Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.SubmenuTrigger>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ContextMenuSubContent
-
-Items of the submenu.
-
-Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Popup>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ContextMenuItem
-
-Action row.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Adds start padding to align with icon items. |
-| `variant` | `"default" \| "destructive"` | `"default"` | `default` or `destructive`. |
-
-Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Item>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### ContextMenuCheckboxItem
-
-Row with a check mark that toggles.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-| `inset` | `boolean` | - | Adds start padding. |
-
-Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### ContextMenuRadioItem
-
-Row that selects one value in its group.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-| `inset` | `boolean` | - | Adds start padding. |
-
-Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.RadioItem>`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### ContextMenuLabel
-
-Heading for a group.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Adds start padding. |
-
-Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.GroupLabel>`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### ContextMenuSeparator
-
-Line between sections.
-
-Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Separator>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .contextMenu
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `() -> Items` | - | - |
-| `preview` | `() -> Preview` | - | - |
-| `previewRadius` | `CGFloat` | - | - |
-
-Overloads: `contextMenu(items:preview:previewRadius:)`, `contextMenu(previewRadius:items:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### ContextMenu
-
-The root that manages the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `expanded` | `Boolean` | - | - |
-| `onExpandedChange` | `(Boolean) -> Unit` | - | - |
-| `trigger` | `@Composable () -> Unit` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1352,10 +1199,144 @@ The root that manages the open state.
 - The popup has the `menu` role; items use `menuitem`, `checkbox` and `radio` roles, and radio groups use `radiogroup`.
 - Separators have the `separator` role.
 
-## Notes
+</Only>
 
-- Uses the `bg-popover` token; a highlighted item fades to `opacity-80` and a disabled one to `opacity-50`; light and dark follow the system appearance.
-- The fade-in respects the system Reduce Motion setting.
+## API Reference
+
+<Only platform="rn">
+
+### ContextMenu
+
+The root that manages the open state.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean, details) => void` | - |
+| `disabled` | `boolean` | `false` |
+
+Use `open` with `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled. `disabled` prevents the menu from opening. Wrap the long-pressable area in `ContextMenuTrigger`.
+
+### ContextMenuContent
+
+Floating menu card.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `portalHost` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Popup>`, `PositionerProps`.
+
+`portalHost` names the portal host to render into. The fade-in respects the system Reduce Motion setting.
+
+### ContextMenuSubTrigger
+
+Row that expands the submenu.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+| `iconClassName` | `string` | - |
+| `inset` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.SubmenuTrigger>`.
+
+`iconClassName` adds classes to the caret icon.
+
+### ContextMenuSubContent
+
+Items of the submenu.
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Popup>`.
+
+### ContextMenuItem
+
+Action row.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+| `variant` | `"default" \| "destructive"` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Item>`.
+
+Items close the menu when pressed unless `closeOnPress={false}`. Set `variant="destructive"` on an item that deletes or removes. `inset` adds start padding to align an item without an icon with items that have one; the sub trigger, checkbox, radio and label parts take it too. A highlighted item fades to `opacity-80` and a disabled one to `opacity-50`.
+
+### ContextMenuCheckboxItem
+
+Row with a check mark that toggles.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+| `inset` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem>`.
+
+Control it with `checked` and `onCheckedChange`.
+
+### ContextMenuRadioItem
+
+Row that selects one value in its group.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+| `inset` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.RadioItem>`.
+
+Place radio items inside a `ContextMenuRadioGroup` with `value` and `onValueChange`.
+
+### ContextMenuLabel
+
+Heading for a group.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.GroupLabel>`.
+
+Group items with `ContextMenuGroup` and a `ContextMenuLabel`.
+
+### ContextMenuSeparator
+
+Line between sections.
+
+Also accepts the props of `React.ComponentProps<typeof ContextMenuPrimitive.Separator>`.
+
+</Only>
+
+<Only platform="swift">
+
+### .contextMenu
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `items` | `() -> Items` | - |
+| `preview` | `() -> Preview` | - |
+| `previewRadius` | `CGFloat` | - |
+
+Overloads: `contextMenu(items:preview:previewRadius:)`, `contextMenu(previewRadius:items:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### ContextMenu
+
+The root that manages the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `expanded` | `Boolean` | - |
+| `onExpandedChange` | `(Boolean) -> Unit` | - |
+| `trigger` | `@Composable () -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `true` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
 
 </Only>
 

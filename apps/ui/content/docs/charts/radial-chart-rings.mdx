@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 Three nested activity rings for move, exercise and stand, each filling toward its own goal. They are drawn as plain SVG circles, so this is the lightest option when you just need static progress rings.
 
+Edit the `rings` array with your labels, values, goals and colors; each ring fills by value divided by goal, and a value above its goal shows a closed ring with no second lap. `SIZE` and `BAR` set the overall size and ring thickness. The graphic is exposed as an image with a label that lists each ring's value and goal.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/radial-chart-rings
@@ -25,15 +29,21 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts radial-chart-rings
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the pieces it builds on: [Card](/docs/components/card).
 
-2. Copy the source into `components/charts/radial-chart-rings.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/radial-chart-rings.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -44,12 +54,6 @@ import { RadialChartRings } from "@/components/charts/radial-chart-rings"
 ```tsx
 <RadialChartRings />
 ```
-
-Edit the `rings` array with your labels, values, goals and colors; each ring fills by value divided by goal. Change `SIZE` and `BAR` for the overall size and ring thickness.
-
-## Notes
-
-The graphic is exposed as an image with a label listing each ring's value and goal. A value above its goal just shows a closed ring, with no second lap.
 
 </Only>
 
@@ -69,9 +73,15 @@ The graphic is exposed as an image with a label listing each ring's value and go
 
 Three rings drawn with `Svg` circles colored through `ChartPalette`. Each entry in `rings` has a value and a goal, and the filled arc is capped at a full circle. The whole graphic is one accessible image whose label lists each ring's value and goal. Nothing is interactive.
 
+Replace the values, goals and colors in `rings`, and change `SIZE` and `BAR` to resize the rings. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -121,7 +131,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -129,7 +141,7 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-svg
@@ -137,17 +149,17 @@ npx expo install react-native-svg
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/radial-chart-rings.tsx`:
+3. Copy and paste the following code into `components/charts/radial-chart-rings.tsx`:
 
 <ComponentSource path="uniwind/components/charts/radial-chart-rings.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-svg
@@ -155,17 +167,17 @@ npx expo install react-native-svg
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/radial-chart-rings.tsx`:
+3. Copy and paste the following code into `components/charts/radial-chart-rings.tsx`:
 
 <ComponentSource path="nativewind/components/charts/radial-chart-rings.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-svg
@@ -173,11 +185,11 @@ npx expo install react-native-svg
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/radial-chart-rings.tsx`:
+3. Copy and paste the following code into `components/charts/radial-chart-rings.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/radial-chart-rings.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -244,6 +256,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -283,12 +299,6 @@ fun RadialRingsExample() {
     RadialChartRings()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace the values, goals and colors in `rings`, and change `SIZE` and `BAR` to resize the rings. The component takes no props.
 
 </Only>
 

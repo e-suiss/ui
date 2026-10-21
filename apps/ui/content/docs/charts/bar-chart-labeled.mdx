@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A single bar series with each value printed above its bar and no grid lines. Use it when exact numbers matter and there are few enough bars for the labels to fit.
 
+Replace `chartData`, point each `dataKey` at your fields and set the label and color in `chartConfig`. The `position` prop on `LabelList` moves the labels, for example inside the bar; raise the chart's top margin if larger labels get clipped. Focus the chart and use the arrow keys to move the tooltip between bars.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/bar-chart-labeled
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts bar-chart-labeled
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/bar-chart-labeled.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/bar-chart-labeled.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { BarChartLabeled } from "@/components/charts/bar-chart-labeled"
 ```tsx
 <BarChartLabeled />
 ```
-
-Replace `chartData`, set each `dataKey` and rename the `chartConfig` entry for the label and color. Move the labels with the `position` prop on `LabelList`, for example inside the bar. Increase the chart's top margin if larger labels get clipped.
-
-## Notes
-
-Labels follow the theme's text color in light and dark mode. Focus the chart and use the arrow keys to move between bars.
 
 </Only>
 
@@ -75,9 +79,15 @@ Labels follow the theme's text color in light and dark mode. Focus the chart and
 
 One rounded bar per month with a `LabelList` placed at the top of each bar, so values are readable without touching the chart. There is no grid; a month axis and a tooltip remain.
 
+Replace `chartData` with your records and change each `dataKey` to match your fields. Change `position` and `offset` on the `LabelList` to move the labels. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +149,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/bar-chart-labeled.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-labeled.tsx`:
 
 <ComponentSource path="uniwind/components/charts/bar-chart-labeled.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +161,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/bar-chart-labeled.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-labeled.tsx`:
 
 <ComponentSource path="nativewind/components/charts/bar-chart-labeled.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +173,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/bar-chart-labeled.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-labeled.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/bar-chart-labeled.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +260,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +303,6 @@ fun BarLabeledExample() {
     BarChartLabeled()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your records and change each `dataKey` to match your fields. Change `position` and `offset` on the `LabelList` to move the labels. The component takes no props.
 
 </Only>
 

@@ -15,7 +15,9 @@ When the container is too short to fit every letter, the bar collapses to fewer 
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/section-index
@@ -27,20 +29,31 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add interactions section-index
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
-2. Copy the source into `components/interactions/section-index.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/interactions/section-index.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { SectionIndex, SectionIndexSection, SectionIndexHeader, SectionIndexBar } from "@/components/interactions/section-index"
+import {
+  SectionIndex,
+  SectionIndexBar,
+  SectionIndexHeader,
+  SectionIndexSection,
+} from "@/components/interactions/section-index"
 import { ScrollArea } from "@/components/ui/scroll-area"
 ```
 
@@ -62,10 +75,6 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 </SectionIndex>
 ```
 
-- Wrap the scrolling list and `SectionIndexBar` in `SectionIndex`, which positions the bar. The list can scroll in its own container, such as `ScrollArea`, or in the page.
-- Set `value` on each `SectionIndexSection` to a letter from `letters` so the bar can find it.
-- Use `onValueChange` to react to jumps.
-
 ## Examples
 
 ### Compact
@@ -74,57 +83,6 @@ In a short list, the bar collapses its letters with dots and still jumps to any 
 
 <ComponentPreview name="section-index-compact" responsive />
 
-## API Reference
-
-<ApiPart index={1}>
-
-### SectionIndex
-
-The relative container that holds the list and the index bar.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SectionIndexSection
-
-A section of the list identified by a letter.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The letter this section belongs to. |
-
-Also accepts the props of `React.ComponentProps<"section">`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SectionIndexHeader
-
-The sticky title at the top of a section.
-
-Also accepts the props of `React.ComponentProps<"h3">`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SectionIndexBar
-
-The vertical letter bar that jumps between sections.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `letters` | `string[]` | `LETTERS` | The letters shown on the bar; defaults to `A` through `Z` followed by `#`. |
-| `onValueChange` | `(value: string) => void` | - | Called with the letter whenever the bar jumps to a section. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
 ## Accessibility
 
 - The bar is a vertical `slider` labelled `Section index`, with `aria-valuetext` set to the current letter.
@@ -132,10 +90,46 @@ Also accepts the props of `React.ComponentProps<"div">`.
 - Typing a letter jumps directly to it.
 - The visible letters and drag bubble are `aria-hidden`.
 
-## Notes
+## API Reference
 
-- Parts use `data-slot` values `section-index`, `section-index-section`, `section-index-header`, `section-index-bar`, and `section-index-bubble`. Sections expose `data-value`, and the bar sets `data-dragging` during a drag.
-- The bar extends its hit area toward the list so it is easier to grab.
+### SectionIndex
+
+The relative container that holds the list and the index bar.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Wrap the scrolling list and `SectionIndexBar` in `SectionIndex`, which positions the bar. The list can scroll in its own container, such as `ScrollArea`, or in the page. Each part sets a `data-slot`, such as `section-index-bar`, for styling.
+
+### SectionIndexSection
+
+A section of the list identified by a letter.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | Required |
+
+Also accepts the props of `React.ComponentProps<"section">`.
+
+Set `value` to a letter from the bar's `letters` so the bar can find the section. Sections expose `data-value`.
+
+### SectionIndexHeader
+
+The sticky title at the top of a section.
+
+Also accepts the props of `React.ComponentProps<"h3">`.
+
+### SectionIndexBar
+
+The vertical letter bar that jumps between sections.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `letters` | `string[]` | `LETTERS` |
+| `onValueChange` | `(value: string) => void` | - |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+`letters` defaults to `A` through `Z` followed by `#`. `onValueChange` is called with the letter whenever the bar jumps to a section. The bar sets `data-dragging` during a drag and extends its hit area toward the list so it is easier to grab.
 
 </Only>
 
@@ -152,6 +146,10 @@ When the bar is too short for every letter, it shows a subset with `•` between
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -201,7 +199,9 @@ The CLI also adds what it builds on: [Text](/docs/components/text). It also adds
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -209,7 +209,7 @@ The CLI also adds what it builds on: [Text](/docs/components/text). It also adds
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
@@ -235,17 +235,17 @@ npx expo install cn react-native-reanimated react-native-worklets
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/interactions/section-index.tsx`:
+5. Copy and paste the following code into `components/interactions/section-index.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/section-index.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
@@ -271,17 +271,17 @@ npx expo install cn react-native-reanimated react-native-worklets
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/interactions/section-index.tsx`:
+5. Copy and paste the following code into `components/interactions/section-index.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/section-index.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -307,11 +307,11 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/interactions/section-index.tsx`:
+5. Copy and paste the following code into `components/interactions/section-index.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/section-index.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -397,6 +397,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -756,14 +760,6 @@ fun SectionIndexRow(name: String, divided: Boolean, onClick: () -> Unit) {
 
 </Only>
 
-<Only platform="rn">
-
-Put a `SectionIndexScrollView` and a `SectionIndexBar` inside `SectionIndex`. Wrap each group in a `SectionIndexSection` with its letter as `value`, and start it with a `SectionIndexHeader`.
-
-The bar shows `A` to `Z` and `#` by default; pass `letters` to match your sections. `onValueChange` is called with the letter when the user jumps.
-
-</Only>
-
 ## Examples
 
 ### Compact
@@ -772,208 +768,6 @@ A short list where the bar collapses letters into dots.
 
 <NativeExample name="section-index-compact" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### SectionIndex
-
-The root that tracks section positions.
-
-Also accepts the props of `React.ComponentProps<typeof SectionIndexPrimitive.Root>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SectionIndexScrollView
-
-The scroll view that holds the sections.
-
-Also accepts the props of `React.ComponentProps<typeof SectionIndexPrimitive.ScrollView>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SectionIndexSection
-
-One section, registered by its `value`.
-
-Also accepts the props of `React.ComponentProps<typeof SectionIndexPrimitive.Section>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SectionIndexHeader
-
-A section heading; string children are styled.
-
-Also accepts the props of `React.ComponentProps<typeof View>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SectionIndexBar
-
-The letter bar with the drag bubble.
-
-Also accepts the props of `React.ComponentProps<typeof SectionIndexPrimitive.Bar>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### SectionIndex
-
-The root that tracks section positions.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `sections` | `[String]?` | `nil` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SectionIndexSection
-
-One section, registered by its `value`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | The letter this section belongs to. |
-| `content` | `() -> Content` | - | The content. |
-| `header` | `() -> Header` | - | - |
-| `_ value` | `String` | - | The letter this section belongs to. |
-
-Overloads: `init(value:content:header:)`, `init(_:content:)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SectionIndexHeader
-
-A section heading; string children are styled.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `verbatim` | `String` | - | The title text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SectionIndexBar
-
-The letter bar with the drag bubble.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `letters` | `[String]?` | `nil` | The letters shown on the bar; defaults to `A` through `Z` followed by `#`. |
-| `onValueChange` | `((String) -> Void)?` | `nil` | Called with the letter whenever the bar jumps to a section. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### SectionIndexSectionScope.item
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `key` | `Any?` | `null` | - |
-| `content` | `@Composable LazyItemScope.() -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SectionIndexSectionScope.items
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `count` | `Int` | - | - |
-| `key` | `((Int) -> Any)?` | `null` | - |
-| `content` | `@Composable LazyItemScope.(index: Int) -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SectionIndexScope.SectionIndexSection
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | - |
-| `header` | `String?` | `value` | - |
-| `content` | `SectionIndexSectionScope.() -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SectionIndex
-
-The root that tracks section positions.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `state` | `LazyListState` | `rememberLazyListState()` | - |
-| `letters` | `List<String>` | `SectionIndexLetters` | The letters shown on the bar; defaults to `A` through `Z` followed by `#`. |
-| `onValueChange` | `((String) -> Unit)?` | `null` | Called with the letter whenever the bar jumps to a section. |
-| `contentPadding` | `PaddingValues` | `PaddingValues(0.dp)` | - |
-| `content` | `SectionIndexScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SectionIndexHeader
-
-A section heading; string children are styled.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### SectionIndexBar
-
-The letter bar with the drag bubble.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `letters` | `List<String>` | `SectionIndexLetters` | The letters shown on the bar; defaults to `A` through `Z` followed by `#`. |
-| `onValueChange` | `((String) -> Unit)?` | `null` | Called with the letter whenever the bar jumps to a section. |
-| `accessibilityLabel` | `String` | `"Section index"` | - |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -981,11 +775,153 @@ The letter bar with the drag bubble.
 - The bar is `adjustable`: swiping up or down with a screen reader moves to the previous or next section, and the current letter is announced as its value.
 - `SectionIndexHeader` has the `heading` role.
 
-## Notes
+</Only>
 
-- A selection haptic plays on each letter change from touch, if the app provides an adapter through `HapticsProvider`.
-- Letters use `text-primary`; the bubble uses `bg-popover`.
-- The bubble animation respects the system reduce motion setting.
+## API Reference
+
+<Only platform="rn">
+
+### SectionIndex
+
+The root that tracks section positions.
+
+Also accepts the props of `React.ComponentProps<typeof SectionIndexPrimitive.Root>`.
+
+Put a `SectionIndexScrollView` and a `SectionIndexBar` inside `SectionIndex`.
+
+### SectionIndexScrollView
+
+The scroll view that holds the sections.
+
+Also accepts the props of `React.ComponentProps<typeof SectionIndexPrimitive.ScrollView>`.
+
+### SectionIndexSection
+
+One section, registered by its `value`.
+
+Also accepts the props of `React.ComponentProps<typeof SectionIndexPrimitive.Section>`.
+
+Wrap each group in a `SectionIndexSection` with its letter as `value`, and start it with a `SectionIndexHeader`.
+
+### SectionIndexHeader
+
+A section heading; string children are styled.
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
+
+### SectionIndexBar
+
+The letter bar with the drag bubble.
+
+Also accepts the props of `React.ComponentProps<typeof SectionIndexPrimitive.Bar>`.
+
+The bar shows `A` to `Z` and `#` by default; pass `letters` to match your sections. `onValueChange` is called with the letter when the user jumps. A selection haptic plays on each letter change from touch, if the app provides an adapter through `HapticsProvider`. The bubble animation respects the system reduce motion setting.
+
+</Only>
+
+<Only platform="swift">
+
+### SectionIndex
+
+The root that tracks section positions.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `sections` | `[String]?` | `nil` |
+| `content` | `() -> Content` | - |
+
+### SectionIndexSection
+
+One section, registered by its `value`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `content` | `() -> Content` | - |
+| `header` | `() -> Header` | - |
+| `_ value` | `String` | - |
+
+Overloads: `init(value:content:header:)`, `init(_:content:)`.
+
+### SectionIndexHeader
+
+A section heading; string children are styled.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### SectionIndexBar
+
+The letter bar with the drag bubble.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `letters` | `[String]?` | `nil` |
+| `onValueChange` | `((String) -> Void)?` | `nil` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### SectionIndexSectionScope.item
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `key` | `Any?` | `null` |
+| `content` | `@Composable LazyItemScope.() -> Unit` | - |
+
+### SectionIndexSectionScope.items
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `count` | `Int` | - |
+| `key` | `((Int) -> Any)?` | `null` |
+| `content` | `@Composable LazyItemScope.(index: Int) -> Unit` | - |
+
+### SectionIndexScope.SectionIndexSection
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `header` | `String?` | `value` |
+| `content` | `SectionIndexSectionScope.() -> Unit` | - |
+
+### SectionIndex
+
+The root that tracks section positions.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `state` | `LazyListState` | `rememberLazyListState()` |
+| `letters` | `List<String>` | `SectionIndexLetters` |
+| `onValueChange` | `((String) -> Unit)?` | `null` |
+| `contentPadding` | `PaddingValues` | `PaddingValues(0.dp)` |
+| `content` | `SectionIndexScope.() -> Unit` | - |
+
+### SectionIndexHeader
+
+A section heading; string children are styled.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### SectionIndexBar
+
+The letter bar with the drag bubble.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `letters` | `List<String>` | `SectionIndexLetters` |
+| `onValueChange` | `((String) -> Unit)?` | `null` |
+| `accessibilityLabel` | `String` | `"Section index"` |
 
 </Only>
 

@@ -15,7 +15,9 @@ Use Progress for determinate or indeterminate task progress.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/progress
@@ -27,24 +29,36 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add progress
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react
 ```
 
-2. Copy the source into `components/ui/progress.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/progress.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Progress, ProgressTrack, ProgressIndicator, ProgressLabel, ProgressValue } from "@/components/ui/progress"
+import {
+  Progress,
+  ProgressIndicator,
+  ProgressLabel,
+  ProgressTrack,
+  ProgressValue,
+} from "@/components/ui/progress"
 ```
 
 ```tsx
@@ -53,37 +67,27 @@ import { Progress, ProgressTrack, ProgressIndicator, ProgressLabel, ProgressValu
 </div>
 ```
 
-<OnlyBase base="base">
+## Composition
 
-Pass `value` as a number between `min` and `max` (by default `0` and `100`). Set `value={null}` for an indeterminate state when the amount of work is unknown.
+Use the following composition to build a `Progress`:
 
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Pass `value` as a number between `0` and `max` (by default `100`). Leave `value` out, or set `value={null}`, for an indeterminate state when the amount of work is unknown.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Pass `value` as a number between `minValue` and `maxValue` (by default `0` and `100`). Set `isIndeterminate` for an indeterminate state when the amount of work is unknown.
-
-</OnlyBase>
-
-The track and indicator are rendered for you, so `ProgressTrack` and `ProgressIndicator` are not needed inside `Progress` children. `ProgressValue` shows the formatted value, a percentage by default.
+```text
+Progress
+├── ProgressLabel
+└── ProgressValue
+```
 
 ## Examples
 
 ### With label
 
-A bar with a label and its current value shown above the track.
+Add a `ProgressLabel` and a `ProgressValue` as children to show a label and the current value on one row above the track.
 
 <ComponentPreview name="progress-with-label" />
 
 ### Complete
 
-A labelled bar at `100`.
+A labelled bar with `value` set to `100`.
 
 <ComponentPreview name="progress-complete" />
 
@@ -103,96 +107,6 @@ A labelled bar with `isIndeterminate` for work of unknown length.
 
 <ComponentPreview name="progress-indeterminate" />
 
-## API Reference
-
-<Anatomy>
-
-- [Progress](#progress)
-  - [ProgressLabel](#progresslabel)
-  - [ProgressValue](#progressvalue)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Progress
-
-The root that holds the value and renders the track and indicator.
-
-<OnlyBase base="base">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `number \| null` | — | The current value. `null` shows an indeterminate bar. |
-| `min` | `number` | `0` | The value of an empty bar. |
-| `max` | `number` | `100` | The value of a full bar. |
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `number \| null` | `null` | The current value. `null` shows an indeterminate bar. |
-| `max` | `number` | `100` | The value of a full bar. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `number` | `0` | The current value. |
-| `minValue` | `number` | `0` | The value of an empty bar. |
-| `maxValue` | `number` | `100` | The value of a full bar. |
-| `isIndeterminate` | `boolean` | `false` | Shows an indeterminate bar for work of unknown length. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ProgressTrack
-
-The full-width rail behind the indicator.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ProgressIndicator
-
-The filled portion of the track that reflects the value.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ProgressLabel
-
-Text that names the progress bar.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ProgressValue
-
-The formatted current value, aligned to the end of the row.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
 ## Accessibility
 
 - The root has the `progressbar` role with `aria-valuenow` reflecting the value.
@@ -210,10 +124,91 @@ Also accepts the props of the primitive part it wraps.
 
 </OnlyBase>
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values `progress`, `progress-track`, `progress-indicator`, `progress-label` and `progress-value`.
-- The track uses `muted` and the indicator uses `primary`; the indicator animates width changes.
+### Progress
+
+The root that holds the value and renders the track and indicator.
+
+<OnlyBase base="base">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `number \| null` | — |
+| `min` | `number` | `0` |
+| `max` | `number` | `100` |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `number \| null` | `null` |
+| `max` | `number` | `100` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `number` | `0` |
+| `minValue` | `number` | `0` |
+| `maxValue` | `number` | `100` |
+| `isIndeterminate` | `boolean` | `false` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base">
+
+Pass `value` as a number between `min` and `max`; `min` is the value of an empty bar and `max` of a full one. Set `value={null}` for an indeterminate bar when the amount of work is unknown.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Pass `value` as a number between `0` and `max`, the value of a full bar. Leave `value` out, or set `value={null}`, for an indeterminate bar when the amount of work is unknown.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass `value` as a number between `minValue` and `maxValue`, the values of an empty and a full bar. Set `isIndeterminate` for an indeterminate bar when the amount of work is unknown.
+
+</OnlyBase>
+
+The track and indicator are rendered for you after the children, so `ProgressTrack` and `ProgressIndicator` are not needed inside `Progress`. The indicator animates width changes.
+
+### ProgressTrack
+
+The full-width rail behind the indicator.
+
+Also accepts the props of the primitive part it wraps.
+
+### ProgressIndicator
+
+The filled portion of the track that reflects the value.
+
+Also accepts the props of the primitive part it wraps.
+
+### ProgressLabel
+
+Text that names the progress bar.
+
+Also accepts the props of the primitive part it wraps.
+
+### ProgressValue
+
+The formatted current value, aligned to the end of the row.
+
+Also accepts the props of the primitive part it wraps.
+
+The value is shown as a percentage by default.
+
+Each part sets a `data-slot`, such as `progress-track` or `progress-indicator`, for styling.
 
 </Only>
 
@@ -230,6 +225,10 @@ Also accepts the props of the primitive part it wraps.
 Use it for uploads, downloads and other tasks with a known amount of work.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -273,7 +272,9 @@ npx @esuiss/ui@latest add progress --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -281,7 +282,7 @@ npx @esuiss/ui@latest add progress --platform kotlin
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
@@ -299,17 +300,17 @@ npx expo install cn react-native-reanimated react-native-worklets
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/progress.tsx`:
+3. Copy and paste the following code into `components/ui/progress.tsx`:
 
 <ComponentSource path="uniwind/components/ui/progress.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
@@ -327,17 +328,17 @@ npx expo install cn react-native-reanimated react-native-worklets
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/progress.tsx`:
+3. Copy and paste the following code into `components/ui/progress.tsx`:
 
 <ComponentSource path="nativewind/components/ui/progress.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -355,11 +356,11 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/progress.tsx`:
+3. Copy and paste the following code into `components/ui/progress.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/progress.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -419,6 +420,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -494,27 +499,17 @@ fun ProgressDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-Set `value` between `min` and `max` (0 and 100 by default). Pass `null` when the progress is unknown.
-
-Add a `ProgressLabel` and a `ProgressValue` as children to show a caption and the formatted value; the value is pushed to the end of the row. Format the value with `format` and `locale`.
-
-Style the bar with `trackClassName` and `indicatorClassName`. `ProgressTrack` and `ProgressIndicator` are also exported for custom layouts.
-
-</Only>
-
 ## Examples
 
 ### With label
 
-A bar with a label and a live percentage value.
+A bar with a caption and a live percentage value at the end of the row.
 
 <NativeExample name="progress-with-label" />
 
 ### Complete
 
-A bar at 100 percent.
+A bar with `value` set to 100.
 
 <NativeExample name="progress-complete" />
 
@@ -524,101 +519,6 @@ Bars at 0, 25, 50, 75 and 100 percent, the last with a custom indicator color.
 
 <NativeExample name="progress-values" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Progress
-
-Root that holds the value and renders the track and indicator.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `trackClassName` | `string` | - | Extra classes for the track. |
-| `indicatorClassName` | `string` | - | Extra classes for the indicator. |
-
-Also accepts the props of `React.ComponentProps<typeof ProgressPrimitive.Root>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ProgressTrack
-
-Background bar.
-
-Also accepts the props of `React.ComponentProps<typeof ProgressPrimitive.Track>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ProgressIndicator
-
-Animated fill that shows the current value.
-
-Also accepts the props of `React.ComponentProps<typeof ProgressPrimitive.Indicator>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ProgressLabel
-
-Caption text above the bar.
-
-Also accepts the props of `React.ComponentProps<typeof ProgressPrimitive.Label>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ProgressValue
-
-Formatted value text, aligned to the end.
-
-Also accepts the props of `React.ComponentProps<typeof ProgressPrimitive.Value>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .progressViewStyle(.bar)
-
-Style that creates `BarProgressViewStyle`.
-
-Takes no parameters.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Progress
-
-Root that holds the value and renders the track and indicator.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Float?` | - | The current value. `null` shows an indeterminate bar. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `max` | `Float` | `100f` | The value of a full bar. |
-| `label` | `String?` | `null` | The label. |
-| `showValue` | `Boolean` | `false` | - |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -626,11 +526,76 @@ Root that holds the value and renders the track and indicator.
 - The root has the `progressbar` role and reports `min`, `max`, the current value and a value text, so VoiceOver and TalkBack announce the progress.
 - Use `getAccessibilityValueText` to customize the announced text.
 
-## Notes
+</Only>
 
-- The track uses `bg-muted` and the indicator `bg-primary`.
-- Label and value text use `text-foreground` and `text-muted-foreground`, with tabular numbers for the value.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Progress
+
+Root that holds the value and renders the track and indicator.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `trackClassName` | `string` | - |
+| `indicatorClassName` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof ProgressPrimitive.Root>`.
+
+Set `value` between `min` and `max` (0 and 100 by default). Pass `null` when the progress is unknown. `trackClassName` and `indicatorClassName` add classes to the track and the indicator. `ProgressTrack` and `ProgressIndicator` are also exported for custom layouts.
+
+### ProgressTrack
+
+Background bar.
+
+Also accepts the props of `React.ComponentProps<typeof ProgressPrimitive.Track>`.
+
+### ProgressIndicator
+
+Animated fill that shows the current value.
+
+Also accepts the props of `React.ComponentProps<typeof ProgressPrimitive.Indicator>`.
+
+### ProgressLabel
+
+Caption text above the bar.
+
+Also accepts the props of `React.ComponentProps<typeof ProgressPrimitive.Label>`.
+
+### ProgressValue
+
+Formatted value text, aligned to the end.
+
+Also accepts the props of `React.ComponentProps<typeof ProgressPrimitive.Value>`.
+
+Format the value with `format` and `locale`. The value uses tabular numbers.
+
+</Only>
+
+<Only platform="swift">
+
+### .progressViewStyle(.bar)
+
+Style that creates `BarProgressViewStyle`.
+
+Takes no parameters.
+
+</Only>
+
+<Only platform="kotlin">
+
+### Progress
+
+Root that holds the value and renders the track and indicator.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Float?` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `max` | `Float` | `100f` |
+| `label` | `String?` | `null` |
+| `showValue` | `Boolean` | `false` |
 
 </Only>
 

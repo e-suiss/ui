@@ -9,13 +9,15 @@ platforms: [web]
 
 <ComponentPreview name="trail-demo" layout="padded" responsive />
 
-`Trail` shows where the current page sits in a hierarchy. On desktop it renders a suiss/ui `Breadcrumb` that links every ancestor and marks the last item as the current page; with `maxItems`, it keeps the root and the nearest ancestors and folds the rest into an ellipsis.
+`Trail` shows where the current page sits in a hierarchy. On desktop it renders a suiss/ui `Breadcrumb` that links every ancestor and marks the last item as the current page. On mobile it renders a single back link to the parent page, with a menu of all ancestors.
 
-On mobile (below `48rem`, via `useIsMobile`) it renders a single back link to the parent page, like an iOS navigation bar. When there is more than one ancestor, a long press, right-click, the Context Menu key or Shift+F10 opens a menu of all ancestors, nearest first. Use it on documentation, support and settings pages with nested structure.
+Use it on documentation, support and settings pages with nested structure.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/trail
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns trail
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
@@ -37,11 +41,15 @@ npm install @base-ui/react @phosphor-icons/react
 
 2. Add the pieces it builds on: [Breadcrumb](/docs/components/breadcrumb), `use-mobile`.
 
-3. Copy the source into `components/patterns/trail.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/trail.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -59,31 +67,17 @@ const items: TrailItem[] = [
 <Trail items={items} />
 ```
 
-- Pass `items` in order from the root to the current page. Each `TrailItem` has a `label` and an optional `href`; the last item is the current page.
-- On mobile, nothing renders when there is only one item.
-<OnlyBase base="base radix">
-
-- Use `render` to output links through your router, for example a framework `Link` element. It applies to breadcrumb links, the mobile back link and the history menu items.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-- Pass a `render` function to output links through your router. It receives the link props, including `href`, and applies to breadcrumb links, the mobile back link and the history menu items.
-
-</OnlyBase>
-
 ## Examples
 
 ### Collapsed
 
-Folds the middle of a deep trail into an ellipsis with `maxItems`.
+Set `maxItems` to cap the items shown on desktop. The trail keeps the root and the nearest ancestors and folds the rest into an ellipsis.
 
 <ComponentPreview name="trail-collapsed" layout="padded" responsive />
 
 ### Back label
 
-Labels the mobile back link Back instead of the parent's name.
+Set `backLabel` to label the mobile back link Back instead of the parent's name.
 
 <ComponentPreview name="trail-back-label" layout="padded" responsive />
 
@@ -93,49 +87,59 @@ Shows a trail with one parent and the current page.
 
 <ComponentPreview name="trail-two-levels" layout="padded" responsive />
 
-## API Reference
-
-<ApiPart index={1}>
-
-### Trail
-
-The navigation element that renders the breadcrumbs or the mobile back link.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `TrailItem[]` | Required | The pages from the root to the current page. |
-| `maxItems` | `number` | - | The maximum number of items shown on desktop before the middle collapses into an ellipsis. |
-| `backLabel` | `string` | - | Text for the mobile back link; defaults to the parent's label. |
-| `ellipsisLabel` | `string` | `"More"` | The accessible label of the collapsed ellipsis. |
-
-<OnlyBase base="base radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `React.ReactElement` | A plain `a` | The element used to render links. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `(props: React.ComponentProps<"a">) => React.ReactNode` | A plain `a` | Renders each link from the props it receives. |
-
-</OnlyBase>
-
-Also accepts the props of `React.ComponentProps<"nav">`.
-
-</ApiPart>
-
 ## Accessibility
 
 - On desktop the trail is a navigation landmark named breadcrumb, and the current page has `aria-current="page"`.
 - On mobile it is a navigation landmark named Back. When a history menu is available, the back link has `aria-haspopup="menu"` and `aria-expanded`.
 - The history menu opens from the keyboard with the Context Menu key or Shift+F10.
 
-## Notes
+## API Reference
 
-Styling hooks: `data-slot="trail"`, `trail-back`, `trail-history` and `trail-history-item`. A long press opens the history only for touch and pen input, and cancels if the pointer moves more than 10 pixels; the press does not also follow the back link.
+### Trail
+
+The navigation element that renders the breadcrumbs or the mobile back link.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `items` | `TrailItem[]` | Required |
+| `maxItems` | `number` | - |
+| `backLabel` | `string` | - |
+| `ellipsisLabel` | `string` | `"More"` |
+
+<OnlyBase base="base radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `React.ReactElement` | A plain `a` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `(props: React.ComponentProps<"a">) => React.ReactNode` | A plain `a` |
+
+</OnlyBase>
+
+Also accepts the props of `React.ComponentProps<"nav">`.
+
+Pass `items` in order from the root to the current page. Each `TrailItem` has a `label` and an optional `href`; the last item is the current page. `ellipsisLabel` is the accessible label of the collapsed ellipsis.
+
+On mobile (below `48rem`, via `useIsMobile`) the trail renders a back link to the parent page, and nothing when there is only one item. When there is more than one ancestor, a long press, right-click, the Context Menu key or Shift+F10 opens a menu of all ancestors, nearest first. A long press opens it only for touch and pen input, cancels if the pointer moves more than 10 pixels, and does not also follow the back link.
+
+<OnlyBase base="base radix">
+
+Use `render` to output links through your router, for example a framework `Link` element. It applies to breadcrumb links, the mobile back link and the history menu items.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass a `render` function to output links through your router. It receives the link props, including `href`, and applies to breadcrumb links, the mobile back link and the history menu items.
+
+</OnlyBase>
+
+Each part sets a `data-slot`, such as `trail`, `trail-back` or `trail-history-item`, for styling.
 
 </Only>

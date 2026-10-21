@@ -15,7 +15,9 @@ Use the `default` variant for the primary action in a view, `secondary`, `tinted
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/button
@@ -27,19 +29,25 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add button
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react class-variance-authority
 ```
 
-2. Copy the source into `components/ui/button.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/button.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -48,16 +56,78 @@ import { Button } from "@/components/ui/button"
 ```
 
 ```tsx
-<Button>Button</Button>
+<Button variant="default | outline | secondary | tinted | ghost | plain | destructive | link">
+  Button
+</Button>
 ```
 
-Mark icons with `data-icon="inline-start"` or `data-icon="inline-end"` to tighten the padding on that side. Icons without a size class are sized automatically.
+## Examples
 
-Use an `icon` size, such as `icon` or `icon-sm`, for buttons that contain only an icon, and give them an `aria-label`.
+### Variants
+
+Use the `variant` prop to set the level of emphasis. This shows all eight variants side by side.
+
+<ComponentPreview name="button-variants" />
+
+### Sizes
+
+Use the `size` prop to change the height and padding. This compares the `xs`, `sm`, `default` and `lg` sizes.
+
+<ComponentPreview name="button-sizes" />
+
+### With icon
+
+Mark icons with `data-icon="inline-start"` or `data-icon="inline-end"` to tighten the padding on that side. Icons without a size class are sized automatically. For a button that contains only an icon, use an `icon` size, such as `icon` or `icon-sm`, and give it an `aria-label`.
+
+<ComponentPreview name="button-with-icon" />
+
+### Disabled
+
+Set the `disabled` attribute to dim the button and skip it in the tab order.
+
+<ComponentPreview name="button-disabled" />
+
+### Block
+
+Set `block` to make the button fill its container. Block buttons use rounded corners that scale with size instead of a pill shape.
+
+<ComponentPreview name="button-block" />
+
+## Accessibility
+
+- Renders a native `button`, so `Enter` and `Space` activate it.
+- A disabled button is removed from the tab order.
+- Icon-only buttons need an `aria-label`.
+- Keyboard focus shows a 3px ring in `--ring`; the `destructive` variant tints it with `ring-destructive/20`.
+- `aria-invalid` adds a destructive border and ring, and `aria-expanded` shows a selected background on `outline`, `ghost` and `plain` buttons that open menus or popovers.
+
+## API Reference
+
+### Button
+
+The interactive button element.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` |
+| `block` | `true` | - |
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+The `xs` to `xl` sizes are for text buttons; `icon-xs` to `icon-xl` are square sizes for icon-only buttons. `block` fills the container width and swaps the pill shape for rounded corners.
 
 <OnlyBase base="base">
 
-To render a link or a router component with button styling, use the `render` prop from Base UI. `buttonVariants` is also exported if you need the classes on another element.
+To render a link or a router component with button styling, use the `render` prop. `buttonVariants` is also exported if you need the classes on another element.
 
 </OnlyBase>
 
@@ -73,77 +143,7 @@ To render a link or a router component with button styling, set `asChild` and pa
 
 </OnlyBase>
 
-## Examples
-
-### Variants
-
-Shows all eight variants side by side.
-
-<ComponentPreview name="button-variants" />
-
-### Sizes
-
-Compares the `xs`, `sm`, `default` and `lg` sizes.
-
-<ComponentPreview name="button-sizes" />
-
-### With icon
-
-Adds leading and trailing icons, and an icon-only button.
-
-<ComponentPreview name="button-with-icon" />
-
-### Disabled
-
-A disabled button that is skipped in the tab order.
-
-<ComponentPreview name="button-disabled" />
-
-### Block
-
-Full-width buttons at each size, whose corner radius scales with size.
-
-<ComponentPreview name="button-block" />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### Button
-
-The interactive button element.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` | Visual style: `default`, `outline`, `secondary`, `tinted`, `ghost`, `plain`, `destructive` or `link`. |
-| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | Height and padding. `xs` to `xl` for text buttons; `icon-xs` to `icon-xl` for square icon-only buttons. |
-| `block` | `true` | - | When `true`, the button fills the container width and uses rounded corners instead of a pill shape. |
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element, such as a link, with the button styling. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-## Accessibility
-
-- Renders a native `button`, so `Enter` and `Space` activate it.
-- A disabled button is removed from the tab order.
-- Icon-only buttons need an `aria-label`.
-- Keyboard focus shows a 3px ring in `--ring`; the `destructive` variant tints it with `ring-destructive/20`.
-- `aria-invalid` adds a destructive border and ring, and `aria-expanded` shows a selected background on `outline`, `ghost` and `plain` buttons that open menus or popovers.
-
-## Notes
-
-- Styling hook: `data-slot="button"`.
-- Colors come from the `primary`, `secondary`, `accent` and `destructive` variables. Hover uses the same color with an opacity, such as `hover:bg-primary/80`, and disabled buttons use `opacity-50`.
-- Buttons in a group raise the focused one above its neighbors so the whole ring stays visible.
+Hover uses the variant color with an opacity, such as `hover:bg-primary/80`, and disabled buttons use `opacity-50`. In a group, the focused button is raised above its neighbors so the whole ring stays visible. Style a button through `data-slot="button"`.
 
 </Only>
 
@@ -160,6 +160,10 @@ Also accepts the props of the primitive part it wraps.
 Use the `default` variant for the primary action on a screen, `secondary`, `tinted` or `outline` for supporting actions, `ghost` and `plain` for low-emphasis actions, and `destructive` for actions that delete or remove. To join several buttons into one control, use Button Group.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -209,7 +213,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -217,7 +223,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -225,17 +231,17 @@ npx expo install class-variance-authority cn
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/button.tsx`:
+3. Copy and paste the following code into `components/ui/button.tsx`:
 
 <ComponentSource path="uniwind/components/ui/button.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -243,11 +249,11 @@ npx expo install class-variance-authority cn
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/button.tsx`:
+3. Copy and paste the following code into `components/ui/button.tsx`:
 
 <ComponentSource path="nativewind/components/ui/button.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -255,11 +261,11 @@ npx expo install class-variance-authority cn
 
 1. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-2. Copy the source into `components/ui/button.tsx`:
+2. Copy and paste the following code into `components/ui/button.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/button.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -335,6 +341,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -403,21 +413,17 @@ fun ButtonDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-Put the label in a `Text` and icons in an `Icon`. The button passes its text color and icon size down through context, so children pick them up without extra classes.
-
-Use an `icon` size, such as `icon` or `icon-sm`, for buttons that contain only an icon, and give them an `accessibilityLabel`.
-
-`buttonVariants` and `buttonTextVariants` are also exported if you need the classes on another element.
-
-</Only>
-
 ## Examples
 
 ### Variants
 
 All eight variants, plus an icon-only button.
+
+<Only platform="rn">
+
+Use the `variant` prop to set the level of emphasis.
+
+</Only>
 
 <NativeExample name="button-variants" />
 
@@ -425,17 +431,35 @@ All eight variants, plus an icon-only button.
 
 Compares the text and icon-only sizes.
 
+<Only platform="rn">
+
+Use the `size` prop to change the height and padding.
+
+</Only>
+
 <NativeExample name="button-sizes" />
 
 ### With icon
 
 Leading and trailing icons, and an icon-only button.
 
+<Only platform="rn">
+
+Give an icon-only button an `icon` size and an `accessibilityLabel`.
+
+</Only>
+
 <NativeExample name="button-with-icon" />
 
 ### Disabled
 
 Disabled buttons in every variant.
+
+<Only platform="rn">
+
+Set `disabled` to dim the button and block presses.
+
+</Only>
 
 <NativeExample name="button-disabled" />
 
@@ -445,85 +469,6 @@ Full-width buttons at each size, whose corner radius scales with size.
 
 <NativeExample name="button-block" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Button
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` | Visual style. |
-| `size` | `"xs" \| "sm" \| "default" \| "lg" \| "xl" \| "icon-xs" \| "icon-sm" \| "icon" \| "icon-lg" \| "icon-xl"` | `"default"` | Height and padding; `icon` sizes are square. |
-| `block` | `boolean` | - | Stretches the button to the full width of its container. |
-
-Also accepts the props of `PressableProps`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .buttonStyle(.variant)
-
-Style that creates `VariantButtonStyle`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `VariantButtonStyle.Variant`: `.default` \| `.outline` \| `.secondary` \| `.tinted` \| `.ghost` \| `.plain` \| `.destructive` \| `.link` | `.default` | Visual style. |
-| `size` | `VariantButtonStyle.Size`: `.default` \| `.xs` \| `.sm` \| `.lg` \| `.xl` \| `.icon` \| `.iconXs` \| `.iconSm` \| `.iconLg` \| `.iconXl` | `.default` | Height and padding; `icon` sizes are square. |
-| `block` | `Bool` | `false` | Stretches the button to the full width of its container. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### ButtonVariant
-
-Values: `Default`, `Outline`, `Secondary`, `Tinted`, `Ghost`, `Plain`, `Destructive`, `Link`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ButtonSize
-
-Values: `Default`, `Xs`, `Sm`, `Lg`, `Xl`, `Icon`, `IconXs`, `IconSm`, `IconLg`, `IconXl`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### Button
-
-The interactive button element.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onClick` | `() -> Unit` | - | Called when it is tapped. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `ButtonVariant`: `Default` \| `Outline` \| `Secondary` \| `Tinted` \| `Ghost` \| `Plain` \| `Destructive` \| `Link` | `ButtonVariant.Default` | Visual style. |
-| `size` | `ButtonSize`: `Default` \| `Xs` \| `Sm` \| `Lg` \| `Xl` \| `Icon` \| `IconXs` \| `IconSm` \| `IconLg` \| `IconXl` | `ButtonSize.Default` | Height and padding; `icon` sizes are square. |
-| `block` | `Boolean` | `false` | Stretches the button to the full width of its container. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `Button(onClick, content)`, `Button(text, onClick)`.
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -532,10 +477,68 @@ Overloads: `Button(onClick, content)`, `Button(text, onClick)`.
 - `disabled` is announced and blocks presses.
 - Icon-only buttons need an `accessibilityLabel`.
 
-## Notes
+</Only>
 
-- Colors come from semantic tokens such as `bg-primary`, `bg-secondary`, `bg-primary/10 dark:bg-primary/20` and `bg-destructive/10 dark:bg-destructive/20`, with `opacity-80` while pressed and `opacity-50` when disabled.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Button
+
+The interactive button element.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` |
+| `size` | `"xs" \| "sm" \| "default" \| "lg" \| "xl" \| "icon-xs" \| "icon-sm" \| "icon" \| "icon-lg" \| "icon-xl"` | `"default"` |
+| `block` | `boolean` | - |
+
+Also accepts the props of `PressableProps`.
+
+`icon` sizes are square, for buttons that contain only an icon. `block` stretches the button to the full width of its container. Put the label in a `Text` and icons in an `Icon`; the button passes its text color and icon size down through context, so children pick them up without extra classes. `buttonVariants` and `buttonTextVariants` are also exported if you need the classes on another element. Pressed buttons use `opacity-80` and disabled buttons `opacity-50`, and colors follow the system appearance.
+
+</Only>
+
+<Only platform="swift">
+
+### .buttonStyle(.variant)
+
+Style that creates `VariantButtonStyle`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `VariantButtonStyle.Variant`: `.default` \| `.outline` \| `.secondary` \| `.tinted` \| `.ghost` \| `.plain` \| `.destructive` \| `.link` | `.default` |
+| `size` | `VariantButtonStyle.Size`: `.default` \| `.xs` \| `.sm` \| `.lg` \| `.xl` \| `.icon` \| `.iconXs` \| `.iconSm` \| `.iconLg` \| `.iconXl` | `.default` |
+| `block` | `Bool` | `false` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### ButtonVariant
+
+Values: `Default`, `Outline`, `Secondary`, `Tinted`, `Ghost`, `Plain`, `Destructive`, `Link`.
+
+### ButtonSize
+
+Values: `Default`, `Xs`, `Sm`, `Lg`, `Xl`, `Icon`, `IconXs`, `IconSm`, `IconLg`, `IconXl`.
+
+### Button
+
+The interactive button element.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `onClick` | `() -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `ButtonVariant`: `Default` \| `Outline` \| `Secondary` \| `Tinted` \| `Ghost` \| `Plain` \| `Destructive` \| `Link` | `ButtonVariant.Default` |
+| `size` | `ButtonSize`: `Default` \| `Xs` \| `Sm` \| `Lg` \| `Xl` \| `Icon` \| `IconXs` \| `IconSm` \| `IconLg` \| `IconXl` | `ButtonSize.Default` |
+| `block` | `Boolean` | `false` |
+| `enabled` | `Boolean` | `true` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `Button(onClick, content)`, `Button(text, onClick)`.
 
 </Only>
 

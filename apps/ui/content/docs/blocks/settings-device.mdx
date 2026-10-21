@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A phone-style Settings screen with a search field, an account row and grouped rows that either open a detail page or hold a switch. Search filters rows by label, and turning on Airplane Mode also turns off Wi-Fi and Bluetooth. From small tablets up the screen sits in a phone frame; on the smallest screens it fills the width. Use it for mobile app settings or any grouped preferences list.
 
+Edit `groups`; each row has a label, icon, tint and either a `toggle` key or a `detail` function that derives its status text from the toggles. Persist the toggles to your settings store, and remove the Airplane Mode coupling if it doesn't apply. Row links point to hash anchors, so swap in your routes.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/settings-device
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks settings-device
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +41,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Input Group](/docs/components/input-group), [Item](/docs/components/item), [Switch](/docs/components/switch).
 
-3. Copy the source into `components/blocks/settings-device.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/settings-device.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,8 +60,6 @@ import { SettingsDevice } from "@/components/blocks/settings-device"
 ```tsx
 <SettingsDevice />
 ```
-
-Edit `groups`; each row has a label, icon, tint and either a `toggle` key or a `detail` function that derives its status text from the toggles. Persist the toggles to your settings store, and remove the Airplane Mode coupling if it doesn't apply. Row links point to hash anchors, so swap in your routes.
 
 </Only>
 
@@ -73,7 +81,17 @@ A large-title `Header` sits over an `InputGroup` search field, an account `Item`
 
 </Only>
 
+<Only platform="rn">
+
+Replace `GROUPS` with your rows and the account details with your user. Use `onAccountPress` and `onRowPress`, which receives the row label, to navigate.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -123,7 +141,9 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Header]
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -131,7 +151,7 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Header]
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -139,17 +159,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Item](/docs/components/item), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text).
 
-3. Copy the source into `components/blocks/settings-device.tsx`:
+3. Copy and paste the following code into `components/blocks/settings-device.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/settings-device.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -157,17 +177,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Item](/docs/components/item), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text).
 
-3. Copy the source into `components/blocks/settings-device.tsx`:
+3. Copy and paste the following code into `components/blocks/settings-device.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/settings-device.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-svg
@@ -175,11 +195,11 @@ npx expo install phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Header](/docs/components/header), [Icon](/docs/components/icon), [Input Group](/docs/components/input-group), [Item](/docs/components/item), [Screen](/docs/components/screen), [Switch](/docs/components/switch), [Text](/docs/components/text).
 
-3. Copy the source into `components/blocks/settings-device.tsx`:
+3. Copy and paste the following code into `components/blocks/settings-device.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/settings-device.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -303,6 +323,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -342,12 +366,6 @@ fun SettingsDeviceExample() {
     SettingsDevice()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `GROUPS` with your rows and the account details with your user. Use `onAccountPress` and `onRowPress`, which receives the row label, to navigate.
 
 </Only>
 

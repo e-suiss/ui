@@ -15,7 +15,9 @@ A highlight pill slides between options as the highlighted item changes, and the
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/select
@@ -27,24 +29,37 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add select
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
 ```
 
-2. Copy the source into `components/ui/select.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/select.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 ```
 
 <OnlyBase base="base">
@@ -65,10 +80,6 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
   </SelectContent>
 </Select>
 ```
-
-Pass `items` to `Select` as `{ value, label }` pairs so `SelectValue` can show the label for the chosen value, even before the popup opens. Use `defaultValue` for an uncontrolled select, or `value` with `onValueChange` to control it. `SelectValue` shows its `placeholder` until a value is chosen. Set `disabled` on `Select` so it can't be opened, and `aria-invalid` on `SelectTrigger` to show an error.
-
-`SelectContent` opens below the trigger by default. It accepts the positioner props `side`, `sideOffset`, `align`, `alignOffset` and `alignItemWithTrigger`.
 
 </OnlyBase>
 
@@ -91,10 +102,6 @@ Pass `items` to `Select` as `{ value, label }` pairs so `SelectValue` can show t
 </Select>
 ```
 
-Use `defaultValue` for an uncontrolled select, or `value` with `onValueChange` to control it. `SelectValue` shows its `placeholder` until a value is chosen. Set `disabled` on `Select` so it can't be opened, and `aria-invalid` on `SelectTrigger` to show an error.
-
-`SelectContent` opens below the trigger by default. It accepts `position` and, in the default `"popper"` position, `side`, `sideOffset`, `align` and `alignOffset`.
-
 </OnlyBase>
 
 <OnlyBase base="aria">
@@ -116,11 +123,23 @@ Use `defaultValue` for an uncontrolled select, or `value` with `onValueChange` t
 </Select>
 ```
 
-Name the select with `aria-label` on `Select`. Use `defaultValue` for an uncontrolled select, or `value` with `onChange` to control it. `SelectValue` shows its `placeholder` until a value is chosen. Set `isDisabled` on `Select` so it can't be opened, and `isInvalid` to show an error.
-
-`SelectContent` opens below the trigger by default. It accepts the popover props `placement`, `offset` and `crossOffset`.
-
 </OnlyBase>
+
+## Composition
+
+Use the following composition to build a `Select`:
+
+```text
+Select
+├── SelectTrigger
+│   └── SelectValue
+└── SelectContent
+    ├── SelectGroup
+    │   ├── SelectItem
+    │   └── SelectLabel
+    ├── SelectItem
+    └── SelectSeparator
+```
 
 ## Examples
 
@@ -132,19 +151,19 @@ Renders the popup open on mount with a value already selected.
 
 ### With value
 
-Starts with a default value, so the trigger shows its label.
+Set `defaultValue` on `Select` to start with a value, so the trigger shows its label.
 
 <ComponentPreview name="select-with-value" />
 
 ### Small
 
-Uses the compact `sm` trigger size.
+Set `size="sm"` on `SelectTrigger` for the compact trigger.
 
 <ComponentPreview name="select-small" />
 
 ### Grouped
 
-Splits options into labelled groups with a separator between them.
+Wrap options in a `SelectGroup` with a `SelectLabel`, and put a `SelectSeparator` between groups.
 
 <ComponentPreview name="select-grouped" />
 
@@ -158,13 +177,13 @@ Places an icon before each option's label.
 
 <OnlyBase base="base radix">
 
-Sets `disabled` on `Select` so it can't be opened.
+Set `disabled` on `Select` so it can't be opened.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-Sets `isDisabled` on `Select` so it can't be opened.
+Set `isDisabled` on `Select` so it can't be opened.
 
 </OnlyBase>
 
@@ -174,187 +193,17 @@ Sets `isDisabled` on `Select` so it can't be opened.
 
 <OnlyBase base="base radix">
 
-Marks the trigger with `aria-invalid` to show an error state.
+Set `aria-invalid` on `SelectTrigger` to show an error state.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-Sets `isInvalid` on `Select` to show an error state.
+Set `isInvalid` on `Select` to show an error state.
 
 </OnlyBase>
 
 <ComponentPreview name="select-invalid" />
-
-## API Reference
-
-<Anatomy>
-
-- [Select](#select)
-  - [SelectTrigger](#selecttrigger)
-    - [SelectValue](#selectvalue)
-  - [SelectContent](#selectcontent)
-    - [SelectGroup](#selectgroup)
-      - [SelectItem](#selectitem)
-      - [SelectLabel](#selectlabel)
-    - [SelectItem](#selectitem)
-    - [SelectSeparator](#selectseparator)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Select
-
-The root that holds the selected value and the open state.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SelectGroup
-
-Groups related options; label it with a `SelectLabel`.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SelectValue
-
-Shows the selected option's label, or the placeholder, inside the trigger.
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `placeholder` | `React.ReactNode` | - | Shown while nothing is selected. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SelectTrigger
-
-The button that opens the popup and displays the current value.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"sm" \| "default"` | `"default"` | Sets the trigger height: `default` is 44px tall, `sm` is 36px with smaller corners. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SelectContent
-
-The positioned popup that holds the option list and scroll arrows.
-
-<OnlyBase base="base">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | The side of the trigger the popup opens on. |
-| `sideOffset` | `number` | `4` | The gap between the trigger and the popup, in pixels. |
-| `align` | `"start" \| "center" \| "end"` | `"center"` | How the popup lines up with the trigger along that side. |
-| `alignOffset` | `number` | `0` | Shifts the popup along the alignment axis, in pixels. |
-| `alignItemWithTrigger` | `boolean` | `false` | Places the popup so the selected item sits over the trigger. |
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `position` | `"popper" \| "item-aligned"` | `"popper"` | `popper` places the popup next to the trigger; `item-aligned` places the selected item over the trigger. |
-| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` | The side of the trigger the popup opens on, in the `popper` position. |
-| `sideOffset` | `number` | `4` | The gap between the trigger and the popup, in pixels. |
-| `align` | `"start" \| "center" \| "end"` | `"center"` | How the popup lines up with the trigger along that side. |
-| `alignOffset` | `number` | `0` | Shifts the popup along the alignment axis, in pixels. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `placement` | `Placement` | `"bottom"` | Where the popup opens relative to the trigger. |
-| `offset` | `number` | `4` | The gap between the trigger and the popup, in pixels. |
-| `crossOffset` | `number` | `0` | Shifts the popup along the cross axis, in pixels. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive parts it wraps.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### SelectLabel
-
-A heading that names a `SelectGroup`.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### SelectItem
-
-A selectable option, with a check mark when selected.
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | - | The value the select reports when this item is chosen. Required. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### SelectSeparator
-
-A thin line that divides groups of options.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### SelectScrollUpButton
-
-An arrow that scrolls the list up when it overflows; rendered by `SelectContent`.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### SelectScrollDownButton
-
-An arrow that scrolls the list down when it overflows; rendered by `SelectContent`.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -376,12 +225,171 @@ Also accepts the props of the primitive part it wraps.
 - `Escape` closes the popup without changing the value, and focus returns to the trigger.
 - A `SelectGroup` with a `SelectLabel` is exposed as a named `group`.
 
-## Notes
+## API Reference
 
-- Parts carry `data-slot` attributes such as `select-trigger`, `select-content`, `select-item` and `select-highlight`.
-- The trigger sets `data-size`, and styles `data-placeholder`, `aria-invalid` and `disabled` states. Invalid triggers use the `destructive` color.
-- The popup uses `bg-popover`, the highlight uses `bg-accent text-accent-foreground`, and the check mark uses `text-primary`.
-- The highlight animation is turned off when reduced motion is preferred.
+### Select
+
+The root that holds the selected value and the open state.
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base">
+
+Pass `items` as `{ value, label }` pairs so `SelectValue` can show the label for the chosen value, even before the popup opens. Use `defaultValue` for an uncontrolled select, or `value` with `onValueChange` to control it.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+Use `defaultValue` for an uncontrolled select, or `value` with `onValueChange` to control it.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Use `defaultValue` for an uncontrolled select, or `value` with `onChange` to control it.
+
+</OnlyBase>
+
+### SelectGroup
+
+Groups related options; label it with a `SelectLabel`.
+
+Also accepts the props of the primitive part it wraps.
+
+### SelectValue
+
+Shows the selected option's label, or the placeholder, inside the trigger.
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `placeholder` | `React.ReactNode` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+`placeholder` is shown until a value is chosen.
+
+### SelectTrigger
+
+The button that opens the popup and displays the current value.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"sm" \| "default"` | `"default"` |
+
+Also accepts the props of the primitive part it wraps.
+
+The `default` size is 44px tall, and `sm` is 36px with smaller corners. The trigger sets `data-size` and styles its placeholder, invalid and disabled states; invalid triggers use the `destructive` color.
+
+### SelectContent
+
+The positioned popup that holds the option list and scroll arrows.
+
+<OnlyBase base="base">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` |
+| `sideOffset` | `number` | `4` |
+| `align` | `"start" \| "center" \| "end"` | `"center"` |
+| `alignOffset` | `number` | `0` |
+| `alignItemWithTrigger` | `boolean` | `false` |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `position` | `"popper" \| "item-aligned"` | `"popper"` |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` |
+| `sideOffset` | `number` | `4` |
+| `align` | `"start" \| "center" \| "end"` | `"center"` |
+| `alignOffset` | `number` | `0` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `placement` | `Placement` | `"bottom"` |
+| `offset` | `number` | `4` |
+| `crossOffset` | `number` | `0` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive parts it wraps.
+
+<OnlyBase base="base">
+
+The popup opens below the trigger by default. `sideOffset` is the gap to the trigger and `alignOffset` shifts the popup along the alignment axis, both in pixels. Set `alignItemWithTrigger` to place the popup so the selected item sits over the trigger.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+The popup opens below the trigger by default. `position="popper"` places it next to the trigger, and `item-aligned` places the selected item over the trigger. `side`, `sideOffset`, `align` and `alignOffset` apply in the `popper` position; the offsets are in pixels.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The popup opens below the trigger by default. `offset` is the gap to the trigger and `crossOffset` shifts the popup along the cross axis, both in pixels.
+
+</OnlyBase>
+
+A highlight pill slides between options as the highlighted item changes. The animation is turned off when reduced motion is preferred.
+
+### SelectLabel
+
+A heading that names a `SelectGroup`.
+
+Also accepts the props of the primitive part it wraps.
+
+### SelectItem
+
+A selectable option, with a check mark when selected.
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="aria">
+
+`value` is required. It is the value the select reports when this item is chosen.
+
+</OnlyBase>
+
+### SelectSeparator
+
+A thin line that divides groups of options.
+
+Also accepts the props of the primitive part it wraps.
+
+### SelectScrollUpButton
+
+An arrow that scrolls the list up when it overflows; rendered by `SelectContent`.
+
+Also accepts the props of the primitive part it wraps.
+
+### SelectScrollDownButton
+
+An arrow that scrolls the list down when it overflows; rendered by `SelectContent`.
+
+Also accepts the props of the primitive part it wraps.
+
+Each part sets a `data-slot`, such as `select-trigger`, `select-item` or `select-highlight`, for styling.
 
 </Only>
 
@@ -398,6 +406,10 @@ Also accepts the props of the primitive part it wraps.
 The trigger comes in two sizes, `default` and `sm`. Use Select for picking one value from a short list; for a list that needs searching, use Combobox.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -447,7 +459,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -455,7 +469,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -499,17 +513,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/select.tsx`:
+5. Copy and paste the following code into `components/ui/select.tsx`:
 
 <ComponentSource path="uniwind/components/ui/select.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -553,17 +567,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/select.tsx`:
+5. Copy and paste the following code into `components/ui/select.tsx`:
 
 <ComponentSource path="nativewind/components/ui/select.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -607,11 +621,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-scre
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/select.tsx`:
+5. Copy and paste the following code into `components/ui/select.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/select.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -708,6 +722,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -964,16 +982,6 @@ fun SelectDemo(
 
 </Only>
 
-<Only platform="rn">
-
-Put a `SelectValue` inside `SelectTrigger`, and `SelectItem` entries inside `SelectContent`. Group items with `SelectGroup` and `SelectLabel`, and divide groups with `SelectSeparator`.
-
-Control the value with `value` and `onValueChange` on `Select`, or start from `defaultValue`. Pass the full option list as `items` so `SelectValue` can show the label of the current value. `Select` also accepts `multiple`, `disabled`, `readOnly`, `open`, `defaultOpen` and `onOpenChange`.
-
-Give each `SelectItem` a `value` and a `label`; the label is shown when no children are passed. `SelectValue` shows `placeholder` until a value is chosen. The `Option` type (`{ value, label }`) is also exported.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -1020,296 +1028,6 @@ The invalid state with an error message.
 
 <NativeExample name="select-invalid" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Select
-
-The root that holds the selected value and the open state.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `SelectItems` | - | Value and label pairs used to show the selected label. |
-| `value` | `Value \| Value[] \| null` | - | The selected value, for controlled use. |
-| `defaultValue` | `Value \| Value[] \| null` | - | The initial value when uncontrolled. |
-| `onValueChange` | `(value, details) => void` | - | Called when the selection changes. |
-| `multiple` | `boolean` | `false` | Allows several values to be selected. |
-| `open` | `boolean` | - | Whether the popup is open, for controlled use. |
-| `defaultOpen` | `boolean` | `false` | Whether the popup starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the popup opens or closes. |
-| `modal` | `boolean` | `true` | Blocks interaction with the rest of the screen while open. |
-| `disabled` | `boolean` | `false` | Disables the select. |
-| `readOnly` | `boolean` | `false` | Shows the value without allowing changes. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SelectGroup
-
-Groups related items.
-
-Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Group>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SelectValue
-
-Shows the selected label or the placeholder.
-
-Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Value>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SelectTrigger
-
-Pressable field that opens the list.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-| `size` | `"default" \| "sm"` | `"default"` | Trigger height: `default` or `sm`. |
-| `invalid` | `boolean` | - | Shows the destructive border. Falls back to the invalid state of an enclosing field. |
-
-Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Trigger>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SelectContent
-
-Floating list rendered in a portal.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `portalHost` | `string` | - | Name of the portal host to render into. |
-
-Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Popup>`, `PositionerProps`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### SelectLabel
-
-Heading for a group.
-
-Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.GroupLabel>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### SelectItem
-
-One option, with a check mark when selected.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-
-Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Item>`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### SelectSeparator
-
-Line between groups.
-
-Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Separator>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### SelectSize
-
-Values: `.default`, `.sm`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SelectField
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selection` | `Binding<Value?>` | - | The selected value. |
-| `placeholder` | `LocalizedStringKey` | `"Select"` | Text shown while it is empty. |
-| `size` | `Size`: `.default` \| `.sm` | `.default` | Trigger height: `default` or `sm`. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SelectItem
-
-One option, with a check mark when selected.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `value` | `Value` | - | The selected value, for controlled use. |
-| `verbatim` | `String` | - | The title text. |
-
-Overloads: `init(_:value:)`, `init(verbatim:value:)`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SelectGroup
-
-Groups related items.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SelectLabel
-
-Heading for a group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### SelectSeparator
-
-Line between groups.
-
-Takes no parameters.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### SelectSize
-
-Values: `Default`, `Sm`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SelectOption
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | - |
-| `label` | `String` | - | - |
-| `enabled` | `Boolean` | `true` | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### Select
-
-The root that holds the selected value and the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String?` | - | The selected value, for controlled use. |
-| `onValueChange` | `(String) -> Unit` | - | Called when the selection changes. |
-| `options` | `List<SelectOption>` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `placeholder` | `String` | `""` | Text shown while it is empty. |
-| `size` | `SelectSize`: `Default` \| `Sm` | `SelectSize.Default` | Trigger height: `default` or `sm`. |
-| `invalid` | `Boolean?` | `null` | Shows the destructive border. Falls back to the invalid state of an enclosing field. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `side` | `PopupSide` | `PopupSide.Bottom` | The side of the trigger the popup opens on. |
-| `align` | `PopupAlign` | `PopupAlign.Center` | How the popup lines up with the trigger along that side. |
-| `sideOffset` | `Dp` | `4.dp` | The gap between the trigger and the popup, in pixels. |
-| `displayValue` | `String?` | - | - |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-Overloads: `Select(value, onValueChange, options)`, `Select(value, onValueChange, displayValue, content)`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SelectGroup
-
-Groups related items.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SelectLabel
-
-Heading for a group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### SelectItem
-
-One option, with a check mark when selected.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | The selected value, for controlled use. |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### SelectSeparator
-
-Line between groups.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1320,10 +1038,221 @@ Line between groups.
 - Label the trigger with `accessibilityLabelledBy` pointing at a `Label`'s `nativeID`, or with `accessibilityLabel`.
 - The Android back button and the VoiceOver escape gesture close the list.
 
-## Notes
+</Only>
 
-- Uses `bg-secondary` for the trigger, `bg-popover` for the list and `text-primary` for the check mark; colors follow the system appearance.
-- On iOS the list renders inside a `FullWindowOverlay` from `react-native-screens`, so it appears above native modals.
+## API Reference
+
+<Only platform="rn">
+
+### Select
+
+The root that holds the selected value and the open state.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `items` | `SelectItems` | - |
+| `value` | `Value \| Value[] \| null` | - |
+| `defaultValue` | `Value \| Value[] \| null` | - |
+| `onValueChange` | `(value, details) => void` | - |
+| `multiple` | `boolean` | `false` |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean, details) => void` | - |
+| `modal` | `boolean` | `true` |
+| `disabled` | `boolean` | `false` |
+| `readOnly` | `boolean` | `false` |
+
+Control the value with `value` and `onValueChange`, or start from `defaultValue`. Pass the full option list as `items` so `SelectValue` can show the label of the current value. Set `multiple` to allow several values, and `readOnly` to show the value without allowing changes. `modal` blocks interaction with the rest of the screen while open.
+
+### SelectGroup
+
+Groups related items.
+
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Group>`.
+
+### SelectValue
+
+Shows the selected label or the placeholder.
+
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Value>`.
+
+`placeholder` is shown until a value is chosen.
+
+### SelectTrigger
+
+Pressable field that opens the list.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+| `size` | `"default" \| "sm"` | `"default"` |
+| `invalid` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Trigger>`.
+
+`invalid` shows the destructive border, and falls back to the invalid state of an enclosing field. The trigger uses `bg-secondary`.
+
+### SelectContent
+
+Floating list rendered in a portal.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `portalHost` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Popup>`, `PositionerProps`.
+
+`portalHost` names the portal host to render into. On iOS the list renders inside a `FullWindowOverlay` from `react-native-screens`, so it appears above native modals.
+
+### SelectLabel
+
+Heading for a group.
+
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.GroupLabel>`.
+
+### SelectItem
+
+One option, with a check mark when selected.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Item>`.
+
+Give each item a `value` and a `label`; the label is shown when no children are passed. The `Option` type (`{ value, label }`) is also exported.
+
+### SelectSeparator
+
+Line between groups.
+
+Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Separator>`.
+
+</Only>
+
+<Only platform="swift">
+
+### SelectSize
+
+Values: `.default`, `.sm`.
+
+### SelectField
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `selection` | `Binding<Value?>` | - |
+| `placeholder` | `LocalizedStringKey` | `"Select"` |
+| `size` | `Size`: `.default` \| `.sm` | `.default` |
+| `content` | `() -> Content` | - |
+
+### SelectItem
+
+One option, with a check mark when selected.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `value` | `Value` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:value:)`, `init(verbatim:value:)`.
+
+### SelectGroup
+
+Groups related items.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### SelectLabel
+
+Heading for a group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+
+### SelectSeparator
+
+Line between groups.
+
+Takes no parameters.
+
+</Only>
+
+<Only platform="kotlin">
+
+### SelectSize
+
+Values: `Default`, `Sm`.
+
+### SelectOption
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `label` | `String` | - |
+| `enabled` | `Boolean` | `true` |
+
+### Select
+
+The root that holds the selected value and the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String?` | - |
+| `onValueChange` | `(String) -> Unit` | - |
+| `options` | `List<SelectOption>` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `placeholder` | `String` | `""` |
+| `size` | `SelectSize`: `Default` \| `Sm` | `SelectSize.Default` |
+| `invalid` | `Boolean?` | `null` |
+| `enabled` | `Boolean` | `true` |
+| `side` | `PopupSide` | `PopupSide.Bottom` |
+| `align` | `PopupAlign` | `PopupAlign.Center` |
+| `sideOffset` | `Dp` | `4.dp` |
+| `displayValue` | `String?` | - |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+Overloads: `Select(value, onValueChange, options)`, `Select(value, onValueChange, displayValue, content)`.
+
+### SelectGroup
+
+Groups related items.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### SelectLabel
+
+Heading for a group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### SelectItem
+
+One option, with a check mark when selected.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `true` |
+
+### SelectSeparator
+
+Line between groups.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
 
 </Only>
 

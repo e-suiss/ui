@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A single radar shape with a solid dot at the value on every axis. The dots make individual scores easier to locate than on the plain filled shape.
 
+Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. The `dot` prop on `Radar` sets the marker size; set it to false for the plain shape.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/radar-chart-dots
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts radar-chart-dots
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/radar-chart-dots.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/radar-chart-dots.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,8 +60,6 @@ import { RadarChartDots } from "@/components/charts/radar-chart-dots"
 ```tsx
 <RadarChartDots />
 ```
-
-Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Change the marker size through the `dot` prop on `Radar`, or set it to false to go back to the plain shape.
 
 </Only>
 
@@ -69,7 +77,17 @@ Replace `chartData`, set the axis and value keys, and rename the series in `char
 
 A `RadarChart` with one lightly filled `Radar` series and a `dot` on each point. `chartData` has one record per axis (`skill`) with `thisMonth` and `lastMonth` scores. Only `thisMonth` is drawn. Pressing the chart shows a tooltip.
 
+<Only platform="rn">
+
+Replace `chartData` with your records, set `PolarAngleAxis` `dataKey` to your axis field, and rename the series in `chartConfig`. The component takes no props.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -119,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -129,11 +149,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/radar-chart-dots.tsx`:
+2. Copy and paste the following code into `components/charts/radar-chart-dots.tsx`:
 
 <ComponentSource path="uniwind/components/charts/radar-chart-dots.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -141,11 +161,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/radar-chart-dots.tsx`:
+2. Copy and paste the following code into `components/charts/radar-chart-dots.tsx`:
 
 <ComponentSource path="nativewind/components/charts/radar-chart-dots.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -153,11 +173,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/radar-chart-dots.tsx`:
+2. Copy and paste the following code into `components/charts/radar-chart-dots.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/radar-chart-dots.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -240,6 +260,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -279,12 +303,6 @@ fun RadarDotsExample() {
     RadarChartDots()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your records, set `PolarAngleAxis` `dataKey` to your axis field, and rename the series in `chartConfig`. The component takes no props.
 
 </Only>
 

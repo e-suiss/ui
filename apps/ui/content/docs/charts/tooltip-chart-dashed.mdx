@@ -11,9 +11,13 @@ platforms: [web]
 
 A stacked bar chart that shows the dashed tooltip indicator, which marks each series with a dashed outline in its color. Compare it with the dot and line variants to pick the indicator that fits your design.
 
+Set `indicator` on `ChartTooltipContent` to `dashed`; it works on any chart. Replace `chartData` and the series in `chartConfig` with your own. The tooltip opens on a preset month when the chart loads; remove `defaultIndex` if it should start hidden.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/tooltip-chart-dashed
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts tooltip-chart-dashed
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/tooltip-chart-dashed.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/tooltip-chart-dashed.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,11 +60,5 @@ import { TooltipChartDashed } from "@/components/charts/tooltip-chart-dashed"
 ```tsx
 <TooltipChartDashed />
 ```
-
-Set `indicator` on `ChartTooltipContent` to `dashed`; the same setting works on any chart. Replace `chartData` and the series in `chartConfig` to use your own data.
-
-## Notes
-
-The tooltip opens on a preset month when the chart loads; remove `defaultIndex` if it should start hidden.
 
 </Only>

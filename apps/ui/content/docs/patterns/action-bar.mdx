@@ -9,13 +9,15 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="action-bar-demo" layout="padded" responsive />
 
-`ActionBar` groups several `ActionBarMenu`s, each with a `ActionBarTrigger` and `ActionBarContent`. On desktop it renders a `Menubar`: each menu is a `MenubarMenu`, and hovering another trigger while a menu is open switches menus.
+`ActionBar` groups several `ActionBarMenu`s. On desktop it renders a `Menubar`, and hovering another trigger while a menu is open switches menus. Below the `48rem` breakpoint (`useIsMobile`), the bar collapses into a ghost icon `Button` that opens a `Drawer` with a row per menu; choosing a row opens that menu's items in an `AlertSheet`.
 
-Below the `48rem` breakpoint (`useIsMobile`), the bar collapses into a ghost icon `Button` that opens a `Drawer`. The drawer lists every menu's trigger as a row; choosing a row closes the drawer and opens that menu's items in an `AlertSheet`, with a Cancel button appended. Use it for toolbar-style command groups, such as File, Edit and View, that need to fit on small screens.
+Use it for toolbar-style command groups, such as File, Edit and View, that need to fit on small screens.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/action-bar
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns action-bar
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
@@ -37,16 +41,29 @@ npm install @base-ui/react @phosphor-icons/react
 
 2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet), [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Menubar](/docs/components/menubar), `use-mobile`.
 
-3. Copy the source into `components/patterns/action-bar.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/action-bar.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { ActionBar, ActionBarMenu, ActionBarTrigger, ActionBarContent, ActionBarLabel, ActionBarItem, ActionBarSeparator, ActionBarShortcut } from "@/components/patterns/action-bar"
+import {
+  ActionBar,
+  ActionBarContent,
+  ActionBarItem,
+  ActionBarLabel,
+  ActionBarMenu,
+  ActionBarSeparator,
+  ActionBarShortcut,
+  ActionBarTrigger,
+} from "@/components/patterns/action-bar"
 ```
 
 ```tsx
@@ -76,88 +93,83 @@ import { ActionBar, ActionBarMenu, ActionBarTrigger, ActionBarContent, ActionBar
 </ActionBar>
 ```
 
-Each child of `ActionBar` should be an `ActionBarMenu` containing one `ActionBarTrigger` and one `ActionBarContent`; the bar uses the child index to pair the mobile row with its sheet. `open`, `defaultOpen` and `onOpenChange` on `ActionBar` control the mobile More actions drawer only; on desktop they have no effect. `ActionBarMenu` accepts its own `open`, `defaultOpen` and `onOpenChange` for an individual menu, which apply on desktop and to the mobile sheet. Use `ActionBarShortcut` with `mod` to prefix the platform modifier key.
-
 ## Examples
 
 ### With icons
 
-Places an icon before each item in the Edit menu, including a destructive Delete item.
+Places an icon before each item in the Edit menu. Set `variant="destructive"` on an item, here Delete, to style it as a destructive action.
 
 <ComponentPreview name="action-bar-with-icons" layout="padded" responsive />
 
 ### By default
 
-Opens the File menu on first render using `defaultOpen` on the bar and the menu.
+Set `defaultOpen` on the bar and on the File menu to open it on first render. On desktop only the menu's `defaultOpen` applies.
 
 <ComponentPreview name="action-bar-open-by-default" layout="padded" responsive />
 
 ### Not dismissible
 
-Sets `dismissible` to `false` so mobile sheets close only through an action or Cancel.
+Set `dismissible` to `false` so mobile sheets use an alert dialog that closes only through an action or Cancel, not on an outside press.
 
 <ComponentPreview name="action-bar-not-dismissible" layout="padded" responsive />
 
 ### Custom labels
 
-Renames the mobile More actions button and the sheet's Cancel button with `moreLabel` and `cancelLabel`.
+Use `moreLabel` to rename the mobile More actions button and its drawer title, and `cancelLabel` to rename the Cancel button of each sheet.
 
 <ComponentPreview name="action-bar-custom-labels" layout="padded" responsive />
 
 ### Floating
 
-Detaches the mobile More actions drawer from the screen edges with `floating`.
+Set `floating` to inset the mobile More actions drawer from the screen edges with fully rounded corners.
 
 <ComponentPreview name="action-bar-floating" layout="padded" responsive />
 
-## API Reference
+## Accessibility
 
-<ApiPart index={1}>
+- On desktop the bar has the `menubar` role and each trigger and item has the `menuitem` role.
+- Disabled items expose `aria-disabled="true"`.
+- `Escape` closes an open menu and returns focus to its trigger.
+- On mobile the More actions button is labelled by `moreLabel`, and each drawer row has `aria-haspopup="dialog"`.
+
+## API Reference
 
 ### ActionBar
 
 The root that renders a `Menubar` on desktop and a More actions button with a `Drawer` on mobile.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Controls whether the mobile More actions drawer is open. |
-| `defaultOpen` | `boolean` | `false` | Whether the mobile More actions drawer starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when the mobile More actions drawer opens or closes. |
-| `dismissible` | `boolean` | `true` | When `true`, mobile sheets close on an outside press; when `false`, they use an alert dialog that closes only through an action or Cancel. |
-| `floating` | `boolean` | - | Insets the mobile drawer from the screen edges with fully rounded corners. |
-| `moreLabel` | `string` | `"More actions"` | Accessible label of the mobile More actions button and title of its drawer. |
-| `cancelLabel` | `string` | `"Cancel"` | Text of the Cancel button appended to each mobile sheet. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `dismissible` | `boolean` | `true` |
+| `floating` | `boolean` | - |
+| `moreLabel` | `string` | `"More actions"` |
+| `cancelLabel` | `string` | `"Cancel"` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+Each child should be an `ActionBarMenu`; the bar uses the child index to pair the mobile row with its sheet. `open`, `defaultOpen` and `onOpenChange` control the mobile More actions drawer only and have no effect on desktop.
 
 ### ActionBarMenu
 
 One menu in the bar; a `MenubarMenu` on desktop and an `AlertSheet` on mobile.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Whether this menu is open, for controlled use. |
-| `defaultOpen` | `boolean` | - | Whether this menu starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when this menu opens or closes. |
-| `children` | `React.ReactNode` | - | The menu's `ActionBarTrigger` and `ActionBarContent`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | - |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `children` | `React.ReactNode` | - |
 
-</ApiPart>
-
-<ApiPart index={3}>
+Put one `ActionBarTrigger` and one `ActionBarContent` in each menu. Its own `open`, `defaultOpen` and `onOpenChange` control that menu, on desktop and for the mobile sheet.
 
 ### ActionBarTrigger
 
 The menu's button; a menubar trigger on desktop and a drawer row with a chevron on mobile.
 
 Also accepts the props of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
 
 ### ActionBarContent
 
@@ -175,10 +187,6 @@ Also accepts `align`, `alignOffset`, `side` and `sideOffset` from `MenubarConten
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### ActionBarLabel
 
 A non-interactive heading; a menu label on desktop and the sheet title on mobile.
@@ -195,18 +203,14 @@ Also accepts `className`, `children` and `id`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={6}>
-
 ### ActionBarItem
 
 An actionable entry; a `MenubarItem` on desktop and an `AlertSheetAction` on mobile.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | - | Use `destructive` to style the item as a destructive action. |
-| `disabled` | `boolean` | - | Prevents the item from being chosen. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | - |
+| `disabled` | `boolean` | - |
 
 <OnlyBase base="base radix">
 
@@ -219,10 +223,6 @@ Also accepts the props of `React.HTMLAttributes<HTMLElement>`.
 Respond to the item with `onAction`. Also accepts `className`, `children`, `id` and `aria-label`.
 
 </OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={7}>
 
 ### ActionBarSeparator
 
@@ -240,28 +240,13 @@ Also accepts `className`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={8}>
-
 ### ActionBarShortcut
 
 A keyboard shortcut hint aligned to the end of an item, rendered on desktop only.
 
 Also accepts the props of `React.ComponentProps<typeof MenubarShortcut>`.
 
-</ApiPart>
-
-## Accessibility
-
-- On desktop the bar has the `menubar` role and each trigger and item has the `menuitem` role.
-- Disabled items expose `aria-disabled="true"`.
-- `Escape` closes an open menu and returns focus to its trigger.
-- On mobile the More actions button is labelled by `moreLabel`, and each drawer row has `aria-haspopup="dialog"`.
-
-## Notes
-
-Parts carry `data-slot` values such as `action-bar`, `action-bar-menu`, `action-bar-trigger`, `action-bar-content`, `action-bar-item`, `action-bar-more`, `action-bar-label`, `action-bar-separator` and `action-bar-shortcut`. `ActionBarSeparator` and `ActionBarShortcut` render nothing on mobile.
+Set `mod` to prefix the platform modifier key. `ActionBarSeparator` and `ActionBarShortcut` render nothing on mobile. Each part sets a `data-slot`, such as `action-bar-trigger` or `action-bar-more`, for styling.
 
 </Only>
 
@@ -271,13 +256,23 @@ Parts carry `data-slot` values such as `action-bar`, `action-bar-menu`, `action-
 
 <Only platform="rn kotlin">
 
-`ActionBar` groups several `ActionBarMenu`s, such as File, Edit and View, behind one ghost icon `Button`. Pressing it opens a `Drawer` that lists each menu's trigger as a row with a chevron.
+`ActionBar` groups several `ActionBarMenu`s, such as File, Edit and View, behind one ghost icon `Button`. Pressing it opens a `Drawer` that lists each menu's trigger as a row with a chevron; choosing a row opens that menu's items in an `AlertSheet`, with a Cancel button appended.
 
-Choosing a row closes the drawer and opens that menu's items in an `AlertSheet`, with a Cancel button appended. Use it for toolbar-style command groups that need to fit on a phone screen.
+Use it for toolbar-style command groups that need to fit on a phone screen.
+
+</Only>
+
+<Only platform="kotlin">
+
+Each child of `ActionBar` should be an `ActionBarMenu` containing one `ActionBarTrigger` and one `ActionBarContent`. The bar renders every child twice, once as a drawer row and once as a sheet, and pairs them by child index.
 
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -327,7 +322,9 @@ The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet)
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -335,7 +332,7 @@ The CLI also adds what it builds on: [Alert Sheet](/docs/components/alert-sheet)
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -343,17 +340,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet), [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/patterns/action-bar.tsx`:
+3. Copy and paste the following code into `components/patterns/action-bar.tsx`:
 
 <ComponentSource path="uniwind/components/patterns/action-bar.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -361,17 +358,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet), [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/patterns/action-bar.tsx`:
+3. Copy and paste the following code into `components/patterns/action-bar.tsx`:
 
 <ComponentSource path="nativewind/components/patterns/action-bar.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-svg
@@ -379,11 +376,11 @@ npx expo install phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Alert Sheet](/docs/components/alert-sheet), [Button](/docs/components/button), [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/patterns/action-bar.tsx`:
+3. Copy and paste the following code into `components/patterns/action-bar.tsx`:
 
 <ComponentSource path="stylesheet/components/patterns/action-bar.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -506,6 +503,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -777,18 +778,6 @@ fun ActionBarScope.actionBarViewMenu() {
 
 </Only>
 
-<Only platform="rn kotlin">
-
-Each child of `ActionBar` should be an `ActionBarMenu` containing one `ActionBarTrigger` and one `ActionBarContent`. The bar renders every child twice, once as a drawer row and once as a sheet, and pairs them by child index.
-
-</Only>
-
-<Only platform="rn">
-
-`open`, `defaultOpen` and `onOpenChange` on `ActionBar` control the drawer. `ActionBarMenu` takes its own `open`, `defaultOpen` and `onOpenChange` for its sheet. A string child of `ActionBarTrigger` is wrapped in `Text`.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -809,13 +798,13 @@ Places an icon before each item in the Edit menu.
 
 ### Not dismissible
 
-Sets `dismissible` to `false`, so sheets close only through an action or Cancel.
+Set `dismissible` to `false` so sheets ignore outside presses and close only through an action or Cancel.
 
 <NativeExample name="action-bar-not-dismissible" />
 
 ### Custom labels
 
-Renames the More actions button and the Cancel button with `moreLabel` and `cancelLabel`.
+Use `moreLabel` to rename the More actions button and `cancelLabel` to rename the Cancel button of each sheet.
 
 <NativeExample name="action-bar-custom-labels" />
 
@@ -823,7 +812,7 @@ Renames the More actions button and the Cancel button with `moreLabel` and `canc
 
 ### Floating
 
-Detaches the drawer from the screen edges with `floating`.
+Set `floating` to inset the drawer from the screen edges. Without it, the drawer's top corners are square.
 
 <NativeExample name="action-bar-floating" />
 
@@ -835,238 +824,6 @@ The React Native tab shows 1 more example.
 
 </Only>
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### ActionBar
-
-The root that renders the More actions button, its drawer and each menu's sheet.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Controls whether the More actions drawer is open. |
-| `defaultOpen` | `boolean` | `false` | Whether the drawer starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when the drawer opens or closes. |
-| `dismissible` | `boolean` | `true` | When `false`, sheets ignore outside presses and close only through an action or Cancel. Defaults to `true`. |
-| `floating` | `boolean` | - | Insets the drawer from the screen edges. |
-| `moreLabel` | `string` | `"More actions"` | Accessibility label of the More actions button and drawer. Defaults to `More actions`. |
-| `cancelLabel` | `string` | `"Cancel"` | Text of the Cancel button in each sheet. Defaults to `Cancel`. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ActionBarMenu
-
-One menu; a row in the drawer and an `AlertSheet` for its items.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Controls whether this menu's sheet is open. |
-| `defaultOpen` | `boolean` | - | Opens this menu's sheet on first render. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when this menu's sheet opens or closes. |
-| `children` | `React.ReactNode` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ActionBarTrigger
-
-The drawer row that opens the menu's sheet, with a trailing chevron.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | - | The content. |
-
-Also accepts the props of `React.ComponentProps<typeof Pressable>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ActionBarContent
-
-The menu's items in an `AlertSheetContent`, followed by a Cancel button.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetContent>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ActionBarLabel
-
-A title shown at the top of the sheet.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetTitle>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### ActionBarItem
-
-An actionable entry, rendered as an `AlertSheetAction`.
-
-Also accepts the props of `React.ComponentProps<typeof AlertSheetAction>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### ActionBarSeparator
-
-Kept for API parity; renders nothing.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Classes merged onto the root element. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### ActionBar
-
-The root that renders the More actions button, its drawer and each menu's sheet.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isPresented` | `Binding<Bool>?` | `nil` | Whether it is shown. |
-| `dismissible` | `Bool` | `true` | When `false`, sheets ignore outside presses and close only through an action or Cancel. |
-| `moreLabel` | `LocalizedStringKey` | `"More actions"` | Accessibility label of the More actions button and drawer. |
-| `cancelLabel` | `LocalizedStringKey` | `"Cancel"` | Text of the Cancel button in each sheet. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ActionBarMenu
-
-One menu; a row in the drawer and an `AlertSheet` for its items.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isPresented` | `Binding<Bool>?` | `nil` | Whether it is shown. |
-| `content` | `() -> Content` | - | The content. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(isPresented:content:label:)`, `init(_:isPresented:content:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### ActionBarScope.ActionBarMenu
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `Boolean?` | `null` | - |
-| `onOpenChange` | `(Boolean) -> Unit` | `{}` | - |
-| `defaultOpen` | `Boolean` | `false` | - |
-| `content` | `ActionBarMenuScope.() -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ActionBarMenuScope.ActionBarTrigger
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | - |
-| `enabled` | `Boolean` | `true` | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ActionBarMenuScope.ActionBarContent
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | - |
-| `content` | `@Composable () -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ActionBar
-
-The root that renders the More actions button, its drawer and each menu's sheet.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `Boolean` | - | Controls whether the More actions drawer is open. |
-| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the drawer opens or closes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `dismissible` | `Boolean` | `true` | When `false`, sheets ignore outside presses and close only through an action or Cancel. |
-| `floating` | `Boolean` | `false` | Insets the drawer from the screen edges. |
-| `moreLabel` | `String` | `"More actions"` | Accessibility label of the More actions button and drawer. |
-| `cancelLabel` | `String` | `"Cancel"` | Text of the Cancel button in each sheet. |
-| `content` | `ActionBarScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### ActionBarLabel
-
-A title shown at the top of the sheet.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### ActionBarItem
-
-An actionable entry, rendered as an `AlertSheetAction`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `onClick` | `() -> Unit` | - | Called when it is tapped. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `MenuItemVariant` | `MenuItemVariant.Default` | Use `destructive` to style the item as a destructive action. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `icon` | `ImageVector?` | `null` | The icon. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### ActionBarSeparator
-
-Kept for API parity; renders nothing.
-
-Takes no parameters.
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1075,10 +832,179 @@ Takes no parameters.
 - Each drawer row has the `button` role and exposes its disabled state.
 - The chevron flips in right-to-left layouts.
 
-## Notes
+</Only>
 
-- Rows sit on `bg-muted` with `border-border` dividers; disabled rows use `opacity-50`.
-- Without `floating`, the drawer's top corners are square.
+## API Reference
+
+<Only platform="rn">
+
+### ActionBar
+
+The root that renders the More actions button, its drawer and each menu's sheet.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `dismissible` | `boolean` | `true` |
+| `floating` | `boolean` | - |
+| `moreLabel` | `string` | `"More actions"` |
+| `cancelLabel` | `string` | `"Cancel"` |
+
+Also accepts the props of `ViewProps`.
+
+Each child should be an `ActionBarMenu` containing one `ActionBarTrigger` and one `ActionBarContent`. The bar renders every child twice, once as a drawer row and once as a sheet, and pairs them by child index. `open`, `defaultOpen` and `onOpenChange` control the drawer.
+
+### ActionBarMenu
+
+One menu; a row in the drawer and an `AlertSheet` for its items.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | - |
+| `onOpenChange` | `(open: boolean) => void` | - |
+| `children` | `React.ReactNode` | - |
+
+Its own `open`, `defaultOpen` and `onOpenChange` control the menu's sheet.
+
+### ActionBarTrigger
+
+The drawer row that opens the menu's sheet, with a trailing chevron.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `React.ReactNode` | - |
+
+Also accepts the props of `React.ComponentProps<typeof Pressable>`.
+
+A string child is wrapped in `Text`.
+
+### ActionBarContent
+
+The menu's items in an `AlertSheetContent`, followed by a Cancel button.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetContent>`.
+
+### ActionBarLabel
+
+A title shown at the top of the sheet.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetTitle>`.
+
+### ActionBarItem
+
+An actionable entry, rendered as an `AlertSheetAction`.
+
+Also accepts the props of `React.ComponentProps<typeof AlertSheetAction>`.
+
+### ActionBarSeparator
+
+Kept for API parity; renders nothing.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | - |
+
+</Only>
+
+<Only platform="swift">
+
+### ActionBar
+
+The root that renders the More actions button, its drawer and each menu's sheet.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isPresented` | `Binding<Bool>?` | `nil` |
+| `dismissible` | `Bool` | `true` |
+| `moreLabel` | `LocalizedStringKey` | `"More actions"` |
+| `cancelLabel` | `LocalizedStringKey` | `"Cancel"` |
+| `content` | `() -> Content` | - |
+
+### ActionBarMenu
+
+One menu; a row in the drawer and an `AlertSheet` for its items.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isPresented` | `Binding<Bool>?` | `nil` |
+| `content` | `() -> Content` | - |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(isPresented:content:label:)`, `init(_:isPresented:content:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### ActionBarScope.ActionBarMenu
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `open` | `Boolean?` | `null` |
+| `onOpenChange` | `(Boolean) -> Unit` | `{}` |
+| `defaultOpen` | `Boolean` | `false` |
+| `content` | `ActionBarMenuScope.() -> Unit` | - |
+
+### ActionBarMenuScope.ActionBarTrigger
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `enabled` | `Boolean` | `true` |
+
+### ActionBarMenuScope.ActionBarContent
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
+
+### ActionBar
+
+The root that renders the More actions button, its drawer and each menu's sheet.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `open` | `Boolean` | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `dismissible` | `Boolean` | `true` |
+| `floating` | `Boolean` | `false` |
+| `moreLabel` | `String` | `"More actions"` |
+| `cancelLabel` | `String` | `"Cancel"` |
+| `content` | `ActionBarScope.() -> Unit` | - |
+
+### ActionBarLabel
+
+A title shown at the top of the sheet.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### ActionBarItem
+
+An actionable entry, rendered as an `AlertSheetAction`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `onClick` | `() -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `MenuItemVariant` | `MenuItemVariant.Default` |
+| `enabled` | `Boolean` | `true` |
+| `icon` | `ImageVector?` | `null` |
+
+### ActionBarSeparator
+
+Kept for API parity; renders nothing.
+
+Takes no parameters.
 
 </Only>
 

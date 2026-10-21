@@ -15,7 +15,9 @@ Use it for small, bounded quantities such as copies, servings, or scale, where p
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/stepper
@@ -27,24 +29,37 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add interactions stepper
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
 ```
 
-2. Copy the source into `components/interactions/stepper.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/interactions/stepper.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Stepper, StepperInput, StepperGroup, StepperDecrement, StepperIncrement, StepperSeparator } from "@/components/interactions/stepper"
+import {
+  Stepper,
+  StepperDecrement,
+  StepperGroup,
+  StepperIncrement,
+  StepperInput,
+  StepperSeparator,
+} from "@/components/interactions/stepper"
 ```
 
 ```tsx
@@ -58,109 +73,26 @@ import { Stepper, StepperInput, StepperGroup, StepperDecrement, StepperIncrement
 </Stepper>
 ```
 
-- Compose `StepperInput` and a `StepperGroup` containing `StepperDecrement`, `StepperSeparator`, and `StepperIncrement` inside `Stepper`.
-- The value is uncontrolled by default; pass `value` and `onValueChange` to control it.
-- Other number field props, such as `min`, `max`, `disabled`, and `format`, pass through to the root.
-- The buttons render minus and plus icons by default; pass children to replace them.
+## Composition
+
+Use the following composition to build a `Stepper`:
+
+```text
+Stepper
+├── StepperInput
+└── StepperGroup
+    ├── StepperDecrement
+    ├── StepperSeparator
+    └── StepperIncrement
+```
 
 ## Examples
 
 ### Print
 
-A print settings list with labelled steppers, a percent format with a step of `5`, and a disabled row.
+A print settings list with labelled steppers. The scale row uses a percent `format` with a `step` of `5`, and the last row sets `disabled`.
 
 <ComponentPreview name="stepper-print" responsive />
-
-## API Reference
-
-<Anatomy>
-
-- [Stepper](#stepper)
-  - [StepperInput](#stepperinput)
-  - [StepperGroup](#steppergroup)
-    - [StepperDecrement](#stepperdecrement)
-    - [StepperSeparator](#stepperseparator)
-    - [StepperIncrement](#stepperincrement)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Stepper
-
-The Number Field root that holds the value and its limits.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `step` | `number` | `1` | The amount each press adds or subtracts. |
-| `value` | `number` | - | The current value, for controlled use. |
-| `defaultValue` | `number` | `0` | The initial value when uncontrolled. |
-| `onValueChange` | `(value: number) => void` | - | Called with the new value when it changes. |
-| `min` | `number` | - | The lowest value. No limit by default. |
-| `max` | `number` | - | The highest value. No limit by default. |
-| `disabled` | `boolean` | `false` | Disables the input and both buttons. |
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `format` | `Intl.NumberFormatOptions` | - | How the number is formatted in the input. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### StepperInput
-
-The editable text field that shows the value.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### StepperGroup
-
-The segmented container for the decrement and increment buttons.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### StepperDecrement
-
-The button that decreases the value by one step.
-
-Also accepts the props of `React.ComponentProps<"button">`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### StepperIncrement
-
-The button that increases the value by one step.
-
-Also accepts the props of `React.ComponentProps<"button">`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### StepperSeparator
-
-A thin divider between the two buttons.
-
-Also accepts the props of `React.ComponentProps<"span">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -169,11 +101,71 @@ Also accepts the props of `React.ComponentProps<"span">`.
 - The buttons are labelled `Decrease` and `Increase`, and are disabled at the limits or when the stepper is disabled.
 - `StepperGroup` has `role="group"`, and `StepperSeparator` is `aria-hidden`.
 
-## Notes
+## API Reference
 
-- Parts use `data-slot` values `stepper`, `stepper-input`, `stepper-group`, `stepper-decrement`, `stepper-increment`, and `stepper-separator`.
-- Values are rounded to the precision of `step`, so decimal steps do not accumulate floating-point errors.
-- The buttons suppress the long-press context menu so holding them on touch devices keeps stepping.
+### Stepper
+
+The Number Field root that holds the value and its limits.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `step` | `number` | `1` |
+| `value` | `number` | - |
+| `defaultValue` | `number` | `0` |
+| `onValueChange` | `(value: number) => void` | - |
+| `min` | `number` | - |
+| `max` | `number` | - |
+| `disabled` | `boolean` | `false` |
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `format` | `Intl.NumberFormatOptions` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+Compose `StepperInput` and a `StepperGroup` containing `StepperDecrement`, `StepperSeparator` and `StepperIncrement` inside `Stepper`. The value is uncontrolled by default; pass `value` and `onValueChange` to control it. `min` and `max` have no limit by default, and `disabled` disables the input and both buttons. Other number field props pass through to the root. Values are rounded to the precision of `step`, so decimal steps do not accumulate floating-point errors. Each part sets a `data-slot`, such as `stepper-input`, for styling.
+
+<OnlyBase base="aria">
+
+`format` sets how the number is formatted in the input.
+
+</OnlyBase>
+
+### StepperInput
+
+The editable text field that shows the value.
+
+Also accepts the props of the primitive part it wraps.
+
+### StepperGroup
+
+The segmented container for the decrement and increment buttons.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### StepperDecrement
+
+The button that decreases the value by one step.
+
+Also accepts the props of `React.ComponentProps<"button">`.
+
+### StepperIncrement
+
+The button that increases the value by one step.
+
+Also accepts the props of `React.ComponentProps<"button">`.
+
+Both buttons render minus and plus icons by default; pass children to replace them. They suppress the long-press context menu so holding them on touch devices keeps stepping.
+
+### StepperSeparator
+
+A thin divider between the two buttons.
+
+Also accepts the props of `React.ComponentProps<"span">`.
 
 </Only>
 
@@ -190,6 +182,10 @@ Also accepts the props of `React.ComponentProps<"span">`.
 Pressing and holding a button steps once, then repeats every 60 ms after 400 ms. The value can also be typed. Use it for quantities, copies or percentages in settings rows.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -239,7 +235,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon).
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -247,7 +245,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon).
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -273,17 +271,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/interactions/stepper.tsx`:
+4. Copy and paste the following code into `components/interactions/stepper.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/stepper.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn nativewind phosphor-react-native react-native-svg
@@ -309,17 +307,17 @@ npx expo install cn nativewind phosphor-react-native react-native-svg
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/interactions/stepper.tsx`:
+4. Copy and paste the following code into `components/interactions/stepper.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/stepper.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-svg
@@ -345,11 +343,11 @@ npx expo install phosphor-react-native react-native-svg
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/interactions/stepper.tsx`:
+4. Copy and paste the following code into `components/interactions/stepper.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/stepper.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -432,6 +430,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -523,18 +525,6 @@ fun StepperDefault() {
 
 </Only>
 
-<Only platform="rn kotlin">
-
-Compose `StepperInput` and a `StepperGroup` containing `StepperDecrement`, `StepperSeparator` and `StepperIncrement` inside `Stepper`.
-
-</Only>
-
-<Only platform="rn">
-
-Use it uncontrolled with `defaultValue` (`0` by default) or controlled with `value` and `onValueChange`. Clearing the field never reports `null`; the change is cancelled instead. `min`, `max`, `step`, `format` (`Intl.NumberFormatOptions`), `locale` and `disabled` are passed to the number field.
-
-</Only>
-
 ## Examples
 
 ### Print
@@ -542,248 +532,6 @@ Use it uncontrolled with `defaultValue` (`0` by default) or controlled with `val
 A print settings list with copies, a percentage scale stepping by 5, and a disabled row.
 
 <NativeExample name="stepper-print" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Stepper
-
-The root that holds the value and limits.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `number` | - | The current value when controlled. |
-| `defaultValue` | `number` | `0` | The initial value when uncontrolled. Defaults to `0`. |
-| `onValueChange` | `( value: number, eventDetails: NumberFieldPrimitive.ChangeEventDetails ) => void` | - | Called with the new number and change details. |
-
-Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Root>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### StepperInput
-
-The editable, right-aligned value.
-
-Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Input>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### StepperGroup
-
-The rounded field that holds the buttons.
-
-Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Group>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### StepperDecrement
-
-The minus button.
-
-Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Decrement>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### StepperIncrement
-
-The plus button.
-
-Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Increment>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### StepperSeparator
-
-A thin divider between the buttons.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### ValueStepper
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Binding<Double>` | - | The current value when controlled. |
-| `in` | `ClosedRange<Double>` | `-Double.infinity...Double.infinity` | - |
-| `step` | `Double` | `1` | The amount each press adds or subtracts. |
-| `format` | `F` | - | - |
-| `content` | `() -> Content` | - | The content. |
-
-Overloads: `init(value:in:step:format:content:)`, `init(value:in:step:content:)`, `init(value:in:step:content:)`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### StepperInput
-
-The editable, right-aligned value.
-
-Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### StepperGroup
-
-The rounded field that holds the buttons.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### StepperDecrement
-
-The minus button.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `() -> Label` | - | The label. |
-
-Overloads: `init(label:)`, `init()`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### StepperIncrement
-
-The plus button.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `() -> Label` | - | The label. |
-
-Overloads: `init(label:)`, `init()`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### StepperSeparator
-
-A thin divider between the buttons.
-
-Takes no parameters.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Stepper
-
-The root that holds the value and limits.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Double` | - | The current value when controlled. |
-| `onValueChange` | `(Double) -> Unit` | - | Called with the new value when it changes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `min` | `Double` | `Double.NEGATIVE_INFINITY` | The lowest value. No limit by default. |
-| `max` | `Double` | `Double.POSITIVE_INFINITY` | The highest value. No limit by default. |
-| `step` | `Double` | `1.0` | The amount each press adds or subtracts. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `format` | `NumberFormat` | `remember { NumberFormat.getNumberInstance() }` | - |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### StepperInput
-
-The editable, right-aligned value.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `contentDescription` | `String?` | `null` | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### StepperGroup
-
-The rounded field that holds the buttons.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### StepperDecrement
-
-The minus button.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `contentDescription` | `String` | `"Decrease"` | - |
-| `content` | `(@Composable () -> Unit)?` | `null` | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### StepperIncrement
-
-The plus button.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `contentDescription` | `String` | `"Increase"` | - |
-| `content` | `(@Composable () -> Unit)?` | `null` | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### StepperSeparator
-
-A thin divider between the buttons.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -793,11 +541,177 @@ A thin divider between the buttons.
 - Label the value with `accessibilityLabel` or `accessibilityLabelledBy` on `StepperInput`.
 - The separator is hidden from screen readers.
 
-## Notes
+</Only>
 
-- A selection haptic plays on each step, if the app provides an adapter through `HapticsProvider`.
-- The group uses `bg-secondary`. Buttons use `bg-card` with a small shadow (`bg-border` in dark mode) and `opacity-80` when pressed; a disabled button or one at its limit uses `opacity-50`.
-- Disabled text uses `opacity-50`.
+## API Reference
+
+<Only platform="rn">
+
+### Stepper
+
+The root that holds the value and limits.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `number` | - |
+| `defaultValue` | `number` | `0` |
+| `onValueChange` | `( value: number, eventDetails: NumberFieldPrimitive.ChangeEventDetails ) => void` | - |
+
+Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Root>`.
+
+Compose `StepperInput` and a `StepperGroup` containing `StepperDecrement`, `StepperSeparator` and `StepperIncrement` inside `Stepper`. Use it uncontrolled with `defaultValue` or controlled with `value` and `onValueChange`, which is called with the new number and change details. Clearing the field never reports `null`; the change is cancelled instead. `min`, `max`, `step`, `format` (`Intl.NumberFormatOptions`), `locale` and `disabled` are passed to the number field. A selection haptic plays on each step, if the app provides an adapter through `HapticsProvider`.
+
+### StepperInput
+
+The editable, right-aligned value.
+
+Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Input>`.
+
+### StepperGroup
+
+The rounded field that holds the buttons.
+
+Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Group>`.
+
+### StepperDecrement
+
+The minus button.
+
+Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Decrement>`.
+
+### StepperIncrement
+
+The plus button.
+
+Also accepts the props of `React.ComponentProps<typeof NumberFieldPrimitive.Increment>`.
+
+### StepperSeparator
+
+A thin divider between the buttons.
+
+Also accepts the props of `ViewProps`.
+
+</Only>
+
+<Only platform="swift">
+
+### ValueStepper
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Binding<Double>` | - |
+| `in` | `ClosedRange<Double>` | `-Double.infinity...Double.infinity` |
+| `step` | `Double` | `1` |
+| `format` | `F` | - |
+| `content` | `() -> Content` | - |
+
+Overloads: `init(value:in:step:format:content:)`, `init(value:in:step:content:)`, `init(value:in:step:content:)`.
+
+### StepperInput
+
+The editable, right-aligned value.
+
+Takes no parameters.
+
+### StepperGroup
+
+The rounded field that holds the buttons.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### StepperDecrement
+
+The minus button.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `label` | `() -> Label` | - |
+
+Overloads: `init(label:)`, `init()`.
+
+### StepperIncrement
+
+The plus button.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `label` | `() -> Label` | - |
+
+Overloads: `init(label:)`, `init()`.
+
+### StepperSeparator
+
+A thin divider between the buttons.
+
+Takes no parameters.
+
+</Only>
+
+<Only platform="kotlin">
+
+### Stepper
+
+The root that holds the value and limits.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Double` | - |
+| `onValueChange` | `(Double) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `min` | `Double` | `Double.NEGATIVE_INFINITY` |
+| `max` | `Double` | `Double.POSITIVE_INFINITY` |
+| `step` | `Double` | `1.0` |
+| `enabled` | `Boolean` | `true` |
+| `format` | `NumberFormat` | `remember { NumberFormat.getNumberInstance() }` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+
+### StepperInput
+
+The editable, right-aligned value.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `contentDescription` | `String?` | `null` |
+
+### StepperGroup
+
+The rounded field that holds the buttons.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+
+### StepperDecrement
+
+The minus button.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `contentDescription` | `String` | `"Decrease"` |
+| `content` | `(@Composable () -> Unit)?` | `null` |
+
+### StepperIncrement
+
+The plus button.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `contentDescription` | `String` | `"Increase"` |
+| `content` | `(@Composable () -> Unit)?` | `null` |
+
+### StepperSeparator
+
+A thin divider between the buttons.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
 
 </Only>
 

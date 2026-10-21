@@ -31,7 +31,14 @@ npx @esuiss/ui@latest add item button trace
 
 ```tsx
 import { Button } from "@/components/ui/button"
-import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item"
 ```
 
 <OnlyBase base="base radix">
@@ -82,8 +89,6 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle }
 
 </OnlyBase>
 
-After the answer, replace the item with a row that says what happened: "Ran rm -rf dist" or "Denied rm -rf dist".
-
 ## AI SDK
 
 While the part is `approval-requested`, answer with the approval id. Pass `sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithApprovalResponses` so the chat continues once every approval has an answer.
@@ -103,15 +108,17 @@ useChat({
 
 Approve streams the tool output. Deny streams `output-denied`. Either way, the part becomes a Tool row. Set `needsApproval` on the tool on the server to ask first.
 
-## API Reference
-
-See [Item](/docs/components/item#api-reference), [Button](/docs/components/button#api-reference) and [Trace](/docs/components/trace#api-reference).
-
 ## Accessibility
 
 - Put the command in the item title, so the question names what will run.
 - Deny comes before Approve, so the safe answer is reached first with Tab.
 - Once answered, the buttons are removed and the row title says the outcome in words.
+
+## API Reference
+
+See [Item](/docs/components/item#api-reference), [Button](/docs/components/button#api-reference) and [Trace](/docs/components/trace#api-reference).
+
+After the answer, replace the item with a row that says what happened: "Ran rm -rf dist" or "Denied rm -rf dist".
 
 </Only>
 

@@ -15,7 +15,9 @@ Use it for short, free-form values. For multi-line text use a textarea, for icon
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/input
@@ -27,19 +29,25 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add input
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react
 ```
 
-2. Copy the source into `components/ui/input.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/input.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -53,61 +61,43 @@ import { Input } from "@/components/ui/input"
 </div>
 ```
 
-Use `defaultValue` for an uncontrolled field, or `value` with `onChange` to control it. Give every input a visible label, for example with `FieldLabel` inside a `Field`, or set `aria-label` when a visible label is not possible. Choose a `size` that matches neighboring controls such as a `Button`.
-
 ## Examples
 
 ### Sizes
 
-The `sm`, `md` and `default` sizes, each next to a button of matching height.
+Use the `size` prop to set the height. Choose a size that matches neighboring controls such as a `Button`, as shown here.
 
 <ComponentPreview name="input-sizes" />
 
 ### Types
 
-Inputs with `email`, `password`, `number` and `search` types.
+Set the native `type` attribute for `email`, `password`, `number` and `search` fields.
 
 <ComponentPreview name="input-types" />
 
 ### With value
 
-An input that starts with a `defaultValue`.
+Set `defaultValue` for an uncontrolled field that starts with a value, or use `value` with `onChange` to control it.
 
 <ComponentPreview name="input-with-value" />
 
 ### File
 
-A file input with an accessible name that accepts a chosen file.
+Set `type="file"` for a file picker. Give it an accessible name, as with any input.
 
 <ComponentPreview name="input-file" />
 
 ### Invalid
 
-An input marked with `aria-invalid`, showing the error style.
+Set `aria-invalid` to show the error style.
 
 <ComponentPreview name="input-invalid" />
 
 ### Disabled
 
-A disabled input that ignores typing.
+Set `disabled` to stop the input from being focused or edited.
 
 <ComponentPreview name="input-disabled" />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### Input
-
-The text field.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"sm" \| "md" \| "default"` | `"default"` | Sets the height and text size: `default` is the tallest, `md` is medium and `sm` is the most compact with a smaller radius. |
-
-Also accepts the props of `React.ComponentProps<"input">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -116,11 +106,19 @@ Also accepts the props of `React.ComponentProps<"input">`.
 - Set `aria-invalid` to communicate a validation error.
 - A disabled input cannot be focused or edited.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot="input"` and `data-size`.
-- Uses the `secondary`, `primary` (caret), `muted-foreground` (placeholder) and `destructive` colors, and `opacity-50` when disabled.
-- The native `size` attribute is replaced by the `size` prop.
+### Input
+
+The text field.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"sm" \| "md" \| "default"` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<"input">`.
+
+`size` sets the height and text size: `default` is the tallest, `md` is medium and `sm` is the most compact with a smaller radius. It replaces the native `size` attribute. Give every input a visible label, for example with `FieldLabel` inside a `Field`, or set `aria-label` when a visible label is not possible. The input sets `data-slot="input"` and `data-size` for styling.
 
 </Only>
 
@@ -137,6 +135,10 @@ Also accepts the props of `React.ComponentProps<"input">`.
 It comes in three sizes: `default` (44 pt), `md` and `sm`. Use the default size for forms on a full screen, and the smaller sizes inside dense layouts such as toolbars or sheets.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -180,7 +182,9 @@ npx @esuiss/ui@latest add input --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -188,7 +192,7 @@ npx @esuiss/ui@latest add input --platform kotlin
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -218,17 +222,17 @@ npx expo install cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/input.tsx`:
+3. Copy and paste the following code into `components/ui/input.tsx`:
 
 <ComponentSource path="uniwind/components/ui/input.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn nativewind
@@ -258,11 +262,11 @@ npx expo install cn nativewind
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/input.tsx`:
+3. Copy and paste the following code into `components/ui/input.tsx`:
 
 <ComponentSource path="nativewind/components/ui/input.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -292,11 +296,11 @@ npx expo install cn nativewind
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-2. Copy the source into `components/ui/input.tsx`:
+2. Copy and paste the following code into `components/ui/input.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/input.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -377,6 +381,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -449,23 +457,13 @@ fun InputSingle(initial: String, placeholder: String, enabled: Boolean = true) {
 
 </Only>
 
-<Only platform="rn">
-
-Pass any `TextInput` prop, such as `placeholder`, `secureTextEntry`, `keyboardType` or `inputMode`, to get the matching field type.
-
-The value works controlled with `value` and `onValueChange(value, details)`, or uncontrolled with `defaultValue`. Inside a `Field`, the input picks up the field's label, description, invalid and disabled state, so you usually set `invalid` on the `Field` instead of on the input.
-
-`className` can be a function that receives the state (`focused`, `invalid`, `disabled`, `filled`, …) and returns classes.
-
-</Only>
-
 ## Examples
 
 ### Types
 
 <Only platform="rn">
 
-Text, email, password, number and search fields set through standard `TextInput` props.
+Pass a `TextInput` prop such as `secureTextEntry`, `keyboardType` or `inputMode` to get the matching field type.
 
 </Only>
 
@@ -501,7 +499,7 @@ An input inside a `Field` with a label and description.
 
 ### Invalid
 
-An input inside an invalid `Field` with an error message.
+An input inside an invalid `Field` with an error message. Inside a `Field`, set `invalid` on the field instead of on the input.
 
 <NativeExample name="input-invalid" />
 
@@ -517,75 +515,6 @@ A disabled input.
 
 <NativeExample name="input-disabled" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Input
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `InputSize` | `"default"` | Height and text size: `default`, `md` or `sm`. |
-
-Also accepts the props of `React.ComponentProps<typeof InputPrimitive.Root>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .textFieldStyle(.input)
-
-Style that creates `InputStyle`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `InputStyle.Size`: `.default` \| `.md` \| `.sm` | `.default` | Height and text size: `default`, `md` or `sm`. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### InputSize
-
-Values: `Default`, `Md`, `Sm`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Input
-
-The text field.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | The current value. |
-| `onValueChange` | `(String) -> Unit` | - | Called when the value changes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `size` | `InputSize`: `Default` \| `Md` \| `Sm` | `InputSize.Default` | Height and text size: `default`, `md` or `sm`. |
-| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
-| `readOnly` | `Boolean` | `false` | - |
-| `invalid` | `Boolean` | `LocalFieldState.current.invalid` | - |
-| `placeholder` | `String?` | `null` | Text shown while it is empty. |
-| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` | - |
-| `keyboardActions` | `KeyboardActions` | `KeyboardActions.Default` | - |
-| `visualTransformation` | `VisualTransformation` | `VisualTransformation.None` | - |
-| `interactionSource` | `MutableInteractionSource?` | `null` | - |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -594,12 +523,62 @@ The text field.
 - `disabled` is set in `accessibilityState` and makes the input non-editable.
 - Outside a `Field`, give the input an `accessibilityLabel`; a placeholder alone is not a label.
 
-## Notes
+</Only>
 
-- Uses the `bg-secondary`, `border-ring` and `border-destructive` tokens, with `opacity-50` when disabled.
-- In Uniwind and NativeWind, a focused field also draws the `ring-3 ring-ring/50` focus ring.
-- Placeholder, cursor and selection colors come from the `muted-foreground` and `primary` tokens.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Input
+
+The text field.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `InputSize` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<typeof InputPrimitive.Root>`.
+
+`size` sets the height and text size. The value works controlled with `value` and `onValueChange(value, details)`, or uncontrolled with `defaultValue`. Inside a `Field`, the input picks up the field's label, description, invalid and disabled state. `className` can be a function that receives the state (`focused`, `invalid`, `disabled`, `filled`, …) and returns classes. In Uniwind and NativeWind, a focused field also draws a `ring-3 ring-ring/50` focus ring.
+
+</Only>
+
+<Only platform="swift">
+
+### .textFieldStyle(.input)
+
+Style that creates `InputStyle`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `size` | `InputStyle.Size`: `.default` \| `.md` \| `.sm` | `.default` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### InputSize
+
+Values: `Default`, `Md`, `Sm`.
+
+### Input
+
+The text field.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `onValueChange` | `(String) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `size` | `InputSize`: `Default` \| `Md` \| `Sm` | `InputSize.Default` |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` |
+| `readOnly` | `Boolean` | `false` |
+| `invalid` | `Boolean` | `LocalFieldState.current.invalid` |
+| `placeholder` | `String?` | `null` |
+| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` |
+| `keyboardActions` | `KeyboardActions` | `KeyboardActions.Default` |
+| `visualTransformation` | `VisualTransformation` | `VisualTransformation.None` |
+| `interactionSource` | `MutableInteractionSource?` | `null` |
 
 </Only>
 

@@ -9,13 +9,15 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="paged-list-demo" layout="padded" responsive />
 
-`PagedList` slices an array of items into pages and renders each one through `renderItem` inside a plain list. On desktop it shows a suiss/ui `Pagination` with previous and next links, the first and last page, the pages next to the current one, and ellipses for the gaps. The pagination is hidden when everything fits on one page.
+`PagedList` slices an array of items into pages and renders each one through `renderItem` inside a plain list. On desktop it shows a suiss/ui `Pagination`. On mobile (below `48rem`, via `useIsMobile`), the list grows instead of paging: a Load more button appends the next page of items.
 
-On mobile (below `48rem`, via `useIsMobile`), the list grows instead of paging: a full-width secondary `Button` appends the next page of items, and focus moves to the first newly loaded item. Use it for long feeds, search results or topic lists where the user moves through a known set of items.
+Use it for long feeds, search results or topic lists where the user moves through a known set of items.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/paged-list
@@ -27,17 +29,23 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns paged-list
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Pagination](/docs/components/pagination), `use-mobile`.
 
-3. Copy the source into `components/patterns/paged-list.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/paged-list.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -67,70 +75,37 @@ const topics = [
 />
 ```
 
-- The current page is uncontrolled by default and starts at `defaultPage`. Pass `page` and `onPageChange` to control it.
-- Out-of-range page values are clamped between `1` and the page count.
-- Without `getPageHref`, page links use `#` and prevent navigation. With it, each link gets a real `href` and still updates the page on click.
-- Provide `getKey` when items have stable IDs; the default key is the item's index.
-- The mobile Load more state is internal and independent of `page`.
-
 ## Examples
 
 ### Start on later page
 
-Opens on page 4 by setting `defaultPage`.
+Set `defaultPage` to open on a later page, here page 4.
 
 <ComponentPreview name="paged-list-start-on-later-page" layout="padded" responsive />
 
 ### Single page
 
-Renders every item without pagination when the items fit on one page.
+The pagination is hidden when every item fits on one page.
 
 <ComponentPreview name="paged-list-single-page" layout="padded" responsive />
 
 ### Page links
 
-Gives each page link a real `href` through `getPageHref`.
+Pass `getPageHref` to give each page link a real `href`. Links still update the page on click.
 
 <ComponentPreview name="paged-list-page-links" layout="padded" responsive />
 
 ### Custom labels
 
-Replaces the previous, next and Load more labels.
+Use `previousLabel`, `nextLabel` and `loadMoreLabel` to replace the previous, next and Load more labels. The previous and next labels also become the links' accessible names.
 
 <ComponentPreview name="paged-list-custom-labels" layout="padded" responsive />
 
 ### Controlled
 
-Owns the current page in state with `page` and `onPageChange`.
+Control the current page with `page` and `onPageChange`.
 
 <ComponentPreview name="paged-list-controlled" layout="padded" responsive />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### PagedList
-
-The root that renders the visible items and the pagination or Load more control.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `T[]` | Required | The full array of items to page through. |
-| `pageSize` | `number` | `10` | The number of items per page, and per Load more step on mobile. |
-| `page` | `number` | - | The current page when controlled. |
-| `defaultPage` | `number` | `1` | The page shown first when uncontrolled. |
-| `onPageChange` | `(page: number) => void` | - | Called with the new page number when the user changes pages. |
-| `getPageHref` | `(page: number) => string` | - | Returns the `href` for a page link, turning pagination into real links. |
-| `getKey` | `(item: T, index: number) => React.Key` | `(_, index) => index` | Returns the React key for an item. |
-| `renderItem` | `(item: T, index: number) => React.ReactNode` | Required | Renders one item; receives the item and its index in `items`. |
-| `loadMoreLabel` | `string` | `"Load more"` | The label of the mobile Load more button. |
-| `previousLabel` | `string` | - | Visible text for the previous link; it also becomes its accessible name. |
-| `nextLabel` | `string` | - | Visible text for the next link; it also becomes its accessible name. |
-| `listClassName` | `string` | - | Classes applied to the inner list element. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -139,9 +114,34 @@ Also accepts the props of `React.ComponentProps<"div">`.
 - Previous and next links get `aria-disabled` on the first and last page. Their default accessible names are Go to previous page and Go to next page.
 - Changing pages scrolls the list into view. Loading more on mobile moves focus to the first focusable element of the first new item.
 
-## Notes
+## API Reference
 
-Styling hooks: `data-slot="paged-list"`, `paged-list-items`, `paged-list-item`, `paged-list-pagination` and `paged-list-load-more`. Because `renderItem` output is wrapped in an `li`, return row content such as an `Item`, not another list item.
+### PagedList
+
+The root that renders the visible items and the pagination or Load more control.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `items` | `T[]` | Required |
+| `pageSize` | `number` | `10` |
+| `page` | `number` | - |
+| `defaultPage` | `number` | `1` |
+| `onPageChange` | `(page: number) => void` | - |
+| `getPageHref` | `(page: number) => string` | - |
+| `getKey` | `(item: T, index: number) => React.Key` | `(_, index) => index` |
+| `renderItem` | `(item: T, index: number) => React.ReactNode` | Required |
+| `loadMoreLabel` | `string` | `"Load more"` |
+| `previousLabel` | `string` | - |
+| `nextLabel` | `string` | - |
+| `listClassName` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+The current page is uncontrolled by default and starts at `defaultPage`. Out-of-range page values are clamped between `1` and the page count. Without `getPageHref`, page links use `#` and prevent navigation. `pageSize` is the number of items per page and per Load more step on mobile; the mobile Load more state is internal and independent of `page`.
+
+`renderItem` receives the item and its index in `items`. Its output is wrapped in an `li`, so return row content such as an `Item`, not another list item. Provide `getKey` when items have stable IDs; the default key is the item's index. `listClassName` applies to the inner list element.
+
+The desktop pagination shows previous and next links, the first and last page, the pages next to the current one, and ellipses for the gaps. Each part sets a `data-slot`, such as `paged-list-item` or `paged-list-load-more`, for styling.
 
 </Only>
 
@@ -151,9 +151,13 @@ Styling hooks: `data-slot="paged-list"`, `paged-list-items`, `paged-list-item`, 
 
 `PagedList` takes the full `items` array and renders only the first `pageSize` items. When the user scrolls near the end, or presses the Load more button in the footer, the next page is appended.
 
-The button disappears once every item is shown. Use it for long local lists where rendering everything at once is not needed.
+Use it for long local lists where rendering everything at once is not needed.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -203,7 +207,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Text](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -211,7 +217,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Text](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -219,17 +225,17 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Text](/docs/components/text).
 
-3. Copy the source into `components/patterns/paged-list.tsx`:
+3. Copy and paste the following code into `components/patterns/paged-list.tsx`:
 
 <ComponentSource path="uniwind/components/patterns/paged-list.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -237,11 +243,11 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Text](/docs/components/text).
 
-3. Copy the source into `components/patterns/paged-list.tsx`:
+3. Copy and paste the following code into `components/patterns/paged-list.tsx`:
 
 <ComponentSource path="nativewind/components/patterns/paged-list.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -249,11 +255,11 @@ npx expo install cn
 
 1. Add the pieces it builds on: [Button](/docs/components/button), [Text](/docs/components/text).
 
-2. Copy the source into `components/patterns/paged-list.tsx`:
+2. Copy and paste the following code into `components/patterns/paged-list.tsx`:
 
 <ComponentSource path="stylesheet/components/patterns/paged-list.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -336,6 +342,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -531,14 +541,6 @@ fun PagedListRow(topic: PagedListTopic) {
 
 </Only>
 
-<Only platform="rn">
-
-Pass `items`, `renderItem` and a `getKey` that returns a stable key for each item. `renderItem` receives the item and its index, not the `FlatList` info object.
-
-Other `FlatList` props pass through, except `data`, `keyExtractor`, `onEndReached` and `ListFooterComponent`, which the list manages. Use `listClassName` to style the content container.
-
-</Only>
-
 ## Examples
 
 ### Small pages
@@ -549,7 +551,7 @@ Uses a `pageSize` of 3 so pages load sooner.
 
 ### Single page
 
-Fewer items than one page, so no Load more button appears.
+Fewer items than one page, so no Load more button appears. The button disappears once every item is shown.
 
 <NativeExample name="paged-list-single-page" />
 
@@ -559,86 +561,73 @@ Renames the button with `loadMoreLabel`.
 
 <NativeExample name="paged-list-custom-labels" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### PagedList
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `T[]` | Required | The full array of items. |
-| `pageSize` | `number` | `10` | Items added per page. Defaults to `10`. |
-| `getKey` | `(item: T, index: number) => React.Key` | `(_, index) => index` | Returns a unique key for an item. Defaults to the index. |
-| `renderItem` | `(item: T, index: number) => React.ReactNode` | Required | Renders one item from the item and its index. |
-| `loadMoreLabel` | `string` | `"Load more"` | Text of the footer button. Defaults to `Load more`. |
-| `className` | `string` | - | Classes for the `FlatList`. |
-| `listClassName` | `string` | - | Classes for the list's content container. |
-
-Also accepts the props of `FlatListProps<T>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### PagedList
-
-The root that renders the visible items and the pagination or Load more control.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ items` | `[Item]` | - | - |
-| `id` | `KeyPath<Item, ID>` | - | - |
-| `pageSize` | `Int` | `10` | Items added per page. |
-| `loadMoreLabel` | `LocalizedStringKey?` | `"Load more"` | Text of the footer button. |
-| `loadsOnEndReached` | `Bool` | `true` | - |
-| `row` | `(Item, Int) -> Row` | - | - |
-
-Overloads: `init(_:id:pageSize:loadMoreLabel:loadsOnEndReached:row:)`, `init(_:pageSize:loadMoreLabel:loadsOnEndReached:row:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### PagedList
-
-The root that renders the visible items and the pagination or Load more control.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `List<T>` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `pageSize` | `Int` | `10` | Items added per page. |
-| `getKey` | `((T, Int) -> Any)?` | `null` | Returns a unique key for an item. |
-| `loadMoreLabel` | `String` | `"Load more"` | Text of the footer button. |
-| `state` | `LazyListState` | `rememberLazyListState()` | - |
-| `contentPadding` | `PaddingValues` | `PaddingValues(0.dp)` | - |
-| `renderItem` | `@Composable (T, Int) -> Unit` | - | Renders one item from the item and its index. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
 
 - The Load more button is a `Button`, so screen reader users can load the next page without scrolling to the end.
 
-## Notes
+</Only>
 
-- The next page loads when the scroll position is within half a screen of the end (`onEndReachedThreshold` of `0.5`).
-- The footer is a full-width `secondary` button.
+## API Reference
+
+<Only platform="rn">
+
+### PagedList
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `items` | `T[]` | Required |
+| `pageSize` | `number` | `10` |
+| `getKey` | `(item: T, index: number) => React.Key` | `(_, index) => index` |
+| `renderItem` | `(item: T, index: number) => React.ReactNode` | Required |
+| `loadMoreLabel` | `string` | `"Load more"` |
+| `className` | `string` | - |
+| `listClassName` | `string` | - |
+
+Also accepts the props of `FlatListProps<T>`.
+
+Pass a `getKey` that returns a stable key for each item; it defaults to the index. `renderItem` receives the item and its index, not the `FlatList` info object. `pageSize` is the number of items added per page. The list manages `data`, `keyExtractor`, `onEndReached` and `ListFooterComponent`, so those do not pass through. `className` styles the `FlatList` and `listClassName` its content container.
+
+The next page loads when the scroll position is within half a screen of the end (`onEndReachedThreshold` of `0.5`). The footer is a full-width `secondary` button.
+
+</Only>
+
+<Only platform="swift">
+
+### PagedList
+
+The root that renders the visible items and the pagination or Load more control.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ items` | `[Item]` | - |
+| `id` | `KeyPath<Item, ID>` | - |
+| `pageSize` | `Int` | `10` |
+| `loadMoreLabel` | `LocalizedStringKey?` | `"Load more"` |
+| `loadsOnEndReached` | `Bool` | `true` |
+| `row` | `(Item, Int) -> Row` | - |
+
+Overloads: `init(_:id:pageSize:loadMoreLabel:loadsOnEndReached:row:)`, `init(_:pageSize:loadMoreLabel:loadsOnEndReached:row:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### PagedList
+
+The root that renders the visible items and the pagination or Load more control.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `items` | `List<T>` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `pageSize` | `Int` | `10` |
+| `getKey` | `((T, Int) -> Any)?` | `null` |
+| `loadMoreLabel` | `String` | `"Load more"` |
+| `state` | `LazyListState` | `rememberLazyListState()` |
+| `contentPadding` | `PaddingValues` | `PaddingValues(0.dp)` |
+| `renderItem` | `@Composable (T, Int) -> Unit` | - |
 
 </Only>
 

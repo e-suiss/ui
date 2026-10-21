@@ -17,6 +17,10 @@ platforms: [rn, swift, kotlin]
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -65,7 +69,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -73,7 +79,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-svg
@@ -81,17 +87,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/signature-pad.tsx`:
+3. Copy and paste the following code into `components/ui/signature-pad.tsx`:
 
 <ComponentSource path="uniwind/components/ui/signature-pad.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-svg
@@ -99,17 +105,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/signature-pad.tsx`:
+3. Copy and paste the following code into `components/ui/signature-pad.tsx`:
 
 <ComponentSource path="nativewind/components/ui/signature-pad.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-gesture-handler react-native-svg
@@ -117,11 +123,11 @@ npx expo install react-native-gesture-handler react-native-svg
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/signature-pad.tsx`:
+3. Copy and paste the following code into `components/ui/signature-pad.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/signature-pad.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -204,6 +210,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -265,16 +275,6 @@ fun SignaturePadExample() {
 
 </Only>
 
-<Only platform="rn">
-
-Use it uncontrolled with `defaultValue`, or controlled with `value` and `onChange`. The value is an array of strokes, where each stroke is an array of `{ x, y }` points.
-
-Pass a `ref` to get a `SignaturePadHandle` with `toSVG()`, `clear()` and `isEmpty()`. `toSVG` returns an SVG string sized to the pad and accepts an optional `color` (defaults to `currentColor`).
-
-The `SignaturePadHandle`, `SignaturePadPoint` and `SignaturePadStroke` types are also exported.
-
-</Only>
-
 ## Examples
 
 ### Signed
@@ -309,174 +309,6 @@ A controlled pad that reads the signature through the ref and exports it with `t
 
 <NativeExample name="signature-pad-controlled" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### SignaturePad
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `SignaturePadStroke[]` | - | Strokes for controlled use. |
-| `defaultValue` | `SignaturePadStroke[]` | - | Initial strokes for uncontrolled use. |
-| `onChange` | `(value: SignaturePadStroke[]) => void` | - | Called with the full list of strokes after each stroke ends or the pad is cleared. |
-| `strokeWidth` | `number` | `2.5` | Line width of the strokes. Defaults to `2.5`. |
-| `disabled` | `boolean` | `false` | Turns off drawing, hides the Clear button and dims the pad. |
-| `placeholder` | `React.ReactNode` | `"Sign here"` | Content shown on the signature line while the pad is empty. Defaults to `"Sign here"`. |
-| `clearLabel` | `React.ReactNode` | `"Clear"` | Label of the Clear button. Defaults to `"Clear"`. |
-| `ref` | `React.Ref<SignaturePadHandle>` | - | Receives a `SignaturePadHandle` with `toSVG`, `clear` and `isEmpty`. |
-
-Also accepts the props of `React.ComponentProps<typeof View>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### SignatureStroke
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ points` | `[CGPoint]` | - | - |
-
-| Property | Type |
-| --- | --- |
-| `points` | `[CGPoint]` |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SignaturePad
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Binding<[SignatureStroke]>` | - | Strokes for controlled use. |
-| `strokeWidth` | `CGFloat` | `2.5` | Line width of the strokes. |
-| `placeholder` | `LocalizedStringKey` | `"Sign here"` | Content shown on the signature line while the pad is empty. |
-| `clearable` | `Bool` | `true` | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SignaturePad.path
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ strokes` | `[SignatureStroke]` | - | - |
-| `strokeWidth` | `CGFloat` | `2.5` | - |
-
-Returns `Path`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SignaturePad.image
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ strokes` | `[SignatureStroke]` | - | - |
-| `size` | `CGSize` | - | - |
-| `strokeWidth` | `CGFloat` | `2.5` | - |
-| `color` | `Color` | `EsuissColor.foreground` | - |
-| `colorScheme` | `ColorScheme` | `.light` | - |
-| `scale` | `CGFloat` | `3` | - |
-
-Returns `UIImage?`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### SignatureStroke
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `points` | `List<Offset>` | - | - |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### toPath
-
-Receiver: `List<SignatureStroke>`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `scale` | `Float` | `1f` | - |
-
-Returns `Path`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### toSvg
-
-Receiver: `List<SignatureStroke>`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `width` | `Float` | - | - |
-| `height` | `Float` | - | - |
-| `strokeWidth` | `Float` | `2.5f` | - |
-| `color` | `String` | `"#000000"` | - |
-
-Returns `String`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### toImageBitmap
-
-Receiver: `List<SignatureStroke>`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `width` | `Dp` | - | - |
-| `height` | `Dp` | - | - |
-| `density` | `Density` | - | - |
-| `color` | `Color` | `Color.Black` | - |
-| `strokeWidth` | `Dp` | `2.5.dp` | - |
-| `background` | `Color` | `Color.Transparent` | - |
-
-Returns `ImageBitmap`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SignaturePad
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `value` | `List<SignatureStroke>?` | `null` | Strokes for controlled use. |
-| `onValueChange` | `((List<SignatureStroke>) -> Unit)?` | `null` | Called when the value changes. |
-| `defaultValue` | `List<SignatureStroke>` | `emptyList()` | Initial strokes for uncontrolled use. |
-| `strokeWidth` | `Dp` | `2.5.dp` | Line width of the strokes. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `placeholder` | `String` | `"Sign here"` | Content shown on the signature line while the pad is empty. |
-| `clearLabel` | `String` | `"Clear"` | Label of the Clear button. |
-| `showClearButton` | `Boolean` | `true` | - |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -485,10 +317,143 @@ Returns `ImageBitmap`.
 - Its value is announced as "Empty" or "Signed", and `disabled` is reported in its state.
 - When it has a signature and is not disabled, it offers a `clear` accessibility action, so VoiceOver and TalkBack users can clear it without finding the button.
 
-## Notes
+</Only>
 
-- Uses `bg-card` in light mode and `bg-muted` in dark mode, with `border-border` and `text-foreground` for the strokes.
-- Points closer than one point to the previous point are skipped while drawing.
+## API Reference
+
+<Only platform="rn">
+
+### SignaturePad
+
+The `SignaturePad` component captures a handwritten signature as strokes.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `SignaturePadStroke[]` | - |
+| `defaultValue` | `SignaturePadStroke[]` | - |
+| `onChange` | `(value: SignaturePadStroke[]) => void` | - |
+| `strokeWidth` | `number` | `2.5` |
+| `disabled` | `boolean` | `false` |
+| `placeholder` | `React.ReactNode` | `"Sign here"` |
+| `clearLabel` | `React.ReactNode` | `"Clear"` |
+| `ref` | `React.Ref<SignaturePadHandle>` | - |
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
+
+Use it uncontrolled with `defaultValue`, or controlled with `value` and `onChange`. The value is an array of strokes, where each stroke is an array of `{ x, y }` points. `onChange` is called with the full list of strokes after each stroke ends or the pad is cleared. Points closer than one point to the previous point are skipped while drawing. `disabled` turns off drawing, hides the Clear button and dims the pad. `placeholder` is shown on the signature line while the pad is empty.
+
+Pass a `ref` to get a `SignaturePadHandle` with `toSVG()`, `clear()` and `isEmpty()`. `toSVG` returns an SVG string sized to the pad and accepts an optional `color` (defaults to `currentColor`). The `SignaturePadHandle`, `SignaturePadPoint` and `SignaturePadStroke` types are also exported.
+
+</Only>
+
+<Only platform="swift">
+
+### SignatureStroke
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ points` | `[CGPoint]` | - |
+
+| Property | Type |
+| --- | --- |
+| `points` | `[CGPoint]` |
+
+### SignaturePad
+
+The `SignaturePad` component captures a handwritten signature as strokes.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Binding<[SignatureStroke]>` | - |
+| `strokeWidth` | `CGFloat` | `2.5` |
+| `placeholder` | `LocalizedStringKey` | `"Sign here"` |
+| `clearable` | `Bool` | `true` |
+
+### SignaturePad.path
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ strokes` | `[SignatureStroke]` | - |
+| `strokeWidth` | `CGFloat` | `2.5` |
+
+Returns `Path`.
+
+### SignaturePad.image
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ strokes` | `[SignatureStroke]` | - |
+| `size` | `CGSize` | - |
+| `strokeWidth` | `CGFloat` | `2.5` |
+| `color` | `Color` | `EsuissColor.foreground` |
+| `colorScheme` | `ColorScheme` | `.light` |
+| `scale` | `CGFloat` | `3` |
+
+Returns `UIImage?`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### SignatureStroke
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `points` | `List<Offset>` | - |
+
+### toPath
+
+Receiver: `List<SignatureStroke>`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `scale` | `Float` | `1f` |
+
+Returns `Path`.
+
+### toSvg
+
+Receiver: `List<SignatureStroke>`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `width` | `Float` | - |
+| `height` | `Float` | - |
+| `strokeWidth` | `Float` | `2.5f` |
+| `color` | `String` | `"#000000"` |
+
+Returns `String`.
+
+### toImageBitmap
+
+Receiver: `List<SignatureStroke>`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `width` | `Dp` | - |
+| `height` | `Dp` | - |
+| `density` | `Density` | - |
+| `color` | `Color` | `Color.Black` |
+| `strokeWidth` | `Dp` | `2.5.dp` |
+| `background` | `Color` | `Color.Transparent` |
+
+Returns `ImageBitmap`.
+
+### SignaturePad
+
+The `SignaturePad` component captures a handwritten signature as strokes.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `value` | `List<SignatureStroke>?` | `null` |
+| `onValueChange` | `((List<SignatureStroke>) -> Unit)?` | `null` |
+| `defaultValue` | `List<SignatureStroke>` | `emptyList()` |
+| `strokeWidth` | `Dp` | `2.5.dp` |
+| `enabled` | `Boolean` | `true` |
+| `placeholder` | `String` | `"Sign here"` |
+| `clearLabel` | `String` | `"Clear"` |
+| `showClearButton` | `Boolean` | `true` |
 
 </Only>
 

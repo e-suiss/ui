@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A health-style heart-rate card that shades each hour's low-to-high range and draws the average as a line through the band. Use it for any metric where the spread matters as much as the typical value, such as temperatures or response times.
 
+Give each record a two-number `range` array and an `average`; the header's overall low and high come from the data. The value axis has a fixed `domain`, so widen it and its `ticks` if readings fall outside it, and change the unit text in the tooltip and header. Set both colors in `chartConfig`. Focus the chart and use the arrow keys to move the tooltip between hours.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/area-chart-range
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts area-chart-range
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/area-chart-range.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/area-chart-range.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { AreaChartRange } from "@/components/charts/area-chart-range"
 ```tsx
 <AreaChartRange />
 ```
-
-Feed in one record per period with a two-number `range` array and an `average` value; the header's overall low and high are derived from the data. Adjust the value axis `domain` and `ticks` to fit your range, and change the unit text in the tooltip and header. Set both colors in `chartConfig`.
-
-## Notes
-
-The value axis has a fixed domain, so readings outside it get clipped until you widen it. Focus the plot and use the arrow keys to move the tooltip between hours.
 
 </Only>
 
@@ -75,9 +79,15 @@ The value axis has a fixed domain, so readings outside it get clipped until you 
 
 A `ComposedChart` that pairs a range `Area`, filled between each hour's low and high reading, with a `Line` for the hourly average. The header shows the day's lowest and highest values in BPM, and the tooltip formats both the range and the average with a custom row built from `Text`.
 
+Replace the `readings` array with `[low, high, average]` tuples for each hour; the header range and the chart data are derived from it. Adjust the `YAxis` `domain` and `ticks` to fit your values. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +149,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/area-chart-range.tsx`:
+2. Copy and paste the following code into `components/charts/area-chart-range.tsx`:
 
 <ComponentSource path="uniwind/components/charts/area-chart-range.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +161,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/area-chart-range.tsx`:
+2. Copy and paste the following code into `components/charts/area-chart-range.tsx`:
 
 <ComponentSource path="nativewind/components/charts/area-chart-range.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +173,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/area-chart-range.tsx`:
+2. Copy and paste the following code into `components/charts/area-chart-range.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/area-chart-range.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +260,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +303,6 @@ fun AreaRangeExample() {
     AreaChartRange()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace the `readings` array with `[low, high, average]` tuples for each hour; the header range and the chart data are derived from it. Adjust the `YAxis` `domain` and `ticks` to fit your values. The component takes no props.
 
 </Only>
 

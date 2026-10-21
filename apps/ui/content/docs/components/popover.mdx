@@ -15,7 +15,9 @@ Use a popover for interactive content that relates to its trigger. Use Tooltip f
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/popover
@@ -27,24 +29,37 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add popover
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react
 ```
 
-2. Copy the source into `components/ui/popover.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/popover.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription } from "@/components/ui/popover"
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -162,134 +177,32 @@ import { Label } from "@/components/ui/label"
 
 </OnlyBase>
 
-The popover is uncontrolled by default; use `defaultOpen`, or the open state with `onOpenChange` to control it. `PopoverContent` accepts the positioning props `side`, `sideOffset`, `align` and `alignOffset`, defaulting to `bottom`, `4`, `center` and `0`.
+## Composition
 
-<OnlyBase base="base">
+Use the following composition to build a `Popover`:
 
-Use the trigger's `render` prop to render it as another component, such as a `Button`.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Set `asChild` on `PopoverTrigger` to render another component, such as a `Button`, as the trigger.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-The `Button` placed first inside `Popover` opens it, and `isOpen` controls the open state.
-
-</OnlyBase>
+```text
+Popover
+├── PopoverTrigger
+└── PopoverContent
+    └── PopoverHeader
+        ├── PopoverTitle
+        └── PopoverDescription
+```
 
 ## Examples
 
 ### Sides
 
-Four popovers that open on the top, right, bottom and left of their triggers.
+Set the `side` prop on `PopoverContent` to open the panel on the top, right, bottom or left of its trigger.
 
 <ComponentPreview name="popover-sides" />
 
 ### Simple
 
-A plain text popover opened from a ghost button, without a header.
+A plain text popover opened from a ghost button. `PopoverHeader` is optional, so the content can be plain text.
 
 <ComponentPreview name="popover-simple" />
-
-## API Reference
-
-<Anatomy>
-
-- [Popover](#popover)
-  - [PopoverTrigger](#popovertrigger)
-  - [PopoverContent](#popovercontent)
-    - [PopoverHeader](#popoverheader)
-      - [PopoverTitle](#popovertitle)
-      - [PopoverDescription](#popoverdescription)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Popover
-
-The root that manages the popover's open state.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### PopoverTrigger
-
-The button that opens and closes the popover.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### PopoverContent
-
-The positioned panel that renders in a portal.
-
-<OnlyBase base="base aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"bottom"` | The side of the trigger the panel opens on. |
-| `sideOffset` | `number` | `4` | The gap in pixels between the trigger and the panel. |
-| `align` | `"start" \| "center" \| "end"` | `"center"` | How the panel lines up with the trigger along that side. |
-| `alignOffset` | `number` | `0` | The offset in pixels along the alignment axis. |
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` | The side of the trigger the panel opens on. |
-| `sideOffset` | `number` | `4` | The gap in pixels between the trigger and the panel. |
-| `align` | `"start" \| "center" \| "end"` | `"center"` | How the panel lines up with the trigger along that side. |
-| `alignOffset` | `number` | `0` | The offset in pixels along the alignment axis. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive parts it wraps.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### PopoverHeader
-
-Groups the title and description at the top of the panel.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### PopoverTitle
-
-The heading that names the popover.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### PopoverDescription
-
-Secondary text that describes the popover.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -298,12 +211,87 @@ Also accepts the props of the primitive part it wraps.
 - Escape closes the popover and returns focus to the trigger.
 - Clicking outside the panel, or clicking the trigger again, closes it.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values `popover-trigger`, `popover-content`, `popover-header`, `popover-title` and `popover-description`. The `Popover` root renders no element of its own.
-- The panel is `w-72` by default; override it with `className`.
-- The panel animates in from the side it opens on.
-- Uses the `popover`, `popover-foreground` and `muted-foreground` tokens.
+### Popover
+
+The root that manages the popover's open state.
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base">
+
+The popover is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Use the trigger's `render` prop to render it as another component, such as a `Button`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+The popover is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Set `asChild` on `PopoverTrigger` to render another component, such as a `Button`, as the trigger.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The popover is uncontrolled by default; set `defaultOpen` to start open, or control it with `isOpen` and `onOpenChange`. The `Button` placed first inside `Popover` opens it.
+
+</OnlyBase>
+
+### PopoverTrigger
+
+The button that opens and closes the popover.
+
+Also accepts the props of the primitive part it wraps.
+
+### PopoverContent
+
+The positioned panel that renders in a portal.
+
+<OnlyBase base="base aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"bottom"` |
+| `sideOffset` | `number` | `4` |
+| `align` | `"start" \| "center" \| "end"` | `"center"` |
+| `alignOffset` | `number` | `0` |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` |
+| `sideOffset` | `number` | `4` |
+| `align` | `"start" \| "center" \| "end"` | `"center"` |
+| `alignOffset` | `number` | `0` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive parts it wraps.
+
+`side` sets which side of the trigger the panel opens on, and `align` how it lines up with the trigger along that side. `sideOffset` is the gap in pixels between the trigger and the panel, and `alignOffset` the offset in pixels along the alignment axis. The panel is `w-72` by default; override it with `className`. It animates in from the side it opens on.
+
+### PopoverHeader
+
+Groups the title and description at the top of the panel.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### PopoverTitle
+
+The heading that names the popover.
+
+Also accepts the props of the primitive part it wraps.
+
+### PopoverDescription
+
+Secondary text that describes the popover.
+
+Also accepts the props of the primitive part it wraps.
+
+Each part sets a `data-slot`, such as `popover-content` or `popover-title`, for styling. The `Popover` root renders no element of its own.
 
 </Only>
 
@@ -320,6 +308,10 @@ Also accepts the props of the primitive part it wraps.
 Use `PopoverHeader`, `PopoverTitle` and `PopoverDescription` to label the panel. For short hints, use Tooltip instead.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -369,7 +361,9 @@ The CLI also adds what it builds on: [Text](/docs/components/text). It also adds
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -377,7 +371,7 @@ The CLI also adds what it builds on: [Text](/docs/components/text). It also adds
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-screens react-native-worklets
@@ -413,17 +407,17 @@ npx expo install cn react-native-reanimated react-native-screens react-native-wo
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/popover.tsx`:
+5. Copy and paste the following code into `components/ui/popover.tsx`:
 
 <ComponentSource path="uniwind/components/ui/popover.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-screens react-native-worklets
@@ -459,17 +453,17 @@ npx expo install cn react-native-reanimated react-native-screens react-native-wo
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/popover.tsx`:
+5. Copy and paste the following code into `components/ui/popover.tsx`:
 
 <ComponentSource path="nativewind/components/ui/popover.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-screens react-native-worklets
@@ -505,11 +499,11 @@ npx expo install react-native-reanimated react-native-screens react-native-workl
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/popover.tsx`:
+5. Copy and paste the following code into `components/ui/popover.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/popover.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -594,6 +588,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -840,18 +838,6 @@ fun PopoverDimensions(defaultOpen: Boolean) {
 
 </Only>
 
-<Only platform="rn">
-
-The popover is uncontrolled by default. Use `defaultOpen` to start open, or `open` with `onOpenChange` to control it. `onOpenChangeComplete` runs after the open or close animation.
-
-Pass a `render` element to `PopoverTrigger`, such as a `Button`, to use your own pressable.
-
-To share one popover between several triggers, create a handle with `createHandle` from the popover primitive, pass it as `handle` to the `Popover` and each `PopoverTrigger`, and give each trigger a `payload`. The `Popover` children can be a function that receives the active `payload`.
-
-Use `portalHost` on `PopoverContent` to render into a named portal host.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -860,7 +846,7 @@ Use `portalHost` on `PopoverContent` to render into a named portal host.
 
 ### Sides
 
-Popovers opened on each of the four sides.
+Popovers that open on each of the four sides of their triggers.
 
 <NativeExample name="popover-sides" />
 
@@ -874,7 +860,7 @@ A short text popover aligned to the start of its trigger.
 
 ### Detached triggers
 
-Several triggers sharing one popover through a handle, each passing its own payload.
+Several triggers share one popover, and each passes its own payload.
 
 <NativeExample name="popover-detached-triggers" />
 
@@ -883,163 +869,6 @@ Several triggers sharing one popover through a handle, each passing its own payl
 <Only platform="kotlin">
 
 The React Native tab shows 1 more example.
-
-</Only>
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Popover
-
-The root that manages the open state.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Whether the popover is open, for controlled use. |
-| `defaultOpen` | `boolean` | `false` | Whether the popover starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the popover opens or closes. |
-| `modal` | `boolean` | `false` | Blocks interaction with the rest of the screen while open. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### PopoverContent
-
-Animated panel rendered in a portal and positioned next to the trigger.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `portalHost` | `string` | - | Name of the portal host to render into. |
-
-Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Popup>`, `React.ComponentProps<typeof PopoverPrimitive.Positioner>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### PopoverHeader
-
-Column for the title and description.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### PopoverTitle
-
-Heading that labels the panel.
-
-Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Title>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### PopoverDescription
-
-Secondary text under the title.
-
-Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Description>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### PopoverContent
-
-Animated panel rendered in a portal and positioned next to the trigger.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `width` | `CGFloat?` | `288` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### PopoverHeader
-
-Column for the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Popover
-
-The root that manages the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `Boolean` | - | Whether the popover is open, for controlled use. |
-| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the popover opens or closes. |
-| `trigger` | `@Composable () -> Unit` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `side` | `PopupSide` | `PopupSide.Bottom` | The side of the trigger the panel opens on. |
-| `align` | `PopupAlign` | `PopupAlign.Center` | How the panel lines up with the trigger along that side. |
-| `sideOffset` | `Dp` | `4.dp` | The gap in pixels between the trigger and the panel. |
-| `alignOffset` | `Dp` | `0.dp` | The offset in pixels along the alignment axis. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### PopoverHeader
-
-Column for the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### PopoverTitle
-
-Heading that labels the panel.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### PopoverDescription
-
-Secondary text under the title.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
 
 </Only>
 
@@ -1053,11 +882,126 @@ Secondary text under the title.
 - The popover can close from an outside press, the Android back button, or the screen reader escape gesture.
 - Animations follow the system reduce motion setting.
 
-## Notes
+</Only>
 
-- The panel uses `bg-popover`, a subtle `border-foreground/5` border (`border-foreground/10` in dark mode) and `shadow-lg`.
-- `FullWindowOverlay` is used only on iOS; on Android the content renders in the portal directly.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Popover
+
+The root that manages the open state.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean, details) => void` | - |
+| `modal` | `boolean` | `false` |
+
+The popover is uncontrolled by default. Use `defaultOpen` to start open, or `open` with `onOpenChange` to control it. `onOpenChangeComplete` runs after the open or close animation. `modal` blocks interaction with the rest of the screen while open.
+
+To share one popover between several triggers, create a handle with `createHandle` from the popover primitive, pass it as `handle` to the `Popover` and each `PopoverTrigger`, and give each trigger a `payload`. The `Popover` children can be a function that receives the active `payload`.
+
+Pass a `render` element to `PopoverTrigger`, such as a `Button`, to use your own pressable.
+
+### PopoverContent
+
+Animated panel rendered in a portal and positioned next to the trigger.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `portalHost` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Popup>`, `React.ComponentProps<typeof PopoverPrimitive.Positioner>`.
+
+Use `portalHost` to render into a named portal host. On iOS the content is wrapped in a `FullWindowOverlay`; on Android it renders in the portal directly. The panel uses `bg-popover`, a subtle `border-foreground/5` border (`border-foreground/10` in dark mode) and `shadow-lg`.
+
+### PopoverHeader
+
+Column for the title and description.
+
+Also accepts the props of `ViewProps`.
+
+### PopoverTitle
+
+Heading that labels the panel.
+
+Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Title>`.
+
+### PopoverDescription
+
+Secondary text under the title.
+
+Also accepts the props of `React.ComponentProps<typeof PopoverPrimitive.Description>`.
+
+</Only>
+
+<Only platform="swift">
+
+### PopoverContent
+
+Animated panel rendered in a portal and positioned next to the trigger.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `width` | `CGFloat?` | `288` |
+| `content` | `() -> Content` | - |
+
+### PopoverHeader
+
+Column for the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### Popover
+
+The root that manages the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `open` | `Boolean` | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - |
+| `trigger` | `@Composable () -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `side` | `PopupSide` | `PopupSide.Bottom` |
+| `align` | `PopupAlign` | `PopupAlign.Center` |
+| `sideOffset` | `Dp` | `4.dp` |
+| `alignOffset` | `Dp` | `0.dp` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### PopoverHeader
+
+Column for the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### PopoverTitle
+
+Heading that labels the panel.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### PopoverDescription
+
+Secondary text under the title.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
 
 </Only>
 

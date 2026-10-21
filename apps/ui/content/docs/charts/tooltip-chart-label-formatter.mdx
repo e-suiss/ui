@@ -11,9 +11,13 @@ platforms: [web]
 
 Two weeks of active energy as a gradient area, where the axis shows only day numbers but the tooltip heading spells out the weekday. Use a label formatter when the axis needs short labels and the tooltip has room for the full context.
 
+Pass a `labelFormatter` to `ChartTooltipContent` and build the heading from the hovered record, which arrives in its second argument. The demo format shows the weekday, month and day but no year, so ranges across a month boundary stay clear; add the year if your range spans more than one.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/tooltip-chart-label-formatter
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts tooltip-chart-label-formatter
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/tooltip-chart-label-formatter.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/tooltip-chart-label-formatter.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,11 +60,5 @@ import { TooltipChartLabelFormatter } from "@/components/charts/tooltip-chart-la
 ```tsx
 <TooltipChartLabelFormatter />
 ```
-
-Pass a `labelFormatter` to `ChartTooltipContent` and build the heading from the hovered record, which arrives in its second argument. Adjust the date format there, for example to add the year when your range spans more than one year.
-
-## Notes
-
-The demo format shows the weekday, month and day, so ranges that cross a month boundary stay clear. It leaves out the year.
 
 </Only>

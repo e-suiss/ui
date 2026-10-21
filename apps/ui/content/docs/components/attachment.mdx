@@ -15,7 +15,9 @@ Wrap several attachments in an `AttachmentGroup` to render them as a single list
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/attachment
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add attachment
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react class-variance-authority
@@ -37,16 +41,32 @@ npm install @base-ui/react class-variance-authority
 
 2. Add the pieces it builds on: [Button](/docs/components/button).
 
-3. Copy the source into `components/ui/attachment.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/attachment.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Attachment, AttachmentLabel, AttachmentMedia, AttachmentContent, AttachmentTitle, AttachmentDescription, AttachmentProgress, AttachmentActions, AttachmentAction, AttachmentTrigger, AttachmentGroup } from "@/components/ui/attachment"
+import {
+  Attachment,
+  AttachmentAction,
+  AttachmentActions,
+  AttachmentContent,
+  AttachmentDescription,
+  AttachmentGroup,
+  AttachmentLabel,
+  AttachmentMedia,
+  AttachmentProgress,
+  AttachmentTitle,
+  AttachmentTrigger,
+} from "@/components/ui/attachment"
 ```
 
 ```tsx
@@ -66,39 +86,44 @@ import { Attachment, AttachmentLabel, AttachmentMedia, AttachmentContent, Attach
 </Attachment>
 ```
 
-Set `state` to reflect the file's lifecycle. `idle` adds a dashed border (outside a group), and `error` colors the description with `text-destructive`. The `state`, `size` and `orientation` values are also exposed as `data-*` attributes for your own styling.
+## Composition
 
-`AttachmentAction` renders a `Button` with the `secondary` variant and an icon size by default. Pass `variant="link"` for a text action such as "Try Again". Icon-only actions need an `aria-label`.
+Use the following composition to build a `Attachment`:
 
-<OnlyBase base="base">
-
-`AttachmentTrigger` is an invisible button stretched over the card. Give it an `aria-label`, or use `render` to turn it into a link. Actions sit above it, so they remain separately clickable.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-`AttachmentTrigger` is an invisible button stretched over the card. Give it an `aria-label`, or use `asChild` with a link as its child to turn it into a link. Actions sit above it, so they remain separately clickable.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-`AttachmentTrigger` is an invisible button stretched over the card. Give it an `aria-label`, or pass a `render` function that returns a link to turn it into a link. Actions sit above it, so they remain separately clickable.
-
-</OnlyBase>
+```text
+Attachment
+├── AttachmentMedia
+│   └── AttachmentLabel
+├── AttachmentContent
+│   ├── AttachmentTitle
+│   ├── AttachmentDescription
+│   └── AttachmentProgress
+├── AttachmentActions
+│   └── AttachmentAction
+└── AttachmentTrigger
+AttachmentGroup
+└── Attachment
+    ├── AttachmentMedia
+    │   └── AttachmentLabel
+    ├── AttachmentContent
+    │   ├── AttachmentTitle
+    │   ├── AttachmentProgress
+    │   └── AttachmentDescription
+    └── AttachmentActions
+        └── AttachmentAction
+```
 
 ## Examples
 
 ### Sizes
 
-Compares the `default`, `sm` and `xs` sizes.
+Use the `size` prop to switch between the `default`, `sm` and `xs` densities.
 
 <ComponentPreview name="attachment-sizes" />
 
 ### States
 
-Shows the `idle`, `uploading`, `processing`, `error` and `done` states.
+Use the `state` prop to show the `idle`, `uploading`, `processing`, `error` and `done` states. `idle` adds a dashed border outside a group, and `error` colors the description with `text-destructive`.
 
 <ComponentPreview name="attachment-states" />
 
@@ -108,31 +133,31 @@ Shows the `idle`, `uploading`, `processing`, `error` and `done` states.
 
 ### Image
 
-Uses an image thumbnail with the `image` media variant.
+Set `variant="image"` on `AttachmentMedia` for a cropped image thumbnail.
 
 <ComponentPreview name="attachment-image" />
 
 ### Vertical
 
-Stacks the media above the content with `orientation="vertical"`.
+Set `orientation="vertical"` to stack the media above the content and overlay the actions on the media.
 
 <ComponentPreview name="attachment-vertical" />
 
 ### Clickable
 
-Makes the whole card a button with `AttachmentTrigger`, alongside a separate download action.
+Add an `AttachmentTrigger` to make the whole card a button. A separate download action stays clickable above it.
 
 <ComponentPreview name="attachment-clickable" />
 
 ### Group
 
-Combines several attachments in one `AttachmentGroup` list.
+Wrap several attachments in an `AttachmentGroup` to show them as one list with inset dividers.
 
 <ComponentPreview name="attachment-group" />
 
 ### File types
 
-Uses colored `AttachmentLabel` tags to indicate file extensions.
+Set `variant="document"` on `AttachmentMedia` and add an `AttachmentLabel` with a color class to show the file extension.
 
 <ComponentPreview name="attachment-file-types" />
 
@@ -148,50 +173,28 @@ Marks completed uploads with a check icon in the actions slot.
 
 <ComponentPreview name="attachment-uploaded" />
 
+## Accessibility
+
+- `AttachmentProgress` wraps the progress primitive and exposes the `progressbar` role with `aria-valuenow`; give it an `aria-label`.
+- `AttachmentTrigger` renders a `button` with `type="button"` by default; give it an `aria-label` that names the file.
+- The trigger and each `AttachmentAction` are separate tab stops, in that order.
+- The card shows a focus ring when its trigger has keyboard focus.
+
 ## API Reference
-
-<Anatomy>
-
-- [Attachment](#attachment)
-  - [AttachmentMedia](#attachmentmedia)
-    - [AttachmentLabel](#attachmentlabel)
-  - [AttachmentContent](#attachmentcontent)
-    - [AttachmentTitle](#attachmenttitle)
-    - [AttachmentDescription](#attachmentdescription)
-    - [AttachmentProgress](#attachmentprogress)
-  - [AttachmentActions](#attachmentactions)
-    - [AttachmentAction](#attachmentaction)
-  - [AttachmentTrigger](#attachmenttrigger)
-- [AttachmentGroup](#attachmentgroup)
-  - [Attachment](#attachment)
-    - [AttachmentMedia](#attachmentmedia)
-      - [AttachmentLabel](#attachmentlabel)
-    - [AttachmentContent](#attachmentcontent)
-      - [AttachmentTitle](#attachmenttitle)
-      - [AttachmentProgress](#attachmentprogress)
-      - [AttachmentDescription](#attachmentdescription)
-    - [AttachmentActions](#attachmentactions)
-      - [AttachmentAction](#attachmentaction)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### Attachment
 
 The card container that sets size, orientation and state.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"default" \| "sm" \| "xs"` | `"default"` | Overall density: `default`, `sm` or `xs`. |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | `horizontal` places media beside the content; `vertical` stacks it above and overlays actions on the media. |
-| `state` | `"idle" \| "uploading" \| "processing" \| "error" \| "done"` | `"done"` | Upload lifecycle state. `idle` adds a dashed border and `error` colors the description red. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"default" \| "sm" \| "xs"` | `"default"` |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
+| `state` | `"idle" \| "uploading" \| "processing" \| "error" \| "done"` | `"done"` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+`orientation="horizontal"` places the media beside the content; `vertical` stacks it above and overlays the actions on the media. Set `state` to reflect the file's lifecycle: `idle` adds a dashed border (outside a group), and `error` colors the description red. The `state`, `size` and `orientation` values are exposed as `data-state`, `data-size` and `data-orientation` for your own styling.
 
 ### AttachmentLabel
 
@@ -199,23 +202,19 @@ A small uppercase tag, usually the file extension, shown inside the media.
 
 Also accepts the props of `React.ComponentProps<"span">`.
 
-</ApiPart>
-
-<ApiPart index={3}>
+The label uses `bg-primary` by default; override it with a color class per file type.
 
 ### AttachmentMedia
 
 The thumbnail area for an icon, document tag or image.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"icon" \| "document" \| "image"` | `"icon"` | Thumbnail style: `icon` for a bordered icon tile, `document` for a page shape with a bottom tag, `image` for a cropped image. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"icon" \| "document" \| "image"` | `"icon"` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={4}>
+Use `icon` for a bordered icon tile, `document` for a page shape with a bottom tag, and `image` for a cropped image. The variant is exposed as `data-variant`.
 
 ### AttachmentContent
 
@@ -223,19 +222,11 @@ Wraps the title, description and progress bar.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### AttachmentTitle
 
 The file name, truncated to one line.
 
 Also accepts the props of `React.ComponentProps<"span">`.
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### AttachmentDescription
 
@@ -243,19 +234,11 @@ Secondary details such as file size or an error message.
 
 Also accepts the props of `React.ComponentProps<"span">`.
 
-</ApiPart>
-
-<ApiPart index={7}>
-
 ### AttachmentProgress
 
 A progress bar with a value readout for uploads.
 
 Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={8}>
 
 ### AttachmentActions
 
@@ -263,24 +246,18 @@ The slot for action buttons or status indicators.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={9}>
-
 ### AttachmentAction
 
 A compact button for actions such as remove, cancel or download.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"secondary"` | The `Button` variant. `link` makes a text action. |
-| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"icon-xs"` | The `Button` size. Defaults to `"sm"` when `variant="link"`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"secondary"` |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"icon-xs"` |
 
 Also accepts the props of [Button](/docs/components/button).
 
-</ApiPart>
-
-<ApiPart index={10}>
+`AttachmentAction` renders a `Button` with the `secondary` variant and an icon size by default. Pass `variant="link"` for a text action such as "Try Again"; its size then defaults to `"sm"`. Icon-only actions need an `aria-label`.
 
 ### AttachmentTrigger
 
@@ -290,31 +267,33 @@ An invisible button covering the card to make it clickable.
 
 Also accepts the props of `useRender.ComponentProps<"button">`.
 
+`AttachmentTrigger` is an invisible button stretched over the card. Give it an `aria-label`, or use `render` to turn it into a link. Actions sit above it, so they remain separately clickable.
+
 </OnlyBase>
 
 <OnlyBase base="radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element, such as a link, instead of a `button`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
 
 Also accepts the props of `React.ComponentProps<"button">`.
+
+`AttachmentTrigger` is an invisible button stretched over the card. Give it an `aria-label`, or set `asChild` with a link as its child to turn it into a link. Actions sit above it, so they remain separately clickable.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | — | Renders your own element, such as a link, with the trigger's props. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | — |
 
 Also accepts the props of `React.ComponentProps<"button">`.
 
+`AttachmentTrigger` is an invisible button stretched over the card. Give it an `aria-label`, or pass a `render` function that returns a link to turn it into a link. Actions sit above it, so they remain separately clickable.
+
 </OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={11}>
 
 ### AttachmentGroup
 
@@ -322,20 +301,9 @@ Stacks attachments into one rounded list with dividers.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
+Inside `AttachmentGroup`, attachments fill the width, lose their own rounding and get inset top dividers.
 
-## Accessibility
-
-- `AttachmentProgress` wraps the progress primitive and exposes the `progressbar` role with `aria-valuenow`; give it an `aria-label`.
-- `AttachmentTrigger` renders a `button` with `type="button"` by default; give it an `aria-label` that names the file.
-- The trigger and each `AttachmentAction` are separate tab stops, in that order.
-- The card shows a focus ring when its trigger has keyboard focus.
-
-## Notes
-
-- Styling hooks: `data-slot` values such as `attachment`, `attachment-media`, `attachment-content` and `attachment-action`, plus `data-state`, `data-size` and `data-orientation` on the root and `data-variant` on the media.
-- Inside `AttachmentGroup`, attachments fill the width, lose their own rounding and get inset top dividers.
-- `AttachmentLabel` uses `bg-primary` by default; override it with a color class per file type.
+Each part sets a `data-slot`, such as `attachment`, `attachment-media` or `attachment-action`, for styling.
 
 </Only>
 
@@ -352,6 +320,10 @@ The `state` prop reflects the upload lifecycle: `idle` draws a dashed border for
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -401,7 +373,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -409,7 +383,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -429,17 +403,17 @@ npx expo install cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/attachment.tsx`:
+4. Copy and paste the following code into `components/ui/attachment.tsx`:
 
 <ComponentSource path="uniwind/components/ui/attachment.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -459,11 +433,11 @@ npx expo install cn
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/attachment.tsx`:
+4. Copy and paste the following code into `components/ui/attachment.tsx`:
 
 <ComponentSource path="nativewind/components/ui/attachment.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -483,11 +457,11 @@ npx expo install cn
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/attachment.tsx`:
+3. Copy and paste the following code into `components/ui/attachment.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/attachment.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -568,6 +542,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -702,37 +680,23 @@ fun AttachmentDefault() {
 
 </Only>
 
-`AttachmentMedia` has three variants: `icon` for a glyph, `document` for a page shape (pair it with `AttachmentLabel` to show a file extension), and `image` for a thumbnail. Put `AttachmentTitle` and `AttachmentDescription` in `AttachmentContent`, and add `AttachmentProgress` with a `value` while uploading.
-
-<Only platform="rn">
-
-`AttachmentAction` is a `Button` that defaults to the `secondary` variant and a small icon size scaled to the attachment, with an enlarged hit area. Use `variant="link"` for a text action.
-
-</Only>
-
-<Only platform="rn swift">
-
-To make the whole card pressable, add an `AttachmentTrigger`; it covers the card while actions stay pressable above it.
-
-</Only>
-
 ## Examples
 
 ### Sizes
 
-The `default`, `sm` and `xs` sizes.
+The `default`, `sm` and `xs` sizes, set with `size`.
 
 <NativeExample name="attachment-sizes" />
 
 ### States
 
-The `idle`, uploading, processing, error and done states.
+The `idle`, uploading, processing, error and done states, set with `state`. Add `AttachmentProgress` with a `value` while uploading.
 
 <NativeExample name="attachment-states" />
 
 ### Image
 
-An image thumbnail with the `image` media variant.
+Use the `image` variant of `AttachmentMedia` for a thumbnail.
 
 <NativeExample name="attachment-image" />
 
@@ -740,7 +704,7 @@ An image thumbnail with the `image` media variant.
 
 <Only platform="rn">
 
-Tiles with `orientation="vertical"`.
+Set `orientation="vertical"` to make tiles with the actions floating over the media.
 
 </Only>
 
@@ -750,7 +714,7 @@ Tiles with `orientation="vertical"`.
 
 <Only platform="rn swift">
 
-A card made pressable with `AttachmentTrigger`.
+Add an `AttachmentTrigger` to make the whole card pressable. It covers the card while actions stay pressable above it.
 
 </Only>
 
@@ -764,556 +728,9 @@ Several attachments in an `AttachmentGroup`, one of them uploading.
 
 ### File types
 
-Document media with colored extension labels.
+Use the `document` variant of `AttachmentMedia` for a page shape, and pair it with `AttachmentLabel` to show a colored file extension.
 
 <NativeExample name="attachment-file-types" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Attachment
-
-Card that provides state, size and orientation to its parts.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `state` | `AttachmentState` | `"done"` | `idle`, `uploading`, `processing`, `error` or `done`. Defaults to `done`. |
-| `size` | `AttachmentSize` | `"default"` | `default`, `sm` or `xs`. |
-| `orientation` | `AttachmentOrientation` | `"horizontal"` | `horizontal` or `vertical`. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AttachmentMedia
-
-Thumbnail area for an icon, document shape or image.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"icon" \| "document" \| "image"` | `"icon"` | `icon`, `document` or `image`. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AttachmentLabel
-
-Small uppercase tag, such as a file extension.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AttachmentContent
-
-Column for the title, description and progress.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### AttachmentTitle
-
-File name, one line by default.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### AttachmentDescription
-
-Secondary details, red in the `error` state.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### AttachmentProgress
-
-Progress bar with a percentage value.
-
-Also accepts the props of `React.ComponentProps<typeof ProgressPrimitive.Root>`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### AttachmentActions
-
-Row of actions; floats over the media in vertical layout.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### AttachmentAction
-
-Small button sized to the attachment.
-
-Also accepts the props of `React.ComponentProps<typeof Button>`.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### AttachmentTrigger
-
-Pressable overlay that makes the whole card pressable.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `RenderProp<Record<string, unknown>, Record<string, never>>` | - | Element to render in place of the default `Pressable`. |
-
-Also accepts the props of `React.ComponentProps<typeof Pressable>`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### AttachmentGroup
-
-List container that joins attachments with separators.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### AttachmentState
-
-Values: `.idle`, `.uploading`, `.processing`, `.error`, `.done`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AttachmentSize
-
-Values: `.default`, `.sm`, `.xs`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AttachmentOrientation
-
-Values: `.horizontal`, `.vertical`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AttachmentMediaVariant
-
-Values: `.icon`, `.document`, `.image`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### Attachment
-
-Card that provides state, size and orientation to its parts.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `state` | `AttachmentState`: `.idle` \| `.uploading` \| `.processing` \| `.error` \| `.done` | `.done` | Upload lifecycle state. `idle` adds a dashed border and `error` colors the description red. |
-| `size` | `Size`: `.default` \| `.sm` \| `.xs` | `.default` | Overall density: `default`, `sm` or `xs`. |
-| `orientation` | `Orientation`: `.horizontal` \| `.vertical` | `.horizontal` | `horizontal` places media beside the content; `vertical` stacks it above and overlays actions on the media. |
-| `block` | `Bool` | `false` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### AttachmentMedia
-
-Thumbnail area for an icon, document shape or image.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `Variant`: `.icon` \| `.document` \| `.image` | `.icon` | Thumbnail style: `icon` for a bordered icon tile, `document` for a page shape with a bottom tag, `image` for a cropped image. |
-| `content` | `() -> Content` | - | The content. |
-| `icon` | `Image` | - | The icon. |
-| `image` | `Image` | - | - |
-| `url` | `URL?` | - | - |
-
-Overloads: `init(_:content:)`, `init(icon:)`, `init(image:)`, `init(url:)`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### AttachmentIcon
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ image` | `Image` | - | - |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### AttachmentImage
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ image` | `Image` | - | - |
-| `url` | `URL?` | - | - |
-
-Overloads: `init(_:)`, `init(url:)`.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### AttachmentLabel
-
-Small uppercase tag, such as a file extension.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ text` | `LocalizedStringKey` | - | The text. |
-| `tint` | `Color` | `EsuissColor.primary` | - |
-| `verbatim` | `String` | - | The text. |
-
-Overloads: `init(_:tint:)`, `init(verbatim:tint:)`.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### AttachmentContent
-
-Column for the title, description and progress.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### AttachmentTitle
-
-File name, one line by default.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ text` | `LocalizedStringKey` | - | The text. |
-| `verbatim` | `String` | - | The text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### AttachmentDescription
-
-Secondary details, red in the `error` state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ text` | `LocalizedStringKey` | - | The text. |
-| `verbatim` | `String` | - | The text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### AttachmentProgress
-
-Progress bar with a percentage value.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Double` | - | The current value. |
-| `total` | `Double` | `100` | - |
-| `label` | `LocalizedStringKey` | `"Uploading"` | The label. |
-
-</ApiPart>
-
-<ApiPart index={14}>
-
-### AttachmentActions
-
-Row of actions; floats over the media in vertical layout.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={15}>
-
-### AttachmentAction
-
-Small button sized to the attachment.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `VariantButtonStyle.Variant` | `.secondary` | The `Button` variant. `link` makes a text action. |
-| `action` | `() -> Void` | - | Called when it is tapped. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `icon` | `Image` | - | The icon. |
-
-Overloads: `init(variant:action:label:)`, `init(_:icon:variant:action:)`, `init(_:variant:action:)`.
-
-</ApiPart>
-
-<ApiPart index={16}>
-
-### AttachmentActionIcon
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `image` | `Image` | - | - |
-
-</ApiPart>
-
-<ApiPart index={17}>
-
-### AttachmentTrigger
-
-An invisible button covering the card to make it clickable.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ label` | `LocalizedStringKey` | - | The label. |
-| `action` | `() -> Void` | - | Called when it is tapped. |
-
-</ApiPart>
-
-<ApiPart index={18}>
-
-### AttachmentGroup
-
-List container that joins attachments with separators.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### AttachmentState
-
-Values: `Idle`, `Uploading`, `Processing`, `Error`, `Done`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AttachmentSize
-
-Values: `Default`, `Sm`, `Xs`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AttachmentOrientation
-
-Values: `Horizontal`, `Vertical`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AttachmentMediaVariant
-
-Values: `Icon`, `Document`, `Image`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### Attachment
-
-Card that provides state, size and orientation to its parts.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `state` | `AttachmentState`: `Idle` \| `Uploading` \| `Processing` \| `Error` \| `Done` | `AttachmentState.Done` | Upload lifecycle state. `idle` adds a dashed border and `error` colors the description red. |
-| `size` | `AttachmentSize`: `Default` \| `Sm` \| `Xs` | `AttachmentSize.Default` | Overall density: `default`, `sm` or `xs`. |
-| `orientation` | `AttachmentOrientation`: `Horizontal` \| `Vertical` | `AttachmentOrientation.Horizontal` | `horizontal` places media beside the content; `vertical` stacks it above and overlays actions on the media. |
-| `onClick` | `(() -> Unit)?` | `null` | Called when it is tapped. |
-| `onClickLabel` | `String?` | `null` | - |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### AttachmentGroup
-
-List container that joins attachments with separators.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### AttachmentMedia
-
-Thumbnail area for an icon, document shape or image.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `AttachmentMediaVariant`: `Icon` \| `Document` \| `Image` | `AttachmentMediaVariant.Icon` | Thumbnail style: `icon` for a bordered icon tile, `document` for a page shape with a bottom tag, `image` for a cropped image. |
-| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
-| `image` | `Painter` | - | - |
-| `contentDescription` | `String?` | - | - |
-
-Overloads: `AttachmentMedia(variant, content)`, `AttachmentMedia(image, contentDescription)`.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### AttachmentLabel
-
-Small uppercase tag, such as a file extension.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `background` | `Color` | `EsuissTheme.colors.primary` | - |
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### AttachmentContent
-
-Column for the title, description and progress.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### AttachmentTitle
-
-File name, one line by default.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### AttachmentDescription
-
-Secondary details, red in the `error` state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### AttachmentProgress
-
-Progress bar with a percentage value.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Float` | - | The current value. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `max` | `Float` | `100f` | - |
-| `contentDescription` | `String?` | `null` | - |
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### AttachmentActions
-
-Row of actions; floats over the media in vertical layout.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={14}>
-
-### AttachmentAction
-
-Small button sized to the attachment.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onClick` | `() -> Unit` | - | Called when it is tapped. |
-| `contentDescription` | `String?` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `ButtonVariant` | `ButtonVariant.Secondary` | The `Button` variant. `link` makes a text action. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `AttachmentAction(onClick, contentDescription, variant, content)`, `AttachmentAction(text, onClick)`.
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -1323,10 +740,388 @@ Overloads: `AttachmentAction(onClick, contentDescription, variant, content)`, `A
 - `AttachmentTrigger` has the `button` role; give it an `accessibilityLabel` such as "Open Invoice.pdf".
 - Icon-only actions need an `accessibilityLabel`.
 
-## Notes
+</Only>
 
-- Uses `bg-muted`, `border-border`, `bg-primary` and `text-destructive` tokens; light and dark follow the system appearance.
-- Separators and action positions use start and end offsets, so they flip in right-to-left layouts.
+## API Reference
+
+<Only platform="rn">
+
+### Attachment
+
+Card that provides state, size and orientation to its parts.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `state` | `AttachmentState` | `"done"` |
+| `size` | `AttachmentSize` | `"default"` |
+| `orientation` | `AttachmentOrientation` | `"horizontal"` |
+
+Also accepts the props of `ViewProps`.
+
+`state` is one of `idle`, `uploading`, `processing`, `error` or `done` and is passed to the parts through context. Separators and action positions use start and end offsets, so they flip in right-to-left layouts.
+
+### AttachmentMedia
+
+Thumbnail area for an icon, document shape or image.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"icon" \| "document" \| "image"` | `"icon"` |
+
+Also accepts the props of `ViewProps`.
+
+Use `icon` for a glyph, `document` for a page shape and `image` for a thumbnail.
+
+### AttachmentLabel
+
+Small uppercase tag, such as a file extension.
+
+Also accepts the props of `ViewProps`.
+
+### AttachmentContent
+
+Column for the title, description and progress.
+
+Also accepts the props of `ViewProps`.
+
+### AttachmentTitle
+
+File name, one line by default.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+### AttachmentDescription
+
+Secondary details, red in the `error` state.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+### AttachmentProgress
+
+Progress bar with a percentage value.
+
+Also accepts the props of `React.ComponentProps<typeof ProgressPrimitive.Root>`.
+
+### AttachmentActions
+
+Row of actions; floats over the media in vertical layout.
+
+Also accepts the props of `ViewProps`.
+
+### AttachmentAction
+
+Small button sized to the attachment.
+
+Also accepts the props of `React.ComponentProps<typeof Button>`.
+
+`AttachmentAction` defaults to the `secondary` variant and a small icon size scaled to the attachment, with an enlarged hit area. Use `variant="link"` for a text action.
+
+### AttachmentTrigger
+
+Pressable overlay that makes the whole card pressable.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `RenderProp<Record<string, unknown>, Record<string, never>>` | - |
+
+Also accepts the props of `React.ComponentProps<typeof Pressable>`, `React.RefAttributes<View>`.
+
+Use `render` to render another element in place of the default `Pressable`.
+
+### AttachmentGroup
+
+List container that joins attachments with separators.
+
+Also accepts the props of `ViewProps`.
+
+</Only>
+
+<Only platform="swift">
+
+### AttachmentState
+
+Values: `.idle`, `.uploading`, `.processing`, `.error`, `.done`.
+
+### AttachmentSize
+
+Values: `.default`, `.sm`, `.xs`.
+
+### AttachmentOrientation
+
+Values: `.horizontal`, `.vertical`.
+
+### AttachmentMediaVariant
+
+Values: `.icon`, `.document`, `.image`.
+
+### Attachment
+
+Card that provides state, size and orientation to its parts.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `state` | `AttachmentState`: `.idle` \| `.uploading` \| `.processing` \| `.error` \| `.done` | `.done` |
+| `size` | `Size`: `.default` \| `.sm` \| `.xs` | `.default` |
+| `orientation` | `Orientation`: `.horizontal` \| `.vertical` | `.horizontal` |
+| `block` | `Bool` | `false` |
+| `content` | `() -> Content` | - |
+
+### AttachmentMedia
+
+Thumbnail area for an icon, document shape or image.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `Variant`: `.icon` \| `.document` \| `.image` | `.icon` |
+| `content` | `() -> Content` | - |
+| `icon` | `Image` | - |
+| `image` | `Image` | - |
+| `url` | `URL?` | - |
+
+Overloads: `init(_:content:)`, `init(icon:)`, `init(image:)`, `init(url:)`.
+
+### AttachmentIcon
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ image` | `Image` | - |
+
+### AttachmentImage
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ image` | `Image` | - |
+| `url` | `URL?` | - |
+
+Overloads: `init(_:)`, `init(url:)`.
+
+### AttachmentLabel
+
+Small uppercase tag, such as a file extension.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ text` | `LocalizedStringKey` | - |
+| `tint` | `Color` | `EsuissColor.primary` |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:tint:)`, `init(verbatim:tint:)`.
+
+### AttachmentContent
+
+Column for the title, description and progress.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### AttachmentTitle
+
+File name, one line by default.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ text` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### AttachmentDescription
+
+Secondary details, red in the `error` state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ text` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### AttachmentProgress
+
+Progress bar with a percentage value.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Double` | - |
+| `total` | `Double` | `100` |
+| `label` | `LocalizedStringKey` | `"Uploading"` |
+
+### AttachmentActions
+
+Row of actions; floats over the media in vertical layout.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### AttachmentAction
+
+Small button sized to the attachment.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `variant` | `VariantButtonStyle.Variant` | `.secondary` |
+| `action` | `() -> Void` | - |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+| `icon` | `Image` | - |
+
+Overloads: `init(variant:action:label:)`, `init(_:icon:variant:action:)`, `init(_:variant:action:)`.
+
+### AttachmentActionIcon
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `image` | `Image` | - |
+
+### AttachmentTrigger
+
+An invisible button covering the card to make it clickable.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ label` | `LocalizedStringKey` | - |
+| `action` | `() -> Void` | - |
+
+### AttachmentGroup
+
+List container that joins attachments with separators.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### AttachmentState
+
+Values: `Idle`, `Uploading`, `Processing`, `Error`, `Done`.
+
+### AttachmentSize
+
+Values: `Default`, `Sm`, `Xs`.
+
+### AttachmentOrientation
+
+Values: `Horizontal`, `Vertical`.
+
+### AttachmentMediaVariant
+
+Values: `Icon`, `Document`, `Image`.
+
+### Attachment
+
+Card that provides state, size and orientation to its parts.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `state` | `AttachmentState`: `Idle` \| `Uploading` \| `Processing` \| `Error` \| `Done` | `AttachmentState.Done` |
+| `size` | `AttachmentSize`: `Default` \| `Sm` \| `Xs` | `AttachmentSize.Default` |
+| `orientation` | `AttachmentOrientation`: `Horizontal` \| `Vertical` | `AttachmentOrientation.Horizontal` |
+| `onClick` | `(() -> Unit)?` | `null` |
+| `onClickLabel` | `String?` | `null` |
+| `content` | `@Composable () -> Unit` | - |
+
+### AttachmentGroup
+
+List container that joins attachments with separators.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
+
+### AttachmentMedia
+
+Thumbnail area for an icon, document shape or image.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `AttachmentMediaVariant`: `Icon` \| `Document` \| `Image` | `AttachmentMediaVariant.Icon` |
+| `content` | `@Composable BoxScope.() -> Unit` | - |
+| `image` | `Painter` | - |
+| `contentDescription` | `String?` | - |
+
+Overloads: `AttachmentMedia(variant, content)`, `AttachmentMedia(image, contentDescription)`.
+
+### AttachmentLabel
+
+Small uppercase tag, such as a file extension.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `background` | `Color` | `EsuissTheme.colors.primary` |
+
+### AttachmentContent
+
+Column for the title, description and progress.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### AttachmentTitle
+
+File name, one line by default.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### AttachmentDescription
+
+Secondary details, red in the `error` state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### AttachmentProgress
+
+Progress bar with a percentage value.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Float` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `max` | `Float` | `100f` |
+| `contentDescription` | `String?` | `null` |
+
+### AttachmentActions
+
+Row of actions; floats over the media in vertical layout.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+
+### AttachmentAction
+
+Small button sized to the attachment.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `onClick` | `() -> Unit` | - |
+| `contentDescription` | `String?` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `ButtonVariant` | `ButtonVariant.Secondary` |
+| `enabled` | `Boolean` | `true` |
+| `content` | `@Composable () -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `AttachmentAction(onClick, contentDescription, variant, content)`, `AttachmentAction(text, onClick)`.
 
 </Only>
 

@@ -15,7 +15,9 @@ Use a slider when an approximate value within a range matters more than a precis
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/slider
@@ -27,19 +29,25 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add slider
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react
 ```
 
-2. Copy the source into `components/ui/slider.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/slider.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -55,8 +63,6 @@ import { Slider } from "@/components/ui/slider"
 </div>
 ```
 
-Pass `defaultValue` or `value` as an array: one number for a single thumb, two for a range. `min` defaults to `0` and `max` to `100`; use `step` to snap to increments. Use `onValueChange` with `value` to control it, and set `orientation="vertical"` for a vertical slider. Set `disabled` to turn it off.
-
 </OnlyBase>
 
 <OnlyBase base="aria">
@@ -67,77 +73,43 @@ Pass `defaultValue` or `value` as an array: one number for a single thumb, two f
 </div>
 ```
 
-Pass `defaultValue` or `value` as an array: one number for a single thumb, two for a range. `minValue` defaults to `0` and `maxValue` to `100`; use `step` to snap to increments. Use `onChange` with `value` to control it, and set `orientation="vertical"` for a vertical slider. Set `isDisabled` to turn it off.
-
 </OnlyBase>
 
 ## Examples
 
 ### Range
 
-Uses two values to select a range with two thumbs.
+Pass two values in `defaultValue` to select a range with two thumbs.
 
 <ComponentPreview name="slider-range" />
 
 ### Steps
 
-Moves in increments of 10.
+Set `step` to `10` so the thumb moves in increments of 10.
 
 <ComponentPreview name="slider-steps" />
 
 ### Vertical
 
-Runs vertically.
+Set `orientation="vertical"` to run the slider vertically. Vertical sliders use the up and down arrow keys.
 
 <ComponentPreview name="slider-vertical" />
 
 ### Disabled
 
-Disables interaction and removes the thumb from the tab order.
-
-<ComponentPreview name="slider-disabled" />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### Slider
-
-The complete slider: track, filled range and thumbs.
-
 <OnlyBase base="base radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `defaultValue` | `number[]` | — | The values at first, when uncontrolled. One number per thumb. |
-| `value` | `number[]` | — | The controlled values. Pass it with `onValueChange`. |
-| `onValueChange` | `(value: number[]) => void` | — | Called when a thumb moves. |
-| `min` | `number` | `0` | The lowest value. |
-| `max` | `number` | `100` | The highest value. |
-| `step` | `number` | `1` | The increment the thumbs snap to. |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays the slider out in a row or a column. |
-| `disabled` | `boolean` | `false` | Turns off interaction. |
+Set `disabled` to turn off interaction and remove the thumb from the tab order.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `defaultValue` | `number[]` | — | The values at first, when uncontrolled. One number per thumb. |
-| `value` | `number[]` | — | The controlled values. Pass it with `onChange`. |
-| `onChange` | `(value: number[]) => void` | — | Called when a thumb moves. |
-| `minValue` | `number` | `0` | The lowest value. |
-| `maxValue` | `number` | `100` | The highest value. |
-| `step` | `number` | `1` | The increment the thumbs snap to. |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays the slider out in a row or a column. |
-| `isDisabled` | `boolean` | `false` | Turns off interaction. |
+Set `isDisabled` to turn off interaction and remove the thumb from the tab order.
 
 </OnlyBase>
 
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
+<ComponentPreview name="slider-disabled" />
 
 ## Accessibility
 
@@ -159,28 +131,63 @@ Also accepts the props of the primitive part it wraps.
 - In a range, `Tab` moves between thumbs, and each thumb moves independently.
 - A disabled slider can't be focused.
 
-## Notes
+## API Reference
+
+### Slider
+
+The complete slider: track, filled range and thumbs.
 
 <OnlyBase base="base radix">
 
-- The number of thumbs follows the length of the `value` or `defaultValue` array. Without an array, the slider renders one thumb. Always pass an array.
+| Prop | Type | Default |
+| --- | --- | --- |
+| `defaultValue` | `number[]` | — |
+| `value` | `number[]` | — |
+| `onValueChange` | `(value: number[]) => void` | — |
+| `min` | `number` | `0` |
+| `max` | `number` | `100` |
+| `step` | `number` | `1` |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
+| `disabled` | `boolean` | `false` |
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-- The number of thumbs follows the length of the `value` or `defaultValue` array.
+| Prop | Type | Default |
+| --- | --- | --- |
+| `defaultValue` | `number[]` | — |
+| `value` | `number[]` | — |
+| `onChange` | `(value: number[]) => void` | — |
+| `minValue` | `number` | `0` |
+| `maxValue` | `number` | `100` |
+| `step` | `number` | `1` |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
+| `isDisabled` | `boolean` | `false` |
 
 </OnlyBase>
 
-- Parts carry `data-slot` attributes: `slider`, `slider-track`, `slider-range` and `slider-thumb`.
-- The range uses `bg-primary`, the track uses `bg-border`, and disabled sliders are dimmed with `opacity-50`.
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base radix">
+
+Pass `defaultValue` or `value` as an array with one number per thumb: one for a single thumb, two for a range. The number of thumbs follows the array length; without an array the slider renders one thumb, so always pass one. Control it with `value` and `onValueChange`, which is called when a thumb moves. `step` is the increment the thumbs snap to.
+
+</OnlyBase>
 
 <OnlyBase base="base">
 
-- Thumbs use `thumbAlignment="edge"`, so they stay inside the track at both ends.
+Thumbs use `thumbAlignment="edge"`, so they stay inside the track at both ends.
 
 </OnlyBase>
+
+<OnlyBase base="aria">
+
+Pass `defaultValue` or `value` as an array with one number per thumb: one for a single thumb, two for a range. The number of thumbs follows the array length. Control it with `value` and `onChange`, which is called when a thumb moves. `step` is the increment the thumbs snap to.
+
+</OnlyBase>
+
+Each part sets a `data-slot`, such as `slider-thumb` or `slider-range`, for styling. Disabled sliders are dimmed with `opacity-50`.
 
 </Only>
 
@@ -201,6 +208,10 @@ Thumbs are aligned to the edges of the track, so they stay within it at `min` an
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -244,7 +255,9 @@ npx @esuiss/ui@latest add slider --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -252,7 +265,7 @@ npx @esuiss/ui@latest add slider --platform kotlin
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -276,17 +289,17 @@ npx expo install cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/slider.tsx`:
+3. Copy and paste the following code into `components/ui/slider.tsx`:
 
 <ComponentSource path="uniwind/components/ui/slider.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -310,11 +323,11 @@ npx expo install cn
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/slider.tsx`:
+3. Copy and paste the following code into `components/ui/slider.tsx`:
 
 <ComponentSource path="nativewind/components/ui/slider.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -338,11 +351,11 @@ npx expo install cn
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-2. Copy the source into `components/ui/slider.tsx`:
+2. Copy and paste the following code into `components/ui/slider.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/slider.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -416,6 +429,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -503,27 +520,17 @@ fun SliderUncontrolled(
 
 </Only>
 
-<Only platform="rn">
-
-Use `defaultValue` for an uncontrolled slider, or `value` with `onValueChange` to control it. `onValueCommitted` runs when a drag or track press ends, which suits saving or fetching.
-
-Set `min`, `max` and `step` to define the range; `min` defaults to `0` and `max` to `100`. For ranges, `minStepsBetweenValues` keeps thumbs apart and `thumbCollisionBehavior` decides whether thumbs `push` each other, `swap`, or stop (`none`).
-
-The number of thumbs comes from the array length of `value` or `defaultValue`.
-
-</Only>
-
 ## Examples
 
 ### Controlled
 
-A controlled slider that shows the live and committed values.
+A controlled slider that shows the live value and the value committed when a drag ends.
 
 <NativeExample name="slider-controlled" />
 
 ### Range
 
-A two-thumb price range with a step and a minimum gap.
+A two-thumb price range that snaps to a step and keeps a minimum gap between the thumbs.
 
 <NativeExample name="slider-range" />
 
@@ -531,7 +538,7 @@ A two-thumb price range with a step and a minimum gap.
 
 ### Multiple thumbs
 
-Three thumbs that swap when they cross.
+Pass three values for three thumbs. Set `thumbCollisionBehavior="swap"` so they swap when they cross.
 
 <NativeExample name="slider-multiple-thumbs" />
 
@@ -539,7 +546,7 @@ Three thumbs that swap when they cross.
 
 ### Step
 
-A slider that moves in decimal steps.
+Set `step` to a decimal so the slider moves in decimal steps.
 
 <NativeExample name="slider-step" />
 
@@ -547,7 +554,7 @@ A slider that moves in decimal steps.
 
 ### Vertical
 
-Single and range sliders in vertical orientation.
+Set `orientation="vertical"` to run single and range sliders vertically.
 
 <NativeExample name="slider-vertical" />
 
@@ -555,7 +562,7 @@ Single and range sliders in vertical orientation.
 
 ### Disabled
 
-A disabled slider with muted colors.
+A disabled slider with muted colors that ignores input.
 
 <NativeExample name="slider-disabled" />
 
@@ -571,90 +578,6 @@ The React Native tab shows 2 more examples.
 
 </Only>
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Slider
-
-Also accepts the props of `SliderPrimitive.RootProps<Value>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### ValueSlider
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Binding<Value>` | - | The controlled values. Pass it with `onValueChange`. |
-| `in` | `ClosedRange<Value>` | `0...1` | - |
-| `step` | `Value.Stride?` | `nil` | The increment the thumbs snap to. |
-| `onEditingChanged` | `(Bool) -> Void` | `{ _ in }` | - |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### RangeSlider
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Binding<ClosedRange<Value>>` | - | The controlled values. Pass it with `onValueChange`. |
-| `in` | `ClosedRange<Value>` | `0...1` | - |
-| `step` | `Value.Stride?` | `nil` | The increment the thumbs snap to. |
-| `onEditingChanged` | `(Bool) -> Void` | `{ _ in }` | - |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Slider
-
-The complete slider: track, filled range and thumbs.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Float` | - | The controlled values. Pass it with `onValueChange`. |
-| `onValueChange` | `(Float) -> Unit` | - | Called when a thumb moves. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
-| `valueRange` | `ClosedFloatingPointRange<Float>` | `0f..100f` | - |
-| `step` | `Float` | `1f` | The increment the thumbs snap to. |
-| `onValueChangeFinished` | `(() -> Unit)?` | `null` | - |
-| `contentDescription` | `String?` | `null` | - |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### RangeSlider
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `ClosedFloatingPointRange<Float>` | - | The controlled values. Pass it with `onValueChange`. |
-| `onValueChange` | `(ClosedFloatingPointRange<Float>) -> Unit` | - | Called when a thumb moves. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
-| `valueRange` | `ClosedFloatingPointRange<Float>` | `0f..100f` | - |
-| `step` | `Float` | `1f` | The increment the thumbs snap to. |
-| `onValueChangeFinished` | `(() -> Unit)?` | `null` | - |
-| `contentDescription` | `String?` | `null` | - |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -663,11 +586,73 @@ The complete slider: track, filled range and thumbs.
 - `accessibilityLabel` on `Slider` is passed to every thumb; set it, since the slider has no visible label.
 - Disabled thumbs report `disabled` in their accessibility state.
 
-## Notes
+</Only>
 
-- The track uses `bg-border` and the indicator `bg-primary`, and the slider is shown at `opacity-50` when disabled.
-- Thumbs use `bg-background` with a shadow, or `bg-foreground` in dark mode.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Slider
+
+The complete slider: track, filled range and thumbs.
+
+Also accepts the props of `SliderPrimitive.RootProps<Value>`.
+
+Use `defaultValue` for an uncontrolled slider, or `value` with `onValueChange` to control it. `onValueCommitted` runs when a drag or track press ends, which suits saving or fetching. Set `min`, `max` and `step` to define the range; `min` defaults to `0` and `max` to `100`. The number of thumbs comes from the array length of `value` or `defaultValue`. For ranges, `minStepsBetweenValues` keeps thumbs apart and `thumbCollisionBehavior` decides whether thumbs `push` each other, `swap`, or stop (`none`). The slider is shown at `opacity-50` when disabled.
+
+</Only>
+
+<Only platform="swift">
+
+### ValueSlider
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Binding<Value>` | - |
+| `in` | `ClosedRange<Value>` | `0...1` |
+| `step` | `Value.Stride?` | `nil` |
+| `onEditingChanged` | `(Bool) -> Void` | `{ _ in }` |
+
+### RangeSlider
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Binding<ClosedRange<Value>>` | - |
+| `in` | `ClosedRange<Value>` | `0...1` |
+| `step` | `Value.Stride?` | `nil` |
+| `onEditingChanged` | `(Bool) -> Void` | `{ _ in }` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### Slider
+
+The complete slider: track, filled range and thumbs.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Float` | - |
+| `onValueChange` | `(Float) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` |
+| `valueRange` | `ClosedFloatingPointRange<Float>` | `0f..100f` |
+| `step` | `Float` | `1f` |
+| `onValueChangeFinished` | `(() -> Unit)?` | `null` |
+| `contentDescription` | `String?` | `null` |
+
+### RangeSlider
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `ClosedFloatingPointRange<Float>` | - |
+| `onValueChange` | `(ClosedFloatingPointRange<Float>) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` |
+| `valueRange` | `ClosedFloatingPointRange<Float>` | `0f..100f` |
+| `step` | `Float` | `1f` |
+| `onValueChangeFinished` | `(() -> Unit)?` | `null` |
+| `contentDescription` | `String?` | `null` |
 
 </Only>
 

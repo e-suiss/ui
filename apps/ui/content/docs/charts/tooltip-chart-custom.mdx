@@ -11,9 +11,13 @@ platforms: [web]
 
 A step-count bar chart whose tooltip is built from scratch as a small card with a big number, unit and day name. Reach for it when the stock tooltip layout can't express what you need, such as a single headline value.
 
+Pass a render function to the `content` prop of `ChartTooltip`; it receives the active state, the hovered rows and the label, and returns null when inactive. A custom tooltip replaces the built-in one, so config labels and colors appear only if you read them yourself. The tooltip opens on a preset bar when the chart loads; remove `defaultIndex` if it should start hidden.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/tooltip-chart-custom
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts tooltip-chart-custom
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/tooltip-chart-custom.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/tooltip-chart-custom.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,11 +60,5 @@ import { TooltipChartCustom } from "@/components/charts/tooltip-chart-custom"
 ```tsx
 <TooltipChartCustom />
 ```
-
-Pass your own render function to the `content` prop of `ChartTooltip`; it receives the active state, the hovered rows and the label, and should return null when inactive. Change the unit text and number format inside it, and replace `chartData` and `chartConfig` as usual.
-
-## Notes
-
-A custom tooltip skips the built-in one entirely, so labels and colors from the config only appear if you read them yourself. The tooltip opens on a preset bar when the chart loads; remove `defaultIndex` to start hidden.
 
 </Only>

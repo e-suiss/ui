@@ -15,7 +15,9 @@ Use a dialog for a short, focused task such as editing a few fields. To confirm 
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/dialog
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add dialog
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
@@ -37,16 +41,29 @@ npm install @base-ui/react @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), `use-scrollbar-gap`.
 
-3. Copy the source into `components/ui/dialog.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/dialog.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Dialog, DialogTrigger, DialogPortal, DialogClose, DialogOverlay, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -158,6 +175,50 @@ import { Label } from "@/components/ui/label"
 
 </OnlyBase>
 
+## Composition
+
+Use the following composition to build a `Dialog`:
+
+```text
+Dialog
+├── DialogTrigger
+└── DialogContent
+    ├── DialogHeader
+    │   ├── DialogTitle
+    │   └── DialogDescription
+    └── DialogFooter
+        └── DialogClose
+```
+
+## Examples
+
+### Without close button
+
+A dialog with no corner close button that adds a Close action to the footer instead.
+
+<ComponentPreview name="dialog-without-close-button" />
+
+### Destructive
+
+A dialog that confirms deleting a project, with a destructive action and a Cancel button.
+
+<ComponentPreview name="dialog-destructive" />
+
+## Accessibility
+
+- The window has the `dialog` role. `DialogTitle` provides its accessible name and `DialogDescription` its accessible description.
+- Opening the dialog moves focus inside it. Escape closes it and returns focus to the trigger.
+- The icon-only close button has a visually hidden `Close` label.
+- Always include a `DialogTitle`; hide it visually with `sr-only` if the design has no visible title.
+
+## API Reference
+
+### Dialog
+
+The root that manages the dialog's open state.
+
+Also accepts the props of the primitive part it wraps.
+
 <OnlyBase base="base">
 
 The dialog is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Render the trigger as another component, such as a `Button`, with the `render` prop. Use `DialogClose` with `render` for a Cancel button.
@@ -176,58 +237,11 @@ The dialog is uncontrolled by default; set `defaultOpen` to start open, or contr
 
 </OnlyBase>
 
-Set `showCloseButton={false}` on `DialogContent` to remove the corner close button, and set `closeLabel` to replace its icon with a text label. Set `showCloseButton` on `DialogFooter` to add a secondary Close button to the actions. The footer stacks its actions in reverse order on small screens and aligns them to the end on wider screens.
-
-## Examples
-
-### Without close button
-
-A dialog with no corner close button that adds a Close action to the footer instead.
-
-<ComponentPreview name="dialog-without-close-button" />
-
-### Destructive
-
-A dialog that confirms deleting a project, with a destructive action and a Cancel button.
-
-<ComponentPreview name="dialog-destructive" />
-
-## API Reference
-
-<Anatomy>
-
-- [Dialog](#dialog)
-  - [DialogTrigger](#dialogtrigger)
-  - [DialogContent](#dialogcontent)
-    - [DialogHeader](#dialogheader)
-      - [DialogTitle](#dialogtitle)
-      - [DialogDescription](#dialogdescription)
-    - [DialogFooter](#dialogfooter)
-      - [DialogClose](#dialogclose)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Dialog
-
-The root that manages the dialog's open state.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### DialogTrigger
 
 The button that opens the dialog.
 
 Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### DialogPortal
 
@@ -235,19 +249,11 @@ Renders its children into a portal outside the current DOM hierarchy.
 
 Also accepts the props of the primitive part it wraps.
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### DialogClose
 
 A button that closes the dialog.
 
 Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={5}>
 
 ### DialogOverlay
 
@@ -255,33 +261,29 @@ The dimmed layer behind the dialog.
 
 Also accepts the props of the primitive part it wraps.
 
-</ApiPart>
-
-<ApiPart index={6}>
-
 ### DialogContent
 
 The dialog window, rendered in a portal with an overlay and an optional close button.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton` | `boolean` | `true` | Shows the close button in the top corner. |
-| `closeLabel` | `string` | - | Replaces the close button's icon with this text. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `showCloseButton` | `boolean` | `true` |
+| `closeLabel` | `string` | - |
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isDismissable` | `boolean` | `true` | Closes the dialog on a press outside it. |
-| `isKeyboardDismissDisabled` | `boolean` | - | Stops Escape from closing the dialog. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `isDismissable` | `boolean` | `true` |
+| `isKeyboardDismissDisabled` | `boolean` | - |
+
+`isDismissable` closes the dialog on a press outside it, and `isKeyboardDismissDisabled` stops Escape from closing it.
 
 </OnlyBase>
 
 Also accepts the props of the primitive part it wraps.
 
-</ApiPart>
-
-<ApiPart index={7}>
+Set `showCloseButton={false}` to remove the corner close button, and set `closeLabel` to replace its icon with a text label. When the close button is shown, the first child gets extra end padding so it does not run under the button. The window is `sm:max-w-md` by default; override it with `className`.
 
 ### DialogHeader
 
@@ -289,23 +291,17 @@ Groups the title and description.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={8}>
-
 ### DialogFooter
 
 Holds the dialog's actions.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton` | `boolean` | `false` | Adds a secondary Close button after the footer's actions. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `showCloseButton` | `boolean` | `false` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={9}>
+Set `showCloseButton` to add a secondary Close button after the actions. The footer stacks its actions in reverse order on small screens and aligns them to the end on wider screens.
 
 ### DialogTitle
 
@@ -313,32 +309,13 @@ The dialog's title, which also names it for assistive technology.
 
 Also accepts the props of the primitive part it wraps.
 
-</ApiPart>
-
-<ApiPart index={10}>
-
 ### DialogDescription
 
 Supporting text that describes the dialog for assistive technology.
 
 Also accepts the props of the primitive part it wraps.
 
-</ApiPart>
-
-## Accessibility
-
-- The window has the `dialog` role. `DialogTitle` provides its accessible name and `DialogDescription` its accessible description.
-- Opening the dialog moves focus inside it. Escape closes it and returns focus to the trigger.
-- The icon-only close button has a visually hidden `Close` label.
-- Always include a `DialogTitle`; hide it visually with `sr-only` if the design has no visible title.
-
-## Notes
-
-- Styling hooks: `data-slot` values `dialog-overlay`, `dialog-content`, `dialog-close`, `dialog-header`, `dialog-footer`, `dialog-title` and `dialog-description`.
-- `data-open` and `data-closed` drive the fade and zoom animation.
-- The window is `sm:max-w-md` by default; override it with `className` on `DialogContent`.
-- When a close button is shown, the first child of the content gets extra end padding so it does not run under the button.
-- Uses the `popover`, `secondary` and `muted-foreground` colors, with a `bg-black/50` backdrop.
+Each part sets a `data-slot`, such as `dialog-content` or `dialog-footer`, for styling. `data-open` and `data-closed` drive the fade and zoom animation.
 
 </Only>
 
@@ -355,6 +332,10 @@ Also accepts the props of the primitive part it wraps.
 Use it for short forms and information that the user can dismiss freely. When the user must make an explicit choice, use Alert Dialog instead.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -404,7 +385,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -412,7 +395,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -446,17 +429,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/dialog.tsx`:
+5. Copy and paste the following code into `components/ui/dialog.tsx`:
 
 <ComponentSource path="uniwind/components/ui/dialog.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -490,17 +473,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/dialog.tsx`:
+5. Copy and paste the following code into `components/ui/dialog.tsx`:
 
 <ComponentSource path="nativewind/components/ui/dialog.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-screens react-native-svg react-native-worklets
@@ -534,11 +517,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-scre
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-5. Copy the source into `components/ui/dialog.tsx`:
+5. Copy and paste the following code into `components/ui/dialog.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/dialog.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -621,6 +604,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -889,16 +876,6 @@ fun DialogDefault(defaultOpen: Boolean) {
 
 </Only>
 
-<Only platform="rn">
-
-Compose `DialogTrigger` and `DialogContent` with a `DialogHeader` (`DialogTitle`, `DialogDescription`), your content, and a `DialogFooter`. Footer buttons stack vertically with the first child at the bottom, and sit in a row aligned to the end on wider screens. Use `DialogClose` with `render` to turn any `Button` into a close button.
-
-Set `showCloseButton={false}` on the content to hide the corner button, or pass `closeLabel` to show a text button such as "Done" instead of the icon. The header adds end padding so the title does not run under it. `DialogFooter` takes `showCloseButton` to append a secondary Close button.
-
-Use `open` and `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled.
-
-</Only>
-
 ## Examples
 
 ### Default
@@ -923,275 +900,6 @@ A text close button through `closeLabel`.
 
 <NativeExample name="dialog-with-close-label" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Dialog
-
-The root that manages the open state.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | Whether the dialog is open, for controlled use. |
-| `defaultOpen` | `boolean` | `false` | Whether the dialog starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean, details) => void` | - | Called when the dialog opens or closes. |
-| `modal` | `boolean` | `true` | Blocks interaction with the rest of the screen while open. |
-| `disablePointerDismissal` | `boolean` | `false` | Keeps the dialog open when the overlay is tapped. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### DialogOverlay
-
-Dimmed scrim that closes the dialog when tapped.
-
-Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Backdrop>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### DialogContent
-
-Centered card with an optional close button.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `portalHost` | `string` | - | Name of the portal host to render into. |
-| `showCloseButton` | `boolean` | `true` | Shows the corner close button. Defaults to `true`. |
-| `closeLabel` | `string` | - | Text for the close button instead of the icon. |
-
-Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Popup>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### DialogHeader
-
-Column for the title and description.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### DialogFooter
-
-Area for actions.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton` | `boolean` | `false` | Appends a secondary Close button. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### DialogTitle
-
-Dialog heading.
-
-Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Title>`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### DialogDescription
-
-Supporting text.
-
-Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Description>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .dialog
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isPresented` | `Binding<Bool>` | - | Whether it is shown. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### DialogContent
-
-Centered card with an optional close button.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton` | `Bool` | `true` | Shows the corner close button. |
-| `closeLabel` | `LocalizedStringKey?` | `nil` | Text for the close button instead of the icon. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### DialogHeader
-
-Column for the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### DialogFooter
-
-Area for actions.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton` | `Bool` | `false` | Appends a secondary Close button. |
-| `content` | `() -> Content` | - | The content. |
-
-Overloads: `init(showCloseButton:content:)`, `init(showCloseButton:)`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### DialogTitle
-
-Dialog heading.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `verbatim` | `String` | - | The title text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### DialogDescription
-
-Supporting text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ description` | `LocalizedStringKey` | - | The supporting text. |
-| `verbatim` | `String` | - | The supporting text. |
-
-Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### DialogClose
-
-A button that closes the dialog.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(action:label:)`, `init(_:action:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### Dialog
-
-The root that manages the open state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `Boolean` | - | Whether the dialog is open, for controlled use. |
-| `onOpenChange` | `(Boolean) -> Unit` | - | Called when the dialog opens or closes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `showCloseButton` | `Boolean` | `true` | Shows the corner close button. |
-| `closeLabel` | `String?` | `null` | Text for the close button instead of the icon. |
-| `dismissible` | `Boolean` | `true` | - |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### DialogHeader
-
-Column for the title and description.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### DialogFooter
-
-Area for actions.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `showCloseButton` | `Boolean` | `false` | Appends a secondary Close button. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### DialogTitle
-
-Dialog heading.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### DialogDescription
-
-Supporting text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1201,11 +909,204 @@ Supporting text.
 - The Android back button and the VoiceOver escape gesture close it.
 - The icon close button is labelled "Close".
 
-## Notes
+</Only>
 
-- On iOS the content is wrapped in a full-window overlay so it appears above native navigation.
-- Animations respect the system Reduce Motion setting.
-- Uses `bg-popover`, `bg-black/50` and `bg-secondary` tokens; light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Dialog
+
+The root that manages the open state.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean, details) => void` | - |
+| `modal` | `boolean` | `true` |
+| `disablePointerDismissal` | `boolean` | `false` |
+
+Use `open` and `onOpenChange` for controlled state, or `defaultOpen` for uncontrolled. `modal` blocks interaction with the rest of the screen while open, and `disablePointerDismissal` keeps the dialog open when the overlay is tapped.
+
+### DialogOverlay
+
+Dimmed scrim that closes the dialog when tapped.
+
+Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Backdrop>`.
+
+### DialogContent
+
+Centered card with an optional close button.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `portalHost` | `string` | - |
+| `showCloseButton` | `boolean` | `true` |
+| `closeLabel` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Popup>`.
+
+Set `showCloseButton={false}` to hide the corner button, or pass `closeLabel` to show a text button such as "Done" instead of the icon. The header adds end padding so the title does not run under it. `portalHost` names the portal host to render into. On iOS the content is wrapped in a full-window overlay so it appears above native navigation, and animations respect the system Reduce Motion setting.
+
+### DialogHeader
+
+Column for the title and description.
+
+Also accepts the props of `ViewProps`.
+
+### DialogFooter
+
+Area for actions.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `showCloseButton` | `boolean` | `false` |
+
+Also accepts the props of `ViewProps`.
+
+Footer buttons stack vertically with the first child at the bottom, and sit in a row aligned to the end on wider screens. Set `showCloseButton` to append a secondary Close button. Use `DialogClose` with `render` to turn any `Button` into a close button.
+
+### DialogTitle
+
+Dialog heading.
+
+Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Title>`.
+
+### DialogDescription
+
+Supporting text.
+
+Also accepts the props of `React.ComponentProps<typeof DialogPrimitive.Description>`.
+
+</Only>
+
+<Only platform="swift">
+
+### .dialog
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isPresented` | `Binding<Bool>` | - |
+| `content` | `() -> Content` | - |
+
+### DialogContent
+
+Centered card with an optional close button.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `showCloseButton` | `Bool` | `true` |
+| `closeLabel` | `LocalizedStringKey?` | `nil` |
+| `content` | `() -> Content` | - |
+
+### DialogHeader
+
+Column for the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### DialogFooter
+
+Area for actions.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `showCloseButton` | `Bool` | `false` |
+| `content` | `() -> Content` | - |
+
+Overloads: `init(showCloseButton:content:)`, `init(showCloseButton:)`.
+
+### DialogTitle
+
+Dialog heading.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### DialogDescription
+
+Supporting text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(_:)`, `init(verbatim:)`.
+
+### DialogClose
+
+A button that closes the dialog.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `action` | `(() -> Void)?` | `nil` |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(action:label:)`, `init(_:action:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### Dialog
+
+The root that manages the open state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `open` | `Boolean` | - |
+| `onOpenChange` | `(Boolean) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `showCloseButton` | `Boolean` | `true` |
+| `closeLabel` | `String?` | `null` |
+| `dismissible` | `Boolean` | `true` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### DialogHeader
+
+Column for the title and description.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### DialogFooter
+
+Area for actions.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `showCloseButton` | `Boolean` | `false` |
+| `content` | `@Composable () -> Unit` | - |
+
+### DialogTitle
+
+Dialog heading.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### DialogDescription
+
+Supporting text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
 
 </Only>
 

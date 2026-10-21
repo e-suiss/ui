@@ -19,6 +19,10 @@ Releasing past `threshold`, or flicking faster than 800 points per second, flies
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -67,7 +71,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -75,7 +81,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
@@ -91,17 +97,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="uniwind/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/interactions/card-stack.tsx`:
+5. Copy and paste the following code into `components/interactions/card-stack.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/card-stack.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
@@ -117,17 +123,17 @@ npx expo install cn phosphor-react-native react-native-gesture-handler react-nat
 
 <ComponentSource path="nativewind/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/interactions/card-stack.tsx`:
+5. Copy and paste the following code into `components/interactions/card-stack.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/card-stack.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-gesture-handler react-native-reanimated react-native-svg react-native-worklets
@@ -143,11 +149,11 @@ npx expo install phosphor-react-native react-native-gesture-handler react-native
 
 <ComponentSource path="stylesheet/components/primitives/haptics.tsx" plain />
 
-5. Copy the source into `components/interactions/card-stack.tsx`:
+5. Copy and paste the following code into `components/interactions/card-stack.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/card-stack.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -230,6 +236,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -707,14 +717,6 @@ fun CardStackDemo(enabled: Boolean) {
 
 </Only>
 
-<Only platform="rn">
-
-Pass `data` and `renderItem`, and handle `onSwipe(direction, item, index)`. Add children below the deck: `CardStackActions` with `CardStackSwipeButton`s and a `CardStackUndo`, and a `CardStackEmpty` shown once every card is swiped.
-
-Undo brings back the last card from the side it left and calls `onUndo`. `useCardStack` exposes `index`, `count`, `remaining`, `canUndo`, `swipe` and `undo` for custom controls. The `CardStackDirection` type is exported.
-
-</Only>
-
 ## Examples
 
 ### Mid swipe
@@ -743,34 +745,42 @@ Turns off swiping and the buttons with `disabled`.
 
 <NativeExample name="card-stack-disabled" />
 
+<Only platform="rn">
+
+## Accessibility
+
+- The top card has `Swipe left` and `Swipe right` accessibility actions.
+- Cards behind the top card are hidden from screen readers.
+- Swipe buttons are labelled `Swipe left` and `Swipe right`, and undo is labelled `Undo`, unless you pass `accessibilityLabel`.
+
+</Only>
+
 ## API Reference
 
 <Only platform="rn">
-
-<ApiPart index={1}>
 
 ### CardStack
 
 The root that renders the deck and handles the drag gesture.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `data` | `readonly T[]` | Required | The items to show as cards. |
-| `renderItem` | `(item: T, index: number) => React.ReactNode` | Required | Renders one card from the item and its index. |
-| `keyExtractor` | `(item: T, index: number) => string` | - | Returns a key for a card. Defaults to its position. |
-| `onSwipe` | `(direction: CardStackDirection, item: T, index: number) => void` | - | Called with the direction, item and index after a card leaves. |
-| `onUndo` | `(item: T, index: number) => void` | - | Called with the item and index after undo. |
-| `threshold` | `number` | `120` | Drag distance that commits a swipe. Defaults to `120`. |
-| `visibleCount` | `number` | `3` | Cards stacked behind the top card. Defaults to `3`. |
-| `disabled` | `boolean` | `false` | Turns off the gesture and the swipe buttons. |
-| `itemAccessibilityLabel` | `(item: T, index: number) => string` | - | Returns the label for the top card. |
-| `deckClassName` | `string` | - | Classes for the deck area, which is `h-96` by default. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `data` | `readonly T[]` | Required |
+| `renderItem` | `(item: T, index: number) => React.ReactNode` | Required |
+| `keyExtractor` | `(item: T, index: number) => string` | - |
+| `onSwipe` | `(direction: CardStackDirection, item: T, index: number) => void` | - |
+| `onUndo` | `(item: T, index: number) => void` | - |
+| `threshold` | `number` | `120` |
+| `visibleCount` | `number` | `3` |
+| `disabled` | `boolean` | `false` |
+| `itemAccessibilityLabel` | `(item: T, index: number) => string` | - |
+| `deckClassName` | `string` | - |
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
+Pass `data` and `renderItem`, and add children below the deck: `CardStackActions` with `CardStackSwipeButton`s and a `CardStackUndo`, and a `CardStackEmpty` shown once every card is swiped. `onSwipe` is called with the direction, item and index after a card leaves. `keyExtractor` defaults to the card's position. `threshold` is the drag distance that commits a swipe, and `visibleCount` is the number of cards stacked behind the top card. `disabled` turns off the gesture and the swipe buttons. `itemAccessibilityLabel` returns the label for the top card. The deck area is `h-96` by default; change it with `deckClassName`.
 
-<ApiPart index={2}>
+Undo brings back the last card from the side it left and calls `onUndo` with the item and index. `useCardStack` exposes `index`, `count`, `remaining`, `canUndo`, `swipe` and `undo` for custom controls. The `CardStackDirection` type is exported. A medium impact haptic plays when a card is swiped by gesture, button or accessibility action, if the app provides an adapter through `HapticsProvider`. Fly-out and spring animations respect the system reduce motion setting.
 
 ### CardStackEmpty
 
@@ -778,33 +788,23 @@ A dashed placeholder shown when no cards remain.
 
 Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### CardStackActions
 
 A centered row for the buttons.
 
 Also accepts the props of `ViewProps`, `React.RefAttributes<View>`.
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### CardStackSwipeButton
 
 A round button that swipes the top card left or right.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `direction` | `CardStackDirection` | Required | `left` shows an X icon, `right` shows a heart icon. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `direction` | `CardStackDirection` | Required |
 
 Also accepts the props of `React.ComponentProps<typeof Button>`.
 
-</ApiPart>
-
-<ApiPart index={5}>
+`left` shows an X icon and `right` shows a heart icon.
 
 ### CardStackUndo
 
@@ -812,21 +812,13 @@ A button that restores the last swiped card.
 
 Also accepts the props of `React.ComponentProps<typeof Button>`.
 
-</ApiPart>
-
 </Only>
 
 <Only platform="swift">
 
-<ApiPart index={1}>
-
 ### CardStackDirection
 
 Values: `.left`, `.right`.
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### CardStackController
 
@@ -839,84 +831,52 @@ Takes no parameters.
 | `canSwipe` | `Bool` |
 | `canUndo` | `Bool` |
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### CardStackController.swipe
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ direction` | `CardStackDirection`: `.left` \| `.right` | - | - |
-
-</ApiPart>
-
-<ApiPart index={4}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ direction` | `CardStackDirection`: `.left` \| `.right` | - |
 
 ### CardStackController.undo
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### CardStackController.reset
 
 Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### CardStack
 
 The root that renders the deck and handles the drag gesture.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ items` | `[Item]` | - | - |
-| `controller` | `CardStackController` | - | - |
-| `visibleCount` | `Int` | `3` | Cards stacked behind the top card. |
-| `onSwipe` | `((CardStackDirection, Item) -> Void)?` | `nil` | Called with the direction, item and index after a card leaves. |
-| `onUndo` | `((Item) -> Void)?` | `nil` | Called with the item and index after undo. |
-| `card` | `(Item) -> Card` | - | - |
-
-</ApiPart>
-
-<ApiPart index={7}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ items` | `[Item]` | - |
+| `controller` | `CardStackController` | - |
+| `visibleCount` | `Int` | `3` |
+| `onSwipe` | `((CardStackDirection, Item) -> Void)?` | `nil` |
+| `onUndo` | `((Item) -> Void)?` | `nil` |
+| `card` | `(Item) -> Card` | - |
 
 ### CardStackAction
 
 Values: `.swipeLeft`, `.swipeRight`, `.undo`.
 
-</ApiPart>
-
-<ApiPart index={8}>
-
 ### CardStackButton
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ action` | `CardStackAction`: `.swipeLeft` \| `.swipeRight` \| `.undo` | - | - |
-| `controller` | `CardStackController` | - | - |
-| `size` | `VariantButtonStyle.Size` | `.iconXl` | - |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ action` | `CardStackAction`: `.swipeLeft` \| `.swipeRight` \| `.undo` | - |
+| `controller` | `CardStackController` | - |
+| `size` | `VariantButtonStyle.Size` | `.iconXl` |
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### CardStackDirection
 
 Values: `Left`, `Right`.
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### CardStackState
 
@@ -926,74 +886,40 @@ Values: `Left`, `Right`.
 | `isEmpty` | `Boolean` |
 | `progress` | `Float` |
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### CardStackState.swipe
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `direction` | `CardStackDirection`: `Left` \| `Right` | - | - |
-
-</ApiPart>
-
-<ApiPart index={4}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `direction` | `CardStackDirection`: `Left` \| `Right` | - |
 
 ### CardStackState.undo
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### rememberCardStackState
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `initialIndex` | `Int` | `0` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `initialIndex` | `Int` | `0` |
 
 Returns `CardStackState`.
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### CardStack
 
 The root that renders the deck and handles the drag gesture.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `List<T>` | - | - |
-| `onSwipe` | `(CardStackDirection, T) -> Unit` | - | Called with the direction, item and index after a card leaves. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `state` | `CardStackState` | `rememberCardStackState()` | - |
-| `key` | `((T) -> Any)?` | `null` | - |
-| `visibleCount` | `Int` | `3` | Cards stacked behind the top card. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `onUndo` | `((CardStackDirection, T) -> Unit)?` | `null` | Called with the item and index after undo. |
-| `empty` | `@Composable () -> Unit` | `{}` | - |
-| `content` | `@Composable (T) -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- The top card has `Swipe left` and `Swipe right` accessibility actions.
-- Cards behind the top card are hidden from screen readers.
-- Swipe buttons are labelled `Swipe left` and `Swipe right`, and undo is labelled `Undo`, unless you pass `accessibilityLabel`.
-
-## Notes
-
-- A medium impact haptic plays when a card is swiped by gesture, button or accessibility action, if the app provides an adapter through `HapticsProvider`.
-- Fly-out and spring animations respect the system reduce motion setting.
-- The left button icon uses `text-destructive`; the right uses `text-primary`.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `items` | `List<T>` | - |
+| `onSwipe` | `(CardStackDirection, T) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `state` | `CardStackState` | `rememberCardStackState()` |
+| `key` | `((T) -> Any)?` | `null` |
+| `visibleCount` | `Int` | `3` |
+| `enabled` | `Boolean` | `true` |
+| `onUndo` | `((CardStackDirection, T) -> Unit)?` | `null` |
+| `empty` | `@Composable () -> Unit` | `{}` |
+| `content` | `@Composable (T) -> Unit` | - |
 
 </Only>
 

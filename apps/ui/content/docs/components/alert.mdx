@@ -15,7 +15,9 @@ Use an alert for inline, persistent messages such as updates, warnings or errors
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/alert
@@ -27,24 +29,35 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add alert
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install class-variance-authority
 ```
 
-2. Copy the source into `components/ui/alert.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/alert.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Alert, AlertTitle, AlertDescription, AlertAction } from "@/components/ui/alert"
+import {
+  Alert,
+  AlertAction,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
 ```
 
 ```tsx
@@ -59,90 +72,42 @@ import { Alert, AlertTitle, AlertDescription, AlertAction } from "@/components/u
 </div>
 ```
 
-Put an icon from your icon library (or any `svg`) first inside `Alert`; it is sized to `size-5` unless it already has a size class. When `AlertDescription` is present the icon spans both rows.
+## Composition
 
-`AlertAction` is positioned in the top-end corner, and the alert reserves end padding for it automatically.
+Use the following composition to build a `Alert`:
+
+```text
+Alert
+├── AlertTitle
+├── AlertDescription
+└── AlertAction
+```
 
 ## Examples
 
 ### Destructive
 
-Tints the icon with the destructive color for errors.
+Set `variant="destructive"` to tint the icon with the destructive color for errors.
 
 <ComponentPreview name="alert-destructive" />
 
 ### Without icon
 
-A title and description with no leading icon.
+Leave out the icon for a title and description only.
 
 <ComponentPreview name="alert-without-icon" />
 
 ### Title only
 
-An icon with a single line of text and no description.
+Leave out `AlertDescription` for an icon with a single line of text.
 
 <ComponentPreview name="alert-title-only" />
 
 ### With action
 
-Places a small button in the top-end corner with `AlertAction`.
+Put a small button in an `AlertAction` to place it in the top-end corner.
 
 <ComponentPreview name="alert-with-action" />
-
-## API Reference
-
-<Anatomy>
-
-- [Alert](#alert)
-  - [AlertTitle](#alerttitle)
-  - [AlertDescription](#alertdescription)
-  - [AlertAction](#alertaction)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Alert
-
-The container that lays out the icon, text and action.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | `"default"` | Icon color. `default` uses `text-primary`; `destructive` uses `text-destructive`. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AlertTitle
-
-The bold headline of the message.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AlertDescription
-
-Secondary text that explains the message.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AlertAction
-
-An absolutely positioned slot for a button or link in the top-end corner.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -150,11 +115,39 @@ Also accepts the props of `React.ComponentProps<"div">`.
 - Interactive content in `AlertAction` stays in the normal tab order.
 - Decorative icons should not need a label; put the meaning in the title text.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot="alert"`, `"alert-title"`, `"alert-description"` and `"alert-action"`.
-- Both variants use `bg-muted`; they differ only in icon color (`text-primary` or `text-destructive`).
-- Links inside the title or description are underlined automatically.
+### Alert
+
+The container that lays out the icon, text and action.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Put an icon from your icon library, or any `svg`, first inside `Alert`; it is sized to `size-5` unless it already has a size class. When `AlertDescription` is present the icon spans both rows. Both variants use `bg-muted` and differ only in icon color: `default` uses `text-primary` and `destructive` uses `text-destructive`. Links inside the title or description are underlined automatically.
+
+### AlertTitle
+
+The bold headline of the message.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### AlertDescription
+
+Secondary text that explains the message.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+### AlertAction
+
+An absolutely positioned slot for a button or link in the top-end corner.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+The alert reserves end padding for the action automatically. Each part sets a `data-slot`, such as `alert-title` or `alert-action`, for styling.
 
 </Only>
 
@@ -171,6 +164,10 @@ Also accepts the props of `React.ComponentProps<"div">`.
 Use the `default` variant for neutral information, where the icon uses the primary color, and `destructive` for errors, where the icon uses the destructive color.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -220,7 +217,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -228,7 +227,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -236,17 +235,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/alert.tsx`:
+3. Copy and paste the following code into `components/ui/alert.tsx`:
 
 <ComponentSource path="uniwind/components/ui/alert.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -254,17 +253,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/alert.tsx`:
+3. Copy and paste the following code into `components/ui/alert.tsx`:
 
 <ComponentSource path="nativewind/components/ui/alert.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-svg
@@ -272,11 +271,11 @@ npx expo install phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Icon](/docs/components/icon), [Text](/docs/components/text).
 
-3. Copy the source into `components/ui/alert.tsx`:
+3. Copy and paste the following code into `components/ui/alert.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/alert.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -350,6 +349,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -411,25 +414,17 @@ fun AlertDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-Pass a Phosphor icon component to `icon`, and compose `AlertTitle` and `AlertDescription` as children. Any `AlertAction` child is detected and placed in the corner, and extra end padding is added so the text does not run under it.
-
-Use `iconClassName` to adjust the icon's size or color.
-
-</Only>
-
 ## Examples
 
 ### Destructive
 
-The `destructive` variant with a destructive-colored icon.
+Set `variant` to `destructive` to color the icon with the destructive color.
 
 <NativeExample name="alert-destructive" />
 
 ### Title only
 
-An alert with only a title.
+Leave out the description for an alert with only a title.
 
 <NativeExample name="alert-title-only" />
 
@@ -437,7 +432,7 @@ An alert with only a title.
 
 <Only platform="rn">
 
-An `AlertAction` button in the top-end corner.
+Put a button in an `AlertAction` to pin it to the top-end corner.
 
 </Only>
 
@@ -445,158 +440,9 @@ An `AlertAction` button in the top-end corner.
 
 ### Without icon
 
-An alert with text only and no icon.
+Leave out the icon for an alert with text only.
 
 <NativeExample name="alert-without-icon" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Alert
-
-Container with the icon, text column and action.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon` | `PhosphorIcon` | - | Phosphor icon component shown before the text. |
-| `variant` | `"default" \| "destructive"` | `"default"` | `default` or `destructive`; changes the icon color. |
-| `iconClassName` | `string` | - | Extra classes for the icon. |
-
-Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AlertTitle
-
-Bold first line.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AlertDescription
-
-Secondary-colored supporting text.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AlertAction
-
-Slot positioned in the top-end corner.
-
-Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### InlineAlert
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `Variant`: `.default` \| `.destructive` | `.default` | `default` or `destructive`; changes the icon color. |
-| `icon` | `Image?` | `nil` | Phosphor icon component shown before the text. |
-| `content` | `() -> Content` | - | The content. |
-| `action` | `() -> Action` | - | Called when it is tapped. |
-
-Overloads: `init(_:icon:content:action:)`, `init(_:icon:content:)`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### AlertTitle
-
-Bold first line.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AlertDescription
-
-Secondary-colored supporting text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ description` | `LocalizedStringKey` | - | The supporting text. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### AlertVariant
-
-Values: `Default`, `Destructive`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Alert
-
-Container with the icon, text column and action.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `AlertVariant`: `Default` \| `Destructive` | `AlertVariant.Default` | `default` or `destructive`; changes the icon color. |
-| `icon` | `ImageVector?` | `null` | Phosphor icon component shown before the text. |
-| `action` | `(@Composable () -> Unit)?` | `null` | Called when it is tapped. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### AlertTitle
-
-Bold first line.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### AlertDescription
-
-Secondary-colored supporting text.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -605,10 +451,114 @@ Secondary-colored supporting text.
 - The container has the `alert` role.
 - The icon is decorative; put the meaning in the title or description.
 
-## Notes
+</Only>
 
-- Uses `bg-muted`, `text-foreground`, `text-primary` and `text-destructive` tokens; light and dark follow the system appearance.
-- The action is positioned with `end-4`, so it flips in right-to-left layouts.
+## API Reference
+
+<Only platform="rn">
+
+### Alert
+
+Container with the icon, text column and action.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `icon` | `PhosphorIcon` | - |
+| `variant` | `"default" \| "destructive"` | `"default"` |
+| `iconClassName` | `string` | - |
+
+Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
+
+Pass a Phosphor icon component to `icon` to show it before the text, and use `iconClassName` to adjust its size or color. `variant` changes the icon color. Compose `AlertTitle` and `AlertDescription` as children.
+
+### AlertTitle
+
+Bold first line.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+### AlertDescription
+
+Secondary-colored supporting text.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+### AlertAction
+
+Slot positioned in the top-end corner.
+
+Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
+
+Any `AlertAction` child is detected and placed in the corner, and extra end padding is added so the text does not run under it. The action is positioned with `end-4`, so it flips in right-to-left layouts.
+
+</Only>
+
+<Only platform="swift">
+
+### InlineAlert
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `Variant`: `.default` \| `.destructive` | `.default` |
+| `icon` | `Image?` | `nil` |
+| `content` | `() -> Content` | - |
+| `action` | `() -> Action` | - |
+
+Overloads: `init(_:icon:content:action:)`, `init(_:icon:content:)`.
+
+### AlertTitle
+
+Bold first line.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+
+### AlertDescription
+
+Secondary-colored supporting text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### AlertVariant
+
+Values: `Default`, `Destructive`.
+
+### Alert
+
+Container with the icon, text column and action.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `AlertVariant`: `Default` \| `Destructive` | `AlertVariant.Default` |
+| `icon` | `ImageVector?` | `null` |
+| `action` | `(@Composable () -> Unit)?` | `null` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### AlertTitle
+
+Bold first line.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### AlertDescription
+
+Secondary-colored supporting text.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
 
 </Only>
 

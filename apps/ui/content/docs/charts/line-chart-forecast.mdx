@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 Actual values drawn as a solid line that continues as a dashed forecast over a shaded future period. Use it whenever you show projections next to history and need readers to tell them apart.
 
+Fill the `actual` and `forecast` arrays and start the forecast with the last actual value so the lines meet; at that point the tooltip lists both values. Move the shaded period with `x1` and `x2` on the reference area. Both series share one color in `chartConfig`, so the dash pattern, the shading and the series names in the tooltip tell them apart.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/line-chart-forecast
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts line-chart-forecast
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/line-chart-forecast.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/line-chart-forecast.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { LineChartForecast } from "@/components/charts/line-chart-forecast"
 ```tsx
 <LineChartForecast />
 ```
-
-Fill the `actual` and `forecast` arrays; the forecast should start with the last actual value so the two lines meet. Move the shaded period by changing `x1` and `x2` on the reference area to match your first and last forecast labels. Both series share one color in `chartConfig`.
-
-## Notes
-
-Since actual and forecast use the same color, the dash pattern and shading carry the distinction; the tooltip also names each series. At the handover point the tooltip lists both values.
 
 </Only>
 
@@ -77,7 +81,17 @@ Two series share one axis: `actual` fills the first nine months and `forecast` c
 
 </Only>
 
+<Only platform="rn">
+
+Replace the `actual` and `forecast` arrays; the forecast starts at the index set in `chartData`. Move the `ReferenceArea` `x1` and `x2` to match your forecast range. The component takes no props.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +141,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +153,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/line-chart-forecast.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-forecast.tsx`:
 
 <ComponentSource path="uniwind/components/charts/line-chart-forecast.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +165,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/line-chart-forecast.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-forecast.tsx`:
 
 <ComponentSource path="nativewind/components/charts/line-chart-forecast.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +177,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/line-chart-forecast.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-forecast.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/line-chart-forecast.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +264,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +307,6 @@ fun LineForecastExample() {
     LineChartForecast()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace the `actual` and `forecast` arrays; the forecast starts at the index set in `chartData`. Move the `ReferenceArea` `x1` and `x2` to match your forecast range. The component takes no props.
 
 </Only>
 

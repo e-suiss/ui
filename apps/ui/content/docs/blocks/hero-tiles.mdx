@@ -11,9 +11,13 @@ platforms: [web]
 
 Two promotional tiles, each with a title, tagline, Learn more and Buy buttons and a product image, one of them rendered in the dark palette. The tiles stack on mobile and sit side by side on desktop. It is a static server component for promoting two products or offers on a home page.
 
+Edit the `tiles` array; each tile has a title, text, image, alt text and a `dark` flag. Dark tiles prefix their title with suiss, so remove that span if it doesn't fit your brand. Connect the buttons to your product pages. Images are Unsplash placeholders.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/hero-tiles
@@ -25,17 +29,23 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks hero-tiles
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
 2. Add the pieces it builds on: [Button](/docs/components/button).
 
-3. Copy the source into `components/blocks/hero-tiles.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/hero-tiles.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -46,11 +56,5 @@ import { HeroTiles } from "@/components/blocks/hero-tiles"
 ```tsx
 <HeroTiles />
 ```
-
-Edit the `tiles` array; each tile has a title, text, image, alt text and a `dark` flag. Dark tiles prefix their title with suiss, so remove that span if it doesn't fit your brand. Connect the buttons to your product pages.
-
-## Notes
-
-Images are Unsplash placeholders.
 
 </Only>

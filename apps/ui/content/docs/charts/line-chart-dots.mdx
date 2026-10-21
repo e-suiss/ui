@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 A health-style weight card with a dot on every monthly reading and a fixed value axis on the right. The dots make it clear where measurements actually exist, so use this variant when readings are sparse or irregular.
 
+Replace the readings in `chartData` and rename `weight` in the data, the line and `chartConfig`. Set the value axis `domain` and `ticks` to suit your numbers, and change the unit in the tooltip formatter. The headline value and the change below it are static text, so update them with the data or compute them from it.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/line-chart-dots
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts line-chart-dots
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/line-chart-dots.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/line-chart-dots.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { LineChartDots } from "@/components/charts/line-chart-dots"
 ```tsx
 <LineChartDots />
 ```
-
-Replace the list of readings in `chartData` and rename `weight` in the data, the line and `chartConfig`. Set the value axis `domain` and `ticks` to a range that suits your numbers, and change the unit in the tooltip formatter.
-
-## Notes
-
-The headline value and the change below it are hard-coded text, so update them along with the data or compute them from it.
 
 </Only>
 
@@ -75,9 +79,15 @@ The headline value and the change below it are hard-coded text, so update them a
 
 Ten monthly weights drawn with `type="linear"` and a dot on every reading, plus a larger dot for the touched point. A value axis on the right covers a fixed range, and the tooltip formats values in kilograms. The header shows the latest weight and the change since January as static text.
 
+Replace the weight array in `chartData` and update the header text to match. Adjust the `YAxis` `domain` and `ticks` for your range. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +149,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/line-chart-dots.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-dots.tsx`:
 
 <ComponentSource path="uniwind/components/charts/line-chart-dots.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +161,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/line-chart-dots.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-dots.tsx`:
 
 <ComponentSource path="nativewind/components/charts/line-chart-dots.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +173,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart), [Text](/docs/components/text).
 
-2. Copy the source into `components/charts/line-chart-dots.tsx`:
+2. Copy and paste the following code into `components/charts/line-chart-dots.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/line-chart-dots.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +260,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +303,6 @@ fun LineDotsExample() {
     LineChartDots()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace the weight array in `chartData` and update the header text to match. Adjust the `YAxis` `domain` and `ticks` for your range. The component takes no props.
 
 </Only>
 

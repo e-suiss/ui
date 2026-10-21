@@ -9,13 +9,15 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="date-picker-demo" responsive />
 
-`DatePicker` is a single component that renders a field-style trigger showing the selected date, formatted with `Intl.DateTimeFormat` in the `medium` date style, or the placeholder. On desktop the trigger opens a `Popover` containing a single-selection `Calendar`; picking a day selects it and closes the popover.
+`DatePicker` renders a field-style trigger showing the selected date or the placeholder. On desktop the trigger opens a `Popover` with a `Calendar`. Below the `48rem` breakpoint it opens a bottom `Drawer` with a `WheelPicker` of day, month and year columns.
 
-Below the `48rem` breakpoint the trigger opens a bottom `Drawer` with a `WheelPicker` of day, month and year columns, ordered to match the locale's short date format. Turning a wheel updates the value immediately, and the day is clamped to the length of the chosen month. Use it for form fields such as delivery dates or dates of birth.
+Use it for form fields such as delivery dates or dates of birth.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/date-picker
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns date-picker
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -37,11 +41,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Calendar](/docs/components/calendar), [Drawer](/docs/components/drawer), [Popover](/docs/components/popover), `use-mobile`, [Wheel Picker](/docs/components/wheel-picker).
 
-3. Copy the source into `components/patterns/date-picker.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/date-picker.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -53,99 +61,67 @@ import { DatePicker } from "@/components/patterns/date-picker"
 <DatePicker aria-label="Date" className="w-60" />
 ```
 
-Use `value` and `onValueChange` for a controlled field, or `defaultValue` for an uncontrolled one; the value is a `Date` or `null`. `locale` drives the trigger format, calendar captions, weekday names, the first day of the week, day labels and the wheel order. `fromYear` and `toYear` bound both the calendar's months and the year wheel. Pass `id`, `aria-label` and `aria-describedby` to connect the field to a label and help text.
-
 ## Examples
 
 ### With value
 
-Starts with a `defaultValue`, and the calendar opens on that month.
+Set `defaultValue` to start with a date. The calendar opens on that month.
 
 <ComponentPreview name="date-picker-with-value" responsive />
 
 ### Locale
 
-Formats the trigger and calendar in Turkish with `locale="tr-TR"`.
+Set `locale` to format the trigger and calendar in another language, here Turkish with `locale="tr-TR"`. It also sets the first day of the week and the wheel order.
 
 <ComponentPreview name="date-picker-locale" responsive />
 
 ### Year range
 
-Limits selection to 1940 through 2010 for a date of birth.
+Set `fromYear` and `toYear` to limit selection to 1940 through 2010 for a date of birth. They bound both the calendar's months and the year wheel.
 
 <ComponentPreview name="date-picker-year-range" responsive />
 
 ### With title
 
-Shows a visible Delivery date title in the mobile drawer.
+Set `title` to show a visible Delivery date title in the mobile drawer. Without it the drawer title is visually hidden.
 
 <ComponentPreview name="date-picker-with-title" responsive />
 
 ### With close button
 
-Adds an icon close button to the mobile drawer.
+Set `showCloseButton` to add an icon close button to the mobile drawer.
 
 <ComponentPreview name="date-picker-with-close-button" responsive />
 
 ### With close label
 
-Adds a text close button labelled Done to the mobile drawer.
+Set `closeLabel` together with `showCloseButton` to show a text close button labelled Done in the mobile drawer.
 
 <ComponentPreview name="date-picker-with-close-label" responsive />
 
 ### Disabled
 
-Disables the trigger so the picker cannot open.
+Set `disabled` to disable the trigger so the picker cannot open.
 
 <ComponentPreview name="date-picker-disabled" responsive />
 
 ### Invalid
 
-Marks the field invalid with `aria-invalid`.
+Set `aria-invalid` to mark the field invalid and apply the destructive border and ring.
 
 <ComponentPreview name="date-picker-invalid" responsive />
 
 ### Controlled
 
-Owns the value in parent state and shows the picked date below the field.
+Control the value with `value` and `onValueChange`, and show the picked date below the field.
 
 <ComponentPreview name="date-picker-controlled" responsive />
 
 ### Floating
 
-Insets the mobile drawer from the screen edges with `floating`.
+Set `floating` to inset the mobile drawer from the screen edges with fully rounded corners.
 
 <ComponentPreview name="date-picker-floating" responsive />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### DatePicker
-
-The field trigger with its desktop calendar popover and mobile wheel drawer.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Date \| null` | - | The selected date when controlled; `null` for no date. |
-| `defaultValue` | `Date \| null` | - | The initial date when uncontrolled. |
-| `onValueChange` | `(value: Date \| null) => void` | - | Called with the new date when the user picks a day or turns a wheel. |
-| `placeholder` | `string` | `"Pick a date"` | Text shown in the trigger when no date is selected. |
-| `locale` | `string` | - | BCP 47 locale used for formatting, week start, labels and wheel order; defaults to the runtime locale. |
-| `fromYear` | `number` | `new Date().getFullYear() - 100` | The earliest selectable year. |
-| `toYear` | `number` | `new Date().getFullYear() + 10` | The latest selectable year. |
-| `title` | `string` | - | Visible title of the mobile drawer; without it the drawer title is visually hidden. |
-| `disabled` | `boolean` | - | Disables the trigger. |
-| `floating` | `boolean` | - | Insets the mobile drawer from the screen edges with fully rounded corners. |
-| `showCloseButton` | `boolean` | `false` | Shows a close button in the mobile drawer. |
-| `closeLabel` | `string` | - | Replaces the drawer's close icon with this text; requires `showCloseButton`. |
-| `id` | `string` | - | The `id` of the trigger button, for use with a `label`. |
-| `className` | `string` | - | Classes applied to the trigger button. |
-| `aria-invalid` | `boolean` | - | Marks the field invalid and applies the destructive border and ring. |
-| `aria-label` | `string` | - | Accessible name of the trigger; also used as the hidden drawer title when `title` is absent. |
-| `aria-describedby` | `string` | - | IDs of elements that describe the field, such as help or error text. |
-
-</ApiPart>
 
 ## Accessibility
 
@@ -154,9 +130,37 @@ The field trigger with its desktop calendar popover and mobile wheel drawer.
 - `Escape` closes the calendar and returns focus to the trigger.
 - On mobile each wheel column is labelled Day, Month or Year, and the drawer always has a title, visually hidden when `title` is not set.
 
-## Notes
+## API Reference
 
-The trigger carries `data-slot="date-picker-trigger"` and `data-placeholder` while empty; the popup carries `data-slot="date-picker-content"` and the wheels `data-slot="date-picker-wheels"`. When no value is set, the mobile wheels start at today's date. The open state is internal and cannot be controlled.
+### DatePicker
+
+The field trigger with its desktop calendar popover and mobile wheel drawer.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `Date \| null` | - |
+| `defaultValue` | `Date \| null` | - |
+| `onValueChange` | `(value: Date \| null) => void` | - |
+| `placeholder` | `string` | `"Pick a date"` |
+| `locale` | `string` | - |
+| `fromYear` | `number` | `new Date().getFullYear() - 100` |
+| `toYear` | `number` | `new Date().getFullYear() + 10` |
+| `title` | `string` | - |
+| `disabled` | `boolean` | - |
+| `floating` | `boolean` | - |
+| `showCloseButton` | `boolean` | `false` |
+| `closeLabel` | `string` | - |
+| `id` | `string` | - |
+| `className` | `string` | - |
+| `aria-invalid` | `boolean` | - |
+| `aria-label` | `string` | - |
+| `aria-describedby` | `string` | - |
+
+Use `value` and `onValueChange` for a controlled field, or `defaultValue` for an uncontrolled one; the value is a `Date` or `null`. `onValueChange` fires when the user picks a day or turns a wheel. The open state is internal and cannot be controlled.
+
+The trigger formats the date with `Intl.DateTimeFormat` in the `medium` date style. `locale` is a BCP 47 locale that drives the trigger format, calendar captions, weekday names, the first day of the week, day labels and the wheel order; it defaults to the runtime locale. On desktop, picking a day selects it and closes the popover. On mobile the wheels follow the locale's short date format, start at today's date when no value is set, and update the value immediately; the day is clamped to the length of the chosen month.
+
+Pass `id`, `aria-label` and `aria-describedby` to connect the field to a label and help text; `aria-label` is also the hidden drawer title when `title` is absent. `className` applies to the trigger button. The trigger sets `data-slot="date-picker-trigger"` and `data-placeholder` while empty, and the popup and wheels set `date-picker-content` and `date-picker-wheels`, for styling.
 
 </Only>
 
@@ -166,13 +170,17 @@ The trigger carries `data-slot="date-picker-trigger"` and `data-placeholder` whi
 
 <Only platform="rn">
 
-`DatePicker` renders a field-style `DrawerTrigger` with a calendar icon and the selected date formatted with `Intl.DateTimeFormat` in the `medium` date style. The trigger sizes itself to its content rather than filling the width; pass `className` to change that. Pressing it opens a `Drawer` with three `WheelPicker` columns.
+`DatePicker` renders a field-style `DrawerTrigger` with a calendar icon and the selected date formatted with `Intl.DateTimeFormat` in the `medium` date style. Pressing it opens a `Drawer` with three `WheelPicker` columns.
 
 </Only>
 
-The column order follows the locale's short date format, falling back to month, day, year. Month names come from the locale, and the day column shrinks or grows with the chosen month and year, clamping the day when needed.
+The column order follows the locale's short date format, falling back to month, day, year. Month names come from the locale, and the day column shrinks or grows with the chosen month and year, clamping the day when needed. When no value is set, the wheels start at today.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -222,7 +230,9 @@ The CLI also adds what it builds on: [Drawer](/docs/components/drawer), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -230,7 +240,7 @@ The CLI also adds what it builds on: [Drawer](/docs/components/drawer), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -238,17 +248,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text), [Wheel Picker](/docs/components/wheel-picker).
 
-3. Copy the source into `components/patterns/date-picker.tsx`:
+3. Copy and paste the following code into `components/patterns/date-picker.tsx`:
 
 <ComponentSource path="uniwind/components/patterns/date-picker.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-svg
@@ -256,17 +266,17 @@ npx expo install cn phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text), [Wheel Picker](/docs/components/wheel-picker).
 
-3. Copy the source into `components/patterns/date-picker.tsx`:
+3. Copy and paste the following code into `components/patterns/date-picker.tsx`:
 
 <ComponentSource path="nativewind/components/patterns/date-picker.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-svg
@@ -274,11 +284,11 @@ npx expo install phosphor-react-native react-native-svg
 
 2. Add the pieces it builds on: [Drawer](/docs/components/drawer), [Icon](/docs/components/icon), [Text](/docs/components/text), [Wheel Picker](/docs/components/wheel-picker).
 
-3. Copy the source into `components/patterns/date-picker.tsx`:
+3. Copy and paste the following code into `components/patterns/date-picker.tsx`:
 
 <ComponentSource path="stylesheet/components/patterns/date-picker.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -400,6 +410,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -516,14 +530,6 @@ fun DatePickerDemo(
 
 </Only>
 
-<Only platform="rn">
-
-Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. The value is a `Date` or `null`; `onValueChange` fires on every wheel change, so there is no separate confirm step.
-
-</Only>
-
-When no value is set the wheels start at today and the field shows `placeholder`. Limit the year column with `fromYear` and `toYear`.
-
 ## Examples
 
 ### With value
@@ -554,7 +560,7 @@ Uses `tr-TR`, which reorders the wheels and translates month names.
 
 ### Year range
 
-A date-of-birth field limited to 1940 through 2010.
+A date-of-birth field limited to 1940 through 2010 with `fromYear` and `toYear`.
 
 <NativeExample name="date-picker-year-range" />
 
@@ -614,85 +620,6 @@ The React Native tab shows 1 more example.
 
 </Only>
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### DatePicker
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Date \| null` | - | The selected date when controlled, or `null`. |
-| `defaultValue` | `Date \| null` | - | The initial date when uncontrolled. |
-| `onValueChange` | `(value: Date \| null) => void` | - | Called with the new `Date` on every wheel change. |
-| `placeholder` | `string` | `"Pick a date"` | Text shown when no date is set. Defaults to `Pick a date`. |
-| `locale` | `string` | - | BCP 47 locale for formatting, month names and wheel order. |
-| `fromYear` | `number` | `new Date().getFullYear() - 100` | First year in the year wheel. Defaults to 100 years ago. |
-| `toYear` | `number` | `new Date().getFullYear() + 10` | Last year in the year wheel. Defaults to 10 years ahead. |
-| `title` | `string` | - | Heading shown at the top of the drawer. |
-| `disabled` | `boolean` | - | Prevents opening and dims the field. |
-| `floating` | `boolean` | - | Insets the drawer from the screen edges. |
-| `showCloseButton` | `boolean` | `false` | Shows a close button in the drawer. Defaults to `false`. |
-| `closeLabel` | `string` | - | Label of the close button. |
-| `invalid` | `boolean` | - | Applies the error border and background. |
-| `className` | `string` | - | Extra classes for the field, for example `w-full` to fill the width. |
-| `accessibilityLabel` | `string` | - | Label for the field, also used for the drawer when there is no `title`. |
-| `accessibilityLabelledBy` | `string` | - | Links the field to a visible label. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### DatePickerField
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selection` | `Binding<Date?>` | - | The selected value. |
-| `placeholder` | `LocalizedStringKey` | `"Pick a date"` | Text shown when no date is set. |
-| `fromYear` | `Int?` | `nil` | First year in the year wheel. |
-| `toYear` | `Int?` | `nil` | Last year in the year wheel. |
-| `title` | `LocalizedStringKey?` | `nil` | Heading shown at the top of the drawer. |
-| `showCloseButton` | `Bool` | `false` | Shows a close button in the drawer. |
-| `closeLabel` | `LocalizedStringKey?` | `nil` | Label of the close button. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### DatePicker
-
-The field trigger with its desktop calendar popover and mobile wheel drawer.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Date?` | - | The selected date when controlled, or `null`. |
-| `onValueChange` | `(Date) -> Unit` | - | Called with the new `Date` on every wheel change. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `placeholder` | `String` | `"Pick a date"` | Text shown when no date is set. |
-| `locale` | `Locale` | `Locale.getDefault()` | BCP 47 locale for formatting, month names and wheel order. |
-| `fromYear` | `Int` | `Calendar.getInstance().get(Calendar.YEAR) - 100` | First year in the year wheel. |
-| `toYear` | `Int` | `Calendar.getInstance().get(Calendar.YEAR) + 10` | Last year in the year wheel. |
-| `title` | `String?` | `null` | Heading shown at the top of the drawer. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `invalid` | `Boolean?` | `null` | Applies the error border and background. |
-| `floating` | `Boolean` | `false` | Insets the drawer from the screen edges. |
-| `showCloseButton` | `Boolean` | `false` | Shows a close button in the drawer. |
-| `closeLabel` | `String?` | `null` | Label of the close button. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -700,10 +627,76 @@ The field trigger with its desktop calendar popover and mobile wheel drawer.
 - The wheels are labelled `Day`, `Month` and `Year`.
 - Without a `title`, the drawer is labelled by `accessibilityLabel` or the placeholder.
 
-## Notes
+</Only>
 
-- The field uses `bg-secondary`, `border-destructive` with a `bg-destructive` tint when invalid, and `opacity-50` when disabled; the tint is stronger in dark mode.
-- Without `floating`, the drawer's top corners are square.
+## API Reference
+
+<Only platform="rn">
+
+### DatePicker
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `Date \| null` | - |
+| `defaultValue` | `Date \| null` | - |
+| `onValueChange` | `(value: Date \| null) => void` | - |
+| `placeholder` | `string` | `"Pick a date"` |
+| `locale` | `string` | - |
+| `fromYear` | `number` | `new Date().getFullYear() - 100` |
+| `toYear` | `number` | `new Date().getFullYear() + 10` |
+| `title` | `string` | - |
+| `disabled` | `boolean` | - |
+| `floating` | `boolean` | - |
+| `showCloseButton` | `boolean` | `false` |
+| `closeLabel` | `string` | - |
+| `invalid` | `boolean` | - |
+| `className` | `string` | - |
+| `accessibilityLabel` | `string` | - |
+| `accessibilityLabelledBy` | `string` | - |
+
+Use it uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. The value is a `Date` or `null`; `onValueChange` fires on every wheel change, so there is no separate confirm step. When no value is set the field shows `placeholder`.
+
+`locale` is a BCP 47 locale for formatting, month names and wheel order. `fromYear` and `toYear` limit the year wheel and default to 100 years ago and 10 years ahead. The field sizes itself to its content; pass a `className` such as `w-full` to fill the width. `accessibilityLabel` labels the field and also the drawer when there is no `title`, and `accessibilityLabelledBy` links the field to a visible label. Without `floating`, the drawer's top corners are square.
+
+</Only>
+
+<Only platform="swift">
+
+### DatePickerField
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `selection` | `Binding<Date?>` | - |
+| `placeholder` | `LocalizedStringKey` | `"Pick a date"` |
+| `fromYear` | `Int?` | `nil` |
+| `toYear` | `Int?` | `nil` |
+| `title` | `LocalizedStringKey?` | `nil` |
+| `showCloseButton` | `Bool` | `false` |
+| `closeLabel` | `LocalizedStringKey?` | `nil` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### DatePicker
+
+The field trigger with its desktop calendar popover and mobile wheel drawer.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Date?` | - |
+| `onValueChange` | `(Date) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `placeholder` | `String` | `"Pick a date"` |
+| `locale` | `Locale` | `Locale.getDefault()` |
+| `fromYear` | `Int` | `Calendar.getInstance().get(Calendar.YEAR) - 100` |
+| `toYear` | `Int` | `Calendar.getInstance().get(Calendar.YEAR) + 10` |
+| `title` | `String?` | `null` |
+| `enabled` | `Boolean` | `true` |
+| `invalid` | `Boolean?` | `null` |
+| `floating` | `Boolean` | `false` |
+| `showCloseButton` | `Boolean` | `false` |
+| `closeLabel` | `String?` | `null` |
 
 </Only>
 

@@ -9,13 +9,15 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="table-list-demo" layout="padded" responsive />
 
-`TableList` displays rows of data from a column definition. On desktop it renders a suiss/ui `Table` inside a bordered section, with a header row and one cell per column. On mobile (below `48rem`, via `useIsMobile`), where wide tables do not fit, it renders an inset grouped list: each row shows a title line, a secondary line that joins description columns with a middle dot, and trailing values on the end.
+`TableList` displays rows of data from a column definition. On desktop it renders a suiss/ui `Table` inside a bordered section, with a header row and one cell per column. On mobile (below `48rem`, via `useIsMobile`), where wide tables do not fit, it renders an inset grouped list, and each column chooses its place in the row through `slot`.
 
-Each column chooses its place in the mobile row through `slot`, and can provide a simpler `mobileCell`. Use it for orders, invoices, transactions and other records that people compare in columns on large screens.
+Use it for orders, invoices, transactions and other records that people compare in columns on large screens.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/table-list
@@ -27,17 +29,23 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add patterns table-list
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the [`cn` helper](/docs/installation#the-cn-helper).
 
 2. Add the pieces it builds on: [Table](/docs/components/table), `use-mobile`.
 
-3. Copy the source into `components/patterns/table-list.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/patterns/table-list.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -62,44 +70,19 @@ const columns: TableListColumn<Order>[] = [
 <TableList rows={orders} columns={columns} getKey={(order) => order.id} title="Orders" />
 ```
 
-- Each `TableListColumn` has a `key`, a `header` and a `cell` renderer. Optional fields are `mobileCell`, `slot` (`title`, `description`, `trailing` or `hidden`) and `align` (`start` or `end`).
-- On mobile, the first `title` column becomes the primary line, `description` columns form the secondary line, and `trailing` columns appear at the end. Columns without a slot, or with `hidden`, are left out on mobile.
-- `mobileCell` replaces `cell` on mobile, for example to drop styling that does not fit the list.
-- `align: "end"` right-aligns the desktop header and cells.
-
 ## Examples
 
 ### Without title
 
-Renders the table without a heading or region.
+Leave out `title` to render the table without a heading or region.
 
 <ComponentPreview name="table-list-without-title" layout="padded" responsive />
 
 ### Empty
 
-Shows custom `emptyText` when there are no rows.
+Set `emptyText` to change the content shown when `rows` is empty.
 
 <ComponentPreview name="table-list-empty" layout="padded" responsive />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### TableList
-
-The section that renders the rows as a table or a grouped list.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `rows` | `T[]` | Required | The data rows to display. |
-| `columns` | `TableListColumn<T>[]` | Required | The column definitions that render each row. |
-| `getKey` | `(row: T, index: number) => React.Key` | `(_, index) => index` | Returns the React key for a row. |
-| `title` | `React.ReactNode` | - | A heading above the data that also names the section. |
-| `emptyText` | `React.ReactNode` | `"No results."` | Content shown when `rows` is empty. |
-
-Also accepts the props of `React.ComponentProps<"section">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -107,9 +90,27 @@ Also accepts the props of `React.ComponentProps<"section">`.
 - On desktop the data is a real table with column headers; an empty state is a single cell that spans every column.
 - On mobile the rows are list items in a `ul`.
 
-## Notes
+## API Reference
 
-Styling hooks: `data-slot="table-list"` and `table-list-title`; on mobile also `table-list-items` and `table-list-item`. The `TableListColumn` type is exported.
+### TableList
+
+The section that renders the rows as a table or a grouped list.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `rows` | `T[]` | Required |
+| `columns` | `TableListColumn<T>[]` | Required |
+| `getKey` | `(row: T, index: number) => React.Key` | `(_, index) => index` |
+| `title` | `React.ReactNode` | - |
+| `emptyText` | `React.ReactNode` | `"No results."` |
+
+Also accepts the props of `React.ComponentProps<"section">`.
+
+Each `TableListColumn` has a `key`, a `header` and a `cell` renderer. Optional fields are `mobileCell`, `slot` (`title`, `description`, `trailing` or `hidden`) and `align` (`start` or `end`); the `TableListColumn` type is exported. `align: "end"` right-aligns the desktop header and cells.
+
+On mobile, the first `title` column becomes the primary line, `description` columns form a secondary line joined with a middle dot, and `trailing` columns appear at the end. Columns without a slot, or with `hidden`, are left out on mobile. `mobileCell` replaces `cell` on mobile, for example to drop styling that does not fit the list.
+
+Each part sets a `data-slot`, such as `table-list-title` or, on mobile, `table-list-item`, for styling.
 
 </Only>
 
@@ -126,6 +127,10 @@ The row parts are also exported, so you can build the same grouped look inside a
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -175,7 +180,9 @@ The CLI also adds what it builds on: [Item](/docs/components/item), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -183,7 +190,7 @@ The CLI also adds what it builds on: [Item](/docs/components/item), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -191,17 +198,17 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Item](/docs/components/item), [Text](/docs/components/text).
 
-3. Copy the source into `components/patterns/table-list.tsx`:
+3. Copy and paste the following code into `components/patterns/table-list.tsx`:
 
 <ComponentSource path="uniwind/components/patterns/table-list.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -209,11 +216,11 @@ npx expo install cn
 
 2. Add the pieces it builds on: [Item](/docs/components/item), [Text](/docs/components/text).
 
-3. Copy the source into `components/patterns/table-list.tsx`:
+3. Copy and paste the following code into `components/patterns/table-list.tsx`:
 
 <ComponentSource path="nativewind/components/patterns/table-list.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -221,11 +228,11 @@ npx expo install cn
 
 1. Add the pieces it builds on: [Item](/docs/components/item), [Text](/docs/components/text).
 
-2. Copy the source into `components/patterns/table-list.tsx`:
+2. Copy and paste the following code into `components/patterns/table-list.tsx`:
 
 <ComponentSource path="stylesheet/components/patterns/table-list.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -302,6 +309,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -441,395 +452,17 @@ fun TableListDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-Define columns with `key`, `header`, `cell` and `slot`. Several `description` columns are joined with ` · `, and several `trailing` columns are shown side by side. Use `mobileCell` to render a different value than `cell` in the list, such as a shorter date.
-
-Pass `onRowPress` to make rows pressable. When there are no rows, `emptyText` is shown in the group. The `TableListColumn` type is exported.
-
-With a `FlatList`, use `TableListRow` as the item, pass `first` and `last` to round the ends, `TableListSeparator` as `ItemSeparatorComponent`, and `TableListHeader` and `TableListFooter` around the list.
-
-</Only>
-
 ## Examples
 
 ### With flat list
 
 <Only platform="rn">
 
-Builds the grouped list in a `FlatList` with a header, footer and separators.
+Builds the grouped list in a `FlatList`: `TableListRow` is the item, with `first` and `last` to round the ends, `TableListSeparator` is the `ItemSeparatorComponent`, and `TableListHeader` and `TableListFooter` sit around the list.
 
 </Only>
 
 <NativeExample name="table-list-with-flat-list" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### TableListTitle
-
-A large heading above the list.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### TableListHeader
-
-A small uppercase heading above a group.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### TableListFooter
-
-A note below a group.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### TableListSeparator
-
-An inset divider between rows.
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### TableListRow
-
-One row with a title, description and trailing content.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `React.ReactNode` | - | The row's main text. |
-| `description` | `React.ReactNode` | - | A single-line secondary text. |
-| `trailing` | `React.ReactNode` | - | Content on the end side; text is shown in secondary color with tabular numbers. |
-| `first` | `boolean` | `false` | Rounds the top corners. |
-| `last` | `boolean` | `false` | Rounds the bottom corners. |
-| `children` | `React.ReactNode` | - | The content. |
-
-Also accepts the props of `React.ComponentProps<typeof Item>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### TableList
-
-Renders rows from a column definition, with an optional title and empty state.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `rows` | `T[]` | Required | The data to render. |
-| `columns` | `TableListColumn<T>[]` | Required | Column definitions with `key`, `header`, `cell`, optional `mobileCell`, `slot` and `align`. |
-| `getKey` | `(row: T, index: number) => React.Key` | `(_, index) => index` | Returns a unique key for a row. Defaults to the index. |
-| `title` | `React.ReactNode` | - | Heading shown above the list. |
-| `emptyText` | `React.ReactNode` | `"No results."` | Content shown when `rows` is empty. Defaults to `No results.`. |
-| `onRowPress` | `(row: T, index: number) => void` | - | Called with the row and index when a row is pressed. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### TableListSlot
-
-Values: `.title`, `.description`, `.trailing`, `.hidden`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### TableListColumn
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ key` | `String` | - | - |
-| `header` | `LocalizedStringKey` | - | - |
-| `slot` | `TableListSlot`: `.title` \| `.description` \| `.trailing` \| `.hidden` | `.hidden` | - |
-| `cell` | `(Row) -> Text` | - | - |
-
-| Property | Type |
-| --- | --- |
-| `key` | `String` |
-| `header` | `LocalizedStringKey` |
-| `slot` | `TableListSlot` |
-| `cell` | `(Row) -> Text` |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### TableList
-
-Renders rows from a column definition, with an optional title and empty state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ rows` | `[Row]` | - | The data to render. |
-| `id` | `KeyPath<Row, ID>` | - | - |
-| `columns` | `[TableListColumn<Row>]` | - | Column definitions with `key`, `header`, `cell`, optional `mobileCell`, `slot` and `align`. |
-| `title` | `LocalizedStringKey?` | `nil` | Heading shown above the list. |
-| `emptyText` | `LocalizedStringKey` | `"No results."` | Content shown when `rows` is empty. |
-| `action` | `((Row) -> Void)?` | `nil` | Called when it is tapped. |
-
-Overloads: `init(_:id:columns:title:emptyText:action:)`, `init(_:columns:title:emptyText:action:)`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### TableListGroup
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### TableListRow
-
-One row with a title, description and trailing content.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `action` | `(() -> Void)?` | `nil` | Called when it is tapped. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### TableListSection
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `header` | `LocalizedStringKey?` | `nil` | - |
-| `footer` | `LocalizedStringKey?` | `nil` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### TableListSlot
-
-Values: `Title`, `Description`, `Trailing`, `Hidden`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### TableListAlign
-
-Values: `Start`, `End`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### TableListColumn
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `key` | `String` | - | - |
-| `header` | `String` | - | - |
-| `slot` | `TableListSlot?`: `Title` \| `Description` \| `Trailing` \| `Hidden` | `null` | - |
-| `align` | `TableListAlign`: `Start` \| `End` | `TableListAlign.Start` | - |
-| `mobileCell` | `(@Composable (T) -> Unit)?` | `null` | - |
-| `cell` | `@Composable (T) -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### TableList
-
-Renders rows from a column definition, with an optional title and empty state.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `rows` | `List<T>` | - | The data to render. |
-| `columns` | `List<TableListColumn<T>>` | - | Column definitions with `key`, `header`, `cell`, optional `mobileCell`, `slot` and `align`. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `getKey` | `(T, Int) -> Any` | `{ _, index -> index }` | Returns a unique key for a row. |
-| `title` | `String?` | `null` | Heading shown above the list. |
-| `emptyText` | `String` | `"No results."` | Content shown when `rows` is empty. |
-| `onRowClick` | `((T) -> Unit)?` | `null` | - |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### TableListTitle
-
-A large heading above the list.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### TableListHeader
-
-A small uppercase heading above a group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### TableListFooter
-
-A note below a group.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### TableListRow
-
-One row with a title, description and trailing content.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `first` | `Boolean` | - | Rounds the top corners. |
-| `last` | `Boolean` | - | Rounds the bottom corners. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `onClick` | `(() -> Unit)?` | `null` | Called when it is tapped. |
-| `onLongClick` | `(() -> Unit)?` | `null` | - |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `selected` | `Boolean?` | `null` | - |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### TableListRowText
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String` | - | The row's main text. |
-| `description` | `String?` | `null` | A single-line secondary text. |
-| `trailing` | `String?` | `null` | Content on the end side; text is shown in secondary color with tabular numbers. |
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### TableListSectionScope.item
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `key` | `Any?` | `null` | - |
-| `onClick` | `(() -> Unit)?` | `null` | - |
-| `content` | `@Composable () -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### TableListSectionScope.row
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `String` | - | - |
-| `description` | `String?` | `null` | - |
-| `trailing` | `String?` | `null` | - |
-| `key` | `Any?` | `null` | - |
-| `onClick` | `(() -> Unit)?` | `null` | - |
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### TableListSectionScope.items
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `List<T>` | - | - |
-| `key` | `((T) -> Any)?` | `null` | - |
-| `onClick` | `((T) -> Unit)?` | `null` | - |
-| `content` | `@Composable (T) -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### TableListScope.title
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | - |
-
-</ApiPart>
-
-<ApiPart index={14}>
-
-### TableListScope.section
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `header` | `String?` | `null` | - |
-| `footer` | `String?` | `null` | - |
-| `emptyText` | `String?` | `null` | - |
-| `content` | `TableListSectionScope.() -> Unit` | - | - |
-
-</ApiPart>
-
-<ApiPart index={15}>
-
-### tableList
-
-Receiver: `LazyListScope`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `key` | `String` | `"table-list"` | - |
-| `content` | `TableListScope.() -> Unit` | - | - |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -839,10 +472,271 @@ Receiver: `LazyListScope`.
 - `TableListTitle` and `TableListHeader` have the `heading` role.
 - Separators are hidden from screen readers.
 
-## Notes
+</Only>
 
-- Rows use `bg-muted` and `opacity-80` when pressed.
-- The `header` and `align` column fields are not rendered by the list layout.
+## API Reference
+
+<Only platform="rn">
+
+### TableListTitle
+
+A large heading above the list.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+### TableListHeader
+
+A small uppercase heading above a group.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+### TableListFooter
+
+A note below a group.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+### TableListSeparator
+
+An inset divider between rows.
+
+Also accepts the props of `ViewProps`.
+
+### TableListRow
+
+One row with a title, description and trailing content.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `title` | `React.ReactNode` | - |
+| `description` | `React.ReactNode` | - |
+| `trailing` | `React.ReactNode` | - |
+| `first` | `boolean` | `false` |
+| `last` | `boolean` | `false` |
+| `children` | `React.ReactNode` | - |
+
+Also accepts the props of `React.ComponentProps<typeof Item>`.
+
+`description` is a single line, and `trailing` text is shown in a secondary color with tabular numbers. `first` and `last` round the top and bottom corners.
+
+### TableList
+
+Renders rows from a column definition, with an optional title and empty state.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `rows` | `T[]` | Required |
+| `columns` | `TableListColumn<T>[]` | Required |
+| `getKey` | `(row: T, index: number) => React.Key` | `(_, index) => index` |
+| `title` | `React.ReactNode` | - |
+| `emptyText` | `React.ReactNode` | `"No results."` |
+| `onRowPress` | `(row: T, index: number) => void` | - |
+
+Also accepts the props of `ViewProps`.
+
+Define columns with `key`, `header`, `cell` and `slot`, plus optional `mobileCell` and `align`; the `TableListColumn` type is exported. Several `description` columns are joined with ` · `, and several `trailing` columns are shown side by side. Use `mobileCell` to render a different value than `cell` in the list, such as a shorter date. The `header` and `align` fields are not rendered by the list layout.
+
+Pass `onRowPress` to make rows pressable; it is called with the row and index. When there are no rows, `emptyText` is shown in the group.
+
+</Only>
+
+<Only platform="swift">
+
+### TableListSlot
+
+Values: `.title`, `.description`, `.trailing`, `.hidden`.
+
+### TableListColumn
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ key` | `String` | - |
+| `header` | `LocalizedStringKey` | - |
+| `slot` | `TableListSlot`: `.title` \| `.description` \| `.trailing` \| `.hidden` | `.hidden` |
+| `cell` | `(Row) -> Text` | - |
+
+| Property | Type |
+| --- | --- |
+| `key` | `String` |
+| `header` | `LocalizedStringKey` |
+| `slot` | `TableListSlot` |
+| `cell` | `(Row) -> Text` |
+
+### TableList
+
+Renders rows from a column definition, with an optional title and empty state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ rows` | `[Row]` | - |
+| `id` | `KeyPath<Row, ID>` | - |
+| `columns` | `[TableListColumn<Row>]` | - |
+| `title` | `LocalizedStringKey?` | `nil` |
+| `emptyText` | `LocalizedStringKey` | `"No results."` |
+| `action` | `((Row) -> Void)?` | `nil` |
+
+Overloads: `init(_:id:columns:title:emptyText:action:)`, `init(_:columns:title:emptyText:action:)`.
+
+### TableListGroup
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### TableListRow
+
+One row with a title, description and trailing content.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `action` | `(() -> Void)?` | `nil` |
+| `content` | `() -> Content` | - |
+
+### TableListSection
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `header` | `LocalizedStringKey?` | `nil` |
+| `footer` | `LocalizedStringKey?` | `nil` |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### TableListSlot
+
+Values: `Title`, `Description`, `Trailing`, `Hidden`.
+
+### TableListAlign
+
+Values: `Start`, `End`.
+
+### TableListColumn
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `key` | `String` | - |
+| `header` | `String` | - |
+| `slot` | `TableListSlot?`: `Title` \| `Description` \| `Trailing` \| `Hidden` | `null` |
+| `align` | `TableListAlign`: `Start` \| `End` | `TableListAlign.Start` |
+| `mobileCell` | `(@Composable (T) -> Unit)?` | `null` |
+| `cell` | `@Composable (T) -> Unit` | - |
+
+### TableList
+
+Renders rows from a column definition, with an optional title and empty state.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `rows` | `List<T>` | - |
+| `columns` | `List<TableListColumn<T>>` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `getKey` | `(T, Int) -> Any` | `{ _, index -> index }` |
+| `title` | `String?` | `null` |
+| `emptyText` | `String` | `"No results."` |
+| `onRowClick` | `((T) -> Unit)?` | `null` |
+
+### TableListTitle
+
+A large heading above the list.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### TableListHeader
+
+A small uppercase heading above a group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### TableListFooter
+
+A note below a group.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+
+### TableListRow
+
+One row with a title, description and trailing content.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `first` | `Boolean` | - |
+| `last` | `Boolean` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `onClick` | `(() -> Unit)?` | `null` |
+| `onLongClick` | `(() -> Unit)?` | `null` |
+| `enabled` | `Boolean` | `true` |
+| `selected` | `Boolean?` | `null` |
+| `content` | `@Composable () -> Unit` | - |
+
+### TableListRowText
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String` | - |
+| `description` | `String?` | `null` |
+| `trailing` | `String?` | `null` |
+
+### TableListSectionScope.item
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `key` | `Any?` | `null` |
+| `onClick` | `(() -> Unit)?` | `null` |
+| `content` | `@Composable () -> Unit` | - |
+
+### TableListSectionScope.row
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `title` | `String` | - |
+| `description` | `String?` | `null` |
+| `trailing` | `String?` | `null` |
+| `key` | `Any?` | `null` |
+| `onClick` | `(() -> Unit)?` | `null` |
+
+### TableListSectionScope.items
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `items` | `List<T>` | - |
+| `key` | `((T) -> Any)?` | `null` |
+| `onClick` | `((T) -> Unit)?` | `null` |
+| `content` | `@Composable (T) -> Unit` | - |
+
+### TableListScope.title
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+
+### TableListScope.section
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `header` | `String?` | `null` |
+| `footer` | `String?` | `null` |
+| `emptyText` | `String?` | `null` |
+| `content` | `TableListSectionScope.() -> Unit` | - |
+
+### tableList
+
+Receiver: `LazyListScope`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `key` | `String` | `"table-list"` |
+| `content` | `TableListScope.() -> Unit` | - |
 
 </Only>
 

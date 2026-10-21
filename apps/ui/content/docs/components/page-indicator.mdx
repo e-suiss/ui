@@ -19,6 +19,10 @@ It comes in two sizes, `default` and `sm`, and two variants: `default` uses the 
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -61,7 +65,9 @@ npx @esuiss/ui@latest add page-indicator --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -69,7 +75,7 @@ npx @esuiss/ui@latest add page-indicator --platform kotlin
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
@@ -83,17 +89,17 @@ npx expo install cn react-native-reanimated react-native-worklets
 
 <ComponentSource path="uniwind/components/primitives/haptics.tsx" plain />
 
-4. Copy the source into `components/ui/page-indicator.tsx`:
+4. Copy and paste the following code into `components/ui/page-indicator.tsx`:
 
 <ComponentSource path="uniwind/components/ui/page-indicator.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
@@ -107,17 +113,17 @@ npx expo install cn react-native-reanimated react-native-worklets
 
 <ComponentSource path="nativewind/components/primitives/haptics.tsx" plain />
 
-4. Copy the source into `components/ui/page-indicator.tsx`:
+4. Copy and paste the following code into `components/ui/page-indicator.tsx`:
 
 <ComponentSource path="nativewind/components/ui/page-indicator.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -131,11 +137,11 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="stylesheet/components/primitives/haptics.tsx" plain />
 
-4. Copy the source into `components/ui/page-indicator.tsx`:
+4. Copy and paste the following code into `components/ui/page-indicator.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/page-indicator.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -223,6 +229,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -265,15 +275,11 @@ fun PageIndicatorExample() {
 
 </Only>
 
-The component is controlled: pass `count` and the current `index`. Pass `onIndexChange` to make the dots pressable; without it the indicator is display-only. Pressing a dot plays a selection haptic.
-
-The `PageIndicatorSize` and `PageIndicatorVariant` types are also exported.
-
 ## Examples
 
 ### Sizes
 
-The `sm` and `default` sizes.
+Set the size to `sm` or `default`.
 
 <NativeExample name="page-indicator-sizes" />
 
@@ -297,106 +303,11 @@ Twelve pages shown in a sliding window at the start, middle and end.
 
 <Only platform="rn">
 
-Pressable dots that change the page through `onIndexChange`.
+Pass `onIndexChange` to make the dots pressable. Pressing a dot plays a selection haptic.
 
 </Only>
 
 <NativeExample name="page-indicator-interactive" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### PageIndicator
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `count` | `number` | Required | Total number of pages. Nothing renders when it is `0`. |
-| `index` | `number` | Required | Zero-based index of the current page. |
-| `onIndexChange` | `(index: number) => void` | - | Called with the new index when a dot is pressed or an accessibility action is used. |
-| `size` | `PageIndicatorSize` | `"default"` | Dot size: `default` or `sm`. |
-| `variant` | `PageIndicatorVariant` | `"default"` | Active dot color: `default` or `accent`. |
-| `maxVisible` | `number` | `7` | Most dots shown at once. Defaults to `7`, minimum `3`. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### PageIndicatorSize
-
-Values: `.sm`, `.default`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### PageIndicatorVariant
-
-Values: `.default`, `.accent`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### PageIndicator
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `count` | `Int` | - | Total number of pages. Nothing renders when it is `0`. |
-| `index` | `Int` | - | Zero-based index of the current page. |
-| `size` | `Size`: `.sm` \| `.default` | `.default` | Dot size: `default` or `sm`. |
-| `variant` | `Variant`: `.default` \| `.accent` | `.default` | Active dot color: `default` or `accent`. |
-| `maxVisible` | `Int` | `7` | Most dots shown at once. |
-| `onIndexChange` | `((Int) -> Void)?` | `nil` | Called with the new index when a dot is pressed or an accessibility action is used. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### PageIndicatorSize
-
-Values: `Sm`, `Default`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### PageIndicatorVariant
-
-Values: `Default`, `Accent`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### PageIndicator
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `count` | `Int` | - | Total number of pages. Nothing renders when it is `0`. |
-| `index` | `Int` | - | Zero-based index of the current page. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `onIndexChange` | `((Int) -> Unit)?` | `null` | Called with the new index when a dot is pressed or an accessibility action is used. |
-| `size` | `PageIndicatorSize`: `Sm` \| `Default` | `PageIndicatorSize.Default` | Dot size: `default` or `sm`. |
-| `variant` | `PageIndicatorVariant`: `Default` \| `Accent` | `PageIndicatorVariant.Default` | Active dot color: `default` or `accent`. |
-| `maxVisible` | `Int` | `7` | Most dots shown at once. |
-| `accessibilityLabel` | `String?` | `null` | - |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -407,9 +318,80 @@ Values: `Default`, `Accent`.
 - When `onIndexChange` is set, VoiceOver and TalkBack users swipe up or down to move to the next or previous page.
 - Animations respect the system reduce motion setting.
 
-## Notes
+</Only>
 
-- Uses `bg-foreground` or `bg-primary` for the active dot and `bg-border` for the others; colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### PageIndicator
+
+The `PageIndicator` component shows the current page as a row of dots.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `count` | `number` | Required |
+| `index` | `number` | Required |
+| `onIndexChange` | `(index: number) => void` | - |
+| `size` | `PageIndicatorSize` | `"default"` |
+| `variant` | `PageIndicatorVariant` | `"default"` |
+| `maxVisible` | `number` | `7` |
+
+Also accepts the props of `ViewProps`.
+
+The component is controlled: pass `count` and the zero-based `index` of the current page. Nothing renders when `count` is `0`. `onIndexChange` is called with the new index when a dot is pressed or an accessibility action is used; without it the indicator is display-only. `maxVisible` is the most dots shown at once, with a minimum of `3`. The `PageIndicatorSize` and `PageIndicatorVariant` types are also exported.
+
+</Only>
+
+<Only platform="swift">
+
+### PageIndicatorSize
+
+Values: `.sm`, `.default`.
+
+### PageIndicatorVariant
+
+Values: `.default`, `.accent`.
+
+### PageIndicator
+
+The `PageIndicator` component shows the current page as a row of dots.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `count` | `Int` | - |
+| `index` | `Int` | - |
+| `size` | `Size`: `.sm` \| `.default` | `.default` |
+| `variant` | `Variant`: `.default` \| `.accent` | `.default` |
+| `maxVisible` | `Int` | `7` |
+| `onIndexChange` | `((Int) -> Void)?` | `nil` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### PageIndicatorSize
+
+Values: `Sm`, `Default`.
+
+### PageIndicatorVariant
+
+Values: `Default`, `Accent`.
+
+### PageIndicator
+
+The `PageIndicator` component shows the current page as a row of dots.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `count` | `Int` | - |
+| `index` | `Int` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `onIndexChange` | `((Int) -> Unit)?` | `null` |
+| `size` | `PageIndicatorSize`: `Sm` \| `Default` | `PageIndicatorSize.Default` |
+| `variant` | `PageIndicatorVariant`: `Default` \| `Accent` | `PageIndicatorVariant.Default` |
+| `maxVisible` | `Int` | `7` |
+| `accessibilityLabel` | `String?` | `null` |
 
 </Only>
 

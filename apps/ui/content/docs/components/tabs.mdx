@@ -11,11 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 `Tabs` wraps the tabs primitive of the chosen base. `TabsList` holds the `TabsTrigger` buttons, and each `TabsContent` panel is shown when its `value` matches the selected tab. An indicator slides to the active tab: a raised pill in the `default` variant, or an underline in the `line` variant.
 
-When there are more tabs than fit, the list scrolls horizontally and keeps the active tab in view. On small screens, a horizontal list bleeds to the edges of its scroll container. Use `Tabs` to switch views within a page. For app-level navigation, use `TabBar` or `Sidebar`; for a compact single-choice control, consider a segmented `ToggleGroup`.
+Use `Tabs` to switch views within a page. For app-level navigation, use `TabBar` or `Sidebar`; for a compact single-choice control, consider a segmented `ToggleGroup`.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/tabs
@@ -27,24 +29,35 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add tabs
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react class-variance-authority
 ```
 
-2. Copy the source into `components/ui/tabs.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/tabs.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
 ```
 
 <OnlyBase base="base radix">
@@ -69,8 +82,6 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
   ))}
 </Tabs>
 ```
-
-Use `defaultValue` on `Tabs` for an uncontrolled set, or `value` with `onValueChange` to control it. Give each `TabsTrigger` and its `TabsContent` the same `value`. Set `orientation="vertical"` on `Tabs` to stack the triggers beside the panel.
 
 </OnlyBase>
 
@@ -97,171 +108,66 @@ Use `defaultValue` on `Tabs` for an uncontrolled set, or `value` with `onValueCh
 </Tabs>
 ```
 
-Use `defaultSelectedKey` on `Tabs` for an uncontrolled set, or `selectedKey` with `onSelectionChange` to control it. Give each `TabsTrigger` and its `TabsContent` the same `id`. Set `orientation="vertical"` on `Tabs` to stack the triggers beside the panel.
-
 </OnlyBase>
+
+## Composition
+
+Use the following composition to build a `Tabs`:
+
+```text
+Tabs
+├── TabsList
+│   └── TabsTrigger
+└── TabsContent
+```
 
 ## Examples
 
 ### Line
 
-Uses the `line` variant, which underlines the active tab.
+Set `variant="line"` on `TabsList` to underline the active tab instead of raising a pill.
 
 <ComponentPreview name="tabs-line" />
 
 ### Vertical
 
-Stacks the tabs vertically beside the panel.
+Set `orientation="vertical"` on `Tabs` to stack the tabs beside the panel. Vertical tabs use the up and down arrow keys.
 
 <ComponentPreview name="tabs-vertical" />
 
 ### With icons
 
-Places an icon before each tab's label.
+Place an icon before the label inside each `TabsTrigger`.
 
 <ComponentPreview name="tabs-with-icons" />
 
 ### Disabled tab
 
-Disables one tab so it can't be selected.
+<OnlyBase base="base radix">
+
+Set `disabled` on a `TabsTrigger` so the tab can't be selected by click or keyboard.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Set `isDisabled` on a `TabsTrigger` so the tab can't be selected by click or keyboard.
+
+</OnlyBase>
 
 <ComponentPreview name="tabs-disabled-tab" />
 
 ### Many tabs
 
-Holds more tabs than fit, so the list scrolls.
+When there are more tabs than fit, the list scrolls horizontally and keeps the active tab in view. On small screens, a horizontal list bleeds to the edges of its scroll container.
 
 <ComponentPreview name="tabs-many-tabs" layout="padded" />
 
 ### Many tabs line
 
-Combines a scrolling list with the `line` variant.
+A scrolling list with `variant="line"` on `TabsList`.
 
 <ComponentPreview name="tabs-many-tabs-line" layout="padded" />
-
-## API Reference
-
-<Anatomy>
-
-- [Tabs](#tabs)
-  - [TabsList](#tabslist)
-    - [TabsTrigger](#tabstrigger)
-  - [TabsContent](#tabscontent)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Tabs
-
-The root that holds the selected value and orientation.
-
-<OnlyBase base="base">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `defaultValue` | `any` | — | The tab selected at first, when uncontrolled. |
-| `value` | `any` | — | The controlled selected tab. Pass it with `onValueChange`. |
-| `onValueChange` | `(value: any) => void` | — | Called when the selected tab changes. |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays the tabs out in a row or a column. |
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `defaultValue` | `string` | — | The tab selected at first, when uncontrolled. |
-| `value` | `string` | — | The controlled selected tab. Pass it with `onValueChange`. |
-| `onValueChange` | `(value: string) => void` | — | Called when the selected tab changes. |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays the tabs out in a row or a column. |
-| `activationMode` | `"automatic" \| "manual"` | `"manual"` | Selects a tab when it gets focus (`automatic`), or only on `Enter` or `Space` (`manual`). |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `defaultSelectedKey` | `Key` | — | The tab selected at first, when uncontrolled. |
-| `selectedKey` | `Key \| null` | — | The controlled selected tab. Pass it with `onSelectionChange`. |
-| `onSelectionChange` | `(key: Key) => void` | — | Called when the selected tab changes. |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays the tabs out in a row or a column. |
-| `keyboardActivation` | `"automatic" \| "manual"` | `"manual"` | Selects a tab when it gets focus (`automatic`), or only on `Enter` or `Space` (`manual`). |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### TabsList
-
-The row or column of tabs, with the sliding indicator.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "line"` | `"default"` | Chooses a filled `default` list with a raised pill, or a `line` list with an underline. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### TabsTrigger
-
-A tab that selects its panel.
-
-<OnlyBase base="base radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | — | Matches the `value` of the panel it shows. |
-| `disabled` | `boolean` | `false` | Stops the tab from being selected. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | `Key` | — | Matches the `id` of the panel it shows. |
-| `isDisabled` | `boolean` | `false` | Stops the tab from being selected. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### TabsContent
-
-The panel shown when its tab is selected.
-
-<OnlyBase base="base radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | — | Matches the `value` of its tab. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | `Key` | — | Matches the `id` of its tab. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -270,31 +176,144 @@ Also accepts the props of the primitive part it wraps.
 - `Home` and `End` move focus to the first and last tabs.
 - Disabled tabs can't be selected by click or keyboard.
 
-## Notes
+## API Reference
 
-- Parts carry `data-slot` attributes: `tabs`, `tabs-list`, `tabs-list-content`, `tabs-indicator`, `tabs-trigger` and `tabs-content`. The list and indicator set `data-variant`.
+### Tabs
+
+The root that holds the selected value and orientation.
 
 <OnlyBase base="base">
 
-- The active trigger sets `data-active`.
+| Prop | Type | Default |
+| --- | --- | --- |
+| `defaultValue` | `any` | — |
+| `value` | `any` | — |
+| `onValueChange` | `(value: any) => void` | — |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
 
 </OnlyBase>
 
 <OnlyBase base="radix">
 
-- The active trigger sets `data-state="active"`.
+| Prop | Type | Default |
+| --- | --- | --- |
+| `defaultValue` | `string` | — |
+| `value` | `string` | — |
+| `onValueChange` | `(value: string) => void` | — |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
+| `activationMode` | `"automatic" \| "manual"` | `"manual"` |
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-- The active trigger sets `data-selected`.
+| Prop | Type | Default |
+| --- | --- | --- |
+| `defaultSelectedKey` | `Key` | — |
+| `selectedKey` | `Key \| null` | — |
+| `onSelectionChange` | `(key: Key) => void` | — |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
+| `keyboardActivation` | `"automatic" \| "manual"` | `"manual"` |
 
 </OnlyBase>
 
-- The edge bleed on small screens is set through the `--tabs-list-bleed-start` and `--tabs-list-bleed-end` properties, which the list measures itself.
-- `className` on `TabsList` styles the inner `tabs-list-content` element, not the scrolling list.
-- Indicator and scroll animations are removed when reduced motion is preferred.
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base">
+
+The tabs are uncontrolled by default; set `defaultValue` for the first selected tab, or control them with `value` and `onValueChange`. `orientation` lays the tabs out in a row or a column.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+The tabs are uncontrolled by default; set `defaultValue` for the first selected tab, or control them with `value` and `onValueChange`. `orientation` lays the tabs out in a row or a column. `activationMode` selects a tab when it gets focus (`automatic`), or only on `Enter` or `Space` (`manual`).
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+The tabs are uncontrolled by default; set `defaultSelectedKey` for the first selected tab, or control them with `selectedKey` and `onSelectionChange`. `orientation` lays the tabs out in a row or a column. `keyboardActivation` selects a tab when it gets focus (`automatic`), or only on `Enter` or `Space` (`manual`).
+
+</OnlyBase>
+
+Each part sets a `data-slot`, such as `tabs-list` or `tabs-trigger`, for styling. Indicator and scroll animations are removed when reduced motion is preferred.
+
+### TabsList
+
+The row or column of tabs, with the sliding indicator.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "line"` | `"default"` |
+
+Also accepts the props of the primitive part it wraps.
+
+`variant` chooses a filled `default` list with a raised pill, or a `line` list with an underline; the list and indicator set `data-variant`. `className` styles the inner `tabs-list-content` element, not the scrolling list. The edge bleed on small screens is set through the `--tabs-list-bleed-start` and `--tabs-list-bleed-end` properties, which the list measures itself.
+
+### TabsTrigger
+
+A tab that selects its panel.
+
+<OnlyBase base="base radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | — |
+| `disabled` | `boolean` | `false` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `id` | `Key` | — |
+| `isDisabled` | `boolean` | `false` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base">
+
+`value` matches the `value` of the panel it shows. The active trigger sets `data-active`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+`value` matches the `value` of the panel it shows. The active trigger sets `data-state="active"`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+`id` matches the `id` of the panel it shows. The active trigger sets `data-selected`.
+
+</OnlyBase>
+
+### TabsContent
+
+The panel shown when its tab is selected.
+
+<OnlyBase base="base radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | — |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `id` | `Key` | — |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
 
 </Only>
 
@@ -311,6 +330,10 @@ Also accepts the props of the primitive part it wraps.
 `TabsList` has two variants: `default`, a segmented control with a raised indicator on a filled track, and `line`, a transparent list with a thin underline. Both work in horizontal and vertical orientation.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -360,7 +383,9 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -368,7 +393,7 @@ The CLI also adds what it builds on: [Text](/docs/components/text).
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn react-native-reanimated react-native-worklets
@@ -392,17 +417,17 @@ npx expo install class-variance-authority cn react-native-reanimated react-nativ
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/tabs.tsx`:
+4. Copy and paste the following code into `components/ui/tabs.tsx`:
 
 <ComponentSource path="uniwind/components/ui/tabs.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn react-native-reanimated react-native-worklets
@@ -426,17 +451,17 @@ npx expo install class-variance-authority cn react-native-reanimated react-nativ
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/tabs.tsx`:
+4. Copy and paste the following code into `components/ui/tabs.tsx`:
 
 <ComponentSource path="nativewind/components/ui/tabs.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -460,11 +485,11 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/tabs.tsx`:
+4. Copy and paste the following code into `components/ui/tabs.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/tabs.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -547,6 +572,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -913,16 +942,6 @@ fun TabsDemo() {
 
 </Only>
 
-<Only platform="rn">
-
-Give each `TabsTrigger` and its `TabsContent` the same `value`. Use `defaultValue` for an uncontrolled tab set, or `value` with `onValueChange` to control it.
-
-Set `orientation="vertical"` on `Tabs` to stack the list beside the panels. Put an `Icon` next to the `Text` in a trigger for icon tabs.
-
-Inactive panels are unmounted unless you set `keepMounted` on `TabsContent`. `tabsListVariants` is exported for reuse.
-
-</Only>
-
 ## Examples
 
 ### With icons
@@ -977,199 +996,6 @@ The React Native tab shows 2 more examples.
 
 </Only>
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Tabs
-
-Root that holds the active value and orientation.
-
-Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.Root>`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### TabsList
-
-Row or column of triggers with the animated indicator.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "line"` | `"default"` | `default` for a filled segmented track, or `line` for an underline. |
-
-Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.List>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### TabsTrigger
-
-Pressable tab that activates its panel.
-
-Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.Tab>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### TabsContent
-
-Panel shown when its value is active.
-
-Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.Panel>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### Tabs
-
-Root that holds the active value and orientation.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selection` | `Binding<Value>` | - | The selected value. |
-| `orientation` | `Axis` | `.horizontal` | Lays the tabs out in a row or a column. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### TabsListVariant
-
-Values: `.default`, `.line`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### TabsList
-
-Row or column of triggers with the animated indicator.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `Variant`: `.default` \| `.line` | `.default` | `default` for a filled segmented track, or `line` for an underline. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### TabsTrigger
-
-A tab that selects its panel.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Value` | - | Matches the `value` of the panel it shows. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(value:label:)`, `init(_:value:)`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### TabsContent
-
-Panel shown when its value is active.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Value` | - | Matches the `value` of its tab. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### TabsListVariant
-
-Values: `Default`, `Line`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Tabs
-
-Root that holds the active value and orientation.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selected` | `String` | - | - |
-| `onSelectedChange` | `(String) -> Unit` | - | - |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### TabsList
-
-Row or column of triggers with the animated indicator.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `TabsListVariant`: `Default` \| `Line` | `TabsListVariant.Default` | `default` for a filled segmented track, or `line` for an underline. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### TabsTrigger
-
-A tab that selects its panel.
-
-Receiver: `RowScope`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | Matches the `value` of the panel it shows. |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-Overloads: `TabsTrigger(value, text)`, `TabsTrigger(value, content)`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### TabsContent
-
-Panel shown when its value is active.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | Matches the `value` of its tab. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1179,11 +1005,150 @@ Panel shown when its value is active.
 - Hidden panels kept with `keepMounted` are removed from the accessibility tree.
 - The indicator animation follows the system reduce motion setting.
 
-## Notes
+</Only>
 
-- The `default` track uses `bg-secondary` with a `bg-card` indicator (`bg-border` in dark mode); the `line` indicator uses `bg-foreground`.
-- Labels use `text-foreground` when active, `text-muted-foreground` when inactive and `opacity-50` when disabled.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Tabs
+
+Root that holds the active value and orientation.
+
+Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.Root>`.
+
+Use `defaultValue` for an uncontrolled tab set, or `value` with `onValueChange` to control it. Set `orientation="vertical"` to stack the list beside the panels.
+
+### TabsList
+
+Row or column of triggers with the animated indicator.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "line"` | `"default"` |
+
+Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.List>`.
+
+`variant` is `default` for a filled segmented track, or `line` for an underline. `tabsListVariants` is exported for reuse.
+
+### TabsTrigger
+
+Pressable tab that activates its panel.
+
+Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.Tab>`.
+
+Give each `TabsTrigger` and its `TabsContent` the same `value`. Labels are dimmed to `opacity-50` when disabled.
+
+### TabsContent
+
+Panel shown when its value is active.
+
+Also accepts the props of `React.ComponentProps<typeof TabsPrimitive.Panel>`.
+
+Inactive panels are unmounted unless you set `keepMounted`.
+
+</Only>
+
+<Only platform="swift">
+
+### Tabs
+
+Root that holds the active value and orientation.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `selection` | `Binding<Value>` | - |
+| `orientation` | `Axis` | `.horizontal` |
+| `content` | `() -> Content` | - |
+
+### TabsListVariant
+
+Values: `.default`, `.line`.
+
+### TabsList
+
+Row or column of triggers with the animated indicator.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `variant` | `Variant`: `.default` \| `.line` | `.default` |
+| `content` | `() -> Content` | - |
+
+### TabsTrigger
+
+A tab that selects its panel.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Value` | - |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(value:label:)`, `init(_:value:)`.
+
+### TabsContent
+
+Panel shown when its value is active.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Value` | - |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### TabsListVariant
+
+Values: `Default`, `Line`.
+
+### Tabs
+
+Root that holds the active value and orientation.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `selected` | `String` | - |
+| `onSelectedChange` | `(String) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+
+### TabsList
+
+Row or column of triggers with the animated indicator.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `TabsListVariant`: `Default` \| `Line` | `TabsListVariant.Default` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+
+### TabsTrigger
+
+A tab that selects its panel.
+
+Receiver: `RowScope`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `true` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+
+Overloads: `TabsTrigger(value, text)`, `TabsTrigger(value, content)`.
+
+### TabsContent
+
+Panel shown when its value is active.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
 
 </Only>
 

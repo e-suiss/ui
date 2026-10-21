@@ -15,7 +15,9 @@ Use an input group when supporting content belongs inside the field, such as a s
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/input-group
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add input-group
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install class-variance-authority
@@ -37,16 +41,27 @@ npm install class-variance-authority
 
 2. Add the pieces it builds on: [Button](/docs/components/button), [Input](/docs/components/input), [Textarea](/docs/components/textarea).
 
-3. Copy the source into `components/ui/input-group.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/input-group.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGroupInput, InputGroupTextarea } from "@/components/ui/input-group"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+  InputGroupText,
+  InputGroupTextarea,
+} from "@/components/ui/input-group"
 ```
 
 ```tsx
@@ -61,9 +76,18 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGro
 </div>
 ```
 
-Addons are positioned with CSS order, so you can place them before or after the control in your markup. `inline-start` and `inline-end` sit beside the control; `block-start` and `block-end` sit above or below it and make the group grow to fit. Clicking an addon outside its buttons focuses the group's `input`.
+## Composition
 
-`InputGroupButton` defaults to `type="button"`, so it does not submit a surrounding form unless you set `type="submit"`. Set `aria-invalid` on the control to show the error style on the whole group. To dim a disabled group's addons, disable the control and set `data-disabled="true"` on `InputGroup`.
+Use the following composition to build a `InputGroup`:
+
+```text
+InputGroup
+├── InputGroupInput
+├── InputGroupAddon
+│   ├── InputGroupText
+│   └── InputGroupButton
+└── InputGroupTextarea
+```
 
 ## Examples
 
@@ -75,133 +99,51 @@ A search field with a clear button that appears only when there is text.
 
 ### With text
 
-Text addons for a currency symbol and code, and for a URL prefix and suffix.
+Put short text such as a currency symbol and code, or a URL prefix and suffix, in `InputGroupText` inside an addon.
 
 <ComponentPreview name="input-group-with-text" />
 
 ### With buttons
 
-Buttons inside the field for copying a link, subscribing, and showing information.
+Use `InputGroupButton` inside an addon for actions such as copying a link, subscribing, and showing information.
 
 <ComponentPreview name="input-group-with-buttons" />
 
 ### Button sizes
 
-The `xs`, `icon-xs` and `icon-sm` button sizes in one addon.
+Use the `size` prop on `InputGroupButton` for the `xs`, `icon-xs` and `icon-sm` sizes, shown here in one addon.
 
 <ComponentPreview name="input-group-button-sizes" />
 
 ### With kbd
 
-A search field with a keyboard shortcut hint at the end.
+Place a `Kbd` in an `inline-end` addon for a keyboard shortcut hint.
 
 <ComponentPreview name="input-group-with-kbd" />
 
 ### Block addons
 
-Addons placed above and below the input with `block-start` and `block-end`.
+Set `align` to `block-start` or `block-end` to place an addon above or below the input. The group grows to fit.
 
 <ComponentPreview name="input-group-block-addons" />
 
 ### With textarea
 
-A chat-style textarea with attach and send buttons and usage text in a bottom addon.
+Use `InputGroupTextarea` as the control for a chat-style field, with attach and send buttons and usage text in a `block-end` addon.
 
 <ComponentPreview name="input-group-with-textarea" />
 
 ### Invalid
 
-An invalid input that shows the error style on the whole group.
+Set `aria-invalid` on the control to show the error style on the whole group.
 
 <ComponentPreview name="input-group-invalid" />
 
 ### Disabled
 
-A disabled group with a dimmed background and addon.
+Disable the control and set `data-disabled="true"` on `InputGroup` to dim the group and its addons.
 
 <ComponentPreview name="input-group-disabled" />
-
-## API Reference
-
-<Anatomy>
-
-- [InputGroup](#inputgroup)
-  - [InputGroupInput](#inputgroupinput)
-  - [InputGroupAddon](#inputgroupaddon)
-    - [InputGroupText](#inputgrouptext)
-    - [InputGroupButton](#inputgroupbutton)
-  - [InputGroupTextarea](#inputgrouptextarea)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### InputGroup
-
-The container that draws the field and holds the control and addons.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### InputGroupAddon
-
-Holds icons, text or buttons beside, above or below the control.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `align` | `"inline-start" \| "inline-end" \| "block-start" \| "block-end"` | `"inline-start"` | Places the addon before (`inline-start`) or after (`inline-end`) the control, or above (`block-start`) or below (`block-end`) it. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### InputGroupButton
-
-A compact button sized to fit inside the field.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"xs" \| "sm" \| "icon-xs" \| "icon-sm"` | `"xs"` | `xs` for a small text button, or `icon-xs` and `icon-sm` for square icon buttons. `sm` keeps the base button size. |
-| `type` | `"button" \| "submit" \| "reset"` | `"button"` | The native button type. Defaults to `button` so the button does not submit forms. |
-
-Also accepts the props of `React.ComponentProps<typeof Button>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### InputGroupText
-
-Static text or an icon with text, such as a unit or prefix.
-
-Also accepts the props of `React.ComponentProps<"span">`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### InputGroupInput
-
-The single-line text control of the group.
-
-Also accepts the props of `React.ComponentProps<"input">`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### InputGroupTextarea
-
-The multi-line text control of the group.
-
-Also accepts the props of `React.ComponentProps<"textarea">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -211,11 +153,58 @@ Also accepts the props of `React.ComponentProps<"textarea">`.
 - Buttons in addons are reachable with Tab after the control.
 - Set `aria-invalid` on the control to communicate a validation error.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values `input-group`, `input-group-addon` and `input-group-control` (on the input or textarea). Addons set `data-align`, and buttons set `data-size`.
-- The group's rounded corners grow when it contains a textarea or a block addon.
-- Uses the `secondary`, `muted-foreground` and `destructive` colors, and `opacity-50` when disabled.
+### InputGroup
+
+The container that draws the field and holds the control and addons.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Its rounded corners grow when it contains a textarea or a block addon. Each part sets a `data-slot`, such as `input-group-addon`, for styling; the input and textarea use `input-group-control`.
+
+### InputGroupAddon
+
+Holds icons, text or buttons beside, above or below the control.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `align` | `"inline-start" \| "inline-end" \| "block-start" \| "block-end"` | `"inline-start"` |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+`align` places the addon before (`inline-start`) or after (`inline-end`) the control, or above (`block-start`) or below (`block-end`) it. Addons are positioned with CSS order, so you can place them before or after the control in your markup. Clicking an addon outside its buttons focuses the group's `input`. The addon sets `data-align`.
+
+### InputGroupButton
+
+A compact button sized to fit inside the field.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"xs" \| "sm" \| "icon-xs" \| "icon-sm"` | `"xs"` |
+| `type` | `"button" \| "submit" \| "reset"` | `"button"` |
+
+Also accepts the props of `React.ComponentProps<typeof Button>`.
+
+`xs` is a small text button, and `icon-xs` and `icon-sm` are square icon buttons; `sm` keeps the base button size. `type` defaults to `button`, so the button does not submit a surrounding form unless you set `type="submit"`. The button sets `data-size`.
+
+### InputGroupText
+
+Static text or an icon with text, such as a unit or prefix.
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+### InputGroupInput
+
+The single-line text control of the group.
+
+Also accepts the props of `React.ComponentProps<"input">`.
+
+### InputGroupTextarea
+
+The multi-line text control of the group.
+
+Also accepts the props of `React.ComponentProps<"textarea">`.
 
 </Only>
 
@@ -229,9 +218,13 @@ Also accepts the props of `React.ComponentProps<"textarea">`.
 
 </Only>
 
-The group shows the focus border while its input is focused, and reads the disabled and invalid state from a surrounding Field. Pressing an addon focuses the input.
+The group shows the focus border while its input is focused, and reads the disabled and invalid state from a surrounding Field. Pressing an addon focuses the input. Add children in any order; the group sorts start addons before the input and end addons after it. Put short labels such as a URL prefix or a unit in `InputGroupText`, and actions in `InputGroupButton`, a small rounded `Button` that defaults to the `ghost` variant and `xs` size.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -281,7 +274,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -289,7 +284,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -319,17 +314,17 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/input-group.tsx`:
+4. Copy and paste the following code into `components/ui/input-group.tsx`:
 
 <ComponentSource path="uniwind/components/ui/input-group.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -359,11 +354,11 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/input-group.tsx`:
+4. Copy and paste the following code into `components/ui/input-group.tsx`:
 
 <ComponentSource path="nativewind/components/ui/input-group.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -393,11 +388,11 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/input-group.tsx`:
+3. Copy and paste the following code into `components/ui/input-group.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/input-group.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -492,6 +487,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -853,19 +852,11 @@ fun InputGroupDefault() {
 
 </Only>
 
-Add children in any order; the group sorts start addons before the input and end addons after it. Put short labels such as a URL prefix or a unit in `InputGroupText`, and actions in `InputGroupButton`, a small rounded `Button` that defaults to the `ghost` variant and `xs` size.
-
-<Only platform="rn">
-
-Use a `block-end` addon with `InputGroupTextarea` for a footer row, for example a character count and a send button. Set `invalid` or `disabled` on the group, or let a Field provide them.
-
-</Only>
-
 ## Examples
 
 ### With textarea
 
-A textarea with a footer row holding a usage label and a button.
+Use a `block-end` addon with `InputGroupTextarea` for a footer row, here holding a usage label and a button.
 
 <NativeExample name="input-group-with-textarea" />
 
@@ -875,315 +866,6 @@ A label addon above the input with `block-start`.
 
 <NativeExample name="input-group-block-start" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### InputGroup
-
-Field container that lays out the input and addons.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `disabled` | `boolean` | `false` | Disables the group and its input. |
-| `invalid` | `boolean` | - | Shows the destructive border and tint. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### InputGroupAddon
-
-Slot for text, icons or buttons beside or around the input.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `align` | `"inline-start" \| "inline-end" \| "block-start" \| "block-end"` | `"inline-start"` | `inline-start`, `inline-end`, `block-start` or `block-end`. Defaults to `inline-start`. |
-
-Also accepts the props of `React.ComponentProps<typeof Pressable>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### InputGroupButton
-
-Compact button inside an addon.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"xs" \| "sm" \| "icon-xs" \| "icon-sm"` | `"xs"` | `xs`, `sm`, `icon-xs` or `icon-sm`. Defaults to `xs`. |
-
-Also accepts the props of `React.ComponentProps<typeof Button>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### InputGroupText
-
-Text inside an addon.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### InputGroupInput
-
-Single-line input without its own border.
-
-Also accepts the props of `React.ComponentProps<typeof Input>`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### InputGroupTextarea
-
-Multi-line input without its own border.
-
-Also accepts the props of `React.ComponentProps<typeof Textarea>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### InputGroupAddonAlign
-
-Values: `.inlineStart`, `.inlineEnd`, `.blockStart`, `.blockEnd`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### InputGroup
-
-Field container that lays out the input and addons.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### InputGroupAddon
-
-Slot for text, icons or buttons beside or around the input.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `align` | `InputGroupAddonAlign`: `.inlineStart` \| `.inlineEnd` \| `.blockStart` \| `.blockEnd` | `.inlineStart` | Places the addon before (`inline-start`) or after (`inline-end`) the control, or above (`block-start`) or below (`block-end`) it. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### InputGroupButtonSize
-
-Values: `.xs`, `.sm`, `.iconXs`, `.iconSm`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### InputGroupButton
-
-Compact button inside an addon.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `VariantButtonStyle.Variant` | `.ghost` | - |
-| `size` | `Size`: `.xs` \| `.sm` \| `.iconXs` \| `.iconSm` | `.xs` | `xs` for a small text button, or `icon-xs` and `icon-sm` for square icon buttons. `sm` keeps the base button size. |
-| `action` | `() -> Void` | - | Called when it is tapped. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(variant:size:action:label:)`, `init(_:variant:size:action:)`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### InputGroupText
-
-Text inside an addon.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-| `_ text` | `LocalizedStringKey` | - | The text. |
-| `verbatim` | `String` | - | The text. |
-
-Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### InputGroupInput
-
-Single-line input without its own border.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `text` | `Binding<String>` | - | The text. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### InputGroupTextarea
-
-Multi-line input without its own border.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `text` | `Binding<String>` | - | The text. |
-| `lineLimit` | `ClosedRange<Int>` | `2...8` | - |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### InputGroupAddonAlign
-
-Values: `InlineStart`, `InlineEnd`, `BlockStart`, `BlockEnd`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### InputGroupButtonSize
-
-Values: `Xs`, `Sm`, `IconXs`, `IconSm`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### InputGroup
-
-Field container that lays out the input and addons.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
-| `invalid` | `Boolean` | `LocalFieldState.current.invalid` | Shows the destructive border and tint. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### InputGroupAddon
-
-Slot for text, icons or buttons beside or around the input.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `align` | `InputGroupAddonAlign`: `InlineStart` \| `InlineEnd` \| `BlockStart` \| `BlockEnd` | `InputGroupAddonAlign.InlineStart` | Places the addon before (`inline-start`) or after (`inline-end`) the control, or above (`block-start`) or below (`block-end`) it. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### InputGroupText
-
-Text inside an addon.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `InputGroupText(content)`, `InputGroupText(text)`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### InputGroupButton
-
-Compact button inside an addon.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onClick` | `() -> Unit` | - | Called when it is tapped. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `size` | `InputGroupButtonSize`: `Xs` \| `Sm` \| `IconXs` \| `IconSm` | `InputGroupButtonSize.Xs` | `xs` for a small text button, or `icon-xs` and `icon-sm` for square icon buttons. `sm` keeps the base button size. |
-| `variant` | `ButtonVariant` | `ButtonVariant.Ghost` | - |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-
-Overloads: `InputGroupButton(onClick, content)`, `InputGroupButton(text, onClick)`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### InputGroupInput
-
-Single-line input without its own border.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | The current value. |
-| `onValueChange` | `(String) -> Unit` | - | Called when the value changes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `placeholder` | `String?` | `null` | Text shown while it is empty. |
-| `readOnly` | `Boolean` | `false` | - |
-| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` | - |
-| `keyboardActions` | `KeyboardActions` | `KeyboardActions.Default` | - |
-| `visualTransformation` | `VisualTransformation` | `VisualTransformation.None` | - |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### InputGroupTextarea
-
-Multi-line input without its own border.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | The current value. |
-| `onValueChange` | `(String) -> Unit` | - | Called when the value changes. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `placeholder` | `String?` | `null` | Text shown while it is empty. |
-| `readOnly` | `Boolean` | `false` | - |
-| `minLines` | `Int` | `3` | - |
-| `maxLines` | `Int` | `Int.MAX_VALUE` | - |
-| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` | - |
-| `keyboardActions` | `KeyboardActions` | `KeyboardActions.Default` | - |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1192,11 +874,230 @@ Multi-line input without its own border.
 - Addons are not separate accessibility elements; their text is not announced with the input, so give the input an `accessibilityLabel` that includes needed context.
 - Icon-only buttons need an `accessibilityLabel`.
 
-## Notes
+</Only>
 
-- Uses `bg-secondary`, `border-ring`, `border-destructive` tokens, with `opacity-50` when disabled; the invalid tint is stronger in dark mode.
-- In Uniwind and NativeWind, a focused field also draws the `ring-3 ring-ring/50` focus ring.
-- Light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### InputGroup
+
+Field container that lays out the input and addons.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `disabled` | `boolean` | `false` |
+| `invalid` | `boolean` | - |
+
+Also accepts the props of `ViewProps`.
+
+Set `invalid` to show the destructive border and tint, or `disabled` to disable the group and its input, or let a Field provide them. In Uniwind and NativeWind, a focused field also draws a `ring-3 ring-ring/50` focus ring.
+
+### InputGroupAddon
+
+Slot for text, icons or buttons beside or around the input.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `align` | `"inline-start" \| "inline-end" \| "block-start" \| "block-end"` | `"inline-start"` |
+
+Also accepts the props of `React.ComponentProps<typeof Pressable>`.
+
+`inline-start` and `inline-end` place the addon on the same line as the input; `block-start` and `block-end` place it above or below and turn the group into a column.
+
+### InputGroupButton
+
+Compact button inside an addon.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"xs" \| "sm" \| "icon-xs" \| "icon-sm"` | `"xs"` |
+
+Also accepts the props of `React.ComponentProps<typeof Button>`.
+
+### InputGroupText
+
+Text inside an addon.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+### InputGroupInput
+
+Single-line input without its own border.
+
+Also accepts the props of `React.ComponentProps<typeof Input>`.
+
+### InputGroupTextarea
+
+Multi-line input without its own border.
+
+Also accepts the props of `React.ComponentProps<typeof Textarea>`.
+
+</Only>
+
+<Only platform="swift">
+
+### InputGroupAddonAlign
+
+Values: `.inlineStart`, `.inlineEnd`, `.blockStart`, `.blockEnd`.
+
+### InputGroup
+
+Field container that lays out the input and addons.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+
+### InputGroupAddon
+
+Slot for text, icons or buttons beside or around the input.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `align` | `InputGroupAddonAlign`: `.inlineStart` \| `.inlineEnd` \| `.blockStart` \| `.blockEnd` | `.inlineStart` |
+| `content` | `() -> Content` | - |
+
+### InputGroupButtonSize
+
+Values: `.xs`, `.sm`, `.iconXs`, `.iconSm`.
+
+### InputGroupButton
+
+Compact button inside an addon.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `variant` | `VariantButtonStyle.Variant` | `.ghost` |
+| `size` | `Size`: `.xs` \| `.sm` \| `.iconXs` \| `.iconSm` | `.xs` |
+| `action` | `() -> Void` | - |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(variant:size:action:label:)`, `init(_:variant:size:action:)`.
+
+### InputGroupText
+
+Text inside an addon.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+| `_ text` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
+
+### InputGroupInput
+
+Single-line input without its own border.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `text` | `Binding<String>` | - |
+
+### InputGroupTextarea
+
+Multi-line input without its own border.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `text` | `Binding<String>` | - |
+| `lineLimit` | `ClosedRange<Int>` | `2...8` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### InputGroupAddonAlign
+
+Values: `InlineStart`, `InlineEnd`, `BlockStart`, `BlockEnd`.
+
+### InputGroupButtonSize
+
+Values: `Xs`, `Sm`, `IconXs`, `IconSm`.
+
+### InputGroup
+
+Field container that lays out the input and addons.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` |
+| `invalid` | `Boolean` | `LocalFieldState.current.invalid` |
+| `content` | `@Composable () -> Unit` | - |
+
+### InputGroupAddon
+
+Slot for text, icons or buttons beside or around the input.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `align` | `InputGroupAddonAlign`: `InlineStart` \| `InlineEnd` \| `BlockStart` \| `BlockEnd` | `InputGroupAddonAlign.InlineStart` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+
+### InputGroupText
+
+Text inside an addon.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `InputGroupText(content)`, `InputGroupText(text)`.
+
+### InputGroupButton
+
+Compact button inside an addon.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `onClick` | `() -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `size` | `InputGroupButtonSize`: `Xs` \| `Sm` \| `IconXs` \| `IconSm` | `InputGroupButtonSize.Xs` |
+| `variant` | `ButtonVariant` | `ButtonVariant.Ghost` |
+| `enabled` | `Boolean` | `true` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+
+Overloads: `InputGroupButton(onClick, content)`, `InputGroupButton(text, onClick)`.
+
+### InputGroupInput
+
+Single-line input without its own border.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `onValueChange` | `(String) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `placeholder` | `String?` | `null` |
+| `readOnly` | `Boolean` | `false` |
+| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` |
+| `keyboardActions` | `KeyboardActions` | `KeyboardActions.Default` |
+| `visualTransformation` | `VisualTransformation` | `VisualTransformation.None` |
+
+### InputGroupTextarea
+
+Multi-line input without its own border.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `onValueChange` | `(String) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `placeholder` | `String?` | `null` |
+| `readOnly` | `Boolean` | `false` |
+| `minLines` | `Int` | `3` |
+| `maxLines` | `Int` | `Int.MAX_VALUE` |
+| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` |
+| `keyboardActions` | `KeyboardActions` | `KeyboardActions.Default` |
 
 </Only>
 

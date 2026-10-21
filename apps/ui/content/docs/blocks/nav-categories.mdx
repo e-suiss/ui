@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A store landing header with a Store heading and tagline beside quick help links, then a draggable row of image tiles for each category. Selecting a tile lifts it and updates the line below to name the category. Use it as the top of a shop home page or any visual category picker.
 
+Replace `categories` with your categories, each with a label and image. Tiles only select themselves, so navigate or load products from the `Toggle`'s `onPressedChange`. Point the `#specialist` and `#stores` links at your routes.
+
+Tile images are decorative, so each tile is named by its label. Images are Unsplash placeholders.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/nav-categories
@@ -25,15 +31,21 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks nav-categories
 ```
 
-### Manual
+</div>
+
+<div>
 
 1. Add the pieces it builds on: [Carousel](/docs/components/carousel), [Toggle](/docs/components/toggle).
 
-2. Copy the source into `components/blocks/nav-categories.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/nav-categories.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -44,12 +56,6 @@ import { NavCategories } from "@/components/blocks/nav-categories"
 ```tsx
 <NavCategories />
 ```
-
-Replace `categories` with your categories, each with a label and image. Tiles only select themselves, so navigate or load products from the `Toggle`'s `onPressedChange`. Point the `#specialist` and `#stores` links at your routes.
-
-## Notes
-
-Tile images are decorative, so each tile is named by its label. Images are Unsplash placeholders.
 
 </Only>
 
@@ -67,7 +73,17 @@ Tile images are decorative, so each tile is named by its label. Images are Unspl
 
 A store screen with a large heading, links to ask a specialist or find a store, and a scrollable `ChipGroup` of categories, each `Chip` showing a photo and a label. Selecting a category updates the line below it.
 
+<Only platform="rn">
+
+Replace `CATEGORIES` with your categories and images. Wire `onSelectCategory`, `onAskSpecialist` and `onFindStore` to your navigation. The photos are Unsplash placeholders.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -117,7 +133,9 @@ The CLI also adds what it builds on: [Chip](/docs/components/chip), [Screen](/do
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -125,7 +143,7 @@ The CLI also adds what it builds on: [Chip](/docs/components/chip), [Screen](/do
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -137,17 +155,17 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/nav-categories.tsx`:
+4. Copy and paste the following code into `components/blocks/nav-categories.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/nav-categories.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -159,17 +177,17 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/nav-categories.tsx`:
+4. Copy and paste the following code into `components/blocks/nav-categories.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/nav-categories.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -181,11 +199,11 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/nav-categories.tsx`:
+4. Copy and paste the following code into `components/blocks/nav-categories.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/nav-categories.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -307,6 +325,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -346,12 +368,6 @@ fun NavCategoriesExample() {
     NavCategories()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `CATEGORIES` with your categories and images. Wire `onSelectCategory`, `onAskSpecialist` and `onFindStore` to your navigation. The photos are Unsplash placeholders.
 
 </Only>
 

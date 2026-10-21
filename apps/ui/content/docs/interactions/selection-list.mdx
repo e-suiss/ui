@@ -15,7 +15,9 @@ The trigger is a suiss/ui `Button` that reads `Select` or `Done` by default, and
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/selection-list
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add interactions selection-list
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -37,16 +41,26 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button).
 
-3. Copy the source into `components/interactions/selection-list.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/interactions/selection-list.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { SelectionList, SelectionListTrigger, SelectionListItem, SelectionListBar, SelectionListCount } from "@/components/interactions/selection-list"
+import {
+  SelectionList,
+  SelectionListBar,
+  SelectionListCount,
+  SelectionListItem,
+  SelectionListTrigger,
+} from "@/components/interactions/selection-list"
 ```
 
 ```tsx
@@ -63,84 +77,13 @@ import { SelectionList, SelectionListTrigger, SelectionListItem, SelectionListBa
 </SelectionList>
 ```
 
-- Place `SelectionListTrigger`, the `SelectionListItem` rows, and `SelectionListBar` inside `SelectionList`. Put your own action buttons and `SelectionListCount` inside the bar.
-- Editing and selection are each uncontrolled by default. Pass `editing` and `onEditingChange`, or `value` and `onValueChange`, to control them.
-- `useSelectionList` returns `editing`, `setEditing`, `selected`, `setSelected`, `selectAll`, and `clear` for building actions such as Select All or Delete.
-- Shift-clicking a row, or pressing `Shift` with `Enter` or `Space`, selects the range from the previously toggled row.
-- `Escape` leaves editing.
-
 ## Examples
 
 ### Icon actions
 
-A controlled selection drives icon-only toolbar actions that stay disabled until a row is picked.
+A controlled selection, through `value` and `onValueChange`, drives icon-only toolbar actions that stay disabled until a row is picked.
 
 <ComponentPreview name="selection-list-icon-actions" responsive />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### SelectionList
-
-The root that holds the editing state and the selected values.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `editing` | `boolean` | - | Whether the list is in editing mode, for controlled use. |
-| `defaultEditing` | `boolean` | `false` | Whether the list starts in editing mode when uncontrolled. |
-| `onEditingChange` | `(editing: boolean) => void` | - | Called when editing mode turns on or off. |
-| `value` | `string[]` | - | The selected row values, for controlled use. |
-| `defaultValue` | `string[]` | `[]` | The rows selected initially when uncontrolled. |
-| `onValueChange` | `(value: string[]) => void` | - | Called with the new array of selected values. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SelectionListTrigger
-
-The button that enters and leaves editing.
-
-Also accepts the props of `React.ComponentProps<typeof Button>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SelectionListItem
-
-A row that becomes a selectable checkbox while editing.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The unique value that identifies the row in the selection. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SelectionListBar
-
-The floating toolbar shown while editing.
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SelectionListCount
-
-A live label with the number of selected rows.
-
-Also accepts the props of `React.ComponentProps<"span">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -148,12 +91,60 @@ Also accepts the props of `React.ComponentProps<"span">`.
 - In editing mode, each row has `role="checkbox"` with `aria-checked`, is focusable, and toggles with `Enter` or `Space`. Its accessible name comes from the row's text unless you set `aria-label`.
 - `SelectionListBar` has `role="toolbar"` and is `inert` while not editing; give it an `aria-label`.
 - `SelectionListCount` is a polite live region, so selection changes are announced.
+- `Escape` leaves editing.
 
-## Notes
+## API Reference
 
-- The root sets `data-editing` while editing, available to children as the `group/selection-list` Tailwind group. Rows expose `data-value` and `data-checked`.
-- Parts use `data-slot` values `selection-list`, `selection-list-trigger`, `selection-list-item`, `selection-list-indicator`, `selection-list-item-content`, `selection-list-bar`, and `selection-list-count`.
-- The bar is fixed to the bottom of the viewport, so leave room below the list for it.
+### SelectionList
+
+The root that holds the editing state and the selected values.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `editing` | `boolean` | - |
+| `defaultEditing` | `boolean` | `false` |
+| `onEditingChange` | `(editing: boolean) => void` | - |
+| `value` | `string[]` | - |
+| `defaultValue` | `string[]` | `[]` |
+| `onValueChange` | `(value: string[]) => void` | - |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Place `SelectionListTrigger`, the `SelectionListItem` rows and `SelectionListBar` inside `SelectionList`. Editing and selection are each uncontrolled by default; pass `editing` and `onEditingChange`, or `value` and `onValueChange`, to control them. `onValueChange` is called with the new array of selected values. `useSelectionList` returns `editing`, `setEditing`, `selected`, `setSelected`, `selectAll` and `clear` for building actions such as Select All or Delete.
+
+The root sets `data-editing` while editing, available to children as the `group/selection-list` Tailwind group. Each part sets a `data-slot`, such as `selection-list-item`, for styling.
+
+### SelectionListTrigger
+
+The button that enters and leaves editing.
+
+Also accepts the props of `React.ComponentProps<typeof Button>`.
+
+### SelectionListItem
+
+A row that becomes a selectable checkbox while editing.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | Required |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Give each row a unique `value` that identifies it in the selection. Shift-clicking a row, or pressing `Shift` with `Enter` or `Space`, selects the range from the previously toggled row. Rows expose `data-value` and `data-checked`.
+
+### SelectionListBar
+
+The floating toolbar shown while editing.
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+Put your own action buttons and `SelectionListCount` inside the bar. The bar is fixed to the bottom of the viewport, so leave room below the list for it.
+
+### SelectionListCount
+
+A live label with the number of selected rows.
+
+Also accepts the props of `React.ComponentProps<"span">`.
 
 </Only>
 
@@ -172,6 +163,10 @@ On Android the hardware back button also leaves editing mode.
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -221,7 +216,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -229,7 +226,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
@@ -249,17 +246,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/selection-list.tsx`:
+5. Copy and paste the following code into `components/interactions/selection-list.tsx`:
 
 <ComponentSource path="uniwind/components/interactions/selection-list.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
@@ -279,17 +276,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/selection-list.tsx`:
+5. Copy and paste the following code into `components/interactions/selection-list.tsx`:
 
 <ComponentSource path="nativewind/components/interactions/selection-list.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-safe-area-context react-native-svg react-native-worklets
@@ -309,11 +306,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-safe
 
 <ComponentSource path="stylesheet/components/primitives/portal.tsx" plain />
 
-5. Copy the source into `components/interactions/selection-list.tsx`:
+5. Copy and paste the following code into `components/interactions/selection-list.tsx`:
 
 <ComponentSource path="stylesheet/components/interactions/selection-list.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -396,6 +393,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -960,14 +961,6 @@ fun SelectionListNotes(defaultEditing: Boolean = false, defaultValue: List<Strin
 
 </Only>
 
-<Only platform="rn">
-
-Wrap the list in `SelectionList`, add a `SelectionListTrigger` that toggles editing (it reads `Select` and `Done` by default), and give each `SelectionListItem` a unique `value`. Put your buttons and a `SelectionListCount` in `SelectionListBar`.
-
-Editing and the selection can be uncontrolled with `defaultEditing` and `defaultValue`, or controlled with `editing`, `onEditingChange`, `value` and `onValueChange`. `useSelectionList` returns `editing`, `selected`, `toggle`, `selectAll` and `clear` for custom actions. Outside editing mode, the row's children receive presses as usual.
-
-</Only>
-
 ## Examples
 
 ### Editing
@@ -982,326 +975,6 @@ A mail list whose bar holds icon-only actions.
 
 <NativeExample name="selection-list-icon-actions" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### SelectionList
-
-The root that holds the editing state and selection.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `editing` | `boolean` | - | Controls editing mode. |
-| `defaultEditing` | `boolean` | `false` | Whether editing starts on when uncontrolled. |
-| `onEditingChange` | `(editing: boolean) => void` | - | Called when editing turns on or off. |
-| `value` | `string[]` | - | Selected item values when controlled. |
-| `defaultValue` | `string[]` | `EMPTY` | Initially selected values when uncontrolled. |
-| `onValueChange` | `(value: string[]) => void` | - | Called with the new selection. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SelectionListTrigger
-
-A plain button that toggles editing.
-
-Also accepts the props of `React.ComponentProps<typeof Button>`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SelectionListItem
-
-A row that toggles its `value` while editing.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The value this row adds to the selection. |
-| `children` | `React.ReactNode` | - | The content. |
-
-Also accepts the props of `React.ComponentProps<typeof Pressable>`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SelectionListBar
-
-A floating toolbar shown while editing.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `portalHost` | `string` | - | Name of a portal host to render into. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SelectionListCount
-
-Text showing the number of selected items.
-
-Also accepts the props of `React.ComponentProps<typeof Text>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### SelectionListProxy
-
-| Property | Type |
-| --- | --- |
-| `isEditing` | `Bool` |
-| `count` | `Int` |
-| `total` | `Int` |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SelectionListProxy.setEditing
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ value` | `Bool` | - | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SelectionListProxy.selectAll
-
-Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SelectionListProxy.clear
-
-Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SelectionList
-
-The root that holds the editing state and selection.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isEditing` | `Binding<Bool>?` | `nil` | - |
-| `selection` | `Binding<Set<Value>>?` | `nil` | The selected value. |
-| `defaultEditing` | `Bool` | `false` | Whether editing starts on when uncontrolled. |
-| `defaultSelection` | `Set<Value>` | `[]` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### SelectionListTrigger
-
-A plain button that toggles editing.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init(label:)`, `init()`, `init(_:)`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### SelectionListItem
-
-A row that toggles its `value` while editing.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `Value` | - | The value this row adds to the selection. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### SelectionListBar
-
-A floating toolbar shown while editing.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `(SelectionListProxy) -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### SelectionListCount
-
-Text showing the number of selected items.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-
-Overloads: `init()`, `init(_:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### SelectionListScope
-
-| Property | Type |
-| --- | --- |
-| `editing` | `Boolean` |
-| `selected` | `List<String>` |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### SelectionListScope.setEditing
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `editing` | `Boolean` | - | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### SelectionListScope.setSelected
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `selected` | `List<String>` | - | - |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### SelectionListScope.toggle
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | - |
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### SelectionListScope.selectAll
-
-Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### SelectionListScope.clear
-
-Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### SelectionList
-
-The root that holds the editing state and selection.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `editing` | `Boolean` | - | Controls editing mode. |
-| `onEditingChange` | `(Boolean) -> Unit` | - | Called when editing turns on or off. |
-| `value` | `List<String>` | - | Selected item values when controlled. |
-| `onValueChange` | `(List<String>) -> Unit` | - | Called with the new selection. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable SelectionListScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### SelectionListTrigger
-
-A plain button that toggles editing.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `text` | `String?` | `null` | The text. |
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### SelectionListItem
-
-A row that toggles its `value` while editing.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | The value this row adds to the selection. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `contentDescription` | `String?` | `null` | - |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### SelectionListBar
-
-A floating toolbar shown while editing.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### SelectionListCount
-
-Text showing the number of selected items.
-
-Receiver: `RowScope`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `text` | `String?` | `null` | The text. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1311,11 +984,233 @@ Receiver: `RowScope`.
 - The bar has the `toolbar` role.
 - `SelectionListCount` is a polite live region, reading `Select items` or `n selected` by default.
 
-## Notes
+</Only>
 
-- Selected rows use `bg-accent`; checked circles use `bg-primary` with a `primary-foreground` check.
-- The bar uses `bg-card`, or `bg-muted` in dark mode, and is up to `max-w-md` wide.
-- Animations respect the system reduce motion setting.
+## API Reference
+
+<Only platform="rn">
+
+### SelectionList
+
+The root that holds the editing state and selection.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `editing` | `boolean` | - |
+| `defaultEditing` | `boolean` | `false` |
+| `onEditingChange` | `(editing: boolean) => void` | - |
+| `value` | `string[]` | - |
+| `defaultValue` | `string[]` | `EMPTY` |
+| `onValueChange` | `(value: string[]) => void` | - |
+
+Also accepts the props of `ViewProps`.
+
+Wrap the list in `SelectionList`. Editing and the selection can be uncontrolled with `defaultEditing` and `defaultValue`, or controlled with `editing`, `onEditingChange`, `value` and `onValueChange`. `useSelectionList` returns `editing`, `selected`, `toggle`, `selectAll` and `clear` for custom actions. Animations respect the system reduce motion setting.
+
+### SelectionListTrigger
+
+A plain button that toggles editing.
+
+Also accepts the props of `React.ComponentProps<typeof Button>`.
+
+It reads `Select` and `Done` by default.
+
+### SelectionListItem
+
+A row that toggles its `value` while editing.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | Required |
+| `children` | `React.ReactNode` | - |
+
+Also accepts the props of `React.ComponentProps<typeof Pressable>`.
+
+Give each item a unique `value`. Outside editing mode, the row's children receive presses as usual.
+
+### SelectionListBar
+
+A floating toolbar shown while editing.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `portalHost` | `string` | - |
+
+Also accepts the props of `ViewProps`.
+
+Put your buttons and a `SelectionListCount` in the bar. `portalHost` names a portal host to render into. The bar is up to `max-w-md` wide.
+
+### SelectionListCount
+
+Text showing the number of selected items.
+
+Also accepts the props of `React.ComponentProps<typeof Text>`.
+
+</Only>
+
+<Only platform="swift">
+
+### SelectionListProxy
+
+| Property | Type |
+| --- | --- |
+| `isEditing` | `Bool` |
+| `count` | `Int` |
+| `total` | `Int` |
+
+### SelectionListProxy.setEditing
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ value` | `Bool` | - |
+
+### SelectionListProxy.selectAll
+
+Takes no parameters.
+
+### SelectionListProxy.clear
+
+Takes no parameters.
+
+### SelectionList
+
+The root that holds the editing state and selection.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `isEditing` | `Binding<Bool>?` | `nil` |
+| `selection` | `Binding<Set<Value>>?` | `nil` |
+| `defaultEditing` | `Bool` | `false` |
+| `defaultSelection` | `Set<Value>` | `[]` |
+| `content` | `() -> Content` | - |
+
+### SelectionListTrigger
+
+A plain button that toggles editing.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init(label:)`, `init()`, `init(_:)`.
+
+### SelectionListItem
+
+A row that toggles its `value` while editing.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `Value` | - |
+| `content` | `() -> Content` | - |
+
+### SelectionListBar
+
+A floating toolbar shown while editing.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `(SelectionListProxy) -> Content` | - |
+
+### SelectionListCount
+
+Text showing the number of selected items.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+
+Overloads: `init()`, `init(_:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### SelectionListScope
+
+| Property | Type |
+| --- | --- |
+| `editing` | `Boolean` |
+| `selected` | `List<String>` |
+
+### SelectionListScope.setEditing
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `editing` | `Boolean` | - |
+
+### SelectionListScope.setSelected
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `selected` | `List<String>` | - |
+
+### SelectionListScope.toggle
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+
+### SelectionListScope.selectAll
+
+Takes no parameters.
+
+### SelectionListScope.clear
+
+Takes no parameters.
+
+### SelectionList
+
+The root that holds the editing state and selection.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `editing` | `Boolean` | - |
+| `onEditingChange` | `(Boolean) -> Unit` | - |
+| `value` | `List<String>` | - |
+| `onValueChange` | `(List<String>) -> Unit` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable SelectionListScope.() -> Unit` | - |
+
+### SelectionListTrigger
+
+A plain button that toggles editing.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `text` | `String?` | `null` |
+
+### SelectionListItem
+
+A row that toggles its `value` while editing.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `contentDescription` | `String?` | `null` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+
+### SelectionListBar
+
+A floating toolbar shown while editing.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+
+### SelectionListCount
+
+Text showing the number of selected items.
+
+Receiver: `RowScope`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `text` | `String?` | `null` |
 
 </Only>
 

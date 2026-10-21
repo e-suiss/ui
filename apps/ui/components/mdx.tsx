@@ -2,7 +2,6 @@ import type { MDXComponents } from "mdx/types"
 import * as React from "react"
 
 import { Anchor } from "@/components/site/anchor"
-import { Anatomy, ApiPart } from "@/components/site/api-reference"
 import { Callout } from "@/components/site/callout"
 import { CodeBlock } from "@/components/site/code-block"
 import { ComponentPreview } from "@/components/site/component-preview"
@@ -51,7 +50,7 @@ function pieceNames(node: React.ReactNode): string[] {
   return pieceNames(node.props.children)
 }
 
-const INSTALL_LEAD = "Install the dependencies and add the "
+const INSTALL_LEAD = "Install the following dependencies and add the "
 
 function withoutInstall(node: React.ReactNode): React.ReactNode {
   if (typeof node === "string")
@@ -122,8 +121,6 @@ export function getMDXComponents(components?: MDXComponents) {
     OnlyStyling,
     StylingNote,
     Tabs,
-    Anatomy,
-    ApiPart,
     ComponentSource,
     RegistryIndex,
     ...components,

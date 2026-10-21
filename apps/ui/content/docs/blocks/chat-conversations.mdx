@@ -11,9 +11,15 @@ platforms: [web, rn, swift, kotlin]
 
 A messaging app with conversations on the left, the open thread on the right and a composer whose send button appears once you type. On mobile only one pane shows at a time, starting with the conversation list, and a back button returns to it. Built on `SplitView` and `MessageScroller`, it is a starting point for direct messages, team chat or customer conversations.
 
+Replace the `threads` array; each thread has a name, avatar hue, time and lines written as strings prefixed with `me:` or `them:`. The `send` function fakes a typing indicator and a canned reply from `replies`, so replace it with your messaging backend. The New message, attachment, video call and details buttons have no handlers.
+
+Typing status is announced, and icon-only buttons are labeled. The composer input uses its placeholder as its accessible name, so keep the placeholder descriptive.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/chat-conversations
@@ -25,9 +31,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks chat-conversations
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +43,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Avatar](/docs/components/avatar), [Bubble](/docs/components/bubble), [Button](/docs/components/button), [Input](/docs/components/input), [Message](/docs/components/message), [Message Scroller](/docs/components/message-scroller), [Split View](/docs/patterns/split-view).
 
-3. Copy the source into `components/blocks/chat-conversations.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/chat-conversations.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +62,6 @@ import { ChatConversations } from "@/components/blocks/chat-conversations"
 ```tsx
 <ChatConversations />
 ```
-
-Replace the `threads` array; each thread has a name, avatar hue, time and lines written as strings prefixed with `me:` or `them:`. The `send` function fakes a typing indicator and a canned reply from `replies`, so replace it with your messaging backend. The New message, attachment, video call and details buttons have no handlers.
-
-## Notes
-
-Typing status is announced, and icon-only buttons are labeled. The composer input uses its placeholder as its accessible name, so keep the placeholder descriptive.
 
 </Only>
 
@@ -77,7 +83,17 @@ Composes `Screen`, `Header`, `SwipeActions` from the interactions, `Avatar`, `Me
 
 </Only>
 
+<Only platform="rn">
+
+Replace `THREADS` and `REPLIES` with your conversations and drop the canned replies. Wire `onSend`, `onNewMessage`, `onAttach`, `onVideoCall`, `onDetails` and `onDelete` to your messaging backend.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +143,9 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Bottom 
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -135,7 +153,7 @@ The CLI also adds what it builds on: [Avatar](/docs/components/avatar), [Bottom 
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -147,17 +165,17 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="uniwind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/chat-conversations.tsx`:
+4. Copy and paste the following code into `components/blocks/chat-conversations.tsx`:
 
 <ComponentSource path="uniwind/components/blocks/chat-conversations.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -169,17 +187,17 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="nativewind/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/chat-conversations.tsx`:
+4. Copy and paste the following code into `components/blocks/chat-conversations.tsx`:
 
 <ComponentSource path="nativewind/components/blocks/chat-conversations.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -191,11 +209,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/ui/animated-view.tsx" />
 
-4. Copy the source into `components/blocks/chat-conversations.tsx`:
+4. Copy and paste the following code into `components/blocks/chat-conversations.tsx`:
 
 <ComponentSource path="stylesheet/components/blocks/chat-conversations.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -333,6 +351,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -372,12 +394,6 @@ fun ChatConversationsExample() {
     ChatConversations()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `THREADS` and `REPLIES` with your conversations and drop the canned replies. Wire `onSend`, `onNewMessage`, `onAttach`, `onVideoCall`, `onDetails` and `onDelete` to your messaging backend.
 
 </Only>
 

@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 Two series drawn as grouped bars side by side for each month. Pick it over the stacked variant when readers need to compare the series directly rather than see their total.
 
+Replace `chartData` and rename the series keys in the data, the two `Bar` elements and `chartConfig`, and add a `Bar` for another series. `barGap` sets the space between bars in a group. Beyond three series or a dozen categories, consider stacked bars or a line chart. Focus the chart and use the arrow keys to move the tooltip between months.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/bar-chart-multiple
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts bar-chart-multiple
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/bar-chart-multiple.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/bar-chart-multiple.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { BarChartMultiple } from "@/components/charts/bar-chart-multiple"
 ```tsx
 <BarChartMultiple />
 ```
-
-Replace `chartData` and rename the series keys in the data, the two `Bar` elements and `chartConfig`. Add a third `Bar` for another series. Tune `barGap` to control the space between bars in a group.
-
-## Notes
-
-Grouped bars get thin quickly; beyond three series or a dozen categories, consider stacked bars or a line chart. The arrow keys move the tooltip between months once the chart has focus.
 
 </Only>
 
@@ -77,7 +81,17 @@ Two `Bar` series sit next to each other in every month, separated by a small `ba
 
 </Only>
 
+<Only platform="rn">
+
+Replace `chartData` with your records and change each `dataKey` to match your fields. Add a `Bar` and a `chartConfig` entry for each extra series. The component takes no props.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +141,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +153,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/bar-chart-multiple.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-multiple.tsx`:
 
 <ComponentSource path="uniwind/components/charts/bar-chart-multiple.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +165,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/bar-chart-multiple.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-multiple.tsx`:
 
 <ComponentSource path="nativewind/components/charts/bar-chart-multiple.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +177,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/bar-chart-multiple.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-multiple.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/bar-chart-multiple.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +264,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +307,6 @@ fun BarMultipleExample() {
     BarChartMultiple()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your records and change each `dataKey` to match your fields. Add a `Bar` and a `chartConfig` entry for each extra series. The component takes no props.
 
 </Only>
 

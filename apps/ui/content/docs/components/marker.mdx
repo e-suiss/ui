@@ -11,11 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 `Marker` displays a short line of secondary text, typically between messages or list entries. Put the text in `MarkerContent` and, optionally, a leading `MarkerIcon`.
 
-The `variant` prop changes the treatment: plain text, text centered between two separator rules, or text above a bottom border. Use `Marker` for annotations within content; use `Separator` for a purely visual rule with no text.
+Use `Marker` for annotations within content; use `Separator` for a purely visual rule with no text.
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/marker
@@ -27,19 +29,25 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add marker
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react class-variance-authority
 ```
 
-2. Copy the source into `components/ui/marker.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/marker.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -55,101 +63,90 @@ import { Marker, MarkerIcon, MarkerContent } from "@/components/ui/marker"
 </div>
 ```
 
-Links inside the marker or its content are underlined automatically. The underlying element can be changed:
+## Composition
 
-<OnlyBase base="base">
+Use the following composition to build a `Marker`:
 
-`Marker` is built on Base UI's `useRender`, so it accepts a `render` prop to change the underlying element.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Set `asChild` on `Marker` and pass the element as the child.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Pass a `render` function to `Marker` that returns the element with the props it receives.
-
-</OnlyBase>
+```text
+Marker
+├── MarkerContent
+└── MarkerIcon
+```
 
 ## Examples
 
 ### Variants
 
-The `default`, `separator` and `border` variants stacked for comparison.
+Use the `variant` prop to pick the treatment: `default` for plain text, `separator` for text between two rules, or `border` for text above a bottom border.
 
 <ComponentPreview name="marker-variants" />
 
 ### Separator
 
-Text centered between two horizontal rules, as used for a date divider.
+Set `variant="separator"` to center the text between two horizontal rules, as used for a date divider.
 
 <ComponentPreview name="marker-separator" />
 
 ### With icon
 
-Markers with a leading decorative icon in the default and separator variants.
+Put a decorative icon in `MarkerIcon` before the content, shown here in the default and separator variants.
 
 <ComponentPreview name="marker-with-icon" />
 
 ### With link
 
-A marker whose content includes an inline link.
+A marker whose content includes an inline link. Links inside the marker or its content are underlined automatically and hover to `foreground`.
 
 <ComponentPreview name="marker-with-link" />
 
+## Accessibility
+
+- `MarkerIcon` sets `aria-hidden="true"`, so icons must be decorative; put meaningful text in `MarkerContent`.
+- Links inside the content remain in the normal tab order.
+
 ## API Reference
-
-<Anatomy>
-
-- [Marker](#marker)
-  - [MarkerContent](#markercontent)
-  - [MarkerIcon](#markericon)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### Marker
 
 The container row that applies the variant styling.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "separator" \| "border"` | `"default"` | Sets the visual treatment: `default` for plain text, `separator` for text between two rules, or `border` for text above a bottom border. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "separator" \| "border"` | `"default"` |
 
 <OnlyBase base="base">
 
 Also accepts the props of `useRender.ComponentProps<"div">`.
 
+Use the `render` prop to change the underlying element.
+
 </OnlyBase>
 
 <OnlyBase base="radix">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element as the marker. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
+
+Set `asChild` and pass the element as the child to change the underlying element.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `(props) => React.ReactNode` | - | Renders your own element with the props it receives. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `(props) => React.ReactNode` | - |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
+Pass a `render` function that returns the element with the props it receives to change the underlying element.
+
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={2}>
+Rules and borders use the `border` color and text uses `muted-foreground`.
 
 ### MarkerIcon
 
@@ -157,27 +154,13 @@ A decorative icon slot shown before the content and hidden from assistive techno
 
 Also accepts the props of `React.ComponentProps<"span">`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### MarkerContent
 
 Holds the marker text and any inline links.
 
 Also accepts the props of `React.ComponentProps<"span">`.
 
-</ApiPart>
-
-## Accessibility
-
-- `MarkerIcon` sets `aria-hidden="true"`, so icons must be decorative; put meaningful text in `MarkerContent`.
-- Links inside the content remain in the normal tab order.
-
-## Notes
-
-- Styling hooks: `data-slot="marker"`, `data-slot="marker-icon"` and `data-slot="marker-content"`. The root also exposes `data-variant`.
-- Rules and borders use the `border` color; text uses `muted-foreground` and links hover to `foreground`.
+Each part sets a `data-slot`, such as `marker` or `marker-content`, for styling. The root also exposes `data-variant`.
 
 </Only>
 
@@ -190,6 +173,10 @@ Also accepts the props of `React.ComponentProps<"span">`.
 Use `separator` for date dividers in a chat or feed, `border` for section headings, and `default` for short notices.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -239,7 +226,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -247,7 +236,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -265,17 +254,17 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/marker.tsx`:
+4. Copy and paste the following code into `components/ui/marker.tsx`:
 
 <ComponentSource path="uniwind/components/ui/marker.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -293,11 +282,11 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/marker.tsx`:
+4. Copy and paste the following code into `components/ui/marker.tsx`:
 
 <ComponentSource path="nativewind/components/ui/marker.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -315,11 +304,11 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/marker.tsx`:
+3. Copy and paste the following code into `components/ui/marker.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/marker.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -392,6 +381,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -523,9 +516,10 @@ fun MarkerVariants() {
 
 <Only platform="rn">
 
-Put the text in `MarkerContent` and an `Icon` in `MarkerIcon`. Text and icons inside the marker pick up the `text-muted-foreground` color and size through context.
+## Accessibility
 
-Pass a `render` element to `Marker` to render it as another component instead of a `View`.
+- `MarkerIcon` and the separator lines are hidden from screen readers, so only the text is read.
+- If the icon carries meaning, include it in the text.
 
 </Only>
 
@@ -533,22 +527,18 @@ Pass a `render` element to `Marker` to render it as another component instead of
 
 <Only platform="rn">
 
-<ApiPart index={1}>
-
 ### Marker
 
 Row that sets the variant and the text and icon styles.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "separator" \| "border"` | `"default"` | `default`, `separator` or `border`. |
-| `render` | `RenderProp<Record<string, unknown>, Record<string, never>>` | - | Element to render in place of the default `View`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "separator" \| "border"` | `"default"` |
+| `render` | `RenderProp<Record<string, unknown>, Record<string, never>>` | - |
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+Pass a `render` element to render the marker as another component instead of a `View`. Text and icons inside the marker pick up the `text-sm text-muted-foreground` style and the `size-4` icon size through context. Lines and the bottom border use `bg-border` and `border-border`.
 
 ### MarkerIcon
 
@@ -556,9 +546,7 @@ Fixed-size slot for an icon.
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
-
-<ApiPart index={3}>
+Put an `Icon` inside it.
 
 ### MarkerContent
 
@@ -566,111 +554,79 @@ Marker text, centered in the `separator` variant.
 
 Also accepts the props of `React.ComponentProps<typeof Text>`.
 
-</ApiPart>
-
 </Only>
 
 <Only platform="swift">
-
-<ApiPart index={1}>
 
 ### MarkerVariant
 
 Values: `.default`, `.separator`, `.border`.
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### Marker
 
 Row that sets the variant and the text and icon styles.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ variant` | `MarkerVariant`: `.default` \| `.separator` \| `.border` | `.default` | Sets the visual treatment: `default` for plain text, `separator` for text between two rules, or `border` for text above a bottom border. |
-| `content` | `() -> Content` | - | The content. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `icon` | `Image?` | `nil` | The icon. |
-| `variant` | `MarkerVariant`: `.default` \| `.separator` \| `.border` | `.default` | Sets the visual treatment: `default` for plain text, `separator` for text between two rules, or `border` for text above a bottom border. |
-| `verbatim` | `String` | - | The title text. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ variant` | `MarkerVariant`: `.default` \| `.separator` \| `.border` | `.default` |
+| `content` | `() -> Content` | - |
+| `_ title` | `LocalizedStringKey` | - |
+| `icon` | `Image?` | `nil` |
+| `variant` | `MarkerVariant`: `.default` \| `.separator` \| `.border` | `.default` |
+| `verbatim` | `String` | - |
 
 Overloads: `init(_:content:)`, `init(_:icon:variant:)`, `init(verbatim:icon:variant:)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### MarkerIcon
 
 Fixed-size slot for an icon.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
 
 ### MarkerContent
 
 Marker text, centered in the `separator` variant.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-| `_ text` | `LocalizedStringKey` | - | The text. |
-| `verbatim` | `String` | - | The text. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+| `_ text` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
 
 Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### MarkerVariant
 
 Values: `Default`, `Separator`, `Border`.
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### Marker
 
 Row that sets the variant and the text and icon styles.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `variant` | `MarkerVariant`: `Default` \| `Separator` \| `Border` | `MarkerVariant.Default` | Sets the visual treatment: `default` for plain text, `separator` for text between two rules, or `border` for text above a bottom border. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
-| `icon` | `ImageVector?` | `null` | The icon. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `variant` | `MarkerVariant`: `Default` \| `Separator` \| `Border` | `MarkerVariant.Default` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+| `text` | `String` | - |
+| `icon` | `ImageVector?` | `null` |
 
 Overloads: `Marker(content)`, `Marker(text, icon)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
 
 ### MarkerIcon
 
 Fixed-size slot for an icon.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable BoxScope.() -> Unit` | - |
 
 ### MarkerContent
 
@@ -678,30 +634,13 @@ Marker text, centered in the `separator` variant.
 
 Receiver: `RowScope`.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
+| `text` | `String` | - |
 
 Overloads: `MarkerContent(content)`, `MarkerContent(text)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- `MarkerIcon` and the separator lines are hidden from screen readers, so only the text is read.
-- If the icon carries meaning, include it in the text.
-
-## Notes
-
-- Text uses `text-sm text-muted-foreground` and icons `size-4`.
-- Lines and the bottom border use `bg-border` and `border-border`.
-- Light and dark colors follow the system appearance.
 
 </Only>
 

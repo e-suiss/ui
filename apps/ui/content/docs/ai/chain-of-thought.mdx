@@ -147,13 +147,7 @@ import { Badge } from "@/components/ui/badge"
 
 </OnlyBase>
 
-<OnlyBase base="base">
-
-Set `keepMounted` on the summary's `TraceCollapsibleContent` so the steps keep their open state while the summary is closed.
-
-</OnlyBase>
-
-### Steps
+## Steps
 
 Each step is a `TraceLine`, or a `TraceCollapsible` when it has output to show. Set its `status` and write the title in the matching tense.
 
@@ -165,7 +159,7 @@ Each step is a `TraceLine`, or a `TraceCollapsible` when it has output to show. 
 
 Set the summary's status and title from its steps: `running` while any step runs, `error` when one failed, and a count such as "Researched in 3 steps, 1 failed" once they are done.
 
-### Search results
+## Search results
 
 When a step runs a web search, show each result as a link row, or show the hostnames as a `Badge` each:
 
@@ -208,15 +202,21 @@ const failed = steps.filter((part) => part.state === "output-error").length
 
 `StepLine` renders one tool part as a line, as in [Tool](/docs/ai/tool#states).
 
-## API Reference
-
-See [Trace](/docs/components/trace#api-reference), [Code Block](/docs/components/code-block#api-reference) and [Badge](/docs/components/badge#api-reference).
-
 ## Accessibility
 
 - The summary and each expandable step are buttons with `aria-expanded`.
 - Say the state in each title, such as "Searching" or "Failed to search", since status is otherwise shown with color and motion.
 - Add "(opens in a new tab)" with `sr-only` to links that open a new tab.
+
+## API Reference
+
+See [Trace](/docs/components/trace#api-reference), [Code Block](/docs/components/code-block#api-reference) and [Badge](/docs/components/badge#api-reference).
+
+<OnlyBase base="base">
+
+Set `keepMounted` on the summary's `TraceCollapsibleContent` so the steps keep their open state while the summary is closed.
+
+</OnlyBase>
 
 </Only>
 

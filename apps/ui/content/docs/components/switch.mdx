@@ -15,7 +15,9 @@ Use a switch for settings that take effect immediately. To select an option in a
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/switch
@@ -27,19 +29,25 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add switch
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react
 ```
 
-2. Copy the source into `components/ui/switch.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/switch.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -51,41 +59,49 @@ import { Switch } from "@/components/ui/switch"
 <Switch aria-label="Wi-Fi" />
 ```
 
+## Examples
+
+### Checked
+
 <OnlyBase base="base radix">
 
-Use `defaultChecked` for an uncontrolled switch, or `checked` with `onCheckedChange` to control it. Set `disabled` to turn it off. Wrap the switch and its text in a `Label` so the text toggles it too.
+Set `defaultChecked` to start the switch in the on state.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-Use `defaultSelected` for an uncontrolled switch, or `isSelected` with `onChange` to control it. Set `isDisabled` to turn it off. Wrap the switch and its text in a `Label` so the text toggles it too.
+Set `defaultSelected` to start the switch in the on state.
 
 </OnlyBase>
-
-## Examples
-
-### Checked
-
-Starts in the on state.
 
 <ComponentPreview name="switch-checked" />
 
 ### Sizes
 
-Compares the `sm` and `default` sizes.
+Use the `size` prop to choose between `sm` and `default`.
 
 <ComponentPreview name="switch-sizes" />
 
 ### With label
 
-Wraps the switch in a `Label` so the text names and toggles it.
+Wrap the switch and its text in a `Label` so the text names and toggles it too.
 
 <ComponentPreview name="switch-with-label" />
 
 ### Disabled
 
-Shows disabled switches in the off and on states.
+<OnlyBase base="base radix">
+
+Set `disabled` to turn the switch off; the example shows the off and on states.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Set `isDisabled` to turn the switch off; the example shows the off and on states.
+
+</OnlyBase>
 
 <ComponentPreview name="switch-disabled" />
 
@@ -93,54 +109,17 @@ Shows disabled switches in the off and on states.
 
 <OnlyBase base="base radix">
 
-Marks the switch with `aria-invalid` to show an error state.
+Mark the switch with `aria-invalid` to show an error state with a `destructive` border.
 
 </OnlyBase>
 
 <OnlyBase base="aria">
 
-Marks the switch with `isInvalid` to show an error state.
+Mark the switch with `isInvalid` to show an error state with a `destructive` border.
 
 </OnlyBase>
 
 <ComponentPreview name="switch-invalid" />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### Switch
-
-The switch track and its sliding thumb.
-
-<OnlyBase base="base radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"sm" \| "default"` | `"default"` | Sets the switch size: `default` or the smaller `sm`. |
-| `checked` | `boolean` | — | The controlled state. Pass it with `onCheckedChange`. |
-| `defaultChecked` | `boolean` | `false` | Whether the switch starts on. |
-| `onCheckedChange` | `(checked: boolean) => void` | — | Called when the switch is toggled. |
-| `disabled` | `boolean` | `false` | Ignores clicks and keyboard presses. |
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"sm" \| "default"` | `"default"` | Sets the switch size: `default` or the smaller `sm`. |
-| `isSelected` | `boolean` | — | The controlled state. Pass it with `onChange`. |
-| `defaultSelected` | `boolean` | `false` | Whether the switch starts on. |
-| `onChange` | `(isSelected: boolean) => void` | — | Called when the switch is toggled. |
-| `isDisabled` | `boolean` | `false` | Ignores clicks and keyboard presses. |
-| `isInvalid` | `boolean` | `false` | Shows the error state. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -149,12 +128,52 @@ Also accepts the props of the primitive part it wraps.
 - `Space` toggles the focused switch.
 - A disabled switch ignores clicks and keyboard presses.
 
-## Notes
+## API Reference
 
-- Uses `data-slot="switch"` and `data-slot="switch-thumb"`, plus `data-size` and the primitive's state attributes.
-- An invalid switch draws a `destructive` border.
-- A transparent hit area extends around the track to make it easier to tap.
-- The thumb's travel flips in right-to-left layouts.
+### Switch
+
+The switch track and its sliding thumb.
+
+<OnlyBase base="base radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"sm" \| "default"` | `"default"` |
+| `checked` | `boolean` | — |
+| `defaultChecked` | `boolean` | `false` |
+| `onCheckedChange` | `(checked: boolean) => void` | — |
+| `disabled` | `boolean` | `false` |
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"sm" \| "default"` | `"default"` |
+| `isSelected` | `boolean` | — |
+| `defaultSelected` | `boolean` | `false` |
+| `onChange` | `(isSelected: boolean) => void` | — |
+| `isDisabled` | `boolean` | `false` |
+| `isInvalid` | `boolean` | `false` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base radix">
+
+Use `defaultChecked` for an uncontrolled switch, or `checked` with `onCheckedChange` to control it. `onCheckedChange` is called when the switch is toggled.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+Use `defaultSelected` for an uncontrolled switch, or `isSelected` with `onChange` to control it. `onChange` is called when the switch is toggled.
+
+</OnlyBase>
+
+A transparent hit area extends around the track to make it easier to tap, and the thumb's travel flips in right-to-left layouts. The parts set `data-slot="switch"` and `data-slot="switch-thumb"`, plus `data-size` and the primitive's state attributes, for styling.
 
 </Only>
 
@@ -168,9 +187,13 @@ Also accepts the props of the primitive part it wraps.
 
 </Only>
 
-Use a switch for settings that take effect immediately. For choices that are submitted later, use Checkbox.
+Use a switch for settings that take effect immediately. For choices that are submitted later, use Checkbox. The switch has a hit slop around it, so it is easier to press than its visual size.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -214,7 +237,9 @@ npx @esuiss/ui@latest add switch --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -222,7 +247,7 @@ npx @esuiss/ui@latest add switch --platform kotlin
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
@@ -246,17 +271,17 @@ npx expo install cn react-native-reanimated react-native-worklets
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/switch.tsx`:
+3. Copy and paste the following code into `components/ui/switch.tsx`:
 
 <ComponentSource path="uniwind/components/ui/switch.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-reanimated react-native-worklets
@@ -280,17 +305,17 @@ npx expo install cn react-native-reanimated react-native-worklets
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/switch.tsx`:
+3. Copy and paste the following code into `components/ui/switch.tsx`:
 
 <ComponentSource path="nativewind/components/ui/switch.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-reanimated react-native-worklets
@@ -314,11 +339,11 @@ npx expo install react-native-reanimated react-native-worklets
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/switch.tsx`:
+3. Copy and paste the following code into `components/ui/switch.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/switch.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -405,6 +430,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -489,16 +518,6 @@ fun SwitchDemo(initial: Boolean) {
 
 </Only>
 
-<Only platform="rn">
-
-Use `defaultChecked` for an uncontrolled switch, or `checked` with `onCheckedChange` to control it.
-
-A switch has no visible text of its own. Pair it with a `Label` and link them with `accessibilityLabelledBy` and the label's `nativeID`, or set an `accessibilityLabel`. Give the `Label` an `onPress` that toggles the value if the label should be pressable too.
-
-</Only>
-
-The switch has a hit slop around it, so it is easier to press than its visual size.
-
 ## Examples
 
 ### Checked
@@ -509,7 +528,7 @@ A switch that starts on.
 
 ### Sizes
 
-The `sm` and `default` sizes side by side.
+Set `size` to `sm` or `default`; the example shows both side by side.
 
 <NativeExample name="switch-sizes" />
 
@@ -533,74 +552,9 @@ Disabled switches in the off and on states.
 
 ### Invalid
 
-A switch with the `invalid` border next to its label.
+Set `invalid` to add a destructive border; the example shows the switch next to its label.
 
 <NativeExample name="switch-invalid" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### Switch
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `SwitchSize` | `"default"` | `default` or `sm`. |
-| `invalid` | `boolean` | - | Adds a destructive border when not disabled. |
-
-Also accepts the props of `React.ComponentProps<typeof SwitchPrimitives.Root>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### .toggleStyle(.switch)
-
-Style that creates `SwitchStyle`.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `SwitchStyle.Size`: `.default` \| `.sm` | - | Sets the switch size: `default` or the smaller `sm`. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### SwitchSize
-
-Values: `Default`, `Sm`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### Switch
-
-The switch track and its sliding thumb.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `checked` | `Boolean` | - | The controlled state. Pass it with `onCheckedChange`. |
-| `onCheckedChange` | `((Boolean) -> Unit)?` | - | Called when the switch is toggled. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `size` | `SwitchSize`: `Default` \| `Sm` | `SwitchSize.Default` | Sets the switch size: `default` or the smaller `sm`. |
-| `enabled` | `Boolean` | `LocalFieldState.current.enabled` | Whether it responds to input. |
-| `invalid` | `Boolean` | `LocalFieldState.current.invalid` | Adds a destructive border when not disabled. |
-| `interactionSource` | `MutableInteractionSource?` | `null` | - |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -611,11 +565,60 @@ The switch track and its sliding thumb.
 - Label every switch with `accessibilityLabel` or `accessibilityLabelledBy`.
 - The thumb animation follows the system reduce motion setting.
 
-## Notes
+</Only>
 
-- The track uses `bg-primary` when on and `bg-input` when off, with `opacity-50` when disabled.
-- The thumb uses `bg-background`, or `bg-foreground` in dark mode.
-- Light and dark colors follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### Switch
+
+The switch track and its sliding thumb.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `SwitchSize` | `"default"` |
+| `invalid` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<typeof SwitchPrimitives.Root>`.
+
+Use `defaultChecked` for an uncontrolled switch, or `checked` with `onCheckedChange` to control it. `invalid` adds a destructive border when the switch is not disabled. A disabled switch is shown at `opacity-50`.
+
+A switch has no visible text of its own. Pair it with a `Label` and link them with `accessibilityLabelledBy` and the label's `nativeID`, or set an `accessibilityLabel`. Give the `Label` an `onPress` that toggles the value if the label should be pressable too.
+
+</Only>
+
+<Only platform="swift">
+
+### .toggleStyle(.switch)
+
+Style that creates `SwitchStyle`.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `size` | `SwitchStyle.Size`: `.default` \| `.sm` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### SwitchSize
+
+Values: `Default`, `Sm`.
+
+### Switch
+
+The switch track and its sliding thumb.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `checked` | `Boolean` | - |
+| `onCheckedChange` | `((Boolean) -> Unit)?` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `size` | `SwitchSize`: `Default` \| `Sm` | `SwitchSize.Default` |
+| `enabled` | `Boolean` | `LocalFieldState.current.enabled` |
+| `invalid` | `Boolean` | `LocalFieldState.current.invalid` |
+| `interactionSource` | `MutableInteractionSource?` | `null` |
 
 </Only>
 

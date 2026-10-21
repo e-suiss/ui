@@ -19,6 +19,10 @@ Use it for forms and other screens with text fields that would otherwise end up 
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -61,7 +65,9 @@ npx @esuiss/ui@latest add keyboard-scroll-view --platform kotlin
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -69,7 +75,7 @@ npx @esuiss/ui@latest add keyboard-scroll-view --platform kotlin
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -81,17 +87,17 @@ npx expo install cn
 
 <ComponentSource path="uniwind/components/primitives/keyboard.ts" plain />
 
-3. Copy the source into `components/ui/keyboard-scroll-view.tsx`:
+3. Copy and paste the following code into `components/ui/keyboard-scroll-view.tsx`:
 
 <ComponentSource path="uniwind/components/ui/keyboard-scroll-view.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn
@@ -103,11 +109,11 @@ npx expo install cn
 
 <ComponentSource path="nativewind/components/primitives/keyboard.ts" plain />
 
-3. Copy the source into `components/ui/keyboard-scroll-view.tsx`:
+3. Copy and paste the following code into `components/ui/keyboard-scroll-view.tsx`:
 
 <ComponentSource path="nativewind/components/ui/keyboard-scroll-view.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -119,11 +125,11 @@ npx expo install cn
 
 <ComponentSource path="stylesheet/components/primitives/keyboard.ts" plain />
 
-2. Copy the source into `components/ui/keyboard-scroll-view.tsx`:
+2. Copy and paste the following code into `components/ui/keyboard-scroll-view.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/keyboard-scroll-view.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -187,6 +193,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -402,23 +412,13 @@ fun KeyboardScrollViewDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-Place inputs anywhere inside the view; no extra setup is needed. Set `bottomOffset` to leave more space between the focused field and the keyboard.
-
-All `ScrollView` props are passed through. By default taps on the content are handled while the keyboard is open (`keyboardShouldPersistTaps="handled"`), and dragging dismisses the keyboard.
-
-`KeyboardScrollViewContext` exposes `scrollToFocused`, which children can call to bring the focused input into view again, for example after their layout changes.
-
-</Only>
-
 ## Examples
 
 <Only platform="rn">
 
 ### Larger bottom offset
 
-Keeps the focused field 64 points above the keyboard.
+Set `bottomOffset` to `64` to keep the focused field 64 points above the keyboard.
 
 <NativeExample name="keyboard-scroll-view-larger-bottom-offset" />
 
@@ -448,69 +448,56 @@ The React Native tab shows 1 more example.
 
 </Only>
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### KeyboardScrollView
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `bottomOffset` | `number` | `16` | Space kept between the focused input and the keyboard. Defaults to `16`. |
-
-Also accepts the props of `ScrollViewProps`, `React.RefAttributes<ScrollView>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### KeyboardScrollView
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showsIndicators` | `Bool` | `true` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### KeyboardScrollView
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `state` | `ScrollState` | `rememberScrollState()` | - |
-| `contentPadding` | `PaddingValues` | `PaddingValues(0.dp)` | - |
-| `verticalArrangement` | `Arrangement.Vertical` | `Arrangement.Top` | - |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
 
 - The view is a standard `ScrollView`, so screen reader scrolling works as usual.
 
-## Notes
+</Only>
 
-- `keyboardDismissMode` defaults to `interactive` on iOS and `on-drag` on Android.
-- After a touch while the keyboard is open, the view checks the focused input again after a short delay.
-- The view fills its parent with `flex-1`.
-- Only an input that is inside the visible frame of the scroll view is adjusted; inputs scrolled out of view are left alone.
+## API Reference
+
+<Only platform="rn">
+
+### KeyboardScrollView
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `bottomOffset` | `number` | `16` |
+
+Also accepts the props of `ScrollViewProps`, `React.RefAttributes<ScrollView>`.
+
+Place inputs anywhere inside the view; no extra setup is needed. `bottomOffset` is the space kept between the focused input and the keyboard. Only an input inside the visible frame of the scroll view is adjusted; inputs scrolled out of view are left alone. After a touch while the keyboard is open, the view checks the focused input again after a short delay.
+
+All `ScrollView` props are passed through. By default taps on the content are handled while the keyboard is open (`keyboardShouldPersistTaps="handled"`), and `keyboardDismissMode` is `interactive` on iOS and `on-drag` on Android. The view fills its parent with `flex-1`.
+
+`KeyboardScrollViewContext` exposes `scrollToFocused`, which children can call to bring the focused input into view again, for example after their layout changes.
+
+</Only>
+
+<Only platform="swift">
+
+### KeyboardScrollView
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `showsIndicators` | `Bool` | `true` |
+| `content` | `() -> Content` | - |
+
+</Only>
+
+<Only platform="kotlin">
+
+### KeyboardScrollView
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `state` | `ScrollState` | `rememberScrollState()` |
+| `contentPadding` | `PaddingValues` | `PaddingValues(0.dp)` |
+| `verticalArrangement` | `Arrangement.Vertical` | `Arrangement.Top` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
 
 </Only>
 

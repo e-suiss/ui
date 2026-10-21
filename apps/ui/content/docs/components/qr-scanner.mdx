@@ -17,11 +17,15 @@ platforms: [rn, swift, kotlin]
 
 <Only platform="rn swift">
 
-The frame size defaults to 66% of the shorter side, capped at 260 points. It is centered horizontally and sits slightly above the vertical center. A `title` sits above the frame and a `description` below it; the flashlight button sits near the bottom edge.
+The frame size defaults to 66% of the shorter side, capped at 260 points. It is centered horizontally and sits slightly above the vertical center. A `title` sits above the frame and a `description` below it; the flashlight button sits near the bottom edge. The `QRScannerState` type is also exported.
 
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -71,7 +75,9 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -79,7 +85,7 @@ The CLI also adds what it builds on: [Icon](/docs/components/icon), [Text](/docs
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -97,17 +103,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/primitives/hooks.ts" plain />
 
-5. Copy the source into `components/ui/qr-scanner.tsx`:
+5. Copy and paste the following code into `components/ui/qr-scanner.tsx`:
 
 <ComponentSource path="uniwind/components/ui/qr-scanner.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -125,17 +131,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/primitives/hooks.ts" plain />
 
-5. Copy the source into `components/ui/qr-scanner.tsx`:
+5. Copy and paste the following code into `components/ui/qr-scanner.tsx`:
 
 <ComponentSource path="nativewind/components/ui/qr-scanner.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -153,11 +159,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/primitives/hooks.ts" plain />
 
-5. Copy the source into `components/ui/qr-scanner.tsx`:
+5. Copy and paste the following code into `components/ui/qr-scanner.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/qr-scanner.tsx" />
 
-6. Update the import paths to match your project.
+6. Update the import paths to match your project setup.
 
 </div>
 
@@ -272,6 +278,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -688,131 +698,31 @@ fun QrScannerDemo(
 
 </Only>
 
-<Only platform="rn">
-
-Render your camera view as `children` and size the scanner with `className`. When there are no children, the background falls back to `bg-black`.
-
-Set `state` to `success` or `error` after you read a code. The brackets fade to a matching color, `success` springs the frame slightly smaller and `error` shakes it. Pass `onTorchToggle` together with a controlled `torch` value to show the flashlight button; leave it out to hide the button. `title` and `description` accept strings or your own elements.
-
-</Only>
-
-<Only platform="rn swift">
-
-The `QRScannerState` type is also exported.
-
-</Only>
-
 ## Examples
 
 ### Success
 
-The `success` state with green brackets and a slightly smaller frame.
+Set `state` to `success` after you read a code. The brackets turn green and the frame springs slightly smaller.
 
 <NativeExample name="qr-scanner-success" />
 
 ### Error
 
-The `error` state, which shakes the frame and turns the brackets red.
+Set `state` to `error` to shake the frame and turn the brackets red.
 
 <NativeExample name="qr-scanner-error-state" />
 
 ### With scan line
 
-The scanner with `scanLine` turned on.
+Set `scanLine` to move a line up and down inside the frame while the state is `idle`.
 
 <NativeExample name="qr-scanner-with-scan-line" />
 
 ### Without torch
 
-A title and description with no flashlight button, because `onTorchToggle` is not passed.
+Leave out `onTorchToggle` to hide the flashlight button. This scanner shows only a title and description.
 
 <NativeExample name="qr-scanner-without-torch" />
-
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### QRScanner
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `state` | `QRScannerState` | `"idle"` | `idle`, `success` or `error`. Sets the bracket color and triggers haptics, the success scale and the error shake. Defaults to `idle`. |
-| `title` | `React.ReactNode` | - | Content shown above the frame. Strings are wrapped in a `Text`. |
-| `description` | `React.ReactNode` | - | Content shown below the frame. Strings are wrapped in a `Text`. |
-| `scanLine` | `boolean` | `false` | Shows the animated scan line while the state is `idle`. Defaults to `false`. |
-| `torch` | `boolean` | `false` | Whether the flashlight is on. The button fills and the icon uses the fill weight when on. Defaults to `false`. |
-| `onTorchToggle` | `(torch: boolean) => void` | - | Called with the next torch value when the flashlight button is pressed. The button is shown only when this is set. |
-| `torchLabel` | `string` | `"Flashlight"` | Accessibility label for the flashlight button. Defaults to `"Flashlight"`. |
-| `frameSize` | `number` | - | Side length of the scan frame in points. Overrides the automatic size. |
-
-Also accepts the props of `React.ComponentProps<typeof View>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### QRScannerState
-
-Values: `.idle`, `.success`, `.error`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### QRScanner
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `state` | `QRScannerState`: `.idle` \| `.success` \| `.error` | `.idle` | `idle`, `success` or `error`. Sets the bracket color and triggers haptics, the success scale and the error shake. |
-| `title` | `LocalizedStringKey?` | `nil` | Content shown above the frame. Strings are wrapped in a `Text`. |
-| `hint` | `LocalizedStringKey?` | `nil` | - |
-| `scanLine` | `Bool` | `false` | Shows the animated scan line while the state is `idle`. |
-| `isTorchOn` | `Bool` | `false` | - |
-| `onTorchToggle` | `(() -> Void)?` | `nil` | Called with the next torch value when the flashlight button is pressed. The button is shown only when this is set. |
-| `frameSize` | `CGFloat?` | `nil` | Side length of the scan frame in points. Overrides the automatic size. |
-| `preview` | `() -> Preview` | - | - |
-
-Overloads: `init(state:title:hint:scanLine:isTorchOn:onTorchToggle:frameSize:preview:)`, `init(state:title:hint:scanLine:isTorchOn:onTorchToggle:frameSize:)`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### QrScannerState
-
-Values: `Idle`, `Success`, `Error`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### QrScanner
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `state` | `QrScannerState`: `Idle` \| `Success` \| `Error` | `QrScannerState.Idle` | `idle`, `success` or `error`. Sets the bracket color and triggers haptics, the success scale and the error shake. |
-| `title` | `String?` | `null` | Content shown above the frame. Strings are wrapped in a `Text`. |
-| `hint` | `String?` | `null` | - |
-| `scanLine` | `Boolean` | `false` | Shows the animated scan line while the state is `idle`. |
-| `torch` | `Boolean` | `false` | Whether the flashlight is on. The button fills and the icon uses the fill weight when on. |
-| `onTorchToggle` | `((Boolean) -> Unit)?` | `null` | Called with the next torch value when the flashlight button is pressed. The button is shown only when this is set. |
-| `frameSize` | `Dp?` | `null` | Side length of the scan frame in points. Overrides the automatic size. |
-| `content` | `@Composable BoxScope.() -> Unit` | `{}` | The content. |
-
-</ApiPart>
-
-</Only>
 
 <Only platform="rn">
 
@@ -824,10 +734,81 @@ Values: `Idle`, `Success`, `Error`.
 - State changes to `success` and `error` play a matching haptic notification when a haptics adapter is provided through `HapticsContext`.
 - The shake and scan-line animations respect the system reduce motion setting, and the success scale is skipped when reduce motion is on.
 
-## Notes
+</Only>
 
-- Uses the `bg-black`, `text-black/50`, `text-white`, `text-green-600 dark:text-green-400`, `text-destructive` and `bg-primary` tokens; the flashlight button uses `bg-black/50` when off and `bg-white` with a `text-black` icon when on.
-- The scan line restarts whenever the state returns to `idle`.
+## API Reference
+
+<Only platform="rn">
+
+### QRScanner
+
+The camera overlay with the scan frame, its labels and the flashlight button.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `state` | `QRScannerState` | `"idle"` |
+| `title` | `React.ReactNode` | - |
+| `description` | `React.ReactNode` | - |
+| `scanLine` | `boolean` | `false` |
+| `torch` | `boolean` | `false` |
+| `onTorchToggle` | `(torch: boolean) => void` | - |
+| `torchLabel` | `string` | `"Flashlight"` |
+| `frameSize` | `number` | - |
+
+Also accepts the props of `React.ComponentProps<typeof View>`.
+
+Render your camera view as `children` and size the scanner with `className`. When there are no children, the background falls back to `bg-black`.
+
+`state` sets the bracket color and triggers haptics, the success scale and the error shake. The scan line restarts whenever the state returns to `idle`. `title` and `description` accept strings, which are wrapped in a `Text`, or your own elements. `frameSize` is the side length of the scan frame in points and overrides the automatic size.
+
+Pass `onTorchToggle` together with a controlled `torch` value to show the flashlight button; it is called with the next torch value when the button is pressed. When `torch` is on, the button fills white with a black icon in the fill weight. `torchLabel` is the button's accessibility label.
+
+</Only>
+
+<Only platform="swift">
+
+### QRScannerState
+
+Values: `.idle`, `.success`, `.error`.
+
+### QRScanner
+
+The camera overlay with the scan frame, its labels and the flashlight button.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `state` | `QRScannerState`: `.idle` \| `.success` \| `.error` | `.idle` |
+| `title` | `LocalizedStringKey?` | `nil` |
+| `hint` | `LocalizedStringKey?` | `nil` |
+| `scanLine` | `Bool` | `false` |
+| `isTorchOn` | `Bool` | `false` |
+| `onTorchToggle` | `(() -> Void)?` | `nil` |
+| `frameSize` | `CGFloat?` | `nil` |
+| `preview` | `() -> Preview` | - |
+
+Overloads: `init(state:title:hint:scanLine:isTorchOn:onTorchToggle:frameSize:preview:)`, `init(state:title:hint:scanLine:isTorchOn:onTorchToggle:frameSize:)`.
+
+</Only>
+
+<Only platform="kotlin">
+
+### QrScannerState
+
+Values: `Idle`, `Success`, `Error`.
+
+### QrScanner
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `state` | `QrScannerState`: `Idle` \| `Success` \| `Error` | `QrScannerState.Idle` |
+| `title` | `String?` | `null` |
+| `hint` | `String?` | `null` |
+| `scanLine` | `Boolean` | `false` |
+| `torch` | `Boolean` | `false` |
+| `onTorchToggle` | `((Boolean) -> Unit)?` | `null` |
+| `frameSize` | `Dp?` | `null` |
+| `content` | `@Composable BoxScope.() -> Unit` | `{}` |
 
 </Only>
 

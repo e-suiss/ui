@@ -14,9 +14,9 @@ const ONLY_OPEN = /^<Only platform="([^"]*)">$/
 const ONLY_BASE_OPEN = /^<OnlyBase base="([^"]*)">$/
 const ONLY_STYLING_OPEN = /^<OnlyStyling styling="([^"]*)">$/
 const TABS_OPEN = /^<Tabs\b(.*)>$/
-const BLOCK_OPEN = /^<(NativeExample|ApiPart|Callout|Anatomy)\b([^>]*)>$/
+const BLOCK_OPEN = /^<(NativeExample|Callout)\b([^>]*)>$/
 const FIRST_CHAR = /^./
-const BLOCK_CLOSE = /^<\/(NativeExample|ApiPart|Callout|Anatomy)>$/
+const BLOCK_CLOSE = /^<\/(NativeExample|Callout)>$/
 const HEADING_ANCHOR = /^(#{1,6} .*?) \[#[^\]]+\]$/
 const RELATIVE_LINK = /\]\((\/[^)\s]*)\)/g
 
@@ -34,7 +34,6 @@ const COMPONENT_SOURCE = /<ComponentSource path="([^"]+)"[^>]*\/>/g
 const COMPONENT_PREVIEW = /^<ComponentPreview\b([^>]*?)\/>$/gm
 const NATIVE_EXAMPLE = /^<NativeExample name="([^"]+)"[^>]*\/>$/gm
 const NATIVE_OPEN = /^<NativeExample name="([^"]+)"/
-const ANATOMY_ITEM = /^(\s*)[-*] (?:\[([^\]]+)\]\([^)]*\)|(.+))$/
 
 const repositoryRoot = path.join(process.cwd(), "../..")
 
@@ -186,8 +185,7 @@ function cleanMarkdown(body: string, full: boolean) {
   const scopes: string[] = []
   let fence = false
   let indent = 0
-  let labels: string[] = []
-  let anatomy = false
+  const tabs: string[][] = []
   let otherBase = false
   let pending: string | undefined
   let bare = -1
@@ -268,23 +266,29 @@ function cleanMarkdown(body: string, full: boolean) {
       close()
       continue
     }
-    const tabs = trimmed.match(TABS_OPEN)
-    if (tabs) {
-      labels = [...tabs[1].matchAll(/&quot;([^&]*)&quot;|"([^"]*)"/g)]
-        .map((match) => decode(match[1] ?? match[2]))
-        .filter((label) => label !== "items")
+    const tabsOpen = trimmed.match(TABS_OPEN)
+    if (tabsOpen) {
+      tabs.push(
+        [...tabsOpen[1].matchAll(/&quot;([^&]*)&quot;|"([^"]*)"/g)]
+          .map((match) => decode(match[1] ?? match[2]))
+          .filter((label) => label !== "items")
+      )
       continue
     }
-    if (trimmed === "</Tabs>" || trimmed === "</div>") continue
+    if (trimmed === "</Tabs>") {
+      tabs.pop()
+      continue
+    }
+    if (trimmed === "</div>") continue
     if (trimmed === "<div>") {
-      if (labels.length) emit(`**${labels.shift()}**`, "")
+      const label = tabs.at(-1)?.shift()
+      if (label) emit(`**${label}**`, "")
       continue
     }
     const open = trimmed.match(BLOCK_OPEN)
     if (open) {
       if (open[1] === "NativeExample")
         emit(previewImage(trimmed.match(NATIVE_OPEN)?.[1] ?? ""), "")
-      anatomy = open[1] === "Anatomy"
       if (open[1] === "Callout")
         emit(
           `> **${(attr(open[2], "type") ?? "note").replace(FIRST_CHAR, (c) => c.toUpperCase())}:**`
@@ -294,12 +298,9 @@ function cleanMarkdown(body: string, full: boolean) {
     }
     if (BLOCK_CLOSE.test(trimmed)) {
       indent = Math.max(0, indent - 2)
-      anatomy = false
       continue
     }
-    const item = anatomy ? line.match(ANATOMY_ITEM) : null
-    if (item) emit(`${item[1]}- \`${(item[2] ?? item[3] ?? "").trim()}\``)
-    else if (trimmed.startsWith("<RegistryIndex")) emit(registryIndex(trimmed))
+    if (trimmed.startsWith("<RegistryIndex")) emit(registryIndex(trimmed))
     else
       emit(
         line

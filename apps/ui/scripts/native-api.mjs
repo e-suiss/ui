@@ -12,13 +12,13 @@ const SOURCES = {
 const NATIVE_SECTION = '<Only platform="rn swift kotlin">'
 const API_HEADING = "## API Reference"
 const PLATFORMS = { swift: "SwiftUI", kotlin: "Compose" }
-const PARAMETERS =
-  "| Parameter | Type | Default | Description |\n| --- | --- | --- | --- |"
+const PARAMETERS = "| Parameter | Type | Default |\n| --- | --- | --- |"
 const PROPERTIES = "| Property | Type |\n| --- | --- |"
 const VARIANTS = "| Value | Parameters |\n| --- | --- |"
 const SOURCE_PATH = /<ComponentSource path="((?:swift|kotlin)\/[^"]+)"/g
 const PART_HEADING = /^### (.+)$/
-const TABLE_ROW = /^\| `([^`]+)` \|.*\| ([^|]*) \|$/
+const RN_PART = /^### /m
+const LEADING_NEWLINES = /^\n+/
 const ONLY_TAG = /<Only platform="[^"]*">|<\/Only>/g
 const ONLY_BASE = /<OnlyBase base="([^"]*)">[\s\S]*?<\/OnlyBase>/g
 const SWIFT_DECLARATION =
@@ -82,7 +82,6 @@ const ARGUMENTS = /\(.*$/
 const PIPE = /\|/g
 const WHITESPACE_RUN = /\s+/g
 const OPTIONAL = /\?$/
-const HANDLER = /^on[A-Z]/
 const LEADING_DOT = /^\./
 const NAME_END = /[.(]/
 const THEME_PATH = /\/(Theme|theme)\//
@@ -90,30 +89,6 @@ const EXTENSION = /\.\w+$/
 const QUOTED = /"([^"]*)"/
 const TITLE = /^title:\s*(.+)$/m
 const QUOTES = /["']/g
-
-const COMMON = {
-  modifier: "Modifier applied to the root.",
-  content: "The content.",
-  label: "The label.",
-  title: "The title text.",
-  description: "The supporting text.",
-  text: "The text.",
-  verbatim: "The text, shown as written.",
-  onClick: "Called when it is tapped.",
-  action: "Called when it is tapped.",
-  enabled: "Whether it responds to input.",
-  isPresented: "Whether it is shown.",
-  onDismissRequest: "Called when it should close.",
-  onDismiss: "Called when it closes.",
-  onOpenChange: "Called when it opens or closes.",
-  value: "The current value.",
-  onValueChange: "Called when the value changes.",
-  selection: "The selected value.",
-  placeholder: "Text shown while it is empty.",
-  icon: "The icon.",
-  leading: "Content before the main content.",
-  trailing: "Content after the main content.",
-}
 
 function matching(text, open) {
   const pairs = { "(": ")", "{": "}", "[": "]", "<": ">" }
@@ -735,50 +710,8 @@ function clean(description) {
   return text
 }
 
-const NUMERIC_TYPE = /\b(?:Int|Double|Float|CGFloat|Long|Dp|TimeInterval)\b/
-const BOOLEAN_TYPE = /\bBool(?:ean)?\b/
-const STRING_TYPE = /\bString\b/
-const NULL_WORD = /\bnull\b/
-const NUMBER_WORDS = /\bnumber sets\b/i
-const BOOLEAN_LITERAL = /`true`|`false`/
-const STRING_WORD = /\bstring\b/i
-const MILLISECONDS = /millisecond|\bms\b/i
-const WEB_ONLY =
-  /promise|\bchildren\b|\bnode\b|`(?:bg|text|border)-|details|\{ ?\w+|\barray\b|\bweb\b|desktop|\bTailwind\b/i
-
-function fits(text, row, platform) {
-  if (WEB_ONLY.test(text)) return false
-  if (MILLISECONDS.test(text) && !row.key.includes("Millis")) return false
-  if (platform === "swift" && NULL_WORD.test(text)) return false
-  if (NUMBER_WORDS.test(text) && !NUMERIC_TYPE.test(row.type)) return false
-  if (BOOLEAN_LITERAL.test(text) && !BOOLEAN_TYPE.test(row.type)) return false
-  if (STRING_WORD.test(text) && !STRING_TYPE.test(row.type)) return false
-  return true
-}
-
-function describe(row, item, references, platform) {
-  if (!item.view && item.kind !== "modifier" && item.kind !== "style")
-    return "-"
-  const callback = row.key === "action" || HANDLER.test(row.key)
-  if (callback && !row.type.includes("->")) return "-"
-  const owner = baseName(item)
-  const names = [row.key, row.name]
-  if (row.key === "onClick" || row.key === "action") names.push("onPress")
-  for (const reference of references) {
-    for (const scope of [reference.byPart.get(owner), reference.props]) {
-      for (const name of names) {
-        const found = clean(scope?.get(name))
-        if (found && fits(found, row, platform)) return found
-      }
-    }
-  }
-  return COMMON[row.key] ?? "-"
-}
-
 function reference(api) {
   const parts = new Map()
-  const props = new Map()
-  const byPart = new Map()
   let current = null
   let expectSummary = false
   for (const line of api.split("\n")) {
@@ -786,7 +719,6 @@ function reference(api) {
     if (heading) {
       current = heading[1].trim()
       parts.set(current, "")
-      byPart.set(current, new Map())
       expectSummary = true
       continue
     }
@@ -801,13 +733,8 @@ function reference(api) {
       continue
     }
     if (line.startsWith("|")) expectSummary = false
-    const row = line.match(TABLE_ROW)
-    if (row && row[1] !== "Prop" && row[2].trim() && row[2].trim() !== "-") {
-      if (!props.has(row[1])) props.set(row[1], row[2].trim())
-      if (current) byPart.get(current).set(row[1], row[2].trim())
-    }
   }
-  return { parts, props, byPart }
+  return { parts }
 }
 
 function baseName(item) {
@@ -849,7 +776,6 @@ function variantsTable(item, platform) {
 
 function render(platform, parsed, references) {
   const blocks = []
-  let index = 0
   for (const item of parsed.parts) {
     const rows = merge(item.signatures)
     if (
@@ -859,8 +785,7 @@ function render(platform, parsed, references) {
     )
       continue
     if (item.kind === "enum" && item.cases.length === 0) continue
-    index++
-    const lines = [`<ApiPart index={${index}}>`, "", `### ${item.name}`, ""]
+    const lines = [`### ${item.name}`, ""]
     const summary = summaryOf(item, references)
     if (summary) lines.push(summary, "")
     if (item.receiver) lines.push(`Receiver: ${code(item.receiver)}.`, "")
@@ -872,7 +797,7 @@ function render(platform, parsed, references) {
       lines.push(PARAMETERS)
       for (const row of rows) {
         lines.push(
-          `| ${code(row.name).replace("_ ", "_\u00a0")} | ${typeCell(row.type, parsed, item.name, platform)} | ${row.fallback ? code(row.fallback) : "-"} | ${escapePipes(describe(row, item, references, platform))} |`
+          `| ${code(row.name).replace("_ ", "_\u00a0")} | ${typeCell(row.type, parsed, item.name, platform)} | ${row.fallback ? code(row.fallback) : "-"} |`
         )
       }
       lines.push("")
@@ -887,8 +812,7 @@ function render(platform, parsed, references) {
       }
       lines.push("")
     }
-    lines.push("</ApiPart>")
-    blocks.push(lines.join("\n"))
+    blocks.push(lines.join("\n").trimEnd())
   }
   if (blocks.length === 0) return null
   return `<Only platform="${platform}">\n\n${blocks.join("\n\n")}\n\n</Only>`
@@ -991,7 +915,7 @@ async function generate(file, report) {
   const split = splitApi(native)
   if (!split) return null
   const rnApi = rnPart(split.api)
-  if (!rnApi.includes("<ApiPart")) return null
+  if (!RN_PART.test(rnApi)) return null
   const name = path.relative(DOCS, file)
   const title = source.match(TITLE)?.[1].replace(QUOTES, "").trim() ?? ""
   const web = webApi(source, nativeStart)
@@ -1021,8 +945,8 @@ async function generate(file, report) {
     if (block) sections.push(block)
     else report.push(`${name}: no public ${platform} API in ${relative}`)
   }
-  const api = `\n${sections.join("\n\n")}\n`
-  return `${source.slice(0, nativeStart)}${split.before}${api}${split.after}${source.slice(nativeEnd)}`
+  const api = `\n${sections.join("\n\n")}\n\n`
+  return `${source.slice(0, nativeStart)}${split.before}${api}${split.after.replace(LEADING_NEWLINES, "")}${source.slice(nativeEnd)}`
 }
 
 const { values } = parseArgs({ options: { check: { type: "boolean" } } })

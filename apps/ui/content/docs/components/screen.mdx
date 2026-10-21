@@ -19,6 +19,10 @@ platforms: [rn, swift, kotlin]
 
 ## Installation
 
+<Tabs items={["Command","Manual"]}>
+
+<div>
+
 <Only platform="rn">
 
 ```bash title="Terminal"
@@ -67,7 +71,9 @@ The CLI also adds what it builds on: [Keyboard Scroll View](/docs/components/key
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -75,7 +81,7 @@ The CLI also adds what it builds on: [Keyboard Scroll View](/docs/components/key
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-safe-area-context
@@ -83,17 +89,17 @@ npx expo install cn react-native-safe-area-context
 
 2. Add the pieces it builds on: [Keyboard Scroll View](/docs/components/keyboard-scroll-view).
 
-3. Copy the source into `components/ui/screen.tsx`:
+3. Copy and paste the following code into `components/ui/screen.tsx`:
 
 <ComponentSource path="uniwind/components/ui/screen.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn react-native-safe-area-context
@@ -101,17 +107,17 @@ npx expo install cn react-native-safe-area-context
 
 2. Add the pieces it builds on: [Keyboard Scroll View](/docs/components/keyboard-scroll-view).
 
-3. Copy the source into `components/ui/screen.tsx`:
+3. Copy and paste the following code into `components/ui/screen.tsx`:
 
 <ComponentSource path="nativewind/components/ui/screen.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install react-native-safe-area-context
@@ -119,11 +125,11 @@ npx expo install react-native-safe-area-context
 
 2. Add the pieces it builds on: [Keyboard Scroll View](/docs/components/keyboard-scroll-view).
 
-3. Copy the source into `components/ui/screen.tsx`:
+3. Copy and paste the following code into `components/ui/screen.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/screen.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -187,6 +193,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -344,33 +354,23 @@ fun ScreenDefault() {
 
 </Only>
 
-<Only platform="rn">
-
-Wrap each screen in `Screen` and put the body in `ScreenContent`. Use `variant="secondary"` for grouped screens such as settings.
-
-Pass `edges` to pad only some sides, for example `["top"]` when a tab bar or bottom bar handles the bottom inset. Set `scrollable` on `ScreenContent` for content taller than the screen or for forms.
-
-The app must be wrapped in a `SafeAreaProvider` from `react-native-safe-area-context`. `ScreenContext` exposes the active `edges` to children.
-
-</Only>
-
 ## Examples
 
 ### Secondary
 
-A screen with the `secondary` background.
+A screen with the `secondary` background, for grouped screens such as settings.
 
 <NativeExample name="screen-secondary" />
 
 ### Scrollable
 
-A screen whose content scrolls.
+A screen whose content scrolls, for content taller than the screen or for forms.
 
 <NativeExample name="screen-scrollable" />
 
 ### Top edge only
 
-A screen that pads only the top inset.
+A screen that pads only the top inset, for when a tab bar or bottom bar handles the bottom inset.
 
 <NativeExample name="screen-top-edge-only" />
 
@@ -384,127 +384,89 @@ A scrollable form with a bottom bar holding the main action.
 
 <Only platform="rn">
 
-<ApiPart index={1}>
-
 ### Screen
 
 The root view that pads for safe area insets.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `edges` | `readonly ScreenEdge[]` | `ALL_EDGES` | Which sides get safe area padding: any of `top`, `right`, `bottom`, `left`. Defaults to all four. |
-| `variant` | `"default" \| "secondary"` | `"default"` | Background: `default` or `secondary`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `edges` | `readonly ScreenEdge[]` | `ALL_EDGES` |
+| `variant` | `"default" \| "secondary"` | `"default"` |
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+`edges` lists the sides that get safe area padding: any of `top`, `right`, `bottom` and `left`, all four by default. The status bar uses `light-content` in dark mode and `dark-content` in light mode, following the system appearance. The app must be wrapped in a `SafeAreaProvider` from `react-native-safe-area-context`. `ScreenContext` exposes the active `edges` to children.
 
 ### ScreenContent
 
 The padded body, optionally scrollable.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `scrollable` | `boolean` | `false` | Renders a `KeyboardScrollView` instead of a `View`. Defaults to `false`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `scrollable` | `boolean` | `false` |
 
 Also accepts the props of `ViewProps`.
 
-</ApiPart>
+`scrollable` renders a `KeyboardScrollView` instead of a `View`, so it needs the Keyboard Scroll View component.
 
 </Only>
 
 <Only platform="swift">
 
-<ApiPart index={1}>
-
 ### Screen
 
 The root view that pads for safe area insets.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `edges` | `Edge.Set` | `.all` | Which sides get safe area padding: any of `top`, `right`, `bottom`, `left`. |
-| `background` | `Background`: `.background` \| `.muted` | `.background` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `edges` | `Edge.Set` | `.all` |
+| `background` | `Background`: `.background` \| `.muted` | `.background` |
+| `content` | `() -> Content` | - |
 
 ### ScreenContent
 
 The padded body, optionally scrollable.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `scroll` | `Bool` | `true` | - |
-| `padded` | `Bool` | `true` | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `scroll` | `Bool` | `true` |
+| `padded` | `Bool` | `true` |
+| `content` | `() -> Content` | - |
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### ScreenEdge
 
 Values: `Top`, `Bottom`, `Left`, `Right`.
-
-</ApiPart>
-
-<ApiPart index={2}>
 
 ### ScreenVariant
 
 Values: `Default`, `Secondary`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### Screen
 
 The root view that pads for safe area insets.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `edges` | `Set<ScreenEdge>` | `AllScreenEdges` | Which sides get safe area padding: any of `top`, `right`, `bottom`, `left`. |
-| `variant` | `ScreenVariant`: `Default` \| `Secondary` | `ScreenVariant.Default` | Background: `default` or `secondary`. |
-| `content` | `@Composable BoxScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `edges` | `Set<ScreenEdge>` | `AllScreenEdges` |
+| `variant` | `ScreenVariant`: `Default` \| `Secondary` | `ScreenVariant.Default` |
+| `content` | `@Composable BoxScope.() -> Unit` | - |
 
 ### ScreenContent
 
 The padded body, optionally scrollable.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `scrollable` | `Boolean` | `false` | Renders a `KeyboardScrollView` instead of a `View`. |
-| `contentPadding` | `PaddingValues` | `PaddingValues(16.dp)` | - |
-| `verticalArrangement` | `Arrangement.Vertical` | `Arrangement.spacedBy(16.dp)` | - |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Notes
-
-- Uses the `bg-background` and `bg-muted` tokens.
-- The status bar uses `light-content` in dark mode and `dark-content` in light mode, following the system appearance.
-- Requires `react-native-safe-area-context` and the Keyboard Scroll View component.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `scrollable` | `Boolean` | `false` |
+| `contentPadding` | `PaddingValues` | `PaddingValues(16.dp)` |
+| `verticalArrangement` | `Arrangement.Vertical` | `Arrangement.spacedBy(16.dp)` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
 
 </Only>
 

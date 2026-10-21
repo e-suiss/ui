@@ -15,7 +15,9 @@ Use breadcrumbs in deep hierarchies so people can see their location and move up
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/breadcrumb
@@ -27,24 +29,38 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add breadcrumb
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
 ```
 
-2. Copy the source into `components/ui/breadcrumb.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/breadcrumb.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbEllipsis } from "@/components/ui/breadcrumb"
+import {
+  Breadcrumb,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 ```
 
 ```tsx
@@ -65,157 +81,39 @@ import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbP
 </Breadcrumb>
 ```
 
-Place a `BreadcrumbSeparator` between items as its own sibling, not inside a `BreadcrumbItem`. It renders a caret by default; pass children to use a different separator.
+## Composition
 
-`BreadcrumbLink` renders an `a` by default and can render your router's link component instead.
+Use the following composition to build a `Breadcrumb`:
 
-<OnlyBase base="base">
-
-Use the `render` prop to render your router's link component: `render={<Link href="/" />}`.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-Set `asChild` on `BreadcrumbLink` and pass your router's link component as the child.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-Pass a `render` function to `BreadcrumbLink` that returns your router's link component with the props it receives.
-
-</OnlyBase>
-
-For an icon-only link, such as a home icon, add an `aria-label`.
+```text
+Breadcrumb
+└── BreadcrumbList
+    ├── BreadcrumbItem
+    │   ├── BreadcrumbLink
+    │   ├── BreadcrumbPage
+    │   └── BreadcrumbEllipsis
+    └── BreadcrumbSeparator
+```
 
 ## Examples
 
 ### With home icon
 
-Replaces the first link with a home icon and an `aria-label`.
+Replace the first link's text with a home icon. An icon-only link needs an `aria-label`.
 
 <ComponentPreview name="breadcrumb-with-home-icon" />
 
 ### With ellipsis
 
-Collapses middle levels with `BreadcrumbEllipsis`.
+Put a `BreadcrumbEllipsis` inside an item to stand in for collapsed middle levels.
 
 <ComponentPreview name="breadcrumb-with-ellipsis" />
 
 ### Custom separator
 
-Uses a slash instead of the default caret separator.
+Pass children to `BreadcrumbSeparator` to use a slash instead of the default caret.
 
 <ComponentPreview name="breadcrumb-custom-separator" />
-
-## API Reference
-
-<Anatomy>
-
-- [Breadcrumb](#breadcrumb)
-  - [BreadcrumbList](#breadcrumblist)
-    - [BreadcrumbItem](#breadcrumbitem)
-      - [BreadcrumbLink](#breadcrumblink)
-      - [BreadcrumbPage](#breadcrumbpage)
-      - [BreadcrumbEllipsis](#breadcrumbellipsis)
-    - [BreadcrumbSeparator](#breadcrumbseparator)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### Breadcrumb
-
-The `nav` landmark that wraps the trail.
-
-Also accepts the props of `React.ComponentProps<"nav">`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### BreadcrumbList
-
-The ordered list of items.
-
-Also accepts the props of `React.ComponentProps<"ol">`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### BreadcrumbItem
-
-A single step in the trail.
-
-Also accepts the props of `React.ComponentProps<"li">`.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### BreadcrumbLink
-
-A link to an ancestor page.
-
-<OnlyBase base="base">
-
-Also accepts the props of `useRender.ComponentProps<"a">`.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element instead of a `a`. |
-
-Also accepts the props of `React.ComponentProps<"a">`.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | — | Renders your own element with the link's props. |
-
-Also accepts the props of `React.ComponentProps<"a">`.
-
-</OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### BreadcrumbPage
-
-The current page, rendered as plain text.
-
-Also accepts the props of `React.ComponentProps<"span">`.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### BreadcrumbSeparator
-
-A decorative divider between items.
-
-Also accepts the props of `React.ComponentProps<"li">`.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### BreadcrumbEllipsis
-
-A placeholder for collapsed levels, with a screen-reader label.
-
-Also accepts the props of `React.ComponentProps<"span">`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -225,10 +123,84 @@ Also accepts the props of `React.ComponentProps<"span">`.
 - `BreadcrumbEllipsis` hides its icon and includes visually hidden text, `More` by default; pass children to change it.
 - Only links are in the tab order; the ellipsis and current page are skipped.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values from `breadcrumb` through `breadcrumb-ellipsis`.
-- The default caret separator flips in right-to-left layouts.
-- Ancestor links use `text-muted-foreground` and the current page uses `text-foreground`.
+### Breadcrumb
+
+The `nav` landmark that wraps the trail.
+
+Also accepts the props of `React.ComponentProps<"nav">`.
+
+### BreadcrumbList
+
+The ordered list of items.
+
+Also accepts the props of `React.ComponentProps<"ol">`.
+
+### BreadcrumbItem
+
+A single step in the trail.
+
+Also accepts the props of `React.ComponentProps<"li">`.
+
+### BreadcrumbLink
+
+A link to an ancestor page.
+
+<OnlyBase base="base">
+
+Also accepts the props of `useRender.ComponentProps<"a">`.
+
+`BreadcrumbLink` renders an `a` by default. Use the `render` prop to render your router's link component: `render={<Link href="/" />}`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
+
+Also accepts the props of `React.ComponentProps<"a">`.
+
+`BreadcrumbLink` renders an `a` by default. Set `asChild` and pass your router's link component as the child to render it instead.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `(props: React.HTMLAttributes<HTMLElement>) => React.ReactNode` | — |
+
+Also accepts the props of `React.ComponentProps<"a">`.
+
+`BreadcrumbLink` renders an `a` by default. Pass a `render` function that returns your router's link component with the props it receives.
+
+</OnlyBase>
+
+Ancestor links use `text-muted-foreground` and the current page uses `text-foreground`.
+
+### BreadcrumbPage
+
+The current page, rendered as plain text.
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+### BreadcrumbSeparator
+
+A decorative divider between items.
+
+Also accepts the props of `React.ComponentProps<"li">`.
+
+Place a `BreadcrumbSeparator` between items as its own sibling, not inside a `BreadcrumbItem`. It renders a caret by default, which flips in right-to-left layouts; pass children to use a different separator.
+
+### BreadcrumbEllipsis
+
+A placeholder for collapsed levels, with a screen-reader label.
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+Each part sets a `data-slot`, such as `breadcrumb-list` or `breadcrumb-ellipsis`, for styling.
 
 </Only>

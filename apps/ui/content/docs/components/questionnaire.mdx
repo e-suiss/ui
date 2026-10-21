@@ -15,7 +15,9 @@ platforms: [web, rn, swift, kotlin]
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/questionnaire
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add questionnaire
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
@@ -37,16 +41,36 @@ npm install @base-ui/react @phosphor-icons/react
 
 2. Add the pieces it builds on: [Button](/docs/components/button), `use-questionnaire`.
 
-3. Copy the source into `components/ui/questionnaire.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/questionnaire.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Questionnaire, QuestionnaireProgress, QuestionnaireItem, QuestionnaireTitle, QuestionnaireDescription, QuestionnaireChoices, QuestionnaireChoice, QuestionnaireChoiceDescription, QuestionnaireInput, QuestionnaireError, QuestionnaireActions, QuestionnairePrevious, QuestionnaireSkip, QuestionnaireNext, QuestionnaireSubmit } from "@/components/ui/questionnaire"
+import {
+  Questionnaire,
+  QuestionnaireActions,
+  QuestionnaireChoice,
+  QuestionnaireChoiceDescription,
+  QuestionnaireChoices,
+  QuestionnaireDescription,
+  QuestionnaireError,
+  QuestionnaireInput,
+  QuestionnaireItem,
+  QuestionnaireNext,
+  QuestionnairePrevious,
+  QuestionnaireProgress,
+  QuestionnaireSkip,
+  QuestionnaireSubmit,
+  QuestionnaireTitle,
+} from "@/components/ui/questionnaire"
 ```
 
 ```tsx
@@ -103,91 +127,93 @@ import { Questionnaire, QuestionnaireProgress, QuestionnaireItem, QuestionnaireT
 </div>
 ```
 
-Give every item a unique `name`; answers are submitted as form data under that name. The first item is shown by default. Use `defaultItem` to start elsewhere, or `item` with `onItemChange` to control the active question.
+## Composition
 
-A `required` item blocks Next and Submit until it is answered. An optional item shows the Skip button. Set `multiple` on an item to render its choices as checkboxes instead of radio buttons.
+Use the following composition to build a `Questionnaire`:
 
-Pass `items` to define the sequence, which items are required or disabled, and the order used for shortcut keys, instead of deriving them from the rendered items. Native browser validation is off by default (`noValidate`); the component runs its own validation on Next and Submit.
+```text
+Questionnaire
+├── QuestionnaireProgress
+├── QuestionnaireItem
+│   ├── QuestionnaireTitle
+│   ├── QuestionnaireDescription
+│   ├── QuestionnaireChoices
+│   │   └── QuestionnaireChoice
+│   │       └── QuestionnaireChoiceDescription
+│   ├── QuestionnaireError
+│   └── QuestionnaireInput
+└── QuestionnaireActions
+    ├── QuestionnairePrevious
+    ├── QuestionnaireSkip
+    ├── QuestionnaireNext
+    └── QuestionnaireSubmit
+```
 
 ## Examples
 
 ### With shortcuts
 
-Choices labelled with letter keys, so pressing a letter selects the matching answer.
+Set `shortcuts="letters"` on `Questionnaire` to label the choices with letter keys, so pressing a letter selects the matching answer. Shortcut badges are hidden below the `md` breakpoint.
 
 <ComponentPreview name="questionnaire-with-shortcuts" />
 
 ### Number shortcuts
 
-Choices labelled with number keys from `1` to `9`.
+Set `shortcuts="numbers"` to label the choices with number keys from `1` to `9`.
 
 <ComponentPreview name="questionnaire-number-shortcuts" />
 
 ### Multiple choice
 
-A `multiple` item with checkboxes, a default selection, a disabled choice and a custom error.
+Set `multiple` on an item to render its choices as checkboxes. This one has a default selection with `defaultChecked`, a disabled choice and a custom error message.
 
 <ComponentPreview name="questionnaire-multiple-choice" />
 
 ### With choice descriptions
 
-Choice cards with a title and a secondary description.
+Add a `QuestionnaireChoiceDescription` inside a choice to give the card a secondary description.
 
 <ComponentPreview name="questionnaire-with-choice-descriptions" />
 
 ### Text input
 
-A required email question answered with `QuestionnaireInput`.
+Use `QuestionnaireInput` with `type="email"` for a free-form answer. The item is `required`, so Next stays blocked until it is answered.
 
 <ComponentPreview name="questionnaire-text-input" />
 
 ### Start on later question
 
-A questionnaire that opens on its second question with `defaultItem`.
+Set `defaultItem` to the `name` of an item to open the questionnaire on it, here the second question.
 
 <ComponentPreview name="questionnaire-start-on-later-question" />
 
+## Accessibility
+
+- Each item is a `fieldset` named by its `legend` title; inactive items are `hidden` and `inert`.
+- Choices are native radio buttons or checkboxes inside a `label`. A choice description is linked with `aria-describedby`.
+- `QuestionnaireInput` is labelled by the question title unless you pass `aria-label`.
+- The item's description and, when invalid, its error are linked with `aria-describedby`. The error uses `role="alert"` and focus moves to the invalid answer.
+- `QuestionnaireProgress` has `role="progressbar"`, an `aria-label` of `Questionnaire progress`, `aria-valuetext` and `aria-live="polite"`.
+- Keyboard: Enter on an answered control advances or submits; Command or Control plus Enter advances from anywhere; ArrowUp and ArrowDown move between answers; outside text fields and radio buttons, ArrowLeft goes back and ArrowRight goes forward once the question has an answer. The active item lists these in `aria-keyshortcuts`.
+- Hidden navigation buttons are `aria-hidden`, `inert` and removed from the tab order.
+
 ## API Reference
-
-<Anatomy>
-
-- [Questionnaire](#questionnaire)
-  - [QuestionnaireProgress](#questionnaireprogress)
-  - [QuestionnaireItem](#questionnaireitem)
-    - [QuestionnaireTitle](#questionnairetitle)
-    - [QuestionnaireDescription](#questionnairedescription)
-    - [QuestionnaireChoices](#questionnairechoices)
-      - [QuestionnaireChoice](#questionnairechoice)
-        - [QuestionnaireChoiceDescription](#questionnairechoicedescription)
-    - [QuestionnaireError](#questionnaireerror)
-    - [QuestionnaireInput](#questionnaireinput)
-  - [QuestionnaireActions](#questionnaireactions)
-    - [QuestionnairePrevious](#questionnaireprevious)
-    - [QuestionnaireSkip](#questionnaireskip)
-    - [QuestionnaireNext](#questionnairenext)
-    - [QuestionnaireSubmit](#questionnairesubmit)
-
-</Anatomy>
-
-<ApiPart index={1}>
 
 ### Questionnaire
 
 The `form` root that tracks the active question and handles navigation and submission.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `defaultItem` | `string` | - | The `name` of the item shown first when uncontrolled. |
-| `item` | `string` | - | The `name` of the active item, for controlled use. |
-| `items` | `readonly QuestionnaireItemDefinition[]` | - | Optional item definitions with `name`, `required`, `disabled` and `choices`, used to define the sequence and shortcut order. |
-| `onItemChange` | `(item: string) => void` | - | Called with the next item's `name` when the active question changes. |
-| `shortcuts` | `QuestionnaireShortcutMode` | - | Enables single-key answer shortcuts using `letters` (A to Z) or `numbers` (1 to 9). |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `defaultItem` | `string` | - |
+| `item` | `string` | - |
+| `items` | `readonly QuestionnaireItemDefinition[]` | - |
+| `onItemChange` | `(item: string) => void` | - |
+| `shortcuts` | `QuestionnaireShortcutMode` | - |
 
 Also accepts the props of `React.ComponentProps<"form">`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+The first item is shown by default. Use `defaultItem` to start elsewhere, or `item` with `onItemChange` to control the active question; `onItemChange` is called with the next item's `name`. Pass `items` (each with `name`, `required`, `disabled` and `choices`) to define the sequence and the order used for shortcut keys, instead of deriving them from the rendered items. `shortcuts` enables single-key answers with `letters` (A to Z) or `numbers` (1 to 9). Native browser validation is off by default (`noValidate`); the component runs its own validation on Next and Submit.
 
 ### QuestionnaireProgress
 
@@ -211,28 +237,22 @@ Also accepts the props of `React.ComponentProps<"div">`, plus a `render` functio
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### QuestionnaireItem
 
 A `fieldset` for one question, visible only while it is active.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `disabled` | `boolean` | `false` | Leaves the item out of the sequence and disables its choices and input. |
-| `invalid` | `boolean` | `false` | Forces the item into the invalid state. |
-| `multiple` | `boolean` | `false` | Allows several answers, rendering choices as checkboxes. |
-| `name` | `string` | Required | The unique item name, used for navigation and as the form field name. |
-| `onStatusChange` | `(status: QuestionnaireItemStatus) => void` | - | Called when the item's status changes between `unanswered`, `answered` and `skipped`. |
-| `required` | `boolean` | `false` | Requires an answer before moving on and hides the Skip button. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `disabled` | `boolean` | `false` |
+| `invalid` | `boolean` | `false` |
+| `multiple` | `boolean` | `false` |
+| `name` | `string` | Required |
+| `onStatusChange` | `(status: QuestionnaireItemStatus) => void` | - |
+| `required` | `boolean` | `false` |
 
 Also accepts the props of `React.ComponentProps<"fieldset">`.
 
-</ApiPart>
-
-<ApiPart index={4}>
+Give every item a unique `name`; it is used for navigation and answers are submitted as form data under it. A `required` item blocks Next and Submit until it is answered and hides the Skip button. A `disabled` item is left out of the sequence. `multiple` renders the choices as checkboxes instead of radio buttons, and `invalid` forces the invalid state. `onStatusChange` is called when the status changes between `unanswered`, `answered` and `skipped`.
 
 ### QuestionnaireTitle
 
@@ -256,10 +276,6 @@ Also accepts the props of `React.ComponentProps<"legend">`, plus a `render` func
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### QuestionnaireDescription
 
 Supporting text that describes the question.
@@ -281,10 +297,6 @@ Also accepts the props of `React.ComponentProps<"p">`, plus `asChild`.
 Also accepts the props of `React.ComponentProps<"p">`, plus a `render` function.
 
 </OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### QuestionnaireChoices
 
@@ -308,21 +320,17 @@ Also accepts the props of `React.ComponentProps<"div">`, plus a `render` functio
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={7}>
-
 ### QuestionnaireChoice
 
 A selectable answer card containing a radio button or checkbox.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `checked` | `boolean` | - | The checked state, for controlled use. |
-| `defaultChecked` | `boolean` | `false` | Whether the choice starts checked when uncontrolled. |
-| `disabled` | `boolean` | `false` | Prevents the choice from being selected. |
-| `onChange` | `React.ChangeEventHandler<HTMLInputElement>` | - | Called when the underlying input changes. |
-| `value` | `string` | Required | The value submitted for this choice. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `checked` | `boolean` | - |
+| `defaultChecked` | `boolean` | `false` |
+| `disabled` | `boolean` | `false` |
+| `onChange` | `React.ChangeEventHandler<HTMLInputElement>` | - |
+| `value` | `string` | Required |
 
 <OnlyBase base="base">
 
@@ -342,9 +350,7 @@ Also accepts the props of `React.ComponentProps<"label">`.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={8}>
+`value` is submitted for the choice. Use `defaultChecked`, or `checked` with `onChange`, which is called when the underlying input changes. Choices expose `data-checked` or `data-unchecked`, plus `data-type`, `data-disabled`, `data-invalid` and `data-shortcut`.
 
 ### QuestionnaireChoiceDescription
 
@@ -352,17 +358,13 @@ Secondary text inside a choice that describes it.
 
 Also accepts the props of `React.ComponentProps<"span">`.
 
-</ApiPart>
-
-<ApiPart index={9}>
-
 ### QuestionnaireInput
 
 A text-style input for free-form answers.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type` | `QuestionnaireInputType` | `"text"` | The input type, such as `text`, `email`, `number`, `date` or `url`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `type` | `QuestionnaireInputType` | `"text"` |
 
 <OnlyBase base="base">
 
@@ -382,9 +384,7 @@ Also accepts the props of `React.ComponentProps<"input">`, plus a `render` funct
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={10}>
+`type` can be `text`, `email`, `number`, `date` or `url`, among others. The input exposes `data-filled` or `data-empty`.
 
 ### QuestionnaireError
 
@@ -408,9 +408,7 @@ Also accepts the props of `React.ComponentProps<"p">`, plus a `render` function.
 
 </OnlyBase>
 
-</ApiPart>
-
-<ApiPart index={11}>
+For required items the default text is `Choose an answer to continue.`; pass children to replace it.
 
 ### QuestionnaireActions
 
@@ -418,18 +416,16 @@ Lays out the navigation buttons in one row.
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-</ApiPart>
-
-<ApiPart index={12}>
+`QuestionnairePrevious`, `QuestionnaireSkip`, `QuestionnaireNext` and `QuestionnaireSubmit` show and hide themselves based on the current question. Their `variant` and `size` are the [Button](/docs/components/button) props, and they expose `data-visible` or `data-hidden`.
 
 ### QuestionnairePrevious
 
 Goes back to the previous question; hidden on the first.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"outline"` | The [Button](/docs/components/button) variant. |
-| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | The [Button](/docs/components/button) size. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"outline"` |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` |
 
 <OnlyBase base="base">
 
@@ -448,19 +444,15 @@ Also accepts the props of `React.ComponentProps<"button">`, plus `asChild`.
 Also accepts the props of `React.ComponentProps<"button">`, plus a `render` function.
 
 </OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={13}>
 
 ### QuestionnaireSkip
 
 Skips the current optional question; hidden when the question is required.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"outline"` | The [Button](/docs/components/button) variant. |
-| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | The [Button](/docs/components/button) size. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"outline"` |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` |
 
 <OnlyBase base="base">
 
@@ -479,19 +471,15 @@ Also accepts the props of `React.ComponentProps<"button">`, plus `asChild`.
 Also accepts the props of `React.ComponentProps<"button">`, plus a `render` function.
 
 </OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={14}>
 
 ### QuestionnaireNext
 
 Validates the current question and moves to the next; hidden on the last.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` | The [Button](/docs/components/button) variant. |
-| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | The [Button](/docs/components/button) size. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` |
 
 <OnlyBase base="base">
 
@@ -510,20 +498,16 @@ Also accepts the props of `React.ComponentProps<"button">`, plus `asChild`.
 Also accepts the props of `React.ComponentProps<"button">`, plus a `render` function.
 
 </OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={15}>
 
 ### QuestionnaireSubmit
 
 Submits the form; shown only on the last question.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` | The [Button](/docs/components/button) variant. |
-| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` | The [Button](/docs/components/button) size. |
-| `type` | `"submit" \| "reset" \| "button"` | `"submit"` | The button type. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` |
+| `type` | `"submit" \| "reset" \| "button"` | `"submit"` |
 
 <OnlyBase base="base">
 
@@ -543,25 +527,7 @@ Also accepts the props of `React.ComponentProps<"button">`, plus a `render` func
 
 </OnlyBase>
 
-</ApiPart>
-
-## Accessibility
-
-- Each item is a `fieldset` named by its `legend` title; inactive items are `hidden` and `inert`.
-- Choices are native radio buttons or checkboxes inside a `label`. A choice description is linked with `aria-describedby`.
-- `QuestionnaireInput` is labelled by the question title unless you pass `aria-label`.
-- The item's description and, when invalid, its error are linked with `aria-describedby`. The error uses `role="alert"` and focus moves to the invalid answer.
-- `QuestionnaireProgress` has `role="progressbar"`, an `aria-label` of `Questionnaire progress`, `aria-valuetext` and `aria-live="polite"`.
-- Keyboard: Enter on an answered control advances or submits; Command or Control plus Enter advances from anywhere; ArrowUp and ArrowDown move between answers; outside text fields and radio buttons, ArrowLeft goes back and ArrowRight goes forward once the question has an answer. The active item lists these in `aria-keyshortcuts`.
-- Hidden navigation buttons are `aria-hidden`, `inert` and removed from the tab order.
-
-## Notes
-
-- Styling hooks: every part sets a `data-slot`, such as `questionnaire`, `questionnaire-item`, `questionnaire-choice`, `questionnaire-choice-indicator`, `questionnaire-choice-shortcut`, `questionnaire-input` and `questionnaire-error`.
-- Choices expose `data-checked` or `data-unchecked`, plus `data-type`, `data-disabled`, `data-invalid` and `data-shortcut`. Inputs expose `data-filled` or `data-empty`. Navigation buttons expose `data-visible` or `data-hidden`.
-- Shortcut badges are hidden below the `md` breakpoint.
-- The default error text is `Choose an answer to continue.` for required items; pass children to customize it.
-- Uses the `primary`, `border`, `secondary`, `destructive` and `accent` colors.
+Each part sets a `data-slot`, such as `questionnaire-item` or `questionnaire-choice`, for styling.
 
 </Only>
 
@@ -578,6 +544,10 @@ Items hold `QuestionnaireChoice` rows, which are `Pressable` radios or, with `mu
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -627,7 +597,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -635,7 +607,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -655,17 +627,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/questionnaire.tsx`:
+4. Copy and paste the following code into `components/ui/questionnaire.tsx`:
 
 <ComponentSource path="uniwind/components/ui/questionnaire.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install cn phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -685,17 +657,17 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/questionnaire.tsx`:
+4. Copy and paste the following code into `components/ui/questionnaire.tsx`:
 
 <ComponentSource path="nativewind/components/ui/questionnaire.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install phosphor-react-native react-native-reanimated react-native-svg react-native-worklets
@@ -709,11 +681,11 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/primitives/hooks.ts" plain />
 
-4. Copy the source into `components/ui/questionnaire.tsx`:
+4. Copy and paste the following code into `components/ui/questionnaire.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/questionnaire.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -812,6 +784,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -1017,104 +993,99 @@ fun QuestionnaireOnboarding(defaultItem: String? = null, attempted: Boolean = fa
 
 </Only>
 
-Give every `QuestionnaireItem` a unique `name`; answers are collected under that name. Mark items `required` to block moving on without an answer; optional items show the Skip button. `QuestionnaireError` appears only when the item is invalid and has a default message you can replace.
-
-The active item is uncontrolled through `defaultItem` or controlled with `item` and `onItemChange`. `onSubmit` receives the collected values: a string for single-answer items and a string array for `multiple` items.
-
-<Only platform="rn">
-
-`QuestionnaireChoice` supports `defaultChecked`, or controlled `checked` with `onCheckedChange`. `QuestionnaireInput` takes a `type` that sets the keyboard, autocomplete and secure entry. `QuestionnaireProgress` shows "Question 1 of 3" by default and accepts a render function. Use `useQuestionnaireContext` to build custom controls, or `useQuestionnaire` for the underlying state.
-
-</Only>
-
 ## Examples
 
 ### Mid flow
 
-Starts on the second question with `defaultItem`.
+Set `defaultItem` to start on the second question. Control the active item with `item` and `onItemChange` instead.
 
 <NativeExample name="questionnaire-mid-flow" />
 
 ### Invalid
 
-A required question shown in its invalid state with an error message.
+A `required` item blocks moving on without an answer and shows `QuestionnaireError`, which appears only when the item is invalid.
 
 <NativeExample name="questionnaire-invalid" />
 
 ### Multiple choice
 
-A `multiple` item that accepts several checked choices.
+Set `multiple` on an item to accept several checked choices. Its answer is collected as a string array.
 
 <NativeExample name="questionnaire-multiple-choice" />
 
 ### With choice descriptions
 
-Choices with secondary text from `QuestionnaireChoiceDescription`.
+Add a `QuestionnaireChoiceDescription` inside a choice to give it secondary text.
 
 <NativeExample name="questionnaire-with-choice-descriptions" />
 
 ### Text input
 
-A required question answered with `QuestionnaireInput`.
+Use `QuestionnaireInput` for a typed answer to a `required` question.
 
 <NativeExample name="questionnaire-text-input" />
+
+<Only platform="rn">
+
+## Accessibility
+
+- Each item has the `radiogroup` role, or `group` when `multiple`, and is labelled by its `QuestionnaireTitle`, which has the `heading` role.
+- Choices have the `radio` or `checkbox` role with checked and disabled states.
+- `QuestionnaireInput` is labelled by the title unless you pass an `accessibilityLabel`.
+- `QuestionnaireProgress` has the `progressbar` role, a value such as "Question 2 of 3" and a polite live region.
+- `QuestionnaireError` has the `alert` role with a polite live region.
+- Slide transitions respect the system reduce motion setting.
+
+</Only>
 
 ## API Reference
 
 <Only platform="rn">
 
-<ApiPart index={1}>
-
 ### Questionnaire
 
 Root that holds the state and the active question.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `QuestionnaireItemDefinition[]` | - | The questions in order, each with a `name` and optional `required` and `disabled`. |
-| `item` | `string` | - | The name of the current question, for controlled use. |
-| `defaultItem` | `string` | - | The question to start on when uncontrolled. |
-| `onItemChange` | `(item: string) => void` | - | Called when the current question changes. |
-| `onSubmit` | `(values: QuestionnaireValues) => void` | - | Called with the answers when the last question is submitted. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `items` | `QuestionnaireItemDefinition[]` | - |
+| `item` | `string` | - |
+| `defaultItem` | `string` | - |
+| `onItemChange` | `(item: string) => void` | - |
+| `onSubmit` | `(values: QuestionnaireValues) => void` | - |
 
 Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`, `UseQuestionnaireParameters`.
 
-</ApiPart>
-
-<ApiPart index={2}>
+`items` lists the questions in order, each with a `name` and optional `required` and `disabled`. The active item is uncontrolled through `defaultItem` or controlled with `item` and `onItemChange`. `onSubmit` is called when the last question is submitted and receives the collected values: a string for single-answer items and a string array for `multiple` items. Moving between items slides the content horizontally, and the direction flips for right-to-left layouts. Use `useQuestionnaireContext` to build custom controls, or `useQuestionnaire` for the underlying state.
 
 ### QuestionnaireProgress
 
 Shows the current question number and total.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `\| React.ReactNode \| ((state: QuestionnaireState) => React.ReactNode)` | - | The content, or a function that receives the questionnaire state. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `\| React.ReactNode \| ((state: QuestionnaireState) => React.ReactNode)` | - |
 
 Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
 
-</ApiPart>
-
-<ApiPart index={3}>
+It shows "Question 1 of 3" by default. Pass a function as `children` to render your own content from the questionnaire state.
 
 ### QuestionnaireItem
 
 One question; shown only while active.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `name` | `string` | Required | Unique key for the answer. |
-| `required` | `boolean` | `false` | Requires an answer before moving on and hides Skip. |
-| `disabled` | `boolean` | `false` | Removes the item from the sequence. |
-| `invalid` | `boolean` | `false` | Forces the invalid state. |
-| `multiple` | `boolean` | `false` | Allows more than one choice. |
-| `onStatusChange` | `(status: QuestionnaireItemStatus) => void` | - | Called when the status changes to `unanswered`, `answered` or `skipped`. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `name` | `string` | Required |
+| `required` | `boolean` | `false` |
+| `disabled` | `boolean` | `false` |
+| `invalid` | `boolean` | `false` |
+| `multiple` | `boolean` | `false` |
+| `onStatusChange` | `(status: QuestionnaireItemStatus) => void` | - |
 
 Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
 
-</ApiPart>
-
-<ApiPart index={4}>
+Give every item a unique `name`; its answer is collected under that name. A `required` item blocks moving on without an answer and hides Skip. A `disabled` item is removed from the sequence. `onStatusChange` is called when the status changes to `unanswered`, `answered` or `skipped`.
 
 ### QuestionnaireTitle
 
@@ -1122,19 +1093,11 @@ The question heading.
 
 Also accepts the props of `Text`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### QuestionnaireDescription
 
 Secondary text under the title.
 
 Also accepts the props of `Text`.
-
-</ApiPart>
-
-<ApiPart index={6}>
 
 ### QuestionnaireChoices
 
@@ -1142,28 +1105,22 @@ Stack of choice rows.
 
 Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
 
-</ApiPart>
-
-<ApiPart index={7}>
-
 ### QuestionnaireChoice
 
 A selectable answer row.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | Value stored when the choice is selected. |
-| `checked` | `boolean` | - | Controlled checked state. |
-| `defaultChecked` | `boolean` | `false` | Initial checked state. |
-| `disabled` | `boolean` | `false` | Disables the choice. |
-| `onCheckedChange` | `(checked: boolean) => void` | - | Called with the next checked state. |
-| `children` | `React.ReactNode` | - | The content. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `string` | Required |
+| `checked` | `boolean` | - |
+| `defaultChecked` | `boolean` | `false` |
+| `disabled` | `boolean` | `false` |
+| `onCheckedChange` | `(checked: boolean) => void` | - |
+| `children` | `React.ReactNode` | - |
 
 Also accepts the props of `React.ComponentProps<typeof Pressable>`, `React.RefAttributes<View>`.
 
-</ApiPart>
-
-<ApiPart index={8}>
+Use `defaultChecked`, or controlled `checked` with `onCheckedChange`. Selecting a choice plays a selection haptic when a haptics adapter is provided through `HapticsContext`.
 
 ### QuestionnaireChoiceDescription
 
@@ -1171,23 +1128,17 @@ Secondary text inside a choice.
 
 Also accepts the props of `Text`.
 
-</ApiPart>
-
-<ApiPart index={9}>
-
 ### QuestionnaireInput
 
 Text field for a typed answer.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type` | `QuestionnaireInputType` | `"text"` | `text`, `email`, `number`, `tel`, `url`, `password` or `search`; sets keyboard and autofill props. |
+| Prop | Type | Default |
+| --- | --- | --- |
+| `type` | `QuestionnaireInputType` | `"text"` |
 
 Also accepts the props of `React.ComponentProps<typeof Input>`.
 
-</ApiPart>
-
-<ApiPart index={10}>
+`type` is `text`, `email`, `number`, `tel`, `url`, `password` or `search`, and sets the keyboard, autofill and secure entry.
 
 ### QuestionnaireError
 
@@ -1195,9 +1146,7 @@ Validation message shown when the item is invalid.
 
 Also accepts the props of `Text`.
 
-</ApiPart>
-
-<ApiPart index={11}>
+It has a default message that you can replace with children.
 
 ### QuestionnaireActions
 
@@ -1205,19 +1154,11 @@ Row for the navigation buttons.
 
 Also accepts the props of `React.ComponentProps<typeof View>`, `React.RefAttributes<View>`.
 
-</ApiPart>
-
-<ApiPart index={12}>
-
 ### QuestionnairePrevious
 
 Goes to the previous question.
 
 Also accepts the props of `Button`.
-
-</ApiPart>
-
-<ApiPart index={13}>
 
 ### QuestionnaireSkip
 
@@ -1225,19 +1166,11 @@ Skips the active question when it is optional.
 
 Also accepts the props of `Button`.
 
-</ApiPart>
-
-<ApiPart index={14}>
-
 ### QuestionnaireNext
 
 Validates and moves to the next question.
 
 Also accepts the props of `Button`.
-
-</ApiPart>
-
-<ApiPart index={15}>
 
 ### QuestionnaireSubmit
 
@@ -1245,39 +1178,27 @@ Validates all questions and calls `onSubmit` on the last step.
 
 Also accepts the props of `Button`.
 
-</ApiPart>
-
 </Only>
 
 <Only platform="swift">
-
-<ApiPart index={1}>
 
 ### QuestionnaireItemStatus
 
 Values: `.unanswered`, `.answered`, `.skipped`.
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### QuestionnaireDirection
 
 Values: `.forward`, `.backward`.
 
-</ApiPart>
-
-<ApiPart index={3}>
-
 ### QuestionnaireItemDefinition
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ name` | `String` | - | - |
-| `required` | `Bool` | `false` | - |
-| `multiple` | `Bool` | `false` | - |
-| `disabled` | `Bool` | `false` | - |
-| `invalid` | `Bool` | `false` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ name` | `String` | - |
+| `required` | `Bool` | `false` |
+| `multiple` | `Bool` | `false` |
+| `disabled` | `Bool` | `false` |
+| `invalid` | `Bool` | `false` |
 
 | Property | Type |
 | --- | --- |
@@ -1287,17 +1208,13 @@ Values: `.forward`, `.backward`.
 | `disabled` | `Bool` |
 | `invalid` | `Bool` |
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### QuestionnaireController
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `[QuestionnaireItemDefinition]?` | `nil` | - |
-| `defaultItem` | `String?` | `nil` | - |
-| `defaultValues` | `[String: [String]]` | `[:]` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `items` | `[QuestionnaireItemDefinition]?` | `nil` |
+| `defaultItem` | `String?` | `nil` |
+| `defaultValues` | `[String: [String]]` | `[:]` |
 
 | Property | Type |
 | --- | --- |
@@ -1315,122 +1232,78 @@ Values: `.forward`, `.backward`.
 | `activeItemStatus` | `QuestionnaireItemStatus?` |
 | `answers` | `[String: [String]]` |
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### QuestionnaireController.status
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `of` | `String` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `of` | `String` | - |
 
 Returns `QuestionnaireItemStatus`.
 
-</ApiPart>
-
-<ApiPart index={6}>
-
 ### QuestionnaireController.isInvalid
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ name` | `String` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ name` | `String` | - |
 
 Returns `Bool`.
-
-</ApiPart>
-
-<ApiPart index={7}>
 
 ### QuestionnaireController.isSelected
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ value` | `String` | - | - |
-| `in` | `String` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ value` | `String` | - |
+| `in` | `String` | - |
 
 Returns `Bool`.
-
-</ApiPart>
-
-<ApiPart index={8}>
 
 ### QuestionnaireController.select
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ value` | `String` | - | - |
-| `in` | `String` | - | - |
-| `selected` | `Bool` | `true` | - |
-
-</ApiPart>
-
-<ApiPart index={9}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ value` | `String` | - |
+| `in` | `String` | - |
+| `selected` | `Bool` | `true` |
 
 ### QuestionnaireController.toggle
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ value` | `String` | - | - |
-| `in` | `String` | - | - |
-
-</ApiPart>
-
-<ApiPart index={10}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ value` | `String` | - |
+| `in` | `String` | - |
 
 ### QuestionnaireController.text
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `for` | `String` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `for` | `String` | - |
 
 Returns `String`.
 
-</ApiPart>
-
-<ApiPart index={11}>
-
 ### QuestionnaireController.setText
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ text` | `String` | - | - |
-| `for` | `String` | - | - |
-
-</ApiPart>
-
-<ApiPart index={12}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ text` | `String` | - |
+| `for` | `String` | - |
 
 ### QuestionnaireController.validate
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ name` | `String` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ name` | `String` | - |
 
 Returns `Bool`.
 
-</ApiPart>
-
-<ApiPart index={13}>
-
 ### QuestionnaireController.go
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `to` | `String` | - | - |
-
-</ApiPart>
-
-<ApiPart index={14}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `to` | `String` | - |
 
 ### QuestionnaireController.goPrevious
 
 Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={15}>
 
 ### QuestionnaireController.goNext
 
@@ -1438,19 +1311,11 @@ Takes no parameters.
 
 Returns `Bool`.
 
-</ApiPart>
-
-<ApiPart index={16}>
-
 ### QuestionnaireController.advance
 
 Takes no parameters.
 
 Returns `Bool`.
-
-</ApiPart>
-
-<ApiPart index={17}>
 
 ### QuestionnaireController.skip
 
@@ -1458,269 +1323,189 @@ Takes no parameters.
 
 Returns `Bool`.
 
-</ApiPart>
-
-<ApiPart index={18}>
-
 ### QuestionnaireController.submit
 
 Takes no parameters.
 
 Returns `Bool`.
 
-</ApiPart>
-
-<ApiPart index={19}>
-
 ### QuestionnaireController.reset
 
 Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={20}>
 
 ### Questionnaire
 
 Root that holds the state and the active question.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `controller` | `QuestionnaireController` | - | - |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={21}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `controller` | `QuestionnaireController` | - |
+| `content` | `() -> Content` | - |
 
 ### QuestionnaireProgress
 
 Shows the current question number and total.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `(_ current: Int, _ total: Int) -> Label` | - | The label. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `label` | `(_ current: Int, _ total: Int) -> Label` | - |
 
 Overloads: `init(label:)`, `init()`.
-
-</ApiPart>
-
-<ApiPart index={22}>
 
 ### QuestionnaireItem
 
 One question; shown only while active.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `name` | `String` | - | Unique key for the answer. |
-| `required` | `Bool` | `false` | Requires an answer before moving on and hides Skip. |
-| `multiple` | `Bool` | `false` | Allows more than one choice. |
-| `disabled` | `Bool` | `false` | Removes the item from the sequence. |
-| `invalid` | `Bool` | `false` | Forces the invalid state. |
-| `onStatusChange` | `((QuestionnaireItemStatus) -> Void)?` | `nil` | Called when the status changes to `unanswered`, `answered` or `skipped`. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={23}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `name` | `String` | - |
+| `required` | `Bool` | `false` |
+| `multiple` | `Bool` | `false` |
+| `disabled` | `Bool` | `false` |
+| `invalid` | `Bool` | `false` |
+| `onStatusChange` | `((QuestionnaireItemStatus) -> Void)?` | `nil` |
+| `content` | `() -> Content` | - |
 
 ### QuestionnaireTitle
 
 The question heading.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `verbatim` | `String` | - | The title text. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
 
 Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={24}>
 
 ### QuestionnaireDescription
 
 Secondary text under the title.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ description` | `LocalizedStringKey` | - | The supporting text. |
-| `verbatim` | `String` | - | The supporting text. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
 
 Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={25}>
 
 ### QuestionnaireChoices
 
 Stack of choice rows.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={26}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
 
 ### QuestionnaireChoice
 
 A selectable answer row.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | Value stored when the choice is selected. |
-| `disabled` | `Bool` | `false` | Disables the choice. |
-| `label` | `() -> Label` | - | The label. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `verbatim` | `String` | - | The title text. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `disabled` | `Bool` | `false` |
+| `label` | `() -> Label` | - |
+| `_ title` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
 
 Overloads: `init(value:disabled:label:)`, `init(_:value:disabled:)`, `init(verbatim:value:disabled:)`.
-
-</ApiPart>
-
-<ApiPart index={27}>
 
 ### QuestionnaireChoiceDescription
 
 Secondary text inside a choice.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ description` | `LocalizedStringKey` | - | The supporting text. |
-| `verbatim` | `String` | - | The supporting text. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ description` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
 
 Overloads: `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={28}>
 
 ### QuestionnaireInput
 
 Text field for a typed answer.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ placeholder` | `LocalizedStringResource` | `""` | Text shown while it is empty. |
-| `keyboard` | `UIKeyboardType` | `.default` | - |
-| `contentType` | `UITextContentType?` | `nil` | - |
-| `disabled` | `Bool` | `false` | Removes the item from the sequence. |
-
-</ApiPart>
-
-<ApiPart index={29}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ placeholder` | `LocalizedStringResource` | `""` |
+| `keyboard` | `UIKeyboardType` | `.default` |
+| `contentType` | `UITextContentType?` | `nil` |
+| `disabled` | `Bool` | `false` |
 
 ### QuestionnaireError
 
 Validation message shown when the item is invalid.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ message` | `LocalizedStringKey` | - | - |
-| `verbatim` | `String` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ message` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
 
 Overloads: `init()`, `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={30}>
 
 ### QuestionnaireActions
 
 Row for the navigation buttons.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={31}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
 
 ### QuestionnairePrevious
 
 Goes to the previous question.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | `"Previous"` | The title text. |
-| `variant` | `VariantButtonStyle.Variant` | `.outline` | The [Button](/docs/components/button) variant. |
-| `size` | `VariantButtonStyle.Size` | `.default` | The [Button](/docs/components/button) size. |
-
-</ApiPart>
-
-<ApiPart index={32}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | `"Previous"` |
+| `variant` | `VariantButtonStyle.Variant` | `.outline` |
+| `size` | `VariantButtonStyle.Size` | `.default` |
 
 ### QuestionnaireSkip
 
 Skips the active question when it is optional.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | `"Skip"` | The title text. |
-| `variant` | `VariantButtonStyle.Variant` | `.outline` | The [Button](/docs/components/button) variant. |
-| `size` | `VariantButtonStyle.Size` | `.default` | The [Button](/docs/components/button) size. |
-
-</ApiPart>
-
-<ApiPart index={33}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | `"Skip"` |
+| `variant` | `VariantButtonStyle.Variant` | `.outline` |
+| `size` | `VariantButtonStyle.Size` | `.default` |
 
 ### QuestionnaireNext
 
 Validates and moves to the next question.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | `"Next"` | The title text. |
-| `variant` | `VariantButtonStyle.Variant` | `.default` | The [Button](/docs/components/button) variant. |
-| `size` | `VariantButtonStyle.Size` | `.default` | The [Button](/docs/components/button) size. |
-
-</ApiPart>
-
-<ApiPart index={34}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | `"Next"` |
+| `variant` | `VariantButtonStyle.Variant` | `.default` |
+| `size` | `VariantButtonStyle.Size` | `.default` |
 
 ### QuestionnaireSubmit
 
 Validates all questions and calls `onSubmit` on the last step.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ title` | `LocalizedStringKey` | `"Submit"` | The title text. |
-| `variant` | `VariantButtonStyle.Variant` | `.default` | The [Button](/docs/components/button) variant. |
-| `size` | `VariantButtonStyle.Size` | `.default` | The [Button](/docs/components/button) size. |
-
-</ApiPart>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ title` | `LocalizedStringKey` | `"Submit"` |
+| `variant` | `VariantButtonStyle.Variant` | `.default` |
+| `size` | `VariantButtonStyle.Size` | `.default` |
 
 </Only>
 
 <Only platform="kotlin">
 
-<ApiPart index={1}>
-
 ### QuestionnaireItemStatus
 
 Values: `Unanswered`, `Answered`, `Skipped`.
 
-</ApiPart>
-
-<ApiPart index={2}>
-
 ### QuestionnaireItemDefinition
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `name` | `String` | - | - |
-| `required` | `Boolean` | `false` | - |
-| `disabled` | `Boolean` | `false` | - |
-
-</ApiPart>
-
-<ApiPart index={3}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `name` | `String` | - |
+| `required` | `Boolean` | `false` |
+| `disabled` | `Boolean` | `false` |
 
 ### QuestionnaireState
 
@@ -1735,84 +1520,48 @@ Values: `Unanswered`, `Answered`, `Skipped`.
 | `activeItemStatus` | `QuestionnaireItemStatus?` |
 | `values` | `Map<String, List<String>>` |
 
-</ApiPart>
-
-<ApiPart index={4}>
-
 ### QuestionnaireState.status
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `name` | `String` | - | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `name` | `String` | - |
 
 Returns `QuestionnaireItemStatus`.
 
-</ApiPart>
-
-<ApiPart index={5}>
-
 ### QuestionnaireState.goTo
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `name` | `String` | - | - |
-
-</ApiPart>
-
-<ApiPart index={6}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `name` | `String` | - |
 
 ### QuestionnaireState.goPrevious
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={7}>
-
 ### QuestionnaireState.goNext
 
 Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={8}>
 
 ### QuestionnaireState.skipCurrent
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={9}>
-
 ### QuestionnaireState.submit
 
 Takes no parameters.
-
-</ApiPart>
-
-<ApiPart index={10}>
 
 ### QuestionnaireState.reset
 
 Takes no parameters.
 
-</ApiPart>
-
-<ApiPart index={11}>
-
 ### rememberQuestionnaireState
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `defaultItem` | `String?` | `null` | - |
-| `items` | `List<QuestionnaireItemDefinition>?` | `null` | - |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `defaultItem` | `String?` | `null` |
+| `items` | `List<QuestionnaireItemDefinition>?` | `null` |
 
 Returns `QuestionnaireState`.
-
-</ApiPart>
-
-<ApiPart index={12}>
 
 ### useQuestionnaire
 
@@ -1820,256 +1569,174 @@ Takes no parameters.
 
 Returns `QuestionnaireState`.
 
-</ApiPart>
-
-<ApiPart index={13}>
-
 ### Questionnaire
 
 Root that holds the state and the active question.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `state` | `QuestionnaireState` | `rememberQuestionnaireState()` | - |
-| `onItemChange` | `((String) -> Unit)?` | `null` | Called when the current question changes. |
-| `onSubmit` | `(Map<String, List<String>>) -> Unit` | `{}` | Called with the answers when the last question is submitted. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={14}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `state` | `QuestionnaireState` | `rememberQuestionnaireState()` |
+| `onItemChange` | `((String) -> Unit)?` | `null` |
+| `onSubmit` | `(Map<String, List<String>>) -> Unit` | `{}` |
+| `content` | `@Composable () -> Unit` | - |
 
 ### QuestionnaireProgress
 
 Shows the current question number and total.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `(@Composable (current: Int, total: Int) -> Unit)?` | `null` | The content. |
-
-</ApiPart>
-
-<ApiPart index={15}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `(@Composable (current: Int, total: Int) -> Unit)?` | `null` |
 
 ### QuestionnaireItem
 
 One question; shown only while active.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `name` | `String` | - | Unique key for the answer. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `required` | `Boolean` | `false` | Requires an answer before moving on and hides Skip. |
-| `multiple` | `Boolean` | `false` | Allows more than one choice. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `invalid` | `Boolean` | `false` | Forces the invalid state. |
-| `onStatusChange` | `((QuestionnaireItemStatus) -> Unit)?` | `null` | Called when the status changes to `unanswered`, `answered` or `skipped`. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={16}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `name` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `required` | `Boolean` | `false` |
+| `multiple` | `Boolean` | `false` |
+| `enabled` | `Boolean` | `true` |
+| `invalid` | `Boolean` | `false` |
+| `onStatusChange` | `((QuestionnaireItemStatus) -> Unit)?` | `null` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
 
 ### QuestionnaireTitle
 
 The question heading.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={17}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
 
 ### QuestionnaireDescription
 
 Secondary text under the title.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={18}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
 
 ### QuestionnaireChoices
 
 Stack of choice rows.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={19}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
 
 ### QuestionnaireChoice
 
 A selectable answer row.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `String` | - | Value stored when the choice is selected. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `checked` | `Boolean?` | `null` | Controlled checked state. |
-| `onCheckedChange` | `((Boolean) -> Unit)?` | `null` | Called with the next checked state. |
-| `defaultChecked` | `Boolean` | `false` | Initial checked state. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `content` | `@Composable ColumnScope.() -> Unit` | - | The content. |
-| `text` | `String` | - | The text. |
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `value` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
+| `checked` | `Boolean?` | `null` |
+| `onCheckedChange` | `((Boolean) -> Unit)?` | `null` |
+| `defaultChecked` | `Boolean` | `false` |
+| `enabled` | `Boolean` | `true` |
+| `content` | `@Composable ColumnScope.() -> Unit` | - |
+| `text` | `String` | - |
 
 Overloads: `QuestionnaireChoice(value, content)`, `QuestionnaireChoice(text, value)`.
-
-</ApiPart>
-
-<ApiPart index={20}>
 
 ### QuestionnaireChoiceDescription
 
 Secondary text inside a choice.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String` | - | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={21}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String` | - |
+| `modifier` | `Modifier` | `Modifier` |
 
 ### QuestionnaireInput
 
 Text field for a typed answer.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `value` | `String?` | `null` | Value stored when the choice is selected. |
-| `onValueChange` | `((String) -> Unit)?` | `null` | Called when the value changes. |
-| `defaultValue` | `String` | `""` | - |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-| `placeholder` | `String?` | `null` | Text shown while it is empty. |
-| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` | - |
-
-</ApiPart>
-
-<ApiPart index={22}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `value` | `String?` | `null` |
+| `onValueChange` | `((String) -> Unit)?` | `null` |
+| `defaultValue` | `String` | `""` |
+| `enabled` | `Boolean` | `true` |
+| `placeholder` | `String?` | `null` |
+| `keyboardOptions` | `KeyboardOptions` | `KeyboardOptions.Default` |
 
 ### QuestionnaireError
 
 Validation message shown when the item is invalid.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `text` | `String?` | `null` | The text. |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-
-</ApiPart>
-
-<ApiPart index={23}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `text` | `String?` | `null` |
+| `modifier` | `Modifier` | `Modifier` |
 
 ### QuestionnaireActions
 
 Row for the navigation buttons.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={24}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable () -> Unit` | - |
 
 ### QuestionnairePrevious
 
 Goes to the previous question.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `text` | `String` | `"Previous"` | The text. |
-| `variant` | `ButtonVariant` | `ButtonVariant.Outline` | The [Button](/docs/components/button) variant. |
-| `size` | `ButtonSize` | `ButtonSize.Default` | The [Button](/docs/components/button) size. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-
-</ApiPart>
-
-<ApiPart index={25}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `text` | `String` | `"Previous"` |
+| `variant` | `ButtonVariant` | `ButtonVariant.Outline` |
+| `size` | `ButtonSize` | `ButtonSize.Default` |
+| `enabled` | `Boolean` | `true` |
 
 ### QuestionnaireSkip
 
 Skips the active question when it is optional.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `text` | `String` | `"Skip"` | The text. |
-| `variant` | `ButtonVariant` | `ButtonVariant.Outline` | The [Button](/docs/components/button) variant. |
-| `size` | `ButtonSize` | `ButtonSize.Default` | The [Button](/docs/components/button) size. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-
-</ApiPart>
-
-<ApiPart index={26}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `text` | `String` | `"Skip"` |
+| `variant` | `ButtonVariant` | `ButtonVariant.Outline` |
+| `size` | `ButtonSize` | `ButtonSize.Default` |
+| `enabled` | `Boolean` | `true` |
 
 ### QuestionnaireNext
 
 Validates and moves to the next question.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `text` | `String` | `"Next"` | The text. |
-| `variant` | `ButtonVariant` | `ButtonVariant.Default` | The [Button](/docs/components/button) variant. |
-| `size` | `ButtonSize` | `ButtonSize.Default` | The [Button](/docs/components/button) size. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-
-</ApiPart>
-
-<ApiPart index={27}>
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `text` | `String` | `"Next"` |
+| `variant` | `ButtonVariant` | `ButtonVariant.Default` |
+| `size` | `ButtonSize` | `ButtonSize.Default` |
+| `enabled` | `Boolean` | `true` |
 
 ### QuestionnaireSubmit
 
 Validates all questions and calls `onSubmit` on the last step.
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `text` | `String` | `"Submit"` | The text. |
-| `variant` | `ButtonVariant` | `ButtonVariant.Default` | The [Button](/docs/components/button) variant. |
-| `size` | `ButtonSize` | `ButtonSize.Default` | The [Button](/docs/components/button) size. |
-| `enabled` | `Boolean` | `true` | Whether it responds to input. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="rn">
-
-## Accessibility
-
-- Each item has the `radiogroup` role, or `group` when `multiple`, and is labelled by its `QuestionnaireTitle`, which has the `heading` role.
-- Choices have the `radio` or `checkbox` role with checked and disabled states.
-- `QuestionnaireInput` is labelled by the title unless you pass an `accessibilityLabel`.
-- `QuestionnaireProgress` has the `progressbar` role, a value such as "Question 2 of 3" and a polite live region.
-- `QuestionnaireError` has the `alert` role with a polite live region.
-- Slide transitions respect the system reduce motion setting.
-
-## Notes
-
-- Selecting a choice plays a selection haptic when a haptics adapter is provided through `HapticsContext`.
-- Selected choices use `border-primary` and `bg-primary`; invalid items use `border-destructive`.
-- The slide direction flips for right-to-left layouts.
-- Light and dark colors follow the system appearance.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `text` | `String` | `"Submit"` |
+| `variant` | `ButtonVariant` | `ButtonVariant.Default` |
+| `size` | `ButtonSize` | `ButtonSize.Default` |
+| `enabled` | `Boolean` | `true` |
 
 </Only>
 

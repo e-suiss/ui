@@ -15,7 +15,9 @@ Groups can contain buttons, `Input`, `InputGroup`, `Select` triggers, and the tr
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/button-group
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add button-group
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react class-variance-authority
@@ -37,18 +41,29 @@ npm install @base-ui/react class-variance-authority
 
 2. Add the pieces it builds on: [Separator](/docs/components/separator).
 
-3. Copy the source into `components/ui/button-group.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/button-group.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
 import { Button } from "@/components/ui/button"
 import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 ```
 
 <OnlyBase base="base">
@@ -247,43 +262,45 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 
 </OnlyBase>
 
-Elements are joined only when they expose a `data-slot` attribute, as the library's components do.
+## Composition
 
-When a group contains other `ButtonGroup` parts, the outer group adds a gap between them instead of joining them.
+Use the following composition to build a `ButtonGroup`:
 
-`ButtonGroupSeparator` is vertical by default. In a vertical group, pass `orientation="horizontal"`. Separators are most useful between `secondary` or `default` buttons; `outline` buttons already show their borders.
-
-Give the group an `aria-label` when its purpose is not clear from its contents, as in the pagination and media control examples.
+```text
+ButtonGroup
+├── ButtonGroupSeparator
+└── ButtonGroupText
+```
 
 ## Examples
 
 ### Outline
 
-The same toolbar built with `outline` buttons and no separators.
+The same toolbar built with `outline` buttons and no separators, since `outline` buttons already show their borders.
 
 <ComponentPreview name="button-group-outline" />
 
 ### Orientation
 
-Stacks zoom buttons vertically with `orientation="vertical"`.
+Set `orientation="vertical"` to stack the buttons, here a set of zoom buttons.
 
 <ComponentPreview name="button-group-orientation" />
 
 ### Sizes
 
-Groups of `sm`, `default` and `lg` buttons.
+Set the `size` prop on the buttons to size the group. This shows `sm`, `default` and `lg`.
 
 <ComponentPreview name="button-group-sizes" />
 
 ### Nested
 
-Nests groups to separate page numbers from previous and next buttons.
+Nest `ButtonGroup` parts to separate page numbers from previous and next buttons. The outer group adds a gap between nested groups instead of joining them.
 
 <ComponentPreview name="button-group-nested" />
 
 ### With separator
 
-Divides two `secondary` buttons with `ButtonGroupSeparator`.
+Divide two `secondary` buttons with `ButtonGroupSeparator`. Separators are most useful between `secondary` or `default` buttons.
 
 <ComponentPreview name="button-group-with-separator" />
 
@@ -337,77 +354,9 @@ Opens a popover from the second half of a split button.
 
 ### Pagination
 
-A labelled group of page buttons that marks the current page with `aria-current`.
+A group of page buttons that marks the current page with `aria-current`. Give the group an `aria-label` when its purpose is not clear from its contents.
 
 <ComponentPreview name="button-group-pagination" />
-
-## API Reference
-
-<Anatomy>
-
-- [ButtonGroup](#buttongroup)
-  - [ButtonGroupSeparator](#buttongroupseparator)
-  - [ButtonGroupText](#buttongrouptext)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### ButtonGroup
-
-The container that joins its children and sets the orientation.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Direction of the group. `horizontal` joins items in a row with pill ends; `vertical` stacks them with rounded top and bottom. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ButtonGroupText
-
-A static, button-shaped label for text or icons.
-
-<OnlyBase base="base">
-
-Also accepts the props of `useRender.ComponentProps<"div">`.
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Renders the child element instead of a `div`. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</OnlyBase>
-
-<OnlyBase base="aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `(props: React.HTMLAttributes<HTMLElement> & { ref?: React.Ref<HTMLElement> }) => React.ReactNode` | — | Renders your own element, such as a `label`, with the text's props. |
-
-Also accepts the props of `React.ComponentProps<"div">`.
-
-</OnlyBase>
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ButtonGroupSeparator
-
-A thin divider between adjacent items.
-
-Also accepts the props of `React.ComponentProps<typeof Separator>`.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -433,11 +382,59 @@ Also accepts the props of `React.ComponentProps<typeof Separator>`.
 
 </OnlyBase>
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot="button-group"`, `"button-group-text"` and `"button-group-separator"`, plus `data-orientation` on the group when `orientation` is set.
-- Focused items are raised with `z-10` so their focus ring is not clipped by neighbors.
-- In groups containing `outline` buttons, inputs, input groups and select triggers also get the `border-border` color.
+### ButtonGroup
+
+The container that joins its children and sets the orientation.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+`horizontal` joins items in a row with pill ends; `vertical` stacks them with rounded top and bottom. Elements are joined only when they expose a `data-slot` attribute, as the library's components do. Focused items are raised with `z-10` so their focus ring is not clipped by neighbors. In groups that contain `outline` buttons, inputs, input groups and select triggers also get the `border-border` color.
+
+### ButtonGroupText
+
+A static, button-shaped label for text or icons.
+
+<OnlyBase base="base">
+
+Also accepts the props of `useRender.ComponentProps<"div">`.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</OnlyBase>
+
+<OnlyBase base="aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `(props: React.HTMLAttributes<HTMLElement> & { ref?: React.Ref<HTMLElement> }) => React.ReactNode` | — |
+
+Also accepts the props of `React.ComponentProps<"div">`.
+
+</OnlyBase>
+
+### ButtonGroupSeparator
+
+A thin divider between adjacent items.
+
+Also accepts the props of `React.ComponentProps<typeof Separator>`.
+
+The separator is vertical by default; in a vertical group, pass `orientation="horizontal"`.
+
+Each part sets a `data-slot`, such as `button-group-text`, for styling, and the group sets `data-orientation` when `orientation` is set.
 
 </Only>
 
@@ -454,6 +451,10 @@ Also accepts the props of `React.ComponentProps<typeof Separator>`.
 Nest groups to keep separate clusters in one row with a gap between them. `ButtonGroupSeparator` draws a divider between joined buttons, and `ButtonGroupText` shows a label or icon in the same pill shape.
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -503,7 +504,9 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -511,7 +514,7 @@ The CLI also adds what it builds on: [Button](/docs/components/button), [Icon](/
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -529,17 +532,17 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/button-group.tsx`:
+4. Copy and paste the following code into `components/ui/button-group.tsx`:
 
 <ComponentSource path="uniwind/components/ui/button-group.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
 <div>
 
-1. Install the dependencies:
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npx expo install class-variance-authority cn
@@ -557,11 +560,11 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
-4. Copy the source into `components/ui/button-group.tsx`:
+4. Copy and paste the following code into `components/ui/button-group.tsx`:
 
 <ComponentSource path="nativewind/components/ui/button-group.tsx" />
 
-5. Update the import paths to match your project.
+5. Update the import paths to match your project setup.
 
 </div>
 
@@ -579,11 +582,11 @@ npx expo install class-variance-authority cn
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
-3. Copy the source into `components/ui/button-group.tsx`:
+3. Copy and paste the following code into `components/ui/button-group.tsx`:
 
 <ComponentSource path="stylesheet/components/ui/button-group.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
 
 </div>
 
@@ -654,6 +657,10 @@ dependencies {
 4. Update the `com.esuiss.ui` package names to match your project.
 
 </Only>
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -1015,14 +1022,6 @@ fun ButtonGroupMail(variant: ButtonVariant, separators: Boolean) {
 
 </Only>
 
-<Only platform="rn">
-
-Set `orientation="vertical"` to stack the buttons. Use a separator between buttons of the same filled variant, such as in a split button, where there is no border to divide them.
-
-Give icon-only buttons an `accessibilityLabel`, and give the group one when its purpose is not clear from its contents.
-
-</Only>
-
 ## Examples
 
 ### Outline
@@ -1034,6 +1033,12 @@ Nested groups of `outline` buttons.
 ### Orientation
 
 A vertical group of zoom buttons with a horizontal separator.
+
+<Only platform="rn">
+
+Set `orientation="vertical"` to stack the buttons.
+
+</Only>
 
 <NativeExample name="button-group-orientation" />
 
@@ -1051,7 +1056,7 @@ Groups inside a group, spaced apart.
 
 ### With separator
 
-Buttons divided by `ButtonGroupSeparator`.
+Buttons divided by `ButtonGroupSeparator`. Use a separator between buttons of the same filled variant, where there is no border to divide them.
 
 <NativeExample name="button-group-with-separator" />
 
@@ -1113,148 +1118,6 @@ Page buttons with previous and next arrows.
 
 <NativeExample name="button-group-pagination" />
 
-## API Reference
-
-<Only platform="rn">
-
-<ApiPart index={1}>
-
-### ButtonGroup
-
-Container that joins its children.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | `horizontal` or `vertical`. Defaults to `horizontal`. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ButtonGroupText
-
-Pill-shaped label or icon slot.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `RenderProp<Record<string, unknown>, Record<string, never>>` | - | Element to render instead of the default `View`. |
-
-Also accepts the props of `ViewProps`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ButtonGroupSeparator
-
-Divider between joined buttons.
-
-Also accepts the props of `React.ComponentProps<typeof Separator>`.
-
-</ApiPart>
-
-</Only>
-
-<Only platform="swift">
-
-<ApiPart index={1}>
-
-### ButtonGroup
-
-Container that joins its children.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `orientation` | `Axis` | `.horizontal` | Direction of the group. `horizontal` joins items in a row with pill ends; `vertical` stacks them with rounded top and bottom. |
-| `content` | `() -> Content` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ButtonGroupText
-
-Pill-shaped label or icon slot.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `content` | `() -> Content` | - | The content. |
-| `_ title` | `LocalizedStringKey` | - | The title text. |
-| `verbatim` | `String` | - | The title text. |
-
-Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ButtonGroupSeparator
-
-Divider between joined buttons.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `_ orientation` | `Axis` | `.vertical` | Direction of the group. `horizontal` joins items in a row with pill ends; `vertical` stacks them with rounded top and bottom. |
-
-</ApiPart>
-
-</Only>
-
-<Only platform="kotlin">
-
-<ApiPart index={1}>
-
-### ButtonGroupOrientation
-
-Values: `Horizontal`, `Vertical`.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### ButtonGroup
-
-Container that joins its children.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `orientation` | `ButtonGroupOrientation`: `Horizontal` \| `Vertical` | `ButtonGroupOrientation.Horizontal` | Direction of the group. `horizontal` joins items in a row with pill ends; `vertical` stacks them with rounded top and bottom. |
-| `content` | `@Composable () -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### ButtonGroupText
-
-Pill-shaped label or icon slot.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `content` | `@Composable RowScope.() -> Unit` | - | The content. |
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### ButtonGroupSeparator
-
-Divider between joined buttons.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modifier` | `Modifier` | `Modifier` | Modifier applied to the root. |
-| `orientation` | `Orientation` | `Orientation.Vertical` | Direction of the group. `horizontal` joins items in a row with pill ends; `vertical` stacks them with rounded top and bottom. |
-| `color` | `Color` | `Color.Unspecified` | - |
-
-</ApiPart>
-
-</Only>
-
 <Only platform="rn">
 
 ## Accessibility
@@ -1262,10 +1125,113 @@ Divider between joined buttons.
 - The container has the `group` role.
 - Each button keeps its own role and state.
 - Icon-only buttons need an `accessibilityLabel`.
+- Give the group an `accessibilityLabel` when its purpose is not clear from its contents.
 
-## Notes
+</Only>
 
-- Uses `bg-secondary` for `ButtonGroupText` and `bg-foreground/20` for separators; light and dark follow the system appearance.
+## API Reference
+
+<Only platform="rn">
+
+### ButtonGroup
+
+Container that joins its children.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
+
+Also accepts the props of `ViewProps`.
+
+`ghost` and `plain` buttons are left unjoined. Colors follow the system appearance.
+
+### ButtonGroupText
+
+Pill-shaped label or icon slot.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `render` | `RenderProp<Record<string, unknown>, Record<string, never>>` | - |
+
+Also accepts the props of `ViewProps`.
+
+`render` sets the element to render instead of the default `View`.
+
+### ButtonGroupSeparator
+
+Divider between joined buttons.
+
+Also accepts the props of `React.ComponentProps<typeof Separator>`.
+
+</Only>
+
+<Only platform="swift">
+
+### ButtonGroup
+
+Container that joins its children.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `orientation` | `Axis` | `.horizontal` |
+| `content` | `() -> Content` | - |
+
+### ButtonGroupText
+
+Pill-shaped label or icon slot.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `content` | `() -> Content` | - |
+| `_ title` | `LocalizedStringKey` | - |
+| `verbatim` | `String` | - |
+
+Overloads: `init(content:)`, `init(_:)`, `init(verbatim:)`.
+
+### ButtonGroupSeparator
+
+Divider between joined buttons.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `_ orientation` | `Axis` | `.vertical` |
+
+</Only>
+
+<Only platform="kotlin">
+
+### ButtonGroupOrientation
+
+Values: `Horizontal`, `Vertical`.
+
+### ButtonGroup
+
+Container that joins its children.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `orientation` | `ButtonGroupOrientation`: `Horizontal` \| `Vertical` | `ButtonGroupOrientation.Horizontal` |
+| `content` | `@Composable () -> Unit` | - |
+
+### ButtonGroupText
+
+Pill-shaped label or icon slot.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `content` | `@Composable RowScope.() -> Unit` | - |
+
+### ButtonGroupSeparator
+
+Divider between joined buttons.
+
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` |
+| `orientation` | `Orientation` | `Orientation.Vertical` |
+| `color` | `Color` | `Color.Unspecified` |
 
 </Only>
 

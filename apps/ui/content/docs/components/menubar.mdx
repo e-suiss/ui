@@ -15,7 +15,9 @@ Most parts reuse the Dropdown Menu components with menubar styling. Use `Menubar
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/menubar
@@ -27,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add menubar
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react
@@ -37,16 +41,37 @@ npm install @base-ui/react @phosphor-icons/react
 
 2. Add the pieces it builds on: [Dropdown Menu](/docs/components/dropdown-menu).
 
-3. Copy the source into `components/ui/menubar.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/menubar.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { Menubar, MenubarMenu, MenubarGroup, MenubarPortal, MenubarTrigger, MenubarContent, MenubarItem, MenubarCheckboxItem, MenubarRadioGroup, MenubarRadioItem, MenubarLabel, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubTrigger, MenubarSubContent } from "@/components/ui/menubar"
+import {
+  Menubar,
+  MenubarCheckboxItem,
+  MenubarContent,
+  MenubarGroup,
+  MenubarItem,
+  MenubarLabel,
+  MenubarMenu,
+  MenubarPortal,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
+  MenubarTrigger,
+} from "@/components/ui/menubar"
 ```
 
 ```tsx
@@ -84,251 +109,19 @@ import { Menubar, MenubarMenu, MenubarGroup, MenubarPortal, MenubarTrigger, Menu
 </Menubar>
 ```
 
-Each `MenubarMenu` accepts the menu root props, such as `open`, `defaultOpen` and `onOpenChange`. `MenubarItem` also accepts `variant="destructive"` and `inset`. Checkbox items use `checked`/`defaultChecked`, and radio groups use `value`/`defaultValue`. Pass `disabled` on `Menubar` to disable the whole bar, or on an individual item.
-
-`MenubarContent` defaults to `align="start"`, `alignOffset={-4}` and `sideOffset={8}`. `MenubarShortcut` accepts `mod` to prepend the platform modifier key.
-
 ## Examples
 
 ### By default
 
-The File menu opened on first render with `defaultOpen`, including a Share submenu.
+Set `defaultOpen` on a `MenubarMenu` to open it on first render. Here the File menu opens with a Share submenu.
 
 <ComponentPreview name="menubar-open-by-default" layout="padded" />
 
 ### Disabled
 
-A menubar with `disabled` set, so none of its menus open.
+Set `disabled` on `Menubar` to disable the whole bar, so none of its menus open.
 
 <ComponentPreview name="menubar-disabled" layout="padded" />
-
-## API Reference
-
-<ApiPart index={1}>
-
-### Menubar
-
-The bar that contains the menus and manages keyboard navigation between them.
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `disabled` | `boolean` | - | Disables every trigger in the bar. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### MenubarMenu
-
-Groups one trigger with its popup and holds that menu's open state.
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | - | The controlled open state. Pass it with `onOpenChange`. |
-| `defaultOpen` | `boolean` | `false` | Whether the menu starts open. |
-| `onOpenChange` | `(open: boolean) => void` | - | Called when the menu opens or closes. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### MenubarGroup
-
-Groups related items inside a menu.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### MenubarPortal
-
-Renders menu content into a portal outside the bar.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### MenubarTrigger
-
-The button in the bar that opens its menu.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### MenubarContent
-
-The positioned popup that holds a menu's items.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `align` | `"start" \| "center" \| "end"` | `"start"` | How the popup lines up with its trigger. |
-| `alignOffset` | `number` | `-4` | The offset in pixels along the alignment axis. |
-| `sideOffset` | `number` | `8` | The gap in pixels between the trigger and the popup. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### MenubarItem
-
-A single command in a menu.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | `"default"` | Use `destructive` for items that delete or remove something. |
-| `inset` | `boolean` | - | Indents the item to align with items that show a leading icon or indicator. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### MenubarCheckboxItem
-
-An item that toggles on and off, with a leading check indicator.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Sets `data-inset` on the item for inset alignment. |
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `defaultChecked` | `boolean` | `false` | Whether it starts checked when uncontrolled. |
-| `closeOnClick` | `boolean` | `false` | Closes the menu when the item is selected. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### MenubarRadioGroup
-
-Groups radio items so only one can be selected.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### MenubarRadioItem
-
-One option in a radio group, with a leading check indicator when selected.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Sets `data-inset` on the item for inset alignment. |
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `closeOnClick` | `boolean` | `false` | Closes the menu when the item is selected. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={11}>
-
-### MenubarLabel
-
-A non-interactive heading for a section of items.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Indents the label to align with items that show a leading icon or indicator. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={12}>
-
-### MenubarSeparator
-
-A thin divider between groups of items.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={13}>
-
-### MenubarShortcut
-
-A trailing keyboard shortcut hint inside an item.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `mod` | `boolean` | - | Prepends the platform's primary modifier key. |
-
-Also accepts the props of `React.ComponentProps<"span">`.
-
-</ApiPart>
-
-<ApiPart index={14}>
-
-### MenubarSub
-
-The root of a nested submenu.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={15}>
-
-### MenubarSubTrigger
-
-The item that opens a submenu.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | - | Indents the trigger to align with items that show a leading icon or indicator. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={16}>
-
-### MenubarSubContent
-
-The popup that holds a submenu's items.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -338,11 +131,198 @@ Also accepts the props of the primitive part it wraps.
 - Escape closes the open menu and returns focus to its trigger.
 - Disabled items expose `aria-disabled="true"`.
 
-## Notes
+## API Reference
 
-- Styling hooks: each part sets a `data-slot` such as `menubar`, `menubar-trigger`, `menubar-content`, `menubar-item` and `menubar-sub-trigger`. Items expose `data-variant` and `data-inset`.
-- Checkbox and radio items always reserve leading space for their indicator.
-- `MenubarShortcut` is hidden below the `md` breakpoint.
-- Uses the `popover`, `accent`, `destructive` and `border` colors.
+### Menubar
+
+The bar that contains the menus and manages keyboard navigation between them.
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `disabled` | `boolean` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+Set `disabled` to disable every trigger in the bar.
+
+### MenubarMenu
+
+Groups one trigger with its popup and holds that menu's open state.
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `open` | `boolean` | - |
+| `defaultOpen` | `boolean` | `false` |
+| `onOpenChange` | `(open: boolean) => void` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+Each `MenubarMenu` accepts the menu root props, such as `open`, `defaultOpen` and `onOpenChange`. Pass `open` with `onOpenChange` to control it.
+
+### MenubarGroup
+
+Groups related items inside a menu.
+
+Also accepts the props of the primitive part it wraps.
+
+### MenubarPortal
+
+Renders menu content into a portal outside the bar.
+
+Also accepts the props of the primitive part it wraps.
+
+### MenubarTrigger
+
+The button in the bar that opens its menu.
+
+Also accepts the props of the primitive part it wraps.
+
+### MenubarContent
+
+The positioned popup that holds a menu's items.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `align` | `"start" \| "center" \| "end"` | `"start"` |
+| `alignOffset` | `number` | `-4` |
+| `sideOffset` | `number` | `8` |
+
+Also accepts the props of the primitive part it wraps.
+
+`align` sets how the popup lines up with its trigger. `alignOffset` is the offset in pixels along the alignment axis, and `sideOffset` the gap in pixels between the trigger and the popup.
+
+### MenubarItem
+
+A single command in a menu.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "destructive"` | `"default"` |
+| `inset` | `boolean` | - |
+
+Also accepts the props of the primitive part it wraps.
+
+Use `variant="destructive"` for items that delete or remove something. `inset` indents the item to align with items that show a leading icon or indicator. Pass `disabled` to disable a single item.
+
+### MenubarCheckboxItem
+
+An item that toggles on and off, with a leading check indicator.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `defaultChecked` | `boolean` | `false` |
+| `closeOnClick` | `boolean` | `false` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+Use `checked` or `defaultChecked` for the checked state. Checkbox items always reserve leading space for their indicator, and `inset` sets `data-inset` on the item.
+
+<OnlyBase base="radix">
+
+`closeOnClick` closes the menu when the item is selected.
+
+</OnlyBase>
+
+### MenubarRadioGroup
+
+Groups radio items so only one can be selected.
+
+Also accepts the props of the primitive part it wraps.
+
+Use `value` or `defaultValue` for the selected item.
+
+### MenubarRadioItem
+
+One option in a radio group, with a leading check indicator when selected.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `closeOnClick` | `boolean` | `false` |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+Radio items always reserve leading space for their indicator, and `inset` sets `data-inset` on the item.
+
+<OnlyBase base="radix">
+
+`closeOnClick` closes the menu when the item is selected.
+
+</OnlyBase>
+
+### MenubarLabel
+
+A non-interactive heading for a section of items.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+
+Also accepts the props of the primitive part it wraps.
+
+### MenubarSeparator
+
+A thin divider between groups of items.
+
+Also accepts the props of the primitive part it wraps.
+
+### MenubarShortcut
+
+A trailing keyboard shortcut hint inside an item.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `mod` | `boolean` | - |
+
+Also accepts the props of `React.ComponentProps<"span">`.
+
+Set `mod` to prepend the platform's primary modifier key. The shortcut is hidden below the `md` breakpoint.
+
+### MenubarSub
+
+The root of a nested submenu.
+
+Also accepts the props of the primitive part it wraps.
+
+### MenubarSubTrigger
+
+The item that opens a submenu.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `inset` | `boolean` | - |
+
+Also accepts the props of the primitive part it wraps.
+
+### MenubarSubContent
+
+The popup that holds a submenu's items.
+
+Also accepts the props of the primitive part it wraps.
+
+Each part sets a `data-slot`, such as `menubar-trigger` or `menubar-item`, for styling. Items expose `data-variant` and `data-inset`.
 
 </Only>

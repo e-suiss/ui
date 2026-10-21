@@ -11,9 +11,15 @@ platforms: [web]
 
 A feature spotlight with a list of features on one side and a photo on the other that cross-fades to match the open item. The list advances on its own every four seconds until someone opens an item, then stays put. On mobile the photo moves above the list. Use it to walk through a handful of product features without a carousel.
 
+Edit the `features` array; each entry has a title, description, image and alt text. Change the 4000 ms interval or the heading in the component. Nothing needs wiring to a backend.
+
+The automatic rotation keeps running under reduced motion until the user opens an item, so drop the interval if that matters for your audience. Photos are Unsplash placeholders.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/bento-closer-look
@@ -25,9 +31,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add blocks bento-closer-look
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install @phosphor-icons/react
@@ -35,11 +43,15 @@ npm install @phosphor-icons/react
 
 2. Add the pieces it builds on: [Accordion](/docs/components/accordion).
 
-3. Copy the source into `components/blocks/bento-closer-look.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/blocks/bento-closer-look.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,11 +62,5 @@ import { BentoCloserLook } from "@/components/blocks/bento-closer-look"
 ```tsx
 <BentoCloserLook />
 ```
-
-Edit the `features` array; each entry has a title, description, image and alt text. Change the 4000 ms interval or the heading in the component. Nothing needs wiring to a backend.
-
-## Notes
-
-The automatic rotation keeps running under reduced motion until the user opens an item, so drop the interval if that matters for your audience. Photos are Unsplash placeholders.
 
 </Only>

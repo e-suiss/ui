@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 Two series stacked into one bar per month, with a legend under the plot. Use it when the total per month matters as well as how each series contributes to it.
 
+Replace `chartData` and rename the series keys in the data, both `Bar` elements and `chartConfig`; the legend reads labels and colors from the config. Every bar in the stack needs the same `stackId`, and the first one sits at the bottom. If you add a series, move the rounded top corners via `radius` to the top bar. Focus the chart and use the arrow keys to move the tooltip between months.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/bar-chart-stacked
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts bar-chart-stacked
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/bar-chart-stacked.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/bar-chart-stacked.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { BarChartStacked } from "@/components/charts/bar-chart-stacked"
 ```tsx
 <BarChartStacked />
 ```
-
-Replace `chartData` and rename the series keys in the data, both `Bar` elements and `chartConfig`. Every bar in the stack needs the same `stackId`; the first one sits at the bottom. If you add a series, move the rounded top corners via `radius` to whichever bar is on top.
-
-## Notes
-
-The legend takes labels and colors from the config. Focus the chart and use the arrow keys to move between months.
 
 </Only>
 
@@ -77,7 +81,17 @@ Desktop and mobile bars share a `stackId`, so each column shows both parts and t
 
 </Only>
 
+<Only platform="rn">
+
+Replace `chartData` with your records and change each `dataKey` to match your fields. Add, rename or recolor series in `chartConfig` and add a `Bar` for each. The component takes no props.
+
+</Only>
+
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +141,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +153,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/bar-chart-stacked.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-stacked.tsx`:
 
 <ComponentSource path="uniwind/components/charts/bar-chart-stacked.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +165,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/bar-chart-stacked.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-stacked.tsx`:
 
 <ComponentSource path="nativewind/components/charts/bar-chart-stacked.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +177,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/bar-chart-stacked.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-stacked.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/bar-chart-stacked.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +264,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +307,6 @@ fun BarStackedExample() {
     BarChartStacked()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your records and change each `dataKey` to match your fields. Add, rename or recolor series in `chartConfig` and add a `Bar` for each. The component takes no props.
 
 </Only>
 

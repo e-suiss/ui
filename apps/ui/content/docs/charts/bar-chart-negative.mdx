@@ -11,9 +11,13 @@ platforms: [web, rn, swift, kotlin]
 
 Monthly cash flow where bars rise green above a zero line and drop red below it. Use it for any value that can be negative, such as profit, net change or deltas against a target.
 
+Replace `chartData` and rename `flow` in the data, the bar and `chartConfig`. Each `Cell` picks its color from the sign of the value, so change the two colors there, and `interval` on the axis sets how many month labels show. Because colors are set per bar, the tooltip has no swatch, so keep the zero line to show the direction without color. Focus the chart and use the arrow keys to move the tooltip between months.
+
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/bar-chart-negative
@@ -25,9 +29,11 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add charts bar-chart-negative
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies:
+<div>
+
+1. Install the following dependencies:
 
 ```bash title="Terminal"
 npm install recharts
@@ -35,11 +41,15 @@ npm install recharts
 
 2. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-3. Copy the source into `components/charts/bar-chart-negative.tsx`:
+3. Copy and paste the following code into your project.
 
 <ComponentSource path="components/charts/bar-chart-negative.tsx" />
 
-4. Update the import paths to match your project.
+4. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
@@ -50,12 +60,6 @@ import { BarChartNegative } from "@/components/charts/bar-chart-negative"
 ```tsx
 <BarChartNegative />
 ```
-
-Replace `chartData` with your values and rename `flow` in the data, the bar and `chartConfig`. The color for each bar is chosen per `Cell` based on its sign, so change the two colors there. Set `interval` on the axis to show more or fewer month labels.
-
-## Notes
-
-Because colors are set per bar instead of in the config, the tooltip has no color swatch, and green and red alone carry the sign; keep the zero line so the direction is clear without color. Focus the chart and use the arrow keys to move between months.
 
 </Only>
 
@@ -75,9 +79,15 @@ Because colors are set per bar instead of in the config, the tooltip has no colo
 
 One bar per month, colored per value through a `Cell`: green when the flow is positive and red when it is negative. A `ReferenceLine` at zero anchors the bars, and the month axis shows every other label.
 
+Replace `chartData` with your months and signed `flow` values. Change the colors in the `Cell` `fill` expression. The component takes no props.
+
 </Only>
 
 ## Installation
+
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 <Only platform="rn">
 
@@ -127,7 +137,9 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 </Only>
 
-### Manual
+</div>
+
+<div>
 
 <Only platform="rn">
 
@@ -137,11 +149,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/bar-chart-negative.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-negative.tsx`:
 
 <ComponentSource path="uniwind/components/charts/bar-chart-negative.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -149,11 +161,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/bar-chart-negative.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-negative.tsx`:
 
 <ComponentSource path="nativewind/components/charts/bar-chart-negative.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -161,11 +173,11 @@ The CLI also adds what it builds on: [Card](/docs/components/card), [Chart](/doc
 
 1. Add the pieces it builds on: [Card](/docs/components/card), [Chart](/docs/components/chart).
 
-2. Copy the source into `components/charts/bar-chart-negative.tsx`:
+2. Copy and paste the following code into `components/charts/bar-chart-negative.tsx`:
 
 <ComponentSource path="stylesheet/components/charts/bar-chart-negative.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
 
 </div>
 
@@ -248,6 +260,10 @@ dependencies {
 
 </Only>
 
+</div>
+
+</Tabs>
+
 ## Usage
 
 <Only platform="rn">
@@ -287,12 +303,6 @@ fun BarNegativeExample() {
     BarChartNegative()
 }
 ```
-
-</Only>
-
-<Only platform="rn">
-
-Replace `chartData` with your months and signed `flow` values. Change the colors in the `Cell` `fill` expression. The component takes no props.
 
 </Only>
 

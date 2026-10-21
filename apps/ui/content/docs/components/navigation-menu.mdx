@@ -15,7 +15,9 @@ The root renders the popup for you. With `layout="popover"` it adds a `Navigatio
 
 ## Installation
 
-### CLI
+<Tabs items={["Command","Manual"]}>
+
+<div>
 
 ```bash title="Terminal"
 npx shadcn@latest add @esuiss/navigation-menu
@@ -27,24 +29,38 @@ Works in any project with a `components.json`. See [Installation](/docs/installa
 npx @esuiss/ui@latest add navigation-menu
 ```
 
-### Manual
+</div>
 
-1. Install the dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
+<div>
+
+1. Install the following dependencies and add the [`cn` helper](/docs/installation#the-cn-helper):
 
 ```bash title="Terminal"
 npm install @base-ui/react @phosphor-icons/react class-variance-authority
 ```
 
-2. Copy the source into `components/ui/navigation-menu.tsx`:
+2. Copy and paste the following code into your project.
 
 <ComponentSource path="components/ui/navigation-menu.tsx" />
 
-3. Update the import paths to match your project.
+3. Update the import paths to match your project setup.
+
+</div>
+
+</Tabs>
 
 ## Usage
 
 ```tsx
-import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
 ```
 
 ```tsx
@@ -96,199 +112,42 @@ import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuT
 </div>
 ```
 
-Give each item with content a `value` so the menu can be opened by default or controlled with `value`, `defaultValue` and `onValueChange` on the root. The root also accepts `align` for the popover and `anchor` for either layout; in `panel` layout, pass a ref to the full-width bar as `anchor` so the panel spans its width.
+## Composition
 
-To style a top-level link like a trigger, pass `navigationMenuTriggerStyle()` as its `className`. Set `active` on a link to mark the current page.
+Use the following composition to build a `NavigationMenu`:
+
+```text
+NavigationMenu
+├── NavigationMenuList
+│   └── NavigationMenuItem
+│       ├── NavigationMenuTrigger
+│       ├── NavigationMenuContent
+│       │   ├── NavigationMenuLabel
+│       │   └── NavigationMenuLink
+│       └── NavigationMenuLink
+├── NavigationMenuPositioner
+└── NavigationMenuPanel
+```
 
 ## Examples
 
 ### By default
 
-A menu that opens the Products item on mount with `defaultValue`.
+Give each item with content a `value`, then set `defaultValue` on the root to open the Products item on mount.
 
 <ComponentPreview name="navigation-menu-open-by-default" layout="padded" />
 
 ### Links only
 
-A bar of plain links styled like triggers, with the first marked `active`.
+Pass `navigationMenuTriggerStyle()` as a link's `className` to style it like a trigger. Set `active` on the link for the current page.
 
 <ComponentPreview name="navigation-menu-links-only" layout="padded" />
 
 ### Panel
 
-The `panel` layout anchored to a sticky header, with columns of labelled links and large primary links.
+Set `layout="panel"` and pass a ref to a sticky header as `anchor` so the panel spans its width. The columns use `NavigationMenuLabel` headings, and `size="lg"` links for primary destinations.
 
 <ComponentPreview name="navigation-menu-panel" layout="fullscreen" />
-
-## API Reference
-
-<Anatomy>
-
-- [NavigationMenu](#navigationmenu)
-  - [NavigationMenuList](#navigationmenulist)
-    - [NavigationMenuItem](#navigationmenuitem)
-      - [NavigationMenuTrigger](#navigationmenutrigger)
-      - [NavigationMenuContent](#navigationmenucontent)
-        - [NavigationMenuLabel](#navigationmenulabel)
-        - [NavigationMenuLink](#navigationmenulink)
-      - [NavigationMenuLink](#navigationmenulink)
-  - [NavigationMenuPositioner](#navigationmenupositioner)
-  - [NavigationMenuPanel](#navigationmenupanel)
-
-</Anatomy>
-
-<ApiPart index={1}>
-
-### NavigationMenu
-
-The root that manages open state and renders the popover or panel popup.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `layout` | `"popover" \| "panel"` | `"popover"` | Chooses the popup style: `popover` for a floating card, or `panel` for a full-width sheet with a backdrop. |
-| `align` | `"start" \| "center" \| "end"` | `"start"` | How the popover lines up with the bar in the `popover` layout. |
-
-<OnlyBase base="base aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `anchor` | `Element \| React.RefObject<Element \| null> \| VirtualElement \| (() => Element \| VirtualElement \| null) \| null` | - | The element the popup is positioned against. In the `panel` layout, pass a ref to the full-width bar. |
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `anchor` | `React.RefObject<HTMLElement \| null>` | - | The element the popup is positioned against. In the `panel` layout, pass a ref to the full-width bar. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive parts it wraps.
-
-</ApiPart>
-
-<ApiPart index={2}>
-
-### NavigationMenuList
-
-The horizontal list of top-level items.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={3}>
-
-### NavigationMenuItem
-
-One top-level entry, holding a trigger with content or a single link.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={4}>
-
-### NavigationMenuTrigger
-
-The button that opens its item's content, with a caret in the popover layout.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={5}>
-
-### NavigationMenuContent
-
-The content shown in the popup when its item is open.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={6}>
-
-### NavigationMenuPositioner
-
-The floating popover card used by the `popover` layout. `NavigationMenu` renders it for you.
-
-<OnlyBase base="base aria">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"bottom"` | The side of the bar the card opens on. |
-| `sideOffset` | `number` | `8` | The gap in pixels between the bar and the card. |
-| `align` | `"start" \| "center" \| "end"` | `"start"` | How the card lines up with the bar. |
-| `alignOffset` | `number` | `0` | The offset in pixels along the alignment axis. |
-
-</OnlyBase>
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `align` | `"start" \| "center" \| "end"` | `"start"` | How the card lines up with the bar. |
-| `anchor` | `React.RefObject<HTMLElement \| null>` | - | The element the card is positioned against. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={7}>
-
-### NavigationMenuPanel
-
-The full-width sheet and backdrop used by the `panel` layout. `NavigationMenu` renders it for you.
-
-<OnlyBase base="radix">
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `anchor` | `React.RefObject<HTMLElement \| null>` | - | The element the panel is positioned against. |
-
-</OnlyBase>
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={8}>
-
-### NavigationMenuLink
-
-A navigation link, either in the bar or inside content.
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"default" \| "lg"` | `"default"` | Sets the link size; `lg` uses large, semibold text for primary destinations. |
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
-
-<ApiPart index={9}>
-
-### NavigationMenuLabel
-
-A small secondary heading above a group of links.
-
-Also accepts the props of `React.ComponentProps<"p">`.
-
-</ApiPart>
-
-<ApiPart index={10}>
-
-### NavigationMenuIndicator
-
-A small arrow that fades in while its menu is open.
-
-Also accepts the props of the primitive part it wraps.
-
-</ApiPart>
 
 ## Accessibility
 
@@ -299,11 +158,137 @@ Also accepts the props of the primitive part it wraps.
 - A link with `active` set receives `aria-current="page"`.
 - The trigger's caret icon is `aria-hidden`.
 
-## Notes
+## API Reference
 
-- Styling hooks: `data-slot` values such as `navigation-menu`, `navigation-menu-trigger`, `navigation-menu-content`, `navigation-menu-popup`, `navigation-menu-panel`, `navigation-menu-backdrop` and `navigation-menu-link`. The root exposes `data-layout`; links expose `data-size` and `data-active`.
-- Triggers and links restyle themselves automatically in the `panel` layout, and panel list items animate in with a stagger that respects reduced motion.
-- `navigationMenuTriggerStyle` is exported for styling links as triggers.
-- Uses the `popover`, `background`, `accent` and `primary` colors, with a blurred `bg-black/20` backdrop (`backdrop-blur-lg`).
+### NavigationMenu
+
+The root that manages open state and renders the popover or panel popup.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `layout` | `"popover" \| "panel"` | `"popover"` |
+| `align` | `"start" \| "center" \| "end"` | `"start"` |
+
+<OnlyBase base="base aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `anchor` | `Element \| React.RefObject<Element \| null> \| VirtualElement \| (() => Element \| VirtualElement \| null) \| null` | - |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `anchor` | `React.RefObject<HTMLElement \| null>` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive parts it wraps.
+
+`layout="popover"` shows a floating card, and `layout="panel"` a full-width sheet with a backdrop. `align` sets how the card lines up with the bar in the `popover` layout. `anchor` is the element the popup is positioned against; in the `panel` layout, pass a ref to the full-width bar. Give each item with content a `value` so the menu can be opened by default or controlled with `value`, `defaultValue` and `onValueChange`.
+
+### NavigationMenuList
+
+The horizontal list of top-level items.
+
+Also accepts the props of the primitive part it wraps.
+
+### NavigationMenuItem
+
+One top-level entry, holding a trigger with content or a single link.
+
+Also accepts the props of the primitive part it wraps.
+
+### NavigationMenuTrigger
+
+The button that opens its item's content, with a caret in the popover layout.
+
+Also accepts the props of the primitive part it wraps.
+
+### NavigationMenuContent
+
+The content shown in the popup when its item is open.
+
+Also accepts the props of the primitive part it wraps.
+
+### NavigationMenuPositioner
+
+The floating popover card used by the `popover` layout. `NavigationMenu` renders it for you.
+
+<OnlyBase base="base aria">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left" \| "inline-start" \| "inline-end"` | `"bottom"` |
+| `sideOffset` | `number` | `8` |
+| `align` | `"start" \| "center" \| "end"` | `"start"` |
+| `alignOffset` | `number` | `0` |
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `align` | `"start" \| "center" \| "end"` | `"start"` |
+| `anchor` | `React.RefObject<HTMLElement \| null>` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+<OnlyBase base="base aria">
+
+`side` is the side of the bar the card opens on, and `sideOffset` the gap in pixels between them. `alignOffset` shifts the card in pixels along the alignment axis.
+
+</OnlyBase>
+
+<OnlyBase base="radix">
+
+`anchor` is the element the card is positioned against.
+
+</OnlyBase>
+
+### NavigationMenuPanel
+
+The full-width sheet and backdrop used by the `panel` layout. `NavigationMenu` renders it for you.
+
+<OnlyBase base="radix">
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `anchor` | `React.RefObject<HTMLElement \| null>` | - |
+
+</OnlyBase>
+
+Also accepts the props of the primitive part it wraps.
+
+### NavigationMenuLink
+
+A navigation link, either in the bar or inside content.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"default" \| "lg"` | `"default"` |
+
+Also accepts the props of the primitive part it wraps.
+
+`size="lg"` uses large, semibold text for primary destinations. Set `active` to mark the current page. To style a top-level link like a trigger, pass `navigationMenuTriggerStyle()` as its `className`. Triggers and links restyle themselves in the `panel` layout, and panel list items animate in with a stagger that respects reduced motion.
+
+### NavigationMenuLabel
+
+A small secondary heading above a group of links.
+
+Also accepts the props of `React.ComponentProps<"p">`.
+
+### NavigationMenuIndicator
+
+A small arrow that fades in while its menu is open.
+
+Also accepts the props of the primitive part it wraps.
+
+Each part sets a `data-slot`, such as `navigation-menu-trigger` or `navigation-menu-panel`, for styling. The root sets `data-layout`, and links set `data-size` and `data-active`.
 
 </Only>
