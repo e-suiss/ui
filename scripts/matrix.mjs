@@ -205,8 +205,7 @@ const SUITES = {
     }),
   "web-options": () =>
     withBaseColor(eachOnce(pairwise(WEB_OPTIONS, webOnly), TOKENS)),
-  "web-visual": () =>
-    product({ base: BASES, style: STYLES, theme: THEMES, rtl: BOOLEAN }),
+  "web-visual": () => product({ base: BASES, style: STYLES, rtl: BOOLEAN }),
   "web-icons": () => product({ base: BASES, icons: WEB_ICONS }),
   "rn-install": () =>
     product({

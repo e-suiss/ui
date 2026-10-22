@@ -9,6 +9,7 @@ import { resolveBase } from "./bases/resolve.ts"
 
 const root = fileURLToPath(new URL(".", import.meta.url))
 const TEST_FILE = /\.test\.tsx$/
+const STYLE = process.env.STYLE ?? "suiss"
 
 const IPHONE = {
   viewport: { width: 393, height: 659 },
@@ -61,6 +62,7 @@ function examples(
       provide: {
         responsiveWidth: Number(process.env.WIDTH ?? 0),
         base: base ?? "base",
+        style: STYLE,
       },
       maxWorkers: 4,
       sequence: { groupOrder: 2 },
@@ -115,7 +117,9 @@ function examples(
             comparatorName: "pixelmatch",
             comparatorOptions: { allowedMismatchedPixels: 10 },
             resolveScreenshotPath: ({ arg, ext, testFileName }) =>
-              `${root}tests/screenshots/${testFileName.replace(TEST_FILE, "")}/${arg}${ext}`,
+              `${root}tests/screenshots/web/${base ?? "base"}/${STYLE}/${testFileName.replace(TEST_FILE, "")}/${arg}${ext}`,
+            resolveDiffPath: ({ arg, ext, testFileName }) =>
+              `${root}.vitest/visual/${base ?? "base"}/${STYLE}/${testFileName.replace(TEST_FILE, "")}/${arg}${ext}`,
           },
         },
       },

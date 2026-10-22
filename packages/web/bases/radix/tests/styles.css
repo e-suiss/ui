@@ -1,3 +1,11 @@
 @import "../../../styles/globals.css";
 @import "../../../styles/theme.css";
 @import "../../../styles/generated/style-suiss-radix.css" layer(base);
+@import "../../../styles/generated/style-nova.css" layer(base);
+@import "../../../styles/generated/style-vega.css" layer(base);
+@import "../../../styles/generated/style-maia.css" layer(base);
+@import "../../../styles/generated/style-lyra.css" layer(base);
+@import "../../../styles/generated/style-mira.css" layer(base);
+@import "../../../styles/generated/style-luma.css" layer(base);
+@import "../../../styles/generated/style-sera.css" layer(base);
+@import "../../../styles/generated/style-rhea.css" layer(base);

@@ -1,6 +1,6 @@
 import "./styles.css"
 
-import { beforeEach } from "vitest"
+import { beforeEach, inject } from "vitest"
 import { cdp, page, server, userEvent } from "vitest/browser"
 
 async function parkPointer() {
@@ -21,6 +21,12 @@ async function parkPointer() {
   corner.remove()
 }
 
-document.documentElement.classList.add("style-suiss")
+declare module "vitest" {
+  interface ProvidedContext {
+    style?: string
+  }
+}
+
+document.documentElement.classList.add(`style-${inject("style") ?? "suiss"}`)
 
 beforeEach(parkPointer)
