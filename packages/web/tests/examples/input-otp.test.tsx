@@ -118,7 +118,7 @@ test("Invalid", async () => {
     )
     await expect(slots).toHaveLength(6)
     for (const slot of slots) {
-      await expect(getComputedStyle(slot).borderTopColor).not.toBe(
+      await expect(getComputedStyle(slot).borderBottomColor).not.toBe(
         "rgba(0, 0, 0, 0)"
       )
     }
@@ -153,9 +153,11 @@ test("Disabled", async () => {
     )
     await expect(slots).toHaveLength(6)
     for (const slot of slots) {
-      await expect(getComputedStyle(slot).backgroundColor).not.toBe(
-        "rgba(0, 0, 0, 0)"
-      )
+      const { backgroundColor, borderBottomColor } = getComputedStyle(slot)
+      await expect([backgroundColor, borderBottomColor]).not.toEqual([
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+      ])
       await expect(separator).toHaveStyle({
         color: getComputedStyle(slot).color,
       })

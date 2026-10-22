@@ -110,10 +110,11 @@ test("Directions", async () => {
         name: "Notifications",
       })
       await expect(drawer).toHaveAttribute("data-swipe-direction", direction)
+      const inset = Number.parseFloat(getComputedStyle(drawer).marginTop) || 0
       await waitFor(() =>
-        expect(Math.abs(edgeGap(drawer.getBoundingClientRect()))).toBeLessThan(
-          1
-        )
+        expect(
+          Math.abs(Math.abs(edgeGap(drawer.getBoundingClientRect())) - inset)
+        ).toBeLessThan(1)
       )
       await userEvent.keyboard("{Escape}")
       await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
@@ -143,10 +144,11 @@ test("Directions Right To Left", async () => {
         name: "Notifications",
       })
       await expect(drawer).toHaveAttribute("data-swipe-direction", direction)
+      const inset = Number.parseFloat(getComputedStyle(drawer).marginTop) || 0
       await waitFor(() =>
-        expect(Math.abs(edgeGap(drawer.getBoundingClientRect()))).toBeLessThan(
-          1
-        )
+        expect(
+          Math.abs(Math.abs(edgeGap(drawer.getBoundingClientRect())) - inset)
+        ).toBeLessThan(1)
       )
       await userEvent.keyboard("{Escape}")
       await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())

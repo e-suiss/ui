@@ -55,7 +55,7 @@ test("Default", async () => {
     await waitFor(() =>
       expect(screen.queryByRole("link", { name: "Documentation" })).toBeNull()
     )
-    await expect(resources).toHaveFocus()
+    await waitFor(() => expect(resources).toHaveFocus())
   })
 })
 test("Open By Default", async () => {

@@ -32,7 +32,7 @@ test("Drop Zone", async () => {
   const zone = canvasElement.querySelector<HTMLElement>(
     "[data-slot=attachment]"
   )
-  await expect(zone).toHaveStyle({ backgroundColor: "rgba(0, 0, 0, 0)" })
+  await expect(zone).toHaveStyle({ borderStyle: "dashed" })
   await expect(
     canvas.getByRole("button", { name: "Choose a file to upload" })
   ).toBeEnabled()
