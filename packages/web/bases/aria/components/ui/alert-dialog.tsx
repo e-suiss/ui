@@ -95,7 +95,7 @@ function AlertDialogContent({
           data-size={size}
           aria-describedby={described ? descriptionId : undefined}
           className={cn(
-            "cn-alert-dialog-content-aria fixed top-1/2 z-50 grid w-full -translate-y-1/2 outline-none group/alert-dialog-content",
+            "cn-alert-dialog-content-aria inset-s-1/2 fixed top-1/2 z-50 grid w-full -translate-y-1/2 outline-none group/alert-dialog-content",
             className
           )}
           {...props}

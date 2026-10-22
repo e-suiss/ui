@@ -111,7 +111,7 @@ function TooltipContent({
       offset={sideOffset}
       crossOffset={alignOffset}
       className={cn(
-        "cn-tooltip-content-aria z-50 w-fit max-w-xs origin-(--trigger-anchor-point) bg-foreground text-background **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-sm",
+        "cn-tooltip-content-aria inline-flex z-50 w-fit max-w-xs origin-(--trigger-anchor-point) bg-foreground text-background **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-sm",
         className
       )}
       {...props}

@@ -125,7 +125,7 @@ function SelectContent({
         align={position === "popper" ? align : undefined}
         alignOffset={position === "popper" ? alignOffset : undefined}
         className={cn(
-          "cn-menu-target cn-menu-translucent cn-select-content relative z-50 max-h-(--radix-select-content-available-height) origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto data-[align-trigger=true]:animate-none",
+          "cn-menu-target cn-menu-translucent cn-select-content isolate relative z-50 max-h-(--radix-select-content-available-height) origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto data-[align-trigger=true]:animate-none",
           className
         )}
         {...props}
@@ -216,7 +216,7 @@ function SelectScrollUpButton({
     <SelectPrimitive.ScrollUpButton
       data-slot="select-scroll-up-button"
       className={cn(
-        "cn-select-scroll-up-button [&_svg:not([class*='size-'])]:size-4",
+        "cn-select-scroll-up-button top-0 w-full flex [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -240,7 +240,7 @@ function SelectScrollDownButton({
     <SelectPrimitive.ScrollDownButton
       data-slot="select-scroll-down-button"
       className={cn(
-        "cn-select-scroll-down-button [&_svg:not([class*='size-'])]:size-4",
+        "cn-select-scroll-down-button bottom-0 w-full flex [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}

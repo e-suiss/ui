@@ -90,7 +90,7 @@ function PopoverContent({
       offset={sideOffset}
       crossOffset={alignOffset}
       className={cn(
-        "cn-popover-content-aria z-50 w-72 origin-(--trigger-anchor-point) outline-hidden",
+        "cn-popover-content-aria flex flex-col z-50 w-72 origin-(--trigger-anchor-point) outline-hidden",
         className
       )}
       {...props}

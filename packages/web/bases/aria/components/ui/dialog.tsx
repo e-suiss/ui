@@ -110,7 +110,7 @@ function DialogContent({
           data-slot="dialog-content"
           aria-describedby={described ? descriptionId : undefined}
           className={cn(
-            "cn-dialog-content-aria fixed top-1/2 z-50 w-full -translate-y-1/2 outline-none has-[>[data-slot=dialog-close]]:*:first:pe-8 has-[>[data-slot=dialog-close][data-label]]:*:first:pe-18",
+            "cn-dialog-content-aria inset-s-1/2 grid fixed top-1/2 z-50 w-full -translate-y-1/2 outline-none has-[>[data-slot=dialog-close]]:*:first:pe-8 has-[>[data-slot=dialog-close][data-label]]:*:first:pe-18",
             className
           )}
           {...props}
@@ -125,7 +125,7 @@ function DialogContent({
               data-label={closeLabel ? "" : undefined}
               variant={closeLabel ? "plain" : "ghost"}
               className={cn(
-                "cn-dialog-close",
+                "cn-dialog-close absolute inset-e-4",
                 closeLabel && "text-base",
                 !closeLabel &&
                   "bg-secondary hover:bg-[color-mix(in_oklab,var(--secondary),var(--foreground)_5%)]"

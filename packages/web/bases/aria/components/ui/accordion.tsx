@@ -81,7 +81,7 @@ function AccordionTrigger({
         slot="trigger"
         data-slot="accordion-trigger"
         className={cn(
-          "cn-accordion-trigger group/accordion-trigger flex flex-1 justify-between outline-none **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-muted-foreground",
+          "cn-accordion-trigger relative group/accordion-trigger flex flex-1 justify-between outline-none **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-muted-foreground",
           className
         )}
         {...props}
@@ -123,7 +123,7 @@ function AccordionContent({
   return (
     <DisclosurePanelPrimitive
       data-slot="accordion-content"
-      className="cn-accordion-content"
+      className="cn-accordion-content overflow-hidden"
       {...props}
     >
       <div

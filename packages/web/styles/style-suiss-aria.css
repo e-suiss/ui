@@ -1,11 +1,11 @@
 .style-suiss {
   /* MARK: Accordion */
   .cn-accordion-trigger {
-    @apply relative min-h-11 cursor-pointer items-center gap-6 py-2.75 ps-0 pe-4 text-start text-base after:absolute after:-inset-s-2 after:inset-e-2 after:top-2 after:h-[calc(100%-1rem)] after:rounded-md hover:underline focus-visible:after:ring-3 focus-visible:after:ring-ring/50 data-disabled:pointer-events-none data-disabled:opacity-50;
+    @apply min-h-11 cursor-pointer items-center gap-6 py-2.75 ps-0 pe-4 text-start text-base after:absolute after:-inset-s-2 after:inset-e-2 after:top-2 after:h-[calc(100%-1rem)] after:rounded-md hover:underline focus-visible:after:ring-3 focus-visible:after:ring-ring/50 data-disabled:pointer-events-none data-disabled:opacity-50;
   }
 
   .cn-accordion-content {
-    @apply overflow-hidden text-sm text-muted-foreground in-data-expanded:animate-accordion-down;
+    @apply text-sm text-muted-foreground in-data-expanded:animate-accordion-down;
   }
 
   /* MARK: Alert Dialog */
@@ -14,21 +14,21 @@
   }
 
   .cn-alert-dialog-content-aria {
-    @apply -translate-x-1/2 inset-s-1/2 rtl:translate-x-1/2 gap-6 rounded-2xl bg-popover p-6 text-popover-foreground shadow-xl ring-1 ring-foreground/5 duration-100 max-w-xs data-[size=default]:max-w-85 dark:ring-foreground/10 in-data-entering:animate-in in-data-entering:fade-in-0 in-data-entering:zoom-in-95 in-data-exiting:animate-out in-data-exiting:fade-out-0 in-data-exiting:zoom-out-95;
+    @apply -translate-x-1/2 rtl:translate-x-1/2 gap-6 rounded-2xl bg-popover p-6 text-popover-foreground shadow-xl ring-1 ring-foreground/5 duration-100 max-w-xs data-[size=default]:max-w-85 dark:ring-foreground/10 in-data-entering:animate-in in-data-entering:fade-in-0 in-data-entering:zoom-in-95 in-data-exiting:animate-out in-data-exiting:fade-out-0 in-data-exiting:zoom-out-95;
   }
 
   /* MARK: Alert Sheet */
   .cn-alert-sheet-overlay {
-    @apply fixed inset-0 isolate z-50 bg-black/50 transition-opacity duration-300 data-exiting:opacity-0 data-entering:opacity-0;
+    @apply isolate z-50 bg-black/50 transition-opacity duration-300 data-exiting:opacity-0 data-entering:opacity-0;
   }
 
   .cn-alert-sheet-content {
-    @apply fixed inset-x-0 bottom-0 z-50 mx-auto flex w-full max-w-md flex-col gap-2 p-2 pb-[max(--spacing(2),env(safe-area-inset-bottom))] text-center outline-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] in-data-exiting:translate-y-full in-data-entering:translate-y-full;
+    @apply bottom-0 z-50 mx-auto max-w-md gap-2 p-2 pb-[max(--spacing(2),env(safe-area-inset-bottom))] text-center outline-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] in-data-exiting:translate-y-full in-data-entering:translate-y-full;
   }
 
   /* MARK: Checkbox */
   .cn-checkbox {
-    @apply flex size-4 items-center justify-center rounded-[calc(var(--radius)*0.4)] border border-foreground/25 bg-background shadow-[0_0.5px_1px_color-mix(in_oklab,var(--foreground)_12%,transparent)] data-focus-visible:border-ring data-focus-visible:ring-3 data-focus-visible:ring-ring/50 dark:not-data-selected:border-transparent dark:not-data-selected:bg-border dark:shadow-none data-selected:border-primary data-selected:bg-primary data-selected:text-primary-foreground data-selected:shadow-none data-disabled:cursor-not-allowed data-disabled:shadow-none data-disabled:data-selected:border-transparent data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:data-invalid:ring-destructive/40 data-invalid:data-selected:border-primary group-has-focus-visible/field-label:ring-0 group-has-focus-visible/field-label:data-selected:border-primary data-disabled:opacity-50 group-has-disabled/field:opacity-50;
+    @apply size-4 items-center justify-center rounded-[calc(var(--radius)*0.4)] border border-foreground/25 bg-background shadow-[0_0.5px_1px_color-mix(in_oklab,var(--foreground)_12%,transparent)] data-focus-visible:border-ring data-focus-visible:ring-3 data-focus-visible:ring-ring/50 dark:not-data-selected:border-transparent dark:not-data-selected:bg-border dark:shadow-none data-selected:border-primary data-selected:bg-primary data-selected:text-primary-foreground data-selected:shadow-none data-disabled:cursor-not-allowed data-disabled:shadow-none data-disabled:data-selected:border-transparent data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:data-invalid:ring-destructive/40 data-invalid:data-selected:border-primary group-has-focus-visible/field-label:ring-0 group-has-focus-visible/field-label:data-selected:border-primary data-disabled:opacity-50 group-has-disabled/field:opacity-50;
   }
 
   .cn-checkbox-aria {
@@ -36,7 +36,7 @@
 
   /* MARK: Combobox */
   .cn-combobox-content-aria {
-    @apply max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+(--spacing(7)))] origin-(--transform-origin) overflow-hidden rounded-xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[chips=true]:min-w-(--anchor-width) data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-start-2 data-[side=inline-start]:slide-in-from-end-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
+    @apply max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+(--spacing(7)))] origin-(--transform-origin) rounded-xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[chips=true]:min-w-(--anchor-width) data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-start-2 data-[side=inline-start]:slide-in-from-end-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
   }
 
   .cn-menu-translucent-aria {
@@ -46,7 +46,7 @@
   }
 
   .cn-input-group-icon-button {
-    @apply flex items-center gap-2 rounded-full text-sm shadow-none size-6 p-0 has-[>svg]:p-0;
+    @apply items-center gap-2 rounded-full text-sm shadow-none size-6 p-0 has-[>svg]:p-0;
   }
 
   /* MARK: Command */
@@ -58,11 +58,10 @@
 
   /* MARK: Context Menu */
   .cn-context-menu-trigger {
-    @apply select-none;
   }
 
   .cn-context-menu-item {
-    @apply relative flex cursor-default items-center gap-2.5 rounded-md px-3 py-2 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-disabled:pointer-events-none data-disabled:opacity-50;
+    @apply gap-2.5 rounded-md px-3 py-2 text-base focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive;
   }
 
   .cn-context-menu-sub-trigger {
@@ -74,11 +73,11 @@
   }
 
   .cn-context-menu-checkbox-item {
-    @apply relative flex cursor-default items-center gap-2.5 rounded-md py-2 pe-8 ps-3 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-disabled:pointer-events-none data-disabled:opacity-50;
+    @apply gap-2.5 rounded-md py-2 pe-8 ps-3 text-base focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5;
   }
 
   .cn-context-menu-radio-item {
-    @apply relative flex cursor-default items-center gap-2.5 rounded-md py-2 pe-8 ps-3 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-disabled:pointer-events-none data-disabled:opacity-50;
+    @apply gap-2.5 rounded-md py-2 pe-8 ps-3 text-base focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5;
   }
 
   /* MARK: Dialog */
@@ -87,16 +86,16 @@
   }
 
   .cn-dialog-content-aria {
-    @apply -translate-x-1/2 inset-s-1/2 grid max-w-[calc(100%-2rem)] rtl:translate-x-1/2 gap-6 rounded-2xl bg-popover p-6 text-base text-popover-foreground shadow-xl ring-1 ring-foreground/5 duration-100 sm:max-w-md dark:ring-foreground/10 in-data-entering:animate-in in-data-entering:fade-in-0 in-data-entering:zoom-in-95 in-data-exiting:animate-out in-data-exiting:fade-out-0 in-data-exiting:zoom-out-95;
+    @apply -translate-x-1/2 max-w-[calc(100%-2rem)] rtl:translate-x-1/2 gap-6 rounded-2xl bg-popover p-6 text-base text-popover-foreground shadow-xl ring-1 ring-foreground/5 duration-100 sm:max-w-md dark:ring-foreground/10 in-data-entering:animate-in in-data-entering:fade-in-0 in-data-entering:zoom-in-95 in-data-exiting:animate-out in-data-exiting:fade-out-0 in-data-exiting:zoom-out-95;
   }
 
   .cn-dialog-close {
-    @apply absolute top-4.75 inset-e-4;
+    @apply top-4.75;
   }
 
   /* MARK: Dropdown Menu */
   .cn-dropdown-menu-item {
-    @apply relative flex cursor-default items-center gap-2.5 rounded-md px-3 py-2 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-disabled:pointer-events-none data-disabled:opacity-50;
+    @apply gap-2.5 rounded-md px-3 py-2 text-base focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive;
   }
 
   .cn-dropdown-menu-sub-trigger {
@@ -108,16 +107,16 @@
   }
 
   .cn-dropdown-menu-checkbox-item {
-    @apply relative flex cursor-default items-center gap-2.5 rounded-md py-2 pe-8 ps-3 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-disabled:pointer-events-none data-disabled:opacity-50;
+    @apply gap-2.5 rounded-md py-2 pe-8 ps-3 text-base focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5;
   }
 
   .cn-dropdown-menu-radio-item {
-    @apply relative flex cursor-default items-center gap-2.5 rounded-md py-2 pe-8 ps-3 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-disabled:pointer-events-none data-disabled:opacity-50;
+    @apply gap-2.5 rounded-md py-2 pe-8 ps-3 text-base focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5;
   }
 
   /* MARK: Fullscreen Menu */
   .cn-fullscreen-menu-content {
-    @apply no-scrollbar fixed inset-0 z-50 flex flex-col overflow-x-hidden overflow-y-auto overscroll-contain bg-background pt-[env(safe-area-inset-top)] pb-[max(--spacing(8),env(safe-area-inset-bottom))] text-foreground outline-none [clip-path:inset(0)] transition-[clip-path] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] data-exiting:duration-350 data-exiting:[clip-path:inset(0_0_100%_0)] data-entering:[clip-path:inset(0_0_100%_0)] motion-reduce:transition-none;
+    @apply no-scrollbar z-50 overscroll-contain bg-background pt-[env(safe-area-inset-top)] pb-[max(--spacing(8),env(safe-area-inset-bottom))] text-foreground outline-none [clip-path:inset(0)] transition-[clip-path] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] data-exiting:duration-350 data-exiting:[clip-path:inset(0_0_100%_0)] data-entering:[clip-path:inset(0_0_100%_0)] motion-reduce:transition-none;
   }
 
   .cn-fullscreen-menu-label {
@@ -131,30 +130,30 @@
 
   /* MARK: Input */
   .cn-input {
-    @apply h-11 w-full min-w-0 rounded-lg border border-transparent bg-secondary px-3 py-1 text-base transition-[color,box-shadow,background-color] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:text-foreground caret-primary placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-[size=md]:h-9 data-[size=md]:text-sm data-[size=sm]:h-8 data-[size=sm]:rounded-md data-[size=sm]:px-2.5 data-[size=sm]:text-sm disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10 disabled:opacity-50;
+    @apply h-11 rounded-lg border border-transparent bg-secondary px-3 py-1 text-base transition-[color,box-shadow,background-color] file:h-7 file:border-0 file:bg-transparent file:text-sm caret-primary focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-[size=md]:h-9 data-[size=md]:text-sm data-[size=sm]:h-8 data-[size=sm]:rounded-md data-[size=sm]:px-2.5 data-[size=sm]:text-sm aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10;
   }
 
   /* MARK: Menubar */
   .cn-dropdown-menu-content {
-    @apply z-50 max-h-(--available-height) w-(--anchor-width) min-w-48 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-start-2 data-[side=inline-start]:slide-in-from-end-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95;
+    @apply min-w-48 rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-start-2 data-[side=inline-start]:slide-in-from-end-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
   }
 
   .cn-menubar-sub-trigger {
-    @apply flex cursor-default items-center gap-2 rounded-md px-3 py-2 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-popup-open:bg-accent data-popup-open:text-accent-foreground;
+    @apply cursor-default items-center gap-2 rounded-md px-3 py-2 text-base outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-popup-open:bg-accent data-popup-open:text-accent-foreground;
   }
 
   .cn-dropdown-menu-sub-content {
-    @apply w-auto min-w-36 rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
+    @apply min-w-36 rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
   }
 
   /* MARK: Message Scroller */
   .cn-message-scroller-viewport {
-    @apply overflow-auto [scrollbar-color:var(--color-border)_transparent] [scrollbar-width:thin] outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-scrollable:scroll-fade-b;
+    @apply [scrollbar-color:var(--color-border)_transparent] [scrollbar-width:thin] outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-scrollable:scroll-fade-b;
   }
 
   /* MARK: Popover */
   .cn-popover-content-aria {
-    @apply flex flex-col gap-4 rounded-2xl bg-popover p-4 text-base text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95;
+    @apply gap-4 rounded-2xl bg-popover p-4 text-base text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95;
   }
 
   /* MARK: Questionnaire */
@@ -167,7 +166,7 @@
   }
 
   .cn-questionnaire-item {
-    @apply flex flex-col gap-5;
+    @apply gap-5;
   }
 
   .cn-questionnaire-title {
@@ -199,7 +198,7 @@
 
   /* MARK: Radio Group */
   .cn-radio-group-item {
-    @apply flex size-4 rounded-full border-foreground/25 bg-background shadow-[0_0.5px_1px_color-mix(in_oklab,var(--foreground)_12%,transparent)] group-has-focus-visible/field-label:ring-0 data-focus-visible:border-ring data-focus-visible:ring-3 data-focus-visible:ring-ring/50 dark:not-data-selected:border-transparent dark:not-data-selected:bg-border dark:shadow-none data-selected:border-primary data-selected:bg-primary data-selected:text-primary-foreground data-selected:shadow-none data-disabled:cursor-not-allowed data-disabled:shadow-none data-disabled:data-selected:border-transparent data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:data-invalid:ring-destructive/40 data-disabled:opacity-50;
+    @apply size-4 rounded-full border-foreground/25 bg-background shadow-[0_0.5px_1px_color-mix(in_oklab,var(--foreground)_12%,transparent)] group-has-focus-visible/field-label:ring-0 data-focus-visible:border-ring data-focus-visible:ring-3 data-focus-visible:ring-ring/50 dark:not-data-selected:border-transparent dark:not-data-selected:bg-border dark:shadow-none data-selected:border-primary data-selected:bg-primary data-selected:text-primary-foreground data-selected:shadow-none data-disabled:cursor-not-allowed data-disabled:shadow-none data-disabled:data-selected:border-transparent data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:data-invalid:ring-destructive/40 data-disabled:opacity-50;
   }
 
   .cn-radio-group-item-aria {
@@ -207,7 +206,7 @@
 
   /* MARK: Scroll Area */
   .cn-scroll-area-viewport {
-    @apply size-full overflow-auto rounded-[inherit] [scrollbar-color:var(--color-border)_transparent] [scrollbar-width:thin] transition-[color,box-shadow] outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1;
+    @apply [scrollbar-color:var(--color-border)_transparent] [scrollbar-width:thin] focus-visible:ring-3;
   }
 
   /* MARK: Select */
@@ -219,32 +218,31 @@
   }
 
   .cn-select-content-aria {
-    @apply min-w-36 overflow-x-hidden overflow-y-auto rounded-xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95;
+    @apply min-w-36 rounded-xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95;
   }
 
   .cn-select-item-aria {
   }
 
   .cn-select-scroll-up-button {
-    @apply top-0 z-10 flex w-full cursor-default items-center justify-center bg-popover py-1;
+    @apply z-10 cursor-default items-center justify-center bg-popover py-1;
   }
 
   .cn-select-scroll-down-button {
-    @apply bottom-0 z-10 flex w-full cursor-default items-center justify-center bg-popover py-1;
+    @apply z-10 cursor-default items-center justify-center bg-popover py-1;
   }
 
   /* MARK: Separator */
   .cn-separator {
-    @apply data-horizontal:h-px data-horizontal:w-full data-vertical:w-px data-vertical:self-stretch;
   }
 
   /* MARK: Sheet */
   .cn-sheet-content {
-    @apply fixed z-50 flex flex-col rounded-3xl bg-popover text-base text-popover-foreground shadow-xl transition duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] in-data-exiting:opacity-0 in-data-entering:opacity-0 data-[side=bottom]:inset-x-2 data-[side=bottom]:bottom-2 data-[side=bottom]:h-auto data-[side=bottom]:in-data-exiting:translate-y-10 data-[side=bottom]:in-data-entering:translate-y-10 data-[side=left]:inset-y-2 data-[side=left]:left-2 data-[side=left]:w-3/4 data-[side=left]:in-data-exiting:-translate-x-10 data-[side=left]:in-data-entering:-translate-x-10 data-[side=right]:inset-y-2 data-[side=right]:right-2 data-[side=right]:w-3/4 data-[side=right]:in-data-exiting:translate-x-10 data-[side=right]:in-data-entering:translate-x-10 data-[side=top]:inset-x-2 data-[side=top]:top-2 data-[side=top]:h-auto data-[side=top]:in-data-exiting:-translate-y-10 data-[side=top]:in-data-entering:-translate-y-10 data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm;
+    @apply z-50 rounded-3xl bg-popover text-base text-popover-foreground shadow-xl transition duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] in-data-exiting:opacity-0 in-data-entering:opacity-0 data-[side=bottom]:inset-x-2 data-[side=bottom]:bottom-2 data-[side=bottom]:h-auto data-[side=bottom]:in-data-exiting:translate-y-10 data-[side=bottom]:in-data-entering:translate-y-10 data-[side=left]:inset-y-2 data-[side=left]:left-2 data-[side=left]:w-3/4 data-[side=left]:in-data-exiting:-translate-x-10 data-[side=left]:in-data-entering:-translate-x-10 data-[side=right]:inset-y-2 data-[side=right]:right-2 data-[side=right]:w-3/4 data-[side=right]:in-data-exiting:translate-x-10 data-[side=right]:in-data-entering:translate-x-10 data-[side=top]:inset-x-2 data-[side=top]:top-2 data-[side=top]:h-auto data-[side=top]:in-data-exiting:-translate-y-10 data-[side=top]:in-data-entering:-translate-y-10 data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm;
   }
 
   .cn-sheet-close {
-    @apply absolute top-4.75 inset-e-4;
+    @apply top-4.75;
   }
 
   /* MARK: Sidebar */
@@ -253,11 +251,11 @@
   }
 
   .cn-sidebar-group-action {
-    @apply absolute top-3.5 end-3 w-5 rounded-md p-0 text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2;
+    @apply top-3.5 end-3 w-5 rounded-md p-0 text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2;
   }
 
   .cn-sidebar-menu-action {
-    @apply absolute top-1.5 end-1 aspect-square w-5 rounded-md p-0 text-sidebar-foreground ring-sidebar-ring peer-hover/menu-button:text-sidebar-foreground peer-data-[size=default]/menu-button:top-2 peer-data-[size=lg]/menu-button:top-2.5 peer-data-[size=sm]/menu-button:top-1 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2;
+    @apply top-1.5 end-1 aspect-square w-5 rounded-md p-0 text-sidebar-foreground ring-sidebar-ring peer-hover/menu-button:text-sidebar-foreground peer-data-[size=default]/menu-button:top-2 peer-data-[size=lg]/menu-button:top-2.5 peer-data-[size=sm]/menu-button:top-1 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2;
   }
 
   .cn-sidebar-menu-sub-button {
@@ -273,7 +271,6 @@
 
   /* MARK: Slider */
   .cn-slider {
-    @apply data-horizontal:w-full;
   }
 
   .cn-slider-thumb {
@@ -301,7 +298,7 @@
 
   /* MARK: Toggle Group */
   .cn-toggle-group {
-    @apply relative gap-[--spacing(var(--gap))] data-[spacing=0]:data-[variant=outline]:rounded-lg data-[spacing=0]:data-[variant=default]:rounded-xl data-[spacing=0]:data-[variant=default]:bg-secondary data-[spacing=0]:data-[variant=default]:gap-1 data-[spacing=0]:data-[variant=default]:p-1;
+    @apply gap-[--spacing(var(--gap))] data-[spacing=0]:data-[variant=outline]:rounded-lg data-[spacing=0]:data-[variant=default]:rounded-xl data-[spacing=0]:data-[variant=default]:bg-secondary data-[spacing=0]:data-[variant=default]:gap-1 data-[spacing=0]:data-[variant=default]:p-1;
   }
 
   .cn-toggle-group-item {
@@ -318,6 +315,6 @@
 
   /* MARK: Tooltip */
   .cn-tooltip-content-aria {
-    @apply inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs has-data-[slot=kbd]:pe-1.5 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95;
+    @apply items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs has-data-[slot=kbd]:pe-1.5 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95;
   }
 }

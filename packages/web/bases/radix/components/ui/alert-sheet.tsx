@@ -45,7 +45,7 @@ function AlertSheetOverlay({
   return (
     <AlertSheetPrimitive.Overlay
       data-slot="alert-sheet-overlay"
-      className={cn("cn-alert-sheet-overlay", className)}
+      className={cn("cn-alert-sheet-overlay fixed inset-0", className)}
       {...props}
     />
   )
@@ -84,7 +84,10 @@ function AlertSheetContent({
           onInteractOutside?.(event)
           if (!dismissible) event.preventDefault()
         }}
-        className={cn("cn-alert-sheet-content", className)}
+        className={cn(
+          "cn-alert-sheet-content fixed inset-x-0 flex w-full flex-col",
+          className
+        )}
         {...props}
       />
     </AlertSheetPortal>

@@ -21,7 +21,10 @@ function Slider<T extends number | number[]>({
 
   return (
     <SliderPrimitive
-      className={cn("cn-slider data-vertical:h-full", className)}
+      className={cn(
+        "cn-slider data-horizontal:w-full data-vertical:h-full",
+        className
+      )}
       data-slot="slider"
       data-horizontal={horizontal}
       data-vertical={vertical}

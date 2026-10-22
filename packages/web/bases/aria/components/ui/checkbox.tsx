@@ -32,7 +32,7 @@ function Checkbox({
     <CheckboxPrimitive
       data-slot="checkbox"
       className={cn(
-        "cn-checkbox cn-checkbox-aria peer relative shrink-0 outline-none after:absolute after:-inset-x-3 after:-inset-y-2",
+        "cn-checkbox flex cn-checkbox-aria peer relative shrink-0 outline-none after:absolute after:-inset-x-3 after:-inset-y-2",
         className
       )}
       {...props}

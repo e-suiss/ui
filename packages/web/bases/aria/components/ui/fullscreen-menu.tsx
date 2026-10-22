@@ -113,7 +113,7 @@ function FullscreenMenuContent({
     <ModalOverlayPrimitive
       data-slot="fullscreen-menu-content"
       className={cn(
-        "cn-fullscreen-menu-content group/fullscreen-menu",
+        "cn-fullscreen-menu-content fixed inset-0 flex flex-col overflow-x-hidden overflow-y-auto group/fullscreen-menu",
         className
       )}
       {...props}

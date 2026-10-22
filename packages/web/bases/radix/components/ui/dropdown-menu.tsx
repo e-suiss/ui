@@ -52,7 +52,7 @@ function DropdownMenuContent({
         side={side}
         sideOffset={sideOffset}
         className={cn(
-          "cn-menu-target cn-menu-translucent cn-dropdown-menu-content z-50 max-h-(--radix-dropdown-menu-content-available-height) w-(--radix-dropdown-menu-trigger-width) origin-(--radix-dropdown-menu-content-transform-origin)",
+          "cn-menu-target cn-menu-translucent cn-dropdown-menu-content overflow-x-hidden overflow-y-auto outline-none data-closed:overflow-hidden z-50 max-h-(--radix-dropdown-menu-content-available-height) w-(--radix-dropdown-menu-trigger-width) origin-(--radix-dropdown-menu-content-transform-origin)",
           className
         )}
         {...props}
@@ -182,7 +182,7 @@ function DropdownMenuSubContent({
         alignOffset={alignOffset}
         sideOffset={sideOffset}
         className={cn(
-          "cn-menu-target cn-menu-translucent cn-dropdown-menu-sub-content z-50 origin-(--radix-dropdown-menu-content-transform-origin)",
+          "cn-menu-target cn-menu-translucent cn-dropdown-menu-sub-content w-auto overflow-x-hidden overflow-y-auto z-50 origin-(--radix-dropdown-menu-content-transform-origin)",
           className
         )}
         {...props}

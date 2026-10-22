@@ -109,7 +109,7 @@ function SheetContent({
           data-side={side}
           aria-describedby={described ? descriptionId : undefined}
           className={cn(
-            "cn-sheet-content has-[>[data-slot=sheet-close]]:*:first:pe-14 has-[>[data-slot=sheet-close][data-label]]:*:first:pe-24",
+            "cn-sheet-content fixed flex flex-col has-[>[data-slot=sheet-close]]:*:first:pe-14 has-[>[data-slot=sheet-close][data-label]]:*:first:pe-24",
             className
           )}
           {...props}
@@ -124,7 +124,7 @@ function SheetContent({
               data-label={closeLabel ? "" : undefined}
               variant={closeLabel ? "plain" : "ghost"}
               className={cn(
-                "cn-sheet-close",
+                "cn-sheet-close absolute inset-e-4",
                 closeLabel && "text-base",
                 !closeLabel &&
                   "bg-secondary hover:bg-[color-mix(in_oklab,var(--secondary),var(--foreground)_5%)]"

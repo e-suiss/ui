@@ -164,7 +164,7 @@ function SelectContent({
       offset={offset}
       crossOffset={crossOffset}
       className={cn(
-        "cn-menu-target cn-menu-translucent cn-select-content-aria cn-menu-translucent-aria relative isolate z-50 w-(--trigger-width) origin-(--trigger-anchor-point)",
+        "cn-menu-target cn-menu-translucent cn-select-content-aria overflow-x-hidden overflow-y-auto cn-menu-translucent-aria relative isolate z-50 w-(--trigger-width) origin-(--trigger-anchor-point)",
         className
       )}
     >
@@ -273,7 +273,7 @@ function SelectScrollUpButton({
       aria-hidden="true"
       data-slot="select-scroll-up-button"
       className={cn(
-        "cn-select-scroll-up-button [&_svg:not([class*='size-'])]:size-4",
+        "cn-select-scroll-up-button top-0 w-full flex [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -298,7 +298,7 @@ function SelectScrollDownButton({
       aria-hidden="true"
       data-slot="select-scroll-down-button"
       className={cn(
-        "cn-select-scroll-down-button [&_svg:not([class*='size-'])]:size-4",
+        "cn-select-scroll-down-button bottom-0 w-full flex [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}

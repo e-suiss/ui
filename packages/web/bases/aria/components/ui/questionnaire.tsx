@@ -253,7 +253,7 @@ function QuestionnaireItem({
           {...questionnaireItem.props}
           data-slot="questionnaire-item"
           className={cn(
-            "cn-questionnaire-item min-w-0 border-0 p-0 outline-none",
+            "cn-questionnaire-item flex flex-col min-w-0 border-0 p-0 outline-none",
             className
           )}
           {...props}

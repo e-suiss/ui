@@ -155,7 +155,7 @@ function NavigationMenuContent({
     <NavigationMenuPrimitive.Content
       data-slot="navigation-menu-content"
       className={cn(
-        "cn-navigation-menu-content top-0 in-data-[slot=navigation-menu-panel]:[&_li]:animate-in in-data-[slot=navigation-menu-panel]:[&_li]:fade-in-0 in-data-[slot=navigation-menu-panel]:[&_li]:slide-in-from-top-2 in-data-[slot=navigation-menu-panel]:[&_li]:fill-mode-both in-data-[slot=navigation-menu-panel]:[&_li]:duration-300 in-data-[slot=navigation-menu-panel]:[&_li]:ease-[cubic-bezier(0.4,0,0.6,1)] in-data-[slot=navigation-menu-panel]:[&_li:nth-child(2)]:delay-[25ms] in-data-[slot=navigation-menu-panel]:[&_li:nth-child(3)]:delay-[50ms] in-data-[slot=navigation-menu-panel]:[&_li:nth-child(4)]:delay-75 in-data-[slot=navigation-menu-panel]:[&_li:nth-child(5)]:delay-100 in-data-[slot=navigation-menu-panel]:[&_li:nth-child(6)]:delay-[125ms] in-data-[slot=navigation-menu-panel]:[&_li:nth-child(n+7)]:delay-150 motion-reduce:[&_li]:animate-none",
+        "cn-navigation-menu-content absolute transition-[opacity,transform,translate] top-0 in-data-[slot=navigation-menu-panel]:[&_li]:animate-in in-data-[slot=navigation-menu-panel]:[&_li]:fade-in-0 in-data-[slot=navigation-menu-panel]:[&_li]:slide-in-from-top-2 in-data-[slot=navigation-menu-panel]:[&_li]:fill-mode-both in-data-[slot=navigation-menu-panel]:[&_li]:duration-300 in-data-[slot=navigation-menu-panel]:[&_li]:ease-[cubic-bezier(0.4,0,0.6,1)] in-data-[slot=navigation-menu-panel]:[&_li:nth-child(2)]:delay-[25ms] in-data-[slot=navigation-menu-panel]:[&_li:nth-child(3)]:delay-[50ms] in-data-[slot=navigation-menu-panel]:[&_li:nth-child(4)]:delay-75 in-data-[slot=navigation-menu-panel]:[&_li:nth-child(5)]:delay-100 in-data-[slot=navigation-menu-panel]:[&_li:nth-child(6)]:delay-[125ms] in-data-[slot=navigation-menu-panel]:[&_li:nth-child(n+7)]:delay-150 motion-reduce:[&_li]:animate-none",
         className
       )}
       {...props}
@@ -181,7 +181,7 @@ function NavigationMenuPositioner({
       data-slot="navigation-menu-positioner"
       data-align={align}
       className={cn(
-        "cn-navigation-menu-positioner",
+        "cn-navigation-menu-positioner flex",
         anchor
           ? "fixed data-[align=center]:justify-center data-[align=end]:justify-end"
           : "absolute top-full data-[align=center]:inset-x-0 data-[align=center]:justify-center data-[align=end]:inset-e-0 data-[align=start]:inset-s-0"
@@ -194,7 +194,10 @@ function NavigationMenuPositioner({
     >
       <NavigationMenuPrimitive.Viewport
         data-slot="navigation-menu-popup"
-        className={cn("cn-navigation-menu-popup", className)}
+        className={cn(
+          "cn-navigation-menu-popup relative overflow-hidden",
+          className
+        )}
         {...props}
       />
     </div>
@@ -257,7 +260,7 @@ function NavigationMenuPanel({
       {open && (
         <div
           data-slot="navigation-menu-backdrop"
-          className="cn-navigation-menu-backdrop"
+          className="cn-navigation-menu-backdrop fixed inset-0"
         />
       )}
       <div
@@ -270,7 +273,10 @@ function NavigationMenuPanel({
       >
         <NavigationMenuPrimitive.Viewport
           data-slot="navigation-menu-panel"
-          className={cn("cn-navigation-menu-panel", className)}
+          className={cn(
+            "cn-navigation-menu-panel relative w-full overflow-hidden",
+            className
+          )}
           style={style}
           {...props}
         />

@@ -148,7 +148,7 @@
 
   /* MARK: Alert Dialog */
   .cn-alert-dialog-overlay {
-    @apply isolate bg-black/50 duration-100 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0;
+    @apply bg-black/50 duration-100 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0;
   }
 
   .cn-alert-dialog-content {
@@ -177,11 +177,11 @@
 
   /* MARK: Alert Sheet */
   .cn-alert-sheet-overlay {
-    @apply fixed inset-0 isolate z-50 bg-black/50 duration-300 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0;
+    @apply isolate z-50 bg-black/50 duration-300 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0;
   }
 
   .cn-alert-sheet-content {
-    @apply fixed inset-x-0 bottom-0 z-50 mx-auto flex w-full max-w-md flex-col gap-2 p-2 pb-[max(--spacing(2),env(safe-area-inset-bottom))] text-center outline-none duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-open:animate-in data-open:slide-in-from-bottom data-closed:animate-out data-closed:slide-out-to-bottom;
+    @apply bottom-0 z-50 mx-auto max-w-md gap-2 p-2 pb-[max(--spacing(2),env(safe-area-inset-bottom))] text-center outline-none duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-open:animate-in data-open:slide-in-from-bottom data-closed:animate-out data-closed:slide-out-to-bottom;
   }
 
   .cn-alert-sheet-group {
@@ -424,7 +424,7 @@
     @apply end-3;
   }
   .cn-bubble-content {
-    @apply w-fit relative rounded-2xl border [background:linear-gradient(var(--bubble-bg),var(--bubble-bg)),var(--bubble-surface,var(--background))] border-transparent px-3.5 py-1.5 text-base group-data-[align=end]/bubble:self-end group-data-[align=end]/message:self-end before:absolute before:-start-[7.9px] before:-bottom-px before:hidden before:size-5 before:[background:inherit] before:[clip-path:path('M7_0H20V4A16_16_0_0_1_4_20H0V19.54A10_10_0_0_0_7_10Z')] rtl:before:-scale-x-100 group-data-[align=end]/bubble:before:-scale-x-100 group-data-[align=end]/message:before:-scale-x-100 rtl:group-data-[align=end]/bubble:before:scale-x-100 rtl:group-data-[align=end]/message:before:scale-x-100 group-data-[align=end]/bubble:before:start-auto group-data-[align=end]/message:before:start-auto group-data-[align=end]/bubble:before:-end-[7.9px] group-data-[align=end]/message:before:-end-[7.9px] [[data-slot=bubble][data-align=start]:not([data-slot=message][data-align=end]_*):not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=start]))>&]:before:block [[data-slot=bubble]:is([data-align=end],[data-slot=message][data-align=end]_*):not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble]:is([data-align=end],[data-slot=message][data-align=end]_*)))>&]:before:block [button]:text-start [button,a]:outline-none [button,a]:focus-visible:border-ring [button,a]:focus-visible:ring-3 [button,a]:focus-visible:ring-ring/50;
+    @apply w-fit rounded-2xl border [background:linear-gradient(var(--bubble-bg),var(--bubble-bg)),var(--bubble-surface,var(--background))] border-transparent px-3.5 py-1.5 text-base group-data-[align=end]/bubble:self-end group-data-[align=end]/message:self-end before:absolute before:-start-[7.9px] before:-bottom-px before:hidden before:size-5 before:[background:inherit] before:[clip-path:path('M7_0H20V4A16_16_0_0_1_4_20H0V19.54A10_10_0_0_0_7_10Z')] rtl:before:-scale-x-100 group-data-[align=end]/bubble:before:-scale-x-100 group-data-[align=end]/message:before:-scale-x-100 rtl:group-data-[align=end]/bubble:before:scale-x-100 rtl:group-data-[align=end]/message:before:scale-x-100 group-data-[align=end]/bubble:before:start-auto group-data-[align=end]/message:before:start-auto group-data-[align=end]/bubble:before:-end-[7.9px] group-data-[align=end]/message:before:-end-[7.9px] [[data-slot=bubble][data-align=start]:not([data-slot=message][data-align=end]_*):not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=start]))>&]:before:block [[data-slot=bubble]:is([data-align=end],[data-slot=message][data-align=end]_*):not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble]:is([data-align=end],[data-slot=message][data-align=end]_*)))>&]:before:block [button]:text-start [button,a]:outline-none [button,a]:focus-visible:border-ring [button,a]:focus-visible:ring-3 [button,a]:focus-visible:ring-ring/50;
   }
 
   /* MARK: Separator */
@@ -447,7 +447,7 @@
     @apply flex-col;
   }
   .cn-button-group-text {
-    @apply flex items-center gap-2 rounded-full bg-secondary px-2.5 text-sm;
+    @apply items-center gap-2 rounded-full bg-secondary px-2.5 text-sm;
   }
 
   /* MARK: Card */
@@ -763,7 +763,7 @@
   }
 
   .cn-context-menu-content {
-    @apply min-w-48 rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
+    @apply min-w-48 rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
   }
 
   .cn-context-menu-content-logical {
@@ -802,7 +802,7 @@
   }
 
   .cn-context-menu-sub-content {
-    @apply max-h-(--radix-context-menu-content-available-height) min-w-48 overflow-x-hidden overflow-y-auto rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
+    @apply max-h-(--radix-context-menu-content-available-height) min-w-48 rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
   }
 
   /* MARK: Drawer */
@@ -815,19 +815,18 @@
   }
 
   .cn-drawer-overlay {
-    @apply fixed min-h-dvh bg-black/50 opacity-[max(var(--drawer-overlay-min-opacity,0),calc(1-var(--drawer-swipe-progress)))] transition-opacity duration-450 ease-[cubic-bezier(0.32,0.72,0,1)] select-none data-ending-style:pointer-events-none data-ending-style:opacity-0 data-ending-style:duration-[calc(var(--drawer-swipe-strength)*400ms)] data-snap-points:[--drawer-overlay-min-opacity:0.5] data-starting-style:opacity-0 data-swiping:duration-0 supports-[-webkit-touch-callout:none]:absolute;
+    @apply bg-black/50;
   }
 
   .cn-drawer-swipe-handle {
-    @apply relative z-10 flex shrink-0 cursor-grab transition-opacity duration-200 group-data-nested-drawer-open/drawer-popup:opacity-0 group-data-nested-drawer-swiping/drawer-popup:opacity-100 group-data-[swipe-axis=x]/drawer-popup:h-full group-data-[swipe-axis=x]/drawer-popup:w-3 group-data-[swipe-axis=x]/drawer-popup:items-center group-data-[swipe-axis=y]/drawer-popup:h-3 group-data-[swipe-axis=y]/drawer-popup:w-full group-data-[swipe-axis=y]/drawer-popup:justify-center group-data-[swipe-direction=down]/drawer-popup:items-end group-data-[swipe-direction=left]/drawer-popup:order-last group-data-[swipe-direction=left]/drawer-popup:justify-start group-data-[swipe-direction=right]/drawer-popup:justify-end group-data-[swipe-direction=up]/drawer-popup:order-last group-data-[swipe-direction=up]/drawer-popup:items-start after:block after:shrink-0 after:rounded-full after:bg-border group-data-[swipe-axis=x]/drawer-popup:after:h-9 group-data-[swipe-axis=x]/drawer-popup:after:w-1.25 group-data-[swipe-axis=y]/drawer-popup:after:h-1.25 group-data-[swipe-axis=y]/drawer-popup:after:w-9 active:cursor-grabbing;
+    @apply group-data-[swipe-axis=x]/drawer-popup:h-full group-data-[swipe-axis=x]/drawer-popup:w-3 group-data-[swipe-axis=x]/drawer-popup:items-center group-data-[swipe-axis=y]/drawer-popup:h-3 group-data-[swipe-axis=y]/drawer-popup:w-full group-data-[swipe-axis=y]/drawer-popup:justify-center group-data-[swipe-direction=down]/drawer-popup:items-end group-data-[swipe-direction=left]/drawer-popup:justify-start group-data-[swipe-direction=right]/drawer-popup:justify-end group-data-[swipe-direction=up]/drawer-popup:items-start after:block after:shrink-0 after:rounded-full after:bg-border group-data-[swipe-axis=x]/drawer-popup:after:h-9 group-data-[swipe-axis=x]/drawer-popup:after:w-1.25 group-data-[swipe-axis=y]/drawer-popup:after:h-1.25 group-data-[swipe-axis=y]/drawer-popup:after:w-9;
   }
 
   .cn-drawer-viewport {
-    @apply pointer-events-none fixed inset-0 z-50 select-none data-[modal=true]:pointer-events-auto
   }
 
   .cn-drawer-popup {
-    @apply pointer-events-auto fixed z-50 m-(--drawer-inset,0px) flex h-(--drawer-content-height) max-h-(--drawer-content-max-height,none) min-h-0 w-(--drawer-content-width,auto) transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))] flex-col rounded-3xl bg-popover text-base text-popover-foreground shadow-xl transition-[transform,height,opacity,filter] duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform outline-none select-none [--drawer-bleed-background:transparent] data-floating:[--drawer-inset:--spacing(2)] [--drawer-stacked-shadow:0_-20px_25px_-5px_rgb(0_0_0/0.1),0_-8px_10px_-6px_rgb(0_0_0/0.1)] [interpolate-size:allow-keywords] data-[swipe-direction=down]:data-nested-drawer-open:shadow-(--drawer-stacked-shadow);
+    @apply rounded-3xl bg-popover text-base text-popover-foreground shadow-xl [--drawer-bleed-background:transparent] data-floating:[--drawer-inset:--spacing(2)] [--drawer-stacked-shadow:0_-20px_25px_-5px_rgb(0_0_0/0.1),0_-8px_10px_-6px_rgb(0_0_0/0.1)] data-[swipe-direction=down]:data-nested-drawer-open:shadow-(--drawer-stacked-shadow);
   }
 
   .cn-drawer-content-base {
@@ -846,11 +845,7 @@
   }
 
   .cn-drawer-description {
-    @apply text-sm text-balance text-muted-foreground;
-  }
-
-  .cn-drawer-content {
-    @apply flex min-h-0 flex-1 flex-col overflow-hidden overscroll-contain rounded-[inherit] transition-opacity duration-300 ease-[cubic-bezier(0.45,1.005,0,1.005)] select-text group-data-nested-drawer-open/drawer-popup:opacity-0 group-data-nested-drawer-swiping/drawer-popup:opacity-100 group-data-swiping/drawer-popup:select-none;
+    @apply text-sm text-muted-foreground;
   }
 
   .cn-drawer-header {
@@ -863,7 +858,7 @@
 
   /* MARK: Dropdown Menu */
   .cn-dropdown-menu-content {
-    @apply overflow-x-hidden overflow-y-auto min-w-48 rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95;
+    @apply min-w-48 rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
   }
 
   .cn-dropdown-menu-content-logical {
@@ -882,7 +877,7 @@
   }
 
   .cn-dropdown-menu-sub-content {
-    @apply max-h-(--radix-dropdown-menu-content-available-height) w-auto min-w-36 overflow-x-hidden overflow-y-auto rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95;
+    @apply max-h-(--radix-dropdown-menu-content-available-height) min-w-36 rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95;
   }
 
   .cn-dropdown-menu-checkbox-item {
@@ -1009,7 +1004,7 @@
   }
 
   .cn-fullscreen-menu-content {
-    @apply no-scrollbar fixed inset-0 z-50 flex flex-col overflow-x-hidden overflow-y-auto overscroll-contain bg-background pt-[env(safe-area-inset-top)] pb-[max(--spacing(8),env(safe-area-inset-bottom))] text-foreground outline-none [clip-path:inset(0)] transition-[clip-path] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] starting:[clip-path:inset(0_0_100%_0)] data-closed:animate-out data-closed:duration-350 data-closed:[clip-path:inset(0_0_100%_0)] motion-reduce:transition-none;
+    @apply no-scrollbar z-50 overscroll-contain bg-background pt-[env(safe-area-inset-top)] pb-[max(--spacing(8),env(safe-area-inset-bottom))] text-foreground outline-none [clip-path:inset(0)] transition-[clip-path] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] starting:[clip-path:inset(0_0_100%_0)] data-closed:animate-out data-closed:duration-350 data-closed:[clip-path:inset(0_0_100%_0)] motion-reduce:transition-none;
   }
 
   .cn-fullscreen-menu-body {
@@ -1033,7 +1028,7 @@
   }
 
   .cn-fullscreen-menu-link {
-    @apply flex min-h-11 items-center rounded-lg text-2xl font-semibold text-foreground outline-none transition-[opacity,translate,color] delay-(--fullscreen-menu-delay) duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] select-none [--fullscreen-menu-delay:calc(var(--fullscreen-menu-index,1)*30ms+var(--fullscreen-menu-section,0)*60ms+100ms)] hover:text-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/50 data-active:text-primary group-data-closed/fullscreen-menu:-translate-y-2 group-data-closed/fullscreen-menu:opacity-0 group-data-closed/fullscreen-menu:delay-0 group-data-closed/fullscreen-menu:duration-200 starting:-translate-y-2 starting:opacity-0 group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:min-h-10 group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:text-lg group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:font-medium motion-reduce:transition-none;
+    @apply min-h-11 items-center rounded-lg text-2xl font-semibold text-foreground outline-none transition-[opacity,translate,color] delay-(--fullscreen-menu-delay) duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] select-none [--fullscreen-menu-delay:calc(var(--fullscreen-menu-index,1)*30ms+var(--fullscreen-menu-section,0)*60ms+100ms)] hover:text-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/50 data-active:text-primary group-data-closed/fullscreen-menu:-translate-y-2 group-data-closed/fullscreen-menu:opacity-0 group-data-closed/fullscreen-menu:delay-0 group-data-closed/fullscreen-menu:duration-200 starting:-translate-y-2 starting:opacity-0 group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:min-h-10 group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:text-lg group-has-data-[slot=fullscreen-menu-label]/fullscreen-menu-group:font-medium motion-reduce:transition-none;
   }
 
   /* MARK: Hover Card */
@@ -1176,7 +1171,7 @@
   }
 
   .cn-menubar-content {
-    @apply max-h-(--radix-menubar-content-available-height) w-(--radix-menubar-trigger-width) min-w-48 overflow-x-hidden overflow-y-auto rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95;
+    @apply max-h-(--radix-menubar-content-available-height) w-(--radix-menubar-trigger-width) min-w-48 rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95;
   }
 
   .cn-menubar-content-logical {
@@ -1187,7 +1182,7 @@
   }
 
   .cn-menubar-checkbox-item {
-    @apply gap-2.5 rounded-md py-2 pe-3 ps-9.5 text-base focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5 data-disabled:opacity-50;
+    @apply gap-2.5 rounded-md py-2 pe-3 ps-9.5 text-base focus:bg-accent focus:text-accent-foreground data-inset:ps-9.5;
   }
 
   .cn-menubar-radio-item {
@@ -1211,7 +1206,7 @@
   }
 
   .cn-menubar-sub-content {
-    @apply max-h-(--radix-menubar-content-available-height) w-auto min-w-36 overflow-x-hidden overflow-y-auto rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95;
+    @apply max-h-(--radix-menubar-content-available-height) w-auto min-w-36 rounded-xl bg-popover p-1.5 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95;
   }
 
   /* MARK: Message */
@@ -1301,23 +1296,23 @@
   }
 
   .cn-navigation-menu-content {
-    @apply absolute start-0 data-[motion^=from-]:animate-in data-[motion^=from-]:fade-in-0 data-[motion^=to-]:animate-out data-[motion^=to-]:fade-out-0 data-[motion=from-end]:slide-in-from-right-1/2 data-[motion=from-start]:slide-in-from-left-1/2 data-[motion=to-end]:slide-out-to-right-1/2 data-[motion=to-start]:slide-out-to-left-1/2 rtl:data-[motion=from-end]:slide-in-from-left-1/2 rtl:data-[motion=from-start]:slide-in-from-right-1/2 rtl:data-[motion=to-end]:slide-out-to-left-1/2 rtl:data-[motion=to-start]:slide-out-to-right-1/2 w-auto p-2.5 pe-3 transition-[opacity,transform,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] in-data-[slot=navigation-menu-panel]:w-full in-data-[slot=navigation-menu-panel]:translate-x-0! rtl:in-data-[slot=navigation-menu-panel]:-translate-x-0! in-data-[slot=navigation-menu-panel]:slide-in-from-left-0 in-data-[slot=navigation-menu-panel]:slide-in-from-right-0 in-data-[slot=navigation-menu-panel]:slide-out-to-left-0 in-data-[slot=navigation-menu-panel]:slide-out-to-right-0 in-data-[slot=navigation-menu-panel]:p-0 in-data-[slot=navigation-menu-panel]:duration-300 in-data-[slot=navigation-menu-panel]:ease-[cubic-bezier(0.4,0,0.6,1)] in-data-[slot=navigation-menu-panel]:data-[motion^=to-]:duration-150;
+    @apply start-0 data-[motion^=from-]:animate-in data-[motion^=from-]:fade-in-0 data-[motion^=to-]:animate-out data-[motion^=to-]:fade-out-0 data-[motion=from-end]:slide-in-from-right-1/2 data-[motion=from-start]:slide-in-from-left-1/2 data-[motion=to-end]:slide-out-to-right-1/2 data-[motion=to-start]:slide-out-to-left-1/2 rtl:data-[motion=from-end]:slide-in-from-left-1/2 rtl:data-[motion=from-start]:slide-in-from-right-1/2 rtl:data-[motion=to-end]:slide-out-to-left-1/2 rtl:data-[motion=to-start]:slide-out-to-right-1/2 w-auto p-2.5 pe-3 duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] in-data-[slot=navigation-menu-panel]:w-full in-data-[slot=navigation-menu-panel]:translate-x-0! rtl:in-data-[slot=navigation-menu-panel]:-translate-x-0! in-data-[slot=navigation-menu-panel]:slide-in-from-left-0 in-data-[slot=navigation-menu-panel]:slide-in-from-right-0 in-data-[slot=navigation-menu-panel]:slide-out-to-left-0 in-data-[slot=navigation-menu-panel]:slide-out-to-right-0 in-data-[slot=navigation-menu-panel]:p-0 in-data-[slot=navigation-menu-panel]:duration-300 in-data-[slot=navigation-menu-panel]:ease-[cubic-bezier(0.4,0,0.6,1)] in-data-[slot=navigation-menu-panel]:data-[motion^=to-]:duration-150;
   }
 
   .cn-navigation-menu-positioner {
-    @apply isolate z-50 flex pt-2;
+    @apply isolate z-50 pt-2;
   }
 
   .cn-navigation-menu-popup {
-    @apply relative h-(--radix-navigation-menu-viewport-height) w-(--radix-navigation-menu-viewport-width) origin-top overflow-hidden rounded-2xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 transition-[width,height] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-90 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-90 data-closed:duration-150 dark:ring-foreground/10;
+    @apply h-(--radix-navigation-menu-viewport-height) w-(--radix-navigation-menu-viewport-width) origin-top rounded-2xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 transition-[width,height] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-90 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-90 data-closed:duration-150 dark:ring-foreground/10;
   }
 
   .cn-navigation-menu-backdrop {
-    @apply fixed inset-0 z-40 animate-in bg-black/20 backdrop-blur-lg duration-350 ease-[cubic-bezier(0.45,0,0.2,1)] fade-in-0 motion-reduce:animate-none;
+    @apply z-40 animate-in bg-black/20 backdrop-blur-lg duration-350 ease-[cubic-bezier(0.45,0,0.2,1)] fade-in-0 motion-reduce:animate-none;
   }
 
   .cn-navigation-menu-panel {
-    @apply relative h-(--radix-navigation-menu-viewport-height) w-full overflow-hidden bg-background text-foreground transition-[height] duration-450 ease-[cubic-bezier(0.45,0,0.2,1)] outline-none [--radix-collapsible-content-height:var(--radix-navigation-menu-viewport-height)] data-open:animate-collapsible-down data-closed:animate-collapsible-up data-closed:duration-300 motion-reduce:animate-none motion-reduce:transition-none dark:bg-muted;
+    @apply h-(--radix-navigation-menu-viewport-height) bg-background text-foreground transition-[height] duration-450 ease-[cubic-bezier(0.45,0,0.2,1)] outline-none [--radix-collapsible-content-height:var(--radix-navigation-menu-viewport-height)] data-open:animate-collapsible-down data-closed:animate-collapsible-up data-closed:duration-300 motion-reduce:animate-none motion-reduce:transition-none dark:bg-muted;
   }
 
   .cn-navigation-menu-link {
@@ -1363,7 +1358,7 @@
 
   /* MARK: Popover */
   .cn-popover-content {
-    @apply flex flex-col gap-4 rounded-2xl bg-popover p-4 text-base text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
+    @apply gap-4 rounded-2xl bg-popover p-4 text-base text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
   }
 
   .cn-popover-content-logical {
@@ -1386,11 +1381,11 @@
   }
 
   .cn-progress-track {
-    @apply relative flex h-1 w-full items-center overflow-x-hidden rounded-full bg-muted;
+    @apply h-1 rounded-full bg-muted;
   }
 
   .cn-progress-indicator {
-    @apply h-full bg-primary transition-[width];
+    @apply bg-primary transition-[width];
   }
 
   .cn-progress-label {
@@ -1451,7 +1446,7 @@
   }
 
   .cn-questionnaire-item {
-    @apply flex flex-col gap-5;
+    @apply gap-5;
   }
 
   .cn-questionnaire-title {
@@ -1520,7 +1515,7 @@
   }
 
   .cn-select-content {
-    @apply isolate min-w-[max(var(--radix-select-trigger-width),--spacing(36))] rounded-xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
+    @apply min-w-[max(var(--radix-select-trigger-width),--spacing(36))] rounded-xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
   }
 
   .cn-select-content-logical {
@@ -1543,11 +1538,11 @@
   }
 
   .cn-select-scroll-up-button {
-    @apply top-0 z-10 flex w-full cursor-default items-center justify-center bg-popover py-1;
+    @apply z-10 cursor-default items-center justify-center bg-popover py-1;
   }
 
   .cn-select-scroll-down-button {
-    @apply bottom-0 z-10 flex w-full cursor-default items-center justify-center bg-popover py-1;
+    @apply z-10 cursor-default items-center justify-center bg-popover py-1;
   }
 
   /* MARK: Sheet */
@@ -1556,7 +1551,7 @@
   }
 
   .cn-sheet-content {
-    @apply fixed z-50 flex flex-col rounded-3xl bg-popover text-base text-popover-foreground shadow-xl duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] data-[side=bottom]:inset-x-2 data-[side=bottom]:bottom-2 data-[side=bottom]:h-auto data-[side=left]:inset-y-2 data-[side=left]:left-2 data-[side=left]:w-3/4 data-[side=left]:data-open:slide-in-from-start-10 data-[side=left]:data-closed:slide-out-to-start-10 data-[side=right]:inset-y-2 data-[side=right]:right-2 data-[side=right]:w-3/4 data-[side=right]:data-open:slide-in-from-end-10 data-[side=right]:data-closed:slide-out-to-end-10 data-[side=top]:inset-x-2 data-[side=top]:top-2 data-[side=top]:h-auto data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm;
+    @apply z-50 rounded-3xl bg-popover text-base text-popover-foreground shadow-xl duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] data-[side=bottom]:inset-x-2 data-[side=bottom]:bottom-2 data-[side=bottom]:h-auto data-[side=left]:inset-y-2 data-[side=left]:left-2 data-[side=left]:w-3/4 data-[side=left]:data-open:slide-in-from-start-10 data-[side=left]:data-closed:slide-out-to-start-10 data-[side=right]:inset-y-2 data-[side=right]:right-2 data-[side=right]:w-3/4 data-[side=right]:data-open:slide-in-from-end-10 data-[side=right]:data-closed:slide-out-to-end-10 data-[side=top]:inset-x-2 data-[side=top]:top-2 data-[side=top]:h-auto data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm;
   }
 
   .cn-sheet-header {
@@ -1582,7 +1577,7 @@
 
   /* MARK: Tooltip */
   .cn-tooltip-content {
-    @apply inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs has-data-[slot=kbd]:pe-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95 data-[state=instant-open]:animate-in data-[state=instant-open]:fade-in-0 data-[state=instant-open]:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
+    @apply items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs has-data-[slot=kbd]:pe-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95 data-[state=instant-open]:animate-in data-[state=instant-open]:fade-in-0 data-[state=instant-open]:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
   }
 
   .cn-tooltip-content-logical {
@@ -1678,7 +1673,7 @@
   }
 
   .cn-sidebar-group-action {
-    @apply absolute top-3.5 end-3 w-5 rounded-md p-0 text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2;
+    @apply top-3.5 end-3 w-5 rounded-md p-0 text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2;
   }
 
   .cn-sidebar-menu-button {
@@ -1723,7 +1718,7 @@
   }
 
   .cn-slider-track {
-    @apply data-horizontal:w-full data-vertical:h-full rounded-full bg-border select-none data-horizontal:h-1 data-vertical:w-1;
+    @apply data-horizontal:w-full data-vertical:h-full rounded-full bg-border data-horizontal:h-1 data-vertical:w-1;
   }
 
   .cn-slider-range {

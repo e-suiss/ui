@@ -52,7 +52,7 @@ function ContextMenuTrigger({
         role="button"
         tabIndex={0}
         data-slot="context-menu-trigger"
-        className={cn("cn-context-menu-trigger", className)}
+        className={cn("cn-context-menu-trigger select-none", className)}
         {...props}
       />
     </Pressable>
@@ -206,7 +206,7 @@ function ContextMenuItem({
       data-variant={variant}
       textValue={itemText(children, textValue)}
       className={cn(
-        "cn-context-menu-item group/context-menu-item [&_svg:not([class*='size-'])]:size-4 focus:*:[svg]:text-accent-foreground data-[variant=destructive]:*:[svg]:text-destructive [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "cn-context-menu-item relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 group/context-menu-item [&_svg:not([class*='size-'])]:size-4 focus:*:[svg]:text-accent-foreground data-[variant=destructive]:*:[svg]:text-destructive [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className
       )}
       {...props}
@@ -357,7 +357,7 @@ function CheckboxMenuItem({
       data-inset={inset ? "" : undefined}
       textValue={itemText(children, textValue)}
       className={cn(
-        "cn-context-menu-checkbox-item [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "cn-context-menu-checkbox-item relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className
       )}
       {...props}
@@ -429,7 +429,7 @@ function ContextMenuRadioItem({
       data-inset={inset ? "" : undefined}
       textValue={itemText(children, textValue)}
       className={cn(
-        "cn-context-menu-radio-item [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "cn-context-menu-radio-item relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className
       )}
       {...props}

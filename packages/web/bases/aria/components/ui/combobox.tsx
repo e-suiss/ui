@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/input-group"
 import { cn } from "@/lib/utils"
 
-const inputGroupIconButtonVariants = cva("cn-input-group-icon-button")
+const inputGroupIconButtonVariants = cva("cn-input-group-icon-button flex")
 
 const Combobox = ComboboxPrimitive.Root
 
@@ -137,7 +137,7 @@ function ComboboxContent({
           data-slot="combobox-content"
           data-chips={!!anchor}
           className={cn(
-            "cn-menu-target cn-menu-translucent cn-combobox-content-aria cn-menu-translucent-aria relative group/combobox-content *:data-[slot=input-group]:m-1.5 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-border/30 *:data-[slot=input-group]:bg-secondary *:data-[slot=input-group]:shadow-none",
+            "cn-menu-target cn-menu-translucent cn-combobox-content-aria overflow-hidden cn-menu-translucent-aria relative group/combobox-content *:data-[slot=input-group]:m-1.5 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-border/30 *:data-[slot=input-group]:bg-secondary *:data-[slot=input-group]:shadow-none",
             className
           )}
           {...props}

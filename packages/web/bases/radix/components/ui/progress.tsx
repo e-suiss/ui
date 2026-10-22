@@ -45,7 +45,10 @@ function Progress({
 function ProgressTrack({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn("cn-progress-track", className)}
+      className={cn(
+        "cn-progress-track relative flex w-full items-center overflow-x-hidden",
+        className
+      )}
       data-slot="progress-track"
       {...props}
     />
@@ -62,7 +65,7 @@ function ProgressIndicator({
   return (
     <ProgressPrimitive.Indicator
       data-slot="progress-indicator"
-      className={cn("cn-progress-indicator", className)}
+      className={cn("cn-progress-indicator h-full", className)}
       style={{
         ...(value !== null && { width: `${(value / max) * 100}%` }),
         ...style,

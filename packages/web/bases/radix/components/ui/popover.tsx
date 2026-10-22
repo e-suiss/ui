@@ -62,7 +62,7 @@ function PopoverContent({
         side={side}
         sideOffset={sideOffset}
         className={cn(
-          "cn-popover-content z-50 w-72 origin-(--radix-popover-content-transform-origin) outline-hidden",
+          "cn-popover-content flex flex-col z-50 w-72 origin-(--radix-popover-content-transform-origin) outline-hidden",
           className
         )}
         {...props}

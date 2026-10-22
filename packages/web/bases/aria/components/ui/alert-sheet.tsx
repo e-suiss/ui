@@ -70,7 +70,7 @@ function AlertSheetOverlay({
   return (
     <ModalOverlayPrimitive
       data-slot="alert-sheet-overlay"
-      className={cn("cn-alert-sheet-overlay", className)}
+      className={cn("cn-alert-sheet-overlay fixed inset-0", className)}
       {...props}
     />
   )
@@ -99,7 +99,10 @@ function AlertSheetContent({
           role={dismissible ? "dialog" : "alertdialog"}
           data-slot="alert-sheet-content"
           aria-describedby={described ? descriptionId : undefined}
-          className={cn("cn-alert-sheet-content", className)}
+          className={cn(
+            "cn-alert-sheet-content fixed inset-x-0 flex w-full flex-col",
+            className
+          )}
           {...props}
         >
           <AlertSheetDescriptionContext.Provider value={description}>

@@ -18,7 +18,7 @@ function ScrollArea({
         data-slot="scroll-area-viewport"
         // biome-ignore lint/a11y/noNoninteractiveTabindex: the scrollable viewport is reachable by keyboard
         tabIndex={0}
-        className="cn-scroll-area-viewport"
+        className="cn-scroll-area-viewport size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-ring/50 focus-visible:outline-1 overflow-auto"
       >
         {children}
       </div>

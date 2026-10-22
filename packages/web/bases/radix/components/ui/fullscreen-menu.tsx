@@ -117,7 +117,7 @@ function FullscreenMenuContent({
       <DialogPrimitive.Content
         data-slot="fullscreen-menu-content"
         className={cn(
-          "cn-fullscreen-menu-content group/fullscreen-menu",
+          "cn-fullscreen-menu-content fixed inset-0 flex flex-col overflow-x-hidden overflow-y-auto group/fullscreen-menu",
           className
         )}
         {...props}
@@ -224,7 +224,7 @@ function FullscreenMenuLink({
         onClick?.(event)
         setOpen(false)
       }}
-      className={cn("cn-fullscreen-menu-link", className)}
+      className={cn("cn-fullscreen-menu-link flex", className)}
       {...props}
     />
   )

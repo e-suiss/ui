@@ -34,7 +34,7 @@ function RadioGroupItem({
     <RadioPrimitive
       data-slot="radio-group-item"
       className={cn(
-        "cn-radio-group-item cn-radio-group-item-aria peer relative aspect-square shrink-0 border outline-none after:absolute after:-inset-x-3 after:-inset-y-2 group/radio-group-item",
+        "cn-radio-group-item flex cn-radio-group-item-aria peer relative aspect-square shrink-0 border outline-none after:absolute after:-inset-x-3 after:-inset-y-2 group/radio-group-item",
         className
       )}
       {...props}

@@ -20,7 +20,10 @@ function Separator({
       data-orientation={orientation}
       data-horizontal={orientation === "horizontal" || undefined}
       data-vertical={orientation === "vertical" || undefined}
-      className={cn("cn-separator shrink-0 bg-border", className)}
+      className={cn(
+        "cn-separator data-horizontal:h-px data-horizontal:w-full data-vertical:w-px data-vertical:self-stretch shrink-0 bg-border",
+        className
+      )}
       {...props}
     />
   )

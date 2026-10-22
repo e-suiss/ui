@@ -43,7 +43,7 @@ function MenuPartContent({
         <MenuPrimitive.Popup
           data-slot="dropdown-menu-content"
           className={cn(
-            "cn-menu-target cn-menu-translucent cn-dropdown-menu-content",
+            "cn-menu-target cn-menu-translucent cn-dropdown-menu-content overflow-x-hidden overflow-y-auto z-50 max-h-(--available-height) w-(--anchor-width) origin-(--transform-origin) outline-none data-closed:overflow-hidden",
             className
           )}
           {...props}
@@ -89,7 +89,7 @@ function MenuPartItem({
       data-inset={inset ? "" : undefined}
       data-variant={variant}
       className={cn(
-        "cn-dropdown-menu-item group/dropdown-menu-item not-data-[variant=destructive]:focus:**:text-accent-foreground [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "cn-dropdown-menu-item relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 group/dropdown-menu-item not-data-[variant=destructive]:focus:**:text-accent-foreground [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className
       )}
       {...props}
@@ -114,7 +114,7 @@ function MenuPartSubTrigger({
       data-slot="dropdown-menu-sub-trigger"
       data-inset={inset ? "" : undefined}
       className={cn(
-        "cn-menubar-sub-trigger [&_svg:not([class*='size-'])]:size-4 not-data-[variant=destructive]:focus:**:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "cn-menubar-sub-trigger flex [&_svg:not([class*='size-'])]:size-4 not-data-[variant=destructive]:focus:**:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className
       )}
       {...props}
@@ -144,7 +144,7 @@ function MenuPartSubContent({
     <MenuPartContent
       data-slot="dropdown-menu-sub-content"
       className={cn(
-        "cn-menu-target cn-menu-translucent cn-dropdown-menu-sub-content",
+        "cn-menu-target cn-menu-translucent cn-dropdown-menu-sub-content w-auto",
         className
       )}
       align={align}
@@ -417,7 +417,7 @@ function MenubarSubTrigger({
       data-slot="menubar-sub-trigger"
       data-inset={inset ? "" : undefined}
       className={cn(
-        "cn-menubar-sub-trigger [&_svg:not([class*='size-'])]:size-4 not-data-[variant=destructive]:focus:**:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "cn-menubar-sub-trigger flex [&_svg:not([class*='size-'])]:size-4 not-data-[variant=destructive]:focus:**:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className
       )}
       {...props}

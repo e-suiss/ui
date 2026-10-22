@@ -48,7 +48,7 @@ function ContextMenuContent({
         data-slot="context-menu-content"
         alignOffset={alignOffset}
         className={cn(
-          "cn-menu-target cn-menu-translucent cn-context-menu-content z-50 max-h-(--radix-context-menu-content-available-height) origin-(--radix-context-menu-content-transform-origin) overflow-x-hidden overflow-y-auto",
+          "cn-menu-target cn-menu-translucent cn-context-menu-content outline-none z-50 max-h-(--radix-context-menu-content-available-height) origin-(--radix-context-menu-content-transform-origin) overflow-x-hidden overflow-y-auto",
           className
         )}
         {...props}
@@ -174,7 +174,7 @@ function ContextMenuSubContent({
       <ContextMenuPrimitive.SubContent
         data-slot="context-menu-sub-content"
         className={cn(
-          "cn-menu-target cn-menu-translucent cn-context-menu-sub-content z-50 origin-(--radix-context-menu-content-transform-origin)",
+          "cn-menu-target cn-menu-translucent cn-context-menu-sub-content overflow-x-hidden overflow-y-auto z-50 origin-(--radix-context-menu-content-transform-origin)",
           className
         )}
         {...props}
