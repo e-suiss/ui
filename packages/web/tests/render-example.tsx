@@ -12,6 +12,7 @@ type Direction = "ltr" | "rtl"
 const environment = globalThis as {
   IS_REACT_ACT_ENVIRONMENT?: boolean
   exampleDirection?: Direction
+  afterExampleRender?: () => Promise<void>
 }
 
 async function withoutActEnvironment<T>(callback: () => Promise<T>) {
@@ -62,6 +63,7 @@ export async function renderExample(
   await render(<DirectionProvider direction={dir}>{ui}</DirectionProvider>, {
     container: canvasElement,
   })
+  await environment.afterExampleRender?.()
   return { canvasElement, canvas: within(canvasElement), step }
 }
 

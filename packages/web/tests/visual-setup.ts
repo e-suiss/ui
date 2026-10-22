@@ -1,5 +1,12 @@
 import axe from "axe-core"
-import { afterEach, beforeEach, expect, inject, vi } from "vitest"
+import {
+  afterEach,
+  beforeEach,
+  expect,
+  inject,
+  type TestContext,
+  vi,
+} from "vitest"
 import { commands, page } from "vitest/browser"
 
 import { findLayoutIssues, type LayoutFinding } from "./layout"
@@ -37,12 +44,7 @@ async function contrast(): Promise<LayoutFinding[]> {
   }))
 }
 
-beforeEach(() => {
-  vi.setSystemTime(new Date(2026, 0, 15, 9, 41))
-})
-
-afterEach(async ({ task }) => {
-  if (task.result?.state === "fail") return
+async function capture(task: TestContext["task"]) {
   const root = document.documentElement
   const wasDark = root.classList.contains("dark")
   const name = `${task.name}${SUFFIX}`
@@ -75,4 +77,28 @@ afterEach(async ({ task }) => {
     `${FINDINGS}/${`${task.file.name}-${name}`.replace(/\W+/g, "-")}.json`,
     JSON.stringify({ example: `${task.file.name} > ${name}`, found }, null, 2)
   )
+}
+
+let current: TestContext | undefined
+
+beforeEach((context) => {
+  vi.setSystemTime(new Date(2026, 0, 15, 9, 41))
+  current = context
+})
+
+if (RTL) {
+  Object.assign(globalThis, {
+    afterExampleRender: async () => {
+      const context = current
+      current = undefined
+      if (!context) return
+      await capture(context.task)
+      context.skip()
+    },
+  })
+}
+
+afterEach(async ({ task }) => {
+  if (RTL || task.result?.state === "fail") return
+  await capture(task)
 })
