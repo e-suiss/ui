@@ -22,11 +22,6 @@
     @apply rounded-xs outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50;
   }
 
-  /* MARK: Bubble */
-  .cn-bubble-content {
-    @apply w-fit rounded-2xl border [background:linear-gradient(var(--bubble-bg),var(--bubble-bg)),var(--bubble-surface,var(--background))] border-transparent px-3.5 py-1.5 text-base group-data-[align=end]/bubble:self-end group-data-[align=end]/message:self-end before:absolute before:-start-[7.9px] before:-bottom-px before:hidden before:size-5 before:[background:inherit] before:[clip-path:path('M7_0H20V4A16_16_0_0_1_4_20H0V19.54A10_10_0_0_0_7_10Z')] rtl:before:-scale-x-100 group-data-[align=end]/bubble:before:-scale-x-100 group-data-[align=end]/message:before:-scale-x-100 rtl:group-data-[align=end]/bubble:before:scale-x-100 rtl:group-data-[align=end]/message:before:scale-x-100 group-data-[align=end]/bubble:before:start-auto group-data-[align=end]/message:before:start-auto group-data-[align=end]/bubble:before:-end-[7.9px] group-data-[align=end]/message:before:-end-[7.9px] [[data-slot=bubble][data-align=start]:not([data-slot=message][data-align=end]_*):not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=start]))>&]:before:block [[data-slot=bubble]:is([data-align=end],[data-slot=message][data-align=end]_*):not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble]:is([data-align=end],[data-slot=message][data-align=end]_*)))>&]:before:block [button]:text-start [button,a]:outline-none [button,a]:focus-visible:border-ring [button,a]:focus-visible:ring-3 [button,a]:focus-visible:ring-ring/50;
-  }
-
   /* MARK: Button Group */
   .cn-button-group-text {
     @apply items-center gap-2 rounded-full bg-secondary px-2.5 text-sm;
@@ -141,7 +136,7 @@
   }
 
   .cn-navigation-menu-popup {
-    @apply h-(--radix-navigation-menu-viewport-height) w-(--radix-navigation-menu-viewport-width) origin-top rounded-2xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 transition-[width,height] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-90 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-90 data-closed:duration-150 dark:ring-foreground/10;
+    @apply origin-top rounded-2xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 transition-[width,height] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-90 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-90 data-closed:duration-150 dark:ring-foreground/10;
   }
 
   .cn-navigation-menu-backdrop {

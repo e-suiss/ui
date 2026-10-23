@@ -195,7 +195,7 @@ function NavigationMenuPositioner({
       <NavigationMenuPrimitive.Viewport
         data-slot="navigation-menu-popup"
         className={cn(
-          "cn-navigation-menu-popup relative overflow-hidden",
+          "cn-navigation-menu-popup relative h-(--radix-navigation-menu-viewport-height) w-(--radix-navigation-menu-viewport-width) overflow-hidden",
           className
         )}
         {...props}

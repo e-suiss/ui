@@ -16,9 +16,6 @@ function Slider<T extends number | number[]>({
 }: Omit<SliderPrimitiveProps<T>, "className" | "children"> & {
   className?: string
 }) {
-  const horizontal = orientation === "horizontal" || undefined
-  const vertical = orientation === "vertical" || undefined
-
   return (
     <SliderPrimitive
       className={cn(
@@ -26,8 +23,7 @@ function Slider<T extends number | number[]>({
         className
       )}
       data-slot="slider"
-      data-horizontal={horizontal}
-      data-vertical={vertical}
+      data-orientation={orientation}
       orientation={orientation}
       minValue={minValue}
       maxValue={maxValue}
@@ -35,20 +31,17 @@ function Slider<T extends number | number[]>({
     >
       {({ state, isDisabled }) => (
         <SliderTrack
-          data-horizontal={horizontal}
-          data-vertical={vertical}
+          data-orientation={orientation}
           className="relative flex w-full cursor-pointer touch-none items-center select-none data-disabled:cursor-not-allowed data-vertical:h-full data-vertical:min-h-40 data-vertical:w-auto data-vertical:flex-col data-disabled:opacity-50"
         >
           <div
             data-slot="slider-track"
-            data-horizontal={horizontal}
-            data-vertical={vertical}
+            data-orientation={orientation}
             className="cn-slider-track relative grow overflow-hidden select-none"
           >
             <SliderFill
               data-slot="slider-range"
-              data-horizontal={horizontal}
-              data-vertical={vertical}
+              data-orientation={orientation}
               className="cn-slider-range select-none data-horizontal:h-full data-vertical:w-full"
             />
           </div>
@@ -57,8 +50,7 @@ function Slider<T extends number | number[]>({
               data-slot="slider-thumb"
               key={index}
               index={index}
-              data-horizontal={horizontal}
-              data-vertical={vertical}
+              data-orientation={orientation}
               isDisabled={isDisabled}
               className="cn-slider-thumb block shrink-0 select-none"
             />
