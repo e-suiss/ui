@@ -499,7 +499,7 @@
   }
 
   .cn-drawer-popup {
-    @apply data-floating:[--drawer-inset:--spacing(2)] bg-popover text-popover-foreground border-popover dark:border-border rounded-xl border text-xs/relaxed [--drawer-bleed-background:transparent] [--drawer-inset:--spacing(2)];
+    @apply data-floating:[--drawer-bleed-background:transparent] data-floating:[--drawer-inset:--spacing(2)] bg-popover text-popover-foreground border-popover dark:border-border rounded-xl border text-xs/relaxed [--drawer-bleed-background:transparent] [--drawer-inset:--spacing(2)];
   }
 
   .cn-drawer-handle {

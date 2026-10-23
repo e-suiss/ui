@@ -42,7 +42,7 @@
   "cn-dialog-content": "-translate-x-1/2 start-1/2 rtl:translate-x-1/2",
   "cn-dialog-content-aria": "-translate-x-1/2",
   "cn-drawer-overlay": "fixed",
-  "cn-drawer-popup": "data-floating:[--drawer-inset:--spacing(2)]",
+  "cn-drawer-popup": "data-floating:[--drawer-bleed-background:transparent] data-floating:[--drawer-inset:--spacing(2)]",
   "cn-drawer-swipe-handle": "flex",
   "cn-dropdown-menu-checkbox-item": "relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50",
   "cn-dropdown-menu-content": "overflow-x-hidden overflow-y-auto",

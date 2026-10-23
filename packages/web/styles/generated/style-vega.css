@@ -499,7 +499,7 @@
   }
 
   .cn-drawer-popup {
-    @apply data-floating:[--drawer-inset:--spacing(2)] bg-popover text-popover-foreground text-sm data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=down]:border-t data-[swipe-direction=left]:rounded-e-xl data-[swipe-direction=left]:border-e data-[swipe-direction=right]:rounded-s-xl data-[swipe-direction=right]:border-s data-[swipe-direction=up]:rounded-b-xl data-[swipe-direction=up]:border-b;
+    @apply data-floating:[--drawer-bleed-background:transparent] data-floating:[--drawer-inset:--spacing(2)] bg-popover text-popover-foreground text-sm data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=down]:border-t data-[swipe-direction=left]:rounded-e-xl data-[swipe-direction=left]:border-e data-[swipe-direction=right]:rounded-s-xl data-[swipe-direction=right]:border-s data-[swipe-direction=up]:rounded-b-xl data-[swipe-direction=up]:border-b data-floating:rounded-xl;
   }
 
   .cn-drawer-handle {

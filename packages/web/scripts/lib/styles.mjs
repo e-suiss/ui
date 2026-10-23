@@ -153,7 +153,11 @@ async function buildStyleData() {
   const vendors = {}
   for (const name of VENDOR_STYLES) {
     const vendor = createStyleMap(await readFile(stylePath(name), "utf8"))
-    vendors[name] = await withStructural(await logicalMap(vendor))
+    const map = await withStructural(await logicalMap(vendor))
+    if (map["cn-drawer-popup"]) {
+      map["cn-drawer-popup"] = floatingCorners(map["cn-drawer-popup"])
+    }
+    vendors[name] = map
   }
   const known = [
     ...new Set(Object.values(vendors).flatMap((map) => Object.keys(map))),
@@ -238,6 +242,22 @@ function scopeTranslucent(scope) {
   })
 }
 
+const EDGE_RADIUS =
+  /(?:^|\s)data-\[swipe-direction=down\]:rounded(?:-t)?(-[^\s-][^\s]*)?(?=\s|$)/
+
+function floatingCorners(classes) {
+  const radius = classes.match(EDGE_RADIUS)
+  return radius ? `${classes} data-floating:rounded${radius[1] ?? ""}` : classes
+}
+
+function floatAllCorners(scope) {
+  scope.walkRules(".cn-drawer-popup", (rule) => {
+    rule.walkAtRules("apply", (apply) => {
+      apply.params = floatingCorners(apply.params)
+    })
+  })
+}
+
 async function parseStyle(name) {
   return postcss.parse(await readFile(stylePath(name), "utf8"))
 }
@@ -273,6 +293,7 @@ export async function styleSheet(name, base = DEFAULT_BASE) {
     })
   }
   scopeTranslucent(scope)
+  floatAllCorners(scope)
   const applies = []
   scope.walkAtRules("apply", (rule) => {
     applies.push(rule)
