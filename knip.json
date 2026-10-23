@@ -39,6 +39,13 @@
         "styles/generated/*.css",
         "styles/style-suiss*.css",
         "styles/vendor/*.css"
+      ],
+      "ignoreDependencies": [
+        "@hugeicons/core-free-icons",
+        "@hugeicons/react",
+        "@remixicon/react",
+        "@tabler/icons-react",
+        "lucide-react"
       ]
     },
     "packages/cli": {

@@ -6,10 +6,13 @@ import {
   type TestProjectInlineConfiguration,
 } from "vitest/config"
 import { resolveBase } from "./bases/resolve.ts"
+import { iconPackages, swapIcons } from "./tests/icons.ts"
 
 const root = fileURLToPath(new URL(".", import.meta.url))
 const TEST_FILE = /\.test\.tsx$/
 const STYLE = process.env.STYLE ?? "suiss"
+const ICONS = process.env.ICONS
+const SCREENSHOTS = ICONS ? `icons-${ICONS}` : STYLE
 
 const IPHONE = {
   viewport: { width: 393, height: 659 },
@@ -48,13 +51,18 @@ function examples(
 ): TestProjectInlineConfiguration {
   return {
     extends: true,
-    plugins: [tailwindcss(), ...(base ? [resolveBase(root, base)] : [])],
+    plugins: [
+      tailwindcss(),
+      ...(base ? [resolveBase(root, base)] : []),
+      ...(ICONS ? [swapIcons(ICONS)] : []),
+    ],
     optimizeDeps: {
       entries: [
         "examples/*.tsx",
         "tests/examples/*.test.tsx",
         ...(base ? [`bases/${base}/**/*.tsx`] : []),
       ],
+      include: ICONS ? iconPackages(ICONS) : [],
     },
     test: {
       name,
@@ -117,9 +125,9 @@ function examples(
             comparatorName: "pixelmatch",
             comparatorOptions: { allowedMismatchedPixels: 10 },
             resolveScreenshotPath: ({ arg, ext, testFileName }) =>
-              `${root}tests/screenshots/web/${base ?? "base"}/${STYLE}/${testFileName.replace(TEST_FILE, "")}/${arg}${ext}`,
+              `${root}tests/screenshots/web/${base ?? "base"}/${SCREENSHOTS}/${testFileName.replace(TEST_FILE, "")}/${arg}${ext}`,
             resolveDiffPath: ({ arg, ext, testFileName }) =>
-              `${root}.vitest/visual/${base ?? "base"}/${STYLE}/${testFileName.replace(TEST_FILE, "")}/${arg}${ext}`,
+              `${root}.vitest/visual/${base ?? "base"}/${SCREENSHOTS}/${testFileName.replace(TEST_FILE, "")}/${arg}${ext}`,
           },
         },
       },
