@@ -47,8 +47,10 @@ async function contrast(): Promise<LayoutFinding[]> {
 async function capture(task: TestContext["task"]) {
   const root = document.documentElement
   const wasDark = root.classList.contains("dark")
+  const padding = document.body.style.padding
   const name = `${task.name}${SUFFIX}`
   const found: Finding[] = []
+  document.body.style.padding = "16px"
   try {
     for (const theme of THEMES) {
       root.classList.toggle("dark", theme === "dark")
@@ -71,6 +73,7 @@ async function capture(task: TestContext["task"]) {
     }
   } finally {
     root.classList.toggle("dark", wasDark)
+    document.body.style.padding = padding
   }
   if (found.length === 0) return
   await commands.writeFile(
