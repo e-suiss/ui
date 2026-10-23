@@ -3,6 +3,9 @@ contact_links:
   - name: Report a security vulnerability
     url: https://github.com/e-suiss/ui/security/advisories/new
     about: Report vulnerabilities privately. Do not open a public issue.
+  - name: Ask a question
+    url: https://github.com/e-suiss/ui/discussions/categories/q-a
+    about: Ask how to use a component, the CLI or the registry.
   - name: Documentation
     url: https://suiss.app/ui
     about: Installation, usage and the API of every component.
