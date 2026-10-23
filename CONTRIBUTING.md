@@ -23,6 +23,8 @@ pnpm --filter @esuiss/web exec vitest --project examples  # render every web exa
 pnpm --filter @esuiss/mobile start                        # the React Native example gallery
 ```
 
+Component, hook and theme changes, on the web and on mobile, reach users as soon as they land on `main`, because the CLI installs them from the registry. A new CLI version is released only when `packages/cli` changes.
+
 Layout:
 
 - `apps/www`: the suiss.app site in English and Turkish, with every suiss product.
@@ -96,45 +98,3 @@ Git hooks are installed by `pnpm install`:
 - pre-push: Biome, the registry checks and the tests in parallel with Knip and then typecheck, which run one after the other because both generate the mobile Uniwind types.
 
 GitHub Actions runs the same checks in `.github/workflows/ci.yml` on every push to `main` and every pull request, and builds the SwiftUI library (and runs its tests on a simulator) and the Compose library when `packages/mobile/swiftui`, `packages/mobile/kotlin` or the tokens change.
-
-## Deploy
-
-suiss.app is a static site on Cloudflare. `apps/www` and `apps/ui` are exported with `output: "export"`, and `pnpm build` merges them into `dist/`: the site at the root and the docs under `dist/ui`. One Worker serves the whole domain from that folder (`wrangler.jsonc`). Its code, `worker.js`, runs only for `/ui/r/*` and maps shadcn style names such as `new-york` or `radix-nova` to the matching registry. Headers and redirects live in `apps/www/public/_headers` and `apps/www/public/_redirects`.
-
-Every push to `main` that changes the site runs `.github/workflows/site.yml`. It builds both sites, runs `pnpm run deploy` and submits the docs pages changed by the push to IndexNow.
-
-The workflow needs these repository secrets:
-
-| Secret | Used for |
-| --- | --- |
-| `CLOUDFLARE_API_TOKEN` | a Cloudflare API token that can edit Workers |
-| `CLOUDFLARE_ACCOUNT_ID` | the Cloudflare account that owns the suiss.app zone |
-
-Run it by hand from the Actions tab (`main` only). To deploy or notify IndexNow from your machine:
-
-```bash
-pnpm build && pnpm run deploy        # needs wrangler login or CLOUDFLARE_API_TOKEN
-pnpm indexnow                        # pages changed in the last 2 days
-pnpm indexnow --since=2026-01-01     # pages changed since a date
-pnpm indexnow --all                  # every page in the sitemaps
-```
-
-`wrangler dev` cannot watch the full `dist/` folder (more than 10,000 files fail with `spawn EBADF`); to try the Worker locally, serve a copy without `dist/ui/source`.
-
-## Release
-
-Component, hook, and theme color changes, on the web and on mobile, reach users as soon as they are pushed to `main`. Releasing is needed when `packages/cli` changes:
-
-```bash
-pnpm release patch   # or minor, major, or an exact version like 1.0.0
-```
-
-This bumps the CLI version, commits, tags that commit `vX.Y.Z`, and pushes both. GitHub Actions then publishes it to npm, publishes `packages/mobile/swiftui` and `packages/mobile/kotlin` to [e-suiss/uim-swift](https://github.com/e-suiss/uim-swift) and [e-suiss/uim-kotlin](https://github.com/e-suiss/uim-kotlin) with the same tag, and creates the GitHub release.
-
-Publishing the two repositories needs the `SWIFT_MIRROR_KEY` and `KOTLIN_MIRROR_KEY` secrets: the private keys of deploy keys with write access to e-suiss/uim-swift and e-suiss/uim-kotlin. The release fails before it publishes anything when one of them is missing.
-
-Every step can be run again: a version already on npm, a tag already in a mirror repository and an existing GitHub release are skipped. To finish a failed release without a new tag, open Actions > Release > Run workflow and enter the tag, e.g. `v1.2.3`, or run:
-
-```bash
-gh workflow run release.yml -f tag=v1.2.3
-```
