@@ -1,0 +1,66 @@
+name: Bug report
+description: Report a component, the CLI or the docs not working as expected.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Security vulnerabilities must not be reported here.** Use private reporting as described in SECURITY.md.
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      multiple: true
+      options:
+        - React (Next.js, Vite)
+        - React Native (Uniwind)
+        - React Native (NativeWind)
+        - React Native (StyleSheet)
+        - SwiftUI
+        - Jetpack Compose
+        - CLI
+        - Docs site
+    validations:
+      required: true
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      description: The component, pattern, chart or block affected, e.g. `dialog`.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the behavior you observed. Screenshots help for visual issues.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: The commands you ran and the code that shows the problem, or a link to a repository.
+    validations:
+      required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: components.json
+      description: For web issues, paste your `components.json` so the style, base, icon library and prefix are known.
+      render: json
+  - type: input
+    id: version
+    attributes:
+      label: CLI version
+      description: The output of `npx @esuiss/ui --version`.
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Framework and version, package manager, browser, device or OS.
+      placeholder: Next.js 16.4, pnpm 10, Chrome 141, macOS 26

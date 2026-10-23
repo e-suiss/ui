@@ -1,0 +1,37 @@
+name: Feature request
+description: Suggest a new component, an option for an existing one, or a change to the CLI.
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      multiple: true
+      options:
+        - React (Next.js, Vite)
+        - React Native
+        - SwiftUI
+        - Jetpack Compose
+        - CLI
+        - Docs site
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What problem would this solve, and for whom?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: The component, prop or command you have in mind. Links to references or sketches help.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives
+      description: What you use today, or other ways to solve it.
