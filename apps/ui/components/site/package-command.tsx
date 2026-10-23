@@ -72,7 +72,7 @@ function convertLine(line: string, manager: Manager) {
     return {
       pnpm: `pnpm dlx ${rest}`,
       yarn: `yarn dlx ${rest}`,
-      bun: `bunx ${rest}`,
+      bun: `bunx --bun ${rest}`,
     }[manager]
   }
   if (NPM_INSTALL.test(line)) {

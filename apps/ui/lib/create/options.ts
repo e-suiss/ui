@@ -201,7 +201,7 @@ const RUNNERS: Record<PackageManager, string> = {
   pnpm: "pnpm dlx",
   npm: "npx",
   yarn: "yarn dlx",
-  bun: "bunx",
+  bun: "bunx --bun",
 }
 
 export const TEMPLATES = {
