@@ -72,18 +72,6 @@ The registry also reads the [style](/docs/theming#styles) from the part of `styl
 
 Use `radix-suiss` or `aria-suiss` for the other bases. Add [`@esuiss/theme-suiss`](#use-the-suissui-theme) for the suiss/ui colors as well.
 
-### Register the namespace
-
-Once `@esuiss` is listed in the public registry directory, the namespace works without any setup. Until then, add it to `components.json` once:
-
-```json title="components.json"
-{
-  "registries": {
-    "@esuiss": "https://suiss.app/ui/r/{style}/{name}.json"
-  }
-}
-```
-
 The full catalog is at [suiss.app/ui/r/registry.json](https://suiss.app/ui/r/registry.json), the second base's at [suiss.app/ui/r/radix/registry.json](https://suiss.app/ui/r/radix/registry.json) and the third base's at [suiss.app/ui/r/aria/registry.json](https://suiss.app/ui/r/aria/registry.json).
 
 ### Use the suiss/ui theme
@@ -175,7 +163,7 @@ Running `add` for a component you already have keeps your file and tells you whe
 | --- | --- |
 | Tailwind CSS 4.2 or later is required | Upgrade with `npm install tailwindcss@latest` and run `init` again. |
 | No `@/*` import alias found | Run `init` first, or add `"paths": { "@/*": ["./src/*"] }` to `compilerOptions` in `tsconfig.json`. |
-| `Unknown registry "@esuiss"` | Add the `registries` entry from [Register the namespace](#register-the-namespace) to `components.json`. |
+| `Unknown registry "@esuiss"` | Run the latest registry CLI with `npx shadcn@latest`, or add `"@esuiss": "https://suiss.app/ui/r/{style}/{name}.json"` to `registries` in `components.json`. |
 | A newly published version is not found | npm can take a few minutes to make new versions available. Run `npx --prefer-online @esuiss/ui@latest ...`. |
 
 </Only>

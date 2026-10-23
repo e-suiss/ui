@@ -72,16 +72,6 @@ npx shadcn@latest add @esuiss/button @esuiss/dialog
 npx shadcn@latest add @esuiss/theme-suiss
 ```
 
-Until the namespace is listed in the public registry directory, register it once in `components.json`:
-
-```json
-{
-  "registries": {
-    "@esuiss": "https://suiss.app/ui/r/{style}/{name}.json"
-  }
-}
-```
-
 Every item is published for three primitive bases under the same name. A `radix-*`, `new-york` or `default` style in `components.json` installs the second base, an `aria-*` style the third, and every other style the default base. This CLI follows the same `style`, or `--base`. `init --base` saves the base as the `style` in `components.json`, creating the file when needed, so later `add` runs use it without the flag.
 
 ## What `init` does
