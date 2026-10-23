@@ -4,7 +4,7 @@ import { tmpdir } from "node:os"
 import path from "node:path"
 
 const ROOT = path.resolve(import.meta.dirname, "..")
-const FAILURE = /Compatibility check failed: ([\s\S]*?)(?:\n\S|$)/
+const FAILURE = /Compatibility check failed: ([\s\S]*)/
 const LAST_LINES = 40
 
 const [script = "compat.mjs"] = process.argv.slice(2)
@@ -57,7 +57,7 @@ for (const [index, line] of runs.entries()) {
   const reason =
     code === 0
       ? ""
-      : (output.match(FAILURE)?.[1] ??
+      : (output.match(FAILURE)?.[1].trim() ??
         output.trim().split("\n").slice(-LAST_LINES).join("\n"))
   results.push({ line, ok: code === 0, seconds, reason })
   console.log(`${code === 0 ? "✓" : "✗"} ${line} (${seconds}s)`)
