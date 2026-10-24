@@ -96,8 +96,8 @@ function SearchIcon() {
 
 function taglineWords(tagline: [string, string]) {
   const placements = [
-    { left: 0.4, width: 0.955 },
-    { left: 1.622, width: 0.917 },
+    { left: 0.4, width: 0.955, justify: "justify-end" },
+    { left: 1.622, width: 0.917, justify: "justify-start" },
   ]
   const total = tagline[0].length + tagline[1].length - 1
   let offset = 0
@@ -560,10 +560,14 @@ export function GlobalNav({
                   style={{
                     left: `calc(${WORDMARK} * ${word.left})`,
                     width: `calc(${WORDMARK} * ${word.width})`,
-                    top: `calc(${WORDMARK} * 0.096)`,
-                    fontSize: `calc(${WORDMARK} * 0.181)`,
+                    top: `calc(${WORDMARK} * 0.111)`,
+                    fontSize: `calc(${WORDMARK} * 0.16)`,
+                    columnGap: `calc(${WORDMARK} * 0.025)`,
                   }}
-                  className="absolute flex justify-between leading-none font-semibold text-foreground/70 uppercase"
+                  className={cn(
+                    "absolute flex leading-none font-semibold text-foreground/70 uppercase",
+                    word.justify
+                  )}
                 >
                   {word.letters.map((item, position) => (
                     <span key={position} style={item.style}>
