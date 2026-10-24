@@ -1,16 +1,9 @@
 import axe from "axe-core"
-import {
-  afterEach,
-  beforeEach,
-  expect,
-  inject,
-  type TestContext,
-  vi,
-} from "vitest"
+import { beforeEach, expect, inject, type TestContext, vi } from "vitest"
 import { commands, page } from "vitest/browser"
 
 import { findLayoutIssues, type LayoutFinding } from "./layout"
-import { settle } from "./settle"
+import { holdingTimers, settle, transitionsDone } from "./settle"
 
 vi.useFakeTimers({ toFake: ["Date"], shouldAdvanceTime: true })
 vi.setSystemTime(new Date(2026, 0, 15, 9, 41))
@@ -64,6 +57,8 @@ async function capture(task: TestContext["task"]) {
       }
       await expect(page).toMatchScreenshot(`${task.name}-${theme}${SUFFIX}`, {
         screenshotOptions: {
+          animations: "disabled",
+          caret: "hide",
           mask: Array.from(
             document.querySelectorAll("[data-visual-mask]"),
             (element) => page.elementLocator(element)
@@ -74,6 +69,7 @@ async function capture(task: TestContext["task"]) {
   } finally {
     root.classList.toggle("dark", wasDark)
     document.body.style.padding = padding
+    await transitionsDone()
   }
   if (found.length === 0) return
   await commands.writeFile(
@@ -89,19 +85,12 @@ beforeEach((context) => {
   current = context
 })
 
-if (RTL) {
-  Object.assign(globalThis, {
-    afterExampleRender: async () => {
-      const context = current
-      current = undefined
-      if (!context) return
-      await capture(context.task)
-      context.skip()
-    },
-  })
-}
-
-afterEach(async ({ task }) => {
-  if (RTL || task.result?.state === "fail") return
-  await capture(task)
+Object.assign(globalThis, {
+  afterExampleRender: async () => {
+    const context = current
+    current = undefined
+    if (!context) return
+    await holdingTimers(() => capture(context.task))
+    if (RTL) context.skip()
+  },
 })

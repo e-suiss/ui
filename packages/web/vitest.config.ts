@@ -39,7 +39,9 @@ function browser(name: string) {
     enabled: true,
     headless: true,
     screenshotFailures: false,
-    provider: playwright({ launchOptions: { channel: "chrome" } }),
+    provider: playwright({
+      launchOptions: { channel: "chrome", args: ["--disable-lcd-text"] },
+    }),
     instances: [{ browser: "chromium" as const, name }],
     viewport: { width: 1280, height: 800 },
   }

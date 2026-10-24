@@ -29,4 +29,8 @@ declare module "vitest" {
 
 document.documentElement.classList.add(`style-${inject("style") ?? "suiss"}`)
 
+beforeEach(() => {
+  localStorage.clear()
+  sessionStorage.clear()
+})
 beforeEach(parkPointer)
