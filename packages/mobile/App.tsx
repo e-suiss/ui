@@ -1,7 +1,14 @@
 import "./global.css"
 
 import * as React from "react"
-import { FlatList, Pressable, View } from "react-native"
+import {
+  FlatList,
+  Linking,
+  Platform,
+  Pressable,
+  Settings,
+  View,
+} from "react-native"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import {
   SafeAreaProvider,
@@ -19,11 +26,41 @@ const context = require.context("./examples", false, /\.tsx$/)
 const EXAMPLE_FILE = /^\.\/(.+)\.tsx$/
 const FULLSCREEN = /^qr-scanner-/
 const INITIAL = process.env.EXPO_PUBLIC_EXAMPLE
+const LINK = /^esuiss-ui:\/\/example\/([\w-]+)(\?capture)?/
+const CAPTURE_TIME = new Date(2026, 0, 15, 9, 41).getTime()
+
+let clockFrozen = false
+
+function freezeClock() {
+  if (clockFrozen) return
+  clockFrozen = true
+  const NativeDate = Date
+  const offset = CAPTURE_TIME - NativeDate.now()
+  class CaptureDate extends NativeDate {
+    constructor(...args: unknown[]) {
+      if (args.length === 0) super(NativeDate.now() + offset)
+      else super(...(args as [string]))
+    }
+
+    static now() {
+      return NativeDate.now() + offset
+    }
+  }
+  globalThis.Date = CaptureDate as DateConstructor
+}
 
 const examples = context
   .keys()
   .map((key) => key.match(EXAMPLE_FILE)?.[1] ?? key)
   .sort()
+
+const LAUNCHED: unknown =
+  Platform.OS === "ios" ? Settings.get("example") : undefined
+const CAPTURED = typeof LAUNCHED === "string" && examples.includes(LAUNCHED)
+
+const OPENED = CAPTURED ? LAUNCHED : INITIAL
+
+if (CAPTURED && Settings.get("capture")) freezeClock()
 
 function Example({ name }: { name: string }) {
   const { default: Component } = context(`./${name}.tsx`) as Module
@@ -44,12 +81,33 @@ function Gallery() {
   const insets = useSafeAreaInsets()
   const [query, setQuery] = React.useState("")
   const [selected, setSelected] = React.useState(
-    INITIAL && examples.includes(INITIAL) ? INITIAL : undefined
+    typeof OPENED === "string" && examples.includes(OPENED) ? OPENED : undefined
   )
+  const [linked, setLinked] = React.useState(CAPTURED ? 1 : 0)
   const filtered = React.useMemo(
     () => examples.filter((name) => name.includes(query.trim().toLowerCase())),
     [query]
   )
+
+  React.useEffect(() => {
+    const open = (url: string | null) => {
+      const [, name, capture] = url?.match(LINK) ?? []
+      if (!name || !examples.includes(name)) return
+      if (capture) freezeClock()
+      setSelected(name)
+      setLinked((count) => count + 1)
+    }
+    Linking.getInitialURL().then(open)
+    const subscription = Linking.addEventListener("url", ({ url }) => open(url))
+    return () => subscription.remove()
+  }, [])
+
+  if (selected && linked > 0)
+    return (
+      <View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
+        <Example key={linked} name={selected} />
+      </View>
+    )
 
   if (selected)
     return (

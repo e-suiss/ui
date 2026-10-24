@@ -5,6 +5,8 @@ node_modules/
 .env*
 .vitest
 packages/web/tests/screenshots
+packages/mobile/tests/screenshots
+packages/mobile/.visual
 .next/
 out/
 build

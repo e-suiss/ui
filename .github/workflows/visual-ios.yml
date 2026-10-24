@@ -1,0 +1,126 @@
+name: Visual (iOS)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/mobile/App.tsx"
+      - "packages/mobile/components/**"
+      - "packages/mobile/examples/**"
+      - "packages/mobile/global.css"
+      - "packages/mobile/styles/**"
+      - "packages/mobile/scripts/visual-ios.mjs"
+      - "packages/mobile/package.json"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/visual-ios.yml"
+  workflow_dispatch:
+    inputs:
+      update:
+        description: Take new reference screenshots, to review as artifacts or to publish to e-suiss/ui-baselines
+        type: choice
+        options:
+          - "no"
+          - review
+          - publish
+        default: "no"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: visual-ios-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  UPDATE: ${{ github.event_name == 'workflow_dispatch' && inputs.update != 'no' }}
+  APP: packages/mobile/ios/build/Build/Products/Release-iphonesimulator/suissui.app
+
+jobs:
+  visual:
+    name: Screenshots (iOS)
+    runs-on: macos-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Check out the reference screenshots
+        if: env.UPDATE != 'true'
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: e-suiss/ui-baselines
+          path: packages/mobile/tests/screenshots
+          sparse-checkout: mobile/ios
+
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Generate the native project
+        working-directory: packages/mobile
+        env:
+          CI: "1"
+        run: pnpm exec expo prebuild --platform ios
+
+      - name: Build the app
+        working-directory: packages/mobile/ios
+        run: xcodebuild -workspace suissui.xcworkspace -scheme suissui -configuration Release -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath build build -quiet
+
+      - name: Take every example
+        working-directory: packages/mobile
+        run: |
+          if [ "$UPDATE" = "true" ]; then
+            node scripts/visual-ios.mjs --app="$GITHUB_WORKSPACE/$APP" --update
+          elif [ ! -d tests/screenshots/mobile/ios ]; then
+            echo "::notice title=No reference screenshots::e-suiss/ui-baselines has no iOS screenshots yet, so this run only checks that every example renders. Run the Visual (iOS) workflow with update set to publish to add them."
+            node scripts/visual-ios.mjs --app="$GITHUB_WORKSPACE/$APP" --update
+          else
+            node scripts/visual-ios.mjs --app="$GITHUB_WORKSPACE/$APP"
+          fi
+
+      - name: Upload the differences
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: differences-ios
+          path: |
+            packages/mobile/.visual/ios
+            packages/mobile/tests/screenshots/mobile/ios
+          if-no-files-found: ignore
+
+      - name: Upload the new reference screenshots
+        if: env.UPDATE == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: baselines-ios
+          path: packages/mobile/tests/screenshots/mobile
+          if-no-files-found: error
+
+  publish:
+    needs: visual
+    if: github.event_name == 'workflow_dispatch' && inputs.update == 'publish' && github.ref == 'refs/heads/main'
+    name: Publish the reference screenshots
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: ui-baselines
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: baselines-ios
+          path: ${{ runner.temp }}/screenshots/mobile
+
+      - name: Replace the iOS screenshots in e-suiss/ui-baselines
+        env:
+          BASELINES_KEY: ${{ secrets.BASELINES_KEY }}
+          SOURCE: ${{ github.sha }}
+        run: scripts/publish-baselines.sh mobile/ios "${{ runner.temp }}/screenshots/mobile/ios"

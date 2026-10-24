@@ -18,7 +18,8 @@
     "nativewind:check": "node scripts/build-nativewind.mjs --check",
     "tokens": "node scripts/build-tokens.mjs",
     "tokens:check": "node scripts/build-tokens.mjs --check",
-    "styles": "node scripts/derive-styles.mjs"
+    "styles": "node scripts/derive-styles.mjs",
+    "visual:ios": "node scripts/visual-ios.mjs"
   },
   "dependencies": {
     "class-variance-authority": "catalog:",
@@ -43,6 +44,7 @@
     "@tabler/icons": "3.49.0",
     "@tabler/icons-react-native": "3.49.0",
     "@types/node": "catalog:",
+    "@types/pngjs": "^6.0.5",
     "@types/react": "^19.2.18",
     "ajv": "^8.20.0",
     "expo-clipboard": "~57.0.2",
@@ -50,6 +52,8 @@
     "lucide-react-native": "1.57.0",
     "lucide-static": "1.57.0",
     "nativewind": "4.2.7",
+    "pixelmatch": "^8.0.0",
+    "pngjs": "^7.0.0",
     "postcss": "^8.5.28",
     "react-dom": "19.2.3",
     "react-native-view-shot": "5.1.0",
