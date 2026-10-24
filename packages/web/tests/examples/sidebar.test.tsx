@@ -90,7 +90,8 @@ test("Right To Left", async () => {
   await step("puts the sidebar on the right next to the content", async () => {
     await waitFor(() =>
       expect(container.getBoundingClientRect().right).toBeCloseTo(
-        document.documentElement.clientWidth,
+        document.body.getBoundingClientRect().right -
+          Number.parseFloat(getComputedStyle(document.body).paddingRight),
         0
       )
     )
