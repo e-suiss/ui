@@ -69,6 +69,7 @@ async function capture(task: TestContext["task"]) {
   } finally {
     root.classList.toggle("dark", wasDark)
     document.body.style.padding = padding
+    window.dispatchEvent(new Event("resize"))
     await transitionsDone()
   }
   if (found.length === 0) return

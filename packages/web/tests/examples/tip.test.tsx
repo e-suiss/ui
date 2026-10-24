@@ -10,7 +10,6 @@ test("Default", async () => {
   const showAgain = canvas.getByRole("button", { name: "Show tips again" })
 
   await step("starts the tour with the compose tip", async () => {
-    await userEvent.click(showAgain)
     const popover = await screen.findByRole("dialog", {
       name: "Start a note fast",
     })
