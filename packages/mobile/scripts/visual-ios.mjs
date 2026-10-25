@@ -90,6 +90,16 @@ function prepare(device) {
     "true"
   )
   simctl(
+    "spawn",
+    device.udid,
+    "defaults",
+    "write",
+    "com.apple.keyboard.preferences",
+    "KeyboardPrediction",
+    "-bool",
+    "false"
+  )
+  simctl(
     "status_bar",
     device.udid,
     "override",
@@ -317,6 +327,16 @@ simctl(
   "ReduceMotionEnabled",
   "-bool",
   "false"
+)
+simctl(
+  "spawn",
+  device.udid,
+  "defaults",
+  "write",
+  "com.apple.keyboard.preferences",
+  "KeyboardPrediction",
+  "-bool",
+  "true"
 )
 console.log(
   `${examples.length * THEMES.length} screenshots, ${written} written, ${failures.length} failed`
