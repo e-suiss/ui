@@ -1,3 +1,4 @@
+import { capturing } from "./capture"
 import "./global.css"
 
 import * as React from "react"
@@ -10,6 +11,7 @@ import {
   View,
 } from "react-native"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { ReducedMotionConfig, ReduceMotion } from "react-native-reanimated"
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
@@ -164,6 +166,7 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
+        {capturing && <ReducedMotionConfig mode={ReduceMotion.Always} />}
         <Gallery />
         <PortalHost />
       </SafeAreaProvider>

@@ -33,6 +33,7 @@ const { values } = parseArgs({
     app: { type: "string", default: "" },
     device: { type: "string", default: "iPhone 17 Pro Max" },
     only: { type: "string", default: "" },
+    shard: { type: "string", default: "1/1" },
     update: { type: "boolean", default: false },
   },
 })
@@ -75,6 +76,16 @@ function createDevice(name) {
 function prepare(device) {
   if (device.state !== "Booted") simctl("boot", device.udid)
   simctl("bootstatus", device.udid, "-b")
+  simctl(
+    "spawn",
+    device.udid,
+    "defaults",
+    "write",
+    "com.apple.Accessibility",
+    "ReduceMotionEnabled",
+    "-bool",
+    "true"
+  )
   simctl(
     "status_bar",
     device.udid,
@@ -177,11 +188,13 @@ const filter = values.only
   .split(",")
   .map((name) => name.trim())
   .filter(Boolean)
+const [shard, shards] = values.shard.split("/").map(Number)
 const examples = readdirSync(EXAMPLES)
   .filter((file) => EXAMPLE_FILE.test(file))
   .map((file) => file.replace(EXAMPLE_FILE, ""))
   .filter((name) => !filter.length || filter.includes(name))
   .sort()
+  .filter((_, index) => index % shards === shard - 1)
 
 const device = findDevice(values.device)
 prepare(device)
@@ -234,6 +247,16 @@ for (const theme of THEMES) {
 
 simctl("terminate", device.udid, BUNDLE)
 simctl("status_bar", device.udid, "clear")
+simctl(
+  "spawn",
+  device.udid,
+  "defaults",
+  "write",
+  "com.apple.Accessibility",
+  "ReduceMotionEnabled",
+  "-bool",
+  "false"
+)
 console.log(
   `${examples.length * THEMES.length} screenshots, ${written} written, ${failures.length} failed`
 )
