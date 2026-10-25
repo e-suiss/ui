@@ -36,11 +36,23 @@ function stillSpinners() {
 }
 
 let loading = 0
+let shown = 0
 const listeners = new Set<() => void>()
 
 function track(change: number) {
   loading += change
   for (const listener of listeners) listener()
+}
+
+export function useShown() {
+  React.useEffect(() => {
+    shown += 1
+    track(0)
+    return () => {
+      shown -= 1
+      track(0)
+    }
+  }, [])
 }
 
 function subscribe(listener: () => void) {
@@ -123,9 +135,12 @@ function trackedImages() {
   })
 }
 
-export function LoadingMarker() {
-  const busy = React.useSyncExternalStore(subscribe, () => loading > 0)
-  if (!busy) return null
+export function ReadyMarker() {
+  const ready = React.useSyncExternalStore(
+    subscribe,
+    () => shown > 0 && loading === 0
+  )
+  if (!ready) return null
   return (
     <View
       pointerEvents="none"

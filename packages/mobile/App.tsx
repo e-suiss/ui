@@ -1,4 +1,4 @@
-import { capturing, LoadingMarker } from "./capture"
+import { capturing, ReadyMarker, useShown } from "./capture"
 import "./global.css"
 
 import * as React from "react"
@@ -66,6 +66,7 @@ if (CAPTURED && Settings.get("capture")) freezeClock()
 
 function Example({ name }: { name: string }) {
   const { default: Component } = context(`./${name}.tsx`) as Module
+  useShown()
   return (
     <View
       className={
@@ -169,7 +170,7 @@ export default function App() {
         {capturing && <ReducedMotionConfig mode={ReduceMotion.Always} />}
         <Gallery />
         <PortalHost />
-        {capturing && <LoadingMarker />}
+        {capturing && <ReadyMarker />}
       </SafeAreaProvider>
     </GestureHandlerRootView>
   )

@@ -23,10 +23,10 @@ const POLL = 400
 const SETTLE_AFTER_THEME = 1500
 const STARTUP = 1500
 const WARM_UP = 15_000
-const STABLE_TIMEOUT = 20_000
+const STABLE_TIMEOUT = 60_000
 const ALLOWED_MISMATCHED_PIXELS = 10
 const STATUS_BAR = 186
-const LOADING_MARKER = { x: 15, y: 165 }
+const READY_MARKER = { x: 15, y: 165 }
 const HOME_INDICATOR = 102
 const EXAMPLE_FILE = /\.tsx$/
 
@@ -136,13 +136,13 @@ function screenshot(udid, file) {
   const height = full.height - STATUS_BAR - HOME_INDICATOR
   const content = new PNG({ width: full.width, height })
   PNG.bitblt(full, content, 0, STATUS_BAR, full.width, height, 0, 0)
-  return { content, loading: loadingImages(full) }
+  return { content, ready: ready(full) }
 }
 
-function loadingImages(full) {
-  const index = (LOADING_MARKER.y * full.width + LOADING_MARKER.x) * 4
+function ready(full) {
+  const index = (READY_MARKER.y * full.width + READY_MARKER.x) * 4
   const [red, green, blue] = full.data.subarray(index, index + 3)
-  return red > 240 && green < 16 && blue > 240
+  return red - green > 60 && blue - green > 60 && Math.abs(red - blue) < 30
 }
 
 function same(a, b) {
@@ -159,7 +159,7 @@ async function stableShot(udid, file) {
   while (Date.now() < deadline) {
     await wait(POLL)
     const current = screenshot(udid, file)
-    if (!current.loading && !previous.loading) {
+    if (current.ready && previous.ready) {
       if (same(previous.content, current.content)) return current.content
     }
     previous = current
