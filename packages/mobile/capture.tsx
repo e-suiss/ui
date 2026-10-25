@@ -6,7 +6,9 @@ import { FullWindowOverlay } from "react-native-screens"
 const HELD_AFTER = 1000
 
 export const capturing =
-  Platform.OS === "ios" && Boolean(Settings.get("capture"))
+  Platform.OS === "ios"
+    ? Boolean(Settings.get("capture"))
+    : process.env.EXPO_PUBLIC_CAPTURE === "1"
 
 function holdTimers() {
   const timeout = globalThis.setTimeout
@@ -141,7 +143,13 @@ export function ReadyMarker() {
     subscribe,
     () => shown > 0 && loading === 0
   )
-  if (!ready) return null
+  React.useEffect(() => {
+    if (Platform.OS === "android") {
+      // biome-ignore lint/suspicious/noConsole: the capture script reads readiness from logcat
+      console.log(`esuiss-capture ${ready ? "ready" : "busy"}`)
+    }
+  }, [ready])
+  if (!ready || Platform.OS !== "ios") return null
   return (
     <FullWindowOverlay>
       <View
