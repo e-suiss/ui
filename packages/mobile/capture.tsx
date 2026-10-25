@@ -1,5 +1,5 @@
-import type * as React from "react"
-import { Platform, Settings } from "react-native"
+import * as React from "react"
+import { Platform, Settings, View } from "react-native"
 import { ReduceMotion } from "react-native-reanimated"
 
 const HELD_AFTER = 1000
@@ -35,8 +35,116 @@ function stillSpinners() {
   })
 }
 
+let loading = 0
+const listeners = new Set<() => void>()
+
+function track(change: number) {
+  loading += change
+  for (const listener of listeners) listener()
+}
+
+function subscribe(listener: () => void) {
+  listeners.add(listener)
+  return () => {
+    listeners.delete(listener)
+  }
+}
+
+function stillCarets() {
+  const ReactNative = require("react-native") as typeof import("react-native")
+  const NativeTextInput = ReactNative.TextInput
+  function StillTextInput(props: React.ComponentProps<typeof NativeTextInput>) {
+    return <NativeTextInput {...props} caretHidden />
+  }
+  Object.assign(StillTextInput, { State: NativeTextInput.State })
+  Object.defineProperty(ReactNative, "TextInput", {
+    configurable: true,
+    enumerable: true,
+    get: () => StillTextInput,
+  })
+}
+
+function trackedImages() {
+  const ReactNative = require("react-native") as typeof import("react-native")
+  const NativeImage = ReactNative.Image
+  function TrackedImage(props: React.ComponentProps<typeof NativeImage>) {
+    const started = React.useRef(false)
+    const loaded = React.useRef(false)
+    React.useEffect(
+      () => () => {
+        if (started.current) track(-1)
+      },
+      []
+    )
+    const finish = () => {
+      loaded.current = true
+      if (!started.current) return
+      started.current = false
+      track(-1)
+    }
+    return (
+      <NativeImage
+        {...props}
+        onLoadStart={() => {
+          if (!started.current && !loaded.current) {
+            started.current = true
+            track(1)
+          }
+          props.onLoadStart?.()
+        }}
+        onLoad={(event) => {
+          finish()
+          props.onLoad?.(event)
+        }}
+        onError={(event) => {
+          finish()
+          props.onError?.(event)
+        }}
+        onLoadEnd={() => {
+          finish()
+          props.onLoadEnd?.()
+        }}
+      />
+    )
+  }
+  Object.assign(TrackedImage, {
+    abortPrefetch: NativeImage.abortPrefetch,
+    getSize: NativeImage.getSize,
+    getSizeWithHeaders: NativeImage.getSizeWithHeaders,
+    prefetch: NativeImage.prefetch,
+    prefetchWithMetadata: NativeImage.prefetchWithMetadata,
+    queryCache: NativeImage.queryCache,
+    resolveAssetSource: NativeImage.resolveAssetSource,
+  })
+  Object.defineProperty(ReactNative, "Image", {
+    configurable: true,
+    enumerable: true,
+    get: () => TrackedImage,
+  })
+}
+
+export function LoadingMarker() {
+  const busy = React.useSyncExternalStore(subscribe, () => loading > 0)
+  if (!busy) return null
+  return (
+    <View
+      pointerEvents="none"
+      style={{
+        position: "absolute",
+        top: 50,
+        left: 0,
+        width: 10,
+        height: 10,
+        backgroundColor: "#ff00ff",
+      }}
+    />
+  )
+}
+
 if (capturing) {
   holdTimers()
   stillSpinners()
+  trackedImages()
+  stillCarets()
   Object.assign(ReduceMotion, { Never: ReduceMotion.Always })
 }

@@ -1,4 +1,4 @@
-import { capturing } from "./capture"
+import { capturing, LoadingMarker } from "./capture"
 import "./global.css"
 
 import * as React from "react"
@@ -169,6 +169,7 @@ export default function App() {
         {capturing && <ReducedMotionConfig mode={ReduceMotion.Always} />}
         <Gallery />
         <PortalHost />
+        {capturing && <LoadingMarker />}
       </SafeAreaProvider>
     </GestureHandlerRootView>
   )
