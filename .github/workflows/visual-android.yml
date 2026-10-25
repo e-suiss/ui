@@ -26,6 +26,10 @@ on:
           - review
           - publish
         default: "no"
+      only:
+        description: Comma-separated example names to take instead of every example
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -116,7 +120,12 @@ jobs:
 
       - name: Choose what to do with the screenshots
         working-directory: packages/mobile
+        env:
+          ONLY: ${{ inputs.only }}
         run: |
+          if [ -n "$ONLY" ]; then
+            echo "ONLY_FLAG=--only=$ONLY" >> "$GITHUB_ENV"
+          fi
           if [ "$UPDATE" = "true" ]; then
             echo "VISUAL_FLAGS=--update" >> "$GITHUB_ENV"
           elif [ ! -d tests/screenshots/mobile/android ]; then
@@ -142,7 +151,7 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
           disable-animations: true
           working-directory: packages/mobile
-          script: node scripts/visual-android.mjs --app="$RUNNER_TEMP/app-release.apk" --shard="${{ matrix.shard }}/4" $VISUAL_FLAGS
+          script: (while sleep 120; do df -h / | tail -1; free -m | sed -n 2p; done) & node scripts/visual-android.mjs --app="$RUNNER_TEMP/app-release.apk" --shard="${{ matrix.shard }}/4" $VISUAL_FLAGS $ONLY_FLAG
 
       - name: Upload the differences
         if: failure()
@@ -155,7 +164,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: Upload the new reference screenshots
-        if: env.UPDATE == 'true'
+        if: always() && env.VISUAL_FLAGS == '--update'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: baselines-android-${{ matrix.shard }}

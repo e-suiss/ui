@@ -182,6 +182,7 @@ export async function run(driver, values) {
     for (const name of examples) {
       const label = `${name} (${theme})`
       const reference = path.join(references, `${name}-${theme}.png`)
+      const started = Date.now()
       let failure
       for (let attempt = 0; attempt < 2; attempt++) {
         failure = await check(name, theme, label, reference)
@@ -189,6 +190,9 @@ export async function run(driver, values) {
         await wait(CONFIRM_DELAY)
       }
       if (failure) failures.push(failure)
+      console.log(
+        `${failure ?? `${label}: ok`} in ${Math.round((Date.now() - started) / 1000)}s`
+      )
     }
   }
 
