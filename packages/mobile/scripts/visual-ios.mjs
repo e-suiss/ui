@@ -23,6 +23,7 @@ const POLL = 400
 const SETTLE_AFTER_THEME = 1500
 const STARTUP = 1500
 const WARM_UP = 15_000
+const CONFIRM_DELAY = 8000
 const STABLE_TIMEOUT = 60_000
 const ALLOWED_MISMATCHED_PIXELS = 10
 const STATUS_BAR = 186
@@ -220,15 +221,46 @@ if (examples.length) {
 const failures = []
 let written = 0
 
-async function check(name, theme, label, reference) {
-  const { image, shot } = await capture(device.udid, name, theme)
-  if (!image) return `${label}: did not settle or the app stopped`
-  if (values.update || !existsSync(reference)) {
-    writeFileSync(reference, PNG.sync.write(image))
-    rmSync(shot)
-    written++
+function matches(reference, image) {
+  return compare(reference, image).mismatched <= ALLOWED_MISMATCHED_PIXELS
+}
+
+async function confirm(name, theme, first) {
+  let previous = first
+  for (let attempt = 0; attempt < 3; attempt++) {
+    await wait(CONFIRM_DELAY)
+    const { image, shot } = await capture(device.udid, name, theme)
+    if (!image) return {}
+    if (matches(previous, image)) return { image, shot }
+    previous = image
+  }
+  return {}
+}
+
+async function record(name, theme, label, reference) {
+  const first = await capture(device.udid, name, theme)
+  if (!first.image) return `${label}: did not settle or the app stopped`
+  if (
+    existsSync(reference) &&
+    matches(PNG.sync.read(readFileSync(reference)), first.image)
+  ) {
+    rmSync(first.shot)
     return undefined
   }
+  const { image, shot } = await confirm(name, theme, first.image)
+  if (!image) return `${label}: did not settle or the app stopped`
+  writeFileSync(reference, PNG.sync.write(image))
+  rmSync(shot)
+  written++
+  return undefined
+}
+
+async function check(name, theme, label, reference) {
+  if (values.update || !existsSync(reference)) {
+    return record(name, theme, label, reference)
+  }
+  const { image, shot } = await capture(device.udid, name, theme)
+  if (!image) return `${label}: did not settle or the app stopped`
   const { mismatched, diff } = compare(
     PNG.sync.read(readFileSync(reference)),
     image
@@ -259,6 +291,7 @@ for (const theme of THEMES) {
     for (let attempt = 0; attempt < 2; attempt++) {
       failure = await check(name, theme, label, reference)
       if (!failure) break
+      await wait(CONFIRM_DELAY)
     }
     if (failure) failures.push(failure)
   }
