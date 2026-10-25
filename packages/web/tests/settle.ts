@@ -128,9 +128,17 @@ export async function settle() {
   const quiet = document.querySelector(".recharts-wrapper") ? 600 : 150
   let previous = ""
   for (let attempt = 0; attempt < 20; attempt++) {
+    await frames(2)
+    await Promise.race([Promise.all(runningTransitions()), wait(4000)])
     const current = document.body.innerHTML
     if (current === previous) return
     previous = current
     await wait(quiet)
+  }
+}
+
+async function frames(count: number) {
+  for (let frame = 0; frame < count; frame++) {
+    await new Promise((resolve) => requestAnimationFrame(resolve))
   }
 }

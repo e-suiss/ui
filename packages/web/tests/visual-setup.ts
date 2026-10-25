@@ -16,6 +16,11 @@ const FINDINGS = `.vitest/visual-findings/${inject("base")}/${inject("style") ??
 
 type Finding = LayoutFinding & { theme: (typeof THEMES)[number] }
 
+const sampling = document.createElement("style")
+sampling.textContent =
+  "*, ::before, ::after { image-rendering: pixelated !important; }"
+document.head.append(sampling)
+
 function blank() {
   return !Array.from(document.body.querySelectorAll("*")).some((element) => {
     const box = element.getBoundingClientRect()
