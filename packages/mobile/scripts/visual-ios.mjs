@@ -297,6 +297,15 @@ for (const theme of THEMES) {
   }
 }
 
+if (values.update && !filter.length) {
+  const kept = new Set(
+    examples.flatMap((name) => THEMES.map((theme) => `${name}-${theme}.png`))
+  )
+  for (const file of readdirSync(REFERENCES)) {
+    if (!kept.has(file)) rmSync(path.join(REFERENCES, file))
+  }
+}
+
 simctl("terminate", device.udid, BUNDLE)
 simctl("status_bar", device.udid, "clear")
 simctl(
