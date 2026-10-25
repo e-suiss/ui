@@ -1,6 +1,7 @@
 import * as React from "react"
 import { Platform, Settings, View } from "react-native"
 import { ReduceMotion } from "react-native-reanimated"
+import { FullWindowOverlay } from "react-native-screens"
 
 const HELD_AFTER = 1000
 
@@ -142,17 +143,19 @@ export function ReadyMarker() {
   )
   if (!ready) return null
   return (
-    <View
-      pointerEvents="none"
-      style={{
-        position: "absolute",
-        top: 50,
-        left: 0,
-        width: 10,
-        height: 10,
-        backgroundColor: "#ff00ff",
-      }}
-    />
+    <FullWindowOverlay>
+      <View
+        pointerEvents="none"
+        style={{
+          position: "absolute",
+          top: 50,
+          left: 0,
+          width: 10,
+          height: 10,
+          backgroundColor: "#ff00ff",
+        }}
+      />
+    </FullWindowOverlay>
   )
 }
 
