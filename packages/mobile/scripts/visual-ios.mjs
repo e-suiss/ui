@@ -22,6 +22,7 @@ const THEMES = ["light", "dark"]
 const POLL = 400
 const SETTLE_AFTER_THEME = 1500
 const STARTUP = 1500
+const WARM_UP = 15_000
 const STABLE_TIMEOUT = 10_000
 const ALLOWED_MISMATCHED_PIXELS = 10
 const STATUS_BAR = 186
@@ -202,6 +203,10 @@ if (values.app) simctl("install", device.udid, path.resolve(values.app))
 rmSync(DIFFS, { recursive: true, force: true })
 mkdirSync(DIFFS, { recursive: true })
 mkdirSync(REFERENCES, { recursive: true })
+if (examples.length) {
+  open(device.udid, examples[0])
+  await wait(WARM_UP)
+}
 
 const failures = []
 let written = 0
