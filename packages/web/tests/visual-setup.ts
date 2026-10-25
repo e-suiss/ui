@@ -1,6 +1,6 @@
 import axe from "axe-core"
 import { beforeEach, expect, inject, type TestContext, vi } from "vitest"
-import { commands, page } from "vitest/browser"
+import { cdp, commands, page } from "vitest/browser"
 
 import { findLayoutIssues, type LayoutFinding } from "./layout"
 import { holdingTimers, settle, transitionsDone } from "./settle"
@@ -47,6 +47,7 @@ async function capture(task: TestContext["task"]) {
   const wasDark = root.classList.contains("dark")
   const name = `${task.name}${SUFFIX}`
   const found: Finding[] = []
+  await reduceMotion("reduce")
   try {
     for (const theme of THEMES) {
       root.classList.toggle("dark", theme === "dark")
@@ -72,6 +73,7 @@ async function capture(task: TestContext["task"]) {
   } finally {
     root.classList.toggle("dark", wasDark)
     await transitionsDone()
+    await reduceMotion("")
   }
   if (found.length === 0) return
   await commands.writeFile(
@@ -81,6 +83,12 @@ async function capture(task: TestContext["task"]) {
 }
 
 let current: TestContext | undefined
+
+function reduceMotion(value: "reduce" | "") {
+  return cdp().send("Emulation.setEmulatedMedia", {
+    features: [{ name: "prefers-reduced-motion", value }],
+  })
+}
 
 beforeEach((context) => {
   document.body.style.padding = "16px"
