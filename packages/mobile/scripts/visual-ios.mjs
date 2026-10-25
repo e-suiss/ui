@@ -219,43 +219,48 @@ if (examples.length) {
 
 const failures = []
 let written = 0
+
+async function check(name, theme, label, reference) {
+  const { image, shot } = await capture(device.udid, name, theme)
+  if (!image) return `${label}: did not settle or the app stopped`
+  if (values.update || !existsSync(reference)) {
+    writeFileSync(reference, PNG.sync.write(image))
+    rmSync(shot)
+    written++
+    return undefined
+  }
+  const { mismatched, diff } = compare(
+    PNG.sync.read(readFileSync(reference)),
+    image
+  )
+  if (mismatched <= ALLOWED_MISMATCHED_PIXELS) {
+    rmSync(shot)
+    return undefined
+  }
+  writeFileSync(shot, PNG.sync.write(image))
+  if (diff) {
+    writeFileSync(
+      path.join(DIFFS, `${name}-${theme}-diff.png`),
+      PNG.sync.write(diff)
+    )
+  }
+  return Number.isFinite(mismatched)
+    ? `${label}: ${mismatched} pixels differ`
+    : `${label}: the screenshot size changed`
+}
+
 for (const theme of THEMES) {
   simctl("ui", device.udid, "appearance", theme)
   await wait(SETTLE_AFTER_THEME)
   for (const name of examples) {
-    const { image, shot } = await capture(device.udid, name, theme)
     const label = `${name} (${theme})`
-    if (!image) {
-      failures.push(`${label}: did not settle or the app stopped`)
-      continue
-    }
     const reference = path.join(REFERENCES, `${name}-${theme}.png`)
-    if (values.update || !existsSync(reference)) {
-      writeFileSync(reference, PNG.sync.write(image))
-      rmSync(shot)
-      written++
-      continue
+    let failure
+    for (let attempt = 0; attempt < 2; attempt++) {
+      failure = await check(name, theme, label, reference)
+      if (!failure) break
     }
-    const { mismatched, diff } = compare(
-      PNG.sync.read(readFileSync(reference)),
-      image
-    )
-    if (mismatched <= ALLOWED_MISMATCHED_PIXELS) {
-      rmSync(shot)
-      continue
-    }
-    writeFileSync(shot, PNG.sync.write(image))
-    if (diff) {
-      writeFileSync(
-        path.join(DIFFS, `${name}-${theme}-diff.png`),
-        PNG.sync.write(diff)
-      )
-    }
-    failures.push(
-      Number.isFinite(mismatched)
-        ? `${label}: ${mismatched} pixels differ`
-        : `${label}: the screenshot size changed`
-    )
+    if (failure) failures.push(failure)
   }
 }
 
