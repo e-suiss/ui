@@ -62,6 +62,16 @@ function useKeyboard(): KeyboardFrame {
       Keyboard.addListener("keyboardDidChangeFrame", onShow),
       Keyboard.addListener(hide, onHide),
     ]
+    const metrics = Keyboard.metrics()
+    if (metrics) {
+      const height =
+        Platform.OS === "ios" ? windowHeight - metrics.screenY : metrics.height
+      setFrame((current) =>
+        current.height > 0
+          ? current
+          : { height: Math.max(0, height), duration: current.duration }
+      )
+    }
     return () => {
       for (const subscription of subscriptions) subscription.remove()
     }
