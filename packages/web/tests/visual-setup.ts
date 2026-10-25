@@ -16,6 +16,11 @@ const FINDINGS = `.vitest/visual-findings/${inject("base")}/${inject("style") ??
 
 type Finding = LayoutFinding & { theme: (typeof THEMES)[number] }
 
+const MASKED = [
+  "[data-visual-mask]",
+  '[style*="photo-1760978631841-f3754859ca59"]',
+].join(", ")
+
 const sampling = document.createElement("style")
 sampling.textContent =
   "*, ::before, ::after { image-rendering: pixelated !important; }"
@@ -63,9 +68,8 @@ async function capture(task: TestContext["task"]) {
         screenshotOptions: {
           animations: "disabled",
           caret: "hide",
-          mask: Array.from(
-            document.querySelectorAll("[data-visual-mask]"),
-            (element) => page.elementLocator(element)
+          mask: Array.from(document.querySelectorAll(MASKED), (element) =>
+            page.elementLocator(element)
           ),
         },
       })
@@ -90,7 +94,8 @@ function reduceMotion(value: "reduce" | "") {
   })
 }
 
-beforeEach((context) => {
+beforeEach(async (context) => {
+  await document.fonts.load('1em "Inter Variable"')
   document.body.style.padding = "16px"
   vi.setSystemTime(new Date(2026, 0, 15, 9, 41))
   current = context
