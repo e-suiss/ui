@@ -86,13 +86,13 @@ jobs:
 
   visual:
     needs: build
-    name: Screenshots (Android ${{ matrix.shard }}/10)
+    name: Screenshots (Android ${{ matrix.shard }}/32)
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
@@ -151,7 +151,7 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
           disable-animations: true
           working-directory: packages/mobile
-          script: node scripts/visual-android.mjs --app="$RUNNER_TEMP/app-release.apk" --shard="${{ matrix.shard }}/10" $VISUAL_FLAGS $ONLY_FLAG
+          script: node scripts/visual-android.mjs --app="$RUNNER_TEMP/app-release.apk" --shard="${{ matrix.shard }}/32" $VISUAL_FLAGS $ONLY_FLAG
 
       - name: Upload the differences
         if: failure()

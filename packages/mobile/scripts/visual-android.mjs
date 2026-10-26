@@ -33,10 +33,12 @@ function shell(...args) {
 let insets = { top: 0, bottom: 0 }
 
 function inset(windows, type) {
-  const frame = windows.match(
-    new RegExp(`type=${type} frame=\\[\\d+,(\\d+)\\]\\[\\d+,(\\d+)\\]`)
-  )
-  return frame ? Number(frame[2]) - Number(frame[1]) : undefined
+  const heights = [
+    ...windows.matchAll(
+      new RegExp(`type=${type} frame=\\[\\d+,(\\d+)\\]\\[\\d+,(\\d+)\\]`, "g")
+    ),
+  ].map((frame) => Number(frame[2]) - Number(frame[1]))
+  return heights.length ? Math.max(...heights) : undefined
 }
 
 async function prepare() {
