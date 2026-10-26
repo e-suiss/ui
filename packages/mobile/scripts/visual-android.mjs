@@ -10,6 +10,11 @@ const ADB = process.env.ANDROID_HOME
   : "adb"
 const READY = /esuiss-capture (ready|busy)/g
 const BOOT_TIMEOUT = 300_000
+const ANIMATIONS = [
+  "window_animation_scale",
+  "transition_animation_scale",
+  "animator_duration_scale",
+]
 
 const values = options("")
 const SERIAL = values.device ? ["-s", values.device] : []
@@ -25,17 +30,17 @@ function shell(...args) {
   return adb("shell", ...args)
 }
 
-function demo(command, extras = {}) {
-  shell(
-    "am",
-    "broadcast",
-    "-a",
-    "com.android.systemui.demo",
-    "-e",
-    "command",
-    command,
-    ...Object.entries(extras).flatMap(([key, value]) => ["-e", key, value])
+let insets = { top: 0, bottom: 0 }
+
+function inset(windows, type) {
+  const frame = windows.match(
+    new RegExp(`type=${type} frame=\\[\\d+,(\\d+)\\]\\[\\d+,(\\d+)\\]`)
   )
+  if (!frame) {
+    console.error(`Could not read the ${type} frame from dumpsys window.`)
+    process.exit(1)
+  }
+  return Number(frame[2]) - Number(frame[1])
 }
 
 async function prepare() {
@@ -48,21 +53,18 @@ async function prepare() {
     }
     await wait(1000)
   }
-  for (const scale of [
-    "window_animation_scale",
-    "transition_animation_scale",
-    "animator_duration_scale",
-  ]) {
+  for (const scale of ANIMATIONS) {
     shell("settings", "put", "global", scale, "0")
   }
   shell("settings", "put", "secure", "show_ime_with_hard_keyboard", "1")
-  shell("settings", "put", "global", "sysui_demo_allowed", "1")
-  demo("enter")
-  demo("clock", { hhmm: "0941" })
-  demo("battery", { level: "100", plugged: "false" })
-  demo("network", { wifi: "show", level: "4", fully: "true" })
-  demo("network", { mobile: "show", datatype: "none", level: "4" })
-  demo("notifications", { visible: "false" })
+  const windows = shell("dumpsys", "window")
+  insets = {
+    top: inset(windows, "statusBars"),
+    bottom: inset(windows, "navigationBars"),
+  }
+  console.log(
+    `Cropping ${insets.top}px from the top and ${insets.bottom}px from the bottom`
+  )
 }
 
 function open(name) {
@@ -92,7 +94,11 @@ function screenshot(file) {
     maxBuffer: 64 * 1024 * 1024,
   })
   writeFileSync(file, data)
-  return { content: PNG.sync.read(data), ready: settled && ready() }
+  const full = PNG.sync.read(data)
+  const height = full.height - insets.top - insets.bottom
+  const content = new PNG({ width: full.width, height })
+  PNG.bitblt(full, content, 0, insets.top, full.width, height, 0, 0)
+  return { content, ready: settled && ready() }
 }
 
 function running() {
@@ -105,12 +111,7 @@ function running() {
 
 function finish() {
   shell("am", "force-stop", BUNDLE)
-  demo("exit")
-  for (const scale of [
-    "window_animation_scale",
-    "transition_animation_scale",
-    "animator_duration_scale",
-  ]) {
+  for (const scale of ANIMATIONS) {
     shell("settings", "put", "global", scale, "1")
   }
 }
