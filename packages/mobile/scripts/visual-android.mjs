@@ -10,6 +10,7 @@ const ADB = process.env.ANDROID_HOME
   : "adb"
 const READY = /esuiss-capture (ready|busy)/g
 const BOOT_TIMEOUT = 300_000
+const BARS_SETTLED = 10_000
 const ANIMATIONS = [
   "window_animation_scale",
   "transition_animation_scale",
@@ -44,21 +45,29 @@ function inset(windows, type) {
 async function prepare() {
   adb("wait-for-device")
   const deadline = Date.now() + BOOT_TIMEOUT
-  for (;;) {
-    if (shell("getprop", "sys.boot_completed").trim() === "1") {
-      const windows = shell("dumpsys", "window")
-      const top = inset(windows, "statusBars")
-      const bottom = inset(windows, "navigationBars")
-      if (top && bottom) {
-        insets = { top, bottom }
-        break
-      }
-    }
+  let settled = 0
+  let previous = ""
+  while (Date.now() - settled < BARS_SETTLED || !settled) {
     if (Date.now() > deadline) {
       console.error("The emulator did not finish booting.")
       process.exit(1)
     }
     await wait(1000)
+    if (shell("getprop", "sys.boot_completed").trim() !== "1") continue
+    const windows = shell("dumpsys", "window")
+    const top = Math.max(
+      inset(windows, "statusBars") ?? 0,
+      inset(windows, "displayCutout") ?? 0
+    )
+    const bottom = inset(windows, "navigationBars") ?? 0
+    const current = `${top},${bottom}`
+    if (!top || !bottom) {
+      settled = 0
+    } else if (current !== previous) {
+      settled = Date.now()
+      insets = { top, bottom }
+    }
+    previous = current
   }
   for (const scale of ANIMATIONS) {
     shell("settings", "put", "global", scale, "0")
