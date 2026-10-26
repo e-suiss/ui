@@ -8,7 +8,7 @@ import { BUNDLE, options, run } from "./visual-native.mjs"
 const ADB = process.env.ANDROID_HOME
   ? path.join(process.env.ANDROID_HOME, "platform-tools/adb")
   : "adb"
-const READY = /esuiss-capture (ready|busy)/g
+const READY = /esuiss-capture (ready|busy) ([\w-]*)/g
 const SYSTEM_DIALOG = /(?:Not Responding|Application Error): ([\w.]+)/
 const BOOT_TIMEOUT = 300_000
 const BARS_SETTLED = 10_000
@@ -81,7 +81,10 @@ async function prepare() {
   )
 }
 
+let opened = ""
+
 function open(name) {
+  opened = name
   adb("logcat", "-c")
   shell(
     "am",
@@ -105,7 +108,8 @@ function ready() {
   }
   const log = adb("logcat", "-d", "-s", "ReactNativeJS:I")
   const states = [...log.matchAll(READY)]
-  return states.at(-1)?.[1] === "ready"
+  const last = states.at(-1)
+  return last?.[1] === "ready" && last[2] === opened
 }
 
 function screenshot(file) {

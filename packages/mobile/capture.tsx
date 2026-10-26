@@ -40,6 +40,7 @@ function stillSpinners() {
 
 let loading = 0
 let shown = 0
+let current = ""
 const listeners = new Set<() => void>()
 
 function track(change: number) {
@@ -47,15 +48,16 @@ function track(change: number) {
   for (const listener of listeners) listener()
 }
 
-export function useShown() {
+export function useShown(name: string) {
   React.useEffect(() => {
     shown += 1
+    current = name
     track(0)
     return () => {
       shown -= 1
       track(0)
     }
-  }, [])
+  }, [name])
 }
 
 function subscribe(listener: () => void) {
@@ -146,7 +148,7 @@ export function ReadyMarker() {
   React.useEffect(() => {
     if (Platform.OS === "android") {
       // biome-ignore lint/suspicious/noConsole: the capture script reads readiness from logcat
-      console.log(`esuiss-capture ${ready ? "ready" : "busy"}`)
+      console.log(`esuiss-capture ${ready ? "ready" : "busy"} ${current}`)
     }
   }, [ready])
   if (!ready || Platform.OS !== "ios") return null

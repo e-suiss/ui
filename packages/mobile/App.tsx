@@ -66,7 +66,7 @@ if (CAPTURED && Settings.get("capture")) freezeClock()
 
 function Example({ name }: { name: string }) {
   const { default: Component } = context(`./${name}.tsx`) as Module
-  useShown()
+  useShown(name)
   return (
     <View
       className={
