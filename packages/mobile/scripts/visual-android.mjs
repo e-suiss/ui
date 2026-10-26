@@ -36,17 +36,22 @@ function inset(windows, type) {
   const frame = windows.match(
     new RegExp(`type=${type} frame=\\[\\d+,(\\d+)\\]\\[\\d+,(\\d+)\\]`)
   )
-  if (!frame) {
-    console.error(`Could not read the ${type} frame from dumpsys window.`)
-    process.exit(1)
-  }
-  return Number(frame[2]) - Number(frame[1])
+  return frame ? Number(frame[2]) - Number(frame[1]) : undefined
 }
 
 async function prepare() {
   adb("wait-for-device")
   const deadline = Date.now() + BOOT_TIMEOUT
-  while (shell("getprop", "sys.boot_completed").trim() !== "1") {
+  for (;;) {
+    if (shell("getprop", "sys.boot_completed").trim() === "1") {
+      const windows = shell("dumpsys", "window")
+      const top = inset(windows, "statusBars")
+      const bottom = inset(windows, "navigationBars")
+      if (top && bottom) {
+        insets = { top, bottom }
+        break
+      }
+    }
     if (Date.now() > deadline) {
       console.error("The emulator did not finish booting.")
       process.exit(1)
@@ -57,11 +62,6 @@ async function prepare() {
     shell("settings", "put", "global", scale, "0")
   }
   shell("settings", "put", "secure", "show_ime_with_hard_keyboard", "1")
-  const windows = shell("dumpsys", "window")
-  insets = {
-    top: inset(windows, "statusBars"),
-    bottom: inset(windows, "navigationBars"),
-  }
   console.log(
     `Cropping ${insets.top}px from the top and ${insets.bottom}px from the bottom`
   )
