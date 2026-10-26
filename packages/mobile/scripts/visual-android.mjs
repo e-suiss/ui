@@ -9,7 +9,7 @@ const ADB = process.env.ANDROID_HOME
   ? path.join(process.env.ANDROID_HOME, "platform-tools/adb")
   : "adb"
 const READY = /esuiss-capture (ready|busy)/g
-const SYSTEM_DIALOG = /Not Responding|Application Error/
+const SYSTEM_DIALOG = /(?:Not Responding|Application Error): ([\w.]+)/
 const BOOT_TIMEOUT = 300_000
 const BARS_SETTLED = 10_000
 const ANIMATIONS = [
@@ -98,7 +98,11 @@ function open(name) {
 
 function ready() {
   const focus = shell("dumpsys window | grep mCurrentFocus || true")
-  if (SYSTEM_DIALOG.test(focus)) return false
+  const dialog = focus.match(SYSTEM_DIALOG)
+  if (dialog) {
+    if (dialog[1] !== BUNDLE) shell("am", "force-stop", dialog[1])
+    return false
+  }
   const log = adb("logcat", "-d", "-s", "ReactNativeJS:I")
   const states = [...log.matchAll(READY)]
   return states.at(-1)?.[1] === "ready"
