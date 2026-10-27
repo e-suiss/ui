@@ -9,6 +9,7 @@ const ADB = process.env.ANDROID_HOME
   ? path.join(process.env.ANDROID_HOME, "platform-tools/adb")
   : "adb"
 const READY = /esuiss-capture (ready|busy) ([\w-]*)/g
+const CUTOUT = /mDisplayCutout=DisplayCutout\{insets=Rect\(\d+, (\d+) -/
 const SYSTEM_DIALOG = /(?:Not Responding|Application Error): ([\w.]+)/
 const BOOT_TIMEOUT = 300_000
 const BARS_SETTLED = 10_000
@@ -43,6 +44,11 @@ function inset(windows, type) {
   return heights.length ? Math.max(...heights) : undefined
 }
 
+function cutout(windows) {
+  const match = windows.match(CUTOUT)
+  return match ? Number(match[1]) : 0
+}
+
 async function prepare() {
   adb("wait-for-device")
   const deadline = Date.now() + BOOT_TIMEOUT
@@ -62,7 +68,7 @@ async function prepare() {
     )
     const bottom = inset(windows, "navigationBars") ?? 0
     const current = `${top},${bottom}`
-    if (!top || !bottom) {
+    if (!top || !bottom || top < cutout(windows)) {
       settled = 0
     } else if (current !== previous) {
       settled = Date.now()

@@ -135,12 +135,18 @@ export async function run(driver, values) {
   async function record(name, theme, label, reference) {
     const first = await capture(name, theme)
     if (!first.image) return `${label}: did not settle or the app stopped`
-    if (
-      existsSync(reference) &&
-      matches(PNG.sync.read(readFileSync(reference)), first.image)
-    ) {
-      rmSync(first.shot)
-      return undefined
+    if (existsSync(reference)) {
+      const previous = PNG.sync.read(readFileSync(reference))
+      if (
+        previous.width !== first.image.width ||
+        previous.height !== first.image.height
+      ) {
+        return `${label}: the screenshot size changed`
+      }
+      if (matches(previous, first.image)) {
+        rmSync(first.shot)
+        return undefined
+      }
     }
     const { image, shot } = await confirm(name, theme, first.image)
     if (!image) return `${label}: did not settle or the app stopped`
