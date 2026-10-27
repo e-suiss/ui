@@ -56,14 +56,18 @@ function KeyboardScrollView({
     const scroll = scrollRef.current
     const node = scroll?.getNativeScrollRef()
     if (!input || !scroll || !node || keyboard.height <= 0) return
-    input.measureInWindow((_x, y, _width, height) => {
-      node.measureInWindow((_sx, top, _sw, viewport) => {
-        if (y < top || y >= top + viewport) return
-        const visibleBottom =
-          Math.min(top + viewport, keyboardTopRef.current) - bottomOffset
-        const overflow = y + height - visibleBottom
-        if (overflow <= 0) return
-        scroll.scrollTo({ y: offsetRef.current + overflow, animated: true })
+    input.measureLayout(node, () => {
+      input.measureInWindow((_x, y, _width, height) => {
+        node.measureInWindow((_sx, top, _sw, viewport) => {
+          const visibleBottom =
+            Math.min(top + viewport, keyboardTopRef.current) - bottomOffset
+          const overflow = y + height - visibleBottom
+          if (overflow <= 0) return
+          scroll.scrollTo({
+            y: offsetRef.current + overflow,
+            animated: true,
+          })
+        })
       })
     })
   }, [bottomOffset, keyboard.height])
