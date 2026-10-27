@@ -82,9 +82,11 @@ async function prepare() {
 }
 
 let opened = ""
+let pid = ""
 
 function open(name) {
   opened = name
+  pid = ""
   adb("logcat", "-c")
   shell(
     "am",
@@ -106,7 +108,9 @@ function ready() {
     if (dialog[1] !== BUNDLE) shell("am", "force-stop", dialog[1])
     return false
   }
-  const log = adb("logcat", "-d", "-s", "ReactNativeJS:I")
+  pid ||= shell(`pidof ${BUNDLE} || true`).trim()
+  if (!pid) return false
+  const log = adb("logcat", "-d", `--pid=${pid}`, "-s", "ReactNativeJS:I")
   const states = [...log.matchAll(READY)]
   const last = states.at(-1)
   return last?.[1] === "ready" && last[2] === opened
