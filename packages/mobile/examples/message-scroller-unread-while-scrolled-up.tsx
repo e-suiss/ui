@@ -185,7 +185,7 @@ function NewMessages({
 
   React.useEffect(() => {
     setTimeout(
-      () => scrollerRef.current.scrollToStart({ animated: false }),
+      () => scrollerRef.current.scrollToMessage("m24", { animated: false }),
       300
     )
     setTimeout(
