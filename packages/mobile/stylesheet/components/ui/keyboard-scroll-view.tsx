@@ -10,6 +10,8 @@ import {
 import { useComposedRefs } from "@/components/primitives/hooks"
 import { useKeyboard } from "@/components/primitives/keyboard"
 
+const FOCUS_FRAMES = 30
+
 type KeyboardScrollViewContextValue = {
   scrollToFocused: () => void
 }
@@ -75,7 +77,16 @@ function KeyboardScrollView({
   React.useEffect(() => {
     if (keyboard.height <= 0) return
     measure()
-    const frame = requestAnimationFrame(scrollToFocused)
+    let attempts = FOCUS_FRAMES
+    let frame = 0
+    const scrollWhenFocused = () => {
+      if (!TextInput.State.currentlyFocusedInput() && attempts-- > 0) {
+        frame = requestAnimationFrame(scrollWhenFocused)
+        return
+      }
+      scrollToFocused()
+    }
+    frame = requestAnimationFrame(scrollWhenFocused)
     return () => cancelAnimationFrame(frame)
   }, [keyboard.height, measure, scrollToFocused])
 
@@ -110,7 +121,12 @@ function KeyboardScrollView({
         {...props}
       >
         {children}
-        <View style={{ height: overlap }} />
+        <View
+          style={{ height: overlap }}
+          onLayout={() => {
+            if (overlap > 0) scrollToFocused()
+          }}
+        />
       </ScrollView>
     </KeyboardScrollViewContext.Provider>
   )
