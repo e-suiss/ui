@@ -13,7 +13,7 @@ permissions:
 jobs:
   retry:
     if: github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.run_attempt == 1
-    name: Re-run the screenshots taken on an emulator of another screen size
+    name: Re-run the screenshots of an emulator that came up wrong
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -22,8 +22,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RUN: ${{ github.event.workflow_run.id }}
         run: |
-          for job in $(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN/jobs" --paginate --jq '.jobs[] | select(.conclusion == "failure") | .id'); do
-            if gh api "repos/$GITHUB_REPOSITORY/actions/jobs/$job/logs" | grep -q "The screen size does not match the reference screenshots"; then
+          for job in $(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN/jobs" --paginate --jq '.jobs[] | select(.conclusion == "failure" and (.name | startswith("Screenshots"))) | .id'); do
+            log=$(gh api "repos/$GITHUB_REPOSITORY/actions/jobs/$job/logs" --allow-escape-sequences)
+            if grep -q "The screen size does not match the reference screenshots" <<< "$log" || ! grep -q "Cropping" <<< "$log"; then
               gh run rerun "$RUN" --failed --repo "$GITHUB_REPOSITORY"
               exit 0
             fi
