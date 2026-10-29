@@ -22,6 +22,7 @@ const WARM_UP = 15_000
 const CONFIRM_DELAY = 8000
 const STABLE_TIMEOUT = 60_000
 const ALLOWED_MISMATCHED_PIXELS = 10
+const REBOOTS = 2
 const EXAMPLE_FILE = /\.tsx$/
 
 export const BUNDLE = "com.esuiss.ui"
@@ -112,9 +113,28 @@ export async function run(driver, values) {
   rmSync(diffs, { recursive: true, force: true })
   mkdirSync(diffs, { recursive: true })
   mkdirSync(references, { recursive: true })
-  if (examples.length) {
+  const sample = readdirSync(references).find((file) => file.endsWith(".png"))
+  const expected =
+    sample && PNG.sync.read(readFileSync(path.join(references, sample)))
+  for (let boot = 0; examples.length; boot++) {
     driver.open(examples[0])
     await wait(WARM_UP)
+    if (!expected) break
+    const screen = path.join(diffs, "screen.png")
+    const { content } = driver.screenshot(screen)
+    rmSync(screen)
+    if (
+      content.width === expected.width &&
+      content.height === expected.height
+    ) {
+      break
+    }
+    if (boot === REBOOTS || !driver.reboot) {
+      console.error("The screen size does not match the reference screenshots.")
+      process.exit(1)
+    }
+    console.log("The screen size does not match the references, rebooting")
+    await driver.reboot()
   }
 
   const failures = []

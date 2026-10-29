@@ -143,6 +143,12 @@ function running() {
   }
 }
 
+async function reboot() {
+  adb("reboot")
+  adb("wait-for-disconnect")
+  await prepare()
+}
+
 function finish() {
   shell("am", "force-stop", BUNDLE)
   for (const scale of ANIMATIONS) {
@@ -160,6 +166,7 @@ await run(
     running,
     theme: (theme) =>
       shell("cmd", "uimode", "night", theme === "dark" ? "yes" : "no"),
+    reboot,
     finish,
   },
   values
