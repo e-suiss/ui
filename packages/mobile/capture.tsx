@@ -1,11 +1,18 @@
 import * as React from "react"
-import { Platform, Settings, View } from "react-native"
+import {
+  type ImageSourcePropType,
+  Platform,
+  Settings,
+  View,
+} from "react-native"
 import { ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay } from "react-native-screens"
+import { CAPTURE_IMAGES } from "./capture-images"
 
 const HELD_AFTER = 1000
 const IMAGE_RETRIES = 3
 const IMAGE_RETRY_DELAY = 500
+const REMOTE_IMAGE = /photo-(\d+-[0-9a-f]+)\?|pravatar\.cc\/150\?img=(\d+)/
 
 export const capturing =
   Platform.OS === "ios"
@@ -83,6 +90,16 @@ function stillCarets() {
   })
 }
 
+function localSource(source: ImageSourcePropType | undefined) {
+  if (!source || typeof source !== "object" || Array.isArray(source)) {
+    return source
+  }
+  const match = source.uri?.match(REMOTE_IMAGE)
+  if (!match) return source
+  const key = match[1] ? `photo-${match[1]}` : `pravatar-${match[2]}`
+  return CAPTURE_IMAGES[key] ?? source
+}
+
 function trackedImages() {
   const ReactNative = require("react-native") as typeof import("react-native")
   const NativeImage = ReactNative.Image
@@ -107,6 +124,7 @@ function trackedImages() {
       <NativeImage
         key={attempt}
         {...props}
+        source={localSource(props.source)}
         onLoadStart={() => {
           retrying.current = false
           if (!started.current && !loaded.current) {
