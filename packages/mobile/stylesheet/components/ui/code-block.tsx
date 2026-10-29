@@ -243,7 +243,8 @@ const CodeBlockContext = React.createContext<{
 const CodeBlockLineContext = React.createContext<{
   number?: number
   numbered: boolean
-}>({ numbered: false })
+  wrap: boolean
+}>({ numbered: false, wrap: false })
 
 const LINE_MARKS: Partial<Record<CodeBlockLineVariant, string>> = {
   added: "+",
@@ -455,7 +456,7 @@ function CodeBlockContent({
         <CodeBlockLineContext.Provider
           // biome-ignore lint/suspicious/noArrayIndexKey: lines are positional
           key={index}
-          value={{ numbered: lineNumbers, number: startLine + index }}
+          value={{ numbered: lineNumbers, number: startLine + index, wrap }}
         >
           {line}
         </CodeBlockLineContext.Provider>
@@ -483,7 +484,7 @@ function CodeBlockLine({
 }: ViewProps & { variant?: CodeBlockLineVariant }) {
   const { colors } = useTheme()
   const { size } = React.useContext(CodeBlockContext)
-  const { number, numbered } = React.useContext(CodeBlockLineContext)
+  const { number, numbered, wrap } = React.useContext(CodeBlockLineContext)
   const mark = LINE_MARKS[variant]
   const background = lineBackground(variant, colors)
   return (
@@ -520,7 +521,10 @@ function CodeBlockLine({
           {number}
         </Text>
       ) : null}
-      <Text style={styles.code}>{children ?? " "}</Text>
+      <Text style={styles.code}>
+        {children ?? " "}
+        {wrap ? null : " "}
+      </Text>
     </View>
   )
 }
