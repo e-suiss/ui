@@ -4,6 +4,8 @@ import { ReduceMotion } from "react-native-reanimated"
 import { FullWindowOverlay } from "react-native-screens"
 
 const HELD_AFTER = 1000
+const IMAGE_RETRIES = 3
+const IMAGE_RETRY_DELAY = 500
 
 export const capturing =
   Platform.OS === "ios"
@@ -87,6 +89,8 @@ function trackedImages() {
   function TrackedImage(props: React.ComponentProps<typeof NativeImage>) {
     const started = React.useRef(false)
     const loaded = React.useRef(false)
+    const retrying = React.useRef(false)
+    const [attempt, setAttempt] = React.useState(0)
     React.useEffect(
       () => () => {
         if (started.current) track(-1)
@@ -101,8 +105,10 @@ function trackedImages() {
     }
     return (
       <NativeImage
+        key={attempt}
         {...props}
         onLoadStart={() => {
+          retrying.current = false
           if (!started.current && !loaded.current) {
             started.current = true
             track(1)
@@ -114,10 +120,16 @@ function trackedImages() {
           props.onLoad?.(event)
         }}
         onError={(event) => {
+          if (attempt < IMAGE_RETRIES) {
+            retrying.current = true
+            setTimeout(() => setAttempt(attempt + 1), IMAGE_RETRY_DELAY)
+            return
+          }
           finish()
           props.onError?.(event)
         }}
         onLoadEnd={() => {
+          if (retrying.current) return
           finish()
           props.onLoadEnd?.()
         }}
