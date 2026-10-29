@@ -80,7 +80,7 @@ jobs:
     needs: build
     name: Screenshots (iOS ${{ matrix.shard }}/4)
     runs-on: macos-latest
-    timeout-minutes: 90
+    timeout-minutes: ${{ inputs.update == 'replace' && 180 || 90 }}
     strategy:
       fail-fast: false
       matrix:
