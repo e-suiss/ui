@@ -11,6 +11,7 @@ const ADB = process.env.ANDROID_HOME
 const READY = /esuiss-capture (ready|busy) ([\w-]*)/g
 const CUTOUT = /mDisplayCutout=DisplayCutout\{insets=Rect\(\d+, (\d+) -/
 const SYSTEM_DIALOG = /(?:Not Responding|Application Error): ([\w.]+)/
+const THREE_BUTTON = "com.android.internal.systemui.navbar.threebutton"
 const BOOT_TIMEOUT = 300_000
 const BARS_SETTLED = 10_000
 const ANIMATIONS = [
@@ -54,6 +55,7 @@ async function prepare() {
   const deadline = Date.now() + BOOT_TIMEOUT
   let settled = 0
   let previous = ""
+  let windows = ""
   while (Date.now() - settled < BARS_SETTLED || !settled) {
     if (Date.now() > deadline) {
       console.error("The emulator did not finish booting.")
@@ -61,7 +63,11 @@ async function prepare() {
     }
     await wait(1000)
     if (shell("getprop", "sys.boot_completed").trim() !== "1") continue
-    const windows = shell("dumpsys", "window")
+    if (!shell("cmd", "overlay", "list").includes(`[x] ${THREE_BUTTON}`)) {
+      shell("cmd", "overlay", "enable-exclusive", "--category", THREE_BUTTON)
+      continue
+    }
+    windows = shell("dumpsys", "window")
     const top = Math.max(
       inset(windows, "statusBars") ?? 0,
       inset(windows, "displayCutout") ?? 0
@@ -75,6 +81,10 @@ async function prepare() {
       insets = { top, bottom }
     }
     previous = current
+  }
+  if (!cutout(windows)) {
+    console.log("The display has no cutout")
+    console.log(shell("cmd overlay list | grep -i cutout || true"))
   }
   for (const scale of ANIMATIONS) {
     shell("settings", "put", "global", scale, "0")
