@@ -3,6 +3,7 @@ import {
   type AccessibilityActionEvent,
   type GestureResponderEvent,
   type HostInstance,
+  PixelRatio,
   Pressable,
   useWindowDimensions,
 } from "react-native"
@@ -137,7 +138,13 @@ function measureFrame(
   const { width, height } = fit(menu + GAP)
   const left = (window.width - width) / 2
   const top = topLimit + Math.max(0, (available - height - GAP - menu) / 2)
-  return { top, left, width, height, source }
+  return {
+    top: PixelRatio.roundToNearestPixel(top),
+    left: PixelRatio.roundToNearestPixel(left),
+    width: PixelRatio.roundToNearestPixel(width),
+    height: PixelRatio.roundToNearestPixel(height),
+    source,
+  }
 }
 
 function timing(entering: boolean) {
