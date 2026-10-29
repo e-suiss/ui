@@ -20,12 +20,13 @@ on:
   workflow_dispatch:
     inputs:
       update:
-        description: Take new reference screenshots, to review as artifacts or to publish to e-suiss/ui-baselines
+        description: Take new reference screenshots, to review as artifacts or to publish to e-suiss/ui-baselines (replace also publishes them when the screen size changed)
         type: choice
         options:
           - "no"
           - review
           - publish
+          - replace
         default: "no"
 
 permissions:
@@ -88,6 +89,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Check out the reference screenshots
+        if: inputs.update != 'replace'
         continue-on-error: true
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -146,7 +148,7 @@ jobs:
 
   publish:
     needs: visual
-    if: github.event_name == 'workflow_dispatch' && inputs.update == 'publish' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'workflow_dispatch' && (inputs.update == 'publish' || inputs.update == 'replace') && github.ref == 'refs/heads/main'
     name: Publish the reference screenshots
     runs-on: ubuntu-latest
     timeout-minutes: 20
