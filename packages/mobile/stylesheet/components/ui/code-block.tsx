@@ -2,6 +2,7 @@ import { setStringAsync } from "expo-clipboard"
 import { CheckIcon, CopyIcon } from "phosphor-react-native"
 import * as React from "react"
 import {
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -219,7 +220,7 @@ function tokenize(line: string, language?: string) {
   return tokens
 }
 
-const MONO = "Menlo"
+const MONO = Platform.select({ ios: "Menlo", default: "monospace" })
 
 function tokenColor(kind: TokenKind, colors: ThemeColors) {
   if (kind === "keyword") return colors.chart3
@@ -243,8 +244,7 @@ const CodeBlockContext = React.createContext<{
 const CodeBlockLineContext = React.createContext<{
   number?: number
   numbered: boolean
-  wrap: boolean
-}>({ numbered: false, wrap: false })
+}>({ numbered: false })
 
 const LINE_MARKS: Partial<Record<CodeBlockLineVariant, string>> = {
   added: "+",
@@ -456,7 +456,7 @@ function CodeBlockContent({
         <CodeBlockLineContext.Provider
           // biome-ignore lint/suspicious/noArrayIndexKey: lines are positional
           key={index}
-          value={{ numbered: lineNumbers, number: startLine + index, wrap }}
+          value={{ numbered: lineNumbers, number: startLine + index }}
         >
           {line}
         </CodeBlockLineContext.Provider>
@@ -484,7 +484,7 @@ function CodeBlockLine({
 }: ViewProps & { variant?: CodeBlockLineVariant }) {
   const { colors } = useTheme()
   const { size } = React.useContext(CodeBlockContext)
-  const { number, numbered, wrap } = React.useContext(CodeBlockLineContext)
+  const { number, numbered } = React.useContext(CodeBlockLineContext)
   const mark = LINE_MARKS[variant]
   const background = lineBackground(variant, colors)
   return (
@@ -521,10 +521,7 @@ function CodeBlockLine({
           {number}
         </Text>
       ) : null}
-      <Text style={styles.code}>
-        {children ?? " "}
-        {wrap ? null : " "}
-      </Text>
+      <Text style={styles.code}>{children ?? " "}</Text>
     </View>
   )
 }

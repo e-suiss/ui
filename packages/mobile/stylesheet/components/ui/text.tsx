@@ -1,5 +1,6 @@
 import * as React from "react"
 import {
+  Platform,
   Text as RNText,
   type Role,
   StyleSheet,
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   },
   code: {
     ...fontSize.sm,
-    fontFamily: "Menlo",
+    fontFamily: Platform.select({ ios: "Menlo", default: "monospace" }),
     fontWeight: "600",
     borderRadius: radius.sm,
     paddingHorizontal: 4,

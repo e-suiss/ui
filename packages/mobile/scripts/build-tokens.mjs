@@ -151,6 +151,14 @@ ${colors("light")}
     @variant dark {
 ${colors("dark")}
     }
+
+    @variant ios {
+      --font-mono: Menlo;
+    }
+
+    @variant android {
+      --font-mono: monospace;
+    }
   }
 }
 

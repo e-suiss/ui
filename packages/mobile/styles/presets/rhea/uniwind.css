@@ -82,6 +82,14 @@
       --color-menu-accent-foreground: oklch(0.9707 0.0026 286.29);
       --color-menu-border: oklch(0.3802 0.005 286.15);
     }
+
+    @variant ios {
+      --font-mono: Menlo;
+    }
+
+    @variant android {
+      --font-mono: monospace;
+    }
   }
 }
 

@@ -7192,7 +7192,8 @@
               "fontWeight": {
                 "button": "400",
                 "title": "600"
-              }
+              },
+              "fontFamily": {}
             }
           }
         }
@@ -7546,7 +7547,8 @@
               "fontWeight": {
                 "button": "500",
                 "title": "500"
-              }
+              },
+              "fontFamily": {}
             }
           }
         }
@@ -7900,7 +7902,8 @@
               "fontWeight": {
                 "button": "500",
                 "title": "500"
-              }
+              },
+              "fontFamily": {}
             }
           }
         }
@@ -8254,7 +8257,8 @@
               "fontWeight": {
                 "button": "500",
                 "title": "500"
-              }
+              },
+              "fontFamily": {}
             }
           }
         }
@@ -8608,7 +8612,8 @@
               "fontWeight": {
                 "button": "500",
                 "title": "500"
-              }
+              },
+              "fontFamily": {}
             }
           }
         }
@@ -8962,7 +8967,8 @@
               "fontWeight": {
                 "button": "500",
                 "title": "500"
-              }
+              },
+              "fontFamily": {}
             }
           }
         }
@@ -9316,7 +9322,8 @@
               "fontWeight": {
                 "button": "500",
                 "title": "500"
-              }
+              },
+              "fontFamily": {}
             }
           }
         }
@@ -9670,7 +9677,8 @@
               "fontWeight": {
                 "button": "600",
                 "title": "600"
-              }
+              },
+              "fontFamily": {}
             }
           }
         }
@@ -10024,7 +10032,8 @@
               "fontWeight": {
                 "button": "500",
                 "title": "500"
-              }
+              },
+              "fontFamily": {}
             }
           }
         }

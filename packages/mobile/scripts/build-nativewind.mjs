@@ -358,7 +358,9 @@ function buildConfig(theme, tokens, metrics) {
     ...style.boxShadow,
   ].join("\n")
 
-  return `module.exports = {
+  return `const { platformSelect } = require("nativewind/theme")
+
+module.exports = {
   darkMode: "class",
   content: [
     "./App.{js,jsx,ts,tsx}",
@@ -386,6 +388,9 @@ ${style.spacing.join("\n")}
       },
       fontWeight: {
 ${style.fontWeight.join("\n")}
+      },
+      fontFamily: {
+        mono: platformSelect({ ios: "Menlo", android: "monospace" }),
       },
     },
   },

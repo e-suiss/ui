@@ -1,6 +1,7 @@
 import type { Icon as PhosphorIcon } from "phosphor-react-native"
 import * as React from "react"
 import {
+  Platform,
   type StyleProp,
   StyleSheet,
   type TextStyle,
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
   name: { gap: 6 },
   value: {
     ...fontSize.xs,
-    fontFamily: "Menlo",
+    fontFamily: Platform.select({ ios: "Menlo", default: "monospace" }),
     fontWeight: "600",
     fontVariant: ["tabular-nums"],
   },

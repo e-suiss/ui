@@ -1,3 +1,5 @@
+const { platformSelect } = require("nativewind/theme")
+
 module.exports = {
   darkMode: "class",
   content: [
@@ -148,6 +150,9 @@ module.exports = {
       fontWeight: {
         button: "600",
         title: "600",
+      },
+      fontFamily: {
+        mono: platformSelect({ ios: "Menlo", android: "monospace" }),
       },
     },
   },

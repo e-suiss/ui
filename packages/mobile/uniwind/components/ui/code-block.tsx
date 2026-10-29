@@ -223,8 +223,7 @@ const CodeBlockContext = React.createContext<{
 const CodeBlockLineContext = React.createContext<{
   number?: number
   numbered: boolean
-  wrap: boolean
-}>({ numbered: false, wrap: false })
+}>({ numbered: false })
 
 const codeBlockVariants = cva("w-full min-w-0 overflow-hidden", {
   variants: {
@@ -404,7 +403,7 @@ function CodeBlockContent({
         <CodeBlockLineContext.Provider
           // biome-ignore lint/suspicious/noArrayIndexKey: lines are positional
           key={index}
-          value={{ numbered: lineNumbers, number: startLine + index, wrap }}
+          value={{ numbered: lineNumbers, number: startLine + index }}
         >
           {line}
         </CodeBlockLineContext.Provider>
@@ -450,7 +449,7 @@ function CodeBlockLine({
   ...props
 }: ViewProps & VariantProps<typeof codeBlockLineVariants>) {
   const { size } = React.useContext(CodeBlockContext)
-  const { number, numbered, wrap } = React.useContext(CodeBlockLineContext)
+  const { number, numbered } = React.useContext(CodeBlockLineContext)
   const mark = variant ? LINE_MARKS[variant] : undefined
   return (
     <View
@@ -480,10 +479,7 @@ function CodeBlockLine({
           {number}
         </Text>
       ) : null}
-      <Text className="min-w-0 shrink">
-        {children ?? " "}
-        {wrap ? null : " "}
-      </Text>
+      <Text className="min-w-0 shrink">{children ?? " "}</Text>
     </View>
   )
 }
