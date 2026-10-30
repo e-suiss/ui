@@ -62,6 +62,15 @@ function compare(reference, actual) {
   return { mismatched, diff }
 }
 
+function readReference(file) {
+  if (!existsSync(file)) return undefined
+  try {
+    return PNG.sync.read(readFileSync(file))
+  } catch {
+    return undefined
+  }
+}
+
 function matches(reference, image) {
   return compare(reference, image).mismatched <= ALLOWED_MISMATCHED_PIXELS
 }
@@ -113,8 +122,7 @@ export async function run(driver, values) {
   mkdirSync(diffs, { recursive: true })
   mkdirSync(references, { recursive: true })
   const sample = readdirSync(references).find((file) => file.endsWith(".png"))
-  const expected =
-    sample && PNG.sync.read(readFileSync(path.join(references, sample)))
+  const expected = sample && readReference(path.join(references, sample))
   if (examples.length) {
     driver.open(examples[0])
     await wait(WARM_UP)
@@ -150,8 +158,8 @@ export async function run(driver, values) {
   async function record(name, theme, label, reference) {
     const first = await capture(name, theme)
     if (!first.image) return `${label}: did not settle or the app stopped`
-    if (existsSync(reference)) {
-      const previous = PNG.sync.read(readFileSync(reference))
+    const previous = readReference(reference)
+    if (previous) {
       if (
         previous.width !== first.image.width ||
         previous.height !== first.image.height
@@ -175,12 +183,11 @@ export async function run(driver, values) {
     if (values.update || !existsSync(reference)) {
       return record(name, theme, label, reference)
     }
+    const stored = readReference(reference)
+    if (!stored) return `${label}: the reference screenshot cannot be read`
     const { image, shot } = await capture(name, theme)
     if (!image) return `${label}: did not settle or the app stopped`
-    const { mismatched, diff } = compare(
-      PNG.sync.read(readFileSync(reference)),
-      image
-    )
+    const { mismatched, diff } = compare(stored, image)
     if (mismatched <= ALLOWED_MISMATCHED_PIXELS) {
       rmSync(shot)
       return undefined
