@@ -13,6 +13,7 @@ const CUTOUT = /mDisplayCutout=DisplayCutout\{insets=Rect\(\d+, (\d+) -/
 const SYSTEM_DIALOG = /(?:Not Responding|Application Error): ([\w.]+)/
 const THREE_BUTTON = "com.android.internal.systemui.navbar.threebutton"
 const BOOT_TIMEOUT = 300_000
+const SCREENCAP_ATTEMPTS = 3
 const BARS_SETTLED = 10_000
 const ANIMATIONS = [
   "window_animation_scale",
@@ -132,13 +133,23 @@ function ready() {
   return last?.[1] === "ready" && last[2] === opened
 }
 
+function screencap() {
+  for (let attempt = 1; ; attempt++) {
+    const data = execFileSync(ADB, [...SERIAL, "exec-out", "screencap", "-p"], {
+      maxBuffer: 64 * 1024 * 1024,
+    })
+    try {
+      return { data, full: PNG.sync.read(data) }
+    } catch (error) {
+      if (attempt === SCREENCAP_ATTEMPTS) throw error
+    }
+  }
+}
+
 function screenshot(file) {
   const settled = ready()
-  const data = execFileSync(ADB, [...SERIAL, "exec-out", "screencap", "-p"], {
-    maxBuffer: 64 * 1024 * 1024,
-  })
+  const { data, full } = screencap()
   writeFileSync(file, data)
-  const full = PNG.sync.read(data)
   const height = full.height - insets.top - insets.bottom
   const content = new PNG({ width: full.width, height })
   PNG.bitblt(full, content, 0, insets.top, full.width, height, 0, 0)
