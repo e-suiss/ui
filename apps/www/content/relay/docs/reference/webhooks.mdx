@@ -1,0 +1,225 @@
+---
+title: Webhooks and event destinations
+description: Draft reference for Relay's planned webhook profile, event envelope, destinations, retry schedule, terminal states, recovery and SSRF rules.
+---
+
+> This is a draft reference. Headers, schedules and limits may change before release.
+
+Relay has one engine for delivering events outward, used in two ways:
+
+| Use | Who sends to whom | Example |
+|---|---|---|
+| **Relay events** | Relay to the tenant's own systems | Delivery, bounce, engagement, skip reason, İYS rejection, device invalidation |
+| **Event destinations** (the `webhook` channel) | The tenant to its own customers' systems | A commerce platform sending signed "order shipped" events to its merchants |
+
+Both share the same retry schedule, signatures, dead-letter queue, replay, SSRF protection and endpoint health checks. A2A push delivery to agents uses the same engine.
+
+A webhook is a notification, not a source of state. Delivery is at least once and the same event may arrive more than once; deduplicate by `webhook-id` and read the authoritative state from the API. There is no ordering guarantee.
+
+## Concepts
+
+| Concept | Meaning |
+|---|---|
+| Event type | A catalog event with a versioned schema, such as `notification.suppressed` or a tenant's `order.shipped` |
+| Consumer | The party receiving events: the tenant itself, or one of the tenant's customers |
+| Endpoint | The consumer's delivery address: an HTTPS URL, a queue or stream, or object storage |
+| Message | The job of delivering one event to one endpoint |
+| Attempt | One try at delivering a message |
+
+One event produces at most one message per endpoint, enforced by a uniqueness constraint on `(endpoint_id, event_id)`.
+
+## Signature profile
+
+Relay uses a webhook profile compatible with Standard Webhooks. The profile is shared with Access, so a consumer can verify events from both products with one verifier.
+
+| Header | Content |
+|---|---|
+| `webhook-id` | The event ID; the same across attempts |
+| `webhook-timestamp` | Unix seconds; refreshed on every attempt |
+| `webhook-signature` | Space-separated list of signatures |
+
+- Signed content: `{webhook-id}.{webhook-timestamp}.{raw body}`.
+- Default scheme `v1a` (Ed25519). `v1` (HMAC-SHA256) can be chosen per endpoint for compatibility.
+- Each endpoint has its own signing key; keys are not shared between endpoints.
+- The Ed25519 public key is always readable and published in the portal. An HMAC secret is shown once, in the creation response, and cannot be read back.
+- **Rotation overlaps.** During the overlap window every message carries two signatures (`v1a,<new> v1a,<old>`). The default window is 24 hours (configurable from 0 to 168 hours).
+- Extra unsigned headers for convenience, such as event type or attempt number, may be present. No security decision may rely on them.
+
+**Recommended consumer checks:**
+
+- verify the signature over the raw body, never a re-serialized one;
+- compare in constant time;
+- allow 5 minutes of timestamp tolerance;
+- keep each `webhook-id` for at least 96 hours, longer than the retry window.
+
+Every server SDK is planned to ship a raw-body verifier, with verification examples in each language.
+
+## Event envelope
+
+The body is CloudEvents 1.0 structured JSON:
+
+| Attribute | Meaning |
+|---|---|
+| `specversion` | CloudEvents version |
+| `id` | Event ID; equal to `webhook-id` |
+| `source` | Event source. For the tenant's customers, the value the tenant defined; Relay's internal tenant ID never appears. |
+| `type` | Event type |
+| `time` | When the event happened |
+| `subject` | The subject the event is about |
+| `datacontenttype` | Content type of `data` |
+| `dataschema` | Versioned schema |
+| `data` | Payload |
+
+Extensions: `seq` (monotonic per subject), `traceparent`, and the environment (`live` or `test`). Queue and stream destinations use structured or binary mode according to the destination's CloudEvents binding.
+
+### Thin events and snapshots
+
+- **Thin by default.** The payload carries `type`, `id` and related IDs: notification, delivery, recipient external ID, workflow key, sub-tenant and `rule_id`. Details are fetched with an authorized API call. Thin events carry no personal data and target a size under 20 kB.
+- **Optional snapshot.** Per endpoint, extra fields can be added through an allow list. The snapshot is pinned to the endpoint's version, so upgrading the API version never changes the webhook payload. Changing the allow list opens a new endpoint version. Fields with personal data enter the allow list only by explicit choice, with a warning.
+- For the `webhook` channel, the payload schema is the tenant's own event type schema. No tenant transformation code runs; transformation is limited to the field allow list and CloudEvents attribute mapping.
+
+### Subscriptions
+
+- An endpoint receives only the event types it selects. An empty selection sends nothing.
+- All types (`*`) can be selected explicitly, with a warning in the console and portal.
+- The number of endpoints per tenant and per consumer is limited; several endpoints may share a URL.
+
+## Relay event families
+
+| Family | Content |
+|---|---|
+| Delivery projection | `status` transitions |
+| Skip and failure | `notification.suppressed` (`reason`, `rule_id`), `notification.render_failed` |
+| Engagement | Seen, read, clicked (human or bot), archived |
+| Email feedback | Bounces, complaints |
+| Consent and compliance | İYS rejection, one-click unsubscribe, SMS opt-out keyword |
+| Subscriber, device, preference | Device invalidation, preference changes |
+| Quota and limits | Quota thresholds reached |
+| Waitpoints and agents | For example `waitpoint.expired` |
+| Webhook operations | `webhook.attempt_exhausted`, `webhook_endpoint.disabled`, `webhook_endpoint.recovered` |
+
+The definitive list is the event catalog. Event names follow `noun.verb_past`; see [Identifiers and events](/relay/docs/reference/identifiers).
+
+## Destinations
+
+| Destination | Authentication | Success |
+|---|---|---|
+| HTTPS webhook | Profile signature; optionally mTLS or OAuth 2.0 client credentials | A 2xx response |
+| Message brokers and streams | The broker's own method (SASL, TLS client certificate, user credentials) | The broker's durable write acknowledgement |
+| Cloud queues, topics and event buses | The cloud provider's role or access credentials | The service's write acknowledgement |
+| S3-compatible object storage | Storage credentials; batched writes | The object write acknowledgement |
+
+- Destination credentials are stored only as secret references. Secrets are never embedded in URLs or connection strings and never written to logs or attempt records.
+- On partitioned destinations, the ordering key maps to the destination's partition key, so events about the same subject go to the same partition.
+- Object storage receives batches by time or size as lines of CloudEvents structured JSON. The file name derives from the batch ID, so rewriting the same batch produces the same object.
+
+## Retry schedule
+
+The default schedule is **10 attempts over roughly 76 hours**:
+
+| Attempt | Wait before it |
+|---|---|
+| 1 | Immediately |
+| 2 | 5 seconds |
+| 3 | 5 minutes |
+| 4 | 30 minutes |
+| 5 | 2 hours |
+| 6 | 5 hours |
+| 7 | 10 hours |
+| 8 | 14 hours |
+| 9 | 20 hours |
+| 10 | 24 hours |
+
+- Each wait gets ±20% jitter, derived deterministically from the message ID.
+- A tenant can change the schedule per endpoint within upper and lower bounds. There is no infinite retry.
+- Connection timeout 5 seconds; total request time 20 seconds; at most 8 kB of the response body is read.
+- On `429` and `503`, if `Retry-After` is present, the longer of the schedule and `Retry-After` applies. Such deferrals do not use up attempts, up to 3 times per message.
+
+### Response handling
+
+| Response | Behavior |
+|---|---|
+| 2xx | Success |
+| 3xx | Failed; redirects are not followed and not retried (`failed_permanent`, `redirect_not_followed`); a health warning is recorded |
+| 410 | Permanent: the message is `failed_permanent` and the endpoint is disabled at once |
+| 401, 407, 409, 429, 5xx | Retried |
+| Other 4xx | Not retried (`failed_permanent`) |
+| Connection error, timeout, TLS error | Retried |
+
+A consumer can stop retries for a message by returning the header `webhook-delivery: abort-message`; the message becomes `failed_permanent` with `aborted_by_consumer`.
+
+### Terminal states
+
+| State | Meaning |
+|---|---|
+| `delivered` | Delivered successfully |
+| `failed_permanent` | Permanent failure: `410`, a non-retried 4xx, a 3xx, or a consumer abort |
+| `exhausted` | Every attempt in the schedule failed |
+| `expired` | The event's delivery time-to-live passed |
+| `window_exceeded` | The destination's rate limit or backlog kept the attempts from fitting in the window |
+| `dead_lettered` | No attempt could be made: endpoint removed, invalid destination configuration, payload over the limit, or rejected by the destination |
+| `cancelled` | Cancelled by the tenant or an operator |
+
+Messages in any terminal state other than `delivered` stay in the dead-letter queue. Every attempt records the raw body digest, the signature produced, the destination IP, the status code, the duration and the first 8 kB of the response body.
+
+## Recovery
+
+The webhook system is designed to work as a durable log. Failed messages stay in the dead-letter queue, and a "missed events" list per endpoint and time range shows dead-lettered messages and events produced while the endpoint was disabled.
+
+| Operation | Meaning |
+|---|---|
+| Resend one message | One immediate attempt |
+| `recover` | Requeue failed or unattempted messages for an endpoint since a given time |
+| Filtered bulk retry | Messages selected by event type, state, time range and error code |
+| Replay | Deliver events still within retention to another endpoint, such as a newly added one |
+| Pause and resume | Stop and restart delivery to an endpoint; messages accumulate and are not discarded |
+| Cancel scheduled retries | Cancel pending attempts (`cancelled`) |
+
+- A manual resend during the schedule makes one immediate attempt. If it succeeds, pending automatic attempts are cancelled. If it fails, the schedule continues unchanged and the manual attempt does not count.
+- A manual resend of a terminal message makes one attempt; if it fails, the message keeps its previous terminal state.
+- Bulk retry and `recover` restart the schedule for each selected message.
+- At most one attempt runs for a message at a time.
+- Resend, recover and replay keep the event's `id`, so consumer deduplication keeps working.
+- Recovery runs within the endpoint's rate limit, fairly across tenants, without crowding out live traffic.
+
+## Endpoint health
+
+- **Circuit breaker per endpoint.** It opens on consecutive failures and timeouts. While open, events are held, not dropped; half-open lets a few probes through and closes on success. Time spent open does not use up attempts.
+- **Automatic disabling.** An endpoint that fails continuously for 5 days is disabled. The clock starts only when there are several failures within 24 hours and at least 12 hours between the first and last. One success resets it. The tenant is warned at hour 72. A `410` disables the endpoint at once. A tenant can turn off automatic disabling per endpoint.
+- **Disabled endpoints.** No new events are attempted; they go to the missed events list and stay for the retention period. After re-enabling, `recover` queues them.
+- **Isolation.** Each endpoint has its own concurrency and rate limits. A slow or failing endpoint does not block others.
+- **Health view.** Success rate, latency distribution, last successful delivery, backlog age, circuit state, disable reason and recent errors per endpoint.
+
+## SSRF protection
+
+| Rule | Detail |
+|---|---|
+| Scheme | `https://` only, including in `test` |
+| Port | 443; an installation operator can allow extra ports |
+| Credentials in URL | Rejected |
+| At registration | All A and AAAA records are checked against blocked ranges, as early feedback only |
+| At connect time | The hostname is resolved, the IP is checked, and the connection is made to that verified IP with the original hostname for SNI and `Host`. This defeats DNS rebinding. |
+| IPv4-mapped IPv6 | Reduced to the canonical IPv4 address before checking |
+| Redirects | Never followed |
+
+Blocked ranges include private, loopback, link-local, carrier-grade NAT, documentation, benchmarking, multicast and reserved ranges in IPv4 and IPv6, plus cloud metadata addresses. The list is data.
+
+The rules apply to every outbound path: HTTPS endpoints, the workflow `webhook` step, A2A push, broker and queue addresses, and OAuth 2.0 token endpoints. The workflow `webhook` step delivers only to a registered endpoint, never to a URL computed from event data, and its response body never flows back into the workflow.
+
+An endpoint is bound to the environment it was created in and cannot be moved. Each endpoint has a test action that sends a sample event.
+
+## Embeddable portal
+
+A tenant can offer its customers an embeddable webhook portal, shipped as ready-made UI components. In the portal a consumer can add and disable endpoints, select event types, browse schemas and sample payloads, see the delivery log and failed deliveries, resend and `recover`, rotate the signing key, see the public key and verification examples, send a test event and view endpoint health.
+
+- The portal opens with a short-lived portal token that the tenant's backend mints with its Access API client token. The token is scoped to one consumer, who sees only their own endpoints and messages.
+- The portal uses the tenant's and sub-tenant's brand and theme.
+- Adding or removing endpoints, rotating keys, turning off automatic disabling and bulk recovery are audited.
+
+## Inbound provider webhooks
+
+- A provider webhook (delivery report, bounce, engagement, inbound message) is first written as a durable receipt, then answered quickly with a 2xx, then processed from the queue.
+- Signatures are verified per provider over the raw body with constant-time comparison. Providers compatible with Standard Webhooks share one verifier.
+- Deduplication is durable: a unique receipt per `(tenant, provider, provider_event_id)`. A repeated event is counted, not processed.
+- Verified events are written to the ledger according to the channel evidence table.
+- Access delivers its own identity and authority events; Relay consumes them with the same profile and verifier.

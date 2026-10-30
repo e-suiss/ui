@@ -1,0 +1,125 @@
+---
+title: Lifecycles
+description: Draft reference for the state machines of authority domains, anchors, Grants, Mandates, Instances, Acceptances, policies, nonces and exercises.
+---
+
+This is a draft reference and may change before release.
+
+Access keeps the content of each authority object in the records that create and change it; the current state is derived from those records. Every transition below is itself an authority exercise with a decision and a record, unless noted otherwise.
+
+## The seven primitives and one policy construct
+
+| Object | Identity | Created by |
+|---|---|---|
+| AuthorityDomain | DomainID, the digest of the genesis record; stays the same if the provider changes | Genesis |
+| AuthorityAnchor | AnchorID; a resource scope within a domain | `anchor.create` by a covering root, or genesis |
+| Grant | GrantID; basis and holder selector are fixed | `grant.issue` |
+| Mandate | MandateID; bound to exactly one Instance | `mandate.bind` |
+| Instance | InstanceID; bound to one Party for good | `instance.create` |
+| Acceptance | AcceptanceID; issuer and use are fixed | `acceptance.establish` |
+| Authority exercise | ExerciseID, bound to the nonce within the domain | The first committed ALLOW |
+| RestrictionPolicy (policy construct) | PolicyID; content is versioned | `policy.set` |
+
+Not primitives, on purpose: Party, Claim, Decision, Intent, Requirement, Budget, Approval, Quorum, Role, Credential, Resource and Action are values, records, derived results or external references.
+
+## AuthorityDomain
+
+```text
+genesis → active → (constitution amended | provider handover) → terminated
+```
+
+Provider changes go through `domain.handover` (cooperative) or `domain.recover` (forced).
+
+## AuthorityAnchor
+
+```text
+create → active → (root transfer | composition amended)* → retired
+```
+
+Every root transfer and composition change states explicitly what happens to the Grants resting on the anchor.
+
+## Grant
+
+```text
+issue → (pending →) active ⇄ restricted → amended* → revoked | expired | renounced
+```
+
+| State | Notes |
+|---|---|
+| active ⇄ restricted | A restriction overlay only adds DENY or requirements; removing it is a widening |
+| amended | A new revision with the same GrantID. Changing holder or basis is a new Grant |
+| revoked, expired, renounced | Terminal and cascading. Renouncing applies only to Grants that name their holder directly |
+
+Per holder, **holding episodes** open and close: an episode is a maximal uninterrupted period in which the holder qualifies. An affirmative disqualification closes it for good. Qualifying again opens a new episode and revives nothing derived from the old one. A derived Grant status is one of `active`, `pending`, `restricted`, `revoked`, `expired`, `lapsed`.
+
+## Mandate
+
+```text
+bind → active → (narrowed | rebound)* → ended
+```
+
+Widening is an explicit rebind. A Mandate ends by revocation, expiry or termination of its Instance.
+
+## Instance
+
+```text
+create → active ⇄ restricted → rekey* → terminated | recovered → successor | expired
+```
+
+- Rekeying keeps the same Instance when continuity is proven.
+- Recovery produces exactly one successor Instance, which inherits no authority.
+- Signing out of an identity session terminates that session's Instance only.
+
+## Acceptance
+
+```text
+establish → active ⇄ restricted → (narrowed | expanded)* → revoked | expired
+```
+
+Losing a federation trust chain does not revoke an Acceptance; it stops the issuer's claims from being decision input until the chain resolves again. A revoked Acceptance comes back only through a new `acceptance.establish`.
+
+## RestrictionPolicy
+
+```text
+set → version* → detached | retired
+```
+
+## Nonce and authority exercise
+
+```text
+nonce opened by a request (evaluation; not yet an exercise)
+├─ REQUIRE_ACTION ── proofs added ──► evaluated again (same nonce, same intent)
+├─ DENY ──────────────────────────────► closed for this nonce (terminal)
+└─ ALLOW committed ══ the authority exercise is born; consumption committed
+     ├─ continue* ─┬─ ALLOW (new decision record, its own state basis)
+     │             ├─ DENY: use ends from now on → closed
+     │             └─ closed (intent validity or horizon elapsed)
+     └─ later: outcome attestation claims, consumption.release
+```
+
+Impossible transitions:
+
+- DENY followed by ALLOW on the same nonce;
+- a different intent on the same nonce;
+- committing the same ALLOW a second time with different consumption;
+- changing the actor, capacity or basis of an exercise.
+
+A request nonce stays open after REQUIRE_ACTION until the intent's validity window ends. A rejection or protocol error consumes neither the nonce nor any proof.
+
+### Exercise outcome
+
+Access never states that an effect happened. What it knows about the outcome is derived from claims reported by the executing system:
+
+| Outcome state | Meaning |
+|---|---|
+| unattested | No effect claim received; shown as unknown |
+| attested-conforming | An attestation claim matches the exercise's envelope |
+| attested-nonconforming | An attestation claim does not match the envelope |
+
+## Invalidity versus restriction
+
+| | Invalidity | Restriction |
+|---|---|---|
+| Triggered by | Revoke, expire, renounce, affirmative lapse, Instance termination | Suspend, containment, restriction policy |
+| Effect | Terminal; every derived Grant, Mandate coverage, reusable decision and projection becomes invalid from that moment | Overlay that adds DENY or requirements; the lineage stays intact |
+| Reversal | None; a new explicit Grant is needed | Removal is a widening meta-action |

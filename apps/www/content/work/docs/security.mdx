@@ -1,0 +1,233 @@
+---
+title: "Security and trust"
+description: "The Work trust model: security invariants, data versus instruction, the credential boundary, approval surfaces, and what Work does and does not claim."
+---
+
+> Work is in development. This page describes the planned security model, which may change.
+
+## Starting assumptions
+
+- **Work does not assume good faith.** People, agents, operators, executors, federation counterparties and suiss services can all be malicious, compromised, mistaken or stale.
+- **Authority is never born in Work.** Identity, authority, revocation, step-up and approval authority live in Access. Forced stops live in Access and the executor. Work can only narrow authority, add a gate or record coordination. It can never create, widen or bypass authority.
+- **Cryptographic authenticity is not semantic truth.** A valid signature, a valid record order or a valid receipt does not mean the content is true, appropriate or authorized.
+- **Language never claims more than the guarantee.** Every claim below belongs to a guarantee class, and product text, API field names and documentation never say something more strongly than its class allows.
+
+## Security invariants
+
+These rules bind every part of Work and are designed to be enforced by types, database constraints or rule tests wherever possible.
+
+| Invariant | Meaning |
+|---|---|
+| Content grants no authority | No text, document, tool output, chat message or model output creates authority |
+| Instructions come from origin | Whether something is an acceptable instruction depends on where it came from, not on prompt order, position or what the prose claims |
+| Delegation never grows authority | Scope, target, duration, assurance, depth and disclosure stay the same or narrow |
+| One declared capacity per consequential act | If Work says "A, on behalf of P", the authority A used in Access must be exercised for P. Acting in your own capacity can never be shown as acting for the principal |
+| A signature shows authorship, not truth | Being in the ledger shows existence and order, not correctness |
+| Revocation changes future authority; it is not proof of a physical stop | No surface presents "authority revoked" as if execution had halted |
+| The interface promises only what the control contract provides | Pause, cancel, take over, interrupt and roll back are offered only if the executor declares them; otherwise they are hidden or clearly marked unsupported |
+| Unknown is a first-class result | No report means unknown or stale, not "in progress". Authority that cannot be verified is never shown as authorized |
+| Evidence strength comes from origin and independence, not count | An agent's self-reported confidence never affects evidence strength or ranking |
+| Silence is not approval | Implicit acceptance rests only on an explicit prior statement from the obligee and is written as a separate record marked implicit |
+| High-impact approval happens on a trusted, structured surface | Agent prose and notification actions can never define the canonical approval |
+| A requester cannot declare their own request urgent or unmutable | Urgency and severity are derived from records and consequences |
+| Secrets never enter Work records | A leaked secret is fixed by rotating it, not only by redaction |
+| Disclosure to a new recipient, processor or trust boundary is explicit and high impact | It needs an attributable disclosure record and a live Access check |
+| Consequential execution is bound to a one-time authority context and an idempotency key | The authority context is single use, and the request carries an idempotency key |
+| Authenticated federation records are admitted, quarantined or rejected with a reason | Never dropped silently |
+| Critical derived decisions carry an explanation and are re-checked | Attention ranking, gate state and context filters are re-checked against canonical records before anything acts on them |
+| Protocol resources are bounded | Exceeding size, complexity or rate limits is a reasoned rejection, not silent truncation |
+| Compromise is handled going forward | Records valid in the past are never deleted or rewritten; records after a compromise are separated and marked |
+| The principal sees the parties acting for them | And can use only the control and revocation their own authority allows |
+
+## Threat posture
+
+Every threat is handled with four questions: **prevent, contain, detect, recover**. What cannot be prevented must be contained, what cannot be contained must be detected, and what is detected must be recoverable.
+
+| Threat | Prevent | Contain | Detect | Recover |
+|---|---|---|---|---|
+| Indirect prompt injection (external documents, email, tool output, federated bodies) | Data is not instruction; trust zones | Task scope; autonomy within authority; gates | Out-of-scope and statement-versus-fact signals | Revoke going forward; a compensating commitment |
+| A compromised or mistaken agent | One declared capacity; the confused deputy intersection | Access authority limits and budget Conditions | Evidence marks; independent verification; four eyes | Access revocation plus executor enforcement; takeover |
+| Poisoned shared memory | No single shared context pile | Agent writes are proposals | Sources are kept | Invalidate with `supersedes` |
+| A malicious federation counterparty | Local admission; selective disclosure | Quarantine; resource limits | Receipt and conflict records | End the federation going forward |
+| Stale authority | Live Access checks | Access's declared freshness limit | Revocation events | Invalidate the cache at once |
+| Fake approval (a notification button, agent text) | Approval surface rules | Binding to exact content | Mismatch between the approval record and the gate content digest | The approval record is invalid; the gate stays open |
+| Secret leakage | The credential boundary | Opaque references | Scanning record bodies and logs for secrets | Rotation plus redaction |
+
+## Data, instruction and authority
+
+| Thing | What it is | What it can change |
+|---|---|---|
+| Data | External pages, email, documents, tool results, federated bodies, another party's Claims, model output | Informs reasoning; cannot change normative state or create authority |
+| Instruction | An eligible party's Declaration that is part of an agent's recorded normative basis | Steers what the agent does, only within authority |
+| Authority | Access's decision and its evidence | Permits action; Work cannot create or widen it |
+
+None turns into another on its own. Data cannot become an instruction, and an instruction cannot become authority. A message is an instruction for an agent only if its author is in the agent's on-behalf-of chain, or a commitment or declared policy allows that author to instruct the agent, **and** it has been turned into an eligible Declaration. Every other message is data.
+
+- Chat is a channel, not a record. A binding chat command cannot be the basis for execution until it becomes an eligible Declaration.
+- One agent telling another "approved" is a Claim, not a decision. One agent saying "a person approved this" never replaces the approval record.
+- A runtime handoff call between agents is evidence, not a transfer of responsibility.
+- In context sent to an agent, control information (task, scope, constraints, instructions) travels in typed fields. Free text from people or external systems travels separately, with its source and an "untrusted content" mark. Instruction-like text inside free text cannot change those fields.
+- Summaries and explanations Work shows to agents or people are generated on the server from structured fields. An agent's free text is shown separately, unformatted, as "the agent's claim".
+
+An agent acts only from a recorded normative basis: Aim, commitment, on-behalf-of delegation, Access authority evidence, autonomy policy and eligible Declarations. Autonomy evaluation returns proceed, proceed and notify, require a gate, or deny. A deny from Access can never be overcome by a gate or a waiver in Work.
+
+## The credential boundary
+
+- Work stores only the **credential mode, assurance level and an opaque reference**. Passwords, refresh tokens, session cookies, API secrets, private keys, one-time codes and payment card data never enter any record, body, evidence, event payload, log or agent context.
+- Real secret handling is not Work's job: an agent's upstream tokens live in Access's credential broker, credential injection at run time happens in the executor, and payment details live in Pay.
+- **Secret input never passes through Work or an agent.** If a job needs a secret or payment details, Work opens an addressed wait and sends the person to the surface that owns the secret (Access or Pay). The agent works with an opaque reference from that surface and never sees the secret.
+- If a secret ends up in a record by mistake, the fix is to rotate it. Redacting or crypto-shredding the body alone is not enough.
+- Work does not implement its own strong authentication. Strong authentication for high-impact human statements comes from Access step-up.
+- Record bodies and log content are scanned for secrets. A high-confidence match on a record submitted through the API is rejected; the error names only the rule and the part, never the secret. A federated or offline-signed record cannot be changed, so it is quarantined, an attention signal is raised and a rotation task is opened. Scanning is detection: a secret that does not match a known pattern is not caught.
+
+## The confused deputy rule
+
+An agent acting for a principal normally uses only the intersection of:
+
+```text
+the agent's own authority
+∩ authority delegated to the agent
+∩ the principal's authority
+∩ the work's visibility
+∩ the task scope
+∩ the current policy (autonomy, gates)
+```
+
+The authority terms are evaluated in Access. Work applies the visibility, scope and policy terms and can never widen any term.
+
+- An agent acting in its own organizational capacity must say so explicitly. Its own authority is never passed off as action for the principal, and the principal's authority is never carried into the agent's own work. The capacity must match the capacity of the authority exercised in Access.
+- Assignment does not grant access. Missing access is requested from Access and shows as a wait.
+- Before a consequential action, the intersection is re-checked with a live Access check.
+
+## Approval surfaces
+
+The two gate kinds are approved on two different surfaces.
+
+- **Closing a gate is not authority.** Closing a coordination gate does not mean the target action will be permitted in Access, and Work never presents a closed gate as granted authority. A coordination gate never satisfies an Access requirement.
+- **The authority gate record is in Access.** The approval is given on Access's trusted approval surface. Work closes the gate only with a Declaration that references that Access record, and checks the reference first. A Declaration that references an invalid, missing or refused Access record is not eligible, and the gate stays open.
+- **The coordination gate record is in Work.** The approval is a Work Declaration only. Before recording it, Work asks Access to confirm that the approver is in the eligible set at that moment; an approval from someone outside it is not recorded. High-impact coordination gates need Access step-up, and the Declaration references the step-up evidence.
+- **One way in.** Authority requests that need a person enter only through Work's Needs Attention. An agent or app cannot open the Access approval surface on its own initiative.
+
+### Binding to exact content
+
+On both surfaces, an approval is bound to exact content, and the surface shows:
+
+| Bound to | Shown |
+|---|---|
+| Work and record identity | The target: who, what, where |
+| Version or content digest | Amount or resource: money, time, budget, blast radius |
+| Parameters | Whether it is reversible |
+| Principal and agent context | On whose behalf, which agent asked, who is accountable |
+| Material changes since last seen | Changed fields highlighted |
+
+- An approval from a surface that does not carry the digest of the content approved, or binds to a different digest than the one shown, is not eligible, and the gate stays open.
+- **A notification action is not approval.** An inbox button, push action, lock screen, SMS, email or chat reply produces no approval record by itself. A reply collected by Relay is a channel reply. For authority gates and high-impact coordination gates, the action in a notification only links to the approval surface. A low-impact coordination gate can be answered from a notification only if the notification surface meets the approval surface requirements, shows the exact content from typed fields, binds the answer to the exact digest, and needs no step-up. Even then, what satisfies the gate is the digest-bound Work Declaration, not the button.
+- **Agent prose cannot define the approval summary.** The summary is generated from canonical structured fields; the agent's description is shown separately as "the agent's claim".
+- A third-party approval surface can satisfy a coordination gate only if it shows the canonical structured data faithfully, binds the exact digest, work and record, and does any required strong authentication through Access step-up.
+
+### A human approval is not an oracle
+
+A human approval shows that the approver saw the content and accepted it with their authority. It does not show that the decision was good, and product language never presents an approved action as correct or safe.
+
+Approval fatigue is a security problem. Approval is asked for only when there is a commitment or a gate, and gate thresholds follow the risk of the work and the action.
+
+## Guarantees
+
+Work separates what it guarantees by design, what it guarantees only under a stated condition, and what it does not claim.
+
+### Guaranteed by design
+
+| Guarantee |
+|---|
+| Normative state changes only through Declarations |
+| Claims and Acts alone have no normative effect |
+| Work does not create or widen authority; autonomy stays within authority |
+| An agent's action can be traced to a recorded normative basis |
+| The accountability chain ends in a party under the declared regime |
+| Signed record bytes and origin never change; corrections use `supersedes` |
+| The same semantic inputs give the same normative result |
+| Normative time is ledger time, not client time |
+| There is no approval without a commitment or gate under it |
+| Experience and metrics never create canonical state |
+| Verifying a record needs no online suiss service |
+| A foreign record has no local normative effect without local admission |
+| An authenticated federation record is never dropped silently |
+| An unevidenced statement is marked unevidenced on every surface |
+| An unanswered decision is not a yes; implicit acceptance rests only on a prior Declaration |
+| Delivery, acknowledgement and channel replies are not approval or authority state |
+| Work is not the only recovery authority for party identity; identity and recovery live in Access |
+
+### Guaranteed under a stated condition
+
+| Guarantee | Condition |
+|---|---|
+| A recorded record survives the loss of a region | The ledger is placed across multiple regions; in a single region, the guarantee is at the availability zone level |
+| Execution stops after authority is revoked | The executor supports pause or cancel and confirms that it stopped |
+| Moving to a safe state | The control or commitment policy defines a safe state that can really be reached |
+| "It existed at time T" | An external witness or a trusted timestamp anchors it |
+| Detecting a ledger that shows different histories | Witnesses or checkpoints are compared |
+| An agent's real-world identity | Access has a trusted identity binding |
+| Runtime and model configuration assurance | Matching remote attestation exists; otherwise the configuration is declared, not proven |
+| Personal data bodies are made unreadable by crypto-shredding | No other copy or backup of the key exists; copies already disclosed are out of scope; this is not the same as legal erasure |
+| Integrity of the approval surface | A trusted approval surface meeting the requirements was used |
+| The operator cannot read content | Only for parts encrypted on the client, which the server cannot process |
+| Reads never use authority older than Access's declared freshness limit | Access declares the limit and the revocation event arrives, or the limit runs out |
+| A consequential external effect happens once | The external system supports idempotency keys |
+
+### Not claimed
+
+Work does not claim, and product language never states as a guarantee, that it can:
+
+- make a recipient forget data that was disclosed to them;
+- guarantee that an offline or compromised executor has physically stopped without confirmation or evidence;
+- prove that a signed Claim is true;
+- fully prevent a model from inferring things from private data it has already seen;
+- turn a human approval into proof of good judgment;
+- guarantee that a model resists prompt injection;
+- tell a compromised but still authorized agent from legitimate behaviour before it is detected;
+- detect undeclared operator configuration changes without remote attestation;
+- prove that parties who look independent are not secretly colluding;
+- stop colluding real people from getting around split authority;
+- guarantee a single external effect when the external system does not support idempotency;
+- guarantee that a ledger does not show different histories if nobody compares witnesses or checkpoints;
+- claim that the hosted service cannot read body content. Only parts encrypted on the client are unreadable to the operator;
+- detect, on its own, censorship that happened before something was recorded;
+- fully prevent leaks between jobs through an external model provider's hidden memory or training. Work does not use customer data to train models, but an external provider's behaviour is outside Work's control;
+- equate accountability in Work with responsibility under law;
+- force an action taken with an ambient session to look separate from the user in an external system;
+- remove copies that were already distributed, through redaction or crypto-shredding;
+- promise that every action has a meaningful safe state; some actions can only be compensated;
+- guarantee that a federation counterparty honours a redaction request passed to it;
+- guarantee that trust zone labelling alone makes agent behaviour safe.
+
+### How Work words things
+
+| Topic | Allowed | Not allowed |
+|---|---|---|
+| Stopping | "Stop requested"; "the executor reported that it stopped"; "authority revoked" | Claiming the agent has halted without executor confirmation |
+| Evidence | "Stated, without evidence"; "evidenced: test result, presented by X"; "verified by Y" | "Verified" when there is only a signature |
+| Approval | "A named person approved this content (digest …)" | "Approved" when there is only a channel reply or an agent message |
+| Authority | "Gate closed"; "Access permitted" | Saying authority was approved when only a coordination gate closed |
+| Erasure | "Personal fields were made unreadable" | Saying data was deleted for good |
+| Delivery | "The counterparty received it"; "the counterparty wrote an acceptance record" | Claiming acceptance by the counterparty when there is only a transport receipt |
+
+## Privacy
+
+- Work sends Access only opaque references, gate content digests and narrow Claims. Work content, Condition and Aim structure, Claim bodies and attention state never go to Access.
+- The record skeleton is kept without a time limit; bodies follow their retention class. There are no physical deletes. On an erasure request, the body is made unreadable by crypto-shredding and the skeleton remains.
+- A person's drafts are private by default, and organization policy cannot make them visible.
+- Per-person aggregate views are off by default; if an organization turns them on, the people concerned can see it.
+- Customer data is never used to train models.
+
+See [Evidence and visibility](/work/docs/concepts/evidence-and-visibility) for visibility axes, context assembly and permission freshness, and [Work across organizations](/work/docs/concepts/across-organizations) for what can and cannot cross an organization boundary.
+
+## Out of scope
+
+| Topic | Owner |
+|---|---|
+| Authentication, step-up, passkeys | Access |
+| General secret storage and credential injection | Access, the executor, Pay |
+| Enforcing a physical stop | Access plus the executor |
+| Data loss prevention, data classification, security event management, audit search | Separate product layers |
+| Model safety and resistance to prompt injection | No coordination layer can provide it |
+| Hiding all content from the operator | Bodies the service must process are readable on the server; only client-side encrypted parts are unreadable to the operator |

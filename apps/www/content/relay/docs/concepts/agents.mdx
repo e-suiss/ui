@@ -1,0 +1,185 @@
+---
+title: Agents, waitpoints and mailboxes
+description: How Relay is designed to let agents reach people and systems, wait for replies durably, and read a mailbox in order.
+---
+
+Relay serves agents in two directions: it lets an agent reach people, services and other agents, and it carries the reply from a person or an external system back to the agent. Three sentences sum up the design:
+
+1. **Relay waits and matches; it does not execute.** The wait, the correlation and the delivery belong to Relay. Execution state and resuming belong to the waiting side.
+2. **Relay collects replies; it does not approve.** A reply is a channel fact, not proof of authority.
+3. **Agents receive structured messages, not prompts.** Control information is in typed fields. Free text from people or external systems is marked as untrusted.
+
+## Who owns what
+
+| Responsibility | Relay | The waiting system | Access | Work |
+|---|---|---|---|---|
+| "A reply is expected for this key by this deadline" | Yes | | | |
+| Matching the reply, whichever channel it comes from | Yes | | | |
+| Delivering "resolved", "expired" or "stalled" to the waiter | Yes | | | |
+| Checkpoint, pause, takeover, resume | | Yes | | |
+| Running agent steps, compensation | | Yes | | |
+| Approval decision, risk tier, outcome class | | The owner | For high-risk approvals | Approval policy |
+| Content of the escalation policy | Applies it | Defines it | | Source in suiss |
+| The person's work and approval queue | | | | Yes |
+| The agent's durable mailbox | Yes | Reads and acknowledges | | |
+
+Relay is not a durable execution engine. A waitpoint is a database record plus a timer; it holds no queue slot, process or memory. Waitpoints are not tied to any one framework: any agent system or your own code uses the same API.
+
+## Agent recipient
+
+An **agent** (`agent`) is a first-class recipient type next to people and services.
+
+| Field | Meaning |
+|---|---|
+| `id`, `name` | Identifier and display name within the tenant |
+| Delivery endpoints | Where wake-up hints go: signed webhook, A2A push configuration, real-time connection |
+| Mailbox | One durable, sequence-numbered mailbox per agent |
+| Subscriptions | Topics the agent subscribes to |
+| Owner | Who is responsible for the agent; cap and stall events go here |
+| Access link | Required reference to the agent's identity in Access |
+| State | `active`, `suspended` or `deleted` (soft) |
+
+The agent proves its identity with an Access token. When Access suspends or removes the agent, Relay stops delivering to it and stops its sends; the mailbox is kept under the retention rules. Agent token scopes are narrow and separate (send, open waitpoints, read and acknowledge the mailbox, read presence); there is no "everything" scope.
+
+## Three ways to wait
+
+| Need | Building block | Cardinality | Example |
+|---|---|---|---|
+| Wait for one answer | **Waitpoint** | Resolves once | "Do you approve this refund?" |
+| Receive many messages | **Mailbox** | Unbounded, ordered | Progress messages of a long job, task updates from another agent |
+| Several readers | **Topic subscription** | One publication, many recipients | Three agents wait for "report ready" |
+
+The workflow `wait_for_event` step uses the same building block as a waitpoint, with the same matching, deadline and event rules.
+
+### Interaction kinds
+
+Agent and workflow notifications declare an **interaction kind** (`interaction_kind`):
+
+| Kind | Reply expected | Message class | Waitpoint |
+|---|---|---|---|
+| `notify` | None | Depends on content | None |
+| `question` | One answer matching a schema | `action_required` | Required |
+| `review` | One of the structured actions, after reviewing an evidence pack | `action_required` | Required |
+
+Questions and reviews carry an expiry and a list of structured actions; reviews also carry an evidence pack of structured fields from the sender. Sensitive values in the pack are carried as hashes, not values.
+
+## Waitpoint
+
+A **waitpoint** (`waitpoint`) is a record that says "a reply is expected for this key, by this deadline".
+
+- The deadline (`expires_at`) is required, is at most 30 days, and is fixed when the waitpoint is first recorded. Retries keep the same deadline.
+- Matching uses a **correlation key** (`correlation_key`) in two stages: an exact match on tenant, environment, event type and correlation key, then an optional condition in the workflow rule language. There are no wildcard, prefix or free-text matches.
+- A reply that arrives **before** the waitpoint is opened is buffered in the waiter's durable mailbox and matched as soon as the waitpoint opens. There is no window in which only later replies count.
+- Two separate timeouts exist: the total deadline ("the person is late") and an optional heartbeat ("the waiter is gone"). A missed heartbeat marks the waitpoint `stalled` and pauses escalation; it keeps accepting replies, and the deadline keeps running.
+
+States are `open`, `stalled`, `resolved`, `expired` and `cancelled`. The full object, transitions and events are in [Waitpoints and mailboxes](/relay/docs/reference/waitpoints).
+
+### Rules enforced as database constraints
+
+These are designed to be enforced by the database rather than left to application code:
+
+1. The waiter cannot resolve its own waitpoint.
+2. The responder must be in the `responders` set, and the identity that opened the reply session is the identity that completes it.
+3. An expired waitpoint cannot be resolved; a late reply is rejected and the rejection is recorded.
+4. A resolved waitpoint never changes: no correction, no undo, no second reply.
+5. A reply that does not match the schema is not stored; the responder gets a synchronous error.
+6. The reply is bound to the `subject_digest` of the request, so a reply given for X cannot be used for Y.
+7. State lives in the waitpoint record. A signal, wake-up hint or reply payload is not the system of record.
+
+## Replies and evidence levels
+
+Relay is a reply collector, not an approval gate. A reply record (`resolution`) carries:
+
+| Field | Meaning |
+|---|---|
+| `value` | The reply value, matching the schema |
+| `responder` | Who replied |
+| `channel` | Where it came from: inbox, push action, SMS, email, chat app, API |
+| `evidence_level` | How strongly the channel identifies the responder |
+| `responded_at` | Server time |
+| `subject_digest` | The request the reply is bound to |
+
+| Evidence level | Meaning | Example |
+|---|---|---|
+| `channel_claim` | The channel's own claim; identity rests on the channel identity | SMS reply, email reply, chat app button |
+| `relay_session` | Given in a session verified with a Relay subscriber token | Reply in the inbox component |
+| `access_aas_ref` | Reference to a decision made on the Access approval surface | Approval in Access after an invitation |
+
+In the API the field is called `response` or `decision`, never `approval`.
+
+High-risk approvals go to the Access approval surface. Relay delivers the invitation in the `action_required` class, and closes the waitpoint at the `access_aas_ref` level when Access reports the result. An inbox button, push action, lock-screen reply, SMS reply or chat app button is never an approval; on an approval item, the only action is a deep link to the Access approval surface.
+
+### Approval safety
+
+- The text shown to the person is produced on the server from the request's structured `content`. The agent's own free text (`claim_text`) is shown separately, labeled as the agent's claim, with Markdown and HTML disabled.
+- Reply tokens and reply links never enter the agent's context. They do not appear in any API response, event or mailbox message to the waiter; they go only to human channels.
+- If a bearer callback is needed, it is single-use, short-lived and scoped to one waitpoint.
+- Who sent a notification (person, system or agent) is visible on every surface.
+- A reply is acknowledged at once and processed asynchronously; the item updates from "processing" to "answered (by whom, when)" on every device. When the waitpoint closes, other copies show that no reply is needed any more.
+
+### Surface policy
+
+The sender may give a per-recipient `surface_policy`: ordered steps, each with a set of surfaces (a registered device or a channel) and an `escalate_after` delay. Relay delivers to the first step's surfaces and moves on when the delay passes without a reply. Relay sets no default delays; it only runs the schedule. The first valid reply closes the waitpoint on all surfaces.
+
+## Escalation
+
+An escalation policy is named, versioned and reusable. Each tier sets a delay and a new recipient and/or a more interruptive channel, for example "if A hasn't answered in 2 hours, SMS to A and push to B; at 8 hours, C". Every added recipient must be in the `responders` set.
+
+The last tier only produces `waitpoint.expired`. Relay never auto-approves or auto-rejects. If the waiter declared a `default_response` when opening the waitpoint, it is passed inside the expired event; Relay does not record it as a reply. Pending tiers are cancelled when the waitpoint is resolved, cancelled or stalled.
+
+## Mailbox
+
+The **mailbox** (`mailbox`) is a durable, sequence-numbered record per recipient, with a cursor and an outbox. The human inbox and the agent mailbox are two faces of the same core.
+
+| Property | Rule |
+|---|---|
+| Human face | Seen, read, archive, hide, snooze |
+| Agent face | **Lease, then acknowledge.** The agent leases one or more messages; if no acknowledgement arrives in time, the message is delivered again. |
+| Waking up | The agent reads what it missed in order, from the last sequence number it acknowledged |
+| Wake-up hint | Push, webhook and A2A push are only hints; the message waits in the mailbox |
+| Delivery promise | At least once; the agent deduplicates by message ID |
+| Content | Structured messages |
+| Retention | No physical deletion; retention and erasure follow the same rules as other personal data |
+
+Lease duration and redelivery count are tenant settings with upper limits. A message that exceeds the redelivery count moves to the mailbox's dead-letter view, is kept, and an event goes to the owner. When the waiter is an API client rather than an agent, results and early replies also go to a durable mailbox owned by that client.
+
+**Order.** Delivery order is not guaranteed. Read order is: each mailbox and stream carries a monotonic sequence number based on commit order. A reader sees gaps and fills them with `since=seq`.
+
+## Structured messages and untrusted content
+
+What reaches an agent is a **structured message** (`agent_message`), never a prompt. Relay never writes free-text instructions to an agent.
+
+| Layer | Content |
+|---|---|
+| Outer envelope | CloudEvents, signed with the tenant's key |
+| Control fields (typed) | Message kind, waitpoint ID, outcome, responder, channel, evidence level, subject digest, sequence number, trust label |
+| Content parts | A2A-style text and data parts, each with an audience |
+| Untrusted content | Free text from people or external systems, in its own part, marked untrusted, with its source: who wrote it, whether it was verified, which channel |
+
+- Untrusted text is wrapped in boundary markers, and markers inside the text are escaped.
+- It is normalized to visible text: hidden HTML, invisible characters and visually hidden text are removed. Raw content, if needed, is fetched separately with the same marking.
+- Free text never goes into control fields.
+- Links in a message go only to destinations on the tenant's allow list.
+
+Incoming messages carry a **trust label** (`trust_label`): `authenticated`, `unauthenticated`, `spam` or `blocked`, visible in the event type before the agent is woken.
+
+## Agent-sent notifications and the agent cap
+
+Notifications with sender type `agent` are subject to a per-agent cap, separate from frequency caps and throttles. When the cap is exceeded, notifications are neither sent nor deleted; they are held, and the owner receives `agent.ceiling_exceeded` and decides: send all, cancel, or stop the agent. If the cap counter cannot be read, agent-sent notifications are held. Held notifications keep their own `expires_at`.
+
+## Protocols
+
+- **MCP.** Relay is planned to offer an MCP server with tools to send a notification, open a waitpoint, read its state, list pending requests, read and acknowledge the mailbox, and subscribe to a topic. The tool list narrows to the caller's scopes. There is no tool that answers a human-facing waitpoint. The MCP task state `input_required` maps to a waitpoint.
+- **A2A.** Relay is planned to send and receive A2A push notifications and carry task lifecycle events, adding retries, signatures, dead-lettering, replay and SSRF protection from its delivery engine.
+- **AG-UI.** AG-UI events travel over the real-time channel as opaque payloads; Relay does not interpret or change them.
+
+A reply received over MCP or A2A is never an approval, and no protocol can bypass the approval gate. When a protocol version changes, only the mapping table changes; the internal waitpoint model stays the same.
+
+## Out of scope
+
+- Durable execution, checkpoints, compensation: the waiting side's job.
+- Being an approval gate or producing risk tiers: authority is in Access, approval policy with the owner.
+- Auto-approving or auto-rejecting: the owner decides; Relay only emits `waitpoint.expired`.
+- Writing free-text instructions to agents or generating content with a model.
+- The human work and approval queue: Work.
+- Multi-channel agent conversation management: conversation state belongs to the agent system.

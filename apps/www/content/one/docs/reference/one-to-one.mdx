@@ -1,0 +1,141 @@
+---
+title: One-to-One protocol
+description: "Draft reference for messages between Ones: wire format, required fields, message kinds, mailbox delivery, encryption and first contact."
+---
+
+> Draft reference. Field names, values and rules may change before release.
+
+## Layers
+
+| Layer | Owner |
+|---|---|
+| Person and agent identity, `did:web`, handle | Access |
+| Relationship level | Access |
+| Person attributes (SD-JWT verifiable credentials) | Access |
+| First-contact token | Issued by Access, verified and consumed by Relay |
+| Mailbox, delivery, wake-up | Relay |
+| Commitment and pre-acceptance proposal chain | Work |
+| Message meaning, reply decision, selective disclosure | One |
+
+## Wire format
+
+| Aspect | Design |
+|---|---|
+| Base protocol | A2A profile: Task, Message, Part and Artifact objects |
+| Binding inside the envelope | A2A HTTP+JSON |
+| Waiting states | A2A input-required and auth-required states map to negotiation waits |
+| Extension | One Federation, through the A2A extension mechanism |
+| Between people | The A2A content is the payload of an encrypted envelope in the Relay mailbox |
+| With organisations' agents | A2A directly |
+
+The One Federation extension defines what A2A lacks: typed message kinds, the Work correlation identifier and proposal version, relationship and first-contact fields, selective disclosure presentations, and the schema version. Message format is guaranteed by schema validation; whether the other side implements the extension correctly depends on that side.
+
+## Message kinds
+
+| Kind | Meaning | Work counterpart |
+|---|---|---|
+| Proposal | Proposes something: a time, a place, a piece of work, an exchange | Request |
+| Counter-proposal | A new version replacing the previous proposal | Counter-offer: `supersedes` chain, monotonically increasing proposal version |
+| Commitment | Accepts a proposal or counter-proposal and makes a promise | Promise, or accepting a counter-offer |
+| Rejection | Declines a proposal with a reason code | Rejection with reason code |
+| Query | Asks for information | Information request |
+| Answer | Answers a query with the least information | Answer to the information request |
+
+Typed fields in message content reuse the capability schemas; for example, a calendar event proposal uses the calendar event proposal capability's schema. There is no separate field vocabulary for One to One.
+
+## Required fields
+
+| Field | Content |
+|---|---|
+| Sender | Person identity and agent identity |
+| Receiver | The receiving person and agent |
+| Authority proof | Reference to the proof that the agent acts for the person |
+| Message kind | One of the kinds above |
+| Work correlation identifier | Stays the same along a proposal chain |
+| Proposal version | Increases monotonically across counter-proposals |
+| Expiry | When the message stops being valid |
+| Extension schema version | Version of the One Federation schema |
+
+A proposal whose expiry passes is recorded as expired. It is never treated as accepted or rejected.
+
+### Free-text notes
+
+A message may carry a free-text note, intended only for a person. The note is labelled untrusted, shown as "the other side's note" without rendering, and never becomes a field value, an operation or an automatic action. The planner never sees it. Only typed fields bind a commitment.
+
+### Pending negotiation handles
+
+The handle of a proposal or query awaiting an answer, and any state it carries, is treated as attacker-controlled input. It is integrity-protected, bound to the sender and receiver identities, short-lived, carries a digest of the original message and is single-use, enforced on the receiving side.
+
+## Delivery
+
+| Property | Design |
+|---|---|
+| Mailbox | Durable agent mailbox in Relay, with a sequence number per message |
+| Retrieval | Lease, then acknowledge |
+| Delivery guarantee | At least once; One de-duplicates by message identifier |
+| Online requirement | The two Ones never need to be online at the same time |
+| Wake-up | Relay sends a push that is only a wake-up hint: no content, no sender name |
+
+## Encryption
+
+| Property | Design |
+|---|---|
+| Scheme | MLS |
+| Group members | The person's Ones on their devices and their cloud One |
+| Endpoints | Only the two people's Ones can decrypt. The cloud One runs in the person's encrypted space inside an attested confidential computing environment |
+| Key discovery | The receiver's encryption keys and mailbox endpoint come from their `did:web` document. Relay is not a key directory |
+| What Relay sees | Sender's Access identity, receiver, size, time, rate, and the typed fields Relay produces (message type, sequence number, trust label). Nothing derived from content |
+| Multi-device | Key distribution, forward secrecy and post-compromise security through group key updates |
+| Cloud One while you are away | Can open the group key only with a valid time-limited, purpose-bound key permission; otherwise the message waits |
+| Device changes | Adding a device is your own action; a removed device leaves the group |
+
+That Relay cannot decrypt content follows from Relay never holding the key. That the endpoints protect their keys depends on client and confidential computing conformance.
+
+After decryption, the receiver applies the content rules: free text is fenced and normalized to visible text, hidden markup and invisible characters are removed, every field is labelled untrusted, and content goes to the quarantine model, emerging only as schema-valid typed fields.
+
+## Addresses
+
+- A permanent identity in Access, published as `did:web`, plus a human-readable handle.
+- Handles live by default in a namespace suiss reserves for them; you can connect your own domain.
+- Verification is two-way: the DID document names the handle, and the handle's domain names the DID. If either fails, the handle is not shown.
+- Handles can change; the DID stays, and contacts are bound to the DID.
+- Discovery is by sharing a handle (link or QR code). Contact matching is opt-in, rate-limited and runs in confidential computing; plain hash matching is not used. There is no public directory.
+
+## First contact
+
+| Rule | Design |
+|---|---|
+| Relationship levels | unknown, known, verified, trusted. Access records; policy inputs only; never authority |
+| Changing levels | Accepting from the request box: known. A verified attribute presentation: verified. Your explicit mark: trusted |
+| Unknown senders | Land in the request box. No wait is resolved, no task started, no reply produced. A quarantine-model summary is shown; you accept, ignore, block or report |
+| First-contact token | Required and free: an anonymous, rate-limited Privacy Pass token plus a rate limit per sender identity. Without a token, the message is rejected. Once a relationship exists, the pair no longer needs it |
+| Outbound first contact | Only on your explicit request, or within your Mandate and only to organisations' agents. One never contacts a person first on its own |
+| Blocking | A low-risk, reversible capability you can delegate. Blocked senders are not told, do not reach the request box and do not wake One |
+| Abuse reports | Sent with metadata; content only if you attach it, labelled as your unverified statement. A sender suspended in Access stops being delivered |
+
+## Replies while you are away
+
+| Situation | Behaviour |
+|---|---|
+| A typed message covered by an explicit Mandate | The cloud One may answer |
+| Anything outside the Mandate | Waits and lands in Pending |
+| Free-text requests | Never answered automatically |
+| Accepting a proposal covered by the Mandate | Accepted without asking; reported to you with the rule that allowed it |
+| Accepting a proposal not covered | You are asked |
+| Waiting for the other One | A Relay waitpoint; on expiry the proposal closes as expired |
+
+Every acceptance is a recorded Access action by One's instance and creates a Work Commitment.
+
+## Selective disclosure
+
+- Answers carry derived, minimal information: availability windows, not the appointments behind them.
+- Nothing derived from sensitive classes enters an answer.
+- Person attributes are presented from SD-JWT verifiable credentials issued by Access, bound to your key or your One's key, revealing only what is required. The first presentation of an attribute to a given party is put to you.
+- Private context (preferences, notes, reasons, memory, reasoning) never enters a message or a Work record.
+
+## Link to Work
+
+- The proposal, counter-proposal and rejection chain is a Work record, forming the commitment's requested and countered phases.
+- Your personal Work space opens automatically at your first accepted One-to-One commitment. Before writing the commitment, One checks for the space and asks Work to open it through Work's public interface if needed.
+- Within one suiss installation, two personal spaces need no federation setup. Across organisations, Work's cross-organisation rules apply.
+- People are the requester and the promiser; the Ones author the records on their behalf.

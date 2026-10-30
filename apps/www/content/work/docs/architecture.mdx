@@ -1,0 +1,244 @@
+---
+title: "Architecture"
+description: "The components of Work, how a record flows from a request to derived views and events, timers, clients and how Work behaves when a dependency fails."
+---
+
+> Work is in development. This page describes the planned architecture, which may change.
+
+## In one sentence
+
+For each ledger, Work is designed as a signed, append-only record log with Merkle commitments, built on the same ledger platform as Access; a single sequencer that writes to that log in one transaction; every view (commitment state, attention, summaries, search) derived deterministically from the log by the Work kernel and never allowed to override it; a reconciler that keeps those views current and durable timers that run commitment clocks; and a core that is enough to verify all of this without asking suiss.
+
+The architecture carries three hard claims:
+
+| Claim | How the architecture answers it |
+|---|---|
+| Normative state changes only through an eligible Declaration, and derived state never overrides a record | Only the signed record log is canonical. Every view can be rebuilt from the log with the kernel. No derived store is ever an input to a normative transition |
+| The same semantic inputs give the same normative result, and verification does not depend on suiss | One kernel runs with the same code on the server, in clients and in independent verifiers. Time, calendars and trust inputs are passed in as explicit parameters |
+| No signal, notification, federation send or external action leaves before the record is durable | The record, the derived state that must be in sync, and an outbox entry are written in one transaction. Everything leaves through the outbox, after the durability boundary |
+
+## Layers
+
+```text
+Clients (web, mobile), third-party clients
+        │  Work API
+        ▼
+Work service ─────────────── another organization's Work service
+        │                              │
+══════ Work protocol: signed records · receipts · checkpoints ══════
+        │
+Executor bindings (A2A, suiss webhook profile, native API) · MCP · Access (identity, authority) · Relay (delivery)
+```
+
+1. The **Work protocol** defines the meaning, encoding, signature, verification and derivation rules of records. It is independent of transport.
+2. The **Work API** is how clients and systems talk to the Work service. It produces and reads protocol records and has no meaning of its own.
+3. The **external faces** (CloudEvents events, the suiss webhook profile, A2A, MCP, W3C Trace Context) are normative bindings. Other formats are mappings and exports only.
+
+Work does not invent a new transport, webhook signature, event envelope or agent protocol. Its contribution is the commitment, responsibility and waiting semantics on top.
+
+## The Work kernel
+
+The kernel holds Work's normative rules and deterministic derivation, and there is no second implementation anywhere else. It has no I/O, no network, no file or database access, no clock and no randomness: time and randomness are passed in by the caller. Arithmetic for budgets, durations and counters is checked, and overflow becomes a typed error on the safe side.
+
+| Part | What it does |
+|---|---|
+| Record validation | Schema checks, required fields, consistency of the `supersedes` and basis chains, size and depth limits |
+| Normative fold | Derives the commitment lifecycle, the assignment axis and Condition states from a sequence of records; only eligible Declarations change normative state |
+| State axes | Derives the five state axes and the fixed summary categories; no report means unknown or stale |
+| Time Conditions | Clock state, start and finish deadlines, pause conditions, implicit acceptance windows, expected periodic updates, using a business calendar input |
+| Aggregation policies | All, any, K of N, sequential, percentage, any rejection rejects; four-valued decision answers |
+| Admission rules | Preconditions for admitting, quarantining or rejecting federated records |
+| Next transitions | The set of transitions allowed right now. This is normative eligibility, not an authority decision; the API and actions from notifications use it |
+| Verifier | Record signatures, ledger attestations, inclusion and consistency proofs, witness signatures |
+
+The kernel's public interface is versioned. A record is always evaluated under the rules of its own protocol version; old records are never reinterpreted under new rules, and a version the kernel does not know is quarantined. Practice rules and policy conditions are evaluated by a shared restriction engine, and the kernel takes the result as an explicit input.
+
+The kernel's result is a function of: the records, protocol and profile versions, adopted Practices, declared trust and policy inputs, restriction engine results, the ledger time of evaluation, and the business calendar. Wall-clock time, node time and values read from the network never enter it.
+
+The same kernel code is designed to run on the server, in the web client, in the mobile app and in independent verifiers (a counterparty, an auditor, an offline device). Record verification does not need any online suiss service.
+
+## Shared ledger platform with Access
+
+Work uses the same ledger platform, cryptography and restriction engine as Access, as shared libraries:
+
+- **Ledger platform:** the log, sequencer, outbox, durability boundary, checkpoints, witness client and replicas.
+- **Cryptography:** deterministic CBOR and digests, COSE signing and verification, proof verification, a separate signer process with keys in hardware security modules or a key management service.
+- **Restriction engine:** evaluation and explanation of restriction rules.
+- **Process hardening:** the same lock-down for network-facing and isolated processes.
+
+| Mechanism | In Work |
+|---|---|
+| Placement and isolation unit | The ledger |
+| Append-only log | One log per ledger, with a `prev` hash chain and a Merkle tree |
+| Sequencer | One writer per ledger, with epoch fencing |
+| Atomic commit | Records, sync-derived state, outbox and head update in one transaction |
+| Durability boundary | Nothing leaves before the record is durable |
+| Checkpoint | Size, Merkle root, head leaf and time, signed with an operational key; this is the ledger attestation |
+| Witnesses | Independent co-signers that verify consistency proofs; comparing them detects a ledger showing different histories |
+| Replica | A replica outside the provider, declared per ledger; mirrored before witnessing |
+| Redaction | Salted body commitments, a key per body, crypto-shredding |
+| Time discipline | Ledger time from at least two independent sources, with bounded progress and cross-checks |
+
+Code is shared; data and keys are not. Work's ledgers, canonical store, database roles, signing keys and operator roles are never shared with Access. Work talks to Access only through Access's public APIs, and there is no path from Work that writes to Access state.
+
+## Components
+
+Every component carries exactly one label:
+
+- **Canonical:** log records.
+- **Sync-derived:** derived from the log in the same transaction, and an input to normative transitions.
+- **Derived:** asynchronous, advisory.
+- **Projection:** outgoing events and views.
+- **Operational:** running the system.
+
+| Component | Responsibility | Never |
+|---|---|---|
+| API gateway | Platform API, federation endpoints, executor bindings, ingest endpoints, export; request size and complexity limits | Makes normative decisions, or turns a transport identity into a party identity |
+| Request validator | Verifies signatures on the exact bytes, schema typing, computes digests itself | Lets anything into the queue before pre-validation passes |
+| Ledger sequencer | One writer per ledger: checks basis and predecessors, validates at the head of the conflict domain, appends in batches | Treats being leader as authority |
+| Canonical store | The ledger log, body store, sync-derived tables, outbox and head rows | Lets anything but the sequencer write the log and head |
+| Checkpoint and witness client | Produces checkpoints, sends them to witnesses, collects co-signatures, compares gossip | Sends a prefix to witnesses before it is written to the replica |
+| Replica mirror | Continuously copies the ledger log to the declared replica | — |
+| Signer | Ledger attestations, checkpoints and event signatures, in a separate process with keys in a hardware module | Produces author signatures, or presents a custodian signature as an author's |
+| Reconciler | Level-triggered, idempotent reconciliation | Lets any workflow engine own Work state |
+| Timer | Due times for commitment clocks, budgets and leases | Times delivery, wait points or escalation |
+| Derivation workers and derived store | Needs Attention, Briefing, Work View, full-text search, optional semantic search, open workload, support chain views | Act as input to a normative transition |
+| Query service | Viewer-scoped reads, allowed next transitions, incremental sync | Returns a sensitive derived read without re-checking canonical visibility and redaction |
+| Event dispatcher | Outbox to Relay, webhooks, executor bindings, federation and the live layer | Treats an event as a commit |
+| Federation gateway | Signed record exchange, receipts, admission, quarantine and reasoned rejection | Silently drops a record from an authenticated peer |
+| Live layer | A thin WebSocket layer for presence, shared sessions and control handover | Writes anything but meaningful events to durable history |
+| Placement directory | Ledger to cell mapping | Acts as a decision input; if it is wrong, the sequencer refuses |
+| Export and replay | Canonical record bundles, fold verification | Exports derived views as canonical |
+
+Only canonical and sync-derived state can be inputs to a normative transition. The derived store, search index, caches and replicas never are. Attention ranking, summaries and search are advisory; if an action is started from them, it is re-validated against canonical state at the moment of the transition.
+
+## How a record flows
+
+```text
+canonical signed records (ledger log + body store)
+        ↓  same transaction
+minimum sync-derived state
+        ↓  same transaction
+outbox  ──  durability boundary
+        ↓  asynchronous
+derivation + reconciler
+        ↓
+query · search · attention · summaries · live projections
+```
+
+1. A client, agent, executor or federation peer sends a request through the API gateway.
+2. The request validator checks the signature on the exact bytes, the schema and the digest.
+3. The ledger sequencer checks the record's basis and predecessors at the head of its conflict domain. Ordinary intake needs no work-wide lock; serialization happens only at the head of the semantic conflict domain.
+4. The record, the minimum derived state needed for the next transition (version keys, idempotency keys, one-time flags, current commitment and Condition heads) and an outbox pointer are written in one transaction.
+5. Only after the record is durable does anything leave. The event dispatcher builds each event from committed records and sends it on.
+6. The reconciler and derivation workers update derived views: attention items, waits, whose move it is, summaries and search.
+
+Nothing that can be derived from records is stored as canonical. Every derived structure can be rebuilt from the log, and any difference between a rebuilt and a live structure is treated as a serious alarm, with the fold from the log as the arbiter.
+
+## The reconciler
+
+Coordination runs through a level-triggered, idempotent reconciler. No workflow engine owns Work state.
+
+- **Keys.** The main reconciliation keys are Commitments and Conditions. Work-level summaries are combined projections of them.
+- **Level-triggered.** Each run reads the key's current canonical state, computes the expected state with the kernel, and produces only the difference. A missed or duplicated trigger does not change the result.
+- **Triggers.** An outbox signal, a timer coming due, and a periodic full scan. The full scan is the last safety net: if a trigger is lost, the state is delayed by up to the scan interval, never lost.
+- **Outputs.** Derived view rows; outgoing requests through the outbox (notifications and wait points to Relay, stop, takeover and amendment requests to executors, federation sends); and only those records a declared policy calls for, such as an implicit acceptance or an expiry, attributed to the party that owns the policy and pointing to the Declaration it rests on.
+- **No spontaneous normative effect.** The reconciler never writes a normative record that is not based on a policy or Declaration. Platform automation is always attributed to a party.
+- **Idempotency.** Every outgoing request carries an idempotency key derived from the key, the transition and the ledger position. Incoming events are deduplicated by source and ID.
+- **Statement versus fact.** The expected state from Declarations is checked against the observed state from executor or external Claims. A contradiction produces an attention signal; the reconciler does not "fix" it.
+
+## Durable timers
+
+A durable timer exists only for a duration that changes canonical state, or needs to notify a party, when it ends. Every other duration is derived at read time.
+
+| Family | Covers |
+|---|---|
+| Commitment clock | Due dates and service levels: approach warnings and breach tiers; start and finish deadlines; start deadlines for pooled and queued work; periodic report due times; implicit acceptance windows (only with the obligee's prior statement); validity periods; follow-ups; `time` waits |
+| Budget | Running out of a time budget. Money and token budgets are measured by Claims and need no timer |
+| Lease | Claim leases and liveness leases |
+| Return and review | Return from a dated deferral; review deadlines for external participants' authority |
+
+Muting expiry and dynamic urgency are computed at read time. "No progress" and "work gone quiet" are found by the periodic full scan.
+
+- A timer is a row, not a process. Pending work holds no process or queue slot in memory.
+- The timer table is derived and can be rebuilt from the log and the business calendar.
+- Due times are evaluated in ledger time. The result comes from comparing record ledger times with the due time, not from when the timer ran. A late timer only delays the signal; it does not change the outcome. For example, an objection recorded before the deadline prevents implicit acceptance even if the timer fires late.
+- Timers never fire early; firing late is safe. They run at least once, and repeats are idempotent.
+
+Delivery, wait and escalation timers live in Relay. Every point where a person or agent's answer is awaited is a Relay wait point, durable and independent of execution. Work never keeps its own copy of a timer Relay holds.
+
+## Events and the live layer
+
+Everything that leaves Work leaves through the outbox. Events are written to the outbox in the commit transaction, and their content is derived from committed records. The outbox feeds a message stream that serves only as a doorbell, and from there Relay, webhooks, executor bindings, the federation gateway, derivation workers and the live layer. The cursor is the ledger and position, which is gap-free and matches commit order.
+
+An event is not a commit. The existence, order or loss of an event never changes a record, normative state or visibility. There is no ordering guarantee between events; each carries the ledger position and a rising version, and a consumer re-queries when in doubt. Delivery is Relay's and the recipient's responsibility.
+
+Live work specific to Work runs on a thin WebSocket layer, limited to presence (who is in this work, who is watching), shared sessions and control handover. Presence is temporary, fades on its own and never enters durable history; only meaningful events, such as a control handover, are recorded. The live layer carries no truth: when a client gets a signal, it re-reads the view from the query service. General real-time updates and notifications go through Relay.
+
+## Infrastructure
+
+Work always runs together with Access and Relay. Both are required, and Work has no built-in authority mode or direct notification mode.
+
+| Component | Status | Role |
+|---|---|---|
+| Relational database | Required | Canonical log, body store, sync-derived state, outbox, timer table, derived views and full-text search |
+| Message stream | Required | A doorbell only; never canonical |
+| Access | Required | Identity, authority, step-up, approval surface |
+| Relay | Required | Notifications, real-time updates, wait points, escalation delivery |
+| Object storage | Optional | Large bodies and attachments, encrypted and content-addressed |
+| Analytics store | Optional | Envelope-level facts only; derived |
+| Vector search | Optional | Semantic search; derived |
+
+Losing the message stream is a delay, not a loss of correctness. If it is unreachable, consumers and the reconciler fall back to polling the outbox and to full scans. No optional component can become canonical.
+
+## Clients
+
+Work is planned with two clients: a web app, installable as a progressive web app, and a mobile app. There is no separate desktop app. Both use the Work kernel, so record validation, signing and state derivation give the same result in the client as on the server. All six surfaces are planned for both; if a client cannot support something, it says so instead of silently leaving it out.
+
+**Offline work is on mobile, and it is only a queue of signed pending statements.**
+
+- The mobile app keeps a local cache (derived and rebuildable) and a queue of Declarations signed by their author. Pre-signing checks and verification use the kernel.
+- The canonical record is ledger-authoritative. Pending statements go through the normal write path when they reach the ledger. Their `occurredAt` is the author's claim; the normative time is ledger time.
+- There is no normative merging of concurrent edits. If a pending statement's basis is out of date and an incompatible concurrent transition exists, the work goes into an explicit conflict state, resolved by an authorized Declaration referring to both bases.
+- A statement signed offline still passes a live Access check when it reaches the ledger if it is consequential. An offline signature is not proof of authority. Authority gates cannot be answered offline.
+- Every queued statement shows as "not sent, offline" until it is sent.
+
+Sync is incremental: the client sends the last position it saw and receives the difference, scoped to its authority. An item whose visibility narrowed comes through as "no longer visible", without content.
+
+Strong authentication and step-up always come from Access. Work does not implement its own passkey or WebAuthn flow. Authority gates are approved on the Access approval surface; the structured approval surface for coordination gates is in the Work client.
+
+## Failure behaviour
+
+Work's behaviour is declared for the outage of every dependency.
+
+| Failure | What Work does |
+|---|---|
+| Access unreachable | Consequential actions and disclosures to new recipients or organizations are refused. Reads continue from cache within the freshness limit Access declares, then are refused. A revocation event invalidates the cache immediately |
+| Relay unreachable | Records, normative state and Needs Attention are unaffected. Notification and wait point requests wait in the outbox and go out when Relay returns. A person who opens the attention surface still sees the items |
+| Message stream unreachable | Falls back to polling and full scans; correctness is unaffected |
+| Executor unreachable or silent | Execution, control and liveness become unknown or stale, never "in progress". Stop requests are recorded and confirmation is awaited. An attention signal is raised |
+| Work unreachable | Safe stopping does not depend on Work: executors and the local side stop without it, and a forced stop happens through Access revocation plus executor enforcement. Relay wait points are durable, and results are processed when Work returns |
+| Derived store late or damaged | Reads are marked stale; normative transitions are unaffected; rebuilt from the log |
+| Sequencer changing leader | No commits during the gap; clients retry with the same idempotency key and see "not confirmed, checking" |
+
+## Data placement and durability
+
+The ledger is the unit of placement and trust; the ledger, not the Work, has a physical location. An organization can use several ledgers, and Work identities do not encode a place, region or tenant. Work, Access and Relay run in the same region. Organizations in different regions can still federate, and only records the sender explicitly discloses cross the boundary.
+
+The API is designed to report durability states separately:
+
+| State | Meaning |
+|---|---|
+| `received` | The request was validated; no durability promise yet |
+| `recorded` | The ledger's durability class is met; the API can return success |
+| `included` | The record is in a checkpoint's Merkle tree |
+| `witnessed` | The checkpoint was co-signed by an independent witness, or anchored with an external timestamp |
+| `federated` | The other side's signed receipt arrived |
+| `admitted` | The other side wrote a local admission record |
+| `quarantined` | The other side quarantined the record; no local effect yet |
+| `rejected` | The other side rejected the record with a reason code |
+| `acted upon` | An executor reported an Act based on this record |
+
+## What Work does not run
+
+Work is the durable coordination and record system. It does not act in the world, move money or deliver notifications. Execution is in the executor, delivery in Relay, payment in Pay, identity and authority in Access.

@@ -1,0 +1,106 @@
+---
+title: Errors
+description: Draft reference for Relay's planned error model, covering problem objects, field errors, retryable statuses and error code families.
+---
+
+> This is a draft reference. Codes, fields and defaults may change before release.
+
+## Problem object
+
+Every error is an RFC 9457 problem object with the media type `application/problem+json`.
+
+| Field | Required | Meaning |
+|---|---|---|
+| `type` | Yes | A resolvable URL for the error code's documentation page; never `about:blank` |
+| `title` | Yes | Fixed text for the error type |
+| `status` | Yes | HTTP status code |
+| `code` | Yes | Machine-readable `snake_case` code, a deliberate copy of the `type` for machines |
+| `retryable` | Yes | Whether retrying the same request can succeed |
+| `detail` | No | Variable, human-readable explanation |
+| `instance` | No | The request path |
+| `request_id` | No | Matches the `Request-Id` header |
+| `errors` | No | Field errors; present only for field validation and omitted when empty |
+| `retry_after` | No | Seconds to wait, when retryable |
+| `limit`, `actual` | No | Which limit was exceeded and the actual value |
+| `required_scope`, `granted_scopes` | No | For scope errors |
+| `policy` | No | The policy involved |
+
+```json
+{
+  "type": "<documentation URL for this code>",
+  "title": "Validation failed",
+  "status": 422,
+  "code": "validation_failed",
+  "retryable": false,
+  "detail": "2 fields are invalid.",
+  "instance": "/v1/events",
+  "request_id": "<request id>",
+  "errors": ["<field errors, see below>"]
+}
+```
+
+## Field errors
+
+- Field errors point at the field with an RFC 6901 JSON Pointer.
+- Sub-codes: `required`, `invalid_format`, `too_long`, `too_short`, `not_found`, `not_allowed`, `conflict`, `unsupported_value`.
+- Validation errors are reported together; validation does not stop at the first error.
+
+## Retryable by status
+
+Every error carries `retryable`. When it is `true`, `Retry-After` is returned in delta seconds.
+
+| Status | `retryable` | `Retry-After` |
+|---|---|---|
+| `400`, `401`, `403`, `404`, `413`, `422` | false | — |
+| `409` `resource_conflict` | false | — |
+| `409` `idempotency_key_in_progress` | true | 1 second |
+| `429` `rate_limited` | true | Remaining window |
+| `429` `quota_exhausted` | false | — |
+| `500` | true | 2 seconds |
+| `503` | true | 5 to 30 seconds |
+| `504` | true | 5 seconds |
+
+Only the server knows whether a request had side effects, so clients should rely on `retryable` rather than guessing from the status code.
+
+## Error code families
+
+| Family | Codes |
+|---|---|
+| `auth_*` | `missing_credentials`, `malformed_credentials`, `invalid_token`, `revoked_client`, `expired_token`, `insufficient_scope`, `environment_mismatch`, `tenant_suspended` |
+| `request_*` | `malformed_request`, `payload_too_large`, `unsupported_media_type`, `validation_failed`, `unknown_field`, `unsupported_api_version` |
+| `idempotency_*` | `key_missing`, `key_invalid`, `key_reuse`, `key_in_progress` |
+| `workflow_*` | `not_found`, `not_published`, `event_type_not_mapped` |
+| `recipient_*` | `not_found`, `invalid` |
+| `channel_*` | `not_configured`, `policy_field_not_overridable` |
+| `quota_*` | `rate_limited`, `quota_exhausted`, `batch_too_large` |
+| `platform_*` | `internal_error`, `service_unavailable`, `upstream_timeout` |
+
+Examples used elsewhere in these docs:
+
+| Response | When |
+|---|---|
+| `400 idempotency_key_missing` | A mutating request without `Idempotency-Key` |
+| `422 idempotency_key_reuse` | The same key with a different body |
+| `409 idempotency_key_in_progress` | The same key while the first request is still running |
+| `422 unknown_field` | An unknown field anywhere in the body |
+| `422 validation_failed` | `data` does not match the workflow's event schema |
+| `422 workflow_not_published` | The workflow has no published version |
+| `422 event_type_not_mapped` | A CloudEvents `type` with no workflow mapping |
+| `422 recipient_not_found` | An ID-only recipient that does not exist |
+| `422 policy_field_not_overridable` | A raw provider block tries to set a policy field |
+| `403 channel_not_configured` | `overrides.email.from` uses an unverified domain |
+| `403 auth_insufficient_scope` | The token lacks the needed scope |
+| `403 auth_environment_mismatch` | A `test` client tries to reach `live` data, or the reverse |
+| `403 auth_tenant_suspended` | The tenant is suspended |
+| `400 unsupported_api_version` | An invalid `Relay-Version` value |
+| `413 batch_too_large` | A batch over its row or size limit |
+| `429 rate_limited` | API rate limit |
+| `429 quota_exhausted` | Send quota exhausted |
+
+## A decision is not an error
+
+Policy outcomes are not in this table. Missing consent, a preference turned off, quiet hours, a frequency cap, a stop control or an İYS rejection never produce an API error. The request is accepted with `202`, and the outcome is reported on the notification and delivery as `skipped` (or deferred) with a `rule_id`. See [Delivery status](/relay/docs/reference/delivery-status#reason-codes).
+
+Policy results come back synchronously only from preview, test and `dry_run` calls; each decision there carries `decision` and a rule ID. A full failure never returns a 2xx status on any endpoint.
+
+Rendering failures are also not skips: they are reported as a separate `notification.render_failed` event with a `failure_reason` of `missing_variable`, `render_timeout`, `output_too_large` or `schema_violation`.

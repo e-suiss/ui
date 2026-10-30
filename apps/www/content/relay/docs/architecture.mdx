@@ -1,0 +1,192 @@
+---
+title: Architecture
+description: Relay's planned components, how a message moves from event to provider, how waits and replies flow, and how load and failure are handled.
+---
+
+This page describes Relay's planned architecture: the parts it is made of, how a message flows through them, and how the system is designed to behave under load and failure.
+
+## Context
+
+```text
+ Your apps and services ──events, recipients, workflows──►┐
+                                                          │
+ AI agents ◄──waitpoints, mailbox, protocol events──►  RELAY  ──push, email, SMS, chat, in-app──► People
+                                                          │  ◄──inbox, preferences, replies───── People
+ Access ◄──sign-in, tokens, agent identity, consent,────► │
+           approvals, audit links, Access's own messages  │
+                                                          │ ──send──────────────────────────► Channel providers
+                                                          │ ◄──delivery reports, bounces, replies──
+                                                          │ ◄──►consent writes and change pulls── İYS
+                                                          └──signed events──► Webhooks, queues, streams, object storage
+```
+
+Relay is never a source of authority. Deliveries, acknowledgements and replies are not approvals. High-stakes approvals happen on the Access approval surface; Relay delivers the invitation. Operator sign-in, step-up, API credentials, subscriber tokens and agent identity all come from Access.
+
+## Components
+
+Relay is planned as one application with three roles. Small installations run all three in one process; large ones scale each role separately. The code path is the same either way.
+
+| Role | Responsibilities |
+|---|---|
+| `api` | HTTP API, CloudEvents intake, inbound provider webhooks, MCP endpoint, console backend, hosted preference pages. Admission control happens here. |
+| `worker` | Planning, the policy lattice, rendering, delivery, retries, digests, schedules, waitpoint timers, reconciliation, maintenance |
+| `socket` | Real-time connections: WebSocket, Server-Sent Events, long-poll |
+
+Alongside the roles:
+
+- **Console and UI components.** The console, the inbox, toast and preference components, and the embeddable webhook portal.
+- **Database.** Holds every source of truth: records, the append-only delivery ledger, mailboxes, waitpoints, the outbox, the job queue and the audit log.
+- **Signal store.** Carries cross-node signals, rate-limit and frequency counters, and short-lived state such as presence. It never holds a primary record.
+- **Key store.** Holds provider signing keys and per-person data encryption keys, reached through a hardware-security-module interface.
+- **Cold archive.** Write-once object storage for old partitions.
+
+There is no separate real-time server and no edge runtime.
+
+### Records versus signals
+
+Truth lives only in the database. The signal store, push, real-time and webhooks are signals and accelerators:
+
+- A signal carries only "something new" and a sequence number; data is always read from the database. A missed signal is recovered with a cursor.
+- If the signal store is unreachable, signals fall back to short-interval polling and rate limiting falls back to a database-backed limiter. Limits never fall back to "unlimited".
+- Losing the signal store entirely costs latency and briefly coarser limiting, not data.
+
+## Core modules
+
+```text
+ingest ──► workflow ──► policy ──► templates ──► channels ──► delivery ──► webhooks
+              │                                     │
+              ├──► inbox                            └──► platform
+              └──► agents                 workflow ──► platform
+```
+
+| Module | Responsibility |
+|---|---|
+| ingest | Idempotency, `dedup_key`, recipient upsert |
+| workflow | Steps, routes, escalation, digest, schedules |
+| policy | Message class, consent, preferences, quiet hours, İYS: gates, then filters, then shapers |
+| templates | Rendering, localization, layouts, variants |
+| channels | Provider adapters, error classes, failover, evidence |
+| delivery | Ledger, four-axis state, reconciliation |
+| inbox | Mailbox human face, badge, real-time |
+| agents | Waitpoints, mailbox agent face, A2A and MCP |
+| webhooks | Delivery engine, destinations, portal |
+| platform | Rate limits, fairness, lanes, circuit breakers, stop controls |
+| tenancy and audit | Tenants, environments, identity, audit log |
+
+Decision logic is designed to be pure and testable; side effects sit at the edges.
+
+## Send flow
+
+```text
+Tenant app      api role            database                worker role                     provider
+    │  POST /v1/events (Idempotency-Key)
+    │──────────────►│
+    │               │── notification + job + outbox ──►│   (one transaction)
+    │◄── 202 ───────│
+    │                                                  │◄── claim job ──│
+    │                                                  │                │ policy lattice: gates → filters → shapers
+    │                                                  │                │
+    │                    not sent:                     │◄── skip record (reason + rule_id)
+    │                    send:                         │                │ render for channel and language
+    │                                                  │◄── mark attempt before the external call
+    │                                                  │                │── send (outside any transaction) ──►│
+    │                                                  │                │◄── accepted / error class ──────────│
+    │                                                  │◄── ledger event│
+    │               │◄────────────── delivery report (webhook) ─────────────────────────────────────────────│
+    │               │── ledger event (monotonic state) ─►│
+```
+
+Key properties of this flow:
+
+- **Accepted means persisted.** The notification, its job and its outbox entry are written in one transaction. A request that cannot be persisted is not accepted (`503`). The number of messages accepted but never queued is designed to be zero, and a gap there is the most severe alarm.
+- **No external calls inside a transaction,** and no job runs longer than an hour. Long waits are a record plus a timer.
+- **Retry decisions rest on evidence,** such as a delivery report, a bounce or a status webhook, not on an application timeout. On an ambiguous result Relay first asks the provider's status endpoint where one exists. Without one, the attempt is recorded as `unknown`, and a paid channel is not automatically resent.
+- **Inbound provider webhooks** are first written as a durable receipt, then acknowledged quickly with a 2xx, then processed from the queue. Signatures are checked on the raw body, and receipts are deduplicated on the provider's event ID.
+- **Reconciliation.** Because webhooks can be lost, each channel periodically pulls the status of open deliveries from the provider. Reconciliation writes ledger events under the same monotonic rules.
+
+## Waitpoint flow
+
+```text
+Agent / waiting system          Relay                               Person
+        │── create waitpoint ───►│ (correlation key, deadline, escalation policy)
+        │                        │── action_required message ─────────►│ (push → SMS → email, per route)
+        │                        │
+   reply arrives:                │◄── reply (value, responder, evidence level) ──│
+        │◄── waitpoint.resolved ─│ (structured fields, never instructions)
+   no reply:                     │── escalation tiers (next person, stronger channel) ──►
+        │◄── waitpoint.expired ──│ (the owner decides what happens next)
+```
+
+A reply that arrives before the waitpoint is opened waits in the waiter's durable mailbox and is matched when the waitpoint opens. Resuming the work is the waiting side's job.
+
+## Priority lanes and load
+
+Queues are organized as **lane × channel**; there is no queue per tenant. The lane comes only from the message class, and no request field can move a message to another lane.
+
+| Lane | Classes | Under load |
+|---|---|---|
+| L0 | `security` | Never shed; work only ends by passing its `expires_at` |
+| L1 | `transactional`, `action_required` | Deferred only as a last resort |
+| L2 | `operational`, `system`, `social` | Second to be shed: digest windows extend, work is deferred |
+| L3 | `marketing` | First: campaigns pause, nothing is discarded |
+
+- **Physical separation.** Each lane × channel has its own queue and concurrency budget. Critical and bulk lanes use separate outbound connection pools and separate database connection pools, so a huge fan-out cannot hold up a one-time code.
+- **Shared provider quota.** When lanes share a provider limit, each lane may use only a cumulative share of it; work above the share waits instead of being rejected.
+- **Load shedding** is triggered by queue delay (how long work waits before it starts), not queue depth.
+- **Admission control.** Under overload the API rejects deferrable classes at the door with `429` and `Retry-After`. `security` is never refused by admission control.
+- **Fairness.** Tenants share queues fairly through weighted deficit round-robin inside each queue. One tenant's provider failure or circuit breaker does not affect another.
+- Every shed or deferral decision is recorded with a `rule_id`.
+
+## Providers, errors and failover
+
+Every provider response maps to one of eight **failure classes** (`failure_class`). Retries, fallback, address deactivation, suppression and circuit breaker weight all come from the class; adapters contain no separate decision logic.
+
+| Class | Retry | Moves the fallback chain | Address or token |
+|---|---|---|---|
+| `transient` | Yes, with backoff and jitter | No | Unchanged |
+| `permanent_target` | No | Yes | Disabled at once (soft) and an event emitted |
+| `permanent_content` | No | Yes | Unchanged; alarm |
+| `policy` | No | Yes | Preference or suppression recorded |
+| `quota` | Deferred until quota renews | No | Unchanged |
+| `auth` | Once after credentials refresh | No | Unchanged |
+| `sender_config` | No | Yes, if another verified provider or identity exists | Not suppressed; sender-level event |
+| `unknown` | Limited | No | Unchanged; event and alarm |
+
+- **Two failover modes** per channel: active-passive (default; a primary and one or more backups, switching when the circuit breaker opens) or weighted and cost-based.
+- **Verified providers only.** In both modes traffic goes only to providers verified for that channel: a registered sender name for SMS, an aligned sending domain for email, an approved number and template for WhatsApp, a working credential for push. Even with the circuit open, Relay does not fail over to an unverified provider.
+- **Circuit breakers** work at two levels: per tenant and provider for credential and configuration errors, and per provider for transport errors, 5xx and timeouts across all tenants. Application-level rejections, such as a bad token, do not open the circuit.
+- **Rate limits** are modeled at the account, sender and recipient levels and set deliberately tighter than the provider's own. Throughput adapts automatically to throttling responses, and a provider's `Retry-After` always wins.
+- Retry counts never go beyond a message's `expires_at`.
+
+## Channels
+
+| Channel | Notes |
+|---|---|
+| Mobile push | Native push services for the major mobile platforms |
+| Web push | Standard Web Push with VAPID |
+| Email | Email service providers or the tenant's own mail server; Relay does not run its own mail transfer service |
+| SMS | Licensed carriers or aggregators per country |
+| Voice | Voice call adapters; also used for out-of-band codes |
+| WhatsApp | Template approval and the conversation window model apply |
+| Chat apps | Slack, Microsoft Teams, Telegram and Discord; these do not report delivery |
+| In-app | Relay's own inbox and real-time streams |
+| Webhooks and event destinations | HTTPS, queues and streams, object storage |
+
+A new channel is added only with its full declarations: capability flags, an evidence table, the provider's idempotency behavior, an error mapping with test vectors, price and limit data, and data residency metadata.
+
+## Real-time and inbox
+
+- WebSocket and Server-Sent Events are equal transports carrying the same stream; long-poll and polling are the last fallback.
+- The inbox item, its counters and the broadcast record are written in one transaction. Broadcasts leave only after commit, so there are no phantom notifications, and every committed change is eventually broadcast.
+- Every stream is ordered by `(stream, epoch, seq)`. A client resumes from its cursor, and an `epoch` change tells it to resync from scratch.
+- All writes from clients go through the REST API; clients cannot publish on the real-time channel or subscribe themselves to other streams.
+
+See [Inbox and real-time](/relay/docs/reference/inbox-realtime).
+
+## Regions and operations
+
+- Each region is an independent installation with its own database, signal store and key store. Disaster recovery stays within the region.
+- The Turkey region is designed to run in-country, with backups and key backups also in-country.
+- Every provider record carries its processing country and transfer basis. A tenant can turn on an "in-country only" policy, which keeps providers that send data abroad out of its routes.
+- Relay does not announce its own incidents through itself; its status page and paging do not depend on Relay.
+- Tracing follows a single trace from trigger to workflow step to provider call to delivery report, using OpenTelemetry context propagation. Span attributes carry no personal data.

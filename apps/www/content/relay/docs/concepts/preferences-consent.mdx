@@ -1,0 +1,154 @@
+---
+title: Preferences and consent
+description: The policy lattice of gates, filters and shapers, four-level preferences, legal consent, country rules, quiet hours and frequency caps.
+---
+
+Every delivery passes one decision layer before it is sent. That layer is designed so that no product, request field or flag can skip a compliance check, and so that every decision is recorded with the rule that made it.
+
+## The policy lattice
+
+The **policy lattice** (`policy_lattice`) evaluates three kinds of rule in a fixed order:
+
+| Kind | Outcome | What can override it |
+|---|---|---|
+| **Gate** (`gate`) | Suppressed; final | Nothing |
+| **Filter** (`filter`) | Filtered; final | Only a locked category |
+| **Shaper** (`shaper`) | Deferred, batched or dropped, per category policy | Class rules (`security` and `action_required` pass through quiet hours) |
+
+```text
+1  GATES (no flag, category or lock can skip them)
+   1a  operator stop controls
+   1b  suppression list (hard bounce, complaint, tenant block list)
+   1c  opt-out: SMS STOP, one-click "never from this brand", İYS rejection, spam complaint
+   1d  compliance table: class × country × channel × consent type × recipient type
+   1e  channel state: address or token disabled, no OS permission, code subtype vs channel
+   1f  scope: unmatched sub-tenant
+2  LOCK EXEMPTION: if the category is locked, step 3 is skipped (step 1 never is)
+3  FILTERS (AND logic: any "off" stops the send)
+   3a  tenant turned the category off
+   3b  user category × channel preference
+   3c  user notification type (workflow) preference
+   3d  user mute for one object (scope_key)
+   3e  user weekly availability schedule
+4  SHAPERS
+   4a  legal sending window
+   4b  user quiet hours
+   4c  frequency cap
+   4d  digest window, throttle, content deduplication
+→  SEND
+```
+
+- The lattice runs again on every attempt. Deferred or paused work goes through it again when it runs; the result from planning time is not reused.
+- Every decision is recorded as `decision` + `rule_id` + `detail`. For filters, `detail` names the level that blocked the send, which is how "why didn't I get it?" is answered.
+- If a channel in a locked category cannot pass a gate, Relay moves to the next channel in the route instead of dropping the delivery.
+- There is no per-message or per-workflow flag that overrides preferences. The only way past preferences is a locked category, which is declared in the category definition and audited.
+
+## Preferences
+
+A **preference** (`preference`) is the recipient's wish about notifications. Its value has three states: `opt_in`, `opt_out` or `unset`. `unset` falls back to the category default.
+
+| Level | Key | Example |
+|---|---|---|
+| Category × channel | `(category, channel)` | "Order updates: no SMS" |
+| Notification type | `workflow` | "Don't send me the weekly summary email" |
+| Mute one object | `scope_key` (opaque string) | "Mute this conversation" |
+| Weekly availability | Day × time range in the recipient's time zone | "Weekdays 09:00 to 18:00" |
+
+- Levels combine with AND logic: if any level says off, nothing is sent.
+- There are no conditional preferences. A rule like "tell me when my balance drops below 5" belongs in the tenant's system, which then sends the event.
+- `security` and locked categories cannot be turned off at any level.
+- A tenant may write a preference on a user's behalf only in the "off" direction. For `marketing`, a tenant can never write "on" for the user.
+- Preferences are tied to the recipient's account, not to a device or a cookie. Turning off push in the OS stops push but does not erase the preference; if the permission comes back, the old preference applies again.
+
+**Default matrix when the tenant sets none:**
+
+| Class | Push | Email | SMS | WhatsApp | In-app |
+|---|---|---|---|---|---|
+| `security` | on (locked) | on (locked) | on (locked) | off | on (locked) |
+| `action_required` | on | on | off | off | on |
+| `transactional` | on | on | on | off | on |
+| `operational` | on | on | off | off | on |
+| `social` | on | off | off | off | on |
+| `marketing` | off | off | off | off | on |
+
+For `marketing`, the default follows the country and platform rows of the compliance table. Where a country or platform requires prior consent, the default is off and the tenant cannot turn it on.
+
+### Preference center
+
+One engine serves three surfaces: an embeddable in-app screen, a sign-in-free page opened from an email footer link (with a signed, time-limited, single-purpose token), and the notification settings entry inside the OS notification itself. The main view is a category (rows) × channel (columns) matrix. Planned acceptance tests include click symmetry (undoing never takes more clicks than granting), visual parity of accept and reject choices, absence of deceptive design patterns, and WCAG 2.2 AA. The user sees one "My preferences" screen that combines consents from Access with notification preferences from Relay.
+
+## Consent is not a preference
+
+**Consent** (`consent`) is a legal record; a preference is a wish. They are separate records and never converted into each other.
+
+| | Consent | Preference |
+|---|---|---|
+| What | Legal opt-in or opt-out for commercial messages | The user's notification wish |
+| Evidence | Required: source, time, channel, consent text version, device or IP, registry transaction ID | None |
+| If missing | Do not send, where the rule requires consent | Category default |
+| In the lattice | Gate | Filter |
+
+- Consent states are `none`, `granted` and `revoked`, and `none` is not the same as `revoked`.
+- If any source says rejected, the result is rejected.
+- Consent without evidence cannot be written.
+- The legal consent record lives in Access. Relay keeps a copy from Access consent events and does not call Access at send time. Consent is keyed by brand, channel and recipient.
+- Turning a channel off in the preference center is a preference; it is not written to any registry. Replying STOP to an SMS, choosing "never from this brand" or filing a complaint is an opt-out: it enters the suppression list and acts as a gate.
+
+## Turkey's İYS registry
+
+For `marketing` messages on voice, SMS and email, when the tenant's region is Turkey or the tenant has entered its İYS details:
+
+- Relay is designed to be the single writer to İYS for a brand: writing consents and rejections, pulling changes, and recording rejections from one-click unsubscribe, SMS keywords and complaints.
+- Without İYS details configured, marketing on those channels is not sent (rule `iys_not_configured`).
+- For an individual recipient, marketing is not sent unless the local İYS copy shows consent and the last successful sync is within the freshness threshold (rule `iys_stale`).
+- Merchant recipients do not need prior consent, but a recorded rejection is honored.
+- Informational messages (`transactional`, `operational`) are not checked against İYS on the hot path.
+
+Push, in-app and WhatsApp are outside İYS; Relay adds no consent requirement there beyond what law or platform rules require.
+
+## Unsubscribe and opt-out keywords
+
+- **One-click unsubscribe (RFC 8058).** A one-click POST or footer link removes the user from that message's category and is recorded as a preference. The endpoint needs no sign-in, shows no confirmation screen, is idempotent and takes effect immediately. A GET never changes state.
+- **Unsubscribe page.** Offers "manage my preferences" and "never send me commercial email from this brand". The second writes an email rejection for the brand to İYS and removes the user from all marketing email categories.
+- **SMS keywords.** A provider-independent, multilingual handler recognizes Turkish rejection words and the STOP family as channel-level opt-outs, HELP for information, and START to resubscribe (recorded as new evidenced consent).
+- **Timing.** Opt-outs apply at once. Legal deadlines are treated as upper limits, not targets.
+
+## Country × channel × class rules
+
+Compliance rules are a data table: **country × channel × message class × consent type × recipient type** → sending condition and extra obligations such as footers, windows and records. A new country is supported by adding rows.
+
+- The tenant can only make the table stricter. There is no loosening flag.
+- A country with no specific row uses explicit opt-in for marketing.
+- Legitimate exceptions are expressed as data, not flags: merchant recipients, soft opt-in for existing customers, B2B legitimate interest.
+- Consent types are `explicit_opt_in`, `soft_opt_in`, `legitimate_interest` and `none`. Recipient types are `individual` and `merchant`.
+- Platform rules are kept as platform rows next to country rows. For example, some push platforms and WhatsApp require explicit opt-in for marketing, so those defaults are off and the tenant cannot turn them on. When a country row and a platform row both apply, the stricter one wins.
+
+Starting rows are planned for Turkey, the EU and the US.
+
+## Quiet hours and legal windows
+
+**Quiet hours** (`quiet_hours`) are a user preference, calculated in the recipient's time zone. By default they apply to interrupting channels (push, SMS, voice, WhatsApp and chat apps). Email and the inbox are excluded by default; the inbox item is written at once.
+
+| Class | During quiet hours |
+|---|---|
+| `security` | Sent |
+| `action_required` | Sent, unless the sender explicitly chose `next_break` |
+| `transactional` | Deferred to the end of the window; expires if `expires_at` passes |
+| `operational` | Deferred |
+| `social` | Collected into a digest at the end of the window |
+| `marketing` | Deferred; legal window and frequency cap also apply; dropped if the cap is full |
+| `system` | Not applied |
+
+A deferred delivery is never sent inside quiet hours, and deferral is finite: if no allowed moment exists before `expires_at`, the delivery expires. Deliveries released at the end of quiet hours are spread with deterministic jitter.
+
+A **legal window** (`legal_window`) is the sending range a country's law allows, for example 08:00 to 21:00 local time for US marketing SMS. It is separate from quiet hours and a tenant cannot turn it off or widen it.
+
+## Frequency caps
+
+A **frequency cap** (`frequency_cap`) is a category × channel policy and a shaper, not a gate.
+
+- It applies only to system-initiated classes: `marketing`, `social` and `operational`.
+- It counts only sendable deliveries.
+- A global per-user cap is always defined; a tenant can make it stricter, not remove it.
+- What happens at the cap is written in the category policy: `drop`, `defer`, `digest` or `inbox_only`.
+- If the counter cannot be read, the frequency cap lets sends through and raises an alarm. This is the only named rule that fails open; provider rate limits and the agent cap never fall back to "unlimited".

@@ -1,0 +1,164 @@
+---
+title: "Core concepts"
+description: "The nine canonical concepts, eight canonical relations and the record model that every part of Work is built on."
+---
+
+Work is designed around a small, fixed core: nine concepts, eight relations and one record model. Everything else, such as queues, deadlines, budgets, plans and role names, is expressed with these pieces rather than added as a new concept.
+
+Something is a concept only if it has its own identity and other things refer to it. A phase of something else, a property, or a view computed from records is not a concept.
+
+## The nine concepts
+
+The concept names are English terms and are used as-is everywhere in Work.
+
+| Concept | Definition | Example |
+|---|---|---|
+| **Work** | Only the identity of a durable piece of work and its semantic anchor. Name, type, state, owner, priority, dates, progress and visibility are not stored on it; they are records, relations or derived views | "Roof repair" |
+| **Party** | An identity that writes records and takes roles in relations: a person, an agent, a system, a machine or an organization | A procurement agent, a warehouse robot, a supplier company |
+| **Aim** | A declared criterion for what counts as satisfied | "The roof no longer leaks and passed the municipal inspection" |
+| **Commitment** | An obligation one party (the obligor) takes on toward another (the obligee), on behalf of a principal, under Conditions, about an Aim or an Act | A contractor promises the building manager to repair the roof by Friday |
+| **Condition** | A satisfiable predicate that blocks an Act, Commitment or Aim from progressing. A Gate is a kind of Condition | "Waiting for materials from the supplier, for 3 days, until Friday" |
+| **Reference** | The identity of something outside Work. Work does not own its content, state or ownership | A pull request, a document, an agent session |
+| **Act** | An attributable report, written by the party that did it, of an action in the world | "I laid the waterproofing" |
+| **Declaration** | The only kind of record that changes normative state: promises, refusals, acceptances, decisions, approvals, handovers and the like | "I accept the result" |
+| **Claim** | A proposition a party puts forward on some basis. It is not assumed to be true and has no normative effect | "The inspection will happen tomorrow" |
+
+### Party
+
+Person, agent, system, machine and organization are not separate kinds of thing. The actor type is a property derived from the party's identity binding in Access, and every record shows it. If there is no binding, the type is marked "declared, unverified" wherever it appears. Capability, authority and accountability never follow from the actor type.
+
+Work does not create a second identity. A Work Party and an Access party reference are the same identity. Changing an agent's model, provider, operator or session does not create a new party; continuity is kept by the party identity.
+
+An AI model or system must be its own party when at least one of these is true: it holds a commitment, uses authority different from its caller, crosses into a different operator's trust boundary, has its outputs used as evidence attributed to it, or behaves like a participant that needs separate control or handover. Otherwise it can stay a tool inside a party.
+
+A machine is a set of roles, not a type. As a doer it is a party. As a shared resource it is the target of a sharing Condition. As the thing being worked on, it is a Reference.
+
+### Aim
+
+An Aim can be **truth-based**, judged by evidence or by whether a proposition is true, or **judgment-based**, judged by the Declaration of a named party. It can be **one-shot** or **maintained** over time. An Aim does not say who does the work; that is what a Commitment is for.
+
+### Commitment
+
+A commitment is always between two parties. Results involving many parties are built from several two-party commitments, or from separate decisions combined by a Condition. The "not yet promised" phase (request, triage, pool) is the first phase of the same commitment, not a separate ticket. See [Commitments](/work/docs/concepts/commitments).
+
+### Condition
+
+There are two classes:
+
+- An **Epistemic Condition** is satisfied by Claims, for example an answer to a question or an observed external event.
+- A **Gate** is a normative Condition, satisfied by the Declaration of an eligible party. There are two kinds of gate: an **authority gate**, approved in Access, and a **coordination gate**, approved in Work. The kind is declared when the gate is created.
+
+Dependencies, budgets and service-level clocks are all Conditions. See [Waits, gates and attention](/work/docs/concepts/waits-gates-and-attention).
+
+### Act, Declaration and Claim
+
+These are the three kinds of record. An Act is the doer's report, not proof that something really happened. A Declaration is never retroactive. A Claim has three subtypes:
+
+| Subtype | Meaning |
+|---|---|
+| Observation | A perception or a snapshot of a source |
+| Assessment | A judgment about whether an Aim is met |
+| Assumption | An assumption or hypothesis |
+
+An agent's own stated confidence may be kept as data inside a Claim body, but it is never shown, never used for ranking or evidence strength, and never appears in the explanation of why an item matters. Uncertainty is expressed as typed states instead: "I don't know", "I assumed", "sources conflict".
+
+## The eight relations
+
+| Relation | Meaning | Rule |
+|---|---|---|
+| `engaged-in` | A party takes part in a Work with a role, but without an obligation | Role labels and participation policy are its parameters; it carries no responsibility or authority |
+| `concerns` | A record or semantic object falls within a Work | A record can concern zero or more Works in the same ledger |
+| `part-of` | Work composition | Not inheritance: state, owner and visibility do not pass down |
+| `serves` | One Aim contributes to another | Contribution, not obligation |
+| `supersedes` | Revision or replacement | Not retroactive; the old record stays in place |
+| `derived-from` | Basis, origin, lineage | Carries a typed role |
+| `on-behalf-of` | Representation of a principal | Must match the capacity authorized in Access |
+| `references` | Link to an external identity | Does not own what it points to |
+
+There is no `depends-on` relation. "X waits for Y" means X has a Condition addressed to Y.
+
+`derived-from` carries one of four core roles:
+
+| Role | Meaning | Example |
+|---|---|---|
+| `basis` | Normative premise | The "done" statement an acceptance rests on |
+| `source` | Information origin, input | The Observations an Assessment rests on |
+| `fulfills` | Fulfillment of a commitment | A delivery Act that fulfills a commitment |
+| `supports` | Sub-commitment to parent commitment | A supplier's promise that a customer promise depends on |
+
+## The record model
+
+Every record is exactly one of Act, Declaration or Claim. Records share a common set of fields:
+
+| Field | Meaning |
+|---|---|
+| `occurredAt` | The author's claim about when the external event happened. Not the normative time |
+| `recordedAt` | The trusted time assigned by the ledger. This is the normative time |
+| `author` | The party that wrote the record |
+| `actorType` | The actor type of the author and of every party in the on-behalf-of chain, derived by the ledger |
+| `onBehalfOf` | The principal chain |
+| `basis` | Normative premise records |
+| `visibility` | Declared visibility |
+| `recordedIn` | The record's canonical ledger |
+| `concerns` | Zero or more Works in the same ledger |
+| `relations` | Canonical relations |
+| `authority` | A reference to the Access evidence for the authority used, required on every consequential record, including those written by people |
+| `producer` | For agent records: the agent version and configuration that produced it |
+| `evidence` | Evidence references |
+| `ext`, `critical` | Namespaced extension fields |
+
+Records are immutable. Their existence, attribution, lineage and signed bytes never change. A correction is a new record linked with `supersedes`. Records are never physically deleted: when retention ends or personal data must be erased, the content body is made unreadable by crypto-shredding and the record skeleton (existence, author, time, origin, digest) remains. The wire encoding is in the [records reference](/work/docs/reference/records).
+
+### Ledger
+
+A ledger is the trust, authority and data-placement boundary for records. Every record is recorded in exactly one ledger. A ledger is not the same as an organization: one organization can use several ledgers. Work identities are opaque and do not encode a place, region or tenant.
+
+## What is derived, not stored
+
+These are deliberately not concepts. They are computed from records, or expressed with relations and roles: state and summary categories, blocked or waiting, progress, the need for attention, whose move it is next, handover, control lease state, clock state, budget state, open workload, context, trust, evidence strength, the counterparty's state, shared work across organizations, track record and the support chain.
+
+## How Work is extended
+
+A new capability is first expressed with what already exists: a typed Declaration subtype, a typed Claim subtype, a Condition type or subtype, or a derived view. Every extension point is typed, versioned and namespaced, and every new enum value must map to a core category. Practices cannot add concepts or relations.
+
+| Need | How Work expresses it |
+|---|---|
+| Queue or pool | The "no obligor yet" phase of a commitment, a queue owner, and a derived view |
+| Service-level clock | A time Condition on the commitment |
+| Budget | A Condition on the commitment; consumption is a Claim |
+| Execution attempt | Executor reports plus execution session References |
+| Decision record | A typed Declaration |
+| Handover note | A typed Declaration |
+| Follow-up ("check again on Monday") | A commitment |
+| Plan | A Claim or Reference; a plan is not a commitment |
+| Signal, alarm, observation | An Observation Claim; it does not create a commitment by itself |
+| Agent session, A2A or MCP task | A Reference; its state is an execution projection |
+| One agent telling another "approved" | A Claim, not a decision |
+| Role name such as "reviewer" | A role label on `engaged-in`, defined in a Practice |
+
+## Terms with one meaning
+
+| Term | Means | Does not mean |
+|---|---|---|
+| Work | The durable identity anchor of a piece of work | A task, project, session or chat |
+| Party | An identity in relations and records | A user account |
+| Agent | A non-human party with attributable records | A model, a tool or a person |
+| Principal | The party acted for | The operator |
+| Operator | The party that runs an agent's environment | Principal, provider, accountable party |
+| Executor | A party working through the Work and Access executor contracts | A person, an identity or a runtime brand |
+| Commitment | An obligation from obligor to obligee, for a principal, under Conditions | A task or an assignment |
+| Gate | A normative Condition satisfied by an eligible Declaration | An approval screen or a notification |
+| Authority | Being allowed to act; decided by Access | Autonomy |
+| Autonomy | Doing something within authority without asking now | Authority |
+| Control | The ability to pause, cancel or take over | Authority or execution |
+| Execution | The actual external action | Work's coordination |
+| Practice | A declarative, deterministic, restricting domain package | Code, a skill or an ontology extension |
+
+## Pages in this section
+
+- [Commitments](/work/docs/concepts/commitments): lifecycle, operations, acceptance, delegation, budgets and clocks.
+- [Responsibility and control](/work/docs/concepts/responsibility-and-control): accountability, queues, assignment, autonomy, stop requests and the executor contract.
+- [Waits, gates and attention](/work/docs/concepts/waits-gates-and-attention): state axes, typed waits, gates, attention and escalation.
+- [Evidence and visibility](/work/docs/concepts/evidence-and-visibility): evidence marks, provenance, context assembly and visibility.
+- [Work across organizations](/work/docs/concepts/across-organizations): federation, disclosure, admission and receipts.
+- [Practices](/work/docs/concepts/practices): domain templates layered on the core.

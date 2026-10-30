@@ -1,0 +1,92 @@
+---
+title: One to One
+description: "How two people's Ones are designed to talk: typed messages, an encrypted mailbox, first-contact protection, minimal disclosure and Work commitments."
+---
+
+One to One is typed messaging between two people's Ones. When it ends in a promise, the result is a Work Commitment. No new identity system, mail infrastructure or commitment model is invented for it: identity and authority live in Access, delivery in Relay, the promise in Work, and the meaning of the messages in One.
+
+A message from another One is data, not an instruction. "Send me their calendar" is a request, and One answers it only within your Grants and Mandate, with as little information as possible.
+
+## An example
+
+A friend's One sends your One a proposal: dinner on Thursday at 20:00, at a restaurant. Your phone is off, so Relay holds the message in your mailbox. Your cloud One checks your Mandate ("accept dinner proposals from close friends if my calendar is free; if it isn't, offer the nearest free time that evening"). Your calendar is busy at 20:00, so it sends a counter-proposal for 20:30. Your friend's One accepts within its own Mandate, and a Work Commitment between the two of you is created. At no point does the content of your calendar reach your friend.
+
+## Who owns what
+
+| Layer | Owner | What it does |
+|---|---|---|
+| Person and agent identity, `did:web`, handle | Access | Permanent identity, verification keys, service endpoints |
+| Relationship level | Access | A policy input; it never creates authority |
+| Person attributes | Access | Issued as SD-JWT verifiable credentials |
+| First-contact token | Access issues it, Relay checks it | Anonymous, rate-limited token |
+| Mailbox, delivery, wake-up | Relay | Encrypted envelope, request box, blocking, abuse reports |
+| Commitment and the proposal chain before it | Work | The commitment record |
+| Message meaning, the reply decision, selective disclosure | One | This page |
+
+Every message carries three things: the person's identity, the agent's identity, and proof of authority. Your friend's One is not your friend; it is an agent acting on their behalf, and the receiver checks that authority in Access.
+
+## Wire format
+
+One-to-One messages use an A2A profile and a **One Federation** extension. A2A tasks, messages, parts and artifacts carry the conversation, and A2A's waiting states map to negotiation waits. What A2A lacks is defined in the extension: the typed message kinds, the Work correlation identifier and proposal version, relationship and first-contact fields, selective disclosure presentations, and the schema version. With organisations' agents, such as an airline or a bank, A2A is used directly.
+
+## Mailbox and end-to-end encryption
+
+- **Delivery is Relay's agent mailbox.** Messages wait in a durable mailbox with a sequence number; One leases and acknowledges them. Delivery is at least once, and One de-duplicates by message ID. Two Ones never need to be online at the same time. If the receiving device is asleep, Relay wakes it with a push that carries no content and no sender name.
+- **Message content is end-to-end encrypted between the two Ones**, using MLS. The ends are the person's Ones: One on their devices, and their cloud One running in their encrypted space inside an attested confidential computing environment. Relay holds no group keys and sees only metadata: the sender's Access identity, the receiver, size, time, rate and the typed fields Relay itself produces (message type, sequence number, trust label). Nothing derived from content.
+- **After decryption, the content rules apply.** Every field from the other One is untrusted. Free text is fenced off and normalized to visible text, with hidden markup and invisible characters stripped. The content goes to the quarantine model, not to the planner, and comes out only as typed fields that match a schema.
+
+Adding a new device to the encryption group is your own action; a removed device is taken out of the group.
+
+## Addresses and discovery
+
+Your address is a permanent identity plus a human-readable handle. The permanent identity is in Access and is published as `did:web`. The handle sits by default under a namespace suiss reserves for handles, and you can connect your own domain. Verification goes both ways: the DID names the handle and the handle's domain names the DID; if either does not match, the handle is not shown. A handle can change; the DID stays. Neither is authority.
+
+Phone numbers and email addresses are discovery hints, not addresses. Discovery happens by sharing your handle (a link or a QR code). Matching your contacts is off by default, needs explicit permission, is rate-limited and runs inside an attested confidential computing environment, never as plain hash matching. There is no public directory and no social graph.
+
+## First contact and relationship levels
+
+Relationship levels are unknown, known, verified and trusted. They are Access records that never grant authority; they are only policy inputs, such as a Mandate condition "only proposals from trusted people". Levels change only through your action: accepting from the request box makes someone known, a verified attribute presentation makes them verified, and only your explicit mark makes them trusted. One can suggest a change; it cannot make one.
+
+- **Unknown senders land in the request box.** A message there triggers no automatic action: it does not resolve a wait, start a task or produce a reply. One only extracts a short summary with the quarantine model ("An unknown One: a booking offer from a restaurant"). You accept, ignore, block or report it.
+- **A first-contact token is required and free.** A first message to an unknown receiver needs a rate limit per sender identity and an anonymous, free, rate-limited Privacy Pass token, issued so it cannot be linked to its use. A first contact without a token is rejected. Once a relationship exists, the token and first-contact limit no longer apply to that pair.
+- **Blocking and abuse reports.** Blocking is a low-risk, reversible capability you can delegate to One; every block it applies shows in the activity log and can be lifted with one tap. A blocked sender is not told. An abuse report goes with metadata; content is attached only if you choose, labelled as your unverified statement.
+- **One reaches out first only in two cases**: when you explicitly ask it to, or within a Mandate you defined, and then only to organisations' agents (a restaurant, an airline, a bank). One never sends a first message to a person on its own; it only suggests it ("Shall I write to them?").
+
+## Typed messages
+
+| Kind | Meaning | Work counterpart |
+|---|---|---|
+| Proposal | Proposes something: a time, a place, a piece of work, an exchange | Request |
+| Counter-proposal | A new version that replaces the previous proposal | Counter-offer, with a `supersedes` chain and an increasing proposal version |
+| Commitment | Accepts a proposal or counter-proposal and makes a promise | Promise, or accepting a counter-offer |
+| Rejection | Declines a proposal with a reason code | Rejection with reason code |
+| Query | Asks for information ("are you free Thursday evening?") | Information request |
+| Answer | Answers a query with the least information | Answer to the information request |
+
+Message fields reuse the capability schemas, so there is no separate vocabulary for One to One. A free-text note is allowed only as something to show a person: it is labelled untrusted, shown as "the other side's note" without rendering, never becomes a field value or an action, and the planner never sees it. Only typed fields bind a commitment. Required fields are listed in the [One-to-One reference](/one/docs/reference/one-to-one).
+
+## Replies while you are away
+
+While your devices are off or you are busy, your cloud One replies only to typed messages that an explicit Mandate covers, such as an availability query or the kind of proposal the Mandate describes. Everything else waits and lands in Pending; free-text requests never get an automatic reply. The cloud One can open your key-protected data only with a time-limited, purpose-bound key permission from your device; without a valid permission, the message waits.
+
+If a Mandate covers accepting a proposal, One accepts without asking you separately; otherwise it asks. Either way the acceptance is a recorded Access action that creates a Work Commitment, and every acceptance under a Mandate is reported to you with the rule that allowed it. It can be undone under Work's rules.
+
+Silence is not an answer. While waiting for the other One, the wait is a Relay waitpoint; when it expires, the proposal closes as expired, neither accepted nor rejected, and One asks whether to try again.
+
+## Selective disclosure
+
+- **Answers carry the least information.** "Thursday 19:00 to 23:00 works", not "there is a doctor's appointment at 16:00". Constraints are shared, reasons are not. Nothing derived from sensitive classes enters a One-to-One answer, and sharing sensitive data with a new party for the first time is never delegated.
+- **Person attributes are disclosed selectively.** If the other side asks for an attribute (over 18, city, verified phone), One presents only the minimum from an SD-JWT verifiable credential issued by Access, bound to your key or your One's key. The first time an attribute goes to a given party, you are asked.
+- **Your private context never crosses over.** Preferences, notes, reasons, memory and reasoning never enter a One-to-One message or a Work record.
+
+Multi-agent privacy and injection scenarios ("must not tell their One X") are part of the evaluation suite, and any release that changes One-to-One behaviour is designed to pass them first.
+
+## Commitments in Work
+
+The proposal, counter-proposal and rejection chain before an agreement is itself a Work record, so the history of who proposed what is kept. Only free-text notes and One's private context stay out.
+
+Your personal Work space is not created in advance; it opens automatically at your first shared commitment, triggered by One. Within the same suiss installation, two personal spaces need no federation setup. If the other side belongs to a different organisation, the commitment follows Work's cross-organisation rules.
+
+The people are the requester and the promiser; the Ones are the authors of the records, acting on their behalf. Commitment items that concern you appear in Pending as a view, and preparation work for a commitment can be a One task linked to it.
+
+Organisations' agents follow the same first-contact, request-box, typed-message and least-information rules. Commercial transactions such as orders and payments go through commerce protocols and Pay; a One-to-One message is never a payment instrument.

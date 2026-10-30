@@ -1,0 +1,341 @@
+---
+title: HTTP API
+description: Draft reference for Relay's planned HTTP API, covering conventions, authentication, idempotency, sending events, batches, cancellation and resources.
+---
+
+> This is a draft reference. Endpoints, fields and limits may change before release.
+
+Relay's HTTP API is designed contract-first: the HTTP surface is described in OpenAPI 3.1 and the event-driven surface (webhook events, real-time broadcasts, agent events) in AsyncAPI 3.1, with JSON Schema 2020-12 for bodies and events. Server and client SDKs are planned to be generated from these documents.
+
+## Endpoint families
+
+All families live under `/v1`, including client endpoints. Each data region has its own base address; a region's address never reaches another region's data.
+
+| Family | Credential | Used by | Covers |
+|---|---|---|---|
+| Send | Access client credentials token, `publish` scope | Tenant backends, producer products | `POST /v1/events` (native JSON and CloudEvents), `POST /v1/events/batch`, campaign sends, cancellation |
+| Management | Access client credentials token with management scopes, or an operator session | Tenant backends, console, files in version control | Recipients, devices, topics and subscriptions, workflows, templates, layouts, partials, routes, recurring rules, webhook endpoints, stop controls |
+| Query | Access client credentials token, `read` scope | Tenant backends, console | Events, notifications, deliveries, attempt history and ledger |
+| Client | Subscriber token | Browsers, mobile apps, UI components | The subscriber's own inbox, preferences and device registration |
+| Agent | Access token for an agent or API client, or a subscriber token | Agents, agent frameworks, your code | Waitpoints, mailboxes, A2A and MCP endpoints |
+| Inbound provider events | Per-provider signature verification | Push services, email providers, SMS providers, İYS | Delivery reports, bounces, complaints, inbound messages |
+| Operator | Operator session plus re-authentication | Installation operator | Platform-level operations |
+
+There is one way to express each concept. There is no per-channel send endpoint: orchestration picks the channel.
+
+## Conventions
+
+- Request and response bodies are `application/json; charset=utf-8`. Errors are `application/problem+json`.
+- Field names are always `snake_case`.
+- **Unknown fields are rejected** with `422 unknown_field`, at the top level, in nested objects and under `overrides`. They are never silently ignored.
+- `null` means "clear this field"; an absent field means "leave it unchanged".
+- Times are RFC 3339 in UTC. Durations are ISO 8601 (`PT30M`, `P1D`).
+- Amounts and large integers are strings. Money is `{ "amount": "1234.50", "currency": "TRY" }`.
+- HTTPS only, TLS 1.2 or later. Plain HTTP is rejected and HSTS is sent.
+- Every response has a `Request-Id` header. Single-resource responses carry an `object` field.
+- IDs are opaque, prefixed by type and time-ordered. See [Identifiers and events](/relay/docs/reference/identifiers).
+- A resource that belongs to another tenant or environment returns `404`, not `403`.
+
+## Authentication
+
+### Server API
+
+The server API is called with a short-lived Access access token (`Authorization: Bearer`), obtained with OAuth 2.0 client credentials for the tenant's API client in Access. Relay has no API keys of its own and stores no client secrets. Mutual TLS with certificate-bound tokens (RFC 8705) can be added for enterprise tenants.
+
+Relay validates the token against Access's published signing keys on every request: issuer, audience (the Relay server API), expiry and not-before, with an allow list of algorithms. Unsigned tokens are rejected. Tenant and environment come from the API client's registration in Access, never from the request.
+
+- Each API client is bound to a single tenant and a single environment (`live` or `test`).
+- Scopes are coarse. `publish` and `read` are separate. Managing API clients is never granted to an API client; it requires an operator session with step-up.
+- A missing scope returns `403 auth_insufficient_scope` with `required_scope` and `granted_scopes`.
+- A `401` carries `WWW-Authenticate: Bearer` and an `auth_*` code. Invalid token attempts are rate-limited per IP.
+- A suspended tenant gets `403 auth_tenant_suspended` at every entry point.
+
+### Client API
+
+Browsers and mobile apps never hold a secret credential.
+
+- The client exchanges its Access token for a Relay **subscriber token** using RFC 8693 token exchange. No tenant backend code is needed.
+- Relay does not accept an Access token directly for inbox access.
+- Subscriber token scopes: `inbox:read`, `inbox:write`, `preferences`, `devices:write` (register, update and remove only the token holder's own devices) and `presence:write` (write only the holder's own device presence).
+- Client endpoints are an allow list. `POST /v1/events` is never open to clients.
+- Revoking a subscriber token, or suspending the subscriber, closes open real-time connections.
+
+## Idempotency
+
+Every mutating request (`POST`, `PUT`, `PATCH`, `DELETE`) requires an `Idempotency-Key` header. A request without one is rejected with `400 idempotency_key_missing`. The header is ignored on `GET`.
+
+| Rule | Value |
+|---|---|
+| Location | Header, never a body field |
+| Length | 8 to 255 characters; `[A-Za-z0-9_.:-]` recommended; quoted or unquoted |
+| Scope | `(tenant, environment, endpoint, key)` |
+| Lifetime | 24 hours, fixed by the server |
+| Fingerprint | SHA-256 of the raw request body bytes |
+| Content | Never put personal data in the key; it appears in audit records |
+
+| Situation | Result |
+|---|---|
+| Same key, same body, request completed | The original response is returned unchanged, status and body included, with `Idempotency-Replayed: true` |
+| Same key, different body | `422 idempotency_key_reuse`; the old response is never returned |
+| Same key, first request still running | `409 idempotency_key_in_progress`, `Retry-After: 1`, `retryable: true` |
+
+Only responses produced after business logic started are stored. `400`, `401`, `403` and `429` are never stored. A `5xx` is stored only if execution partly progressed; a failure with no side effect is not stored and returns `retryable: true`.
+
+SDKs are planned to generate the key automatically and reuse it on retries of the same call. A legitimate repeat, such as "send the code again", uses a new `Idempotency-Key` and a new `dedup_key`.
+
+The only exception is CloudEvents intake without the header; see [CloudEvents](#cloudevents).
+
+## Send an event
+
+```http
+POST /v1/events
+Authorization: Bearer <access token>
+Idempotency-Key: order-1042-shipped-a1
+Content-Type: application/json
+```
+
+```json
+{
+  "workflow": "order-shipped",
+  "to": [
+    {
+      "id": "user-42",
+      "email": "user@example.com",
+      "locale": "en-US",
+      "timezone": "Europe/Istanbul"
+    }
+  ],
+  "data": {
+    "order_id": "1042",
+    "total": { "amount": "249.90", "currency": "TRY" }
+  },
+  "dedup_key": "shop:order-shipped:evt-8f2c"
+}
+```
+
+The endpoint returns `202 Accepted`. Acceptance is not delivery; nothing waits for providers.
+
+```json
+{
+  "object": "event",
+  "id": "evt_01jb8x2k4m6n8p0q2r4s6t8v0w",
+  "workflow": { "key": "order-shipped", "version": 7 },
+  "status": "accepted",
+  "recipient_count": 1,
+  "notifications": [
+    {
+      "recipient_id": "sub_01jb8x2k4m6n8p0q2r4s6t8v1a",
+      "notification_id": "ntf_01jb8x2k4m6n8p0q2r4s6t8v1b"
+    }
+  ],
+  "created_at": "2026-01-15T09:30:00Z"
+}
+```
+
+Response headers include `Location: /v1/events/{id}`, `Request-Id` and `Idempotency-Key`. A `notification_id` per recipient is returned immediately.
+
+### Request fields
+
+| Field | Meaning |
+|---|---|
+| `workflow` | Slug of a published workflow. An unpublished workflow returns `422 workflow_not_published`. |
+| `to` | 1 to 100 recipients. Each is a recipient object (`{id, email, phone, locale, timezone, ...}`), an ID only, or a topic (`{topic}`). A request with no target returns `422`. |
+| `actor` | Who did it: a person, a system or an agent. Sender type is a separate field from the message class. |
+| `tenant` | A sub-tenant within the API client's tenant |
+| `data` | Event data, at most 256 kB, validated against the published workflow version's event schema |
+| `dedup_key` | Business key for the event |
+| `channels` | Filter that narrows the workflow's steps; it never adds steps |
+| `overrides` | Per-channel overrides |
+| `send_at` | Scheduled send; must be in the future and at most 90 days ahead. A past time returns `422`. |
+| `expires_at` | Not sent after this moment; ends as `expired` |
+| `priority` | `low`, `normal` or `high`; fine-tuning within the lane only |
+| `security_subtype` | `security` class only: `otp_oob` or `email_verification` |
+| `on_expire` | `security` class only: `drop` (default) or `inbox_only` |
+| `cancellation_key` | Optional key for later cancellation; need not be unique |
+| `retention` | `none`: rendered content is not stored |
+| `metadata` | Opaque; at most 16 keys, values at most 512 characters; returned in events and webhooks |
+
+### Recipient upsert
+
+- If the recipient object carries contact data beyond the ID, the recipient is created or updated on the spot and the notification is sent.
+- If only an ID is given and the recipient does not exist, the request returns `422 recipient_not_found`. No ghost recipients are created.
+- An inbox-only recipient can be created explicitly with an object containing only an ID (`to: [{ "id": "..." }]`); its address is its ID. A bare string ID does not have this meaning.
+- Phone numbers are E.164.
+
+### Priority
+
+The lane comes only from the message class; `priority` cannot move a message to another lane. Each class has a priority ceiling (for example `marketing` at most `normal`). A higher value is lowered to the ceiling and the response includes a `priority_clamped` warning. Platform priority is derived from class plus priority through one mapping table. `priority` is not a channel SLA.
+
+### Overrides
+
+- Keys are channel names (`email`, `sms`, `push`, `in_app`, `whatsapp`, `webhook`), not provider names. `overrides.<channel>.provider` can only narrow the choice among verified providers.
+- Precedence is one-way: request, then step, then workflow, then tenant default.
+- A raw provider-specific block exists only for push and WhatsApp.
+- A raw block cannot override policy fields such as push interruption level, priority, push type, or the `critical` and `time-sensitive` rules. Such a field returns `422 policy_field_not_overridable`.
+- `overrides.email.from` must use a verified domain, otherwise `403 channel_not_configured`.
+
+### Security subtypes and content retention
+
+For `otp_oob` and `email_verification`, `expires_at` is required and rendered content is never stored. For other classes, `retention: none` turns off content storage for that message. Combining `retention: none` with the in-app channel is rejected, because the inbox has to keep the rendered item.
+
+### Sub-tenant
+
+`tenant` selects a sub-tenant inside the API client's tenant; the client's own tenant cannot be overridden. A delivery to an undefined or mismatched sub-tenant is recorded as `skipped` with `scope_mismatch`.
+
+## CloudEvents
+
+The same intake accepts CloudEvents 1.0 over HTTP in binary mode (`ce-*` headers), structured mode (`application/cloudevents+json`) and batched mode (`application/cloudevents-batch+json`).
+
+- The CloudEvents `type` is bound to a workflow through a mapping table the tenant defines. An unmapped type returns `422 event_type_not_mapped`; this is a contract error, not a policy decision.
+- `(tenant, source, id)` is the event's `dedup_key`.
+- `traceparent` is carried end to end.
+- If the request has no `Idempotency-Key` header, the idempotency key is derived from `(tenant, source, id)`. If the header is present, it wins. This exception applies only to CloudEvents intake.
+
+How and in which order events are produced on the customer side is not Relay's responsibility. Relay does not read customer databases.
+
+## Batch
+
+`POST /v1/events/batch` is not all-or-nothing.
+
+| Status | Meaning |
+|---|---|
+| `202` | All rows accepted |
+| `207` | Some rows accepted, some rejected |
+| `422` | No row accepted; full failure never returns 2xx |
+| `400` | Malformed envelope |
+| `413` | Row or size limit exceeded (`batch_too_large`, with `limit` and `actual`) |
+| `401`, `403`, `429` | Credential, permission, rate or quota problem for the whole request |
+
+- Give each row a `ref` (at most 128 characters) and match results by `ref`; without one, `index` is used.
+- Each row error is a full RFC 9457 problem object. A `summary` field is always present.
+- One `Idempotency-Key` covers the whole batch; there is no per-row key and `ref` is not an idempotency unit. Resend rejected rows as a new batch with a new key.
+- A batch is neither atomic nor ordered. `results` follows input order, but processing order is not guaranteed.
+- A batch consumes rate limit and quota per row.
+
+| Limit | Planned default |
+|---|---|
+| Events per batch | 500 |
+| Recipients per event | 100 |
+| Body size | 5 MB |
+| `data` per row | 256 kB |
+
+Limits are also announced in the `Relay-Batch-Max-Events` and `Relay-Batch-Max-Recipients-Per-Event` response headers.
+
+**Campaigns.** Large list or topic sends use a separate campaign endpoint: prepare, then trigger, with its own progress record, deadline and cancellation. The tenant passes a list or picks a topic; there are no attribute-query segments.
+
+## Rate limits and quotas
+
+- Headers: `RateLimit` and `RateLimit-Policy`, plus `X-RateLimit-Limit`, `X-RateLimit-Remaining` and `X-RateLimit-Reset` (delta seconds) for compatibility. `Retry-After` is always delta seconds.
+- API rate limits are tenant-scoped with a short burst window and a longer sustained window; the more restrictive is reported. An API client can have its own lower limit.
+- Requests are weighted: a `GET` or a single event counts 1, a batch counts its rows, starting a campaign has a fixed high weight, and template writes and previews have a medium weight.
+
+| Situation | Response |
+|---|---|
+| API rate limit | `429 rate_limited`, retryable |
+| Send quota exhausted | `429 quota_exhausted`, not retryable, no `Retry-After` |
+| System overload | `503`, not `429` |
+| Provider limits | Never surface as `429`; they slow delivery and show in delivery state |
+
+Under overload, admission control rejects only deferrable classes; `security` is never rejected by admission control. When the quota is exhausted, `security` is still accepted within a limited extra allowance (planned default 10%). A class that fills its own quota share gets the same `quota_exhausted` error, and the body names the quota and class.
+
+## Versioning
+
+- The major version is in the path (`/v1`) and is permanent. A new major path opens only if the conceptual model changes.
+- Behavior within `/v1` is selected with a dated header: `Relay-Version: YYYY-MM-DD`. Without the header, the tenant's pinned version applies. A new account is pinned to the current version on its first successful request. "Latest" is never the default. An invalid value returns `400 unsupported_api_version` with the list of supported versions.
+- Each dated version is planned to be supported for at least 24 months, and removal announced at least 12 months ahead, including `Deprecation` (RFC 9745), `Sunset` (RFC 8594) and `Link rel="deprecation"` headers.
+- The webhook payload version is separate and pinned per endpoint. SDK versions are pinned to an API version.
+- Beta features are enabled with `Relay-Beta: <feature>`, sit outside the version contract and return `"beta": true`.
+
+| Not breaking | Breaking |
+|---|---|
+| New response field; new enum value (clients must handle unknown values); new endpoint, optional field or query parameter; `detail` text; field order; new event type; new response header; narrowing nullability | Removing or renaming a field; changing a type; removing an enum value; adding a required field; changing default behavior; changing a status code; changing meaning; lowering a limit; tightening authentication |
+
+## Pagination
+
+- List endpoints use opaque cursors; there are no offsets or page numbers.
+- Parameters: `limit` (1 to 100, default 50), `starting_after`, `ending_before`.
+- Response shape: `{ "object": "list", "data": [...], "has_more": true, "next_cursor": "..." }`.
+- Cursors are signed and bound to the tenant (and to the subscriber on client endpoints).
+- Related objects are not expanded in lists; `expand` works only on single resources.
+
+## Cancellation
+
+| Endpoint | Cancels |
+|---|---|
+| `POST /v1/events/{id}/cancel` | Everything pending for an event |
+| `POST /v1/notifications/{id}/cancel` | One notification |
+| `POST /v1/events/cancel_by_key` | All pending work matching a `cancellation_key`, optionally filtered by recipient and channel |
+
+Campaigns and recurring rules also have cancellation endpoints. No key needs to be declared in advance; an event or notification ID is enough. The response is `200` with counts (`cancelled`, `already_sent`, `not_found`, `details[]`), never `204`.
+
+Cancellation is processed on the same ordering key as the trigger. If the run does not exist yet, a tombstone is written and the later run ends as `cancelled`. Cancellation stops only deliveries not yet handed to a provider; sent SMS, email and push cannot be recalled. A delivered in-app item can be retracted.
+
+## Preview, test and send mode
+
+| Endpoint | Behavior |
+|---|---|
+| `POST /v1/workflows/{key}/preview` | Synchronous `200`: per step `would_send`, `rule_id`, rendered content and warnings such as `missing_variable`; for SMS, `encoding`, `segments` and `characters`. Works on draft or published versions. |
+| `POST /v1/templates/{key}/preview` | Same, for a template |
+| `POST /v1/workflows/{key}/test` | Sends through real providers in `live` to at most 5 of the tenant's verified test recipients or devices. Marked `is_test`: billed and counted separately, with a small separate quota. |
+
+`send_mode` values are `live`, `shadow`, `dry_run` and `off`; see [Messages and delivery](/relay/docs/concepts/messages#send-modes). A per-request mode is accepted only in the `test` environment.
+
+## Resources
+
+### Subscribers
+
+| Endpoint | Behavior |
+|---|---|
+| `POST /v1/subscribers` | Create; `409` on conflict |
+| `PUT /v1/subscribers/{id}` | Upsert with full replacement; `201` on first creation |
+| `PATCH /v1/subscribers/{id}` | Partial update |
+| `GET /v1/subscribers/{id}` | Read; includes per-channel reachability (`channels.*.reachable` plus reason) |
+| List and bulk upsert | Bulk upsert follows the batch rules and returns `207` on partial success |
+| `DELETE /v1/subscribers/{id}` | `202` and an erasure request applied to queued work, scheduled sends, digest buffers and the inbox. Personal fields are made unreadable by crypto-shredding; there is no physical deletion. |
+
+### Devices
+
+| Endpoint | Behavior |
+|---|---|
+| `POST /v1/subscribers/{id}/devices` | Register a device; re-registering the same token is idempotent and updates `last_seen_at` |
+| `GET /v1/subscribers/{id}/devices` | List devices |
+| `DELETE /v1/subscribers/{id}/devices/{device_id}` | Remove a device |
+| `DELETE /v1/devices/by-token` | Remove a device by its token |
+
+- A device token is never returned; only a fingerprint is.
+- If the token belongs to another subscriber, it is moved to the new one and `device.reassigned` is emitted.
+- `apns_environment` (`production` or `sandbox`) is a separate field and is not the same as the Relay environment.
+- A device record carries the OS permission state (`granted`, `denied`, `provisional`, `not_determined`) and the Android channel importance.
+- There is an upper limit on active devices per subscriber.
+
+### Queries
+
+| Endpoint | Returns |
+|---|---|
+| `GET /v1/events/{id}` | The event |
+| `GET /v1/notifications/{id}` | Summary by default; `expand=deliveries` adds deliveries |
+| `GET /v1/notifications` | Filter by subscriber, workflow, status and time |
+| `GET /v1/notifications/{id}/deliveries` | Deliveries of a notification |
+
+A separate endpoint returns attempt history and ledger events. The external projection is described in [Delivery status](/relay/docs/reference/delivery-status) and is designed to stay stable even when the internal model changes.
+
+### Management
+
+| Endpoint | Behavior |
+|---|---|
+| `GET /v1/workflows`, `POST /v1/workflows` | List and create |
+| `GET /v1/workflows/{key}`, `PUT /v1/workflows/{key}` | Read; `PUT` creates a new draft |
+| `POST /v1/workflows/{key}/publish` | Publish; returns `202` |
+| Version list | Published versions of a workflow |
+| `POST /v1/workflows/{key}/versions/{n}/promote` | Roll back to an older version |
+
+Templates, layouts, partials, routes, topics and subscriptions, recurring rules, throttle resets, webhook endpoints and stop controls follow the same common rules. Workflow and template management endpoints accept the same definition format as files.
+
+## SDK behavior
+
+Every SDK is planned to include:
+
+- automatic `Idempotency-Key`, kept the same across retries;
+- retries only on `retryable: true` errors, with exponential backoff and jitter, honoring `Retry-After`;
+- a typed error hierarchy: authentication, validation with `errors[]`, rate limit with `retry_after`, idempotency, server;
+- a webhook verifier that works on the raw body.

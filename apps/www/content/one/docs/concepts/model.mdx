@@ -1,0 +1,111 @@
+---
+title: Core model
+description: The nine canonical concepts, six relations and shared record fields that One's design is built on.
+---
+
+One's design rests on a small, fixed core: nine concepts and six relations. Something counts as a concept only if it has its own identity and other records refer to it. Anything that is a property of another concept, a phase of it, or a view computed from records is not a concept of its own.
+
+New needs are meant to fit into the existing shapes first: a new memory content type, a new interaction kind, a new capability name or field, a typed extension field, or a view derived from records. Adding, removing or changing a concept is a deliberate change to the model, not something an implementation does on its own.
+
+## The nine concepts
+
+| Concept | Code name | What it is |
+|---|---|---|
+| Observation | `Observation` | A record of an input One received from a source, at the moment it arrived: something you said, a device signal, an item read from a connected account, external content such as a web page or an email, a message from another agent, or a tool's output. It is data, never an instruction |
+| Episode | `Episode` | A time-bounded sequence of events: a conversation, the run of a task, a meeting transcript, or a set of observations over a period. Observations belong to an episode. A conversation history is an episode; there is no separate "chat" concept |
+| Memory record | `MemoryRecord` | A lasting, structured record about you, with content type, epistemic state, layer, time kind, confidence computed from evidence, and life area kept as separate fields. See [Memory](/one/docs/concepts/memory) |
+| Goal | `Goal` | A state you want to reach, such as "walk three days a week this year". Tasks and suggestions serve a goal. A goal is not authority |
+| Routine | `Routine` | An explainable hypothesis about your behaviour, such as "calls the family on Friday evenings, 7 of the last 8 weeks". Its authority is fixed at none |
+| Task | `Task` | A record of single-person work: purpose, plan, steps, waiting state, checkpoint and a verifiable finish. It belongs to One, not to a device, a conversation or a model. See [Tasks and execution](/one/docs/concepts/tasks) |
+| Interaction | `Interaction` | A surface-independent unit of meaning between One and you: an approval request, a question, a choice, a result, progress or a brief item. Every surface shows a view of it. See the [Interaction reference](/one/docs/reference/interaction) |
+| Capability definition | `CapabilityDefinition` | The meaning of an action or information capability: its name, inputs and outputs, authority requirement, autonomy ceiling and reversibility. A capability definition is not authority |
+| Surface capability | `SurfaceCapability` | What a client or device surface declares it can present and accept: class, modes, size budget, local actions and the short-lived signals it can report |
+
+## The six relations
+
+| Relation | Meaning | Used for |
+|---|---|---|
+| `derived-from` | Evidence and origin | Memory record to episode or observation; routine and goal to their evidence. Provenance travels along this chain |
+| `about` | Subject | Memory record to a person, goal, routine, place or external object |
+| `supersedes` | New version or replacement | Not retroactive; the old record stays, marked invalid |
+| `serves` | Service | Task, suggestion or routine suggestion to a goal |
+| `concerns` | Concern | Interaction to a task, memory record, routine, goal or another product's object |
+| `references` | External identity | One record to an Access, Work, Relay, Executor or Pay object, or an external source, without owning it |
+
+No relation carries authority. Linking a task to a goal with `serves`, or a memory to a person with `about`, never makes an action permitted.
+
+## Four layers that never merge
+
+Observation, inference, memory and authority are kept apart:
+
+- An **observation** is an input that was received.
+- An **inference** is a claim derived from observations. It exists as a memory record whose epistemic state is "inferred" or "hypothesis".
+- A **memory** is a lasting record tied to its sources.
+- **Authority** is only an Access Grant and Mandate.
+
+Moving from one layer to the next is an explicit, recorded step. An inference becomes lasting memory only through the memory lifecycle rules, and authority changes only through your own action in Access.
+
+## Fields every record carries
+
+| Field | Meaning |
+|---|---|
+| `id` | Opaque, permanent identifier. It does not encode a place, region, device or model |
+| `owner` | The person the record belongs to, as an Access reference |
+| `domain` | Life area (work, health, finance, relationships, home, travel …) and an optional project label |
+| `data_class` | Data class; sensitive classes are described in [Security and privacy](/one/docs/security) |
+| `retention_class` | The One retention class the record belongs to |
+| `provenance` | Provenance label; a value combined from several sources takes the worst label |
+| `recorded_at` | Server-assigned record time |
+| `version`, `supersedes` | Version and link to the previous version |
+| `status`, `deleted_at` | Lifecycle state and soft-delete marker |
+| `produced_by` | Who produced the record: you, One or a sub-agent instance, with a reference to the model and configuration version used |
+
+Records are never changed in place. A correction is a new version linked with `supersedes`. Views such as the activity log, the Pending list, the daily brief, "recently learned" and task progress are always computed from records and can be rebuilt; if a view disagrees with the records, the view is wrong.
+
+## Concepts that belong to other products
+
+One does not keep a second copy of anything another suiss product owns. It links to it with `references`, and any local copy is a cache that yields to the owner.
+
+| Concept | Owner |
+|---|---|
+| You and other people in suiss | Access |
+| One's own identity, sub-agents and execution instances | Access |
+| Devices and local executors | Access |
+| Grant, Mandate, Trigger, Exercise, decision records | Access |
+| Relationship level (unknown, known, verified, trusted) | Access |
+| Connected accounts and their tokens | Access token vault |
+| Commitment, proposal chain, Needs Attention items | Work |
+| Device state (presence) | Relay |
+| Notification, waitpoint, mailbox message | Relay |
+| Execution session, checkpoint, effect report, stop state, browser profile | Access Executor |
+| Payment, order, agent token | Pay |
+| Calendar event, email, document, reservation | The source system |
+
+People who are not in suiss, such as a contact in your address book, are kept as an external reference plus a minimal relationship record: name, role and last interaction.
+
+## Words with one meaning
+
+| Term | Means | Is not |
+|---|---|---|
+| One | Your single personal agent; in Access, the agent that acts for you | A model, an app or a chat window |
+| Sub-agent | An agent inside One working on a specific job, with its own instance in Access | A second One |
+| Routine | An explainable behaviour hypothesis | A Trigger, or authority |
+| Trigger | An Access record "when X happens, do Y", bound to a Mandate | A routine |
+| Task | A record of single-person work | A commitment, a chat or an execution session |
+| Commitment | Work that involves a promise to someone else; a Work record | A task |
+| Approval | Your own action on the Access trusted approval surface (or a surface Access accepts), bound to exact content | A "yes" in chat, a notification tap or a channel reply |
+| Authority | Access Grant intersected with Mandate | Confidence, a routine or a relationship level |
+| Autonomy | Being able to act without asking, within authority | Authority itself |
+
+## Protocols are projections
+
+Protocol objects are mappings of One's concepts, never the source of truth. If a protocol changes or goes away, only the mapping layer changes.
+
+| One concept | Projected as |
+|---|---|
+| Task | MCP Task, A2A Task, live progress items on phones |
+| One's identity | A2A Agent Card, `did:web` document |
+| Capability definition | MCP tool, operating-system app intents and app functions |
+| Interaction | Agent UI protocols, live progress content, voice templates, notifications |
+| One-to-One typed message | A2A profile with the One Federation extension |
+| Memory export package | An open, versioned schema, with adapters for direct transfer protocols |

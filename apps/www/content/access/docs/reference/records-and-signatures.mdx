@@ -1,0 +1,257 @@
+---
+title: Records and signatures
+description: Draft reference for canonical encoding, digests, record envelopes, Merkle trees, checkpoints, signature profiles, key scope and media types.
+---
+
+This is a draft reference and may change before release.
+
+These are the core rules every implementation of the Access Protocol must agree on bit for bit. They let a third party check records and artifacts without asking Access.
+
+## Protocol layers
+
+| Layer | Contents |
+|---|---|
+| L0 Core semantics | Encoding and digests, the authority algebra, evaluation, the validity contract, signature verification and key scope |
+| L1 Interoperability profiles | How Access maps onto existing standards (below) |
+| L2 Access-native parts | Artifacts only Access produces: domain metadata, key excerpts, record envelopes, decision record fields, receipts, portable proofs, approval statements, schema publications, record exchange |
+| L3 Conformance | Criteria, test suites and vectors for providers, enforcement points, offline verifiers, approval surfaces, claim issuers, schema publishers, coordinators and event receivers |
+
+Each layer has its own version track. A version takes effect only once a domain adopts it. A newer verifier accepts everything an older verifier of the same track accepted, never the reverse. An element a verifier does not understand never widens authority.
+
+### Interoperability profiles
+
+| Profile | Standards |
+|---|---|
+| Decisions | OpenID AuthZEN |
+| Token projection | OAuth 2.0, Rich Authorization Requests, DPoP, Token Exchange |
+| Identity | OpenID Connect, SAML 2.0, SCIM 2.0 |
+| Signals | Shared Signals Framework, CAEP, RISC |
+| Credentials | SD-JWT VC, W3C Verifiable Credentials, OpenID4VCI and OpenID4VP |
+| Workload identity | SPIFFE |
+| Trust bootstrap | OpenID Federation |
+| Agents | Model Context Protocol, Agent2Agent |
+
+A profile never changes core semantics. Where a standard cannot express an Access limit, the profile narrows what it projects. A carrier only carries: a field whose meaning has no Access counterpart (an OAuth scope, an AuthZEN subject, an actor chain in a token) is ignored or used only as a hint.
+
+## Deterministic CBOR
+
+Canonical values use the core deterministic encoding of RFC 8949: shortest-form integers and lengths, definite lengths, map keys sorted by their encoded bytes, no duplicate keys.
+
+- Only integers, byte strings, text strings, arrays, maps, `true` and `false` are allowed. Floating point, `null` and `undefined` are rejected.
+- No CBOR tags, except tag 18 as the outermost item of a `COSE_Sign1`.
+- Map keys are short `snake_case` strings. Only COSE header maps use integer keys.
+- An optional field without a value, or equal to its default, is not written.
+- Arrays that are sets are sorted by the bytes of each element's encoding, without repeats.
+- Amounts are signed 64-bit integers; counters, positions and times are unsigned 64-bit. All arithmetic is checked.
+- Times are TrustedTime: milliseconds since the Unix epoch.
+- Identifiers are opaque 16-byte strings.
+- A map in new input with an unknown key or choice is rejected.
+
+### Decoder reasons
+
+| Reason | Cause |
+|---|---|
+| `non-shortest` | An integer or length not in its shortest form |
+| `indefinite` | An indefinite-length item |
+| `reserved` | A reserved additional-information value |
+| `float` | A floating-point number |
+| `simple` | `null`, `undefined` or another simple value |
+| `tag` | Any tag |
+| `utf8` | Invalid UTF-8 in a text string |
+| `key-order` | Map keys out of order |
+| `duplicate-key` | Two equal map keys |
+| `depth` | Nesting deeper than allowed |
+| `string-length` | A string longer than allowed |
+| `items` | Too many elements |
+| `truncated` | The input ends inside an item, or is empty |
+| `trailing-bytes` | Bytes remain after the item |
+
+## Strict JSON and base64url
+
+Where JSON is used, it follows a strict profile and size limits applied before parsing:
+
+| Item | Limit |
+|---|---|
+| JWS protected header | 2,048 bytes |
+| JWS payload | 65,536 bytes |
+| Compact JWS | 98,304 bytes |
+| Whole SD-JWT presentation | 262,144 bytes |
+| Disclosures in one SD-JWT | 256 |
+
+Base64url uses the URL-safe alphabet with no padding and no whitespace, and unused low bits must be zero. Digests are always computed over CBOR, never over JSON. A JWS signature covers the JSON bytes exactly as received.
+
+## Digests
+
+The only digest algorithm is SHA-256. Digests are always tagged with their algorithm:
+
+```text
+CBOR:  [-16, h'<32 bytes>']
+Text:  sha-256:<base64url of 32 bytes>
+```
+
+Each kind of digested value has a context string, for domain separation:
+
+```text
+digest(v) = SHA-256( context ‖ 0x00 ‖ dCBOR(v) )
+```
+
+| Kind | Context |
+|---|---|
+| Intent envelope | `access/intent/v1` |
+| Genesis record (DomainID) | `access/genesis/v1` |
+
+New digest kinds receive a context of the form `access/<kind>/v1`. Hashes that are not value digests use a one-byte prefix:
+
+| Prefix | Use |
+|---|---|
+| `0x00` | Merkle leaf |
+| `0x01` | Merkle interior node |
+| `0x02` | Field commitment |
+| `0x03` | Body commitment |
+
+The intent digest is computed from the canonical intent envelope by the party that prepares the evaluation, never taken from the requester. The request nonce is not part of the envelope.
+
+## Record envelope
+
+| Rule | Statement |
+|---|---|
+| Kinds | `genesis`, `opening`, `decision`, `claim`. Checkpoints are signed artifacts over the log, not records. A `check` decision is never written |
+| DomainID | The tagged digest of the genesis record's full envelope under `access/genesis/v1` |
+| Chain | The genesis record (position 0) has no `domain` and no `prev`. Every later record carries `domain` and `prev`, the tagged digest of the previous record's leaf hash. `recorded_at` never decreases |
+| Field commitments | Every field has its own random 32-byte salt: `FC(name) = SHA-256(0x02 ‖ salt ‖ dCBOR([name, value]))` |
+| Leaf hash | `field_root` is the Merkle tree hash over the field commitments, ordered by field name. The leaf hash is `SHA-256(0x00 ‖ dCBOR(leaf-core))`, where the leaf core replaces fields and salts with `field_root` |
+| Body commitment | A redactable body is committed as `SHA-256(0x03 ‖ salt ‖ dCBOR(body))` |
+| Selective disclosure | A disclosure opens some fields with their salts and gives only the commitment of each withheld field. Withholding or redacting a field never changes the leaf hash |
+
+A record's leaf hash is the leaf at index `pos` of its domain's log tree, so an inclusion proof for a disclosure uses `pos` as its index.
+
+### Decision record fields
+
+| Field | Meaning |
+|---|---|
+| `outcome` | The decision |
+| `state_basis` | The position the evaluation read state at, and every state key it read with the version it saw |
+| `consumption` | Counter draws and single-use flags the decision consumes |
+| `effects` | State changes the decision makes: `[key, value]` sets a key, `[key]` removes it |
+| `versions` | The specification versions the decision was made under |
+| `nonce`, `intent` | The request nonce and the intent digest |
+| `proof_commit` | Digests of the signed bytes the decision cites |
+| `artifacts` | Digests of the artifacts issued for the decision |
+| `validity` | The validity contract, only when the result is reusable |
+
+Only a `decision` record with outcome `allow` carries `effects`. The state of a domain at position `p` is the fold of the effects of records `1..p` in order; a replica, index or cache that disagrees with the fold is wrong. A disclosure for an artifact opens `artifacts` and withholds `state_basis` and `consumption`.
+
+## Merkle trees
+
+The tree hash follows RFC 9162:
+
+```text
+MTH({})   = SHA-256("")
+MTH({d})  = SHA-256(0x00 ‖ d)
+MTH(D[n]) = SHA-256(0x01 ‖ MTH(D[0:k]) ‖ MTH(D[k:n]))   k = largest power of two < n
+```
+
+Inclusion and consistency proofs follow RFC 9162 and travel as CBOR arrays of 32-byte strings.
+
+## Checkpoints
+
+A checkpoint is the signed tree head of a domain log, in the C2SP signed-note, checkpoint and cosignature formats.
+
+- The body has at least three lines: the log origin, the tree size in decimal, and the root hash in standard base64. Further lines are extensions.
+- A note is the body, an empty line, then one or more signature lines `— <name> <base64>`.
+- A verifier accepts at least 16 and at most 64 signature lines. It ignores lines from unknown keys and rejects the note if a line from a known key does not verify.
+- A checkpoint is accepted only when the log's own Ed25519 signature verifies and the origin is the expected one.
+- A witness cosignature is an 8-byte timestamp followed by an Ed25519 signature over `cosignature/v1`, the time line and the whole body.
+
+| Reason | Cause |
+|---|---|
+| `checkpoint-malformed` | The body breaks the format |
+| `note-control` | Control characters other than newline |
+| `note-duplicate` | Two lines with the same name and key ID |
+| `note-malformed` | Any other syntax error |
+| `note-unverified` | The log's own signature does not verify |
+
+## Algorithms
+
+| Algorithm | COSE | JOSE `alg` | Use |
+|---|---|---|---|
+| Ed25519 | -19 | `Ed25519` | Default for authority artifacts |
+| ESP256 | -9 | — | Accepted |
+| ES256 | -7 | `ES256` | Accepted when in the allowlist; JOSE projections |
+| EdDSA | -8 | `EdDSA` | Never in JWS; in COSE only for WebAuthn assertions with an Ed25519 key |
+| ML-DSA-44 / -65 / -87 | -48 / -49 / -50 | `ML-DSA-44` / `-65` / `-87` | Off unless a profile enables it |
+
+- The accepted set comes only from the domain metadata and the verifier profile. A header `alg` only selects from that set and never widens it.
+- Ed25519 is verified strictly: 64-byte signatures, canonical point encodings, `S < L`, no small-order points, and the cofactorless equation. Batch verification is not used.
+- ECDSA P-256 signatures are exactly 64 bytes (`r ‖ s`); DER is rejected. Artifacts a domain produces use low-S, and high-S is rejected for them.
+- An L2 artifact is never signed with RSA or with a realm identity key.
+- Whether a classical signature, a post-quantum signature or both are required (`classic`, `both`, `pq`) is read from the domain metadata `hybrid` field, never from the artifact. A missing field means `classic`.
+
+## COSE_Sign1
+
+- Tag 18 as the outermost item; `COSE_Sign` is not used.
+- The protected header holds exactly `alg` (1), content type (3) and `kid` (4). The unprotected header is empty. `crit` is always rejected.
+- `kid` is the 32-byte RFC 7638 SHA-256 thumbprint of the signing key, used only as an exact lookup.
+- The payload is embedded, `external_aad` is empty, and the content type separates artifact kinds.
+
+| Reason | Check |
+|---|---|
+| `cbor` | Not tagged 18, not deterministic, or not valid CBOR |
+| `shape` | Not a four-element `COSE_Sign1` array |
+| `header` | Protected header not a map, or with an unknown, missing or mistyped label |
+| `crit` | Protected header contains `crit` |
+| `unprotected` | Unprotected header not empty |
+| `algorithm` | `alg` not recognized, not allowed or disabled |
+| `unknown-kid` | No key with this `kid` |
+| `key-type` | Key does not match `alg` |
+| `content-type` | Not the expected content type |
+| `high-s` | ECDSA high S on a domain-produced artifact |
+| `signature` | Signature does not verify |
+
+## JWS and JWT
+
+Only the compact serialization with exactly three parts is accepted. The header holds exactly `alg`, `kid` and `typ`; `jwk`, `jku`, `x5u`, `x5c`, `crit`, `b64` and `cty` are rejected, and the verifier never fetches a key or trusts one carried in the token. `alg: none` in any case, HMAC algorithms and `EdDSA` are always rejected. Each artifact kind has its own `typ`.
+
+A JWT-carried authority artifact must contain `iss`, `aud` and `exp`. NumericDate values are compared in milliseconds with checked arithmetic.
+
+| Order | Claim reason |
+|---|---|
+| 1 | `issuer` |
+| 2 | `audience` |
+| 3 | `expired` (also when `exp` is absent) |
+| 4 | `not yet valid` (`nbf`, then `iat`) |
+| Any | `bad time claim` |
+
+SD-JWT artifacts follow RFC 9901, with `sha-256` as the only disclosure hash, strict base64url and JSON for disclosures, and a mandatory Key Binding JWT for holder-bound artifacts.
+
+## Key scope
+
+A domain has one or more **binding keys**. They sign the domain metadata and short-lived **key excerpts**. An excerpt declares one operational key, the domain it may sign for, its window and its usages. Artifacts carry their excerpt, so a verifier can build the chain without fetching current metadata.
+
+A verifier finds the operational key for an artifact in these steps:
+
+| Step | Check | Reason on failure |
+|---|---|---|
+| 1 | The excerpt verifies as `COSE_Sign1` under a binding key, with the binding key's own `alg` | `unknown-binding`, `content-type`, `signature`, `algorithm`, or another COSE reason |
+| 2 | The binding key is not superseded | `superseded` |
+| 3 | The binding key's scope includes the artifact's domain | `outside-binding-scope` |
+| 4 | The excerpt's domain equals the artifact's domain | `domain-mismatch` |
+| 5 | The excerpt key's thumbprint equals its `kid` | `thumbprint` |
+| 6 | The key's algorithm is allowed and matches its type | `algorithm` |
+| 7 | The requested usage is in the excerpt: `receipt`, `pap`, `token`, `checkpoint`, `set`, `status-list` | `usage` |
+| 8 | `valid_from ≤ valid_until`, the window is at most `operational_window_max_ms` (at most 24 hours), and the signing time is inside it | `window` |
+
+The freshness of domain metadata is established outside this check; the metadata's own `issued_at` is never proof of freshness. Keys that sign identity tokens are not operational keys and never sign an authority artifact.
+
+## Media types
+
+| Artifact | Media type | Signed by |
+|---|---|---|
+| Domain metadata | `application/access-domain-metadata+cbor` | A binding key of the domain |
+| Operational key excerpt | `application/access-key-excerpt+cbor` | A binding key whose scope covers the domain |
+| Record envelope | Carried inside other artifacts | Not signed by itself |
+| Record disclosure | Carried inside other artifacts | Not signed by itself |
+| Decision record fields | Inside a `decision` record envelope | Not signed by itself |
+| Intent envelope | Carried inside other artifacts | Not signed by itself |
+
+Every L2 artifact is a `COSE_Sign1` over its deterministic CBOR encoding. Further parts (Actor Intent Statement, Approval Act Statement, portable authority proof, receipt, schema publication package, record exchange) are planned to be specified as the features that produce them are defined.

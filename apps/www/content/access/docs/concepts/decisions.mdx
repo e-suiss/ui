@@ -1,0 +1,127 @@
+---
+title: Intents, decisions and exercises
+description: How an action is requested, decided and recorded. Intents, the three outcomes, requirements, approvals and the authority exercise.
+---
+
+Every action in Access is requested as an exact **intent**, gets one of three **decisions**, and, when allowed and committed, becomes an **authority exercise** with a record.
+
+## Intent
+
+An **intent** is the exact description of the requested action. It is carried in an **IntentEnvelope**:
+
+- the action (namespace, name, major version, schema digest);
+- the resources, each including its incarnation, so a resource deleted and recreated under the same path is a different resource;
+- typed parameters that matter for authority, and digests of parameters that do not;
+- the recipient and the purpose;
+- opaque context references (for example a reference to a Work item);
+- its own validity window.
+
+The envelope is immutable. Access computes its digest from the canonical content; a caller can never supply the digest. Every request names a resource: a bare "role check" without a resource cannot be expressed.
+
+## Decision
+
+A decision has exactly one of three outcomes:
+
+| Outcome | Meaning |
+|---|---|
+| **ALLOW** | The action may happen now, for exactly this intent |
+| **DENY** | It may not. Every failed check is listed as a blocker |
+| **REQUIRE_ACTION** | Not yet. The decision lists what is missing: a step-up, an approval, a fresh claim |
+
+There is no UNKNOWN. When a decision must be mapped to a yes/no answer, only ALLOW maps to yes; DENY and REQUIRE_ACTION both map to no. If Access cannot be reached, that is the enforcement point's unknown, not an Access decision, and the enforcement point must not produce the effect.
+
+A restriction DENY overrides everything, including a covering Grant and unmet requirements.
+
+### Modes
+
+| Mode | Purpose |
+|---|---|
+| `commit` | A decision that is relied upon. ALLOW starts an authority exercise |
+| `continue` | A new decision on a running exercise |
+| `check` | Advisory: "would this be allowed now?" Not recorded, not a promise, never a credential |
+
+A `check` answer cannot be cached and used as permission.
+
+## Requirements
+
+A Grant, an anchor root, a Mandate or a restriction policy can attach **requirement terms**: conditions that proofs must satisfy before an action is allowed.
+
+| Need | Requirement term |
+|---|---|
+| Stronger authentication | Claim · authentication · bound to the Instance · assurance floor · freshness |
+| Approval | Contribution · approve · from holders of the approve authority · bound to the intent digest · single-use |
+| Co-authority | Contribution · co-authorize · bound to the intent digest |
+| Quorum | Contribution · count = k · independence · bound to the intent digest |
+| Fresh claim | Claim · class · freshness |
+| Device posture | Claim · device posture · bound to the Instance |
+
+A term can require a count, independence between proofs (different Party, Instance or issuer), a binding (to the actor Instance, the intent digest or a resource), a maximum age, single use, accepted issuers and assurance floors. Unmet terms become the "missing" list of REQUIRE_ACTION, together with who is eligible to satisfy them, as far as the requester may see.
+
+If a term needs human presence and the actor is an agent, the term is marked as not satisfiable by the actor.
+
+## Approvals
+
+Approval is split into four questions:
+
+| Question | Who answers it |
+|---|---|
+| Why and where is approval needed? | Work, or the domain |
+| Who may approve? | Access: the holders of the matching approve authority |
+| Is this approval valid? | Access: the decision on the approver's contribution |
+| The act of approving | The approver, through a contribution exercise |
+
+- `approve` is an ordinary authority class. Holding "approve payments" is not holding "make payments".
+- Separation of duties is an independence term, for example "contributor is not the actor's principal".
+- A quorum is authority composition, not a workflow. Collecting, reminding, ordering and timeouts belong to Work and Relay.
+- An approval is bound to the exact intent digest. It cannot be reused for another action and cannot override a DENY, a budget or a ceiling.
+
+An approval is captured as an **Approval Act Statement**: one user act, confirmed with a single passkey or WebAuthn assertion whose challenge is the statement's digest. The statement names the target intent digest, the surface it was shown on and a digest of what was rendered. It is always a proof, never an intent itself. Access records the approval and then re-checks the request; recording an approval does not prove the approver understood what they approved.
+
+## Authority exercise
+
+An **authority exercise** is the use of an authority for a specific action at a specific moment, together with its decision and record. It is Access's unit of value. Example: the purchasing agent placing a specific order with a supplier at 14:02.
+
+```text
+commit(nonce, intent, basis, capacity, proofs)
+├─ REQUIRE_ACTION ── nonce stays open until the intent expires
+│    └─ commit(same nonce, same intent, + proofs) → evaluated again
+├─ DENY ── the nonce is closed for good; a new attempt needs a new nonce
+└─ ALLOW ══ the exercise is born; consumption is committed with it
+     ├─ continue(exercise) → ALLOW (new decision, new state basis)
+     │                     → DENY (the exercise closes from now on; the earlier ALLOW stays valid)
+     ├─ attest(effect claim) ── reported by the executing system
+     └─ consumption.release(exercise, grounded claim) ── a meta-action
+```
+
+Rules that hold throughout:
+
+- **Explicit basis and capacity.** A `commit` names the Grant holding (or anchor root) it relies on and the capacity it acts in. Without them the request is malformed, not evaluated.
+- **Idempotent.** Repeating a `commit` with the same nonce, intent and actor returns the same decision record and does not consume twice. The same nonce with a different intent is rejected.
+- **Impossible transitions.** DENY to ALLOW on the same nonce; a different intent on the same nonce; changing the actor, capacity or basis of an exercise.
+- **Decision is not effect.** Access decides; the executing system acts. Access learns about effects only through claims, and is designed to say "Allowed · owner: reported done / unknown", never that an action happened.
+- **Batch is not atomic.** In a batch, each item is its own request and each ALLOW is its own exercise.
+
+### Continuation
+
+Long-running or intermittent work asks again on the same exercise with `continue`. Each continuation is a fresh decision against the current state, not a renewal. A continuation DENY closes the exercise from that point on; it does not undo what was already allowed. Revoking authority does not physically stop a running process; the executing system is expected to stop starting new effects when a continuation is denied.
+
+### Projected exercises
+
+When an enforcement point decides locally against an artifact Access issued (a token or a portable proof), each use is not a separate exercise in Access. The chain of legitimacy is the `projection.issue` exercise plus the enforcement point's local decision within the artifact's [validity contract](/access/docs/concepts/validity).
+
+## Explanations
+
+Access is designed to explain decisions without leaking what the viewer may not see:
+
+| Disclosure scope | Who | What it shows |
+|---|---|---|
+| `requester` | The requester | Blocker classes, their position in the requester's chain, remediation codes |
+| `viewer` | Another Party looking at the decision | Each blocker relative to the viewer's own position |
+| `audit` | Holders of audit authority | State basis, cited claims, acceptances, policy versions, consumption |
+
+A DENY on a resource the requester cannot see is indistinguishable from "it does not exist". Explanations are advisory: an agent that ignores one simply meets the next decision.
+
+## Related
+
+- [Decision codes reference](/access/docs/reference/decision-codes)
+- [Decision API reference](/access/docs/reference/decision-api)

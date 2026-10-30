@@ -1,0 +1,100 @@
+---
+title: API conventions
+description: Draft reference for One's interface families, data formats, shared HTTP rules, provenance labels and cross-product events.
+---
+
+> Draft reference. Field names, values and rules may change before release.
+
+This page covers the conventions every One interface is designed to share. Endpoint-level reference is not part of this draft.
+
+## Interface families
+
+Each layer has its own format, and every format is schema-first.
+
+| Layer | Transport and format | Rule |
+|---|---|---|
+| Client and developer API | REST over JSON, described by OpenAPI | Breaking changes only with a new major version; the previous major version stays available for a client compatibility window |
+| Sync and signed records | Deterministic CBOR with COSE signatures, schemas in CDDL | Schemas and test vectors come first; the server and the shared client core pass the same vectors |
+| `Interaction` | JSON Schema 2020-12, versioned | Test vectors and per-surface size budgets checked in tests |
+| Model structured output | JSON Schema, including intent and quarantine output schemas | Model output that does not match the schema is rejected |
+| Cross-product events | CloudEvents; catalog in AsyncAPI with JSON Schema | Contract first; schema drift checked automatically |
+| Agent and tool protocols | MCP (as client, and as One's own outward server) and an A2A profile with the One Federation extension | Projections only; extensions only where the standard allows them |
+| Other suiss products | The APIs and SDKs Access, Relay, Work and Pay publish | Supported versions listed in a compatibility table |
+
+## Shared HTTP rules
+
+These rules match the other suiss products and apply to every API family:
+
+| Topic | Convention |
+|---|---|
+| Errors | Problem Details (RFC 9457) |
+| Pagination | Opaque cursors |
+| Retries | `Idempotency-Key` header on writes |
+| Concurrency | `ETag` and `If-Match` |
+| Identifiers | Prefixed, opaque identifiers |
+| Field names | `snake_case` |
+| Timestamps | RFC 3339, UTC |
+| Large integers | Encoded as strings |
+| Tracing | `Request-Id` |
+| Rate limits | `RateLimit` headers |
+| Deprecation | Announced with `Deprecation` and `Sunset` headers |
+
+Every outbound request to another system leaves through an outbox after it is durably recorded, and carries an idempotency key.
+
+## Provenance labels
+
+Every value carries a provenance label. Labels travel with values into intents sent to Access.
+
+| One label | Meaning | Access provenance |
+|---|---|---|
+| `user.direct` | Your direct input in this task | `user` |
+| `user.memory` | A memory record whose origin is entirely your own statement or explicit confirmation | `user` |
+| `record.trusted` | A value read from an Access or Work record | `trusted` |
+| `one.inferred` | A value One produced from observation or inference; an externally sourced record made lasting by independent evidence without your confirmation | `untrusted-external` |
+| `external.*` | Web, email, calendar invite, document, PDF, screen, another One, another person, tool output, tool description, imported record | `untrusted-external` |
+
+Rules:
+
+1. A value derived from several sources takes the worst label, in the order `external.*`, `one.inferred`, `record.trusted`, `user.*`.
+2. Summarizing, translating, quarantine extraction and writing to memory never remove a label.
+3. An unlabelled parameter is treated as `untrusted-external`.
+4. A label can only be tightened. Promotion to a more trusted label needs your explicit action on a trusted surface.
+5. Access uses the label as a decision input and does not verify it. One and the executor are responsible for labelling correctly.
+
+If an authority-relevant parameter (recipient, amount, target URL, file destination, shared data class) is `untrusted-external`, One's data-flow policy escalates the action to your approval.
+
+## Access decision values
+
+| Value | Meaning |
+|---|---|
+| `ALLOW` | May run |
+| `DENY` | May not run |
+| `REQUIRE_ACTION` | Needs something first, such as step-up authentication or an approval |
+
+## Device state scopes
+
+Device state (worn, locked, headphones connected, focus mode on, at a natural break) lives in Relay's short-lived device state channel: a versioned signal vocabulary with expiry, falling back to `unknown`, never written to a lasting record.
+
+| Scope | Used by |
+|---|---|
+| `presence:write` | One clients, to publish their device's signals |
+| `presence:read` | One's attention engine, under an Access Grant, to choose interruption level and surface |
+
+Device state never reaches other recipients, analytics, logs or traces. Only meaningful events, such as pairing glasses for the first time, enter One's records.
+
+## Routing records
+
+Every model routing decision is recorded with the chosen model, a reason class and the outcome, without content. These records are used for evaluation only.
+
+## Guarantee wording
+
+Interfaces follow the same wording rules as the product. No API response, field name or document may state something more strongly than its guarantee allows.
+
+| Topic | Allowed | Not allowed |
+|---|---|---|
+| Stopping | "stop requested"; "stopped (executor confirmed)" | Claiming it stopped without confirmation |
+| Privacy | "suiss cannot read the content; size and time are visible" | Claiming nobody can see anything |
+| Deletion | "made unreadable" | Claiming physical erasure |
+| Security | "measured against these attacks at this rate" | "protected against prompt injection", "100% secure" |
+| Approval | "you accepted this content" | "verified as safe" |
+| Provenance | "this recipient came from an email" | Wording that hides or softens origin |

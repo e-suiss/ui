@@ -8,6 +8,7 @@ import { ThemeProvider, ThemeScript } from "@/components/ui/theme"
 import { dictionary } from "@/lib/dictionary"
 import { libraries, products } from "@/lib/products"
 import { absolute, site } from "@/lib/site"
+import { hasDocs } from "@/lib/source"
 import "./globals.css"
 
 const fontInter = Inter({
@@ -60,6 +61,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       href,
       explore: [
         { label: dictionary.overview, href },
+        ...(hasDocs(product.slug)
+          ? [{ label: dictionary.docs, href: `${href}/docs` }]
+          : []),
         section("principles", dictionary.principlesLabel),
         section("capabilities", dictionary.capabilitiesLabel),
         section("agents", dictionary.agentLabel),
@@ -82,6 +86,23 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       }),
     }
   })
+  const ui = {
+    label: dictionary.ui,
+    href: "/ui",
+    explore: [
+      { label: dictionary.overview, href: "/ui" },
+      { label: dictionary.docs, href: "/ui/docs" },
+      { label: dictionary.components, href: "/ui/docs/components" },
+      { label: dictionary.patterns, href: "/ui/docs/patterns" },
+      { label: dictionary.charts, href: "/ui/docs/charts" },
+      { label: dictionary.blocks, href: "/ui/docs/blocks" },
+    ],
+    quick: [
+      { label: dictionary.installation, href: "/ui/docs/installation" },
+      { label: dictionary.cli, href: "/ui/docs/cli" },
+      { label: dictionary.github, href: `${site.github}/ui` },
+    ],
+  }
   const columns = [
     { title: dictionary.products, links: items.slice(0, 4) },
     { title: " ", links: items.slice(4) },
@@ -137,7 +158,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-svh flex-col bg-background text-foreground antialiased">
         <ThemeProvider>
           <GlobalNav
-            items={navItems}
+            items={[...navItems, ui]}
             quickLinks={[
               ...items,
               {

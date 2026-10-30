@@ -1,0 +1,96 @@
+---
+title: Overview
+description: Identity and authority for people, organizations and AI agents. An overview of what Access is designed to do and how it fits into suiss.
+---
+
+Access is in development. These docs describe its design, which may change before release.
+
+## What Access is
+
+Access is the identity and authority product of suiss. It is designed as one product made of two planes:
+
+- **Identity plane.** A complete identity provider. It is designed to sign in people (customers, employees, developers, administrators), services, devices and AI agents, to manage accounts, passwords, passkeys and sessions, and to speak standard protocols: OpenID Connect and OAuth 2.1, SAML 2.0, SCIM 2.0, LDAP, Kerberos, RADIUS, WS-Federation, OpenID Federation and the Model Context Protocol.
+- **Authority plane.** It records where an authority comes from, who delegated it to whom and within which bounds. When an action is requested, it decides **ALLOW**, **DENY** or **REQUIRE_ACTION** (stating what is still missing), and produces a signed record of that decision that others can check without asking Access.
+
+Everything in Access serves one question:
+
+> May this actor, on this authority, do this exact thing now?
+
+## The problem it addresses
+
+Most identity systems answer "who are you?" well. Access is designed to also answer "on whose authority, within which bounds, may this actor do this right now, and how can that be shown afterwards?". The question matters most when AI agents act on someone else's behalf.
+
+The question breaks down into five parts:
+
+| Question | How Access is designed to answer it |
+|---|---|
+| Who is acting? | The concrete running actor (an [Instance](/access/docs/concepts/actors)) and how strongly it was authenticated |
+| On whose authority? | The root of the authority, the delegation chain, and whether the actor acts for itself or for someone else |
+| Within which bounds? | Actions, resources, amounts, time, purpose and budget. Bounds only narrow along a chain |
+| Can it be used now, for exactly this? | A decision that checks required approvals, proofs, revocation state and restrictions |
+| What was used? | A record of which authority was used for which action |
+
+A product that relies on Access is designed to get seven things from it: the **actor**, its **representation and provenance**, the **bounds**, the **decision**, **continuity** (revocation applies from the moment it is committed), a **record**, and **portability** (records can be checked across organizations without asking Access).
+
+## Who it is for
+
+| Role | Examples |
+|---|---|
+| Acting actors | People, AI agents, services, workloads, devices |
+| Authority holders | People, companies, merchants, jointly owned groups, organizations |
+| Relying products | Products and services that enforce Access decisions before they act |
+| Administrators | Organization admins, resource owners, security and governance teams |
+| Verifiers and auditors | Internal audit, counterparties, regulators, dispute resolution |
+| End users | Consumers signing in with passkeys, social sign-in or email links; employees signing in through enterprise SSO |
+| Developers | OIDC and SAML relying parties, OAuth clients, MCP clients, API consumers |
+
+## What Access is not
+
+| Access is not… | Who owns that job | What Access does there |
+|---|---|---|
+| The system that carries out the work (makes the payment, sends the message) | The executing system or domain product | Defines the bounds of the work and decides whether it may be done |
+| The owner of business data and rules ("is this order valid?") | Domain products such as Commerce and Serve | Uses the domain's claims as input |
+| A work coordination system | Work | Decides who has authority to approve |
+| A payment or money system | Pay, Money | Decides payment authority and budget |
+| A notification or delivery system | Relay | Defines what needs to be notified |
+| An agent runtime or orchestrator | One and other agent runtimes | Manages the agent's identity and authority |
+| An identity-proofing service | External proofing providers | Accepts the proofing result as a [claim](/access/docs/concepts/claims) |
+| A replacement for an existing enterprise directory | The existing directory | Works alongside it |
+| A privileged-access vault, fraud system, SIEM or data-classification tool | Separate product layers | Decides the authority part of their work and emits events and signals for them |
+| A global trust or reputation scoring system | Nobody | — |
+
+Some things Access is designed never to do:
+
+- **Signing in does not grant authority.** No sign-in, token, group membership, session or risk score creates authority on its own.
+- **No impersonation.** Support staff never become the user. They act under their own identity, with the user's permission, and on the record.
+- **No customer code runs inside Access.** Customization happens through data, templates and calls out to the customer's own servers.
+- **Fail closed.** If something cannot be checked, the answer is not ALLOW.
+
+## How it relates to other suiss products
+
+Other suiss products use Access through the same contract any third party uses. Access does not do their jobs; it decides the authority part.
+
+| Product | Relationship |
+|---|---|
+| One | One's permissions and approvals live in Access. One cannot create authority from memory or conversation; its authority is limited to what was delegated, within the Mandate and budget. |
+| Relay | Access sends its messages through Relay, and Relay uses Access for sign-in, credentials and approvals. Relay delivers semantic events; delivery is never a security decision. |
+| Work | Work decides where an approval is needed and coordinates people. Access decides who may approve and records the approval. A satisfied Work gate is not an Access ALLOW, and Work can narrow authority but never create it. |
+| Pay | Agent payments are designed to run on mandates from Access. Pay executes the payment; Access decides the payment authority. |
+| Money | Access decides whether an agent may use someone's money. Authority budgets are not account balances. |
+| Commerce, Serve | Access decides what an agent may buy and spend; the domain owns its own business rules. |
+
+## Core principles
+
+1. **Authority comes only from Grants.** Roles, groups and tokens are not authority. At most they select to whom a Grant applies.
+2. **Authority only narrows along a chain.** No one can delegate more than they hold.
+3. **Holding is not the same as being able to use.** Not every Instance of a Party that holds an authority can use it.
+4. **Every change goes through one path.** Granting, amending and revoking authority are themselves authority exercises, each with a decision and a record.
+5. **Revocation is prospective.** It applies from the moment it is committed, including to ongoing use. What already happened stays in the record.
+6. **Records can be checked outside Access.** A counterparty or auditor is designed to be able to check that a decision is genuine and valid without asking Access.
+
+## Where to go next
+
+- [Concepts](/access/docs/concepts/actors) explains the vocabulary: Party, Instance, Grant, Mandate, Claim, Acceptance and the rest.
+- [Architecture](/access/docs/architecture) shows the planes, components and how a request flows.
+- [Security](/access/docs/security) states what the design guarantees and what it does not.
+- The [reference](/access/docs/reference/decision-api) pages describe the draft API and protocol.

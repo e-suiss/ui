@@ -1,0 +1,81 @@
+---
+title: Identity plane and tenancy
+description: The identity provider inside Access, how it relates to authority, and the four tenancy axes of tenant, authority domain, identity realm and cell.
+---
+
+The identity plane is a complete identity provider. It answers "who is this?". It never answers "what may they do?": that belongs to the authority plane.
+
+## Identity is not authority
+
+- The identity plane never creates authority. It passes facts to the authority plane only as [claims](/access/docs/concepts/claims), and those claims count only as far as an explicit Acceptance allows.
+- The authority plane never writes identity records. It sends the identity plane only decisions, semantic events (revoked, terminated, compromised) and Instance references; the identity plane reacts with its own records.
+- An external identity provider can be used under the same Acceptance conditions as the Access identity plane. Using the Access identity plane is optional.
+
+## Protocols and methods
+
+The identity plane is designed to act as an OAuth 2.1 authorization server and OpenID Connect provider (including PKCE, PAR, DPoP, token exchange, CIBA and FAPI 2), a SAML 2.0 identity provider, a SCIM 2.0 server and client, and to offer LDAP, Kerberos, RADIUS and WS-Federation through separate edge gateways, plus OpenID Federation for trust bootstrap. It also acts as the authorization server for MCP clients.
+
+Design defaults:
+
+- **Phishing-resistant first.** Passkeys (WebAuthn) are the primary method. Passwords, one-time codes and push are fallbacks with limited assurance. Passkeys are phishing-resistant; codes and push can be phished.
+- **Sender-constrained tokens.** Tokens are bound to a key (DPoP, mutual TLS or a workload credential) by default. Plain bearer tokens are an explicit opt-in for legacy relying parties.
+- **Pairwise identifiers.** Each relying party sees a different user identifier by default. Timing, network and device data may still allow correlation.
+- **Email is never a key.** User records use opaque identifiers. External identities are linked by provider and subject.
+- **Signals are not gates.** Attestation, device integrity and risk scores are claim inputs; none of them opens anything on its own.
+- **Fail closed.** If freshness, a signature chain, metadata or a trust chain cannot be checked, the answer is a rejection. Token introspection answers `active=false` when freshness cannot be shown.
+
+## Two kinds of tokens
+
+| Kind | Examples | Rules |
+|---|---|---|
+| Authority-carrying | Access tokens that grant resource access, refresh tokens, exact-intent and bounds tokens | Issued through a `projection.issue` decision, holder-bound, carry a full validity contract |
+| Identity assertions | ID tokens, SAML and WS-Federation assertions, logout tokens, directory sessions | Carry no authority. Their horizon is their expiry; fast revocation uses `session_epoch` |
+
+OAuth scopes do not carry Access authority. Authority is carried only as typed rich authorization details.
+
+## Sessions, accounts and recovery
+
+| Identity concept | Authority-plane counterpart |
+|---|---|
+| User, service account, agent | A Party |
+| Login identifier, password, passkey, one-time code secret | None. Their effect is an authentication or authenticator-binding claim |
+| Session | The authenticated context of one Instance per device. Refreshing a session is not a new Instance; signing out terminates that Instance only |
+| Account status (suspended, deactivated) | A claim that the domain's default policy applies as a DENY overlay |
+| Account recovery | Always a new successor Instance; old Mandates are not inherited |
+| Linking accounts across realms | An explicit identity-binding claim |
+
+An administrator cannot set another person's credentials. The identity plane only offers a reset flow.
+
+## Configuration goes through the decision path
+
+Changes to identity configuration (clients, redirect URIs, upstream identity providers, templates, realm settings) are actions in the realm's governing authority domain. They are authorized with an ordinary `commit` decision, with the administrator's Instance as actor. A browser cookie alone can never authorize an authority change, and there is no separate class of "admin token".
+
+## Organizations
+
+Business customers' organizations live inside a realm as a Party plus an anchor. An organization's root is typically a joint root of its administrators. Its authority is used by an Instance acting `for` the organization. Authority across organizations is set up with an explicit bridging Grant.
+
+## Agents and upstream credentials
+
+The identity plane registers agents and issues their identity, then hands the authority question to the authority plane. When an agent needs a credential for an upstream service, releasing it is an Access decision tied to an exercise that received ALLOW. Release without such an exercise is not authorized. An unbound upstream token that leaks remains usable until it expires; that is why such tokens are short-lived and single-audience.
+
+## Tenancy: four axes
+
+"Tenant" is split into separate axes so that commercial, semantic and physical boundaries do not get mixed up:
+
+| Axis | What it is | Does it affect decisions? |
+|---|---|---|
+| **Tenant** | The commercial account: billing, quotas, contract, support | No. A tenant identifier is never input to an authority decision |
+| **AuthorityDomain** | The unit of authority semantics: genesis, log, signing scope | Yes |
+| **Identity Realm** | An isolated identity space: issuer, signing keys, login namespace, users, credentials, clients, branding, sign-in policy | Only through accepted claims and configuration actions |
+| **Cell** | Physical placement | No |
+
+- A tenant can hold several authority domains and realms; a domain never spans two tenants.
+- Every realm has exactly one governing authority domain. Other domains may consume its claims, each through its own Acceptance.
+- Credentials and login identifiers are local to a realm. Realms are linked only through an explicit identity binding.
+- The domain of a decision comes from the actor's signed request, never from a tenant claim in a token.
+
+Isolation between tenants is logical; hardware isolation is available only with dedicated compute. Queries without a tenant or domain scope are designed not to compile, and the database additionally enforces row-level security.
+
+## Personal data
+
+Personal data lives in a separate vault, encrypted per person. Erasing it means making the personal fields unreadable within a declared period (crypto-shredding). The pseudonymous audit skeleton is kept, and copies shared earlier are not recalled.

@@ -1,0 +1,139 @@
+---
+title: Task
+description: "Draft reference for the Task record: fields, the task state machine, protocol mappings, the intent pipeline and failure behaviour."
+---
+
+> Draft reference. Field names, values and rules may change before release.
+
+A `Task` is One's record of single-person work. Work that involves a promise to someone else is a Work Commitment instead; a task that prepares for one carries a `commitment_ref`, and the task's state never changes the commitment's state.
+
+## Fields
+
+| Field | Content |
+|---|---|
+| Identifier | Task identifier, independent of model and device |
+| Owner | The person's Access identity. A task always belongs to one person |
+| Purpose and origin | Your request, or a reference to the Trigger or routine suggestion that led to it |
+| Plan | Ordered steps. Each step has a capability name, typed inputs with a provenance label per input, and a step state |
+| Finish criterion | A verifiable definition of the result, such as "order confirmation email arrived" or "reservation number received" |
+| Authority binding | References to the bound Mandate and Trigger; an Access action reference on every step with an external effect |
+| Waiting | References to open Relay waitpoints |
+| Checkpoint | Reference to the last checkpoint |
+| Life area | The area used to filter memory retrieval |
+| Budget | Step budget and, if any, amount budget, from the Mandate. The narrower one applies |
+| Sub-agents | References to sub-agent instances working on the task |
+| `commitment_ref` | Optional link to a Work Commitment the task prepares for |
+
+Every task also carries the [common record fields](/one/docs/reference/memory#common-record-fields). Each step records the execution place chosen and the reason, and the action path used.
+
+## States
+
+State is not stored. It is computed deterministically from the task's event history, kept by the executor's long-task engine.
+
+| State | Meaning | Can move to |
+|---|---|---|
+| `pending` | Planned; the first step has not started | `running`, `cancelled` |
+| `running` | A step is running | Any state |
+| `waiting_user` | Waiting for your approval, input or takeover. The wait is a Relay waitpoint | `running`, `cancelled`, `failed` (expired) |
+| `waiting_external` | Waiting for an outside event: another One's reply, a price threshold, a website, a Trigger event | `running`, `cancelled`, `failed` (expired) |
+| `paused` | Stopped by you or by One, with stop confirmation from the executor | `running`, `cancelled` |
+| `completed` | The finish criterion was verified | Terminal |
+| `failed` | The finish criterion could not be reached; the reason and the completed steps are visible | Terminal |
+| `cancelled` | You gave up, or the authority was removed | Terminal |
+
+```text
+pending ──► running ◄──────────────┐
+   │          │                     │
+   │          ├──► waiting_user ────┤──► failed (expired)
+   │          ├──► waiting_external ┤──► failed (expired)
+   │          ├──► paused ──────────┘
+   │          ├──► completed
+   │          ├──► failed
+   ▼          ▼
+cancelled ◄───┴── (from pending, running, waiting_*, paused)
+```
+
+- `paused` is written only after the executor confirms the stop. Cancelling authority in Access does not mean the work stopped.
+- If the executor is unreachable or does not report, the user-facing result is "unknown", never "running".
+
+### Protocol mappings
+
+States are projected to protocols through a mapping table; if a protocol changes, only the table changes.
+
+| Protocol | Target states |
+|---|---|
+| MCP Tasks | `working`, `input_required`, `completed`, `failed`, `cancelled` |
+| A2A Task | `submitted`, `working`, `input-required`, `auth-required`, `completed`, `failed`, `canceled`, `rejected` |
+
+## Intent pipeline
+
+Every external effect follows these steps in order:
+
+| Step | What happens | On failure |
+|---|---|---|
+| 1. Typed intent | The model produces a typed intent | — |
+| 2. Schema validation | Validated against the capability's input schema (JSON Schema 2020-12) | The intent is dropped, the model does not retry, and you are asked |
+| 3. Data-flow policy | One's deterministic policy and provenance rules; Rule of Two | Escalated to your approval |
+| 4. Access decision | One builds an intent envelope and gets a decision | Deny: no action |
+| 5. Execution | Only an allowed intent goes to the executor | Effect reported as unknown if it cannot be verified |
+
+### Access decision values
+
+| Value | Meaning |
+|---|---|
+| `ALLOW` | The action may run |
+| `DENY` | The action may not run |
+| `REQUIRE_ACTION` | Something is still required before it can run, such as step-up authentication or an approval |
+
+Continuing after an approval, a takeover, a checkpoint or a long sleep is a new Access decision. If authority narrowed or was removed in between, the work does not continue.
+
+### Batches
+
+In a batch with several external effects, the first failure stops the rest. Each item is reported as done, failed or not run. Continuing is your explicit action and a new Access decision.
+
+## Execution placement
+
+| Condition | Place |
+|---|---|
+| Possible through an API, a tool server or a commerce protocol | Cloud executor calls the API |
+| No sign-in needed, or long-running | Isolated cloud machine |
+| Needs your session and you are at the device | Local executor on your device |
+| Needs your session and you are away | Task moves to `waiting_user` |
+
+## Long-task engine guarantees
+
+| Property | Design |
+|---|---|
+| Durable execution | Event history plus deterministic replay; another worker continues after a crash |
+| External effects | Separate steps with an idempotency key and a recorded result; never repeated on replay |
+| Crash between send and record | The result is verified (page, confirmation email, API query) instead of sending again; if it cannot be verified, the step is shown as unknown and you decide |
+| Human waits | Relay waitpoints; no timer of One's own. Expiry stops the work |
+| Checkpoints | Logical state stored durably; browser state as an encrypted snapshot that never outlives its profile. On resume the page is reloaded and re-checked; changes are put to you |
+| Task state location | Never in a model layer or a provider-managed agent runtime |
+
+Replay is guaranteed by the event history. That an external effect happens only once holds only when the other system supports the idempotency key.
+
+## User commands
+
+These work on every surface, including voice:
+
+| Command | Effect |
+|---|---|
+| "What are you doing?" | Current task and step, from records |
+| "Why?" | The decision's reasons, with links to the records it rests on; never raw reasoning |
+| "Stop" | Suspends authority in Access and asks the executor to stop. Shown as "stopping" until the executor confirms. Accepted on every surface, with no approval ceiling |
+| "Undo" | Offered only for `reversible` actions; `compensable` actions offer their own label, such as "Request refund" |
+| "Don't do this again" | Opens a proposal to narrow the related rule or Grant |
+
+## Failure behaviour
+
+| Unavailable | Behaviour |
+|---|---|
+| Access | No consequential action, no new-party sharing, no authority-requiring retrieval. Read-only and local work continues |
+| Relay | Records and tasks unaffected; notification, waitpoint and mailbox requests wait in the outbox |
+| Executor | Task state becomes unknown; stop requests are recorded and confirmation awaited |
+| Work | New commitment and proposal operations wait in the outbox; single-person work continues |
+| Pay | No payment; the payment step waits and stops if it expires |
+| Model serving, or attestation unverifiable | Language-model work waits; no outside model or unattested node is used |
+| Device offline | Offline core runs; pending operations queue, signed |
+| One cloud | Running work continues in the executor under Access rules or pauses; stopping works through Access and the executor without One |

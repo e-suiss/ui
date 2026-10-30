@@ -1,0 +1,208 @@
+---
+title: "Events and integrations"
+description: "Draft reference for Work events, the CloudEvents envelope, signed webhooks, A2A and MCP bindings, the executor contract bindings and standard mappings."
+---
+
+> This is a draft reference and may change before release.
+
+Work does not invent a transport, a webhook signature format, an event envelope or an agent protocol. It talks to agents over A2A and MCP and to systems over CloudEvents and the suiss webhook profile. Its contribution is the commitment, responsibility and waiting semantics on top: agent protocols carry execution state, not commitments.
+
+## Events
+
+### An event is not a record
+
+An event announces that a record was created, or that state derived from a record changed. It is not canonical.
+
+- Events come from a transactional outbox. No event, notification, federation send or external action based on a record leaves before that record is durable.
+- Losing or delaying an event delays projections; it never loses Work's truth. Notifications are optional; state can always be queried from the API.
+- There is no ordering guarantee between events. Each carries the ledger position and a rising version; when in doubt, re-query.
+- State changes derived without a record (going stale, attention order, urgency) produce no protocol event. If such a change needs a notification, it goes to Relay.
+
+### Envelope
+
+Every event Work publishes uses the **CloudEvents 1.0** envelope: structured JSON over HTTP, and structured or binary mode on queues and streams, following the target's CloudEvents binding.
+
+| Attribute | Content |
+|---|---|
+| `specversion` | CloudEvents version |
+| `id` | Event ID; stays the same across delivery attempts |
+| `source` | The Work deployment and ledger URI, written `<deployment URI>/ledgers/<ledger hex>` |
+| `type` | Event name |
+| `time` | The `recorded_at` of the record the event was derived from |
+| `subject` | The work item ID |
+| `datacontenttype` | Content type |
+| `dataschema` | Versioned schema |
+
+| Extension | Content |
+|---|---|
+| `seq` | Rising version per subject, as a decimal string |
+| `traceparent` | W3C Trace Context |
+| `correlationid` | Correlation ID |
+| `recordid` | Digest of the record the event rests on, lowercase hex |
+| `ledger` | The record's ledger ID, lowercase hex |
+| `pos` | The record's ledger position, as a decimal string |
+
+Incoming CloudEvents are processed idempotently by tenant, `source` and `id`.
+
+### Thin events
+
+By default an event is thin: `type`, `id`, the work item ID, the version (`seq`), the record digest and the IDs of the parties involved. The record body is not in the event; details come from an authorized API call. This keeps events from bypassing visibility checks and reduces problems with stale data when events arrive out of order. Rich events that carry body fields are available only through a per-subscription allowlist, pass visibility checks, and are pinned to the subscription's version.
+
+### Names and catalog
+
+Event names follow the shared suiss form `noun.past_tense_verb`, for example:
+
+```text
+commitment.promised
+commitment.declined
+condition.opened
+gate.decided
+work.conflicted
+```
+
+The event catalog is published as an AsyncAPI 3 document with JSON Schema 2020-12 schemas. Each event type's schema is versioned; a schema change opens a new version in `dataschema`, and the event name stays. The AsyncAPI document does not express behaviour (ordering, state machines, delivery guarantees); those are defined by the protocol.
+
+There is a single event model. Automations, integrations, Relay and third-party consumers consume the same events; there is no separate automation event stream or hidden in-product path. A type to be removed is first marked deprecated in the catalog and announced, and removal is a major version change. An automation's result is always a record attributed to a party.
+
+### Presence is not a record
+
+Presence (who is looking, who is typing) is a separate, temporary channel that fades on its own, carried on Work's thin live layer. Work passes it to Relay as a signal for suppressing notifications; the suppression and delivery decision is Relay's. Only meaningful events are written to durable history.
+
+### Events to and from Relay
+
+For notifications, waits and escalation to people and agents, Work sends CloudEvents to Relay. Who and why, and the content, are Work's; channel, timing and delivery are Relay's. Events from Relay, such as `waitpoint.expired`, arrive in the same envelope and are attributed to a party before they become records. Delivery and acknowledgement are never authority or a decision.
+
+## Signed webhooks
+
+Webhooks Work delivers use the **suiss webhook profile**, shared with Access and Relay:
+
+- Standard Webhooks headers: `webhook-id`, `webhook-timestamp`, `webhook-signature`.
+- The default signature is `v1a` (Ed25519); `v1` (HMAC) exists only for compatibility.
+- Overlapping key rotation.
+- A CloudEvents body.
+- A recommendation to store `webhook-id` for deduplication.
+
+Customers can accept events from all three products with one verifier. Delivery is at least once. Webhooks are delivered by Relay's shared delivery engine; Work runs no delivery engine, retry schedule or dead-letter queue of its own.
+
+## Trace context
+
+Every API request, outbox entry, event and coordination contract message carries W3C `traceparent`. If the client sent one, it is used; otherwise one is created. `Request-Id` is tied to it.
+
+Traces are sampled, short-lived telemetry. They are not records, audit logs or evidence; Work's history and evidence are its records. Traces link to Work only by ID: a span can carry a Work, Commitment or record ID as an attribute, and a record can carry a trace ID in `correlation`. Trace content never enters a record, and record bodies never enter traces.
+
+## Agent protocols
+
+General rules for all agent protocol bindings:
+
+1. A task in an agent protocol (an A2A task, an MCP task) is the **execution projection** of a commitment, not a Work item. Task state is a Claim on the execution axis.
+2. A protocol message has no normative effect by itself. A binding takes effect only when it can turn the message into a typed Work record attributed to the sending party's identity as verified in Access. The record's author is that party, not the binding.
+3. One agent telling another "approved" is a Claim, not a decision. A runtime handoff or task redirection is a Claim, not a transfer of responsibility; responsibility moves only through delegation.
+4. An agent's capability statement (an A2A AgentCard) is a Claim, an input to allocation, not authority.
+5. When a protocol version changes, Work's internal model does not; only the mapping table changes.
+
+### A2A
+
+As an A2A client, Work gives work to agent executors and follows it. As an A2A server, it receives requests from agents: commitment requests, questions and status reports. The `A2A-Version` header is sent and checked. A2A push notifications travel through Relay's shared delivery engine with the suiss webhook profile. Incoming A2A events are processed idempotently by task and sequence; if needed, the state is re-read with `GetTask`.
+
+| A2A | In Work |
+|---|---|
+| `contextId` | `correlation`; tasks in the same context link to the same commitment or Work |
+| `referenceTaskIds` | A `references` relation |
+| `SUBMITTED` | A transport receipt; not a promise |
+| `WORKING` | An execution axis "running" Claim; not a promise. A promise is made with the commitment operation |
+| `INPUT_REQUIRED` | An addressed `information` Condition |
+| `AUTH_REQUIRED` | An addressed `authority` Condition; approval happens in Access |
+| `COMPLETED` | The obligor's "done" statement; not acceptance, which is a separate record |
+| `FAILED` | An execution axis "failed" Claim; the commitment closes through a Declaration by the obligor or accountable party |
+| `CANCELED` | An execution axis "cancelled" Claim; cancelling the commitment is a separate operation. A `COMPLETED` after cancellation does not change the outcome but is recorded |
+| `REJECTED` | A decline of a commitment still in the request phase |
+| Artifact | A Reference; using it as evidence follows the evidence rules |
+| AgentCard | A capability Claim |
+
+A2A does not carry commitment operations such as promise, counter-offer, conditional yes, partial acceptance or delegation. For these, Work publishes an A2A extension, identified by URI, announced in the AgentCard and marked `required: false`. An agent that does not support the extension can perform the same operations through the Work API.
+
+### MCP
+
+Work offers an MCP server. Its tools cover authorized reads and task-scoped context, sending Acts and Claims, typed commitment operations (promise, decline, stating done, opening a question), and listing waits and attention items. Every tool call goes through the same rules and Access checks as the API.
+
+- The tool catalog narrows to the caller's authority, and unauthorized calls are also rejected.
+- **No MCP tool answers a gate meant for a person**, whether an authority gate or a coordination gate.
+- The server is stateless, following the current MCP version. Flows where the server asks the client for input are never used for secrets; secret input never passes through Work or an agent.
+- MCP Tasks `input_required` maps to an `information` Condition. MCP elicitation `accept`, `decline` and `cancel` map to the decision answers accept, reject and closed without an answer; timeout is a separate fourth value.
+- An MCP task expiring has no effect on the Work record.
+- MCP is never the coordination truth. Executors can use MCP internally; that is outside Work's scope.
+
+## Executor contract bindings
+
+The Work coordination contract (assignment, control capability statement, delivering stop and takeover requests, Act and Claim reports, handover notes, heartbeats) is a contract of meaning, not a single transport. It is described in [Responsibility and control](/work/docs/concepts/responsibility-and-control#the-executor-coordination-contract).
+
+| Binding | For |
+|---|---|
+| The A2A profile and the Work A2A extension | Agent executors |
+| The suiss webhook profile (Work to executor) plus pull or long polling (executor to Work) | Simple systems and machines |
+| The Work API (native client) | Executors using an SDK, including executors run by suiss |
+
+Executors run by suiss use the same bindings, with no privileged path. The authority side (executor identity, per-job token, checking back with Access before each step) is the Access contract.
+
+## Standard mappings
+
+| Standard | Decision | Where it cannot override Work semantics |
+|---|---|---|
+| CloudEvents 1.0 | Adopted as the normative event envelope | The envelope is only an envelope; meaning and order (`seq`) are Work's |
+| Standard Webhooks (suiss webhook profile) | Profiled, normative | Delivery is a notification, not a decision or authority |
+| W3C Trace Context | Adopted, normative | A trace is not an audit |
+| A2A | Profiled and extended, normative binding | Task state is a Claim; promise, acceptance and responsibility live in Work |
+| MCP | Profiled, normative binding | A tool result is not coordination truth; no person-facing gate is answered over MCP |
+| AsyncAPI 3 | Adopted as the catalog document | Does not express behaviour |
+| W3C PROV | Mapped, export only | A PROV document is not canonical |
+| W3C Verifiable Credentials 2.0 | Mapped, export only; a portable statement across organizations | A credential is not proof of authority; that lives in Access |
+| ActivityStreams 2.0 | Mapped, export of the event vocabulary only | Not a canonical form or signature base |
+| JSON-LD or ActivityStreams as the canonical form | Rejected | Conflicts with deterministic signatures and a single encoding |
+| Protobuf as the canonical form | Rejected | Deterministic serialization is not guaranteed |
+
+No mapping or export format can be imported back into Work as a substitute for a canonical record. A document in an external format enters only as a Claim or Reference attributed to a party.
+
+### PROV
+
+| Work | PROV |
+|---|---|
+| Act | `prov:Activity` |
+| Party | `prov:Agent`, with the actor type as an attribute |
+| `author` | `prov:wasAssociatedWith` (Act), `prov:wasAttributedTo` (Declaration, Claim) |
+| `on_behalf_of` | `prov:actedOnBehalfOf` |
+| Commitment or normative basis | `prov:Plan`, linked to the Act with `prov:hadPlan` |
+| `derived-from`, `basis` | `prov:wasDerivedFrom`, `prov:used` |
+| Reference, Claim, Declaration | `prov:Entity` |
+| A Reference produced by an Act | `prov:wasGeneratedBy` |
+| `supersedes` | `prov:wasRevisionOf`, plus `prov:wasInvalidatedBy` for the old record |
+
+Exports are PROV-JSON or PROV-O. Exports pass through visibility rules, and a hidden origin does not reveal that it exists.
+
+### Verifiable Credentials
+
+Some Declarations that cross an organization boundary (accepting a result, a coordination gate decision, a commitment outcome) can optionally be exported as Verifiable Credentials 2.0:
+
+| Credential field | From |
+|---|---|
+| `issuer` | The author's organization, or the author |
+| `credentialSubject` | The record's subject: the work item and the outcome |
+| `validFrom` | `recorded_at` |
+| `evidence` | Evidence references |
+| `credentialStatus` | Supersession and revocation status |
+
+The credential is secured with COSE and bound to the same record digest. If selective disclosure is needed, only the minimum fields are included. The export never replaces the canonical record, is not proof of authority, and is not used inside one organization.
+
+### ActivityStreams
+
+| Work operation | ActivityStreams activity |
+|---|---|
+| Commitment request | `Offer` |
+| Promise | `Accept` |
+| Decline | `Reject` |
+| Conditional yes or counter-offer | `TentativeAccept` or a new `Offer` |
+| Revoke request | `Undo` |
+| Assignment | `Assign` |
+| Question or information wait | `Question` |
+| Correction | `Update`, with supersession |
+
+This is an export of the event vocabulary only. ActivityPub delivery and JSON-LD signatures are not used.

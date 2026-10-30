@@ -1,6 +1,7 @@
 import { dictionary } from "@/lib/dictionary"
 import { libraries, products } from "@/lib/products"
 import { absolute, site } from "@/lib/site"
+import { hasDocs } from "@/lib/source"
 
 const UI_FACTS = [
   "Web: React components for Next.js and Vite, built with Tailwind CSS v4 on a choice of three primitive bases: Base UI, Radix or React Aria.",
@@ -20,7 +21,7 @@ export function GET() {
     `## Products\n\n${products
       .map(
         (product) =>
-          `- [suiss ${product.name}](${absolute(`/${product.slug}`)}): ${product.category} (${product.status === "development" ? "in development" : "planned"}). ${product.summary} Core question: ${product.question}`
+          `- [suiss ${product.name}](${absolute(`/${product.slug}`)}): ${product.category} (${product.status === "development" ? "in development" : "planned"}). ${product.summary} Core question: ${product.question}${hasDocs(product.slug) ? ` Docs: ${absolute(`/${product.slug}/docs`)}` : ""}`
       )
       .join("\n")}`,
     `## Developers\n\n${libraries

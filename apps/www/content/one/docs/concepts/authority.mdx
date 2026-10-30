@@ -1,0 +1,121 @@
+---
+title: Authority and autonomy
+description: "How One is designed to act on your behalf: authority from Access, autonomy per action, rules, approvals, reversibility and what is never delegated."
+---
+
+One is designed to do more for you over time, but it never earns authority by guessing. Authority is something you give explicitly, step by step, in Access. One can be more careful than its authority allows; it can never go beyond it.
+
+## Where authority comes from
+
+The authority One can use is the intersection of the **Grants** you give One and the **Mandate** of the One instance doing the work. Both are Access records.
+
+- One cannot grant itself anything, widen a Grant or stretch a Mandate.
+- Conversations, memories, routines, relationship levels and model confidence never create authority.
+- Anything that needs your own authority (a new Grant, widening one, an approval) is prepared by One and carried out by you, from your own instance in Access.
+- Every sub-agent and execution instance is a separate agent instance in Access. Its authority can only be narrower than One's, it has its own trail, and it can be stopped on its own.
+
+## Autonomy per action
+
+How much One may do without asking is set by the behaviour scope of the Mandate. It is not one global slider: it can differ per capability, per resource (account, recipient, merchant), per context (time, place), per budget and per risk.
+
+| Choice | What One does |
+|---|---|
+| Do it yourself | If Access allows the action, One does it, unless one of the "ask anyway" factors below applies |
+| Do it if I said so before | One acts only if the earlier go-ahead (which request, which wording, when) is recorded against the Mandate; otherwise it asks |
+| Ask me first | One prepares the action and you confirm it on the Access approval surface |
+| Leave it to me | One prepares the information and the link, and does not act |
+
+"Order my weekday coffee", "draft emails and ask me", and "leave bank transfers to me" can all be true at the same time.
+
+## Rules in your own words
+
+You describe a rule in a sentence or pick a template. One turns it into a structured Grant and Mandate proposal (capability, resource, amount and budget, time window, end date, behaviour scope), and you see it as a plain preview in Access before confirming. The preview calls out anything One had to interpret, such as whether "weekdays" includes public holidays. Until you confirm, the proposal has no effect, and granting is always your own action.
+
+## When One asks anyway
+
+Even when Access allows an action, One is designed to ask in these cases:
+
+| Factor | Example |
+|---|---|
+| Low or conflicting confidence | "Your usual americano?" when recent orders have varied |
+| Novelty | A merchant, recipient, address, amount level or capability seen for the first time |
+| Intent conflicts with habit | You said you feel unwell today, so the usual coffee order is not placed |
+| A parameter came from outside | The recipient, amount or target URL came from an email or a web page |
+| Irreversibility | The action cannot be undone and confidence is borderline |
+| Price or terms changed | The price is clearly above your usual level, or the delivery date moved |
+
+Confidence only works in the direction of asking. High confidence never turns a denial or a required approval into an allow, and there is no fixed "act above 0.9" threshold.
+
+## What One never does on its own
+
+These actions cannot be given to One or its sub-agents by any Grant, and nobody, including you, can relax this list:
+
+1. Changing passwords, two-factor or recovery settings, including recovery email and phone.
+2. Adding a payment method.
+3. Widening a Grant or any authority.
+4. Deleting the account, or destroying a retention class, a life area or all of memory.
+5. A first transfer to a recipient that has never been paid before.
+6. Sharing sensitive data with a new party for the first time.
+7. Signing out sessions and authorizing new devices.
+8. Installing software.
+
+For these, One only hands off: it takes you to the right screen and explains what is needed. There is no switch for them in settings; the list is shown read-only. If the browser agent runs into one of these on a website, it stops and hands the task to you.
+
+Forgetting a single memory record is not on this list. It is an everyday action you take in the app with a clear confirmation.
+
+## Acting while you are away
+
+Background work is read-only by default. While you are away, One reads, watches, prepares and adds things to your brief; it does not change anything. A state-changing action happens only inside a Mandate that is explicitly named, has a budget, an end date and a fixed target (a site, a recipient, a merchant).
+
+"When X happens, do Y" is an Access **Trigger**, always tied to a Mandate:
+
+| Field | Content |
+|---|---|
+| Event source | Calendar, email, a price watch, a Relay event, another One's typed reply |
+| Condition | Written in the shared restriction language |
+| Allowed action | A single action with a fixed target |
+| Budget | An amount and/or count ceiling |
+| End date | Required; there are no open-ended Triggers |
+| Bound Mandate | The Trigger cannot exceed it |
+
+When a Trigger fires, One asks Access for a fresh decision. If the Mandate has been revoked, narrowed or has expired in the meantime, nothing happens, and your brief says the rule fired but the authority is gone. If Access requires an approval, the work waits for you; your absence never counts as consent.
+
+Each Trigger appears as a card: "If X, do Y, at most Z, until this date", with its last run, remaining budget and end date. It can be paused or removed with one tap.
+
+## Approvals
+
+- **What needs approval comes from Access**, from the action's consequence tier, its reversibility and your rules. It is never left to the model's judgement, and there is no classifier-based automatic approval.
+- **Some actions always need approval by default**: purchases, sending messages, submitting forms, legal acceptance such as agreeing to terms, and changing account settings. Over time you can add narrow exceptions ("coffee under a set amount from this café"), never a blanket one ("all purchases").
+- **Silence is not consent.** Every approval request has an expiry. When it passes, the work stops ("stopped: no approval") and no default action is taken. Restarting it later is a new Access decision.
+- **The agent does not write the approval.** The exact intent is rendered by the Access trusted approval surface from typed fields. One's explanation sits next to it, visually separate. Higher-risk actions require a passkey unlocked by biometrics or PIN.
+- **The approval channel never collects secrets.** No password, PIN, card number, one-time code or recovery code is ever asked for as an answer.
+- **Approval fatigue is measured.** If you keep accepting the same kind of request unchanged, One may propose a narrower rule; you still confirm it yourself.
+- **Approvals can be listed together but are bound one by one.** "Approve all" is offered only for low-risk, reversible items.
+
+## Reversibility
+
+Reversibility is a separate field from risk. Every capability declares one of three values:
+
+| Value | Meaning | Example | What you see |
+|---|---|---|---|
+| `reversible` | Undone without side effects | Adding a calendar entry | "Undo" |
+| `compensable` | Made good with time or cost | Payment to refund, order to cancellation | "Request refund" or "Cancel", with the time and cost |
+| `irreversible` | Cannot be undone | Sending an email or message, sharing data | No undo button |
+
+An undeclared value counts as `irreversible`. For irreversible sends such as emails and messages, the executor is designed to hold a short window by default in which you can still say "don't send"; you can turn it off or lengthen it per capability. For every purchase, the refund and dispute path is kept, so "Request refund" is always next to it in the activity log.
+
+## Which surface can approve what
+
+| Action | Voice (car, glasses) | Watch | Phone or desktop with strong authentication |
+|---|---|---|---|
+| Low-risk, reversible or compensable, within Mandate and budget | Can approve | Can approve | Can approve |
+| Irreversible, higher risk, or over budget or Mandate | Cannot; sends it to your phone or desktop | Cannot; sends it to your phone | Can approve |
+| Never-delegated actions | No | No | Only by your own direct action |
+
+This table is an upper bound. Your settings can only make it stricter, for example "don't approve anything from my watch".
+
+## Payments and loyalty
+
+All payments go through Pay. One requests a payment, and the card or agent token comes from Pay; One never sees raw card data.
+
+One works for you. Commissions, paid placement and suiss's own interests do not enter recommendations or rankings, and suiss products are ranked like any other provider.

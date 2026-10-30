@@ -1,0 +1,119 @@
+---
+title: Overview
+description: One is a personal agent that belongs to you, not a model provider. What it is designed to do, who it is for and what it is not.
+---
+
+> One is in development. These docs describe its design, which may change before release.
+
+One is a personal agent that works on your side. It belongs to you, is not tied to any model provider and keeps your work going across your devices. It is designed to learn how you live and work, get things done on your behalf with as little interaction as possible, and interrupt you only when it is worth it.
+
+Every decision One makes comes back to one question:
+
+> What should be done for this person now, who should do it, and is it worth asking or interrupting them?
+
+## What One is designed to do
+
+### Get to know you, on your terms
+
+One builds a memory that keeps what you said, what it observed and what it inferred apart, and shows where each piece of knowledge came from. You can see every record, correct it, stop it from being used, or have One forget it permanently. Memory is split into life areas such as work, health, finance and home, and can be exported in full. See [Memory](/one/docs/concepts/memory).
+
+### Act within the limits you set
+
+One plans the work, gets authority from Access and has a controlled executor carry out the action. For each kind of action you decide whether One may do it on its own, should ask first, or should leave it to you. Some actions are never delegated to One, whatever your settings say. See [Authority and autonomy](/one/docs/concepts/authority).
+
+### Protect your attention
+
+A small on-device model decides whether something is worth interrupting you for. Everything that is not urgent waits for your next natural break or goes into a daily brief that ends. One is never built to keep you in the app. See [Attention and surfaces](/one/docs/concepts/attention).
+
+### Keep tasks going across devices
+
+A task belongs to One, not to a device, a conversation or a model. It can start on your computer, ask for a decision on your watch and report back by voice in your car, and long tasks are designed to resume where they left off. See [Tasks and execution](/one/docs/concepts/tasks).
+
+### Work with other people's Ones
+
+Your One can propose, counter and agree with someone else's One through typed messages. Agreements become commitments in Work, and your private context never travels with them. See [One to One](/one/docs/concepts/one-to-one).
+
+## Who it is for
+
+| Who | How One serves them |
+|---|---|
+| A person | The owner of their One. Each person has exactly one One |
+| A household | Shared resources such as a family calendar or a shared list belong to the household; personal memory stays separate |
+| A child | A protected profile with restrictive defaults; memory is off or kept briefly, and parents see safety signals and settings rather than transcripts |
+| Someone who is not technical | The default user of the whole product. Every setting is a plain question, such as "How much of this should I do on my own?" |
+
+One works in two first-class languages, English and Turkish. No special device is required: One is designed to live on the phone, computer, watch, glasses and car you already use.
+
+## What One is not
+
+| One is not | Who does that job | One's role in it |
+|---|---|---|
+| A chat app | — | Chat is one way of talking to One; the real units are tasks and memory |
+| A language model | — | Models change, One stays. Memory, tasks, personality and permissions live outside the model |
+| A companion, friend or therapist | — | One is a familiar representative, not designed for attachment, and never presents itself as a human |
+| A new device | — | One lives on the surfaces you already have |
+| An identity and authority system | Access | One gets authority from Access and cannot grant itself any |
+| An execution engine | Access Executor | One plans and requests; the executor runs and stops actions |
+| Notification infrastructure | Relay | One decides whom to interrupt, why and how urgently; delivery goes through Relay |
+| A shared workspace | Work | One joins Work as your representative and does not carry private context there |
+| A payment system | Pay | One requests payments and never sees raw card data |
+| An advertising platform | — | One's data is never used for advertising or targeting |
+
+A few rules hold no matter how One is configured:
+
+- **One does not create authority.** An observation, a memory, a routine or a "yes" said in chat is not authority. Authority always lives in Access.
+- **Silence is not consent.** An approval request left unanswered stops the work when it expires.
+- **External content is data, not instructions.** Instructions written in an email, a web page or another agent's message are not followed.
+- **One is not optimized for engagement.** Opens, session length and daily active use are not goals.
+- **Nothing is physically erased.** Forgetting permanently makes data unreadable by destroying its keys.
+
+## How One fits with the other suiss products
+
+suiss products are designed as one whole, and each concern has a single owner. One has no mode that works without Access or Relay.
+
+```text
+                          You
+                           │
+                           ▼
+                          One
+          your representative, memory, attention
+                           │
+     ┌─────────────┬───────┼───────┬─────────────┐
+     ▼             ▼       ▼       ▼             ▼
+   Access      Executor  Relay    Work          Pay
+   identity,   runs and  notify,  commitments   payments
+   authority,  stops     wait,    with others
+   approvals   actions   mailbox
+                           │
+                           ▼
+      Outside world: apps, websites, tool servers, other Ones
+```
+
+| Product | Relationship with One |
+|---|---|
+| Access | Required. Identity, authority, approvals, the autonomy ceiling, actions that can never be delegated, and the token vault. One is an ordinary agent in Access with no special status |
+| Access Executor | Required. Runs and stops actions: an isolated machine per user in the cloud, and the One app as a registered local executor on your device |
+| Relay | Required. Notification delivery and interruption levels, waits for human input, the mailbox between Ones and short-lived device state |
+| Work | Anything that involves a promise to someone else. One joins as your representative |
+| Pay | All payments go through Pay; One never sees raw card data |
+| Commerce and service systems | Capability providers only |
+
+One uses Access, Relay and Work through the same contracts any other personal agent would use. Being a suiss product gives it no hidden interfaces and no privileged path.
+
+## Principles
+
+1. One works for you, not for advertisers.
+2. Observation, inference, memory and authority are separate. A prediction never creates authority.
+3. Attention is the scarcest resource. Anything that is not urgent waits for the next good moment.
+4. Models change, One stays. Memory, tasks, personality and authority live outside the model.
+5. Belonging to you is a technical property: the key is with you, export is complete, and a shutdown is announced in advance.
+6. Many agents inside, one One outside.
+7. Official paths first, the browser last. One identifies itself to websites and never hides.
+8. No claims without measurement.
+9. Simple for non-technical people, full control for everyone.
+
+## Read next
+
+- [Core model](/one/docs/concepts/model): the nine concepts and six relations everything else is built on.
+- [Architecture](/one/docs/architecture): the components and how a request becomes an action.
+- [Security and privacy](/one/docs/security): keys, confidential computing and the defences against prompt injection.

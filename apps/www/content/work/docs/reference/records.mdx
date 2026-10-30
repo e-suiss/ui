@@ -1,0 +1,374 @@
+---
+title: "Record format"
+description: "Draft reference for the Work record format, canonical encoding, signatures, fields, the ledger envelope, core identifiers and reason codes."
+---
+
+> This is a draft reference and may change before release.
+
+Work's canonical truth is signed, immutable records. Events, notifications, traces and exports are derived from records, and none of them replaces a record. This page describes how records look on the wire and on disk. The meaning of each concept is in [Core concepts](/work/docs/concepts).
+
+## Canonical encoding
+
+- Every canonical record, and every digest Work computes, is encoded as **deterministic CBOR** (RFC 8949, section 4.2) described by **CDDL** (RFC 8610). The profile is the same as in Access.
+- There is exactly one accepted byte encoding for any semantic value. Decoders reject non-canonical input: non-preferred number encodings, unsorted map keys, indefinite lengths, duplicate keys and CBOR tags outside the allowlist.
+- The digest algorithm is SHA-256, with an algorithm label. Leaf and field commitments use the same domain separation prefixes as Access (leaf `0x00`, field commitment `0x01`); body commitments use `0x02`.
+- Bytes signed elsewhere (an authenticator assertion, an Access decision receipt, an Access approval record, another organization's signed record) are never re-encoded. They are stored as received, verified over those bytes, and linked to records only by digest.
+- On the wire, standard carriers use their own format: JSON in the API, CloudEvents JSON for events. These are projections of the canonical record. Signatures and digests are always over the canonical CBOR.
+
+## Signatures
+
+- A record signature is a **COSE_Sign1** structure. The payload is the deterministic CBOR bytes of the signed record.
+- Algorithms follow the Access algorithm table. The default signature is Ed25519. ES256 verification is required. A FIPS profile uses ES256 throughout, and ML-DSA-65 is an optional post-quantum profile. Identifiers are fully specified COSE identifiers; there are no `none` or RSA record signatures.
+- The COSE container is not semantic. Evidence binds to the payload digest, not to the signature, so another container produced from the same record (such as a Verifiable Credentials export) binds to the same digest.
+- Verification is strict: non-canonical Ed25519 values and small-order keys are rejected, and ECDSA signatures produced by Work are low-S.
+
+### Four separate proofs
+
+| Proof | Shows | Does not show |
+|---|---|---|
+| Author signature | This party wrote the record with this key | That the record is true |
+| Ledger attestation | The ledger admitted the record under its policy, with its position and `recorded_at` | That the author signed it |
+| Inclusion proof | The record is in the ledger's transparency log | That the time is independently correct |
+| External timestamp or witness | An upper bound for "existed before time T", and that the ledger did not present conflicting histories (if witnesses were compared) | That the record is true |
+
+A ledger or custodian signature is never presented as an author signature. The interface and API show which proofs exist for each record.
+
+### Who signs
+
+The signing key is bound to the author's identity in Access. Work keeps no identity root of its own. A party from another organization is verified through that organization's Access by federation.
+
+An author signature is required for:
+
+1. every record written by a non-human party (agent, system, machine, organization);
+2. statements queued offline;
+3. decisions on coordination gates marked high impact;
+4. records that cross an organization boundary (either the author's signature or the author organization's ledger signature, shown explicitly).
+
+Otherwise, a person's record can be written with a ledger attestation and a reference to the Access authentication context (`auth_context`: which session, which assurance level, whether step-up was done). The interface does not present that as an author signature. `authority` is independent of the author signature: a consequential record still carries `authority`.
+
+## Record kinds
+
+There are exactly three record kinds (`kind`): `act`, `declaration` and `claim`. Every record also carries a typed subtype (`type`), a namespaced URI such as `https://suiss.app/ns/work/declaration/promise`, or a subtype in a Practice namespace. Every subtype belongs to exactly one kind and maps to one core subtype.
+
+People, agents, systems and machines use the same record model. There is no action outside records through any interface, API or binding: everything an agent does in Work is a record.
+
+## Fields
+
+CDDL and API field names are `snake_case`. Concept names in prose (`occurredAt`, `recordedAt`, `onBehalfOf`, `recordedIn`) map to `occurred_at`, `recorded_at`, `on_behalf_of` and `ledger`.
+
+| Field | Meaning | Written by | Required |
+|---|---|---|---|
+| `kind`, `type` | Record kind and subtype | Author | Yes |
+| `occurred_at` | The author's claim about when it happened; not normative time | Author | Yes on Acts and Claims; optional on Declarations |
+| `recorded_at` | Trusted time assigned by the ledger | Ledger | Yes, in the ledger envelope |
+| `author` | The party that wrote the record | Author | Yes |
+| `actor_type` | Actor type of the author and every party in `on_behalf_of` | Derived by the ledger | Yes, in the ledger envelope |
+| `on_behalf_of` | The principal chain, from author to root | Author | Yes when written on someone else's behalf |
+| `capacity` | The single capacity the author uses on this record: their own, or for a principal | Author | Yes on consequential records |
+| `basis` | Normative premise records, as a digest list | Author | Required on Declarations (may be empty); optional on Acts and Claims, omitted when empty |
+| `visibility` | Declared visibility | Author | Yes |
+| `ledger` | The record's canonical ledger; exactly one | Author declares, ledger checks | Yes |
+| `concerns` | Zero or more Work IDs in the same ledger | Author | Yes (may be an empty list) |
+| `relations` | Canonical relations | Author | No |
+| `authority` | Reference to the authority used | Author | Yes on consequential records |
+| `producer` | For agent records: agent, version and configuration | Author | Yes when the author is an agent |
+| `correlation` | Correlation IDs | Author | No |
+| `evidence` | Typed evidence references | Author | Where policy requires |
+| `params` | Typed normative parameters of the subtype; no free text | Author | When the subtype schema requires |
+| `body` | Salted commitments of body parts; never an input to normative derivation | Author | No |
+| `versions` | Protocol, subtype schema and adopted Practice versions | Author | Yes |
+| `ext`, `critical` | Namespaced extension fields and critical extension keys | Author | No; omitted when there are no extensions |
+
+There is no confidence field in the canonical set. An agent's self-reported confidence can only be kept as a body field in a Claim subtype schema, and is never shown or used by any rule.
+
+## Informative schema
+
+The following is informative.
+
+```text
+; The part the author signs; three shapes by kind
+SignedRecord = ActRecord / DeclarationRecord / ClaimRecord
+ActRecord = {
+  kind:          "act",
+  type:          TypeURI,
+  occurred_at:   Time,                     ; author claim, not normative
+  ? basis:       [+ Digest],               ; optional, omitted when empty
+  RecordCore,
+}
+DeclarationRecord = {
+  kind:          "declaration",
+  type:          TypeURI,
+  ? occurred_at: Time,
+  basis:         [* Digest],               ; required, may be empty
+  RecordCore,
+}
+ClaimRecord = {
+  kind:          "claim",
+  type:          TypeURI,
+  occurred_at:   Time,
+  ? basis:       [+ Digest],               ; optional, omitted when empty
+  RecordCore,
+}
+RecordCore = (
+  author:        PartyRef,
+  ? on_behalf_of: [+ PartyRef],            ; principal chain, author to root
+  ? capacity:    Capacity,                 ; required on consequential records
+  visibility:    VisibilityDecl,
+  ledger:        LedgerID,                 ; exactly one
+  concerns:      [* WorkID],               ; same ledger; sorted, no duplicates
+  ? relations:   [+ Relation],
+  ? authority:   AuthorityRef,
+  ? producer:    ProducerRef,
+  ? correlation: [+ CorrelationID],
+  ? evidence:    [+ EvidenceRef],
+  ? params:      { + ParamName => ParamValue }, ; typed normative parameters, no free text
+  ? body:        [+ BodyCommitment],
+  versions:      VersionVector,
+  ? ext:         { + ExtKey => any },
+  ? critical:    [+ ExtKey]
+)
+
+; Added by the ledger on admission
+LedgerEnvelope = {
+  record:        Digest,                   ; digest of SignedRecord = record ID
+  ledger:        LedgerID,
+  pos:           uint,                     ; position in the ledger
+  recorded_at:   Time,                     ; trusted ledger time; monotonic with pos
+  prev:          Digest,                   ; leaf hash of the previous envelope
+  actor_type:    ActorTypeAnnotation,
+  ? auth_context: AuthContextRef,          ; Access authentication context
+  ? proof_commit: Digest,                  ; binds the author signature bytes
+  ingest:        "admitted" / ["quarantined", ReasonCode] / ["rejected", ReasonCode]
+}
+
+Relation = {
+  rel:           CanonicalRelation,
+  target:        Ref,
+  ? source:      Ref,                      ; defaults to the record itself
+  ? qualifier:   TypeURI,
+}
+CanonicalRelation = "engaged_in" / "concerns" / "part_of" / "serves" /
+                    "supersedes" / "derived_from" / "on_behalf_of" / "references"
+```
+
+The record ID is the unprefixed SHA-256 digest of the deterministic CBOR of the `SignedRecord`. The ledger position is a separate value. Body bytes never enter the envelope; only their commitments do. An optional list or map that is empty is never written, so "no list" has exactly one encoding.
+
+### Actor type
+
+The actor type of the author and of every party in `on_behalf_of` is required, derived and queryable on every record. It comes from the identity binding in Access, not from the author's own statement, and the ledger writes it into the envelope on admission. Each entry is `[type, source]`:
+
+- type: `human`, `agent`, `system`, `machine`, `organization`;
+- source: `access_binding`, or `declared_unverified` when there is no binding.
+
+The actor type is only an input for visibility and policy. Authority and capacity never follow from it.
+
+### Authority and capacity
+
+`authority` is not where Work creates authority. It references the evidence of authority that was used, as `{proof, digest}`:
+
+| `proof` | Meaning |
+|---|---|
+| `decision_receipt` | An Access decision receipt |
+| `portable_authority_proof` | An Access portable proof of authority |
+| `approval_act_statement` | The Access approval record, on an authority gate |
+| `eligibility_check` | Access's confirmation that the approver was eligible, on a coordination gate |
+
+Every consequential record, including one written by a person, carries `authority`. A consequential record without it is rejected whatever its author's type. Every core Declaration subtype, and every Practice subtype mapped to one, is consequential. Acts and Claims are not. Comments and added references are `observation` Claims, and sending to a federation peer is a `disclosure` Declaration.
+
+`capacity` is `"own"` or `["for", PartyRef]`. It must agree with `authority`: if the record says "A, on behalf of P", the Access authority used must have been exercised for P, and the on-behalf-of chain cannot be wider than that capacity covers.
+
+### Producer, correlation and body
+
+- `producer` carries `version` and `config` (a configuration digest), and optionally `model` (an external reference), `toolset`, `instructions` and `attestation`. The configuration is a statement, not proof, unless matching remote attestation exists. Changing the model, provider, operator or session changes `producer`; `author` stays the same.
+- `correlation` items are `[scheme, id]`, where `scheme` is an HTTPS type URI. A record can carry an external system's or another organization's work ID, an A2A `contextId`, or an executor run ID. Events carry the same ID as a CloudEvents extension.
+- The signed envelope carries no plain-text content. Body parts are kept separately, linked by salted commitments and encrypted by retention class. This lets redaction make content unreadable without touching the record's existence, author, time or lineage. Secrets never enter any field or body.
+
+### Visibility
+
+```text
+visibility = { see: Audience, ? search: false, ? agent_context: false }
+Audience   = "work" / "author" / ["parties", [1*256 PartyRef]]
+```
+
+`work` means parties who can see every Work in `concerns`. `author` means the author only. The author and every party in `on_behalf_of` are always implicitly in the audience. `true` is never written. There is no field for the external-organization axis; only a `disclosure` Declaration opens it.
+
+### Versions and extensions
+
+`versions` carries the protocol version the record is read under, the subtype schema version and the namespace and version of every adopted Practice that affects it. The rule set is chosen by the record's protocol version, and an unknown version is quarantined.
+
+Extension fields are namespaced (absolute HTTPS URIs only), typed and versioned, and are declared critical or non-critical. An unrecognized non-critical extension is kept and not interpreted. A record with an unrecognized critical extension is neither rejected nor dropped; it is quarantined and needs attention. An extension can never change a canonical field's meaning or add a concept or relation.
+
+## Immutability and correction
+
+- A record's existence, author, authority basis, lineage (basis and relations) and signed bytes never change, and records are never deleted. Corrections, withdrawals, reopenings and cancellations are all new records.
+- A correction is a new record with `supersedes`. The old record stays readable, marked as superseded. Only Declarations form supersede chains, and the version is derived from `supersedes`, never written on the record.
+- No Declaration has retroactive effect. `params.effective_at` sets when it takes effect; if it is earlier than `recorded_at`, the record is rejected.
+- Updates are monotonically versioned. The same author writing the same version twice in one chain is rejected (`duplicate_version`). Incompatible writes by different authors who had not seen each other are both kept and the chain becomes `conflicted`.
+- Redaction destroys the body key (crypto-shredding). The encrypted body and its commitment remain and no row is deleted. The wording is "content made unreadable", never "deleted". Content already disclosed beyond a trust boundary cannot be recalled.
+- No expiry in any binding, cache or external system ever deletes or changes a work or outcome record.
+
+## Time, causality and conflicts
+
+- Normative time is ledger time (`recorded_at`). `occurred_at` is the author's claim and cannot override cancellation, expiry, conflict or ordering rules. Wall-clock time is never the authority in a conflict.
+- Causality is set by the signed `basis` and predecessor graph. A record has seen a chain head only if that head is in its `basis` or its `supersedes` targets.
+- If two incompatible normative transitions are written in the same conflict domain without seeing each other, both are recorded and the state becomes `conflicted`. It is closed by an authorized party's `conflict_resolution` Declaration that refers to every current head; while conflicted, no other Declaration in that chain has effect. There is no "last writer wins".
+- Every work item (Work, Commitment, Condition and their derived state) has a monotonically rising version, returned in the API as `ETag` and carried in events as `seq`.
+- An offline client keeps only signed pending statements. The ledger evaluates each against its `basis`; if what it saw has changed, it becomes conflicted, or is rejected with a reason if the authority is gone. Nothing is merged silently.
+
+## Determinism
+
+```text
+the same records
++ the same protocol and profile versions
++ the same adopted Practice versions
++ the same declared trust and policy inputs
+= the same normative result
+```
+
+The record set alone does not guarantee the same result. Different sets of trusted issuers can produce a visible divergence, which is not a protocol error.
+
+## Limits
+
+Exceeding a limit is a reasoned protocol rejection: no record is created and nothing panics. A deployment or ledger can choose narrower values, never wider ones.
+
+| Limit | Default |
+|---|---|
+| CBOR nesting depth | ≤ 16 |
+| Map or array items | ≤ 256 |
+| Single string or byte string | ≤ 64 KB |
+| `basis` list | ≤ 64 digests |
+| `on_behalf_of` chain | ≤ 8 links, or Access's delegation depth if narrower |
+| `relations` | ≤ 256 items |
+| `concerns` | ≤ 64 Works |
+| A single request | ≤ 256 KB, excluding body parts |
+
+## Core identifier catalog
+
+Core URIs have the form `https://suiss.app/ns/work/<point>/<wire_name>`. Wire names are `snake_case`; a hyphenated concept name swaps `-` for `_` on the wire (`promise-conditional` becomes `promise_conditional`). Where a namespaced identifier is expected, core values are written as the full URI. Closed fields (`kind`, summary categories, flags, `visibility.see` and `params` code values) are written as plain text.
+
+| Extension point | URI prefix | Can a Practice extend it? |
+|---|---|---|
+| Record kind (`kind`) | Text: `act`, `declaration`, `claim` | No |
+| Declaration subtype | `https://suiss.app/ns/work/declaration/` | Yes, mapped to a core subtype |
+| Act subtype | `https://suiss.app/ns/work/act/` | Yes, mapped to `action` |
+| Claim subtype | `https://suiss.app/ns/work/claim/` | Yes |
+| Condition (wait) type | `https://suiss.app/ns/work/condition/` | Yes, as a subtype |
+| Dependency type | `https://suiss.app/ns/work/dependency/` | Yes, as a subtype |
+| Evidence type | `https://suiss.app/ns/work/evidence/` | Yes |
+| `derived_from` role (qualifier) | `https://suiss.app/ns/work/derived_from/` | Yes |
+| Summary category | Text | No; display names only |
+| Flag | Text | No |
+| Visibility audience | Text: `work`, `author`, `["parties", …]` | No |
+| Gate form, decline reason, stop type and response, wait reason | Text, as `params` values | No; reason codes can take a namespaced sub-code |
+
+### Declaration subtypes
+
+This list is closed. Every core Declaration subtype is consequential and needs `authority`.
+
+| Group | Wire names |
+|---|---|
+| Commitment operations | `request`, `promise`, `promise_conditional`, `decline`, `counter`, `accept_counter`, `state`, `accept`, `reject`, `cancel`, `release`, `delegate`, `assign`, `allow`, `refuse`, `amend`, `declare_obsolete`, `expire`, `administrative_close`, `dispute`, `defer`, `resume`, `notice`, `revoke_request`, `revoke_promise`, `revoke_statement`, `revoke_acceptance` |
+| Responsibility operations | `claim`, `unclaim`, `forward`, `nominate`, `offer`, `reassign`, `renew_lease` |
+| Gates, stops and conditions | `gate_decision`, `stop_request`, `stop_response`, `open_condition`, `withdraw_condition`, `resume_after_stop` |
+| Other | `practice_adoption`, `disclosure`, `queue_definition`, `control_lease`, `handoff_note`, `conflict_resolution`, `admission`, `autonomy_policy`, `implicit_acceptance_terms`, `waiver`, `attention_request`, `acknowledgement` |
+
+Notes:
+
+- `gate_decision` closes an authority gate or a coordination gate; the gate kind is declared on the gate. A delivery acceptance gate is satisfied by `accept` or `reject`.
+- `disclosure` covers disclosure to a new recipient, processor or trust boundary, and sending to a federation peer.
+- `admission` is the local admission of a federated record. It is never confused with `accept`, which accepts a commitment's result.
+- `acknowledgement` makes the acknowledging party responsible for the item.
+- There is no core comment Declaration. Comments and added references are `observation` Claims.
+
+### Act and Claim subtypes
+
+The only core Act subtype is `action`: the doer's report of something done in the world. Delivery and execution steps are not separate subtypes; they are expressed with relations (`derived_from` plus `fulfills`) and correlation.
+
+Core Claim subtypes are `observation`, `assessment` and `assumption`.
+
+| Claim | Core subtype |
+|---|---|
+| Observations, progress and consumption in executor reports | `observation` |
+| Execution axis reports (running, failed, cancelled, a stop confirmation; A2A task states) | `observation` |
+| Control mode, status reports and heartbeats | `observation` |
+| Capability statements (machine factsheets, A2A AgentCards, control capability statements) | `observation` |
+| A plan | `assumption` |
+| An agent's assumption | `assumption` |
+| Independent verification | `assessment` |
+| Derived trust | `assessment` |
+
+### Conditions, dependencies, evidence and roles
+
+| Point | Values |
+|---|---|
+| Condition types | Epistemic: `information`, `commitment`, `external_event`, `time`, `third_party`. Gate: `authority` (authority gate), `decision`, `acceptance`, `resource` (coordination gates) |
+| Gate forms (`params.gate_form`) | `approval`, `pre_action_review`, `delivery_acceptance` |
+| Wait reasons (`params.wait_reason`) | `internal`, `external` |
+| Dependency types | `flow`, `sharing`, `fit`, `part_whole` |
+| Evidence categories | `artifact`, `external_event`, `measurement`, `human_verification` |
+| `derived_from` qualifiers | `https://suiss.app/ns/work/derived_from/source`, `…/fulfills`, `…/supports`. The `basis` role is never a qualifier; it lives only in the `basis` field |
+| Relations (`rel`) | `engaged_in`, `concerns`, `part_of`, `serves`, `supersedes`, `derived_from`, `on_behalf_of`, `references` |
+| Summary categories | `triage`, `deferred`, `ready`, `active`, `waiting`, `awaiting_acceptance`, `unknown`, `closed` |
+| Flags | `overdue`, `at_risk`, `contradiction`, `stale`, `taken_over`, `unevidenced` |
+
+### Parameters
+
+`params` is a signed skeleton field with no free text. Keys match `[a-z][a-z0-9_]{0,63}`. Values are integers, booleans, times, digests, Work IDs, party references, type URIs, catalog wire names, or arrays of these. The record a Declaration answers or withdraws (for example the request answered by a `stop_response`) goes in `basis`.
+
+| Key | Allowed on | Values |
+|---|---|---|
+| `effective_at` | Any Declaration (optional) | A time; defaults to `recorded_at`; earlier than `recorded_at` is rejected |
+| `reason` | `decline` | `no_capacity`, `no_authority`, `out_of_scope`, `missing_information`, `unacceptable_terms`, `other` |
+| `reason` | `cancel` | `cannot_complete`, `failed`, `abandoned`, `other` |
+| `notice_type` | `notice` | `at_risk`, `cannot_complete`, `obsolete_suggested` |
+| `stop_type` | `stop_request` | `immediate`, `finish_then_stop`, `pause` |
+| `response` | `stop_response` | `accept`, `finish_then_stop`, `refuse` |
+| `condition_type` | `open_condition` | A Condition type URI (core or a mapped Practice subtype) |
+| `wait_reason` | `open_condition` | `internal`, `external` |
+| `gate_form` | `open_condition` with a Gate type | `approval`, `pre_action_review`, `delivery_acceptance`; the `acceptance` type always uses `delivery_acceptance` |
+| `address`, `deadline`, `criterion` | `open_condition` | The wait's address, end time and satisfaction criterion |
+
+Reason codes can carry a namespaced sub-code, `<code>:<absolute HTTPS URI>`, for example `other:https://procurement.example/ns/reason/budget_freeze`. An unknown sub-code is read as its parent code.
+
+## Reason codes
+
+A rejection or quarantine reason is `<family>` or `<family>:<detail>`. Detail lists are closed. `extension_critical_unknown` and `protocol_version_unknown` lead to quarantine. `secret_detected` is a rejection through the API and a quarantine for federated and offline-signed records. The rest are rejections. The three `idempotency_key_*` codes reject the request, not a record, and nothing enters the log.
+
+| Code | Details | Meaning |
+|---|---|---|
+| `malformed_cbor` | `truncated`, `trailing_bytes`, `invalid_utf8` | Not well-formed CBOR |
+| `non_canonical_cbor` | `non_preferred_argument`, `unsorted_map_keys`, `duplicate_map_key`, `indefinite_length`, `tag_not_allowed`, `float_not_in_profile`, `simple_not_in_profile` | Well-formed but not deterministic |
+| `limit_exceeded` | `depth`, `items`, `string`, `basis`, `on_behalf_of`, `relations`, `concerns`, `request` | A structural, schema or Work-specific limit |
+| `schema` | `kind`, `relation`, `required_field`, `unknown_core_field`, `empty_optional_list`, `empty_optional_map`, `type_uri`, `ext_key`, `digest_alg`, `digest_length`, `ingest`, `container`, `params` | Does not match the schema or the subtype schema |
+| `non_canonical_set_order` | `basis`, `concerns`, `critical`, `visibility` | A set-like list is not sorted or has duplicates |
+| `duplicate_entry` | `relations`, `evidence`, `correlation`, `body`, `on_behalf_of`, `visibility` | A repeated entry in an author-ordered list |
+| `signature` | `alg_not_allowed`, `invalid`, `high_s`, `non_canonical_ed25519`, `small_order_key`, `kid_unknown`, `header_profile` | Author signature rejected |
+| `envelope_mismatch` | `ledger`, `record`, `prev`, `recorded_at`, `proof_commit`, `actor_type` | The envelope does not match the record or the previous envelope |
+| `authority_missing` | — | A consequential record has no `authority` |
+| `capacity_missing` | — | A consequential record has no `capacity` |
+| `capacity_mismatch` | — | `capacity` and `on_behalf_of` disagree |
+| `unattributed_automation` | — | An automation record does not carry a bound system party or a `basis` |
+| `producer_missing` | — | An agent author with no `producer` |
+| `author_signature_missing` | — | An author signature was required but missing |
+| `auth_context_missing` | — | An unsigned human record without `auth_context` |
+| `unmapped_extension_value` | — | An extensible value that does not map to the core |
+| `extension_critical_dangling` | — | A key in `critical` is not in `ext` |
+| `visibility_no_work` | — | `see: "work"` with an empty `concerns` |
+| `duplicate_version` | — | Same author, same chain, same version |
+| `retroactive_declaration` | — | `params.effective_at` is before `recorded_at` |
+| `supersedes_kind_mismatch` | — | The `supersedes` target is a different kind |
+| `secret_detected` | — | A high-confidence secret match in a body |
+| `idempotency_key_expired` | — | The `Idempotency-Key` belongs to an archived period; resend with a new key |
+| `idempotency_key_malformed` | — | The `Idempotency-Key` is not a valid UUIDv7, or its embedded time is too far ahead of ledger time; resend with a valid key |
+| `idempotency_key_missing` | — | A mutating request has no `Idempotency-Key`; resend with one |
+| `extension_critical_unknown` | — | Unrecognized critical extension; quarantined |
+| `protocol_version_unknown` | — | No rule set for the protocol version; quarantined |
+
+## Derivation values
+
+When the kernel derives state from records:
+
+- Each record's `effect` is `normative`, `conflicted` or `["none", reason]`, where the reason is one of `not_a_declaration`, `not_admitted`, `protocol_version`, `denied`, `requirement_pending`, `untrusted_authority`, `not_yet_effective`, `unknown_target`, `terminal_outcome`, `conflicted` or `stale`.
+- `superseded_by` lists each superseding record once.
+- A chain's `status` is `open`, `terminal` or `conflicted`.
+- Restriction engine results are `no_objection`, `deny` or `require`. The issuer is `local` or `["federated", PartyRef]`.

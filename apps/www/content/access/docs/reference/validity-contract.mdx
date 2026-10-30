@@ -1,0 +1,139 @@
+---
+title: Validity contract and portable proofs
+description: Draft reference for validity contract fields, connectivity profiles, verifier checks and reason codes, portable proofs and offline reports.
+---
+
+This is a draft reference and may change before release.
+
+A validity contract is the semantic contract of every reusable artifact: a portable authority proof, a bounds token, a reusable decision, a session or access token. It is a value and carries no authority of its own.
+
+## Fields
+
+| Field | Meaning |
+|---|---|
+| `issuing_exercise` | The `projection.issue` exercise that issued the contract |
+| `basis_ref` | Reference to the authority state it was issued against; may be an opaque token |
+| `holder` | The holder's key binding. A contract is never a bearer contract |
+| `audience` | The verifiers the contract is valid at |
+| `bounds` | The authority the artifact can be used for: the Grant's authority intersected with the Mandate, limited to the intended actions, with prefixes pinned to a catalog |
+| `profile` | Connectivity class, variant, profile version and parameters |
+| `horizon` | Absolute end of validity, in trusted time |
+| `max_staleness_ms` | Δ: how old the verifier's status information may be |
+| `freshness_sources` | Where the verifier refreshes status |
+| `revalidation` | When a new online decision is required |
+| `offline_slice` | Budget drawn in advance for offline use |
+| `local_requirements` | Requirement terms the verifier checks locally |
+| `verifier_profile_ref` | Digest of the verifier profile the contract was issued for |
+| `clock` | Accepted clock source class and skew tolerance |
+| `must_understand` | Extensions the verifier must understand |
+
+## Profile classes and variants
+
+The class set is closed: `online`, `intermittent`, `offline`, `long-running`. Each variant belongs to exactly one class.
+
+| Variant | Class | Offline use without an online decision |
+|---|---|---|
+| `online-strict` | `online` | Rejected: `online-required` |
+| `bounded-staleness` | `intermittent` | Accepted while `now − last_refresh ≤ max_staleness_ms`; otherwise `stale` |
+| `revalidate-on-reconnect` | `intermittent` | Accepted up to the acceptance end; the next reconnect requires a new decision |
+| `checkpointed-offline` | `offline` | Accepted up to the acceptance end |
+| `checkpoint-continuation` | `long-running` | Accepted up to the acceptance end |
+
+A contract whose class does not match its variant is malformed. Class and variant are must-understand; parameter values are local. Under `bounded-staleness`, a missing `max_staleness_ms`, a missing `last_refresh`, or a `last_refresh` later than `now` is `stale`.
+
+## Horizon
+
+When a contract is issued, its horizon is the smallest of `issued_at + profile_max_ms` and every dependency bound, computed with checked arithmetic. The dependency bounds are the `validity.until` of every hop and `time + freshness_ms` of every relied-on proof that has a freshness limit.
+
+A contract derived by narrowing another never has a later horizon or a larger Δ. The staleness window Δ is measured from the verifier's last status refresh and is never extended by silence, missing acknowledgements or clock drift.
+
+## Verifier checks
+
+Each failure is a local DENY. The verifier may ask the domain online instead, where the profile allows it.
+
+| Check | Rule |
+|---|---|
+| Acceptance end | `accept_until = min(horizon, iat + cap)`, where `cap` depends on the verifier's class and variant and on the consequence tier of the intent. Ceilings come only from the domain metadata and the verifier profile, never from the artifact |
+| Within the horizon | Accept only when `now ≤ accept_until + skew`. `now = horizon` is accepted |
+| Key window | The artifact's signing time lies within the signing key's window. No skew is applied |
+| Audience and holder | The verifier is in `audience`, and the presenter proves possession of the `holder` key |
+| Clock | The verifier's clock source is of the named class. Skew defaults to 60 seconds for artifacts the domain produces; the contract can only narrow it |
+| Future signing time | If `iat > now + skew`, reject with `not-yet-valid` |
+| Bounds | The intent is covered by `bounds` and every local requirement is satisfied |
+| Staleness | Status information is at most `max_staleness_ms` old, otherwise online only |
+| Revalidation | When a revalidation condition is met, obtain a new online decision first |
+| Offline slice | Local draws never exceed the slice amount |
+| Profile | The verifier rejects a contract its own profile does not support, and any unrecognized must-understand entry |
+| Arithmetic | Every addition and comparison is checked; an overflow makes the artifact invalid |
+
+### Reason codes
+
+The checks run in this order; the first failure is the result:
+
+| Order | Reason |
+|---|---|
+| 1 | `must-understand` |
+| 2 | `audience` |
+| 3 | `not-yet-valid` |
+| 4 | `expired` |
+| 5 | `online-required` or `stale` |
+| Any | `overflow` |
+
+## Ceilings
+
+Domain metadata declares its ceilings as `caps.horizon`, a map from tier to milliseconds with the text keys `"ct0"`, `"ct1"`, `"ct2"` and `"ct3"`. The verifier profile declares its ceilings in the same form per class and variant. The effective ceiling is the smallest of the metadata's, the verifier profile's and the protocol default that apply.
+
+## Portable authority proof
+
+| Field | Meaning |
+|---|---|
+| `issuer` | DomainID and the provider's signing key bound to the domain |
+| `projection_exercise` | The `projection.issue` exercise ID |
+| `holder` | Instance ID and key binding; across domains, a pairwise PartyRef and key binding |
+| `capacity` | The allowed capacity |
+| `bounds` | The authority it can be used for, with action schema digests and pinned catalog versions |
+| `local_requirements` | Requirements the verifier can check locally. Actions with requirements a verifier cannot check locally cannot be in the bounds |
+| `validity` | The validity contract |
+| `offline_slice` | Pre-drawn amount per budget dimension, and which lineage nodes it was drawn from |
+| `status` | Status list reference and local freshness requirement |
+| `lineage_commitment` | Digest of the basis lineage path, with links that can be selectively disclosed |
+| `audience` | The verifier set |
+| `must_understand` | Versions and closed types the verifier must understand |
+
+### Offline verifier rule
+
+| Step | Check | On failure |
+|---|---|---|
+| 1 | The signature chain resolves to the provider binding in the domain metadata; the embedded key excerpt's domain matches the artifact's; the signing time is within the operational key window | Local DENY |
+| 2 | Within the horizon by the verifier's trusted clock, using `min(horizon, iat + local ceiling)` | Local DENY |
+| 3 | Holder proof of possession | Local DENY |
+| 4 | The intent is within `bounds` and the local requirements are met | Local DENY |
+| 5 | The slice covers the local draw | Local DENY |
+| 6 | Status freshness is within Δ; metadata freshness is measured by an independent witness cosignature, not by the metadata's own timestamp | Go online, or DENY |
+| 7 | Every must-understand element is recognized | Local DENY |
+
+After a provider handover or forced recovery, an artifact signed with the superseded key is accepted only with an inclusion proof showing that its exact content was committed in the cited checkpoint, or after it is reissued by the new provider. The artifact's exercise ID alone is not proof.
+
+## Verifier profile
+
+A verifier profile is a claim in which a verifier (an enforcement point, device, robot or resource server) declares its capabilities: its identity, supported profile classes and parameter limits, supported versions, clock source class, whether it can hold a slice in a tamper-evident counter, whether it can produce offline reports, attestation references and access to status sources. A domain accepts a profile through a `predicate-input` Acceptance, and never issues a contract that the verifier's profile does not cover.
+
+## Offline exercise report
+
+When an offline verifier reconnects, it sends a report, recorded as a claim of class `offline.exercise-report`.
+
+| Field | Meaning |
+|---|---|
+| `verifier` | Verifier identity and profile digest |
+| `projection` | The `projection.issue` exercise and contract digest it covers |
+| `period` | The local time range covered |
+| `entries[]` | Per use: intent digest, relevant parameters or their digests, local time with clock evidence, the local outcome, the amount drawn from the slice, holder proof reference |
+| `chain` | Sequence numbers and a hash chain over entries, making hidden or reordered entries detectable |
+| `slice_unused` | The unused slice amount |
+| `profile_version` | The profile version applied |
+
+The report changes no authority state. Usage outside the contract appears as derived state; any sanction is an explicit exercise by an authorized Party. Returning an unused slice is an explicit `consumption.release`. A report that never arrives, or a dishonest report, is not prevented; the gap shows up as derived state.
+
+## Authority-state acknowledgement
+
+An enforcement point can declare, as a claim of class `authority-state.ack`, that it has applied a specific change (a revocation, narrowing, Mandate end or Instance termination), with the time and scope. Acknowledgements are for visibility. A revocation takes effect in Access regardless of acknowledgements; a missing acknowledgement is a detection signal, not a safety mechanism.

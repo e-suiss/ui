@@ -1,0 +1,163 @@
+---
+title: Interaction
+description: Draft reference for the Interaction schema, InteractionResponse, surface classes, interruption levels and delivery timing.
+---
+
+> Draft reference. Field names, values and rules may change before release.
+
+Everything One shows you, or waits for you to answer, is an `Interaction` record. Its data is authoritative in One; every surface (phone card, watch button, voice prompt, notification, live progress item) is a projection of it. The schema is defined in JSON Schema 2020-12, is versioned and is pinned by test vectors.
+
+## `Interaction` fields
+
+| Field | Meaning |
+|---|---|
+| `id`, `version` | Permanent identifier and version. An item that updates in place, such as ongoing progress, keeps its `id` and gets a new `version` |
+| `kind` | Semantic kind; see below |
+| `subject` | A short human-readable title plus a typed reference to the record it concerns: a task, an Access request, a Work item |
+| `details` | Typed fields such as amount, recipient, time and place. Free text appears only as a display note, in a separate field marked untrusted |
+| `risk` | The level mapped to the Access consequence tier |
+| `reversibility` | `reversible`, `compensable` or `irreversible` |
+| `data_class`, `sensitive` | Data class, and a sensitivity flag for the lock screen and voice. Sensitive content never reaches the lock screen or voice |
+| `provenance` | Provenance labels of the values. Values from external content are shown marked |
+| `why_now` | The "why now?" explanation, with references to evidence |
+| `interruption` | Interruption level, from the attention decision |
+| `timing` | Delivery timing request: `next_break`, `max_defer`. For approval invitations, also the target surface and escalation schedule |
+| `minimal_projection` | One sentence in English and Turkish, plus labels for a two-option answer |
+| `surface_budgets` | Size budget per surface class |
+| `actions` | The allowed answers. For approvals, the verbs the Access request permits |
+| `min_assurance` | The lowest surface and assurance level that is accepted |
+| `expires_at` | Expiry. When it passes, the work stops; silence is not consent |
+
+### `kind`
+
+| Value | Meaning |
+|---|---|
+| `approval` | An approval request |
+| `choice` | Pick one of several options |
+| `question` | A question from One |
+| `info` | Information |
+| `progress` | Ongoing work |
+| `receipt` | A result or receipt |
+| `comparison` | A comparison |
+| `form` | Filling in fields |
+| `digest_item` | An item in the daily brief |
+
+The list is closed. It can only grow through the extension rule: a new kind has a reverse-DNS name and a version, and must map to one of the core kinds. A value that maps to no core kind is rejected.
+
+### Display rules
+
+- Buttons come only from `actions`. Free text in an interaction never produces an action button.
+- Remote images and links in agent output are not loaded automatically. An image loads when you open it; a link is shown with its full URL.
+- Content One generated looks visually different from source content and links to its source.
+- Values with untrusted provenance, especially recipients, amounts and URLs, are shown marked.
+- No projection or adapter may drop or weaken `risk`, `reversibility` or authority fields. A projection that would do so is rejected.
+
+## Minimal projection and size budgets
+
+Every kind has a required minimal projection: one sentence plus a two-option answer, for example "Approve the coffee order for the shown amount? Yes / No". Size budgets per surface class are written into the schema and checked in tests. An interaction that does not fit a surface's budget is not sent to it; the minimal projection and a link to the workspace are sent instead.
+
+| Surface | Budget |
+|---|---|
+| Lock screen live activity | 4 KB of static and dynamic data |
+| Live update chip | At most 96 dp wide, no custom view |
+| Car | Voice only; no text or visual answers |
+| Glasses with display | Text, image, list, button and video components only |
+| Watch | A two-option answer |
+
+## `InteractionResponse`
+
+Every surface returns your answer in the same shape:
+
+| Field | Meaning |
+|---|---|
+| Interaction identifier | The `id` being answered |
+| Selected action | One of the interaction's `actions` |
+| Responder | Your own Access instance |
+| `nonce` | Binds the answer to one request |
+| Device | The device identifier |
+| Surface class | The class of the answering surface |
+| Evidence level | Authentication method and proof of human presence |
+| Time | When you answered |
+| Signature | Signed with the device key |
+
+Rules:
+
+- Responses are idempotent. Re-sending a response never creates a new approval.
+- When the same interaction is open on several surfaces, the first valid response wins. Later responses with the same `nonce` are rejected, and the copies on other surfaces close.
+- For an approval, Access maps the response to an approval statement and accepts it according to the surface and evidence level.
+- A response from a surface below the approval ceiling is not counted as an approval. The request keeps waiting and you are asked to answer from your phone.
+
+## Surface classes and approval ceilings
+
+| Class | Examples | Persistent presence | Approval ceiling |
+|---|---|---|---|
+| Phone | Phones, tablets | Widget, lock screen control, assistant gesture, quick settings | Full, with strong authentication |
+| Desktop | Desktop apps, web workspace, browser extension | Menu bar, tray, global shortcut | Full, with strong authentication |
+| Watch | Smartwatches | Complication, widget | Low risk |
+| Voice: car | In-car voice | None | Low risk |
+| Voice: glasses | Smart glasses | None | Low risk |
+
+| Action | Voice | Watch | Phone or desktop |
+|---|---|---|---|
+| Low risk, `reversible` or `compensable`, within Mandate and budget | Yes | Yes | Yes |
+| `irreversible`, higher risk, or over budget or Mandate | No, routed to phone or desktop | No, routed to phone | Yes |
+| Never-delegated actions | No | No | Only by your own direct action |
+
+The table is an upper bound; user settings can only tighten it. On a watch, the approval gesture is a press-and-hold by default, with a two-step option.
+
+## `SurfaceCapability`
+
+Each surface declares its capabilities when it registers and whenever they change.
+
+| Field | Example values |
+|---|---|
+| Class | One of the classes above |
+| Output channels | Voice, haptic, compact visual (with a size budget), full visual |
+| Input channels | Touch, keyboard, voice, gesture, camera |
+| Observation capabilities | Screen observation, camera, microphone, each enabled by separate consent |
+| Local action | Local executor, operating-system app intents |
+| Assurance level | Reachable authentication methods and proof of human presence |
+| State signals | Worn, connected, camera on |
+
+A surface capability cannot widen the approval ceiling Access defines for that surface. The current values of state signals live in Relay's device state channel, which is short-lived and never stored.
+
+## Interruption levels
+
+| Level | Meaning |
+|---|---|
+| `passive` | Silent; does not wake the screen, no sound |
+| `active` | A normal notification |
+| `time-sensitive` | Breaks through focus modes and summaries as far as the platform allows |
+| `critical` | Breaks through silent mode and focus. Only with an explicit Grant from you |
+
+Relay may lower the level it receives, never raise it.
+
+## Attention decision outcomes
+
+| Outcome | Sent to Relay |
+|---|---|
+| Interrupt now | `timing: immediate` plus a level |
+| At the next break | `timing: next_break` plus `max_defer` |
+| Put in the brief | Nothing |
+| Keep quietly | Nothing |
+| Drop | Nothing; the decision is recorded |
+
+Every decision records the probability of the chosen outcome and the policy version, so that a new policy can be evaluated against past decisions before it ships.
+
+## Mapping to Relay message classes
+
+| One output | Relay class | Rule |
+|---|---|---|
+| Approval request | `action_required` | If not urgent, sent with an explicit `timing: next_break`; deferred delivery does not happen during quiet hours |
+| Time-sensitive information about your own business (a cancelled flight, a delivery at the door) | `transactional` | Up to `time-sensitive` |
+| Progress update | `transactional` | `passive` |
+| Output covered by your critical Grant | The output's own class | `critical`; breaks through quiet hours |
+
+One outputs are never sent with the `security` class. A new kind of output is not sent until it has a row in this table.
+
+## Approval routing
+
+1. A pending approval goes to the single surface the attention decision picks. The invitation gives Relay the target surface and an escalation schedule.
+2. With no answer, it escalates to other surfaces that meet the ceiling. Planned default: five minutes, or half the request's remaining time, whichever comes first. You can shorten or lengthen it, but never past the request's expiry.
+3. The first valid `InteractionResponse` wins.
+4. At expiry the work stops, and Pending shows "expired, work stopped".

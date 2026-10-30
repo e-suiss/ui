@@ -1,0 +1,128 @@
+---
+title: Authority
+description: Authority domains, anchors and roots, Grants, delegation, Mandates, restriction policies, budgets and consequence tiers.
+---
+
+In Access, authority is explicit. It starts at a root, is passed on through Grants, can only narrow along the way, and is used by an Instance within its Mandate.
+
+## Authority domain
+
+An **AuthorityDomain** is the scope in which authority records are kept, with a single source of truth. It is usually an organization.
+
+- It is identified by a **DomainID**, the digest of its genesis record. The DomainID stays the same even if the provider hosting the domain changes.
+- Each domain has one append-only log of records. The current authority state is a deterministic fold of that log.
+- A domain never spans two tenants.
+
+### Genesis
+
+The **genesis record** is the one unconditioned record of a domain. It is set up once, signed, by the domain's founding root holders. It contains the first meta-anchor and root composition, founding Grants, initial Acceptances, reserved power definitions and the requirements for meta-actions.
+
+There is no separate bootstrap path. "Who creates the first administrator?" is answered by genesis. After genesis, every change is an authority exercise. The legitimacy of genesis itself is external (legal or organizational reality); Access records who set up the domain but does not judge it.
+
+## Anchor and root
+
+An **AuthorityAnchor** is the point where authority over a resource scope begins. Its **root** is the ultimate holder of that authority:
+
+| Root | Meaning |
+|---|---|
+| `Sole(Party)` | One Party is the root |
+| `Joint(Parties, k, independence)` | k of the listed Parties must act together |
+
+- Anchor scopes inside a domain are disjoint or nested. A resource's root is at the most specific anchor that covers it. A resource no anchor covers has no authority over it.
+- Because the root is a value of the anchor, an anchor without an owner cannot be expressed.
+- Transferring a root states explicitly what happens to the Grants that rest on it. There is no default.
+- A hosting provider is never a root.
+
+## Grant
+
+A **Grant** is an explicit conferral of authority. It is the **only** source of positive authority. Delegation is also a Grant.
+
+- Each Grant has exactly one basis: an anchor root, or a holding of another Grant (`HoldingRef ⟨GrantID, holder, since⟩`). The chain of bases is the **lineage**.
+- Issuing a Grant does not transfer authority away. The grantor keeps what they hold.
+- A Grant carries an **authority set** (what may be done), a **constraint set** (validity window, while-conditions, budgets), **requirements**, **delegation terms** and **agency terms** (which capacities the holder may act in).
+- Revising a Grant keeps its identity. Changing the holder or basis creates a new Grant.
+
+### Rule-shaped Grants
+
+A Grant can name its holder directly (extensional) or by a rule over claims (rule-shaped), for example "everyone the HR system says is in Finance". When the claims change, no new Grant is created: the same Grant selects a different set of holders. A rule can only use claim classes that the domain has accepted for subject selection.
+
+Each uninterrupted period in which a holder qualifies is a **holding episode**. An affirmative change ends the episode for good. A stale claim does not end it but makes the decision ask for a fresh claim. Qualifying again opens a new episode and does not revive what was derived from the old one.
+
+### Roles
+
+A role such as `admin` or `editor` is a **named authority set** with a version. Assigning a role is a Grant that pins that version. Changing a role definition cannot silently change existing Grants. A role claim in an identity token is a projection, never proof of authority on its own.
+
+## Delegation only narrows
+
+A delegated Grant must stay within the Grant it comes from:
+
+- its authority set is within the parent's;
+- its validity window lies inside the parent's, and it keeps all of the parent's while-conditions;
+- the parent has delegation depth left, and the child's depth is smaller;
+- if the parent restricts who may hold delegations, the holder is within that class;
+- its requirements are at least as strict as the parent's.
+
+Delegation depth 0 means the Grant cannot be delegated further. There is no separate "delegable" flag.
+
+Budgets are not compared during delegation. Instead, every use draws from **every** budget along the lineage, so a child cannot amplify a parent's budget. The exact rules are in the [authority algebra reference](/access/docs/reference/authority-algebra).
+
+## Mandate
+
+A **Mandate** is the fixed envelope of authority that a Party binds to one of its own Instances. Holding an authority does not mean being able to use it everywhere.
+
+- A Mandate creates no holding, is not part of the lineage, cannot be delegated and cannot move to another Instance.
+- Widening a Mandate is an explicit rebind.
+- A principal cannot bind a Mandate to another Party's Instance.
+
+What an Instance can actually use is:
+
+```text
+exercisable = holding ∩ mandate ∩ actor-side restrictions ∩ requirements it can satisfy
+```
+
+Example: a purchasing agent holds "supplier orders up to EUR 100,000 per month", but in today's run its Mandate allows only up to EUR 10,000.
+
+## Restriction policy
+
+A **RestrictionPolicy** grants nothing. It can only deny, require more proofs, or stay silent. Example: "no payments on weekends".
+
+- Positive authority has no negation. Exclusions are expressed only as restriction policies.
+- A restriction DENY overrides any covering Grant.
+- Removing a restriction is itself a widening and is treated like one.
+
+## Changing authority is an exercise
+
+Issuing, amending, revoking and renouncing Grants, binding Mandates, establishing Acceptances and setting policies are all **meta-actions**. Each goes through the same decision path as any other action, with an actor, a basis, requirements and a record. An administrative API cannot be a separate write path.
+
+- Widening can require stricter proofs than narrowing, never the reverse.
+- Relaxing a requirement requires satisfying the existing, stricter requirement first.
+- **Reserved actions** are never covered by wildcards or namespace prefixes; they must be named exactly.
+
+## Budgets
+
+A budget term counts uses or an amount in a unit defined by the action schema, over a total window or a rolling window of seconds. There are no calendar windows. Budgets are authority limits, not money: account balances and financial holds belong to the payment owner.
+
+## Consequence tiers
+
+Every action falls into a **consequence tier**, from reads to irreversible and critical actions. Required assurance rises with the tier. The tiers are policy defaults that a domain can tighten.
+
+| Tier | Typical actions |
+|---|---|
+| CT0 | Reads and checks with no effect on authority state or the outside world |
+| CT1 | Reversible or low-value actions with a known recipient |
+| CT2 | Irreversible effects, effects on outside parties, new recipients, issuing delegations |
+| CT3 | Reserved actions, widening meta-actions, root and provider changes, break-glass use, high-value actions |
+
+Narrowing actions (revoke, adding a restriction, narrowing an Acceptance, terminating an Instance) are designed to be possible at CT1 assurance regardless of tier.
+
+## Grant lifecycle
+
+| State | Meaning |
+|---|---|
+| pending | Issued, not yet active |
+| active | In force |
+| restricted | A restriction overlay applies; it only adds DENY or requirements |
+| amended | A new revision with the same identity |
+| revoked, expired, renounced | Terminal. Everything derived from it becomes invalid from that moment. Only Grants naming their holder directly can be renounced |
+
+See [lifecycles](/access/docs/reference/lifecycles) for every state machine.

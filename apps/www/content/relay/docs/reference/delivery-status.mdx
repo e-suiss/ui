@@ -1,0 +1,163 @@
+---
+title: Delivery status
+description: Draft reference for Relay's planned delivery projection, internal state axes, channel evidence rules, unknown windows and reason codes.
+---
+
+> This is a draft reference. States, fields, windows and reason codes may change before release.
+
+Delivery state in Relay is derived from an append-only ledger. Ledger rows are never updated; every status shown by the API or in webhooks is a projection that can always be rebuilt from the ledger. A periodic rebuild test is planned to compare the projection with a fresh recomputation.
+
+## External projection
+
+The API and webhooks show this projection, not the internal model. It is designed to stay stable when the internal model changes; adding a value to `status` follows the API versioning rules.
+
+| Field | Values |
+|---|---|
+| `status` | `queued`, `sent`, `delivered`, `unknown_pending`, `unknown`, `failed`, `skipped`, `expired`, `cancelled` |
+| `engagement` | Separate timestamps for `seen`, `read`, `clicked` and `archived`; clicks are split into human and bot |
+| `reason`, `rule_id` | Required for `skipped`, `failed`, `expired` and `cancelled`; also present on deferrals |
+| `failure` | `kind` (`bounced`, `failed`, …), `class` (failure class), normalized code, `retryable` |
+
+| `status` | Meaning |
+|---|---|
+| `queued` | Accepted and waiting to send, including scheduled, deferred and rate-limited work |
+| `sent` | The provider accepted it; no conclusive delivery evidence yet |
+| `delivered` | The channel's delivery evidence arrived |
+| `unknown_pending` | The short window passed with no conclusive event; still waiting |
+| `unknown` | The long window passed with no conclusive event; a late event can still raise it |
+| `failed` | A conclusive failure, including bounces; `failure.kind` tells them apart |
+| `skipped` | Not sent because of a Relay decision |
+| `expired` | Passed its `expires_at` and was not sent |
+| `cancelled` | Cancelled before sending |
+
+There is no separate notification-level delivery status. A notification's delivery view is the list of its deliveries with counts per status. The workflow's run state (waiting, completed, cancelled) is a separate field.
+
+### Derivation rules
+
+1. If the delivery axis is `delivered` and there is no valid post-delivery failure, `status` is `delivered`.
+2. If there is a valid conclusive failure, `status` is `failed` and `delivered_at` is kept (for example, an email bounce that arrives after delivery).
+3. With no conclusive event, the window rules apply: `sent`, then `unknown_pending`, then `unknown`.
+4. A late conclusive event always raises `unknown_pending` and `unknown`. `unknown` can become `delivered` or `failed`.
+5. `skipped`, `expired` and `cancelled` are final, because nothing was sent.
+
+## Internal axes
+
+Internally a delivery is not squeezed into one state. Four axes answer separate questions:
+
+| Axis | Values | Written by | Monotonic |
+|---|---|---|---|
+| Attempt | `pending`, `in_flight`, `succeeded`, `failed`, `unknown` | Relay only | No; each attempt has its own lifecycle |
+| Delivery certainty | `none` < `accepted` < `delivered` | Evidence table | Yes; never decreases |
+| Failure kind | `skipped`, `failed`, `bounced`, `expired`, `cancelled`, plus failure class, `reason` and `rule_id` | Evidence table and policy decisions | Per channel rules |
+| Engagement | `seen`, `read`, `clicked`, `archived`, each with its own timestamp, source and (for clicks) human or bot class | Evidence table, inbox actions, SDK receipts | Each on its own; independent of delivery |
+
+Example: an SMS attempt times out at the provider (attempt `unknown`), a second attempt is accepted (delivery `accepted`), then the first attempt's late delivery report says `delivered`. The delivery becomes `delivered`; if both attempts were delivered, `duplicate_delivered` is flagged and stays visible.
+
+### Ordering and late events
+
+- The projection only moves forward. An update applies only if the new value ranks higher; otherwise the event is counted as late and still written to the ledger.
+- Events for the same delivery are reduced in this order: attempt number (an old attempt's late event cannot overwrite a newer attempt), then the provider's sequence number, then `occurred_at` and `received_at`, then source priority for the same attempt and event type (provider webhook, then provider API, then Relay).
+- Timestamps cannot be in the future: `occurred_at` must be no later than `received_at` plus one hour.
+- Conflicting evidence sets `has_conflict`.
+
+### Failure after delivery
+
+Whether a failure can follow `delivered` is defined per channel (`after_delivered`):
+
+| Value | Effect | Example |
+|---|---|---|
+| `valid` | The failure applies; delivery stays `delivered` but the projection becomes `failed` | Asynchronous email bounce; a WhatsApp number that later becomes invalid |
+| `stale` | Written to the ledger; projection unchanged | An expiry that arrives after delivery |
+| `conflict` | Written; the delivery is flagged `has_conflict` | A permanent failure for a message already read |
+
+### Ledger event sources
+
+The `actor` of a ledger event is one of `relay`, `provider_api`, `provider_webhook`, `client_sdk` or `user`. `client_sdk` is a receipt sent by the app on the device (displayed, tapped); `user` is a human action. They are never mixed.
+
+## Channel evidence
+
+Each channel declares which events count as delivery evidence. Events are mapped through a versioned evidence table; an undefined event code is rejected, and an unmapped provider code leaves the projection unchanged, writes an `unknown_provider_code` event and raises an alarm. The raw provider code is always kept.
+
+| Channel | What `sent` means | `delivered` evidence | Engagement evidence | Signals that can drive decisions |
+|---|---|---|---|---|
+| Email | The provider or mail server accepted it | The provider's delivery event or a success DSN; a human click | Opens (unreliable), clicks (human or bot) | Human clicks only |
+| SMS | The provider accepted it | Delivery report `delivered` | None | None |
+| WhatsApp | The provider accepted it | The `delivered` event | `read` (the recipient may turn it off; its absence means nothing), interactive replies | `read` |
+| Push | The provider accepted it | Only a "displayed" receipt from the mobile or web SDK | SDK "displayed" and "tapped" receipts | SDK receipts |
+| In-app | — | The inbox item was committed | `seen`, `read`, `clicked`, `archived` | `seen`, `read`, `clicked` |
+| Webhook channel | — | The destination's success response | None | None |
+| Voice | The provider started the call | The provider's answered or completed event | Key-press reply, if any | None |
+
+Rules:
+
+- **Push.** Provider acceptance is never reported as `delivered`. Without an SDK receipt, a push stays `sent` and is shown as "accepted by provider". Push never becomes `unknown`, because there is no delivery report to wait for. Reports show acceptance rate and SDK-confirmed delivery rate separately.
+- **Reads prove only their own channel.** Reading in the inbox does not prove the SMS or push for the same notification was delivered.
+- **A human click proves email delivery,** even without a provider delivery event. Bot clicks and opens never count as delivery.
+- **Opens are never used** in any decision or as delivery evidence. Engagement events carry a `machine_open` flag for opens made by privacy proxies, caches and security scanners.
+- **Clicks are classified** as `human` or `likely_bot` using signals such as clicks seconds after delivery, all links clicked at once, known scanner IP ranges, user agent and request shape. Reports show human and bot clicks separately.
+- **Tracking defaults.** Open pixels and link wrapping are off by default and can never be turned on for `security` messages or code and verification emails.
+
+## Unknown windows
+
+For channels that wait for a conclusive delivery event, two windows follow `sent`: when the short window passes the delivery becomes `unknown_pending`; when the long window passes it becomes `unknown`. Windows are data per channel and can be tightened or extended per channel, provider and tenant within limits.
+
+| Channel | Short window | Long window |
+|---|---|---|
+| SMS | 6 hours | 72 hours |
+| Email | 24 hours | 72 hours |
+| Push, in-app, webhook channel | Not applied | Not applied |
+
+Other channels, such as WhatsApp and voice, have their own planned values.
+
+- A late conclusive event (`delivered` or `failed`) is accepted whenever it arrives, written to the ledger and raises the projection.
+- `unknown`, or a reconciliation result of "not delivered", never triggers an automatic resend. Resending is a human or tenant decision, made with a new request.
+- `unknown` does not trigger fallback; fallback moves only on permanent failure. Time-based escalation runs independently and stops only on reliable signals.
+- Periodic reconciliation pulls the state of open deliveries from the provider and writes ledger events under the same rules.
+
+## Attempt and failure classes
+
+Attempt states: `pending`, `in_flight`, `succeeded`, `failed`, `unknown`. `succeeded`, `failed` and `unknown` are terminal for an attempt, and a terminal attempt state is never overwritten.
+
+Failure classes: `transient`, `permanent_target`, `permanent_content`, `policy`, `quota`, `auth`, `sender_config`, `unknown`. Retry and fallback behavior per class is described in [Architecture](/relay/docs/architecture#providers-errors-and-failover).
+
+## Reason codes
+
+Every skip, deferral and block comes from a single, versioned `rule_id` dictionary. Each rule ID maps to a `reason` code and to the place the rule is defined.
+
+| `reason` family | Example rule | Extra detail |
+|---|---|---|
+| `preference_off` | The user turned it off | The level that blocked it: category × channel, notification type, single object (`scope_key`) or weekly schedule |
+| `consent_missing`, `consent_revoked`, `iys_rejected` | No consent, consent withdrawn, no İYS consent or a stale İYS sync | Reference to the consent record |
+| `suppressed_address` | Suppression list: hard bounce, complaint, opt-out | Reference to the suppression record |
+| `quiet_hours_dropped` | Drop-during-quiet-hours policy | Recipient local time and time zone source |
+| `frequency_capped` | Frequency cap | The cap rule |
+| `duplicate_content` | Content deduplication window | Window and matching notification |
+| `scope_mismatch` | Undefined or mismatched sub-tenant | Requested scope |
+| `no_channel_variant` | No template variant for the channel | Template version |
+| `no_address` | No channel address or active device | — |
+| `no_permission` | No OS notification permission on the device | Device permission state |
+| `country_rule` | A compliance table rule | Country × channel × class row |
+| `channel_policy` | A class and channel rule, for example `otp_oob` never goes to email | — |
+| `tenant_suspended`, `sender_unverified` | Tenant or sender suspended, sender identity not approved | — |
+| `expired` | `expires_at` passed | — |
+| `cancelled` | A cancellation command or tombstone | The cancellation request |
+
+An operator stop control also produces a skip with its own reason code and the stop record's reason.
+
+Specific rule IDs mentioned elsewhere in these docs include `iys_not_configured`, `iys_stale`, `otp_channel_forbidden`, `send_mode_off`, `next_break` and `timing_ignored`.
+
+**Every skip is visible in three places:** the console, the `notification.suppressed` webhook event and metrics.
+
+### Deferrals
+
+A deferral (quiet hours, a `defer` frequency policy, a rate limit, a time window) is not a skip. The ledger records a `deferred` event with `reason`, `rule_id` and `deferred_until`; the projection stays `queued` and carries `deferred_until`.
+
+### "Why didn't I get it?"
+
+For a recipient and a time range, the console and the API are planned to show each notification's decision chain: which gates it passed, which rule stopped or deferred it at which level, and which channels were tried with which result.
+
+## Always-visible metrics
+
+These metrics are always produced and never hidden: `duplicate_delivered` and conflict counts, late events, `unknown_pending` and `unknown` rates per channel and provider, `unknown_provider_code` counts, funnel gaps, reconciliation delay, delivery report delay, and bot click rate.
+
+The delivery funnel runs: accepted, queued, sent to provider, accepted by provider, delivered, engaged. The primary delivery health metric is funnel completeness rather than error rate.

@@ -1,0 +1,143 @@
+---
+title: Security, privacy and compliance
+description: Relay's planned model for tenant isolation, identity, keys and secrets, stop controls, audit, data residency, retention and erasure.
+---
+
+Relay is designed so that its compliance and security rules fail closed, cannot be bypassed with a flag, and leave a record. This page describes that model as specified. Using Relay does not by itself make a sender compliant with any law; Relay applies its checks fail-closed and keeps evidence.
+
+## Tenant isolation
+
+- **Shared schema, scoped rows.** Every tenant table carries the tenant and environment as required columns that lead every primary key. Every uniqueness constraint includes them; there is no global uniqueness across tenants.
+- **Structural links.** Every reference between records includes the tenant and environment, so a record of tenant A cannot be linked to a record of tenant B.
+- **Row-level security as a second line.** Row-level security is enabled and forced on every tenant table. The tenant context is set only inside a transaction. A query without context does not return rows; the data access layer stops it with an error.
+- **Safe database role.** The application refuses to start if its database role is a superuser, can bypass row-level security, owns tables, or has delete or truncate rights.
+- **No existence leaks.** Access to another tenant's or environment's resource returns `404`.
+- **Tests.** Planned isolation tests include negative API tests generated from the endpoint list, property-based tests that no query returns another tenant's rows, a check that row-level security is on for every tenant table, nightly checks for rows without a tenant or orphaned rows, and a test that every table with personal data is covered by tenant closure and subject erasure.
+- **Cache and signal keys** carry the tenant and environment prefix.
+- **No cross-tenant use.** One tenant's data is not used for another tenant's analytics, model training or product development. Platform metrics carry no personal data or content.
+
+## Identity and access
+
+All identities come from Access. Relay keeps no user or password store and no API key system, and does not store client secrets.
+
+- **Operators** sign in with Access. Roles and permissions are kept in Relay, and every management action is audited.
+- **Step-up.** Sensitive operations ask Access for step-up authentication, and the result is written to the audit log with the action. Examples: reopening or loosening a stop control, rotating provider secrets or keys, revealing a recipient's personal data, changing İYS settings, releasing held agent notifications, retention and export actions, approving `critical` push priority, suspending a tenant, and changing roles or API clients.
+- **Loosening needs more authority than tightening.** Stopping, throttling, suspending and lowering quotas are fast and low-privilege. Reopening, loosening and raising quotas require higher authority and step-up.
+- **API clients** use short-lived Access tokens from OAuth 2.0 client credentials. Tokens are validated against Access signing keys, checking issuer, audience, expiry and not-before on every request, with an allow list of algorithms. Mutual TLS with certificate-bound tokens can be added for enterprise tenants. A revoked or suspended client is rejected immediately across all nodes.
+- **Subscriber tokens** are short-lived (planned default 15 minutes), narrowly scoped, asymmetrically signed, and obtained only by exchanging an Access token. Revoking one disconnects open real-time connections at once.
+- **Installation operators** cannot read tenant data by bypassing isolation. Support access happens on the tenant's behalf through a time-limited, audited delegation.
+
+## Keys and secrets
+
+- **One key store interface.** Keys and secrets are reached through a hardware-security-module interface (PKCS#11). Which module backs it is configuration; product behavior is the same.
+- **References, not secrets.** The database stores only a secret reference and version. Plain secrets are never written to the database, job arguments, logs or traces.
+- **Envelope encryption.** Each region has its own key store. The region key wraps per-tenant data keys, and secrets are encrypted with the tenant data key. Bring-your-own-key per tenant is an option.
+- **Provider signing keys stay in the key store.** Long-lived push signing keys are imported into the key store, and signatures are made there.
+- **Secrets are not readable back.** Webhook signing secrets, provider credentials and device tokens are never shown in clear after creation; only a fingerprint is returned.
+- **Rotation** requires step-up, is audited, and is applied without restarting.
+
+## Personal data protection
+
+- **Field encryption per person.** Addresses, profile fields, notification content and other personal fields are encrypted with a data key per person and per retention class (AES-256-GCM).
+- **Blind indexes.** Push tokens and addresses are not stored in plain text. Equality lookups, such as finding a row from a provider's "invalid token" response or checking suppression, use a keyed HMAC blind index whose key lives outside the database.
+- **Content minimization.** Delivery records store a digest of the rendered content plus template, layout and partial versions, not the rendered text. A tenant can turn on content storage, which is kept in a separate retention class. One-time codes and verification messages never have their rendered content stored. A per-message `retention: none` flag turns off content storage for that message.
+- **Masked raw responses.** Raw provider responses are kept in the ledger, with personal fields encrypted. In the console they are masked for unauthorized viewers; revealing them is an audited sensitive operation.
+- **Push payloads.** Payloads can be minimized so that they carry no content, but platform providers still see metadata such as the app, timing, size and headers. Minimization reduces this; it does not remove it.
+- **No tracking on security messages.** Open pixels and link wrapping are off by default everywhere and can never be turned on for `security` messages or code and verification emails. Single-use links are never consumed by a GET; a GET only shows a confirmation page.
+- **Device presence signals** (worn, locked, headphones, focus mode) are short-lived, expire on their own, are never written to the database, ledger or archive, and never reach other recipients, the tenant's server API, analytics, logs, metrics or traces.
+
+## Retention and erasure
+
+- **No physical deletion.** The application's database role has no delete, truncate or drop rights. Deletion is a soft delete with a status, a timestamp and a tombstone.
+- **Crypto-shredding.** A personal data erasure request destroys the person's data keys. Rows are soft-deleted and remain unreadable. The request also applies to queued work, scheduled sends, digest buffers and the inbox.
+- **Retention classes.** Personal data is grouped into retention classes: recipient profile, notification content, delivery records, commercial consent and sending records, and preferences. Retention periods and their legal basis follow a region × sector table shared with Access. In Turkey, commercial message consent and sending records are kept for 10 years.
+- **End of retention** is a soft delete plus crypto-shredding; old partitions move to a write-once cold archive and are not destroyed.
+- **Legally required evidence** is kept separately and with minimal data when a subject is erased.
+- **Suppression** records are kept as keyed digests of the identifier and are not destroyed on subject erasure, so an opted-out address stays opted out.
+- **Inbox defaults** (planned): last 1,000 visible items, 90 days active, 1 year archived, adjustable by the tenant within the retention table's limits.
+
+## Stop controls
+
+Relay has a single model for stopping traffic, keyed by five dimensions:
+
+| Dimension | Values |
+|---|---|
+| Scope | `platform`, `tenant`, `subtenant`, `campaign`, `workflow`, `api_client`, `sender` |
+| Channel | All, or one channel |
+| Target | All, a provider account, or a template |
+| Message class | All, or one class |
+| State | `on`, `off`, `canary` (percentage), `paused_until` (time) |
+
+- Every record requires a reason and a time-to-live; an open-ended stop needs a separate explicit approval.
+- The most restrictive record wins. If the platform is off, a tenant cannot be on.
+- Blocked work is **paused**, not cancelled: it is not deleted, not counted as an error and not retried automatically. Resuming is an explicit operator action, and on resume every message goes through the policy lattice again. Work that passes its `expires_at` while paused ends as `expired`. Bulk cancellation of paused work is a separate, audited action.
+- **Fail-safe.** If the state cannot be read, the last known state applies; a node that has never read the state does not send. An outage never lifts a stop on its own.
+- **`security` is excluded by default.** A stop with "all classes" scope still does not include `security`; stopping it is a separate, explicit choice with its own approval.
+- **Abnormal volume pauses automatically.** If the send rate of a tenant, campaign or workflow exceeds a threshold (planned default: 10 times its last-hour average), that scope is paused and the tenant and operations are alerted. Reopening is a human decision. This does not apply to `security`.
+- Every block is recorded with a `rule_id` and is visible in the console, in webhook events and in metrics.
+
+## Audit log
+
+- Relay keeps its own append-only **audit log** (`audit_log`) of human and administrative actions. The delivery ledger records what happened to messages; the audit log records what people did.
+- Integrity is protected by periodic signed Merkle checkpoints, published outside the system. The existence of a single entry can be proven with a Merkle inclusion proof without opening other entries. Changes made before a published checkpoint are detectable; a database-level change inside the window not yet covered by a checkpoint may not be detected.
+- The format and integrity model match the Access audit log, so one verifier checks both. Every entry carries the actor's Access identity and the related Access record number.
+- The application can only append through a write function. Reading the audit log is itself an audited event.
+- Audit records can be streamed or exported to a SIEM. The planned default retention is 400 days, extended by sector rules.
+
+Audited event families include stop controls, secret and key rotation, personal data reveals, İYS and compliance settings, agent cap releases, retention and export, publication and campaign actions, roles and API clients, `critical` priority approvals, and tenant changes.
+
+## Noisy neighbors and quotas
+
+- **Quota is rejected synchronously; rate limits slow work down.** An exhausted send quota returns `429 quota_exhausted`, which is not retryable. A rate limit never rejects accepted work; it slows it in the queue.
+- **Separate buckets.** `security` and bulk sends use separate quota buckets. When the quota runs out, `security` gets a limited extra allowance (planned default 10% of the quota), and the tenant and operator are alerted. Destination protections, such as SMS pumping detection, apply before that allowance.
+- **Per-class shares.** A tenant can cap a class's share of the quota, for example marketing at 80%.
+- **Concurrency limits** per tenant cover in-flight deliveries, concurrent waitpoints and queued work.
+
+## One-time codes
+
+Relay does not generate, store or verify codes. The sender chooses the subtype and assurance level. Relay applies:
+
+- the subtype's channel rules, so `otp_oob` never goes to email, even through fallback;
+- destination protections: per-number and per-number-block rate limits, a country allow list, SMS pumping detection with automatic stop;
+- a dedicated lane for codes that never shares a queue or provider account with campaigns.
+
+Codes are never scheduled, digested or delayed, are not carried in push payloads or previews, and expire only by the sender's `expires_at`.
+
+## Webhook and outbound security
+
+- Outbound webhooks are signed with Ed25519 by default (`v1a`); HMAC-SHA256 (`v1`) is available per endpoint for compatibility. Key rotation overlaps, so messages carry both signatures during the switch.
+- **SSRF protection.** Endpoints must use `https://` on port 443, URLs with credentials are rejected, and the real check happens at connect time: the hostname is resolved, the IP is checked against blocked ranges (private, loopback, link-local, documentation, multicast and cloud metadata addresses), and the connection is made to that verified IP. Redirects are not followed.
+- Delivery workers leave from a network segment with no access to internal services. Each region publishes fixed egress IPs that stay within the region.
+- Workflow `webhook` steps deliver only to registered endpoints, never to a URL computed from event data.
+
+## Templates and content safety
+
+- Templates render with a restricted, logic-only template language that cannot run code. There are no include tags and no file system access; undefined variables and filters are errors.
+- Templates see only allow-listed plain data: event data, declared recipient attributes, brand variables and helpers. Internal structures, tenant IDs and secrets never enter the template context.
+- Every render runs in a separate, time-limited process (planned: 50 ms for email, 10 ms for other channels). Output over a channel's limit is rejected, not truncated.
+- Promotional content in a transactional or informational template is rejected at publish time.
+
+## Cryptography
+
+| Use | Algorithm |
+|---|---|
+| Outbound webhook signatures | Ed25519 (`v1a`), HMAC-SHA256 (`v1`, compatibility) |
+| Push provider tokens and VAPID | ES256, signed in the key store |
+| Web Push content encryption | RFC 8291 `aes128gcm` |
+| Stored personal data | AES-256-GCM with a per-person, per-class key |
+| Blind index | HMAC-SHA256, key outside the database |
+| Subscriber tokens and signed links | EdDSA or ES256 signed opaque tokens |
+| Transport | TLS 1.2 or later (1.3 preferred); certificate checks cannot be disabled for provider connections |
+
+Rules: no home-grown cryptographic primitives; constant-time comparison for secrets and signatures; signatures always verified over the raw body bytes; signed and hashed structures use canonical serialization.
+
+## Data residency
+
+- Separate installations for Turkey, the EU and the US, with no data flow between regions.
+- The Turkey region is designed to run in-country, including backups and key backups.
+- Providers that process data outside the region are flagged in the console, and enabling one is audited. A tenant can require in-country providers only.
+- For tenants with in-country data obligations, a deployment guide is planned that recommends the Turkey region and in-country providers. It will state plainly that there is no push path to one major mobile platform that avoids that platform's own push service.
+
+## Supply chain
+
+Every release is planned to ship with a software bill of materials, a signature and provenance evidence. The service domain will publish an RFC 9116 `security.txt`.

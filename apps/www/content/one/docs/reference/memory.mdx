@@ -1,0 +1,195 @@
+---
+title: Memory record
+description: Draft reference for common record fields, MemoryRecord fields and values, relations, retention classes, forgetting and the export package.
+---
+
+> Draft reference. Field names, values and rules may change before release.
+
+Values on this page are given in English. They describe the meaning of each value; exact wire spellings are not part of this draft.
+
+## Common record fields
+
+Every canonical record carries these fields. Names are `snake_case`.
+
+| Field | Meaning |
+|---|---|
+| `id` | Opaque, permanent identifier. Encodes no place, region, device or model |
+| `owner` | Access reference to the person the record belongs to |
+| `domain` | Life area, plus an optional project label |
+| `data_class` | Data class |
+| `retention_class` | One retention class; see below |
+| `provenance` | Provenance label. A combined value takes the worst label |
+| `recorded_at` | Server-assigned record time |
+| `version`, `supersedes` | Version and link to the previous version |
+| `status`, `deleted_at` | Lifecycle state and soft-delete marker |
+| `produced_by` | The producer (you, One or a sub-agent instance), with a reference to the model and configuration version used |
+
+Records are never changed in place. A correction is a new version with `supersedes`; the previous version becomes invalid.
+
+## Relations
+
+| Relation | From | To |
+|---|---|---|
+| `derived-from` | Memory record; routine; goal | Episode, observation; evidence records |
+| `about` | Memory record | Person reference, goal, routine, place or external object |
+| `supersedes` | New version | Previous version (not retroactive) |
+| `serves` | Task, suggestion, routine suggestion | Goal |
+| `concerns` | Interaction | Task, memory record, routine, goal, or another product's object |
+| `references` | Any One record | An Access, Work, Relay, Executor or Pay object, or an external source |
+
+No relation carries authority.
+
+## Storage shape
+
+| Table | Content |
+|---|---|
+| Episode | The raw input unit a record is derived from: a conversation fragment, an explicit "remember this", a reference to an event read from a connected source, an imported item. Carries source kind and provenance |
+| Fact | A typed memory record linked to one or more episodes |
+| Relationship | A typed, bitemporal edge between two entities ("manager of, since a given month"), linked to one or more episodes |
+
+A record whose source cannot be shown is not written. Every vector carries the name and version of the embedding model that produced it; vectors from two model versions are never mixed in one search.
+
+## `MemoryRecord` fields
+
+| Field | Values | Notes |
+|---|---|---|
+| Content type | preference, routine, goal, constraint, relationship, personal fact, opinion, event | Extensible; each new type maps to a core type |
+| Epistemic state | said, observed, inferred, hypothesis, verified, invalid | How One knows it |
+| Layer | event, consolidated fact, behaviour rule | |
+| Time kind | permanent, for now, seasonal, one-off, in the past | |
+| Valid time | `valid_from`, `valid_to` | When the fact was true in the world |
+| Record time | `recorded_at`, `superseded_at` | When One learned it or superseded it |
+| Source episodes | Episode references | Cannot be empty |
+| Source kind | user statement, user behaviour, connected source, external content, import | Feeds confidence and provenance |
+| Evidence | Observation count, ratio, first and last observation, conflicting records | Confidence is computed from this |
+| Alternative explanations | Typed list of candidates | When there is more than one reading |
+| Life area and project | One or more areas, optional project | Retrieval filter |
+| Sensitivity class | normal, or a sensitive class | Sets retention class and gates |
+| Lifecycle state | candidate, active, not in use, permanently forgotten | |
+| Usage restriction | Empty, or "only for this area or project" | |
+| Version | `supersedes` reference | Correction chain |
+
+### Epistemic states
+
+| State | Meaning |
+|---|---|
+| said | You said it |
+| observed | Seen directly in your behaviour |
+| inferred | Derived from observations |
+| hypothesis | Untested inference with more than one explanation |
+| verified | Confirmed by you, or by independent evidence from a different source |
+| invalid | Replaced, or corrected by you |
+
+Imported and externally derived records arrive as candidates; their epistemic state reflects how One knows them (usually hypothesis), not what the source claimed. Two pieces of evidence from the same source count as one.
+
+### Layers
+
+| Layer | Meaning | Write rule |
+|---|---|---|
+| event | Something that happened at a point in time | Written automatically in the background |
+| consolidated fact | Lasting knowledge merged from events | Written automatically for normal classes |
+| behaviour rule | How One should behave | Only proposal, then your acceptance, then a new version |
+
+### Time kinds
+
+| Kind | Behaviour |
+|---|---|
+| permanent | No estimated end |
+| for now | An estimated end; at the end, a one-line confirmation question |
+| seasonal | Retrieved according to its season |
+| one-off | Does not change the lasting preference |
+| in the past | Not used as a fact for present-tense questions |
+
+### Confidence classes
+
+Confidence is computed from evidence with a versioned formula pinned by test vectors. When the formula changes, existing confidences are recomputed and the change is recorded. Users see a class, not a number.
+
+| Class shown | Condition |
+|---|---|
+| "You told me" | said, or verified by you |
+| "I think so" | observed or inferred, above the threshold |
+| "I'm not sure" | hypothesis, or below the threshold |
+| "I saw it in a source, not verified" | candidate from external content |
+| "Imported, not verified" | candidate from an import |
+
+## Write paths
+
+| Path | Result |
+|---|---|
+| Explicit "remember this" | active, said |
+| Background inference, normal class | active; listed in "recently learned" |
+| Background inference, sensitive class or behaviour rule | candidate until you confirm |
+| External content | candidate; lasting only with your confirmation (labelled `user.memory`) or independent second evidence (labelled `one.inferred`); never a behaviour rule |
+| Import | candidate, "imported, not verified"; never enters personal training |
+| Behaviour rule proposed by One | candidate; active once you accept |
+
+## Life areas
+
+work, health, finance, relationships, home, travel, shopping, learning, leisure, general.
+
+The list is fixed. You add projects under one or more areas, not new areas. A closed project is archived and excluded from retrieval until reopened.
+
+## Retrieval pipeline
+
+| Step | Rule |
+|---|---|
+| 1. Task area | Limit to the task's area and project, plus general |
+| 2. State filter | Drop candidate, not in use, permanently forgotten and invalid records; apply usage restrictions |
+| 3. Policy gate | Sensitive-class consent and sharing preferences, evaluated with the shared restriction language |
+| 4. Opinion filter | Leave out opinion records for factual questions |
+| 5. Search | Hybrid lexical, vector and relationship traversal |
+| 6. Ranking | Relevance, decay priority, confidence, time kind |
+| 7. Smallest subset | Fewest records the task needs |
+| 8. Presentation | Marked data block; each line labelled with content type, epistemic state, confidence class and conflict flag |
+
+Only the output of step 7 reaches a cloud language model.
+
+## Forgetting
+
+| Verb | Effect | Reversible |
+|---|---|---|
+| Correct | New version; the old one becomes invalid | Yes |
+| Don't use | Record kept, state "not in use"; excluded from retrieval and training | Yes |
+| Forget permanently | The record key and every wrapped copy are destroyed; the content and its derivatives become unreadable | No |
+
+Forgetting permanently covers the record content, episode content belonging only to it, derived consolidated facts and summaries, text views, embeddings and device caches. Each record and its derivatives are encrypted with their own record key, wrapped by the person and retention-class data key; other records are unaffected. The skeleton (identifier, state, time of destruction) remains; content, content type and source do not. A personal adapter that saw the record is retrained from the remaining memory, the old version's key is destroyed, and the old adapter is not used meanwhile.
+
+Single-record forgetting needs a clear in-app confirmation. Forgetting a life area or all memory happens on the Access approval surface with strong authentication and is never started by One.
+
+## Retention classes
+
+| Class | One data |
+|---|---|
+| `one_memory` | Memory records, episodes, behaviour rules, personality profile, life area and project definitions, tasks, attention decision records |
+| `one_sensitive` | Records in opened sensitive classes, under a separate data key; made unreadable as soon as consent is withdrawn |
+| `one_observation` | Raw audio, screen, camera and location; not kept by default |
+| `one_model` | Personal adapter and personal small models |
+| `one_provider_trace` | Which processor, region and sub-processor received which data class; metadata only |
+| `one_browser_profile` | Executor browser profile, cookies and snapshots; made unreadable when the bound Mandate or task ends |
+| `one_training_lineage` | Content-free lineage records for opt-in shared training |
+
+Embeddings, summaries, text views and device caches take the class of their source; a derivative of several sources takes the most restrictive one.
+
+## Export package
+
+| Part | Content |
+|---|---|
+| Memory records | All fields, including version chains |
+| Episodes | The raw inputs records came from; references for data kept at the source |
+| Personality profile and rules | Name, form of address, style, values, accepted behaviour rules and their versions |
+| Grant summary | A readable summary of the Grants and Mandates given to One and its sub-agents, read from Access at export time |
+| Connections | Connected accounts and capabilities, without secrets or tokens |
+| Task history | One's single-person tasks, their steps and results |
+| Personal adapter | Weights, base model name and version, training date, with a note that it will not work on another base model |
+| Text view | A human-readable form of the whole package |
+
+- The schema is open, versioned and defined in CDDL; the package is encoded as JSON. Schema versions are backward compatible, and readers skip fields they do not know.
+- Starting an export requires strong authentication. The package is delivered to your device, encrypted with your key. Sensitive classes are in a separate section you can leave out.
+- If Access is unreachable, the export job waits; an incomplete package is never produced.
+
+## Import
+
+- Sources: a One export package, other assistants' memory dumps (text or file), and direct transfer protocols through adapters.
+- Every imported record arrives as a candidate, "imported, not verified". Its content is data; command sentences inside it are not executed and cannot become behaviour rules.
+- Imported records never enter personal training, even after you confirm them.
+- You can confirm imported records in bulk per area; behaviour rules and sensitive classes are confirmed one by one.

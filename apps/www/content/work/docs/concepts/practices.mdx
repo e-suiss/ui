@@ -1,0 +1,117 @@
+---
+title: "Practices"
+description: "Practices are optional, declarative domain templates that add vocabulary, subtypes, role labels and restricting policy on top of the fixed core."
+---
+
+The core of Work is fixed. A profession, team or way of working adds its own language with a **Practice**. A Practice never adds concepts, never grants authority, and is never required for work to exist.
+
+## What a Practice is
+
+A Practice is a **declarative** package that maps the working patterns of a domain (a clinic, construction, customer support, software, a law firm, field maintenance) onto the Work core: field schemas, vocabulary, subtypes, restricting policies, role labels, view defaults and deterministic condition expressions.
+
+A Practice is not code, a plug-in, an executor skill, an agent persona prompt or an ontology extension. It carries no executable code.
+
+A commitment works as a boundary object: the common core everyone recognizes (who, to whom, what, under which conditions, by when) stays the same, and each team or profession adds its own fields and names through a Practice. The same commitment can show as a "consultation request" in a clinic and a "review request" in a software team; in the core, both are the same commitment.
+
+## What a Practice can contain
+
+| Content | What it defines | Tied to |
+|---|---|---|
+| Field schemas and facets | Typed fields added to work, commitments or records (a bed number, a part serial number, a customer plan) | Record body and extension fields |
+| Vocabulary | Domain names and translations for core concepts, operations, states and categories | Display names only; core names do not change |
+| Record subtypes | Typed Declaration, Claim and Act subtypes ("surgical consent obtained", "sensor reading") | The mapping rule below |
+| Condition subtypes | Wait and dependency subtypes ("waiting for lab result" as an external event; "building permit" as a third party) | Core wait and dependency types |
+| Timing relations | Finish-to-start, start-to-start, finish-to-finish, start-to-finish, with lags | An extension of the core flow dependency |
+| Clock definitions | Business calendars, warning and breach tiers, start and finish deadlines, declared pause conditions | The commitment's time Condition |
+| Distribution policy | Push, pull, bidding, skill or capacity; pool and queue defaults | The assignment axis |
+| Escalation policy | Recipient tiers, durations, repeat limit, skipping empty tiers, final-tier behaviour; ready-made chains a tenant can pick | Work's escalation policy; channel and timing in Relay |
+| Periodic update patterns | Recurring report commitments such as "a status report every day at 17:00" | The periodic update commitment type |
+| Role labels | A role name and its meaning in the work, linked to an Access role | See below |
+| Restricting policies | Extra conditions and gates ("a medication change needs a second physician's approval"), required evidence types | Can only narrow |
+| Views and defaults | Domain views, columns, groupings, display names for summary categories | Derived views; canonical state does not change |
+| Condition expressions | Rules such as "approval is needed above an amount threshold" | See below |
+
+## Every subtype maps to the core
+
+Every subtype a Practice defines maps to exactly one core type: each record subtype to one kind (Act, Declaration or Claim) and one of its core subtypes; each wait subtype to one of the nine core wait types and to internal or external; each dependency subtype to one of the four core dependency types; and each state name to one of the fixed summary categories. The mapping is part of the subtype definition and is published with the signed Practice. A Practice with an unmapped subtype, one mapped to several core types, or one mapped to a core type that does not exist cannot be adopted.
+
+A Declaration subtype can create only the normative effect of the core operation it maps to. A Claim subtype can create no normative effect. A subtype can add fields and narrow, but cannot loosen the core operation's preconditions, acceptance rules or authority requirements.
+
+Attention ranking, clocks, escalation, reports, cross-organization mapping and automation all look at the **core type and category** a subtype maps to, not at its name. Two teams or organizations using different Practices therefore see the same work with the same meaning, and a client that does not know a Practice still behaves correctly.
+
+Every extension point (subtype, field, enum value, view) is namespaced (an absolute HTTPS URI on the wire), typed and versioned. Enums can grow, but every added value maps to a core category, and a client that sees an unknown value shows it as that category.
+
+## What a Practice cannot do
+
+| A Practice cannot | Why |
+|---|---|
+| Add canonical concepts or relations | The nine concepts and eight relations are fixed; new capabilities are typed subtypes, Condition types or derived views |
+| Grant or widen authority | Authority lives in Access |
+| Skip or loosen Conditions or gates | Practice policy only narrows |
+| Hide the accountable party, a pending decision or an attention signal | Accountability and attention are core guarantees |
+| Widen visibility implicitly | Visibility never widens implicitly |
+| Make work depend on it to exist | Free work can always be opened |
+| Run code, or reach the network or external systems | Determinism and security |
+| Turn on per-person performance monitoring | That is only possible by organization policy, and visible to the person |
+| Use an agent's self-reported confidence in ranking | Attention ranking uses external signals only |
+
+## Role labels
+
+A role name and its meaning in the work is a **label** in the Practice ("on-call physician" in a clinic, "site manager" in construction, "second line" in support). The role's **authority** (what it can do or approve) is defined in Access. The Practice links the label to an Access role by its identity, never a copy. A Practice cannot give a role authority it does not have in Access, and when the Access role changes, the label follows without any Practice change. A label not linked to an Access role is display only; no gate, acceptance or policy can rely on it.
+
+A role label shows in which capacity a party takes part: it is the role value of the `engaged-in` relation, which carries no obligation. A label never makes anyone an obligor, accountable party or approver by itself. A Practice can define a **default** based on a label ("for this kind of work, the acceptor is whoever holds the on-call physician role"); when the commitment is created, a declared rule resolves the default to a single party, and the resolution is recorded and visible. A group or role can never be the acceptor, obligor or accountable party without being resolved.
+
+## Optional and explainable
+
+- **Practices are optional.** Free work can always be opened, and the core works on its own. A Practice can be adopted later without retroactive effect. A work item can leave a Practice; its fields and subtypes stay readable in history and stop applying to new records.
+- **A required field needs a reason.** No field is required unless it benefits whoever enters it. A Practice that makes a field required must say why ("to evaluate the acceptance criterion", "to start the clock", "statutory record"). For people, a missing required field becomes a suggestion and, if needed, an information wait, never a form error that blocks the work. An agent cannot perform the typed operation with the field missing.
+- **Every effect is explainable.** Each effect of a Practice (a required field, an added Condition, a gate, a clock, a default assignment, a role resolution, a view) shows its source: which Practice, which version, which rule, which input. "Why is this locked?" and "why does this need approval?" can always be answered, narrowed to what the reader is allowed to see.
+- **Deviation is not an error.** Departing from a Practice's coordination rule (a suggested order, a default distribution, a suggested checklist) is a recorded event with a reason. Restricting policies and gates cannot be bypassed this way. A rule people keep departing from produces a signal suggesting a change, aimed at the rule, not the person.
+
+## Adoption, versions and composition
+
+A Practice is namespaced, signed and versioned, and uses the same encoding and signature profile as records. It is adopted explicitly with a Declaration recording who adopted which version, for which scope (one Work, a ledger or an organization), with which authority; the authority to adopt comes from Access. Adoption history is part of the exportable records.
+
+Adoption is pinned to a version, and records carry the Practice versions that affected them. Moving to a new version is an explicit adoption Declaration with no retroactive effect: old records are read under the old version, and the transition record says how new rules apply to open commitments. A publisher cannot change a published version; a fix is a new version.
+
+Several Practices can apply to the same work, for example the organization's general Practice, a team Practice and a profile shared with a partner organization. Restricting policies apply together, and one cannot widen what another narrowed. Where two Practices conflict, nothing is resolved silently: a Claim and a decision gate are opened and an authorized party decides. Two Practices cannot define the same namespaced subtype differently; the namespace belongs to the publisher.
+
+The same records, protocol version, adopted Practice versions and trust and policy inputs always give the same normative result. No Practice rule can depend on outside state, randomness or network calls; its only time input is ledger time.
+
+## Condition expressions
+
+Practice rules and policy conditions (distribution, aggregation and escalation tier conditions, restricting policies) are written in the same restriction rule language Access uses, and evaluated by the same shared engine. A rule returns one of three results: `NO_OBJECTION`, `DENY` or `REQUIRE`. For example, "approval is needed above an amount threshold" returns `REQUIRE` (a gate is needed) once the threshold is passed.
+
+Rules only restrict and set conditions (a gate is needed, it cannot start, four eyes are needed); they never produce authority, and `NO_OBJECTION` is not permission. A rule reads only records and declared inputs, with no side effects, I/O or network access. Its evaluation cost is bounded and checked when the Practice is adopted; exceeding it at run time is a reasoned rejection, and an evaluation error counts as `DENY`. The same engine gives the same result on the server, on the client and in an independent verifier.
+
+Writing rules needs no coding. A visual editor ("if the amount exceeds this, approval is needed"), YAML and an SDK all compile to the same rule, and the "why does this need approval?" explanation uses the same format as Access.
+
+## Definition, capability, plan and actual
+
+Practices and executor reports keep four layers apart:
+
+| Layer | Meaning | Where it lives in Work |
+|---|---|---|
+| Definition | How this kind of work gets carried out (steps, required evidence) | The Practice |
+| Capability | Who or what can do it | The doer's capability Claim; authority in Access |
+| Plan | This doer's plan for this work | A Claim or Reference; not binding |
+| Actual | What really happened | Act and Claim records |
+
+Only what was promised binds. A definition or a plan never counts as what actually happened.
+
+## Profiles between organizations
+
+A shared profile for work between two organizations (which subtypes, which fields, which acceptance criteria) can be expressed as a Practice that each side adopts separately in its own ledger. One side's Practice never applies to the other side automatically.
+
+## Examples
+
+These examples show how the same core looks in different domains.
+
+| Domain | What the Practice adds | What it is in the core |
+|---|---|---|
+| Clinic | "Consultation request", an "on-call physician" role label, a "waiting for lab result" wait subtype, a 30-minute response clock | A commitment request; an `engaged-in` role value plus an Access role; an external event wait; a time Condition |
+| Construction | A "curing time after pour" finish-to-start plus 7 days relation, a "building permit" wait subtype, a "site manager" label | A flow dependency extension; a third-party wait; a role label |
+| Customer support | A "second line" queue, skill-based distribution, first response and resolution clocks, a "waiting for customer reply" pause condition | An owned queue; a distribution policy; start and finish deadlines; a declared pause with the waited-on party addressed |
+| Software | "Review request", a "build result" Claim subtype, a "merge approval" coordination gate | A commitment request; a Claim; a coordination gate |
+
+None of these adds a concept, a relation or authority. Without a Practice, the same work can be opened as free work.

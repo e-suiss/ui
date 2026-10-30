@@ -1,0 +1,137 @@
+---
+title: Identifiers, events and enums
+description: Draft reference for Relay's planned ID format and prefixes, event naming, event catalog entries, headers and shared enumerations.
+---
+
+> This is a draft reference. Prefixes, names and values may change before release.
+
+## ID format
+
+External IDs are a type prefix plus 26 lowercase Crockford base32 characters encoding a UUIDv7:
+
+```text
+ntf_01jb8x2k4m6n8p0q2r4s6t8v1b
+```
+
+- Time-ordered, case-insensitive and URL-safe.
+- The prefix identifies the type and is checked when the ID is resolved.
+- IDs are opaque; do not parse them.
+- Record time comes from the database clock.
+
+| Prefix | Object |
+|---|---|
+| `ten_` | Tenant |
+| `stn_` | Sub-tenant |
+| `sub_` | Subscriber (human recipient) |
+| `agt_` | Agent recipient |
+| `rcp_` | Recipient, without saying which kind |
+| `evt_` | Event (intake) |
+| `ntf_` | Notification |
+| `dlv_` | Delivery |
+| `att_` | Delivery attempt |
+| `dle_` | Delivery ledger event |
+| `oev_` | Outbound event |
+| `wfl_` | Workflow |
+| `tpl_` | Template |
+| `wp_` | Waitpoint |
+| `wpr_` | Waitpoint reply |
+| `mbx_` | Mailbox |
+| `mbr_` | Mailbox record |
+| `dlq_` | Dead-letter record |
+| `fan_` | Fan-out or batch |
+
+Workflows are addressed in the API by their readable key (slug), such as `order-shipped`, not by ID.
+
+## Event naming
+
+- Every event name has the form `noun.verb_past` and lives in one catalog. One concept never has two names; for example, `cancelled` is the only spelling.
+- The catalog is written as AsyncAPI 3.1 with JSON Schema 2020-12. Each event type's schema is versioned, and a schema change opens a new version of that type.
+- The same catalog feeds the webhook portal, SDKs and webhook verifiers.
+- A tenant's own event types for the `webhook` channel use the same catalog structure, scoped to the tenant.
+
+### Events mentioned in these docs
+
+| Event | Meaning |
+|---|---|
+| `notification.suppressed` | A notification or delivery was not sent; carries `reason` and `rule_id` |
+| `notification.render_failed` | Rendering failed; carries `failure_reason` |
+| `device.reassigned` | A device token moved to another subscriber |
+| `device.unregistered` | A device token was disabled after a permanent failure |
+| `address.disabled` | An address was disabled after a permanent failure |
+| `waitpoint.created` | A waitpoint was opened |
+| `waitpoint.escalated` | An escalation tier ran |
+| `waitpoint.resolved` | A valid reply was recorded |
+| `waitpoint.expired` | The deadline passed |
+| `waitpoint.cancelled` | The waitpoint was cancelled |
+| `waitpoint.stalled` | The waiter's heartbeat stopped |
+| `waitpoint.response_rejected` | A reply was rejected |
+| `agent.ceiling_exceeded` | An agent exceeded its send cap |
+| `mailbox.record_dead_lettered` | A mailbox record exceeded its redelivery count |
+| `mailbox.abuse_reported` | A recipient reported a message as abuse |
+| `webhook.attempt_exhausted` | A webhook message used up its retry schedule |
+| `webhook_endpoint.disabled` | A webhook endpoint was disabled |
+| `webhook_endpoint.recovered` | A webhook endpoint recovered |
+| `inbox.item_created` | Real-time: a new inbox item |
+| `inbox.item_updated` | Real-time: an inbox item changed |
+| `inbox.items_bulk_updated` | Real-time: a bulk inbox operation |
+| `inbox.counters_changed` | Real-time: new counters |
+| `stream.resync_required` | Real-time: the client must resync |
+
+The definitive list is the published event catalog.
+
+## Headers
+
+| Header | Direction | Meaning |
+|---|---|---|
+| `Authorization: Bearer` | Request | Access token or subscriber token |
+| `Idempotency-Key` | Request | Required on every mutating request |
+| `Idempotency-Replayed` | Response | `true` when the response is a replay |
+| `Request-Id` | Response | On every response |
+| `Relay-Version` | Request | Dated API version, `YYYY-MM-DD` |
+| `Relay-Beta` | Request | Turns on a beta feature |
+| `Relay-Batch-Max-Events` | Response | Batch row limit |
+| `Relay-Batch-Max-Recipients-Per-Event` | Response | Recipients per event limit |
+| `RateLimit`, `RateLimit-Policy` | Response | Rate limit state and policy |
+| `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset` | Response | Rate limit state, for compatibility |
+| `Retry-After` | Response | Delta seconds |
+| `Deprecation`, `Sunset`, `Link rel="deprecation"` | Response | Version retirement notices |
+| `webhook-id`, `webhook-timestamp`, `webhook-signature` | Outbound webhook | Signature profile |
+| `webhook-delivery: abort-message` | Consumer response | Stop retrying this message |
+
+## Shared enumerations
+
+| Name | Values |
+|---|---|
+| Environment | `live`, `test` |
+| Region | `tr`, `eu`, `us` |
+| Tenant state | `active`, `suspended`, `closed` |
+| Message class | `security`, `action_required`, `transactional`, `operational`, `social`, `marketing`, `system` |
+| Security subtype | `otp_oob`, `email_verification` |
+| Sender type | `human`, `system`, `agent` |
+| Priority | `low`, `normal`, `high` |
+| Channel | `push`, `email`, `sms`, `whatsapp`, `voice`, `in_app`, `webhook`, plus chat app channels |
+| Delivery status | `queued`, `sent`, `delivered`, `unknown_pending`, `unknown`, `failed`, `skipped`, `expired`, `cancelled` |
+| Delivery certainty | `none`, `accepted`, `delivered` |
+| Attempt state | `pending`, `in_flight`, `succeeded`, `failed`, `unknown` |
+| Failure class | `transient`, `permanent_target`, `permanent_content`, `policy`, `quota`, `auth`, `sender_config`, `unknown` |
+| Engagement | `seen`, `read`, `clicked`, `archived` |
+| Click class | `human`, `likely_bot` |
+| Ledger event actor | `relay`, `provider_api`, `provider_webhook`, `client_sdk`, `user` |
+| Decision | `send`, `skip`, `defer`, `digest`, `expire`, `cancel` |
+| Preference value | `opt_in`, `opt_out`, `unset` |
+| Consent state | `none`, `granted`, `revoked` |
+| Consent type | `explicit_opt_in`, `soft_opt_in`, `legitimate_interest`, `none` |
+| Recipient legal type | `individual`, `merchant` |
+| Device OS permission | `granted`, `denied`, `provisional`, `not_determined` |
+| Send mode | `live`, `shadow`, `dry_run`, `off` |
+| Timing | `immediate`, `next_break` |
+| On expire (`security`) | `drop`, `inbox_only` |
+| Workflow manager | `panel`, `code` |
+| Interaction kind | `notify`, `question`, `review` |
+| Waitpoint state | `open`, `stalled`, `resolved`, `expired`, `cancelled` |
+| Evidence level | `channel_claim`, `relay_session`, `access_aas_ref` |
+| Trust label | `authenticated`, `unauthenticated`, `spam`, `blocked` |
+| Mailbox record state | `available`, `leased`, `acked`, `dead_lettered`, `held` |
+| Webhook terminal state | `delivered`, `failed_permanent`, `exhausted`, `expired`, `window_exceeded`, `dead_lettered`, `cancelled` |
+| Webhook signature scheme | `v1a` (Ed25519), `v1` (HMAC-SHA256) |
+| Inbox item state | `seen`, `read`, `archived`, `hidden`, `snoozed` |

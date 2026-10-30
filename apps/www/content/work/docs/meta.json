@@ -1,0 +1,14 @@
+{
+  "title": "Work",
+  "pages": [
+    "index",
+    "concepts",
+    "architecture",
+    "security",
+    "---Reference---",
+    "reference/records",
+    "reference/state-machines",
+    "reference/api",
+    "reference/events-and-integrations"
+  ]
+}

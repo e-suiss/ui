@@ -1,0 +1,177 @@
+---
+title: Decision API
+description: Draft reference for the Access Decision Profile, the planned HTTP interface for decisions, batches, search and explanations.
+---
+
+This is a draft reference and may change before release.
+
+The decision interface is called the **Access Decision Profile (ADP)**. It profiles and extends the OpenID AuthZEN Authorization API 1.0: every AuthZEN field keeps its meaning, except where Access narrows it, and Access-specific members travel in the AuthZEN `context` objects. This page lists the semantically required fields. Exact member names and the JSON and CBOR encodings are not yet fixed.
+
+## Endpoints
+
+| Method and path | Status in AuthZEN | Use in Access |
+|---|---|---|
+| `POST /access/v1/evaluation` | Required | Single decision in `commit`, `continue` or `check` mode |
+| `POST /access/v1/evaluations` | Optional; supported | Batch of independent requests |
+| `POST /access/v1/search/subject` | Optional; supported | "Who can do Y?", eligible approvers, access reviews |
+| `POST /access/v1/search/resource` | Optional; supported | "What can X reach?" |
+| `POST /access/v1/search/action` | Optional | The actions a viewer may see |
+| `GET /.well-known/authzen-configuration` | Required | Discovery document derived from the domain metadata |
+
+The discovery document's `capabilities` array announces the ADP profile, the explain operation and consistency tokens. Its `signed_metadata` is signed with the domain metadata signature. The HTTPS and JSON binding is normative; endpoints include `v1`; member order is not significant.
+
+## Exercise request
+
+| Field | Required | Meaning |
+|---|---|---|
+| `domain` | Always | Target authority domain (DomainID) |
+| `mode` | Always | `commit` (relied-upon decision; ALLOW starts an exercise), `continue` (new decision on a running exercise), `check` (advisory; not recorded, not a promise) |
+| `nonce` | `commit`, `continue` | Key of the exercise identity. Unique within the domain; the same nonce with a different intent cannot be expressed |
+| Actor proof | `commit` and `continue` when an authenticated actor is needed | The Actor Intent Statement (below) |
+| `basis` | `commit`, `continue`; optional in `check` | Anchor root, Grant holding `⟨GrantID, holder, since⟩`, or a public Grant |
+| `capacity` | `commit`, `continue` | `own` or `for(PartyRef)`; must be allowed by the basis Grant's agency terms |
+| `intent` | Always | The intent envelope: action reference (namespace, name, version, schema digest), resource references with incarnation, typed authority-relevant parameters, digests of other parameters, recipient, purpose, context references, validity window |
+| `proofs` | When needed | Claims (inline or by ID), contribution exercise IDs, foreign authority proofs, authentication assertions |
+| `pep` | Always | The enforcement point's own authenticated identity, proven at the transport layer. Must match the audience in the actor's statement |
+| `reuse` | Optional | Request for a validity contract: desired horizon and checkpoint plan. Granting it is the domain's decision |
+
+AuthZEN carriers: `action` carries the action reference, `resource` the primary resource reference, and `context` everything else.
+
+### Actor Intent Statement
+
+A message-level statement signed by the actor Instance with its current key binding. It contains:
+
+- `domain` (the audience is the authority domain);
+- `nonce`;
+- the intent digest;
+- the enforcement point's audience;
+- `mode`;
+- `capacity`;
+- the basis reference;
+- the time;
+- in `continue`, the exercise ID.
+
+It travels in a standard JWS or COSE container as a `context` member. When the actor calls Access directly, HTTP Message Signatures may be used. DPoP, mutual TLS and workload proof tokens are **not** actor proofs: they bind a request or channel, not an intent digest and nonce.
+
+### Request rules
+
+1. **AuthZEN `subject` is derived.** Access derives the subject from the verified statement. Properties an enforcement point writes into `subject` are not authority input.
+2. **No statement means anonymous.** Only public Grants can then be evaluated. A plain AuthZEN enforcement point that does not know the profile can connect, but only benefits from public authority.
+3. **The enforcement point is not the actor.** If the statement's domain, nonce, intent digest, mode or audience does not match the request, the request is a protocol error and no exercise exists. A forwarded statement cannot be bound to another intent or nonce.
+4. **Basis and capacity are explicit.** If they are missing in `commit`, the request is malformed: nothing is evaluated or recorded, and the nonce is not consumed.
+5. **Idempotency.** The same nonce, intent digest and actor in a repeated `commit` returns the same decision record and does not consume again. The same nonce with a different intent digest is rejected. A DENY closes the nonce. A REQUIRE_ACTION keeps the nonce open; it is evaluated again when the missing proofs are added.
+6. **The domain comes from the signature.** A tenant claim in a token or context written by the enforcement point cannot choose the domain.
+7. **A resource is always required.** A check without a resource cannot be expressed.
+
+## Decision response
+
+| Field | When | Meaning |
+|---|---|---|
+| `decision` | Always | AuthZEN boolean: `true` exactly when the outcome is ALLOW |
+| `outcome` | Always | `ALLOW`, `DENY` or `REQUIRE_ACTION`. There is no UNKNOWN |
+| `advisory` | `check` | Marks the answer as unrecorded and not a promise |
+| `exercise` | ALLOW in `commit` or `continue` | Exercise ID and decision record reference |
+| `validity` | When reuse was requested and granted | The validity contract |
+| `receipt` | ALLOW in `commit` or `continue` | The decision receipt |
+| `blockers` | DENY | The set of every failed check |
+| `unmet` | REQUIRE_ACTION | Each unmet requirement, with the eligible set as far as the requester may see |
+| `remediation` | DENY, REQUIRE_ACTION | A typed remediation code per blocker |
+| `evaluation_record` | A recorded DENY or REQUIRE_ACTION | Reference to the evaluation record (not an exercise) |
+| `basis_ref` | ALLOW and recorded decisions | Reference to the state basis. Readable within audit scope; an opaque token otherwise |
+| `causal_binding` | ALLOW with an upstream causal reference | `enforced` or `audit-only` |
+| `witnessed_through` | Derived reads | The witnessed position the read reflects |
+| `versions` | Always | Core specification, meta-schema and profile versions used |
+
+Blocker and requirement fields are listed in [decision codes](/access/docs/reference/decision-codes).
+
+## HTTP semantics
+
+| Situation | Response |
+|---|---|
+| DENY or REQUIRE_ACTION | `200` with `decision: false` |
+| ALLOW | `200` with `decision: true` |
+| Protocol error (malformed request, mismatched statement, missing basis or capacity in `commit`) | `400`. Not a decision |
+| The enforcement point may not call the decision point | `401` or `403`. Not a decision |
+| `5xx`, timeout or unparseable response | The enforcement point must not produce the effect |
+
+Mixing these up is a fail-open class of error. Rate limiters, caches and other components never turn a failure into ALLOW, and the protocol defines no "timeout means allow" option.
+
+Further carrier rules:
+
+- `X-Request-ID` is echoed and recorded as context; it is never authority input.
+- Unknown AuthZEN carrier fields are ignored. ADP **must-understand** members are not: an unknown must-understand member results in DENY.
+- Enforcement points must authenticate. API keys are accepted only for enforcement points that use public authority alone.
+- Payloads follow I-JSON and UTF-8. Authority-relevant numbers are integers in a declared unit; floating-point values never express an authority bound.
+- `reason_user` carries the requester-scope view (blocker classes, positions, remediation codes; no free text). `reason_admin` is present only when the calling enforcement point has audit authority.
+
+## Idempotency keys
+
+Management endpoints may accept an `Idempotency-Key` header, mapped deterministically to the meta-action's nonce:
+
+| Case | Result |
+|---|---|
+| Key missing where required | `400` |
+| Same key, same intent | The same decision record |
+| Same key, different intent | `422` |
+| Same key while the first request is still in flight | `409` |
+
+A key is at most 255 characters and must not contain personal data. Only a protocol error can be retried as a fresh attempt; a key that received DENY returns the same DENY record.
+
+## Consistency tokens
+
+`context.consistency_token` carries an `at_least(position)` or `as_of(position)` read class as an opaque token. It is meaningful only in `check`, search and explain. `commit` and `continue` always read the head of the log; a token never relaxes them.
+
+## Batch
+
+An `evaluations` call is a set of independent requests. In `commit` mode each item carries its own nonce and its own actor statement, and each ALLOW is its own exercise. There is no atomicity across items.
+
+| `evaluations_semantic` | In `check` | In `commit` or `continue` |
+|---|---|---|
+| `execute_all` | Allowed | The only allowed value |
+| `deny_on_first_deny` | Allowed; skipped items return "not evaluated", not DENY | Protocol error |
+| `permit_on_first_permit` | Allowed | Protocol error |
+
+Each item's result equals the result of the same request sent alone under the same consistency token.
+
+## Search
+
+Search is always a derived, advisory query and never creates an exercise. Results are limited to what the requester may see, including page totals. Planned limits:
+
+| Limit | Value |
+|---|---|
+| Hard deadline | 1 s |
+| Results per page | 1000 |
+| Pagination | Required (`page.next_token`; empty means the end) |
+
+If the deadline is exceeded the answer is an error, never a partial list. Under the same consistency token, every subject, action and resource that a resource search returns must also be allowed by `check`, and the reverse.
+
+## Explain
+
+Explain is an Access operation outside AuthZEN, announced in discovery. It builds a viewer-scoped proof of why something was allowed or denied: from the decision record for a past decision, or from an advisory evaluation for a hypothetical one, labelled accordingly. For each blocker it can return `relative_to_viewer`: `below-viewer`, `at-or-above-viewer` or `outside-viewer-lineage`. It never returns a raw decision tree to a requester.
+
+## Meta-actions
+
+Changes to authority use the same request with a core action in `intent.action`. The new content (for example the new Grant) travels as the intent's typed parameters.
+
+| Family | Actions |
+|---|---|
+| Grants | `grant.issue`, `grant.amend`, `grant.revoke`, `grant.renounce` |
+| Mandates | `mandate.*` (bind, rebind, revoke) |
+| Trust | `acceptance.*` (establish, amend, revoke) |
+| Policy | `policy.set` |
+| Anchors | `anchor.*` (create, transfer, retire) |
+| Domain | `domain.handover`, `domain.recover` |
+| Instances | `instance.*` (create, rekey, recover, terminate) |
+| Other | `party.register`, `claim.issue`, `contribute`, `consumption.release`, `projection.issue` |
+
+A management call without an actor proof cannot change authority state.
+
+## Continuation
+
+| Field | Meaning |
+|---|---|
+| `mode = continue` | A new decision on an existing exercise |
+| `exercise` | The exercise ID being continued |
+| Actor proof | A statement from the **same** Instance, bound to the exercise ID. An executing system cannot request a continuation on its own behalf |
+| `checkpoint` | An opaque checkpoint reference and, optionally, an attested progress claim |
+| `intent` | The same intent digest. A changed envelope needs a new `commit` |

@@ -1,0 +1,113 @@
+---
+title: Messages and delivery
+description: Events, notifications, deliveries, attempts, the delivery ledger, message classes and the protections against duplicate sends.
+---
+
+Relay separates "what happened" from "what was sent" and from "what the provider said". Each level has its own record, and they are never merged.
+
+## From event to attempt
+
+```text
+event ──► workflow (versioned steps) ──► notification (per recipient) ──► delivery (channel × target) ──► attempt (one external request)
+```
+
+| Level | Code name | Meaning | Example |
+|---|---|---|---|
+| Event | `event` | A "this happened" input, sent through the API or as a CloudEvent. Its type maps to a workflow. | `order.shipped` |
+| Notification | `notification` | The logical message for one recipient. Created once; its plan is fixed when it is created. | "Your order has shipped" for one recipient |
+| Delivery | `delivery` | The intent to send that notification on one channel to one target (an address, a device, the inbox, an endpoint or an agent mailbox) | The same notification as SMS, as push on each device and as an inbox item: separate deliveries |
+| Attempt | `attempt` | One request to a provider for a delivery | The second try of the SMS |
+| Ledger event | `delivery_event` | Any fact about a delivery or attempt: Relay's own events, provider responses, provider webhooks, device receipts, user actions | A delivery report, a hard bounce, an inbox read |
+
+Rules:
+
+- **A retry opens a new attempt; a fallback opens a new delivery.** Sending again on the same channel is a new attempt of the same delivery. Moving to another channel is a new delivery, linked to the previous one with `fallback_of`.
+- **A blocked target still opens a delivery record.** A delivery stopped by a rule appears in the delivery records with its reason, not hidden in a queue.
+- **One live delivery per channel and target.** For a given notification there is at most one live delivery on the same channel and target.
+- **"Was it sent?" is not "did the provider return 200?".** Provider acceptance and delivery are separate facts.
+
+## The fixed plan
+
+When a notification is created, Relay fixes its **plan** (`plan`): the template, layout and partial versions, address resolution, any experiment variant and the `dedup_key`. Later publications do not change it. Policy checks, by contrast, are evaluated again on every attempt. If the fixed version cannot be sent, Relay does not silently switch to a newer one; it records an explicit outcome and rule.
+
+## Message classes
+
+Every message gets one of seven fixed classes (`message_class`) when it is accepted. The class never changes after acceptance, and most rules follow from it.
+
+| Class | What it is for | Can the user turn it off? | Quiet hours | Digest | Priority lane |
+|---|---|---|---|---|---|
+| `security` | One-time codes, verification, security alerts | No, always locked | Sent through | No | Highest; never shed |
+| `action_required` | Requests that wait for a person's reply: agent questions, workflow approvals, sign-in approval invitations | Yes, unless the category is locked | Sent through | No | High |
+| `transactional` | The result of something the user started: order, payment, delivery, account change | Yes, unless locked | Deferred | No | High |
+| `operational` | System-initiated information: reminders, status changes, maintenance | Yes, unless locked | Deferred | Tenant chooses | Medium |
+| `social` | Other people's activity: comments, mentions, follows | Yes | Collected into a digest | Yes | Medium |
+| `marketing` | Commercial messages: promotions, campaigns | Yes | Deferred, plus legal sending windows and frequency caps | No | Lowest |
+| `system` | Invisible technical messages: silent push, badge sync, removal from other devices | Not shown in preferences | Not applied | No | Medium |
+
+Two `security` subtypes (`security_subtype`) carry codes and links:
+
+| Subtype | Use | Allowed channels |
+|---|---|---|
+| `otp_oob` | Second-factor or out-of-band code | SMS, WhatsApp, voice. Never email, including through fallback. |
+| `email_verification` | Sign-in by email, address verification, recovery | Email only |
+
+The sender chooses the subtype and the assurance level; Relay applies the subtype's channel rules. For these subtypes `expires_at` is required and rendered content is never stored. Relay does not generate, store or verify codes.
+
+## Category, sender type and subject
+
+Three axes are independent of one another:
+
+- **Category** (`category`): a product category the tenant defines, such as "orders" or "comments". Each category is bound to a single class. It carries a default route, preference defaults, a frequency policy, a default expiry and an optional `locked` flag. In a locked category the user can choose channels but at least one channel stays on.
+- **Sender type** (`sender_type`): who produced the notification: `human`, `system` or `agent`. Agent-sent notifications are subject to a per-agent cap and are shown as agent-sent.
+- **Subject** (`subject`): the business object the notification is about, as `{type, id}`, for example `{order, 123}`. Notifications about the same subject update each other: collapse on the device, digest, and a single inbox item.
+
+## Expiry
+
+`expires_at` is the moment a notification stops making sense. It is required for one-time code subtypes and comes from the sender; other classes use the category default. Channel time-to-live values are derived from it. A notification that passes its expiry ends as `expired`, with a recorded reason, and is not sent.
+
+## Protection against duplicate sends
+
+Relay has four separate protections. None replaces another.
+
+| Protection | Guards against | Key | Lifetime |
+|---|---|---|---|
+| `Idempotency-Key` header | The same HTTP request repeated by accident, for example after a client timeout | Generated by the client | 24 hours, fixed by the server |
+| `dedup_key` | The same business event arriving again hours or days later, for example from an outbox retry | Derived by the producer from its own event ID | As long as the notification record is kept |
+| Content deduplication | A faulty client loop sending identical content to the same recipient on the same channel | Recipient + channel + content | A window; off by default except a short window for `operational` |
+| Delivery uniqueness | Opening two deliveries for the same notification, recipient and channel | Internal | Enforced as a database constraint |
+
+A legitimate new request, such as "send the code again", comes with a new idempotency key and a new `dedup_key`.
+
+The delivery promise is stated as **at-least-once delivery with durable idempotency**. Consumers of webhooks and mailboxes should deduplicate by message ID.
+
+## Delivery state, in short
+
+Internally Relay tracks four axes per delivery, all derived from the append-only ledger: the attempt, delivery certainty (`none` < `accepted` < `delivered`, which never goes down), the failure kind and engagement. Externally the API and webhooks show a simple projection: one `status`, engagement timestamps, and `reason` with `rule_id` when something was not sent.
+
+- `unknown_pending` and `unknown` are honest states: when a provider stays silent, Relay does not invent `delivered` or `failed`.
+- Push is never reported as `delivered` on provider acceptance alone. It needs a receipt from the app's SDK.
+- Email opens are never used as evidence or as input to any decision.
+- An `unknown` result does not trigger an automatic resend.
+
+The full status list, channel evidence table and reason codes are in [Delivery status](/relay/docs/reference/delivery-status).
+
+## A decision is not an error
+
+Policy outcomes, such as no consent, preference off, quiet hours, frequency cap or a stop control, are not API errors. The request is accepted with `202`, and the outcome is recorded on the notification and delivery as `skipped` or deferred, with a `rule_id`. Policy results come back synchronously only from preview, test and dry-run calls.
+
+## Send modes
+
+`send_mode` controls how a workflow or campaign runs, separately from the environment:
+
+| Mode | Behavior |
+|---|---|
+| `live` | Normal sending |
+| `shadow` | The whole pipeline runs with real limits and decisions, but the final provider call is skipped; the result is recorded |
+| `dry_run` | Decisions and rendering come back synchronously; nothing is queued and no delivery record is opened |
+| `off` | Nothing is sent; every notification is recorded as `skipped` with `send_mode_off` |
+
+The mode resolves from the most specific setting: tenant × category × channel, then tenant × channel, then tenant, then the installation default. A per-request mode is accepted only in the `test` environment.
+
+## Cancellation
+
+Any scheduled work can be cancelled: a `send_at` send, a wait step, a digest window, a recurring rule or a campaign. Cancellation only stops deliveries not yet handed to a provider. A sent SMS, email or push cannot be recalled. The one exception is the in-app inbox, where a delivered item can be retracted. See [HTTP API](/relay/docs/reference/http-api#cancellation).

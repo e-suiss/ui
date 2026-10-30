@@ -1,0 +1,16 @@
+{
+  "title": "Access",
+  "pages": [
+    "index",
+    "concepts",
+    "architecture",
+    "security",
+    "---Reference---",
+    "reference/decision-api",
+    "reference/decision-codes",
+    "reference/authority-algebra",
+    "reference/validity-contract",
+    "reference/records-and-signatures",
+    "reference/lifecycles"
+  ]
+}

@@ -1,0 +1,158 @@
+---
+title: Decision codes
+description: Draft reference for outcomes, blocker classes, positions, resolvers, remediation codes, unmet requirements and rejections.
+---
+
+This is a draft reference and may change before release.
+
+## Outcomes
+
+| Outcome | Encoded as | Carries |
+|---|---|---|
+| ALLOW | `allow` | `relied_on`: the IDs of the proofs the decision relied on, when any |
+| DENY | `deny` | `blockers`; in `commit` and `continue` also `unmet` when there are unmet terms |
+| REQUIRE_ACTION | `require_action` | `unmet` |
+
+There is no fourth outcome. Only `allow` permits an effect; a party that maps a decision to a boolean must map `deny` and `require_action` to `false`.
+
+### How the outcome is combined
+
+For one basis, the blockers come from its hops, its capacity check, the Mandate, restriction results and requirement resolution. Then:
+
+1. if there is any blocker, the outcome is `deny`, and unmet terms are listed as well;
+2. otherwise, if any requirement term is unmet, the outcome is `require_action`;
+3. otherwise the outcome is `allow`.
+
+In `check` mode several candidate bases can be evaluated in order. The first `allow` wins; otherwise the first `require_action`; otherwise `deny` with the union of all candidates' blockers and no unmet terms. With no candidate basis, `check` returns `deny` with a single `no-covering-authority` blocker at hop 0.
+
+## Blockers
+
+Each blocker carries a class, an optional subcode, a position, a resolver class and a remediation code.
+
+### Classes
+
+| Class | Meaning |
+|---|---|
+| `no-covering-authority` | A hop of the basis does not cover the intent, or was not understood |
+| `outside-instance-limits` | The actor Instance's Mandate does not cover the intent |
+| `restricted` | A restriction policy denies |
+| `budget-exhausted` | A budget along the lineage is short |
+| `ended` | A hop expired, has not started, was revoked or lapsed |
+| `capacity-mismatch` | The declared capacity is not allowed by the basis |
+| `source-not-accepted` | A proof would match, except that its issuer is outside the accepted source |
+| `schema-not-accepted` | The action's schema version is not accepted in the domain |
+| `nonce-closed` | The nonce cannot be used |
+| `foreign-status-unavailable` | The status of foreign authority cannot be obtained |
+
+The class set is closed. A new top-level class requires protocol governance. A reader that meets an unknown subcode reads the blocker as its class.
+
+### Subcodes
+
+| Subcode | Meaning |
+|---|---|
+| `ended/expired` | The hop's validity window has passed or not started |
+| `ended/revoked` | The hop was revoked |
+| `ended/lapsed` | The hop lapsed, or a while-condition no longer holds |
+| `restricted/policy:<ref>` | The denying policy, as unpadded base64url of its 16-byte reference |
+| `nonce-closed/pre-recovery` | The request's statement predates a forced recovery and its nonce is not in the continuing lineage |
+| `budget-exhausted/release-exceeds-draw` | A release would exceed what the exercise drew |
+
+### Positions
+
+| Position | Where the blocker sits |
+|---|---|
+| `hop(k)` | The k-th Grant from the requester's own (hop 0) toward the root |
+| `instance` | The actor's Mandate or Instance restrictions |
+| `anchor` | The anchor's root terms |
+| `domain-policy` | A restriction policy |
+| `foreign` | A foreign domain |
+| `actor-side` | The proofs the actor presented |
+
+The identity of a hop (Grant ID, grantor) is revealed only as far as the requester may see; otherwise only `hop(k)` is returned.
+
+### Resolvers
+
+The resolver says **which class** of party can remove the blocker, not which person: `grantor_of_hop(k)`, `root`, `restriction-owner`, `issuer`, `domain-admin`, `actor`, `actor-party`, `time`.
+
+### Remediation codes
+
+| Code | Meaning |
+|---|---|
+| `route-to-coordinator` | Someone else must act; route the request to the coordinator |
+| `refresh-claim` | Obtain a fresh or accepted claim |
+| `self-authenticate` | The actor can satisfy it by authenticating |
+| `wait_until(T)` | Wait until the given trusted time, for example a budget window reset |
+| `not-satisfiable-by-actor` | The actor cannot resolve it |
+| `new-request-required` | A new request with a new nonce is needed |
+
+Remediation codes are planning data, not instructions. There is no free-text field.
+
+### Blocker table
+
+| Condition | Class / subcode | Position | Resolver | Remediation |
+|---|---|---|---|---|
+| Hop does not cover the intent, or is not understood | `no-covering-authority` | `hop(k)` | `grantor_of_hop(k)` | `route-to-coordinator` |
+| Mandate does not cover the intent | `outside-instance-limits` | `instance` | `actor-party` | `route-to-coordinator` |
+| Restriction DENY | `restricted`, `restricted/policy:<ref>` | `domain-policy` | `restriction-owner` | `not-satisfiable-by-actor` |
+| Budget short, rolling window | `budget-exhausted` | `hop(k)` | `time` | `wait_until(resets_at)` |
+| Budget short, total window | `budget-exhausted` | `hop(k)` | `grantor_of_hop(k)` | `route-to-coordinator` |
+| Hop expired | `ended/expired` | `hop(k)` | `grantor_of_hop(k)` | `new-request-required` |
+| Hop not yet started | `ended/expired` | `hop(k)` | `time` | `wait_until(from)` |
+| Hop revoked | `ended/revoked` | `hop(k)` | `grantor_of_hop(k)` | `new-request-required` |
+| While-condition failed, or lapsed | `ended/lapsed` | `hop(k)` | `grantor_of_hop(k)` | `new-request-required` |
+| Capacity not allowed by the basis | `capacity-mismatch` | `hop(0)` | `actor` | `new-request-required` |
+| Proof issuer outside the accepted source | `source-not-accepted` | `actor-side` | `issuer` | `refresh-claim` |
+| Statement predates a forced recovery | `nonce-closed/pre-recovery` | — | `actor` | `new-request-required` |
+| Release exceeds draw | `budget-exhausted/release-exceeds-draw` | — | `actor` or `issuer` | `not-satisfiable-by-actor` or `refresh-claim` |
+
+`blockers` is a set: sorted by the bytes of each blocker's canonical encoding, with duplicates removed.
+
+## Unmet requirements
+
+Each element of `unmet` describes one requirement term that no acceptable set of proofs satisfied:
+
+| Field | Meaning |
+|---|---|
+| `proofKind` | `claim`, `contribution`, `authentication` or `foreign_authority` |
+| `class` | The claim or contribution class |
+| `count` | How many proofs are still missing |
+| `binding` | None, actor Instance, intent digest or resource |
+| `freshness` | Maximum age |
+| `independence` | Distinct Party, Instance or issuer |
+| `consumption` | Reusable or single-use |
+| `source` | Accepted issuers for a claim; for a contribution, the eligible set as far as the requester may see |
+| `position` | Which hop or policy the requirement came from |
+| `satisfiable_by_actor` | `false` when the term needs human presence and the actor is an agent |
+
+Identical terms from several hops, the Mandate or restrictions count once, at the position of their first occurrence (hops from 0 upward, then `instance`, then `domain-policy`).
+
+## Rejections
+
+A **rejection** is a reasoned refusal to evaluate. It is not a decision: it produces no record and consumes neither the nonce nor any proof. To an enforcement point it means only "there is no ALLOW".
+
+| Kind | Causes |
+|---|---|
+| `input` | Non-canonical encoding; a mismatch with the data model; an unknown field or choice; an assurance dimension or level outside the closed list; an exceeded limit; a selector with too many conditions; an inverted time window; a cyclic purpose order; a duplicate catalog, purpose entry or proof ID; a wrong number of bases in `commit` or `continue`; a restriction DENY naming another policy or version; an exhausted rolling budget without a reset time; the current time outside the intent's validity |
+| `fuel` | The evaluation cost budget is exhausted |
+
+The evaluator is given a fuel budget and spends one unit per hop checked, per restriction result and per comparison of one proof with one requirement term. Running out of fuel is never a decision.
+
+## Evaluation input
+
+The evaluator is a pure function of its input and fuel. Two conformant evaluators given the same input bytes return the same decision bytes. The input is prepared outside the evaluator:
+
+| Field | Meaning |
+|---|---|
+| `mode` | `commit`, `continue` or `check` |
+| `intent`, `intent_digest` | The intent envelope and its digest, computed by the preparing layer, never copied from the requester |
+| `now` | Trusted evaluation time |
+| `actor_instance` | The authenticated actor Instance, if any |
+| `actor_is_agent` | `true` when the actor Instance is a software agent |
+| `mandate` | The actor Instance's own limits, if any |
+| `capacity` | `own`, or `for` a Party |
+| `bases` | Candidate bases, each a list of hops from hop 0 toward the root, plus the capacities it permits. Exactly one in `commit` and `continue` |
+| `restrictions` | The result of each applicable restriction policy: `no_objection`, `deny` or `require` |
+| `proofs` | The proofs presented with the request |
+| `catalog` | Pinned action catalogs, reserved actions and the declared purpose order |
+
+Each hop carries the Grant's authority, its status if revoked or lapsed, whether its while-conditions fail, and the state of each budget it draws from. A hop whose stored Grant the reading layer did not understand is written as `{not_understood: true}` and covers nothing; it is never dropped.

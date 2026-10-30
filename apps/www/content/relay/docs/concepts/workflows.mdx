@@ -1,0 +1,140 @@
+---
+title: Workflows and routing
+description: Versioned workflows, the eight step types, route policies, channel escalation, digest, throttle, timing rules, topics and campaigns.
+---
+
+A workflow turns an event into notifications, and a route decides which channels each notification tries. Both are data, not code: nothing in a workflow calls customer code while it runs.
+
+## Workflow
+
+A **workflow** (`workflow`) is a versioned list of steps that defines what happens for one event type. Its user-facing name is the notification type, which is also a preference level.
+
+- **Three equal ways to write one.** A visual editor in the console, files (YAML or JSON with a JSON Schema) kept in version control, or code through an SDK. All three produce the same definition format, and none is more powerful than the others.
+- **One manager.** Each workflow is managed either from the console or from code (`managed_by: panel | code`). A code-managed workflow's structure cannot be changed in the console.
+- **Lifecycle.** Draft, then test, then publish. Rolling back to an older version is one action. Runs finish on the version they started with. A published version never changes.
+- **Identified by a slug.** Workflows are referenced by a readable key, for example `order-shipped`, not a numeric ID.
+- **Event schema.** Each workflow version owns a JSON Schema (2020-12) for its event data. Incoming data is validated against it at acceptance, and template variables are checked against it at publish time.
+
+## Steps
+
+There are eight step types:
+
+| Step | What it does | Limit |
+|---|---|---|
+| `channel` | Sends to one channel or to a route policy, with optional A/B variants and escalation | — |
+| `delay` | Waits for a duration or until a time | Up to 90 days |
+| `digest` | Collects events over a window into one notification | Up to 31 days |
+| `throttle` | Limits the flow per key with a threshold and a window | Up to 31 days |
+| `condition` | Branches | Simple rule language |
+| `wait_for_event` | Waits for a reply or event on a correlation key; built on the same waitpoint as agent waits | Up to 30 days |
+| `time_window` | Defers sending into a defined window, such as working hours in the recipient's time zone | — |
+| `webhook` | Delivers a signed event to one of the tenant's registered destinations | — |
+
+There is deliberately no step to fetch data, update data or call another workflow. Data the workflow needs comes with the event; chained flows are built with a `webhook` step and a new event sent back by the tenant.
+
+**Condition language.** A simple, deterministic rule language over the event data, recipient attributes declared in the schema, and the results of earlier steps (delivered, seen, clicked, throttled). It runs no code, makes no external calls and reads time only from event and run timestamps.
+
+## Route policies
+
+A **route** (`route`) is a named, reusable channel selection policy. It is a nested tree of `single` and `all` nodes: `single` tries in order and stops at the first success; `all` sends to every branch.
+
+```json
+{ "single": ["in_app", { "all": ["push", "email"] }] }
+```
+
+| Strategy | Meaning |
+|---|---|
+| Fallback | Moves to the next channel after a permanent failure |
+| Fan out | Sends to all channels in parallel |
+| Last active channel | Picks the channel the recipient engaged with most recently |
+| User preference | Picks the channel the recipient prefers |
+| Last active device only | Sends push only to the recipient's most recently active device |
+| Escalate unless seen | Moves to the next channel after a set time without engagement |
+
+Rules:
+
+- Every category has a default route; a channel step can choose another. Precedence is one-way: step over category.
+- The default fallback trigger is a permanent failure or an exhausted retry budget. A temporary error does not advance the chain. A time-based trigger is optional and must be explicit.
+- If a template has no variant for a channel, that channel is skipped with a recorded rule and a `single` node moves on.
+- By default a notification goes to all of the recipient's active devices. Reading it on one device marks it read on the others. A device with an active real-time connection receives it in real time instead of by push.
+- For producers such as Access and Work, the recipient list belongs to the producer. Relay does not widen or narrow it; it only chooses channels and timing.
+
+## Channel escalation
+
+Channel escalation sends to the same person on another channel. It is turned on deliberately with `escalate_unless(seen | read | clicked | event)`, and each stage has its own delay. Example: in-app first; push after 10 minutes if not seen; email after an hour if not clicked. When the stop condition arrives, remaining stages are cancelled.
+
+Only reliable evidence stops escalation: an in-app "seen", a human email click, a push receipt from the app's SDK, or an event from your system. An email open never stops it, and a click classified as a likely bot does not count.
+
+## Escalation policy
+
+An **escalation policy** (`escalation_policy`) moves a pending request to other people. Each tier defines a delay and a new recipient, a more interruptive channel, or both. It shares the same timer mechanism as channel escalation.
+
+The final tier only emits an event, `waitpoint.expired`. Relay never auto-approves or auto-rejects. That decision belongs to the owner of the wait, or to a default response declared when the wait was opened. In the suiss ecosystem the policy comes from Work and Relay applies it. See [Agents](/relay/docs/concepts/agents).
+
+## Digest
+
+A **digest** (`digest`) collects events over a window into one notification.
+
+| Field | Meaning |
+|---|---|
+| `key` | Opaque grouping key; the recipient is always part of it |
+| `mode` | `fixed` (first event opens a fixed window), `sliding` (each new event extends it) or `scheduled` (daily or weekly in the recipient's time zone) |
+| `debounce` | In `sliding` mode, how long to wait after the last event |
+| `max_wait` | The longest the window may stay open after the first event |
+| `schedule` | Calendar expression for `scheduled` mode |
+| `max_items` | Closes the window early when reached |
+| `leading` | `immediate` sends the first event at once and groups the rest; `none` sends everything at the end |
+
+Rules: a read signal cancels a pending digest; an empty digest is not sent; a single-event digest goes out as that event; a later digest for the same subject replaces the earlier one ("5 new messages" becomes "8 new messages"). `security`, `transactional` and `action_required` are never digested. The digest output still passes preference, consent, quiet hours and frequency checks.
+
+## Throttle, frequency cap and send rate
+
+These are three separate controls:
+
+- **Throttle** is a workflow step: a threshold per key per window. The key is tenant-wide, so throttling across workflows is possible. Events over the threshold are recorded as skipped.
+- **Frequency cap** is a category × channel policy per user. See [Preferences and consent](/relay/docs/concepts/preferences-consent#frequency-caps).
+- **Send rate** limits how fast a campaign or channel flow goes. A rate-limited bulk send carries a deadline; if it cannot be met, the remaining recipients are counted as `expired` instead of exceeding provider limits.
+
+## Timing
+
+Hard limits apply, and a request beyond them is rejected:
+
+| What | Upper limit |
+|---|---|
+| Scheduled send (`send_at`) | 90 days |
+| Wait step | 90 days |
+| Digest window | 31 days |
+| Throttle window | 31 days |
+| Wait for event and waitpoints | 30 days |
+
+Longer-range scheduling is the job of your own scheduler. Long waits are stored as a record plus a timer; they do not hold a queue slot or a process.
+
+The send time of a delivery is computed in this order: class pass-through (`security` and one-time codes go now), explicit scheduling, conversion to the recipient's local time, quiet hours and legal windows, do-not-disturb, next break, frequency cap, deterministic jitter, then rate limits. Deferred work re-checks the rules when it runs.
+
+**Time zone chain.** The recipient's explicit choice, then the device-reported zone, then the profile country, then the tenant default. If the zone was inferred and the country has a legal sending window, the most restrictive possible window applies.
+
+**Deterministic jitter.** Spreading uses a hash of the recipient and local time, not random numbers, so retries and replays land on the same moment. A tenant that needs an exact time selects `strict`.
+
+**Next break.** A sender can set `timing: next_break` with a required `max_defer` to hold a non-urgent notification until the recipient's next natural break, such as unlocking the device, the end of a focus mode or the end of quiet hours. `security` and one-time codes ignore it.
+
+## Recurring notifications
+
+A **schedule** (`schedule`) is a recurring rule written with RRULE logic for a recipient or a topic and run in the recipient's local time. It is stored as a definition; each occurrence is created when due, with the workflow and template versions published at that moment. It can be cancelled at any time.
+
+## Experiments
+
+A channel step can define 2 to 10 weighted variants. The split unit is the user and is deterministic, so a user sees the same variant for the whole experiment. The chosen variant is written into the notification's plan. Reports count sends, deliveries, views and clicks per variant, with human and bot clicks separated.
+
+## Audience: recipients, lists and topics
+
+An audience is given in one of three ways: a single recipient, a list in the request, or the subscribers of a topic.
+
+- A **topic** (`topic`) is a named set of subscribers with at most two levels of hierarchy. A **subscription** binds a recipient to a topic.
+- At fan-out time the subscriber list is frozen; someone who subscribes later does not receive that notification. A recipient subscribed through several paths still gets one notification.
+- Matching uses no wildcards. A trigger that reaches no subscriber is recorded with a rule, not dropped silently.
+- There is no attribute-query segment engine. The tenant computes segments in its own system and sends them as a list.
+- Topics are also the basis for agent subscriptions.
+
+## Campaigns
+
+A **campaign** (`campaign`) is a large send to a list or topic, run in two phases: prepare, then trigger. Preparation freezes the recipient list and produces rendered content and `dedup_key` values; triggering only sends. A campaign has its own progress record and deadline and can be cancelled at any time. Tenant-wide announcements use a separate inbox announcement record instead of one row per person.

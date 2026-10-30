@@ -1,0 +1,227 @@
+---
+title: "Waits, gates and attention"
+description: "The five state axes, summary categories and flags, typed and addressed waits, dependencies, gates, attention ranking and escalation."
+---
+
+This page describes how the state of a piece of work is derived, how waits are written down, how gates work, whose attention is needed and why, and how escalation is split between Work and Relay.
+
+Five principles apply:
+
+1. **State is never moved by hand.** Every state value is a pure function of records. The same records always give the same value, and it can be recomputed from history.
+2. **Unknown is shown as unknown.** If an expected report does not arrive, the work is unknown or stale, never "in progress".
+3. **Waiting is typed and addressed.** "Waiting" is not a value by itself. A wait records what is awaited, from whom, why, since when and until when.
+4. **Attention is ranked by external signals.** An agent's own stated confidence is never shown and never affects ranking.
+5. **Work changes the recipient; Relay changes the channel.** Escalation policy is in Work. Delivery, channel escalation and timers are in Relay.
+
+## Five state axes
+
+The state of a piece of work is not a single value. Five independent axes can all be true at once. For example, a lab sample analysis has been accepted (commitment), a technician has claimed it (assignment), the instrument is working (execution), an operator has taken over (control), and the instrument has not reported for ten minutes (liveness).
+
+| Axis | Question | Source | Values (summary) |
+|---|---|---|---|
+| Commitment | Who promised what to whom, and at what stage? | Work Declarations | Not yet promised, promised, declined, countered, stated as done, accepted, rejected, cancelled, released, expired and other closing outcomes |
+| Assignment | Who has picked up the work right now? | Work Declarations | Pooled, nominated, held (with lease), nobody picked it up, lease expired |
+| Execution | What is the action in the world actually doing? | Claims from the executor or an external system | Not started, running, paused, completed (reported), failed, cancelled (reported), unknown |
+| Control | Who is driving execution right now? | Executor Claims | Automatic, intervened, manual; control lease holder; no control capability declared |
+| Liveness | Are the expected signals arriving? | Executor or external system Claims, periodic update commitments | Live, stale, unknown, left cleanly, not applicable |
+
+The commitment and assignment axes come from Work Declarations. Execution, control and liveness come from Claims. No axis is derived from another, and nothing is squeezed into one combined status.
+
+**Authority is not a state axis.** It lives in Access. Work records the authority used and authority events from Access and shows their source. Revoking authority does not mean execution has halted. "Stopped" appears on the execution axis only when the executor or external system confirms it.
+
+### Contradictions and unknowns
+
+When a party's statement (for example "done") contradicts an observed fact (for example the executor reporting "failed"), Work overrides neither. Both records stay, the work gets a contradiction flag, and an item goes to the accountable party. Only a new record resolves it.
+
+Liveness is evaluated only where a report is expected: when the executor declared a heartbeat interval, or when a periodic update commitment exists. If the interval passes with no signal, liveness is stale; if nothing has ever arrived or the source is disconnected, it is unknown. A clean "I'm leaving" from the doer is shown as left cleanly. Work where no report is expected is never stale; its liveness is "not applicable".
+
+States from external systems (ticket systems, fleet managers, A2A tasks) are never copied directly. They are mapped onto the fixed axis values and independent flags. A value that cannot be mapped is not dropped; it is treated as unknown and goes to the integration owner's attention.
+
+## Summary categories and flags
+
+For interfaces, reports, clocks and automation, a single summary category is derived from the five axes. The set is fixed. Practices can rename the categories for display but cannot add categories or change their meaning.
+
+| Category | Meaning |
+|---|---|
+| `triage` | There is a request, but no promise yet, or nobody has picked it up from the pool |
+| `deferred` | The parties explicitly deferred the work until a time or an event |
+| `ready` | Promised, no open wait, execution not started |
+| `active` | Execution is running and liveness is live or not applicable |
+| `waiting` | At least one open Condition |
+| `awaiting_acceptance` | Stated as done; waiting for acceptance of the result |
+| `unknown` | Expected signals are missing, or the source cannot be reached |
+| `closed` | The commitment reached a terminal outcome, shown alongside |
+
+When several apply, the first in this order wins: `closed`, `deferred`, `triage`, `awaiting_acceptance`, `waiting`, `unknown`, `active`, `ready`. If there is a wait and the executor is stale, the category is `waiting` with a stale flag.
+
+Flags are shown independently of the category and never change it:
+
+| Flag | Meaning |
+|---|---|
+| `overdue` | The service-level clock is in warning or breach |
+| `at_risk` | A promise lower in the support chain broke or is at risk |
+| `contradiction` | A statement contradicts an observed fact |
+| `stale` | Expected signals are late |
+| `taken_over` | Control is manual or intervened |
+| `unevidenced` | A statement has no evidence |
+
+Triage and deferred are different phases: triage is before any promise, deferred is a promised or requested piece of work explicitly put on hold. When an estimate or target date changes, the first value is kept and the current value is shown next to it.
+
+## Waits
+
+A wait is a Condition: a satisfiable condition blocking progress. Each wait maps to one of nine core types, and each type belongs to one of two classes: **Epistemic** (satisfied by Claims) or **Gate** (satisfied by an authorized party's Declaration).
+
+| Type | What is awaited | Class | Satisfied by | Example |
+|---|---|---|---|---|
+| `information` | An input, answer or structured data | Epistemic | The addressed party's Claim | An agent asks a customer for a delivery address |
+| `authority` | New authority, access or step-up | Gate (authority gate) | An Access decision | An agent has no access to a supplier portal |
+| `decision` | A binding choice between options | Gate (coordination gate) | An authorized party's decision | Choosing a menu for an event |
+| `acceptance` | Accepting or rejecting a delivered result | Gate (coordination gate) | The acceptor's Declaration | Accepting a translation |
+| `resource` | More budget, or a resource allocated or reserved | Gate (coordination gate) | The resource owner's or accountable party's Declaration | A token budget ran out |
+| `commitment` | Another commitment reaching a meaningful event | Epistemic | Facts derived from that commitment's records | The venue-clearing commitment was accepted |
+| `external_event` | Something happening outside Work | Epistemic | An Observation Claim | A shipment arrives at the warehouse |
+| `time` | A moment arriving | Epistemic | Ledger time | "Do not start before Monday 09:00" |
+| `third_party` | An answer from someone not taking part in the work | Epistemic | An Observation of that answer | A municipal permit |
+
+Each wait also says whether its cause is internal (in the hands of whoever is doing the work) or external (outside them).
+
+**Addressing is required.** A wait cannot be recorded without these fields:
+
+| Field | Meaning |
+|---|---|
+| Waiting party | The party or commitment experiencing the wait |
+| Address | Who or what it waits for: a party, a commitment, a Reference or a time |
+| Type | One of the nine core types, and a subtype if any |
+| Reason | Internal or external, and a short reason |
+| Start | Ledger time when the wait began |
+| Until | A time, or an explicitly declared "open-ended" |
+| Satisfaction criterion | Which record or event closes the wait |
+
+Open-ended waits are allowed, but are shown as open-ended and fall under the escalation policy. The addressed party sees the wait on their own attention surface. A bare "needs input" (such as A2A `INPUT_REQUIRED`) is not recorded until it is enriched with these fields.
+
+More rules about waits:
+
+- Work can wait on several conditions at once. Each wait is its own record and closes on its own.
+- When several waits are open, waits that need a person to act (gates, or `information` addressed to a person) come first.
+- Practice subtypes, such as "waiting for materials" or "lab result", each map to exactly one core type.
+- A wait is tied to a meaningful event ("decision made", "result accepted", "payment completed in Pay"), not to a vague "closed". Why work is enabled or locked can always be explained: which condition, which record is missing, who can satisfy it.
+- A wait for a person lives independently of execution. Even if the executor session closes, the model changes or the process restarts, the wait stays in Work.
+- An agent asking a person a question is a normal, cheap wait. If the agent guesses instead of asking, that is an assumption record.
+
+## Dependencies
+
+A dependency is not a link; it is a queryable Condition on the waiting work.
+
+| Type | Meaning | Condition form | Example |
+|---|---|---|---|
+| Flow | I need the other's output | A `commitment` wait on the other's meaningful event | Translation starts when the text is accepted |
+| Sharing | We share a resource, person or machine | A `resource` wait | Two jobs use the same elevator |
+| Fit | We have to finish together or match | Mutual `commitment` waits and an aggregation policy | Kitchen and wiring handed over on the same day |
+| Part-whole | The whole is "done" only when the parts are accepted | A `commitment` wait on accepting the sub-commitments | A main contract depends on subcontractor deliveries |
+
+Timing relations such as finish-to-start are not in the core; Practices add them and map them onto these types. Whether a dependency is met is derived from records. If a dependency is unmet, no interface or agent can say the work started or finished; if it does, that is a contradiction. When a commitment needs several doers in an AND or OR shape, the effect of one doer dropping out is computed, and a signal appears only when the whole is at risk.
+
+## Gates
+
+A gate is a wait satisfied by an authorized party's Declaration. There are two kinds, and the kind is declared when the gate is created and cannot change.
+
+| — | Authority gate | Coordination gate |
+|---|---|---|
+| Used for | New authority, step-up, approval required by an Access rule | Decisions, delivery acceptance, plan approval, permission to start |
+| Wait type | `authority` | `decision`, `acceptance`, `resource` |
+| Where it is approved | The Access trusted approval surface | Work's structured approval surface |
+| Who decides | Access | The gate's authorized party; who is eligible is decided by Access |
+| Work's role | Gives the reason and timing policy, shows who is waiting, records the result | Places the gate, checks the approver's eligibility with Access at approval time, collects answers, keeps the decision record |
+| Approval record | An Access approval record, plus a Work Declaration referencing it | A Work Declaration only; nothing is recorded in Access |
+| Strong authentication | As Access requires | Access step-up when the gate is marked high impact |
+
+Closing a gate is a Work Declaration. A closed gate is not a permission: a coordination gate never satisfies any Access requirement and grants nobody new authority. Work never runs its own authentication or passkey mechanism; strong authentication always comes from Access.
+
+**Approval is bound to exact content.** On both surfaces, an approval is tied to the work, the record version or digest, and the parameters. A generic "Do you approve?" is invalid. If the content changes after approval, even by one parameter, the earlier answer is no longer valid and the gate waits again.
+
+An approval is an immutable decision record, not a message button. For authority gates and high-impact coordination gates, a notification is only an invitation to the approval surface. A low-impact coordination gate can be answered from a notification only if the notification surface meets the approval surface requirements, shows the exact content from typed fields, binds the answer to the exact digest, and no step-up is needed.
+
+Gate forms are distinct, each with its own answer schema: `approval` (yes or no), `pre_action_review` (decide before an action) and `delivery_acceptance` (decide after a result). A request for information is not a gate form; it is an `information` wait.
+
+A decision record that closes a coordination gate carries at least: the options presented, who decided and their actor type (rule, agent or person), the chosen option, the reasoning, the inputs (evidence and References), the expected outcome and any `supersedes` chain.
+
+**No answer is not yes.** A gate's answer can be accept, reject, closed without an answer or timed out. Silence and expiry never produce approval; the only exception is implicit acceptance based on a statement the obligee gave beforehand. One agent telling another "approved" is a Claim and does not satisfy a gate.
+
+Permission to start is its own coordination gate, separate from delivery acceptance and plan approval. It can be withdrawn before the work starts; after that, withdrawing it is a stop request. Secrets such as passwords or payment details never pass through Work or an agent through any gate.
+
+## Attention
+
+The need for attention is a derived view, not a record. Needs Attention is that view for one party.
+
+### Whose move is it?
+
+| Situation | Next move |
+|---|---|
+| Request or triage | The candidate obligor, or the queue owner for pooled work |
+| Counter-offer | The requester |
+| Promised, no open wait | The doer |
+| Open wait | Whoever the wait is addressed to |
+| Stated as done | The acceptor |
+| Stop request | The doer; if refused, the principal |
+| Unknown or stale | The accountable party |
+
+On top of this, these triggers put an item in front of the accountable party, in any domain: no progress in the expected time; a loop (the same attempt repeating, work bouncing between teams); work going outside the commitment's scope; a failed or broken dependency or a risk in the support chain; a statement contradicting a fact; a wait near its deadline; work that has gone quiet without closing; conflicting decisions from parallel branches; and a record at an organization boundary that cannot be mapped.
+
+Items enter Needs Attention only from defined sources: waits addressed to me, commitments where the next move is mine, an escalation tier that reached me, the triggers above for work I am accountable for, typed authority requests from Access, and defined signals such as an acceptance window that passed, a budget decision or a refused stop request. Activity volume, novelty and guesses about personal interest are never sources.
+
+Every attention item has at least one typed action (decide, accept, answer, claim, forward, request a stop and so on). A signal with no action is information and goes to Briefing.
+
+**Attention is a budget.** Items from the same root cause are grouped: if one Access revocation affects five jobs, there is one item listing five affected jobs. Repeated signals are deduplicated and linked to the work. The number of items reaching a party is measured; past a flood threshold, grouping tightens and the accountable party gets a flood signal.
+
+**Muting is timed, recorded and limited.** Muting an item is a timed Declaration: who, why, until when. There is no open-ended mute; when the time runs out, the item returns. Muting affects only the muting person's view. It never stops a clock, a wait or an escalation. A requester cannot mark their own item urgent or unmutable.
+
+### Ranking
+
+Needs Attention is ranked only on external signals: the cost of waiting, risk and blast radius, irreversibility, due dates and validity, weakness of evidence, position in the accountability chain, and whether a person needs to act. Weak evidence is measured by external signals: whether evidence exists and how strong it is, independent verification, past accuracy on related work, and reversibility. Past accuracy is a count limited to the type of work ("how many of the last deliveries of this kind were accepted"), never a general score, and Work never ranks agents.
+
+An agent's own stated confidence never enters the ranking, is never shown, and is never part of the "why this item" explanation. Ranking is deterministic and explainable: the same records and policy give the same order, and every item explains why it is there and why now. Weights are organization policy.
+
+Urgency changes over time and rises as a target or validity limit approaches. Severity is defined by consequence (breach, broken support chain, irreversible effect), not by colour. Urgent-but-minor and important-but-not-urgent are shown differently.
+
+### Uncertainty
+
+An agent's uncertainty is a typed record, not a percentage:
+
+| Type | Meaning | Recorded as | Effect on attention |
+|---|---|---|---|
+| `unknown` | "I don't know" | A Claim; opens an `information` wait if needed | Appears as an addressed question on a consequential path |
+| `assumed` | "I made an assumption" | An Assumption Claim with its content and basis | Goes to approval on irreversible or high-impact steps; assumptions are listed on the work |
+| `conflicting` | "Sources disagree" | A Claim with the conflicting References | Appears as a `decision` wait |
+
+When parallel agents or branches make conflicting decisions, Work raises a conflict signal and opens a decision wait for the accountable party. Work does not pick a branch.
+
+## Notifications and escalation
+
+Every notification Work hands to Relay is one of two classes:
+
+1. **Blocking:** a decision or action is needed. It is a Needs Attention item, goes to Relay as action-required, and is tied to a Relay wait point. Only this class may interrupt someone immediately.
+2. **Informational:** done, changed, closed. It can be summarized or delayed and appears in Briefing.
+
+For every notification, Work provides the reason, the recipient set, the consequence of waiting, the due time, what content may be shown, and what an acknowledgement means. Relay owns channel, timing, retries, fallback and delivery status, and never widens or narrows the recipient set.
+
+Delivered, read, accepted and done are different facts. A Relay delivery receipt, Work's semantic acknowledgement ("I've seen it and it's mine") and an authority-status acknowledgement are separate, and none of them changes authority.
+
+### Escalation policy
+
+The escalation policy lives in Work; channel and timing live in Relay. For example, a cold-chain alarm in a pharmacy warehouse has not been acknowledged for 15 minutes. The Work policy says: first the shift lead, after 15 minutes the warehouse manager, after 30 minutes the quality lead, and at the last tier, a request to quarantine the products. Relay picks the right channel at each tier and runs the timers.
+
+| Field | Meaning |
+|---|---|
+| Recipient tiers | The recipients at each tier: a party, a role resolution, or the queue owner |
+| Tier durations | How long to wait for acknowledgement at each tier |
+| Repeat limit | How many times the chain repeats |
+| Skip empty tiers | Skip a tier whose recipient cannot be resolved, and record the skip |
+| Final-tier behaviour | **Wait** (the wait stays open with the accountable party), **go to a safe state** (a stop request, only if a reachable safe state is declared), or **move to the accountable party** |
+
+The policy is declared on the work, the commitment or a Practice. There are no product defaults for tier durations or repeats: if no policy is declared, escalation is a single tier (the addressed party) and the final behaviour is "wait". Work does not guess an organization's hierarchy. Overdue work stays visible and reaches the accountable party's Needs Attention.
+
+Four different meanings of "escalation" are separate event types: **redistribution** (the work moves to another doer or queue, responsibility changes), **hierarchical notification** (someone above is informed, responsibility does not change), **priority escalation** (urgency is raised) and **scope escalation** (the work moves to a party with wider authority, or from an agent to a person, with explicit acceptance).
+
+When it opens a Relay wait point, Work gives the resolved recipients and durations for each tier and updates the remaining tiers if roles change; Relay never resolves recipients. Relay's last tier is an expiry event; when it arrives, Work applies the final-tier behaviour and records the result. Expiry is never automatic approval. If Relay reports that the waiting side went silent, Work marks the wait as orphaned and alerts the accountable party.
+
+An acknowledgement stops escalation but does not resolve the item. Whoever acknowledges becomes responsible for it, and it stays on their attention surface until resolved. A delivery receipt or a read notification does not stop escalation. Every tier change, skipped tier, acknowledgement, final result and orphaned wait is a record. Work never sends notifications or runs escalation timers without Relay.

@@ -1,0 +1,165 @@
+---
+title: Architecture
+description: The components One is designed around, where each responsibility lives, and how a request flows from your words to an action.
+---
+
+In one sentence: One is designed as a cloud side that keeps your personal records encrypted with your key and decrypts them only per request inside an attested confidential computing environment; shared, stateless models operated by suiss, with a personal adapter attached per request; a thin orchestration layer that takes authority from Access, execution from Access Executor, notifications and waits from Relay, shared commitments from Work and payments from Pay; and clients that are native on each operating system's own surfaces, with a shared core.
+
+```text
+      Native surfaces                      Workspace
+ (phone, watch, desktop, car, glasses)    (phone, desktop, web)
+              └───────────────┬───────────────┘
+                     Shared client core
+             local encrypted store · on-device models
+                              │  signed, versioned sync
+                              ▼
+ ┌──────────────────────── One cloud side ────────────────────────┐
+ │ API · sync · tasks · memory · router · capability registry ·   │
+ │ attention · One-to-One federation · jobs · activity view       │
+ │ encrypted records and encrypted object storage                 │
+ └──────┬─────────────┬─────────────┬─────────────┬───────────────┘
+        │             │             │             │
+  Model serving     Access      Executor        Relay        Work · Pay
+  (confidential   (authority,  (isolated      (notify,      (commitments,
+   computing,      identity)    machine,       wait,         payments)
+   per-request                  local          mailbox)
+   adapter)                     executor)
+```
+
+Three design properties hold the architecture together:
+
+| Property | How the architecture supports it |
+|---|---|
+| suiss cannot read your content | Keys live on your devices; the cloud holds only wrapped data keys; processing happens per request inside an attested confidential computing environment |
+| One does not depend on a model and survives model changes | Task state, memory, personality and plans live in One; model serving is stateless; task state is never kept in any model layer |
+| One does not create authority | Every consequential step goes through Access, execution happens in the executor, and One has no authority table of its own |
+
+## Cloud components
+
+The cloud side is designed as one application deployed in roles and split into modules inside. A module moves into its own process only for a measured need such as load, isolation or a security boundary.
+
+| Module | Responsibility |
+|---|---|
+| API | The client and developer API: interactions, tasks, memory, settings |
+| Sync | Signed, versioned difference sync with devices; accepts the offline queue |
+| Tasks | One's single-person task records: plan, steps, waits, checkpoint |
+| Memory | Memory records, episodes, retrieval and consolidation triggers |
+| Router | Which job goes to which model; every decision is recorded |
+| Capability registry | The capability taxonomy and records, the curated tool catalog and pinned hashes |
+| Attention (cloud) | Value estimates for outputs between the two thresholds of the on-device decision |
+| Federation | One to One: the A2A profile and One Federation extension, and the Relay mailbox client |
+| Job runner | Consolidation, personal training, re-embedding and export package jobs, all inside confidential computing |
+| Activity view | Builds the activity log by joining task steps with Access decision records, Work records, executor reports and memory events. It stores no table of its own and never produces a row without a linked record |
+
+Every code path that touches personal content runs inside the confidential computing boundary. Decrypted content is never written to disk, logs or telemetry outside it. Caches, if added, hold only short-lived signals and rate limits, never security-critical truth and never decrypted personal content.
+
+## Models
+
+One's brain is a set of models that suiss operates:
+
+- a small language model for everyday tasks;
+- a large language model for planning and long text;
+- an embedding model for memory search;
+- speech recognition and speech synthesis models.
+
+There is no model or GPU per user. Personalization lives in context and in a small **personal adapter**, attached per request to the small model and decrypted only inside confidential computing. Serving is stateless: after a request, no context, output or adapter stays on the serving node, and prompts and outputs are not logged. Model serving never accesses One's records directly. Outside model providers' APIs are not used, so personal context never leaves the models suiss operates. You never have to pick a model, and there is no model switch in settings.
+
+The **router** works in two stages:
+
+1. **Rule gate**, which cannot be skipped: data class and consent, Grant and budget, connection state, device state. Sensitive classes are processed only by One's own models inside confidential computing.
+2. **Learned quality and cost estimate**: is the small model enough, or is the large one needed.
+
+Every routing decision (chosen model, reason class, outcome) is recorded for evaluation, without content. Simple jobs that a rule, a count, a small classifier or an embedding can answer, such as how often you drink coffee or when a reminder is due, never go to a language model, and background decisions about attention, risk and memory candidates do not depend on one.
+
+If a model does not respond, a switch happens only to another suiss model within the rule gate. If no suitable model is available, the work waits.
+
+The quarantine model and the reviewer model used by the [security model](/one/docs/security) are separate calls to model serving. They share no context with the planner, and within a request neither receives the other's output as free text.
+
+## On-device models
+
+Only small models run on the phone. There is no language model and no training on the phone.
+
+| Model | Role |
+|---|---|
+| Embedding model (text part, same as in the cloud) | Memory search, and input to the classifiers; vectors match the cloud's |
+| Short command classifier | Understanding and routing short commands |
+| Attention and risk models | The attention decision and the risk class; the personal version is trained in the cloud |
+| Voice activity and wake-word models | The first response in voice interaction, with an opt-in wake word where the platform allows it; audio does not leave the device before wake-up |
+
+Background decisions are made on the device with these models; background work that needs a language model is deferred to the cloud. Models are not bundled into the app: they download after install over Wi-Fi, with the size shown and confirmation asked on mobile data, and the cloud covers until they arrive. Every model is pinned by content hash and signature, and the client does not load one that fails verification.
+
+## Clients
+
+- **A shared core** holds the canonical types, the task state machine, the meaning of interactions, sync, cryptography, provenance labels and local privacy rules (filtering sensitive content, redaction decisions for the lock screen and voice). This logic is not reimplemented per platform, so meaning cannot drift between platforms.
+- **Native surfaces** for presence on each platform: widgets, live progress items, lock screen controls, watch, car, glasses, menu bar and tray.
+- **One workspace** for memory, the activity log, autonomy and rules, connections, Pending and settings, the same on mobile (inside the native app), desktop (inside a native shell) and the web.
+- **A browser extension** as a separate client, whose agent mode runs only when you call it.
+
+The local store on your device is a cache of canonical records, the offline memory subset, calendar and task caches, on-device model inputs and a signed queue of pending operations. It is encrypted with a device key kept in the platform's secure storage.
+
+### Sync
+
+- Each device gets its own key pair and is a device instance in Access. Sync uses mutual device verification, encrypted transport and signed, versioned messages, and is incremental.
+- Authority (Access), payments (Pay), task execution (Executor) and commitments (Work) are always authoritative at their owner. The client only caches them, and an offline signature is never proof of authority.
+- One's own records (memory, tasks, rules) are authoritative in the One cloud. Changes made offline enter the queue as signed pending operations and go through the normal write path when you reconnect. A change based on stale data that conflicts is shown to you, never silently merged.
+- Conflict-free merging is used only for free-form notes and lists you edit yourself.
+
+## How a request becomes an action
+
+```text
+your request
+   ↓  planner (never sees untrusted content)
+plan + typed variables (with provenance labels)
+   ↓  quarantine model extracts only typed fields from external content
+typed intent  →  schema validation
+   ↓
+One's data-flow policy  +  Rule of Two  +  reviewer
+   ↓
+Access decision (with provenance and the task's site set)
+   ↓  if action is required: the trusted approval surface
+Executor runs it; egress gate; site set enforced
+```
+
+1. **You ask**, on any surface, in voice, text or through a linked channel.
+2. **The planner** builds a plan only from your request, One's own records and Access and Work records. Relevant memory is retrieved through the fixed retrieval pipeline.
+3. **External content** (a web page, an email, another One's message) never reaches the planner as text. The quarantine model turns it into typed, labelled values that can only fill variables, never change which capability is called, which recipient is used or which step is skipped.
+4. **The model's output becomes a typed intent** and is validated against the capability's input schema. Output that does not validate is rejected.
+5. **Two independent checks** run before every consequential action: One's deterministic data-flow policy, which escalates to your approval if an authority-relevant parameter is untrusted, and the Access decision. The stricter one wins. A separate reviewer model may also say "stop and ask", but it can never turn a decision into an allow.
+6. **Access decides**: allow, deny, or action required. If an approval is required, the Access trusted approval surface opens in your One client.
+7. **The executor runs** the allowed intent, through an egress gate that enforces the Access decision and the task's set of allowed sites, and reports the effect as a claim. If the result cannot be verified, it is reported as unknown.
+8. **One records and tells you** through an `Interaction`, with the attention decision choosing when and where.
+
+| Who | Owns |
+|---|---|
+| One | The task record (purpose, plan, steps, wait reason, logical checkpoint, user-facing state), provenance labels and the site set computation, the proposed execution place |
+| Executor | The execution history, step results, browser and machine state with its encrypted snapshot, the stop state, and enforcing the site set and egress gate |
+| Access | The intent envelope, the decision, the recorded action and continuation decisions |
+
+## How One uses the other products
+
+One uses the other suiss products only through their published interfaces and never rebuilds their mechanisms.
+
+| Product | What One uses it for |
+|---|---|
+| Access | Identity, device and agent instances; previewing your rules as structured Grants and Mandates that you give from your own instance; intent envelopes and decisions; the trusted approval surface; the token vault; verifiable credentials; `did:web` and handles; the first-contact token; the web signing key; key recovery |
+| Access Executor | The isolated cloud machine, the local executor registration, the long-task engine, stopping |
+| Relay | Notifications and the four interruption levels, deferral to a natural break, lock screen redaction, waitpoints, the encrypted agent mailbox, the device state channel, updating a process as a single item |
+| Work | A Commitment for anything involving a promise to someone else; the One-to-One proposal chain; opening your personal space at the first shared commitment; showing Needs Attention items in Pending |
+| Pay | Payments, agent tokens or single-use cards, and One's own operating budget |
+
+Every outbound request leaves through an outbox after it is durably recorded, and carries an idempotency key. Cross-product events use CloudEvents.
+
+## When something is unavailable
+
+| What fails | How One is designed to behave |
+|---|---|
+| Access unreachable | No consequential action, no sharing with a new party, no retrieval that needs authority. You are told "I can't get approval right now; I'll continue when the connection is back." Read-only and local work continues |
+| Relay unreachable | Records and tasks are unaffected. Notification, wait and mailbox requests wait in the outbox; an open client sees state through direct sync |
+| Executor unreachable or silent | The task becomes "unknown", never "running". A stop request is recorded and confirmation awaited |
+| Work unreachable | New commitment and proposal operations wait in the outbox. One cannot promise anything to anyone; single-person work continues |
+| Pay unreachable | No payment is made. The payment step waits and stops if it expires |
+| Model serving unreachable, or attestation cannot be verified | Work that needs a language model waits. No outside model or unattested node is used as a fallback. The offline core and on-device models continue |
+| Device offline | The offline core runs; pending operations wait in the signed queue |
+| One cloud unreachable | Running work continues in the executor under Access rules, or pauses. Stopping can be done through Access and the executor without One |
+
+In every case, uncertainty on a security path falls to the safe side: no action.

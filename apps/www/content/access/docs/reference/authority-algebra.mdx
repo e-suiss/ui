@@ -1,0 +1,159 @@
+---
+title: Authority algebra
+description: Draft reference for how authority is described, compared, intersected and delegated, with bound types, selectors, requirement terms and assurance.
+---
+
+This is a draft reference and may change before release.
+
+Authority in Access is described by values from a closed type system. Three operations are defined on them:
+
+- `c ⊑ p` (subsumption): every concrete use that `c` allows, `p` also allows;
+- `a ∩ b` (intersection): the largest value below both `a` and `b`;
+- `normalize(v)`: the single canonical form of `v`.
+
+All comparisons are syntactic. No rule calls out to a policy engine, a database or the network, and every operation terminates.
+
+## General rules
+
+| Rule | Statement |
+|---|---|
+| Bottom | `⊥` covers nothing. `⊥ ⊑ x` for every `x`, and `x ∩ ⊥ = ⊥` |
+| Missing means unbounded | A dimension or parameter an authority does not write allows every value |
+| Different types do not compare | `⊑` is false and `∩` is `⊥`, except where `public` says otherwise |
+| Must-understand | An unknown element in new input is rejected. In a stored or external artifact it is read as unknown and makes the value that contains it cover nothing |
+| Empty is a value | An empty intersection is valid and covers nothing. Issuing a Grant with empty authority is denied |
+| No negation | Positive authority has no negation and no disjunction beyond set membership. Exclusions exist only as restriction policies |
+
+## Bound types
+
+A parameter bound is a map with exactly one key, naming its type. An intent value is a one-key map naming the matching value type. The set is closed.
+
+| Bound | Matching value | `c ⊑ p` | `a ∩ b` | `normalize` |
+|---|---|---|---|---|
+| `enum: [text…]` | `enum: text` | `c` is a subset of `p` | Common elements; `⊥` if none | Sorted, unique |
+| `eq: v` | `eq: v` | `c = p` | `a` if equal, else `⊥` | Itself |
+| `flag: bool` | `flag: bool` | `c = p` | `a` if equal, else `⊥` | Itself |
+| `range: {min?, max?, unit}` | `amount: {value, unit}` | Same unit, `p.min ≤ c.min`, `c.max ≤ p.max` | Same unit: `[max(min), min(max)]`; `⊥` if units differ or the result is empty | `⊥` if `min > max` |
+| `count_max: n` | `count: n` | `c ≤ p` | The smaller | Itself |
+| `interval: [from, until]` | `interval: [from, until]` | `p.from ≤ c.from` and `c.until ≤ p.until` | The overlap; `⊥` if none | Itself |
+| `resource: selector` | `resource: resource-ref` | See resources | See resources | Itself |
+| `subject: selector` | `subject: party-ref` | See subjects | See subjects | Conjuncts sorted, unique |
+| `purpose: [purpose-ref…]` | `purpose: purpose-ref` | See purposes | See purposes | Maximal elements |
+
+- Intervals are closed, in milliseconds, and must have `from ≤ until`. An inverted window is an input rejection.
+- Ranges are closed integers. A missing `min` or `max` is unbounded on that side, so a child without a `min` is not within a parent that has one.
+- There are no decimals. Every quantity is an integer in the smallest step of its unit, which the action schema names.
+
+## Actions
+
+- An action is identified by `namespace`, `name` and `major`. Two references with the same identity and different schema digests do not match.
+- A prefix `{namespace, catalog}` covers exactly the actions of the pinned catalog whose namespace equals the prefix or starts with it followed by `.`. Actions added in a later catalog are not covered.
+- A prefix that names a catalog not present in the input covers nothing, on either side.
+- **Reserved actions** (marked by the schema or by the domain) are covered only by an exact reference, never by a prefix.
+
+## Resources
+
+A resource selector is either `exact` (one resource reference) or structural: a `namespace`, an optional path `prefix`, an optional `type` and optional `where` equality conditions. A resource reference includes its incarnation, and resource identifiers are never reused.
+
+| Child | Parent | `c ⊑ p` holds when |
+|---|---|---|
+| exact | exact | The references are equal |
+| exact | structural | Same namespace, the parent prefix is a leading part of the child path (whole segments), and the parent has no `type` and no `where` |
+| structural | structural | Same namespace, the parent prefix leads the child prefix, the types match if the parent has one, and every parent `where` entry is in the child with an equal value |
+| structural | exact | Never |
+
+Namespaces compare by equality, not by hierarchy.
+
+## Subjects
+
+| Selector | Meaning |
+|---|---|
+| `party(x)` | One Party |
+| `pred(C)` | A conjunction of conditions, each naming a claim class and optionally an equal value |
+| `foreign(d, a)` | Authority of a given class from a foreign domain |
+| `public` | Anyone |
+
+Every selector is within `public`; `public` is within nothing but itself. `pred(C) ⊑ pred(P)` when every conjunct of `P` is also in `C`. There is no subsumption between different kinds. Two `pred` selectors intersect to the union of their conjuncts.
+
+## Purposes
+
+A purpose is a code, a work reference or an aim reference, compared by equality. One purpose is below another only if the schema declares it. Free text is never a purpose. A purpose set is normalized to its maximal elements; `c ⊑ p` when every element of `c` is below some element of `p`.
+
+## Authority sets
+
+An authority set has five dimensions: `actions`, `resource`, `params`, `recipient` and `purpose`.
+
+`c ⊑ p` holds when actions, resource, every parameter `p` bounds, the recipient (if `p` has one) and the purpose (if `p` has one) are each within `p`'s. Intersection is taken dimension by dimension; if any dimension is `⊥`, or no action is covered by both sides, the whole result is `⊥`.
+
+### Coverage of an intent
+
+An authority set covers an intent when the action is covered, every resource is within the selector, every bounded parameter has a value within its bound, the recipient (if bounded and not `public`) is within the selector, and the purpose (if bounded) is below an allowed purpose. Unbounded parameters, opaque parameter digests and context references are not checked.
+
+## Constraints
+
+| Part | Rules |
+|---|---|
+| Validity window | One closed window |
+| While-conditions | `instance_alive` (an Instance is still alive) and `claim_held` (a subject still holds a claim of a class under an Acceptance) |
+| Budget terms | Count uses or an amount in a unit. Window `total` or rolling over a number of seconds. No calendar windows |
+| Delegation terms | Optional `depth` (missing means 0: no further delegation) and optional `downstream_holder_class` |
+
+## Child within parent
+
+A Grant `child` held by `holder` may be delegated from a Grant `parent` exactly when all of these hold:
+
+1. `child.authority ⊑ parent.authority`.
+2. The child's validity window lies inside the parent's, and the child keeps every parent while-condition.
+3. `parent.depth > 0` and `child.depth < parent.depth`.
+4. If the parent has a `downstream_holder_class`, the holder is within it, and the child has one that is within the parent's.
+5. `public` appears only as a recipient or as the holder of a Grant that cannot be delegated further.
+6. The child's requirement set is at least as strict as the parent's: every parent term appears in the child with an identical encoding.
+
+Budget terms are not compared; every use draws from every budget along the lineage. Agency terms are checked separately when a Grant is issued.
+
+## Requirement terms
+
+A requirement term names a `proof_kind` (`claim`, `contribution`, `authentication`, `foreign_authority`) and a `class`, and optionally:
+
+| Field | Values | Default |
+|---|---|---|
+| `count` | Integer ≥ 2 | 1 |
+| `binding` | `actor_instance`, `intent_digest`, `resource` | None |
+| `freshness_ms` | Milliseconds | No limit |
+| `independence` | Distinct `party`, `instance` or `issuer` | None |
+| `consumption` | `single_use` | Reusable |
+| `source` | Subject selector of accepted issuers | Any issuer |
+| `assurance` | Map from dimension to minimum level | No floor |
+
+A proof matches a term when its kind and class are equal, the binding holds, it is not dated after `now` and is within `freshness_ms`, its issuer is within `source`, it meets every assurance floor, and, for a single-use term, it has not been consumed. A single-use proof chosen for one term cannot satisfy another.
+
+## Assurance dimensions
+
+The set is closed. Levels are integers.
+
+| Dimension | Levels | Stronger |
+|---|---|---|
+| `aal` | 1 to 3 | Higher |
+| `loa_eidas` | 1 = low, 2 = substantial, 3 = high | Higher |
+| `phishing_resistant` | 0 or 1 | Higher |
+| `hardware_bound` | 0 or 1 | Higher |
+| `non_custodial` | 0 or 1 | Higher |
+| `uv` | 0 or 1 | Higher |
+| `human_presence` | 0 or 1 | Higher |
+| `app_controlled_factor` | 0 or 1 | Higher |
+| `synced` | 0 or 1 | Lower: a key that is not synced is stronger |
+
+A dimension missing from a proof does not meet a floor. Authentication time is not a dimension; recency is expressed with `freshness_ms`.
+
+## Limits
+
+| Limit | Ceiling |
+|---|---|
+| CBOR nesting depth | 16 |
+| Elements in one array or entries in one map | 256 |
+| Length of one byte or text string | 64 KB |
+| JSON nesting depth | 32 |
+| Hops in one basis | 16 |
+| Conditions in one subject or resource selector | 32 |
+
+A caller may configure lower limits, never higher ones.

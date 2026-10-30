@@ -1,0 +1,101 @@
+---
+title: Parties, Instances and agents
+description: Who acts in Access. Parties hold authority, Instances act, capacity says on whose behalf, and agents use the same model as people.
+---
+
+Access separates **who holds authority** from **what is acting right now**. A person or company holds authority; a specific session, device or agent run uses it.
+
+## Party
+
+A **Party** is a person or organization with rights and responsibilities: a human, a company, an agent, a service.
+
+- Access refers to a Party through a **PartyRef**. Access does not keep a second, global registry of Parties.
+- Organizations and jointly owned groups do not act directly. Their authority is exercised by an Instance acting **for** the organization.
+- Outside its own authority domain, a Party is shown under a **domain-pairwise pseudonym**: stable within one domain, unrelated across domains. Linking a Party across domains requires an explicit, recorded binding.
+
+Example: a person; a company; the company's purchasing agent.
+
+## Instance
+
+An **Instance** is the concrete acting occurrence of a Party: a session on a given device, or a running agent process.
+
+- It is the actor of every authority exercise and the target of a Mandate.
+- Its identity is the continuity of its key binding. Rotating keys keeps the same Instance; breaking continuity creates a new one.
+- Recovery always produces a single **successor Instance**. The successor does not inherit the old Instance's Mandates; rebinding them is an explicit step.
+
+Three things are kept apart:
+
+| Term | Meaning |
+|---|---|
+| InstanceID | The logical identity of the Instance in Access |
+| KeyBinding | The current proof-of-possession material (for example a DPoP or mutual-TLS key) |
+| Attestation | A claim about the runtime environment of an Instance or key |
+
+### Instance lifecycle
+
+| State | Reached by |
+|---|---|
+| active | `instance.create` (genesis ceremony) |
+| restricted | A restriction overlay; can return to active |
+| active (rekeyed) | `instance.rekey`, authenticated with the current key binding |
+| terminated | `instance.terminate` |
+| recovered | `instance.recover`, which creates one successor Instance |
+| expired | Its validity ends |
+
+## Actor context
+
+Every request carries an actor context:
+
+- **`Authenticated(InstanceID)`**: the request carries an Actor Intent Statement signed with the Instance's current key binding.
+- **`Anonymous(context)`**: no statement is present. The context records only actor-independent facts such as channel or network. An anonymous actor holds nothing, cannot approve and cannot change authority. It can only use public Grants.
+
+The service that forwards a request (the policy enforcement point, or PEP) is never the actor. Its own transport identity, such as a client certificate or a DPoP key, never becomes an actor context.
+
+## Capacity: on whose behalf
+
+Every exercise declares a **capacity**:
+
+| Capacity | Meaning |
+|---|---|
+| `own` | The actor's Party acts on its own behalf |
+| `for(P)` | The actor's Party acts on behalf of Party P |
+
+The declared capacity must be one the Grant being used allows. On-behalf-of is never inferred from the delegation chain or from a token; it comes only from this explicit declaration. A Grant can only allow `own` and `for` the principal who issued it, so an organization cannot consent on a user's behalf through its own Grant.
+
+"Principal" is a role, not a stored entity: it is the Party named by the capacity.
+
+## Agents
+
+An AI agent is not a separate security universe. People, services, workloads and agents use the same authority model.
+
+- In the authority plane an agent is an **Instance** under a Party. That Party can be the agent's operator, the user's own agent Party, or an organization.
+- The agent's authority comes only from Grants. Its Mandate can only narrow what it may use; it never adds authority.
+- An action `for(P)` without a Grant whose agency allows `for(P)` is denied.
+- A model provider holds no authority by default.
+- Agent kind, operator and sponsor are recorded as claims, not as authority. Relations such as `operated-by` and `sponsored-by` are claims between Parties.
+
+Three levels are kept separate:
+
+| Level | Access object |
+|---|---|
+| The agent "product" | An operator Party plus a Grant template |
+| A running copy, run or task | An Instance: the unit of attribution and revocation |
+| A single action | An authority exercise, identified by its nonce |
+
+Templates for agents are designed to require a budget, limit further delegation and keep agent projections short-lived. These are policy defaults, not separate semantics.
+
+The thesis behind this: take authorization out of the model and put it in a deterministic layer. Prompt injection cannot be solved in the authorization layer. What that layer can do is limit what a compromised agent can do to the intersection of its Grant, its Mandate and its budget.
+
+## Support access, without impersonation
+
+There is no impersonation in Access. A support agent always acts with their own Instance, on behalf of their own Party. On a user's resources they can act only through:
+
+- a Grant `for(user)` that the user issued themselves, which can be revoked and cascades, or
+- a break-glass Grant issued in advance for that purpose.
+
+Every support action is attributed to the support agent's own Instance.
+
+## Related
+
+- [Authority](/access/docs/concepts/authority): Grants, Mandates and delegation.
+- [Identity plane](/access/docs/concepts/identity): how sessions and accounts relate to Instances.

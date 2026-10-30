@@ -172,3 +172,167 @@ body {
   line-height: 1.47059;
   letter-spacing: -0.022em;
 }
+
+.prose {
+  color: var(--color-foreground);
+  overflow-wrap: break-word;
+}
+
+.prose > :first-child:not([data-not-prose] *) {
+  margin-top: 0;
+}
+
+.prose p:not([data-not-prose] *),
+.prose ul:not([data-not-prose] *),
+.prose ol:not([data-not-prose] *),
+.prose blockquote:not([data-not-prose] *) {
+  margin-top: 0.8em;
+}
+
+.prose h2:not([data-not-prose] *) {
+  margin-top: 2.4em;
+  padding-top: 1.2em;
+  border-top: 1px solid
+    color-mix(in oklab, var(--color-foreground) 12%, transparent);
+  font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+.prose h3:not([data-not-prose] *) {
+  margin-top: 1.8em;
+  font-size: 22px;
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.prose h4:not([data-not-prose] *) {
+  margin-top: 1.5em;
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.prose :is(h2, h3, h4) + *:not([data-not-prose] *) {
+  margin-top: 0.8em;
+}
+
+.prose a:not([data-card]):not([data-not-prose] *) {
+  color: var(--color-primary);
+}
+
+.prose a:not([data-card]):hover:not([data-not-prose] *) {
+  text-decoration: underline;
+}
+
+.prose strong:not([data-not-prose] *) {
+  font-weight: 600;
+}
+
+.prose ul:not([data-not-prose] *) {
+  list-style: disc;
+  padding-inline-start: 1.25em;
+}
+
+.prose ol:not([data-not-prose] *) {
+  list-style: decimal;
+  padding-inline-start: 1.25em;
+}
+
+.prose li + li:not([data-not-prose] *) {
+  margin-top: 0.4em;
+}
+
+.prose li:not([data-not-prose] *)::marker {
+  color: var(--color-muted-foreground);
+}
+
+.prose :not(pre) > code:not([data-not-prose] *) {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  letter-spacing: -0.027em;
+}
+
+.prose hr:not([data-not-prose] *) {
+  margin-block: 2em;
+  border-color: var(--color-border);
+}
+
+.prose blockquote:not([data-not-prose] *) {
+  padding-inline-start: 1em;
+  border-inline-start: 2px solid var(--color-border);
+  color: var(--color-muted-foreground);
+}
+
+.prose table:not([data-not-prose] *) {
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.42859;
+  letter-spacing: -0.016em;
+  border-collapse: collapse;
+}
+
+.prose th:not([data-not-prose] *) {
+  text-align: start;
+  font-weight: 600;
+}
+
+.prose th:not([data-not-prose] *) {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+.prose :is(th, td):not([data-not-prose] *) {
+  padding: 0.75em 1em 0.75em 0;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--color-foreground) 12%, transparent);
+  vertical-align: top;
+}
+
+.prose td:not([data-not-prose] *) {
+  color: var(--color-muted-foreground);
+}
+
+.prose td code:not([data-not-prose] *) {
+  color: var(--color-foreground);
+}
+
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+}
+
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark);
+}
+
+.prose pre:not([data-not-prose] *) {
+  margin-top: 1.2em;
+  overflow-x: auto;
+  border-radius: var(--radius-2xl);
+  background: color-mix(in oklab, var(--color-foreground) 4%, transparent);
+  padding: 1em 1.25em;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+.prose .shiki,
+.dark .prose .shiki {
+  background: color-mix(in oklab, var(--color-foreground) 4%, transparent);
+}
+
+.prose table:not([data-not-prose] *) {
+  display: block;
+  margin-top: 1.2em;
+  overflow-x: auto;
+}

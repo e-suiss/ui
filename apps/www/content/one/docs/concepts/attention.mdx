@@ -1,0 +1,157 @@
+---
+title: Attention and surfaces
+description: How One is designed to decide when to interrupt you, which surface to use, and how Pending, the activity log and the daily brief work.
+---
+
+One's success is meant to be measured by how much unnecessary interaction it removes, not by how long it keeps you in an app. Deciding what should be done and deciding whether to tell you now are two separate decisions.
+
+## The attention decision
+
+Every candidate output (an outside event, a suggestion, prepared work, an approval request, another app's notification) passes through a decision head that runs on your phone. It is a small, calibrated model, not a language model, and it works in the background and offline. It picks one of five outcomes:
+
+| Decision | What happens |
+|---|---|
+| Interrupt now | You are told immediately |
+| At the next break | You are told at your next natural break |
+| Put in the brief | No notification; it goes into the daily brief |
+| Keep quietly | No notification; it appears in One's "left for later" list |
+| Drop | Not shown; the decision itself is recorded |
+
+The inputs include the time, device state from Relay, your calendar, who it is from, the content type, urgency, the time since the last interruption, today's interruption count and the time since the last output of the same kind.
+
+When the decision is uncertain, One can ask for a value estimate from the cloud models, inside your encrypted space. If the cloud cannot be reached, the uncertain item goes to the brief: uncertainty is never a reason to interrupt you.
+
+Your attention model is trained only on your own signals (accepting, rejecting, "not now", muting, undoing), only in your encrypted cloud space, and then downloaded to your phone. It is not used for anyone else. On day one One starts from a general model built from synthetic and open data.
+
+## Interruption levels
+
+Every output carries one of four levels, which Relay delivers:
+
+| Level | Meaning | Typical use |
+|---|---|---|
+| `passive` | Silent; does not wake the screen | A progress update, "your brief is ready" |
+| `active` | A normal notification | Prepared work, a result you were waiting for |
+| `time-sensitive` | Breaks through focus and summaries as far as the platform allows | An approval about to expire, a delivery at the door, a changed departure time |
+| `critical` | Breaks through silent mode and focus | Only with your explicit Grant |
+
+One uses `critical` only with a Grant you give explicitly in Access, scoped to something specific, such as "anything from my mother" or "anything from my child's school". One cannot give itself that Grant or widen it; it can only suggest it. Relay may lower a level, never raise it.
+
+Urgency is not authority. A cancelled flight may be critical, but booking a new ticket still needs a Mandate. Equally, being allowed to do something does not give One the right to interrupt you about it.
+
+## Hard limits
+
+Quiet hours, focus modes, muting and the daily interruption budget are hard limits. The learning policy cannot stretch them or "learn" its way around them; only your own critical Grant breaks through.
+
+- **Muting binds One.** Outputs are grouped into kinds, such as "coffee approval", "meeting prep" or "bill reminder", and you can mute each kind. A muted kind never comes back as a notification unless you turn it on again. A live progress item you dismissed is not sent again for that task.
+- **Daily interruption budget.** You set how many times a day One may interrupt you. The planned default is three, adjustable from zero to ten. `active` and `time-sensitive` interruptions count; `passive` ones and critical-Grant ones do not. When the budget is used up, the rest of the day's items go to the brief, and One tells you so.
+- **Nothing gets lost.** Items held back by the budget, quiet hours or muting stay in "left for later" and in the brief. One does not hide that it stayed quiet: "I left 3 things for later, take a look if you like."
+
+Anything that is not urgent goes to your next natural break by default: unlocking the phone, a focus mode ending, a meeting ending, quiet hours ending. Relay detects the break and delivers. Each deferred item carries a maximum delay and, if relevant, an expiry; information that has expired is not shown but noted in the brief.
+
+Sensitive content never appears on the lock screen or in voice. It goes to Relay marked sensitive, the lock screen shows neutral text, and the content is fetched after you unlock.
+
+## "Why now?"
+
+Every proactive output explains what it is based on (an email, a calendar entry, a routine, something you said), why now (a deadline, a break, a price change) and under which rule. Numbers and dates in the explanation come from records, not from the model. Raw reasoning is never shown.
+
+## The daily brief
+
+The daily brief is One's main low-interruption channel. You choose when it arrives, and it ends: "That's all for today." It contains:
+
+1. Prepared work waiting for your approval, one tap away from the approval surface.
+2. Today's deadlines and events from your own transactions: flights, parcels, bills, bookings.
+3. What was left for later, including items held back by the budget.
+4. A short list of what One did on its own, linked to the activity log.
+5. Work that expired or stopped, such as "stopped because no approval came".
+
+Every item links to its source, and text One generated looks different from source text. Summaries of content in a third party's voice, such as news or newsletters, are left out of the brief by default.
+
+Proactive suggestions come only from your own data and goals: your transactions, calendar and tasks, goals you stated, routines you confirmed, and pending items from Access and Work. One does not produce feeds based on guessed interests.
+
+## Routines
+
+A routine is an explainable hypothesis with a trigger ("weekdays, 7:30 to 9:30, on the way to the office"), a behaviour, an evidence count, known exceptions, first and last observation, an expected period, a source, and an authority field that is fixed at none. Routines are detected by counting and rules, not by a language model, and never in sensitive classes.
+
+- "Why?" is answered with evidence: "because you bought the same coffee at this time on 10 of the last 12 weekday office trips".
+- Your intent overrides habit. If you say you are not feeling well today, the routine does not apply.
+- Behaviour observed after One suggested something does not count as much as behaviour you showed on your own, so a routine cannot confirm itself.
+- A routine that stops happening is quietly suspended, and returns only as a single suggestion that you accept.
+- An action from a routine only comes from suggestion, then your acceptance, then a Grant in Access.
+
+## What One does not optimize for
+
+Opens, clicks, session length, time in app and daily active users are never rewards, goals or product metrics. There are no streaks, fake urgency, "you're missing out" language, badges or win-back notification campaigns. The attention policy learns from completed work and "useful" marks (positive), and from "not now", muting, wrong actions, undo and "why did you tell me so late?" (negative).
+
+Experiments with timing are off by default. If you allow them, they only vary between "put in the brief" and "at the next break"; never "interrupt now", and never for critical items.
+
+## Surfaces
+
+One has no device of its own. It lives on the surfaces you already carry, in three modes:
+
+| Mode | For | Where |
+|---|---|---|
+| Presence | Short, everyday interaction: status, a one-line question, a low-risk approval, a voice command | Widgets, lock screen, menu bar and tray, assistant gesture, watch, car, glasses, live progress items |
+| Workspace | Deep work: comparisons, long text, plans, chat, reviewing memory and activity | Full screen on the phone, desktop, web |
+| Control | Managing One: settings, authority, rules, sub-agents, consent, devices | A separate section of the workspace |
+
+Surface classes set the size budget and the approval ceiling:
+
+| Class | Main channel | Approval ceiling |
+|---|---|---|
+| Phone | Visual, voice, touch | Full, with strong authentication |
+| Desktop (including the web workspace and the browser extension) | Visual, keyboard | Full, with strong authentication |
+| Watch | Small visual, haptic | Low risk |
+| Voice: car | Voice only | Low risk |
+| Voice: glasses | Voice, small visual, camera | Low risk |
+
+### Presence follows the task
+
+One does not sit on screen saying "I'm here" when there is nothing to do. With no task running, it appears only on passive, user-invoked surfaces: home and lock screen widgets, quick controls, the menu bar or tray, a global shortcut, a watch complication. Live progress items open only while a task is active, and a long task updates one item in place rather than sending a notification per step.
+
+### Continuity
+
+The source of truth is the task state on the server. Each surface holds a lease on a view; if a surface closes or drops, the task is unaffected and the attention engine may pick another surface. Handing a task to another device is only a hint to open it there; the real state is always read from the server. Conversations work the same way: start on the phone, continue on the desktop.
+
+### One meaning, many projections
+
+Everything shown to you is first a typed `Interaction`. A phone card, a watch button, a voice prompt in the car and a short line on glasses are projections of the same meaning. Every interaction has a minimal projection, one sentence plus a two-option answer, and per-surface size budgets; an interaction that does not fit a surface sends its minimal projection and a link to the workspace instead.
+
+One's answers are usually interactive: three restaurant cards with photo, rating, distance and open times, where tapping a time opens the booking approval. The model picks the format, but only from a fixed catalog of components (card, list, comparison, approval, form, timeline, map, progress, receipt). It never writes screen code, and approvals and payments are never given inside generated UI. You can turn down the amount of visuals or ask for text only.
+
+Third-party UI, such as a tool server's embedded app, is shown only on large surfaces, runs sandboxed without access to One's session, cookies, memory or other connections, and is for information and choice only. Approvals, payments, granting authority, entering credentials and consent screens never appear inside it.
+
+See the [Interaction reference](/one/docs/reference/interaction).
+
+### Approvals across surfaces
+
+A pending approval goes by default to the single surface the attention engine chooses. One gives Relay the target surface and an escalation schedule; if there is no answer, the request also goes to other surfaces that meet the approval ceiling. The planned default escalation time is five minutes or half the request's remaining time, whichever comes first. The first valid answer wins; the copies on other surfaces close and later answers are rejected. When the request expires, the work stops.
+
+## Pending
+
+Pending answers "What do you need from me right now?". It is a single list of everything that needs you:
+
+| Item | Where the answer is recorded |
+|---|---|
+| Approval request from One's plan, a Trigger or another One's proposal | Access |
+| Work item relevant to you | Work and Access |
+| One's question or a choice | The One task |
+| A rule One suggests | Access (if accepted) and One |
+| First contact from an unknown agent | Relay and One; no automatic action |
+| Parent approval for a child's request | Access |
+| Memory confirmation | One's memory |
+
+Each item says what is asked, who or what is asking, why now, by when, its risk and reversibility, and links to its source. Pending is a view: an item closes only when its source closes. When an item expires it shows "expired, work stopped".
+
+## Activity log
+
+The activity log answers "What did you do, and why?". It is not a separate table and not operational telemetry. Every row is linked to an Access decision record, a Work record, an executor report or a memory event, and a row with no linked record is not shown. "What did you do yesterday?" is answered from these records, not from the model's own account.
+
+Rows are grouped by verb: observed, decided, asked, did, spent, shared, handed off, remembered. Each row shows what happened and when, on which surface or executor, under which Grant or rule, the result ("done" with executor confirmation, otherwise "unknown"), the cost, the reason, and honest actions: "Undo" only for reversible actions, "Request refund" for compensable ones, and nothing for irreversible ones.
+
+## Offline core
+
+Without a connection, the phone can still handle fixed short commands (set a reminder, add to a list, take a note, check the calendar or tasks), search the on-device memory subset, show cached calendar and tasks, make attention decisions and fire local reminders. Requests that need a language model are queued and you are told "I'll do it when I'm back online". No action that needs an Access decision runs offline.
+
+## Settings in plain words
+
+Every setting is a plain question, has the same name and default on every platform, and shows its effect before you change it. Defaults are cautious: loosening takes an explicit action, tightening takes one tap. Technical terms such as Grant or Mandate stay under "details". Permissions are asked for when they are needed, with the reason, rather than in a wall at first launch.

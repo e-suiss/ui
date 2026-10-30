@@ -1,0 +1,134 @@
+---
+title: Tasks and execution
+description: How One is designed to plan work, choose an action path, run long tasks safely, use capabilities and coordinate sub-agents.
+---
+
+One plans, Access decides, and Access Executor runs the action. One has no execution runtime, token vault or human-wait timer of its own. Model output is never an action: an effect on the outside world happens only through a typed intent, an Access decision and the executor.
+
+## What a task is
+
+A task is One's record of single-person work, such as "order my coffee every morning" or "tell me if the flight price drops below my limit". It has a purpose, a plan, steps, a waiting state, a checkpoint and a verifiable finish.
+
+Anything that involves a promise to someone else, such as an agreement between two people's Ones or shared family work, is a Work **Commitment**, not a task. One creates and follows it, and Work owns it. A task that prepares for a commitment (booking a table, a reminder) carries a reference to it, and the task's state never changes the commitment's state.
+
+A task belongs to One, not to a device, a conversation or a model. It can start on your computer, be followed on your phone, ask for approval on your watch and be read out in your car, and it is still the same task. Task state is never kept in a model session or by a model provider. If the model changes mid-task, the task carries on and the remaining steps are re-planned if needed.
+
+## Task states
+
+Task state is not a stored field. It is computed deterministically from the task's event history.
+
+| State | Meaning |
+|---|---|
+| `pending` | Planned; the first step has not started |
+| `running` | A step is running |
+| `waiting_user` | Waiting for your approval, input or takeover |
+| `waiting_external` | Waiting for an outside event: another One's reply, a price threshold, a website, a Trigger event |
+| `paused` | Stopped by you or by One, with stop confirmation from the executor |
+| `completed` | The finish criterion was verified |
+| `failed` | The finish criterion could not be reached; the reason and the completed steps are visible |
+| `cancelled` | You gave up, or the authority was removed |
+
+Transitions and fields are in the [task reference](/one/docs/reference/task).
+
+## From intent to effect
+
+Every effect on the outside world follows the same order:
+
+1. The model produces a **typed intent**.
+2. The intent is validated against the capability's input schema. If it does not validate, it is dropped, the model does not retry, and you are asked instead.
+3. One's data-flow policy and provenance rules are applied.
+4. One builds an Access intent envelope and gets a decision: allow, deny, or "action required" (step-up authentication or approval).
+5. Only an allowed intent goes to the executor.
+
+There is no untyped action such as "make the purchase somehow". Saying "yes" in chat is not an approval; approvals are given on the Access approval surface.
+
+In a batch with several external effects, such as sending ten invitations, a failure stops the rest. You see which steps ran, which one failed and which were not run, and continuing is your explicit choice and a new Access decision.
+
+## Where work runs
+
+| Executor | Where | What it runs |
+|---|---|---|
+| Cloud executor | An isolated machine per user in Access Executor, with its disk encrypted with your key | API calls, work that needs no sign-in, long work, and the cloud browser (a separate browser context per task) |
+| Local executor | The One app on your device, registered with the executor | Work that needs your signed-in session while you are at the device, the desktop agent, device actions, and the bridge to your own coding agents |
+
+Neither has a privileged path. The placement is chosen by rules, never by the model:
+
+| Condition | Where |
+|---|---|
+| The job can be done through an API, a tool server or a commerce protocol | The cloud executor calls the API; the upstream token stays in the Access token vault |
+| No sign-in needed, or the job is long | The cloud machine |
+| Your session is needed and you are at the device | The local executor |
+| Your session is needed and you are away | The task waits for you |
+
+While a device is offline, Access cannot be asked, so no step with an external effect runs. Commands you give offline are saved as tasks and go through the normal order when you reconnect.
+
+## Order of action paths
+
+One uses the first path that works:
+
+1. An official API, a tool server or a commerce protocol. Payments always go through Pay.
+2. The operating system's intent mechanisms.
+3. A cloud browser that identifies itself, if there is no API.
+4. Handing the task to you, if there is no path, the site blocks agents, or its terms forbid them.
+
+On a site whose terms clearly forbid agents, One says so, hands the task to you and does not use the site in disguise.
+
+## The cloud browser identifies itself
+
+Requests the executor makes on your behalf are signed with Web Bot Auth (HTTP Message Signatures). The signing identity is at the suiss level and does not reveal who you are; the key is bound to your One's identity in Access. There is no disguise, fingerprint spoofing, proxy rotation or CAPTCHA solving.
+
+At a CAPTCHA, a bot wall, a sign-in or a two-factor screen, the browser stops and hands the job to you. If you are away, the task waits; when the wait expires, it stops and tells you why.
+
+## Credentials never reach the model
+
+The agent's browser profile, cookies and sessions live in the executor, encrypted with your key, for the same lifetime as the machine. Passwords are preferably filled in from your own password manager at execution time, directly into the page, and only when the domain matches, so nothing is typed into a lookalike site. Each release of a profile, password or cookie is a recorded Access action. When you take over a session, screenshots stop and the model context is closed; when you hand it back, the agent reads the page from scratch.
+
+## Desktop agent and browser extension
+
+- On the desktop, the agent is designed to run in a separate account or virtual desktop by default. Inside your own session it runs only in an explicit "watch and do" mode that you start, that shows a constant on-screen indicator and that ends with one tap. Unattended background work runs in the cloud.
+- The browser extension does nothing during normal browsing and reads a page only when you share it. Agent mode starts only when you call it, is limited to the task's set of allowed sites, and runs in a separate tab group.
+
+While a browser or desktop job runs, you see one item that updates in place ("One is on the hotel site, step 3 of 7"), with Watch, Take over and Stop always available. Agent work has a step budget from the Mandate; when it runs out, the task stops and asks you.
+
+## Capabilities
+
+Capabilities are named by meaning, not by provider: `transport.ride.request`, not a specific app's method. Names live under a reverse-DNS namespace, are versioned, and can extend a parent capability. Third-party extensions use their own namespace and extend a suiss capability.
+
+- **The planner sees only what is allowed right now.** A capability outside the current Grant and Mandate is never shown to the planner. From the rest, a few candidates are retrieved and only their definitions reach the model.
+- **Only tested, working capabilities are listed.** A capability whose evaluation fails, or whose provider breaks, disappears from planning and is shown to you as "not working right now". If reversibility cannot be verified, the action is treated as irreversible.
+- **One knows itself.** Which permissions it has, which devices are online, which models are available, which tasks are running and which capabilities are connected come from a live record, not from the model's guess.
+
+The default catalog is curated by suiss. Under "Advanced" you can add your own tool server, for example your workplace's. It shows a plain warning, runs in a restricted sandbox (network access only to the sites it declares, output always treated as untrusted, no data flow to other servers), and follows the same pinning and re-approval rules. Packages are signed and declare their permissions; a tool's name, description and schema are pinned by hash when you add it, and if they change, the tool stops until you confirm it again.
+
+Full fields are in the [capability reference](/one/docs/reference/capability).
+
+## Inbound channels and other assistants
+
+- Messaging channels and email can hand work to One, but their content is untrusted. A command is accepted only from you, through a channel account linked to your identity in Access. A message from anyone else is data. A channel button or reply is never an approval; work that needs one goes to the Access approval surface.
+- One works with your own accounts. It does not get its own public email address, because that would widen the injection surface. Its only address of its own is its One-to-One address.
+- One can be exposed to other assistants as a tool server, an A2A agent or an app intent. Every caller carries an Access Grant, the default scope is read-only, and writing or acting needs a separate, explicit Grant. Personal context goes only to an assistant whose provider neither stores nor trains on it, and sensitive classes go to no outside assistant.
+
+## Your own coding agents
+
+One is designed to be a screen and remote control for coding agents you already use on your own computer. It runs the official command-line tools on your machine, in the local executor, with your own account, and lets you start, watch, steer and stop those sessions. One never uses these tools for its own work, never receives or stores their sign-in credentials, and does not send them your memory or other context. Every step the tool takes passes an Access decision and can be stopped, and everything it produces is untrusted data to One.
+
+## Long tasks
+
+Long work, such as "buy if the price drops" or "wait for the other One's reply", must survive restarts and lost connections:
+
+- **Durable execution.** The executor keeps each task's event history. If a process dies, another worker replays the history deterministically and continues where it stopped.
+- **External effects are separate, recorded steps.** Submitting a form, buying or sending a message has an idempotency key and a recorded result, and is not repeated on replay. If a crash happens between sending and recording, One first checks the result (the page, a confirmation email, an API) instead of sending again. If it cannot check, the step is shown to you as unknown and the decision is yours. Whether an effect happens only once also depends on the other system honouring the idempotency key.
+- **Human waits live in Relay.** Approval, input and takeover waits are Relay waitpoints. When a wait expires unanswered, the work stops.
+- **Continuing is a new decision.** After an approval, a takeover or a long sleep, continuing asks Access again. If authority shrank or was removed in the meantime, the work does not continue.
+- **Two-layer checkpoints.** The logical state (plan, completed steps, collected data) is stored durably; the browser state is kept as an encrypted snapshot. On resume the page is reloaded and checked again (is the cart the same, did the price change), and if something changed you are asked.
+- **Partial progress is visible.** Every long task has a verifiable finish, its progress is visible, and you can take over at any point. Nothing is designed as all-or-nothing.
+
+## "Stop" always works
+
+At any moment you can ask "What are you doing?", "Why?", "Stop", "Undo" or "Don't do this again". Stop is never refused, on any surface, even a weak one. It suspends the authority in Access and asks the executor to stop. Until the executor confirms, you see "stopping"; One says it stopped only after the executor reports that it did. "Undo" appears only for actions that can really be undone.
+
+## Sub-agents
+
+To you and to the world there is one One. Inside, each sub-agent (research, travel, shopping) and each execution instance is a separate agent instance in Access, with narrower authority, its own trail and its own stop.
+
+The default view is simply "One is on it". "Show details" lists the sub-agents and their states ("Travel: comparing flights", "Payment: waiting for approval"). An optional advanced view lets you message a sub-agent, redirect it, stop or restart it, narrow its authority and change its settings, and its authority still cannot exceed One's. An outside specialist agent, such as an airline's agent, appears as a capability provider. There is no agent store where you install and manage dozens of agents.

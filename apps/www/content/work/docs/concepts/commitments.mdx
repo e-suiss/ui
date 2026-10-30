@@ -1,0 +1,254 @@
+---
+title: "Commitments"
+description: "How a commitment moves from request to acceptance, the closed set of operations, acceptance rules, delegation, budgets and service-level clocks."
+---
+
+A commitment is the unit of work in Work. It is the obligation one party (the obligor) takes on toward another (the obligee), on behalf of a principal, under Conditions, about an Aim or an Act.
+
+Three rules shape everything on this page:
+
+1. **"Done" means accepted.** The obligor's "done" is a statement. A commitment is only fulfilled when the acceptor accepts it.
+2. **Commitment state is derived, never stored.** It is computed deterministically from the Declarations attached to the commitment, and can be recomputed from history.
+3. **Nothing happens silently.** Silence is not acceptance, a budget does not quietly grow, a clock does not quietly stop, and nobody quietly walks away from a commitment.
+
+## Roles
+
+| Role | Meaning | Note |
+|---|---|---|
+| Obligee | The party the commitment is for; whoever opened the request, or on whose behalf it was opened | An agent can be an obligee |
+| Obligor | The party that promised and carries the obligation | Not yet known while the request sits in a pool |
+| Principal | On whose behalf the commitment is given (the on-behalf-of chain) | Can be on either side |
+| Acceptor | The party that may accept or reject the result | The obligee by default, or a verifier declared up front |
+| Performer | The party that actually does the work | Can differ from the obligor |
+| Accountable | The single party accountable for the commitment | See [Responsibility and control](/work/docs/concepts/responsibility-and-control) |
+
+One party can hold several roles. The interface then shows them once, while the records keep the roles apart.
+
+## Required fields
+
+Every commitment has an obligee, an obligor or a queue, an aim (an Aim reference or a one-sentence goal), and an acceptor. If no acceptor is given, the obligee is written in as an explicit value.
+
+An offer has six minimum fields: aim, expected form of delivery, scope (in and out), acceptance criterion, acceptor and due date.
+
+- When one side is an agent, all six are required, and an incomplete offer is rejected.
+- Between people, the system (or the person's One) suggests the missing fields and a person may leave them empty. An empty field stays visible as "undefined", and if the result is later accepted, the acceptance record notes that the acceptance criterion was undefined.
+
+No field is required unless it gives the person entering it a direct benefit.
+
+Optional fields include line items, Conditions, a start deadline and clock definition, a budget, an amendment policy, an implicit acceptance statement, a four-eyes waiver, a multi-party aggregation policy and a support link.
+
+## Commitment types
+
+A type is not a separate concept. It is a typed commitment that uses the same lifecycle.
+
+| Type | Meaning | Special rule |
+|---|---|---|
+| Standard | A promise between two parties about an Aim or an Act | None |
+| Sub-commitment | A new commitment linked to a parent by a support link | The obligation stays with the parent |
+| Periodic update | A recurring report promise, such as "a status report every day at 17:00" | A missing report is a breach signal |
+| Follow-up | "Look again on this date" or "continue when this happens" | The trigger is a time or event Condition |
+| Help request | An agent asks a person for a decision, input or help | The agent is the obligee; it opens as an owned commitment, not a chat message |
+
+An agent can be a requester. When an agent asks a person or another agent for something, it opens an owned commitment with the same request operation, and the asked party has the same rights to decline, counter or promise.
+
+A signal is not a commitment. An observation, alarm or external signal is a Claim. It is deduplicated and linked to the work, but a commitment only starts with a request. No template or Practice is needed to open a commitment.
+
+## Lifecycle
+
+```text
+                      counter (obligee: new offer version)
+              ┌──────────────────────────────────┐
+              ▼                                  │
+ request ─► requested ── counter (candidate) ─► countered ── accept-counter ──┐
+              │  │  │                                                         │
+              │  │  └ decline ──────────► declined (terminal)                 │
+              │  └ promise-conditional ─► conditionally-promised              │
+              │                                │ precondition met             │
+              └ promise ────────────────► promised ◄────────────────────────┘
+                                              │      ▲
+                                        state │      │ reject (back to work)
+                                              ▼      │
+                                            stated ──┘
+                                              │ accept (explicit or implicit)
+                                              ▼
+                                          accepted (terminal)
+
+ From any open state: cancel (obligor) · release (obligee) · revoke-* (two-sided) · expire · administrative-close
+```
+
+| State | Meaning | Terminal |
+|---|---|---|
+| `requested` | The request is open; waiting for the candidate obligor or the queue | No |
+| `countered` | The candidate proposed different terms; waiting for the obligee | No |
+| `conditionally-promised` | Promised, but a declared precondition is not yet met | No |
+| `promised` | The obligor is bound; execution is expected or under way | No |
+| `stated` | The obligor said "done"; waiting for the acceptor's decision | No |
+| `accepted` | The result was accepted, explicitly or implicitly | Yes |
+| `declined` | The request was declined before any promise | Yes |
+| `withdrawn` | The other side allowed a revoke request | Yes |
+| `cancelled` | The obligor gave up unilaterally | Yes |
+| `released` | The obligee released the obligor from the obligation | Yes |
+| `obsolete` | The parent aim or parent commitment went away; nobody is blamed | Yes |
+| `expired` | A declared validity period ran out with no action | Yes |
+| `closed-administratively` | Closed with a reason by an authorized party outside the two sides | Yes |
+
+`promised` and `accepted` never share a name in any interface, API or mapping. A missed due date does not change the commitment's state; it is a breach signal from the clock, and late fulfillment is still possible. A terminal state never changes. Reopening means a new commitment linked to the old one.
+
+The full operation table, with who may perform each and from which states, is in the [state machines reference](/work/docs/reference/state-machines).
+
+## Operations are speech acts
+
+Every operation is a typed Declaration: request, promise, conditional promise, decline, counter, accept a counter, state ("done"), accept, reject, cancel, release, delegate, assign, dispute, defer, resume, the four revoke requests with allow and refuse, amend, notice, declare obsolete, expire and administrative close. The list is closed.
+
+Agents use the typed operations directly. People do not have to know their names: the system or One suggests the operation ("Shall I record this as a promise?"), and the person confirms. An unconfirmed suggestion is not a Declaration.
+
+An operation is valid only if the author holds that role, the commitment is in a state that allows it, and Access authorizes the author for it. An invalid operation is rejected with a reason and the rejection is recorded; it is never dropped silently. For every commitment, the API is designed to return the operations the caller is allowed to perform right now.
+
+## The offer phase
+
+**Declining is first-class and cheap.** People and agents can decline. A decline carries a reason code: no capacity, no authority, out of scope, missing information, unacceptable terms, or other. Declining closes the request; it does not count as failed work.
+
+**Counter-offers** change the terms of the open offer (due date, scope, line items, acceptance criterion, budget) and are linked to the previous offer with `supersedes`. Each counter carries a rising offer version. If the obligee accepts the candidate's counter-offer, the commitment becomes `promised` directly. An obligee's counter is a new offer version and returns the commitment to `requested`.
+
+**A conditional yes** is a promise that depends on a precondition, such as "if the budget is approved" or "if the materials arrive", without changing the terms. The precondition is an addressed Condition with a deadline. When it is met, the commitment becomes `promised`; this follows from the record that satisfied the precondition. If the deadline passes first, the commitment expires.
+
+**Line items and partial acceptance.** A commitment can consist of line items. The candidate can promise, conditionally promise or decline each item, and the acceptor can accept or reject each item. State is derived per item; if items differ, the summary is `mixed` with a breakdown.
+
+## Statement, acceptance and fulfillment
+
+Fulfillment is recorded separately from the commitment, as Acts, Claims and References linked with `derived-from` in the `fulfills` role. Partial fulfillment, and one event fulfilling several commitments, are both supported.
+
+The acceptor either accepts a `stated` commitment or rejects it with a reason, which sends it back to `promised`. Every rejected statement and its reason stays in history, and the number of consecutive rejections is visible.
+
+When an Aim is truth-based, or when the acceptance criterion or policy asks for it, acceptance requires a typed evidence reference. Without it, the acceptance is not valid. A statement without evidence shows as "stated, without evidence".
+
+An executor or agent protocol saying a task is complete (for example an A2A `COMPLETED` status) is the obligor's statement if the executor is the obligor, and a Claim otherwise. It never counts as acceptance.
+
+## Closing outcomes
+
+- **Cancel is not release.** Cancel is the obligor giving up; it counts against the obligor and triggers the duty to notify. Release is the obligee letting the obligor go; it needs no consent from the obligor and does not count against them.
+- **Cancel reasons:** cannot complete, failed, abandoned, other. Who started each closing (obligor, obligee, an administrative party, the Work service) is part of every terminal outcome.
+- **Expiry** rests only on a declared validity period: an unanswered request or counter-offer, or a conditional promise whose precondition was not met. A promised commitment does not expire.
+- **Obsolete** applies when the parent aim or commitment closes or the work stops making sense. The obligee or principal records it; the obligor can suggest it. It blames nobody.
+- **Administrative close** is for when a side can no longer act (someone left, an organization closed, an agent was disabled). A party with that authority in Access closes it with a reason, and the parties and the accountable party are told.
+
+A "complete" report that arrives after a cancel or release does not change the outcome, but it is recorded and shown.
+
+## Revoking
+
+There are four revoke requests. Each goes ahead only when the other side answers allow or refuse. No revoke deletes or edits a record.
+
+| Request | Asked by | Asked of | If allowed | If refused |
+|---|---|---|---|---|
+| Revoke request | Obligee | Obligor | `withdrawn` | The commitment continues; the obligee can still release |
+| Revoke promise | Obligor | Obligee | `withdrawn`, not counted as a cancel | The commitment continues; the obligor can still cancel |
+| Revoke statement | Obligor | Acceptor | Back to `promised` | Stays `stated` |
+| Revoke acceptance | Acceptor | Obligor | The terminal outcome stays; a linked reopening commitment starts | A dispute mark |
+
+A refused revoke, or a `dispute` against a rejection or a revoked acceptance, puts a dispute mark on the commitment. It appears on both sides' attention surfaces and on the accountable party's. It is resolved by a new Declaration from the parties or by an administrative close.
+
+## Acceptor and four eyes
+
+The obligee accepts, or a verifier the obligee named when creating the commitment. A verifier can be a person, an automated test or an agent party; acceptance by an agent or test is valid only because of that declaration. Changing the acceptor later is a change of terms.
+
+**Four eyes is on by default.** The party that requested the work, or started the agent, cannot accept that agent's output alone. The second pair of eyes must be a party outside the requester's on-behalf-of chain; another of the requester's own agents does not count. Turning four eyes off is an explicit, recorded Declaration by the obligee and is shown on every view of the commitment. Organization policy can forbid turning it off; policy can never turn it off by itself.
+
+Acceptance is a coordination gate. It is given on Work's structured approval surface and bound to the exact content (commitment, statement version or digest, line items). For a commitment marked high impact, acceptance asks Access for step-up authentication.
+
+## Implicit acceptance
+
+Implicit acceptance happens only on the basis of an explicit statement the obligee gave beforehand, such as "accepted if there is no objection within N days of the statement". The statement carries the period and the items it covers, and can be withdrawn going forward before the period ends. The period starts from the ledger time of the `stated` record.
+
+When the period ends, the Work service party writes a separate `accept` record, linked to that statement and marked implicit, with its reason readable on every view.
+
+Policy, templates and settings cannot create implicit acceptance on their own; a template can only suggest the statement. Without a prior statement, a passed deadline means "awaiting acceptance, time passed" and goes to the attention of the acceptor and obligor. Implicit acceptance also never overrides the conditions for explicit acceptance: missing required evidence, the four-eyes rule or a required step-up all block it.
+
+## Delegation, sub-commitments and the support chain
+
+There are two different moves:
+
+- **Delegation** changes the obligor. The obligation changes hands. It takes two records: the current obligor's offer, which must include a handover note, and the new obligor's explicit acceptance. Until the new party accepts, the old obligor stays the obligor.
+- **A sub-commitment** is a new commitment the obligor takes from someone else for part or all of the work. The obligation stays with the parent. Sub-commitment is the default when work is handed on; delegation is chosen explicitly.
+
+A runtime conversation handoff between agents is only evidence (a Claim), not a delegation.
+
+The handover note has the same shape for people and agents:
+
+| Field | Meaning |
+|---|---|
+| Why | A structured reason (capacity, competence, escalation, leaving, control handover, other) and an explanation |
+| Summary | Where the work stands now |
+| What was done or tried | Including failed attempts |
+| What changed | Terms, assumptions or environment since the offer |
+| Open questions | Unanswered questions and who they are waiting on |
+| What is next | Suggested next steps |
+| Context references | A list of References; context is not copied |
+| Context carried over | Stateful (progress and context carried) or stateless (start over) |
+
+A sub-commitment links to its parent with `derived-from` in the `supports` role. The support chain (external promise ← internal promises ← supplier promises) is derived from these links. When a sub-commitment is cancelled, declined or expires, enters a warning or breach tier, receives an at-risk or cannot-complete notice, or its estimate passes the parent's due date, an attention signal goes to the parent's obligor and accountable party. The signal does not change the parent's state.
+
+The obligee can also hand the claim to the result to another party (`assign`), with the same two-record pattern.
+
+## Budgets
+
+A budget is a resource Condition on the commitment, in time (effort spent, separate from the due date), money (currency and an integer amount in the smallest unit) or operations and tokens. Consumption arrives as Claims from the executor or from Pay; Work does not measure it itself.
+
+When a budget runs out, nothing happens silently. The work neither grows on its own nor gets cancelled. A "resource decision pending" wait opens, and the accountable party gets a three-way decision: continue (raise the budget), reshape (change scope or terms), or let go (release or cancel). Stopping execution is the executor's job and moving money is Pay's. A budget is not authority: spending authority and limits live in Access, and a Work budget can never exceed them.
+
+## Service-level clocks and periodic updates
+
+A service-level clock is a time Condition on the commitment, defined on the commitment or in a Practice. It carries a target (response, start, finish or periodic update), a target duration, a business calendar with a time zone, warning tiers, a breach definition, pause conditions, and start and end events. The start deadline (nobody picked it up) and the finish deadline (picked up but not finished) are separate targets.
+
+Clock state (remaining time, warning, breach, paused, met) is derived from records, never stored. A changed clock definition applies going forward.
+
+A clock pauses only when a pause condition declared in its definition occurs and the party being waited on is addressed: what is awaited, from whom and since when is written down, and that party sees it. A one-sided pause without a reason is invalid. Muting an attention item never stops the clock.
+
+A periodic update commitment carries a calendar rule, a report schema (by default: status, what I did, what I need) and a tolerance. A report that does not arrive within tolerance is a breach signal for the obligor, obligee and accountable party.
+
+## Multi-party aggregation
+
+When a request goes to several parties, each gets its own commitment or decision. The combined result is derived through a Condition with a declared aggregation policy:
+
+| Policy | Satisfied when | Cannot be satisfied when |
+|---|---|---|
+| All | All N participants accepted | Any rejection, timeout or close without an answer |
+| Any | The first acceptance | Every participant closed with something other than acceptance |
+| K of N | K acceptances | The open participants can no longer reach K |
+| Sequential | Each in turn accepts; the next request opens only after the previous acceptance | Any non-acceptance in the sequence |
+| Percentage | Acceptances reach the threshold | The rest can no longer reach it |
+| Any rejection rejects | Added to another policy | Any rejection |
+
+The participant set is fixed at creation and changes only through an amendment. A decision answer has four values: accept, reject, closed without an answer, timeout. No answer is never a yes. When the result is decided early, open participant requests are closed as obsolete and the participants are told. Each participant's authority to decide is checked in Access.
+
+## Amendments
+
+New instructions to a commitment or to running work are an `amend` Declaration linked to the previous version with `supersedes`. There are two kinds:
+
+| Kind | Example | Rule |
+|---|---|---|
+| Instruction change | Updating the glossary for a translation job | Does not change acceptance criterion, due date, scope or budget; applied by the amendment policy |
+| Terms change | Scope, due date, line items, acceptance criterion, acceptor, budget | Needs a new promise from the obligor, who can accept, counter or decline; if declined, the old terms stand |
+
+The amendment policy declares how an instruction change reaches running work: queue (apply after the current step, the default), refuse while running, interrupt the current step, or roll back to the last checkpoint. Interrupt and roll back can be chosen only if the executor declares it supports them. The executor reports which version it applied; an unapplied version shows as pending.
+
+## Duty to notify and whose move it is
+
+The obligor tells the obligee, and the parent commitments in the support chain, when the work is stated as done, when it cannot be completed, when it is at risk, or when it seems no longer needed. There is no silent exit from a non-terminal commitment.
+
+Whose move it is follows from the state and is the basis of Needs Attention:
+
+| State | Next move |
+|---|---|
+| `requested` | The candidate obligor, or the queue owner |
+| `countered` | The obligee |
+| `conditionally-promised` | Whoever the precondition is addressed to |
+| `promised` | The obligor |
+| `stated` | The acceptor |
+| Open revoke request | The other side |
+| Budget exhausted | The accountable party |
+
+A plan is not a commitment. The doer's plan appears as a Claim or Reference; only the promised part binds. A commitment can have several execution attempts, and past attempts and their failure reasons are kept.
+
+## Agreements between two Ones
+
+When two people's Ones negotiate, they exchange only typed messages: offer, query, counter-offer and commitment. These map onto the operations above. Accepting creates a Work commitment between the two people, with each One as the author of its records on behalf of its person. Every typed message before acceptance is also a Work record, so the history of who offered what is kept. Free text in these messages is shown to the person as an untrusted note and never becomes an operation, field value or automatic action. Each One acts only within the authority its person granted in Access.

@@ -1,0 +1,133 @@
+---
+title: "Work across organizations"
+description: "How two or more organizations work on the same thing: author-owned records, federation, selective disclosure, admission, quarantine and receipts."
+---
+
+When two organizations work on the same thing, each one owns its own records. No organization hosts another's records, and no organization's record is ever rewritten in someone else's ledger.
+
+- **Identity and authority come from Access.** External identities come through Access federation and identity binding, and authority across organizations is Access's portable proof of authority. Work carries and records that proof; it does not create authority.
+- **Nothing is lost silently.** Every record from an authenticated counterparty is admitted, quarantined or rejected with a reason, and every event that cannot be mapped becomes something that needs attention.
+
+## The author owns the record
+
+| Rule | Meaning |
+|---|---|
+| The author owns it | Every record stays in its author's ledger. Corrections, withdrawals and retention happen only there, under the owner's rules |
+| Signed copy | The other side receives the record's signed bytes; the bytes and the signed `concerns` never change |
+| Local admission | The other side writes its own admission, quarantine or reasoned rejection in its own ledger. A foreign record has local normative effect only through local admission |
+| Projection | Shared work is a projection derived from both sides' records. There is no separate shared canonical record |
+
+There is no host-owned mode in which the organization that opened the work keeps the shared record.
+
+**Links and events, not copied state.** State is not synchronized between organizations. Each side derives its own internal state from its own records and sends the other side commitment events with fixed meaning: request, promise, decline, counter-offer, progress, blocker, "done" statement, acceptance or rejection of the result, cancel, release. The record itself is transferred as evidence, never a copy of the internal structure of the work, internal Condition and Aim breakdown, or attention state.
+
+**Shared work is a projection.** It is not a kind of Work. Each side has its own local Work, linked by signed records, commitments and References. A single shared Aim is not required. Each side sees only the part of the projection it is allowed to see, so the same shared work can look different on each side; what is common is the signed events both sides hold.
+
+## Federation
+
+Federation is an explicit **ledger-to-ledger relationship**. Both sides establish it with an explicit Declaration in their own ledger; there is no one-sided federation. The sides can be in different regions; only records the sender explicitly discloses cross the boundary.
+
+- There is no global suiss registry. Discovery can use signed `.well-known` ledger metadata. A domain name is an alias and a discovery path, not an identity root.
+- Each federation relationship has a declared owner party. Quarantines, mapping failures and expiring external authority go to that owner's attention.
+- The other end does not have to be suiss Work. It can join through an implementation of the Work protocol, or through the external bindings (A2A, the suiss webhook profile). An implementation of the Work protocol uses Access for authority and Relay for notifications and delivery.
+
+**External identity and authority.** An external participant is never added to the internal directory as a guest. They are represented through the cross-organization relationship, with time-limited authority defined in Access. Every external authority has an end time; a review is due before it ends and appears on the federation owner's attention surface. Expired external authority never extends itself. Internal "everyone", "all members" or "whole team" visibility never reaches external parties, external agents or a federation counterparty.
+
+**Capability announcements and partner profiles.** Each organization publishes a signed capability announcement of the kinds of work, commitment operations, evidence types and profile versions it accepts. Before sending work, the sender checks the match; if it does not match, the work is not sent and the reason shows on the sender's side. The announcement is a Claim and does not bind the other side. Partner profiles (fields, evidence types, deadline rules and acceptance criteria used between two organizations) are typed, versioned and negotiable. A profile change is a new version that needs the other side's agreement; open work continues on the version it was agreed under.
+
+## Opening work across organizations
+
+Opening work across organizations depends on the other side agreeing. One organization offers work or a commitment request; the other accepts or declines. An offer that has not been accepted is not the other side's work, and appears on their attention surface only as an offer. Accepting the offer opens the work in the receiving organization's ledger; this is different from a promise in the commitment lifecycle, even if both happen in one record.
+
+The obligor of a commitment can be a party in another organization; the commitment is then a cross-organization commitment and follows these rules.
+
+Every cross-organization piece of work and commitment carries a **correlation ID**. It is created with the offer, is the same in both ledgers, and every related record on both sides refers to it. A second piece of work cannot be opened with the same correlation ID, and duplicate parallel work is detected through it.
+
+## What crosses the boundary
+
+| Can cross, with explicit disclosure | Never crosses implicitly |
+|---|---|
+| Signed Declarations | The internal work graph |
+| Claims and Act reports | Private Claims |
+| References and content digests | Private reasoning and private provenance |
+| Commitment derivation semantics | Internal Condition and Aim breakdown |
+| Identity and key references | Attention state, ranking, per-person views |
+| Portable proofs of authority | Raw agent traces and raw chain of thought |
+| Basis and lineage | A person's unshared drafts |
+| Receipts and checkpoints | Secrets and credentials |
+
+Everything on the left crosses only with an explicit disclosure decision. Nothing on the right crosses through any default, any derived output or any agent action.
+
+**Selective disclosure.** Only the minimum fields needed go to the other side. The default cross-organization projection is: the commitment event, the related deadline, the wait type and address, and evidence metadata (subject digest, type, presenter, signature). The other side sees "delivered, plus evidence digest", not the internal discussion. Field-level disclosure does not break the record signature, because signed body parts are protected by separate commitments and only the digest of an undisclosed part passes.
+
+The disclosure decision is itself a record: what, to whom, when, and by which rule or which party's decision. It stays in the discloser's ledger. Disclosure to a new organization or recipient is high impact and always needs a live Access check. A "result accepted" or "approval given" statement that crosses the boundary can also be issued as a portable, verifiable object (a W3C Verifiable Credentials export), which is an export only.
+
+Output derived from a record received from another organization cannot go beyond the source organization's disclosure scope. Content from the other side enters local agent context with the federated trust zone label, as data only.
+
+## Admission, quarantine and reasoned rejection
+
+A cryptographically valid foreign record never changes local normative state by itself. The receiving ledger writes exactly one of three outcomes:
+
+| Outcome | Meaning | Local effect | To the other side |
+|---|---|---|---|
+| `admitted` | The record is linked to a local Work | Normative effect through a local admission Declaration | A signed admission receipt |
+| `quarantined` | The record is kept but has no local effect; a decision is pending | None; it appears on the federation owner's attention surface | A signed quarantine receipt |
+| `rejected` | The record is not accepted | None; the rejection and its reason code stay in the local ledger | A signed rejection receipt with a reason code |
+
+Federation admission is always called `admitted`, never `accepted`, which is reserved for accepting a commitment's result. Admission is a Declaration by an eligible local party, or the application of an admission rule declared on that party's behalf; automatic admission is also attributed to a party. A quarantined record can enter local agent context only with a quarantine label and only as data, never as an instruction or a basis.
+
+Checks before deciding, in order:
+
+| Check | On failure |
+|---|---|
+| Resource limits: size, complexity, rate | Reasoned rejection |
+| Cryptographic validity: signature, key status, record integrity | Reasoned rejection |
+| Federation relationship and correlation: is the relationship open, is the correlation ID known? | Quarantine (unknown correlation) or rejection (no relationship) |
+| Profile and capability match: are the record type and profile version accepted? | Quarantine or reasoned rejection |
+| Proof of authority, for consequential records | Quarantine or reasoned rejection |
+| Semantic fit: is the record consistent with the local commitment state? | Quarantine or a conflict |
+
+A foreign record is never linked to a local Work directly. The chain is: the foreign record, referenced by a local receipt or Observation plus a local admission Declaration, which `concerns` the local Work. The foreign record's signed bytes and signed `concerns` are never changed.
+
+An event that cannot be mapped to a local commitment, correlation ID or profile type is not dropped. It becomes something that needs attention and goes to the federation owner.
+
+## Receipts
+
+Four facts are separate and shown by separate records. None implies another.
+
+| Fact | What it shows | Owner | Record |
+|---|---|---|---|
+| Delivered | The record reached the other side's endpoint | Work's federation layer for records; Relay for notifications to people and agents | A signed transport receipt; Relay delivery status |
+| Processed | The record was read, found valid, and an admission decision was made | The receiving ledger | Admission, quarantine or rejection receipt |
+| Accepted | The other side promised, or accepted the result | The commitment's parties | A commitment operation Declaration |
+| Done | The work happened in the world | The doer; evidence as usual | An Act report and evidence |
+
+Delivery and acknowledgement are never acceptance, approval or authority.
+
+Every receipt is signed and carries the digest of the record it is about, the receipt type (transport, admission, quarantine, rejection), a reason code for rejection and quarantine, the correlation ID, and the writing ledger and ledger time. A record that is not yet durable in its owner's ledger is never sent. If no receipt arrives, the state is unknown, not delivered. Resending is idempotent by source and record ID, and the same record is never admitted twice.
+
+## Conflicts
+
+Concurrent, incompatible normative transitions across organizations are never resolved by wall-clock time. Causality comes from the signed basis and predecessor graph: a record shows what it had seen through its signed basis. Genuine concurrency becomes an explicit conflict that appears on the attention surface of the relevant parties on both sides. Only an authorized resolution record that refers to both bases closes it. During a conflict, neither side can present its own view as the other side's canonical state.
+
+Different sets of trusted issuers can lead to different normative results. This is a visible divergence, not a protocol error.
+
+## Proof of authority across organizations
+
+The authority behind a consequential record that crosses the boundary is a portable, verifiable proof of authority carrying the subject, principal, scope, target, validity, delegation chain and a status or revocation mechanism. Access produces it; Work attaches it to the record and carries it. The other organization's proof comes from that organization's own Access setup.
+
+The receiving side runs three separate checks:
+
+1. **Cryptographic validity:** is the proof's signature and status valid?
+2. **Trust in the issuer:** is this issuer trusted for this scope? This is local or federation policy.
+3. **Semantic scope:** does the proof really cover this action?
+
+There is no global authority system. Sending consequential records or disclosures across organizations needs a live Access check.
+
+## Ownership, corrections and retention
+
+Correcting, withdrawing or redacting a record happens only in its owner's ledger. A correction is a new record plus `supersedes`, and goes to the other side as a new event, which handles it again with admission, quarantine or rejection.
+
+Each organization's records follow its own retention rules, and the signed copy the other side received follows the other side's rules. Neither side physically deletes records. Content that was already disclosed cannot be recalled: the owner's redaction or crypto-shredding is passed to the other side as a request, which it records in its own ledger, but Work cannot guarantee the other side complies.
+
+Ending a federation relationship does not delete past records; it applies going forward. Records arriving after the end are rejected with a reason.

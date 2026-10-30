@@ -1,0 +1,101 @@
+---
+title: "API"
+description: "Draft reference for the Work API: API families, common conventions, identifiers, idempotency, concurrency, allowed next transitions, sync, import and errors."
+---
+
+> This is a draft reference and may change before release.
+
+The Work API is how clients and systems talk to the Work service. It produces and reads protocol [records](/work/docs/reference/records) and carries no meaning of its own.
+
+## API families
+
+| Family | Used by | Rule |
+|---|---|---|
+| Standard protocol endpoints (A2A, MCP, CloudEvents intake, `.well-known`) | Agents, external systems, other organizations | Exactly as the standard defines; extensions only where the standard allows them |
+| Management and work API (REST) | Tenant backends, integrations, SDKs | The common rules below |
+| Frontend API | The Work web and mobile apps | Its own cookie, CORS and CSRF rules, plus the common rules below |
+| Federation binding | Another organization's Work service | See [Work across organizations](/work/docs/concepts/across-organizations) |
+| Internal RPC | Work processes | Not exposed |
+
+The external API is described by an OpenAPI document generated from the implementation, and SDKs are generated from that document.
+
+## Common rules
+
+| Topic | Rule |
+|---|---|
+| Versioning | The major version is in the address. Within a major version, changes are additive only. Removals are announced with the `Deprecation` (RFC 9745) and `Sunset` (RFC 8594) headers |
+| Errors | Problem details (RFC 9457). A rule outcome such as "this transition is not allowed right now" or "awaiting acceptance" is not an error; it is returned as a typed result |
+| Idempotency | Every mutating request carries an `Idempotency-Key`, a UUIDv7. The same key with the same content returns the first result; the same key with different content is rejected |
+| Concurrency | The work item version is returned as `ETag`. Changes require `If-Match`; a mismatch returns `412`. `If-Match` becomes the Declaration's `basis` |
+| Pagination | Opaque cursors only; no page numbers or offsets |
+| Identifiers | Opaque and prefixed by type (see below) |
+| Field names | `snake_case` |
+| Time | RFC 3339, UTC |
+| Large integers | Amounts and counters are strings in JSON |
+| Request ID | Every response carries `Request-Id`, tied to the W3C `traceparent` |
+| Rate limits | Standard `RateLimit` headers |
+
+### Identifiers
+
+| Prefix | Object |
+|---|---|
+| `wrk_…` | Work |
+| `cmt_…` | Commitment |
+| `cnd_…` | Condition |
+| `rec_…` | Record; a projection of the record ID (the record digest) |
+
+Identifiers never encode a cell, region or tenant.
+
+### Idempotency errors
+
+These reject the request, not a record; nothing enters the log.
+
+| Code | Meaning | What to do |
+|---|---|---|
+| `idempotency_key_missing` | A mutating request has no `Idempotency-Key` header | Resend with a key |
+| `idempotency_key_malformed` | The key is not a valid UUIDv7, or its embedded time is further ahead of ledger time than the declared tolerance | Resend with a new, valid key |
+| `idempotency_key_expired` | The key comes from an archived period | Resend with a new key |
+
+If a request is interrupted while the ledger sequencer is changing leader, the client retries with the same idempotency key and sees "not confirmed, checking" in the meantime.
+
+## Allowed next transitions
+
+Every API response that reads a work item returns the **transitions the caller is allowed to make right now**, for example "promise", "decline" or "counter". For each transition it includes the result of the required authority check and, if something is missing, what it is (a step-up, a gate).
+
+Actions taken directly from a Relay notification use the same list. A gate can be answered from a notification only under the low-impact coordination gate conditions described in [Waits, gates and attention](/work/docs/concepts/waits-gates-and-attention).
+
+Clients do not recompute the transition rules themselves. The list is a suggestion: when a transition is written, the rules and Access are checked again.
+
+## Scope and sessions
+
+- Every list and search is scoped to the caller's authority. There is no unscoped global list.
+- Work state does not depend on a session or connection. A connection is temporary; state is derived from the ledger.
+- Reads can come from cache within the freshness limit Access declares. Consequential actions and disclosures to a new recipient always need a live Access check.
+
+## Read freshness
+
+A derived read response carries the ledger position it reflects, as a token that is opaque to the viewer. When a client needs to read its own write, it asks for "at least this position". If the derived view has not reached that position, the response waits or is marked stale. A stale view never says "in progress".
+
+## Durability in responses
+
+The API reports durability states separately: `received`, `recorded`, `included`, `witnessed`, `federated`, `admitted`, `quarantined`, `rejected` and `acted upon`. Success can be returned once a record is `recorded`. See [State machines](/work/docs/reference/state-machines#durability-states).
+
+## Incremental sync
+
+The client sends the last state it saw (a cursor or item versions) and receives the difference. The difference stream follows the same ordering rules as the event stream (`seq`). If the cursor has expired, the client fetches the full state again; a difference is never returned silently incomplete. The difference is scoped to the caller's authority, and an item whose visibility narrowed comes through as "no longer visible", with no content.
+
+## Record rejections
+
+When a submitted record fails validation, the response carries a reason code such as `authority_missing`, `schema:required_field` or `limit_exceeded:basis`. A rejection caused by a detected secret names only the rule and the part, never the secret or the matching fragment. The full list is in [Record format](/work/docs/reference/records#reason-codes).
+
+## Import
+
+Work is planned with importers for CSV and for existing work tracking tools.
+
+- Importers use only the public management and work API. There is no privileged write path, no direct database write and no bulk load that skips validation. Third-party importers can use the same API.
+- External cards become Work and Commitment records. The party that started the import is their author. External state values are not copied; they are mapped onto the state axes with mapping tables, and external IDs and links stay as References.
+- Every imported record carries an "imported, not verified" provenance mark. The mark appears on every view of the record and in exports. Later Declarations do not remove it; they only establish the state from that point on.
+
+## Export and verification
+
+A customer can export its canonical records, signatures, key statements, Practice adoption history, visibility metadata and verification material without depending on suiss. Derived projections do not have to be portable; they are rebuilt from records. A published Work record can be verified without any online suiss service, because the key statements and proofs a verifier needs are exported with it.

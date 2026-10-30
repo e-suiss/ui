@@ -1,0 +1,132 @@
+---
+title: Architecture
+description: The planes and components Access is designed around, how a decision request flows through them, and how records stay checkable.
+---
+
+Access is designed as two planes in separate trust boundaries, connected by a single narrow channel. In one sentence: for every authority domain there is one fenced, append-only log with Merkle commitments; one sequencer writes to it in a single transaction; everything else is derived from that log deterministically and never overrides it.
+
+## Context
+
+```text
+People ───────────── sign in, consent, approvals ─────────┐
+AI agents ─────────── identity, authority requests ───────┤
+Applications and PEPs ─ sign-in, decisions, management ───┤
+Upstream identity and HR systems ─ federation, provisioning ┤
+                                                          ▼
+                                 ┌──────────────────────────────────┐
+                                 │ Access                           │
+                                 │ identity plane + authority plane │
+                                 └──────────────────────────────────┘
+                                                          │
+            ├── SSO and outbound provisioning ──► SaaS applications
+            ├── signed decision records ───────► counterparties and auditors (offline checks)
+            └── decisions, events, approvals ◄─► other suiss products (Work, Pay, Relay, One)
+```
+
+Signing in never grants authority by itself: the identity plane passes facts, and the authority plane decides.
+
+## Containers
+
+### Authority cell
+
+| Component | Responsibility |
+|---|---|
+| Protocol gateway | Decision, search and explain endpoints, token endpoints for authority projections, claim ingest, signals, export, discovery. Makes no decisions and never turns a transport identity into an actor |
+| Request verifier | Size and depth limits, canonical encoding, verifying the Actor Intent Statement over the exact bytes, matching domain, nonce, intent digest, audience and mode, typing the intent against the pinned schema, computing the intent digest. Never trusts a digest from the caller |
+| Domain sequencer | One leader per domain: nonce checks, evaluation, read-set validation, appending to the log. The only write path |
+| Access Core and Kernel | The pure decision function: authority algebra, requirement resolution, restriction evaluation, the decision combinator, explanations and the record fold |
+| Canonical store | The domain log, record bodies, state derived in the same transaction, and the outbox |
+| Checkpointer and witness client | Produces signed checkpoints on a fixed cadence, sends them to independent witnesses, collects cosignatures and compares them |
+| Replica mirror | Copies records to a replica the domain declares, before checkpoints go to witnesses |
+| Claim ingest pipeline | Authenticates issuers, normalizes, minimizes, deduplicates and records claims through the sequencer. Never touches authority state |
+| Derived store and query service | Graph index, search, eligible approvers, revocation impact, status-list input. Advisory only; never an input to a committed decision |
+| Projection issuer | Builds artifacts from a recorded decision and has them signed after commit |
+| Authority signer | A separate process with no network access that holds the domain's operational signing keys |
+| Outbox relay and signal transmitter | Turns committed changes into signed semantic events |
+| Export and replay | Record export packages and fold checks |
+| Domain metadata publisher | Publishes the domain's identifiers, endpoints, keys and supported versions |
+
+### Identity cell
+
+| Component | Responsibility |
+|---|---|
+| Identity core | OpenID Connect provider and OAuth authorization server, sessions and token state, accounts and recovery, SCIM, management API, hosted pages, WebAuthn relying party, federation, audit and signals |
+| Identity signer | A separate process holding each realm's signing keys |
+| Identity store | Identity records and a personal-data vault with per-person encryption keys |
+
+### Edge and companions
+
+| Component | Responsibility |
+|---|---|
+| Edge gateways | SAML, LDAP, Kerberos, RADIUS and WS-Federation, one process each, talking to the identity core over an internal API |
+| Parser workers | Disposable, isolated processes for XML and ASN.1 parsing |
+| Executor | Carries out effects using only the public decision API |
+| Access proxy | Puts Access decisions in front of existing services through forward-authentication, using only the public decision API |
+| Key management | A hardware security module or key management service holding binding keys |
+| Witnesses and replica | Independent cosigners of checkpoints and a domain-controlled copy of the records |
+
+### Boundaries
+
+- The authority core has no access to the identity store. The identity plane passes identity to the authority plane **only as claims**, through the claim ingest API.
+- The two planes use separate key stores and separate operator roles.
+- Signers keep key material outside the request-handling processes and make no network calls.
+- Companion services use only public interfaces. Other suiss products have no privileged path either.
+- Every boundary is either a standard protocol binding (decisions, OAuth, signals, claim ingest) or authenticated local IPC.
+- The same Kernel code runs in the server, in offline verifiers, at the edge and on mobile.
+
+## How a decision request flows
+
+1. **The actor signs.** The actor Instance builds an intent and signs an **Actor Intent Statement** with its current key binding. The statement covers the domain, the nonce, the intent digest, the enforcement point's identity, the mode, the capacity, the basis and the time.
+2. **The enforcement point forwards.** The PEP sends a decision request carrying the intent, basis, capacity, proofs and the actor's statement. It authenticates itself at the transport layer; it can forward the statement but cannot produce it.
+3. **The gateway and request verifier check the request.** Limits and canonical encoding are enforced, the intent is typed against the pinned schema, and Access computes the intent digest itself. The statement must match the request's domain, nonce, digest, mode and audience; otherwise the request is a protocol error and nothing is recorded.
+4. **The sequencer evaluates.** For `commit` and `continue`, the domain leader evaluates against the head of the log, never against a replica or cache. It reads the Grants of the basis, the Mandate, restriction policies, budgets and proofs, recording every state key and version it reads.
+5. **The Kernel decides.** The pure evaluator returns ALLOW, DENY or REQUIRE_ACTION from that prepared input.
+6. **One transaction commits.** The decision record, the derived state it changes (budget draws, single-use proofs, nonce), the outbox entries and the head position are written in a single database transaction. If anything the evaluation read has changed, the transaction is refused and retried; two leaders can never both append.
+7. **Artifacts are signed after commit.** The digest of every artifact is in the decision record before the commit; the signer signs only artifacts whose digest is recorded.
+8. **The answer goes back.** The response carries the outcome, the exercise and receipt on ALLOW, blockers on DENY, unmet requirements on REQUIRE_ACTION, and the versions used.
+9. **Events go out.** The outbox relay publishes semantic events (revoked, narrowed, expired, budget exhausted). Delivery is best effort and is never a security decision.
+
+For revocations and the highest consequence tier, step 8 waits until the covering checkpoint has been cosigned by an independent witness and the records up to it have reached the declared replica. Until then, reads show "Revoked — confirming (witness pending)".
+
+`check`, search and explain take a different path: they are answered from the derived store, are marked advisory, and never create an exercise.
+
+## Reads and consistency
+
+| Read class | Used for |
+|---|---|
+| strong | Committed decisions, always from the head of the log |
+| `at_least(position)` | Advisory reads that must reflect at least a known change |
+| `as_of(position)` | Advisory reads at a fixed point |
+
+Derived answers carry a `witnessed_through` position, the latest witnessed checkpoint they reflect. Below audit scope, positions are returned only as opaque tokens so that they do not leak information.
+
+## Records and checkpoints
+
+- Every record is a canonical, salted envelope. Its identity is its commitment, so a copy whose commitment matches is a legitimate restore.
+- The current state is the fold of the log. A derived table, index or cache that disagrees with the fold is wrong; a disagreement stops commits until resolved.
+- A **checkpoint** is the signed tree head of the domain log. Checkpoints are produced on a fixed cadence even when nothing changes, sent to witnesses, and recorded back into the log as claims.
+- Trusted time comes from at least two independent sources; if they disagree too much, nothing is committed.
+
+## Keys
+
+| Key | Role |
+|---|---|
+| Binding key | Held in a hardware security module under quorum. Signs the domain metadata and delegates operational keys |
+| Operational keys | Domain-scoped and short-lived. Sign receipts, portable proofs, tokens, checkpoints, signal events and status lists |
+| Realm keys | Identity-plane keys per realm. Sign identity tokens and assertions; never sign an authority artifact |
+
+Every authority artifact carries a signed excerpt that binds its operational key to the domain. A verifier requires the excerpt's domain to match the artifact's domain, so a key from one domain is never accepted in another.
+
+## Provider change and recovery
+
+A domain's identifier does not depend on its provider. The design includes two exits:
+
+- **Cooperative handover** (`domain.handover`): the old and new provider hand over the record export at a checkpoint.
+- **Forced recovery** (`domain.recover`): the domain's recovery holders move the domain to a new provider from the latest witnessed checkpoint. Changes recorded after that checkpoint may be lost and are named in the recovery record; revocations made after then should be repeated.
+
+After either, artifacts signed with the old provider's key are accepted only with an inclusion proof showing that their exact content is in the cited checkpoint.
+
+## Related
+
+- [Security](/access/docs/security)
+- [Record and signature formats](/access/docs/reference/records-and-signatures)

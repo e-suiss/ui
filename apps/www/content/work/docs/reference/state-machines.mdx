@@ -1,0 +1,229 @@
+---
+title: "State machines"
+description: "Draft reference for Work state machines: commitment states and operations, revoke requests, assignment, summary categories, gates, stops and durability states."
+---
+
+> This is a draft reference and may change before release.
+
+All state on this page is derived from records by the Work kernel; none of it is stored as an editable field. Wire names use `snake_case`; concept names in prose use hyphens (`promise-conditional` is `promise_conditional` on the wire). For the meaning behind each machine, see [Commitments](/work/docs/concepts/commitments), [Responsibility and control](/work/docs/concepts/responsibility-and-control) and [Waits, gates and attention](/work/docs/concepts/waits-gates-and-attention).
+
+## Commitment
+
+### States
+
+| State | Wire name | Terminal |
+|---|---|---|
+| Requested | `requested` | No |
+| Countered | `countered` | No |
+| Conditionally promised | `conditionally_promised` | No |
+| Promised | `promised` | No |
+| Stated | `stated` | No |
+| Accepted | `accepted` | Yes |
+| Declined | `declined` | Yes |
+| Withdrawn | `withdrawn` | Yes |
+| Cancelled | `cancelled` | Yes |
+| Released | `released` | Yes |
+| Obsolete | `obsolete` | Yes |
+| Expired | `expired` | Yes |
+| Closed administratively | `closed_administratively` | Yes |
+
+A commitment with line items derives state per item. If items are in different states, the commitment summary is `mixed` with a per-item breakdown. `mixed` is a summary only, not a value of the commitment axis.
+
+A terminal state never changes. A missed due date is a breach signal from the clock and does not change the state.
+
+### Operations
+
+Every operation is a typed Declaration (`https://suiss.app/ns/work/declaration/<wire name>`). The list is closed.
+
+| Operation | Who | From | Result | Required content |
+|---|---|---|---|---|
+| `request` | Obligee, or someone on its behalf | — | `requested` | Minimum fields |
+| `promise` | Candidate obligor | `requested` | `promised` | — |
+| `promise_conditional` | Candidate obligor | `requested` | `conditionally_promised` | Precondition (a Condition) and its deadline |
+| `decline` | Candidate obligor | `requested` | `declined` | Reason code |
+| `counter` | Candidate obligor (from `requested`) or obligee (from `countered`) | `requested`, `countered` | Candidate's counter: `countered`. Obligee's counter: `requested` (new offer version) | Changed terms |
+| `accept_counter` | Obligee | `countered` | `promised` | Digest of the accepted counter version |
+| `state` | Obligor | `promised` | `stated` | Fulfillment references |
+| `accept` | Acceptor | `stated` | `accepted` | Evidence reference, if the acceptance criterion requires evidence |
+| `reject` | Acceptor | `stated` | `promised` | Reason |
+| `cancel` | Obligor | `conditionally_promised`, `promised`, `stated` | `cancelled` | Reason code |
+| `release` | Obligee | Any open state | `released` | Reason optional |
+| `delegate` | Obligor (offer) plus new obligor (acceptance) | `promised`, `conditionally_promised` | Same state, new obligor, on acceptance | Handover note in the offer |
+| `assign` | Obligee (offer) plus new obligee (acceptance) | Any open state | Same state, new obligee, on acceptance | — |
+| `dispute` | The party a `reject` or open `revoke_acceptance` is aimed at (the obligor) | After a `reject` or an open `revoke_acceptance` | No state change; a dispute mark | Reference to the disputed record, and a reason |
+| `defer` | Obligee or obligor | `requested`, `countered`, `conditionally_promised`, `promised` | No state change; summary category `deferred` | Reason; optional return date or return event |
+| `resume` | Obligee or obligor; the Work service party when the return date arrives | An open `defer` | The deferral closes; the category is derived again | Reference to the closed `defer`, in `basis` |
+| `revoke_request`, `revoke_promise`, `revoke_statement`, `revoke_acceptance` | See below | See below | A revoke request opens | Reason |
+| `allow`, `refuse` | The other side of a revoke request | An open revoke request | See below | Reason, for `refuse` |
+| `amend` | See amendments | Any open state | A new version | `supersedes` |
+| `notice` | Obligor | Any open state | No state change; attention and notification | `notice_type`: `at_risk`, `cannot_complete`, `obsolete_suggested` |
+| `declare_obsolete` | Obligee or principal | Any open state | `obsolete` | Reference to the parent aim or commitment that went away |
+| `expire` | The Work service party | `requested`, `countered`, `conditionally_promised` | `expired` | The validity statement it rests on, in `basis` |
+| `administrative_close` | A party with that authority in Access | Any open state | `closed_administratively` | Reason; the parties are notified |
+
+`delegate` and `assign` are one logical operation but two records: the offer and the new party's acceptance. The old party stays in place until acceptance.
+
+An operation is valid only if the author holds the role, the commitment's state allows it, and Access authorizes it. An invalid operation is rejected with a reason and recorded.
+
+### Revoke requests
+
+| Request | Asked by | Asked of | On `allow` | On `refuse` |
+|---|---|---|---|---|
+| `revoke_request` | Obligee | Candidate or obligor | `withdrawn` | Continues; the obligee can still `release` |
+| `revoke_promise` | Obligor | Obligee | `withdrawn`, not counted as a cancel | Continues; the obligor can still `cancel` |
+| `revoke_statement` | Obligor | Acceptor | `promised` | Stays `stated` |
+| `revoke_acceptance` | Acceptor | Obligor | The terminal outcome stays; a linked reopening commitment starts | A dispute mark |
+
+### Reason codes
+
+| Field | Values |
+|---|---|
+| `decline` reason | `no_capacity`, `no_authority`, `out_of_scope`, `missing_information`, `unacceptable_terms`, `other` |
+| `cancel` reason | `cannot_complete`, `failed`, `abandoned`, `other` |
+| `notice` type | `at_risk`, `cannot_complete`, `obsolete_suggested` |
+
+### Records written by the Work service
+
+The Work service party writes a record only on the basis of a prior Declaration, and links to it in `basis`:
+
+| Record | Written when | Rests on |
+|---|---|---|
+| `expire` | A declared validity period ends with no action | The validity statement |
+| `accept` (marked implicit) | An implicit acceptance window ends with no explicit answer | The obligee's `implicit_acceptance_terms` |
+| `resume` | A dated deferral reaches its return date, or its return event occurs | The `defer` |
+| `unclaim` | An ownership lease ends and the queue says to return to the pool | The queue's declared lease behaviour |
+
+Implicit acceptance is never written if required evidence is missing, if the four-eyes rule blocks acceptance, or if step-up is required.
+
+### Whose move it is
+
+| State | Next move |
+|---|---|
+| `requested` | Candidate obligor, or queue owner |
+| `countered` | Obligee |
+| `conditionally_promised` | Whoever the precondition is addressed to |
+| `promised` | Obligor |
+| `stated` | Acceptor |
+| Open revoke request | The other side |
+| Budget exhausted | Accountable party |
+
+## Assignment
+
+| Value | Wire name | Meaning |
+|---|---|---|
+| Pooled | `pooled` | In the pool; candidates exist; nobody has claimed it |
+| Offered | `offered` | Offered or directly requested from a specific party |
+| Held | `held` | The obligor is known; the lease is valid if one is defined |
+| Failed to assign | `failed_to_assign` | The start deadline passed, or the policy found no candidate |
+
+| Operation | Who | Effect on assignment | Effect on the commitment |
+|---|---|---|---|
+| `claim` | A party in the candidate set | `held` | `requested` to `promised`; a `promise` record is produced |
+| `unclaim` | The obligor who claimed it | `pooled` | `promised` to `requested`; not a `release` |
+| `forward` | Queue owner or the claiming obligor | Moves to another queue or candidate set; the forward count rises | None |
+| `nominate` | Queue owner, obligee or accountable party | A candidate is proposed | None |
+| `offer` | Queue owner or distribution policy | `offered` | None; the party answers with a commitment operation |
+| `reassign` | Queue owner or accountable party | An offer opens to a new party | None; the obligation moves only through `delegate` |
+| `renew_lease` | Obligor | The lease is extended | None |
+
+## Summary category
+
+One category is derived from the five state axes. When several apply, the first in this order wins:
+
+```text
+closed > deferred > triage > awaiting_acceptance > waiting > unknown > active > ready
+```
+
+| Category | Derived from | Changed by | Can move to |
+|---|---|---|---|
+| `triage` | Commitment in the request phase; assignment pooled | Candidate obligor, queue owner | `ready`, `waiting`, `closed` |
+| `deferred` | An open `defer` | The party that deferred or resumes; the Work service party on return | The previous category, `closed` |
+| `ready` | Promised; execution not started | Doer (starting), executor report | `active`, `waiting`, `closed` |
+| `active` | Execution running; liveness live or not applicable | Executor report | `waiting`, `awaiting_acceptance`, `unknown`, `closed` |
+| `waiting` | Open Condition records | The addressed party (by satisfying), the Condition owner (by withdrawing) | The previous category, `closed` |
+| `awaiting_acceptance` | Stated as done | Acceptor | `closed`, `active` (on rejection) |
+| `unknown` | Liveness stale or unknown; an external state that cannot be mapped | Executor (new signal), accountable party (handover, stop request) | The previous category, `waiting`, `closed` |
+| `closed` | The commitment reached a terminal state | Nobody; reopening is a new record | None |
+
+Flags: `overdue`, `at_risk`, `contradiction`, `stale`, `taken_over`, `unevidenced`. Flags never change the category. A wait with a stale executor is `waiting` plus `stale`. "Stated, not verified" is `awaiting_acceptance` plus `unevidenced`.
+
+## Other state axes
+
+| Axis | Values |
+|---|---|
+| Execution | Not started, running, paused, completed (reported), failed, cancelled (reported), unknown |
+| Control | `automatic`, `intervened`, `manual`; the control lease holder; or no control capability declared |
+| Liveness | Live, stale, unknown, left cleanly, not applicable |
+
+Execution, control and liveness come from executor or external Claims. "Stopped" appears on the execution axis only when the executor confirms it.
+
+## Conditions and gates
+
+A Condition is opened with `open_condition` and withdrawn with `withdraw_condition`. A gate closes with `gate_decision`, or with `accept` or `reject` for delivery acceptance.
+
+| Answer | Counts as acceptance? |
+|---|---|
+| Accept | Yes |
+| Reject | No |
+| Closed without an answer | No |
+| Timed out | No |
+
+If the content bound to an approval changes after the answer, even by one parameter, the answer stops being valid and the gate waits again. A gate's kind is fixed when it is created; if it is wrong, the gate is withdrawn and a new one is opened.
+
+### Multi-party aggregation
+
+| Policy | Satisfied | Becomes unsatisfiable |
+|---|---|---|
+| All | All N accepted | Any rejection, timeout or close without an answer |
+| Any | The first acceptance | All closed with something other than acceptance |
+| K of N | K acceptances | Open participants can no longer reach K |
+| Sequential | The current participant accepted and the sequence is finished; the next request opens only after the previous acceptance | Any non-acceptance in sequence |
+| Percentage | Acceptances ≥ ⌈N × p⌉ | The rest can no longer reach the threshold |
+| Any rejection rejects | Added to another policy | Any rejection |
+
+The participant set and N are fixed at creation and change only through `amend`. When the result is decided early, the remaining open participant requests close as `obsolete`.
+
+## Stop requests
+
+```text
+stop_request (immediate | finish_then_stop | pause)
+        │
+        ▼
+   pending ──► stop_response: accept
+          ├──► stop_response: finish_then_stop
+          └──► stop_response: refuse (with reason) ──► attention for principal and requester
+
+executor confirmation (an observation Claim) ──► execution axis shows stopped
+no confirmation ──► execution axis stays unknown
+```
+
+Continuing after a stop is a separate `resume_after_stop` Declaration and never happens on its own.
+
+## Control handover
+
+```text
+pause request → executor confirmation or checkpoint → control_lease → the person changes the work
+   → hand back control + handoff_note → re-check assumptions → continue OR re-plan
+```
+
+## Federation admission
+
+| Envelope `ingest` | Meaning |
+|---|---|
+| `admitted` | Linked to a local Work through an `admission` Declaration |
+| `["quarantined", code]` | Kept with no local effect; later closes as admitted or rejected |
+| `["rejected", code]` | Not accepted; the reason code is kept |
+
+## Durability states
+
+| State | Meaning |
+|---|---|
+| `received` | The request was validated; no durability promise; not kept, only in the response |
+| `recorded` | The ledger's durability class is met; the API can return success |
+| `included` | The record is in a checkpoint's Merkle tree |
+| `witnessed` | The checkpoint was co-signed by an independent witness or anchored by an external timestamp |
+| `federated` | The other side's signed receipt arrived |
+| `admitted` | The other side wrote a local admission record |
+| `quarantined` | The other side quarantined the record |
+| `rejected` | The other side rejected the record with a reason code |
+| `acted upon` | An executor reported an Act based on this record |

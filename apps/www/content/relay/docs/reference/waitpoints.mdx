@@ -1,0 +1,211 @@
+---
+title: Waitpoints and mailboxes
+description: Draft reference for Relay's planned waitpoint object, state machine, reply record, events, mailbox lease states and protocol state mapping.
+---
+
+> This is a draft reference. Fields, states and limits may change before release.
+
+For the model behind these contracts, see [Agents, waitpoints and mailboxes](/relay/docs/concepts/agents).
+
+## Waitpoint object
+
+| Field | Required | Meaning |
+|---|---|---|
+| `id` | Yes | Server-generated ID. Knowing it grants nothing; it cannot be used to answer. |
+| `waiter` | Yes | The waiting identity: an agent recipient or an API client |
+| `match` | Yes | Event type plus correlation key |
+| `condition` | No | Second-stage matching condition in the workflow rule language |
+| `response_schema` | For questions and reviews | JSON Schema (2020-12) of an acceptable reply |
+| `responders` | For questions and reviews | The set of recipients allowed to reply. The producer owns this set; Relay does not widen or narrow it. |
+| `expires_at` | Yes | Total deadline; at most 30 days; fixed at first record |
+| `heartbeat_interval` | No | How often the waiter must show it is alive |
+| `escalation_policy` | No | Reference to an escalation policy |
+| `surface_policy` | No | Per-recipient target surfaces and escalation schedule |
+| `default_response` | No | A reply declared in advance, passed to the waiter on expiry |
+| `subject_digest` | For questions and reviews | Digest of the structured fields of the request; the reply is bound to it |
+| `content` | For questions and reviews | Typed fields shown to the person: action type, target, amount, source and so on |
+| `claim_text` | No | The agent's own free text, shown separately as the agent's claim |
+| `deliver_to` | Yes | Where result events go: the waiter's mailbox by default, optionally also a topic |
+| `tags` | No | For listing and filtering |
+| `state`, `resolution` | Server | See below |
+
+- Creating a waitpoint requires an `Idempotency-Key`, like every mutating request.
+- The deadline becomes permanent at first record; retries keep it. There is no infinite or implicit default deadline.
+- Waitpoints can be listed, queried and cancelled. "Which requests are waiting for a reply?" (`open` and `stalled`) is available to every tenant and every waiter.
+- A waiter has at most one active waitpoint for the same event type and correlation key. Different waiters may wait on the same key, and one event resolves all of them.
+
+### Waitpoint kinds
+
+| Kind | Reply expected | Message class |
+|---|---|---|
+| `question` | One reply matching `response_schema` | `action_required` |
+| `review` | One of the structured actions, after reviewing an evidence pack | `action_required` |
+| `event` | An event matching the correlation key (also used by the workflow `wait_for_event` step) | — |
+
+## States
+
+| State | Meaning | Terminal |
+|---|---|---|
+| `open` | Waiting for a reply | No |
+| `stalled` | The waiter's heartbeat stopped; marked ownerless and escalation paused | No |
+| `resolved` | A valid reply was recorded | Yes |
+| `expired` | The total deadline passed | Yes |
+| `cancelled` | Cancelled by the waiter or an authorized operator | Yes |
+
+```text
+open ──► resolved | expired | cancelled | stalled
+stalled ──► open (heartbeat returns; escalation continues from its tier) | resolved | expired | cancelled
+```
+
+A `stalled` waitpoint keeps accepting replies and its deadline keeps running; the reply waits in the mailbox until the waiter returns.
+
+### Two timeouts
+
+| Timeout | Question | Result |
+|---|---|---|
+| Total (`expires_at`) | Is the person late? | `expired` and `waitpoint.expired` |
+| Heartbeat (`heartbeat_interval`) | Is the waiter gone? | `stalled` and `waitpoint.stalled`; escalation stops |
+
+Without a heartbeat interval, only the total deadline applies.
+
+### Matching
+
+1. **Exact key:** `(tenant, environment, event type, correlation key)` through one index. All matching, including early and out-of-order events, goes through this stage.
+2. **Optional condition:** evaluated only for waiters matched in stage 1, in the workflow rule language.
+
+There is no wildcard, prefix or free-text matching. An event that matches nothing is recorded with a `rule_id` and stays visible.
+
+### Early replies
+
+A reply or event that arrives before the waitpoint opens is buffered in the waiter's durable mailbox under its correlation key. When the waitpoint opens, the mailbox is checked first and a matching record resolves it immediately. The buffered record follows the mailbox retention rules.
+
+## Invariants
+
+These are designed as database constraints:
+
+1. Responder is not the waiter.
+2. The responder is in `responders`, and the identity that opened the reply session is the one that completes it.
+3. An expired waitpoint cannot be resolved; a late reply is rejected and the rejection is recorded.
+4. A resolved waitpoint is immutable: no correction, no undo, no second reply.
+5. A reply that fails the schema is never stored; the responder gets a synchronous error.
+6. The reply carries `subject_digest`; a reply for X cannot be used for Y.
+7. State lives in the waitpoint record. Signals, wake-up hints and reply payloads are not the system of record.
+
+## Reply record
+
+The `resolution` of a resolved waitpoint:
+
+| Field | Meaning |
+|---|---|
+| `value` | The reply value, valid against the schema |
+| `responder` | Who replied |
+| `channel` | Where the reply came from: inbox, push action, SMS, email, chat app, API |
+| `evidence_level` | `channel_claim`, `relay_session` or `access_aas_ref` |
+| `responded_at` | Server time |
+| `subject_digest` | The request the reply is bound to |
+
+| Evidence level | Meaning |
+|---|---|
+| `channel_claim` | The channel's own claim; identity rests on the channel identity (SMS, email, chat app button) |
+| `relay_session` | Given in a session verified with a Relay subscriber token (inbox component) |
+| `access_aas_ref` | Reference to a decision on the Access approval surface |
+
+In the API the field is named `response` or `decision`, never `approval`.
+
+On expiry, a declared `default_response` is delivered inside the `waitpoint.expired` event. Relay does not record it as a reply and does not write it to `resolution`.
+
+**Guardian approval.** A child's request that needs a guardian's approval, such as a purchase, is a `review` waitpoint marked `profile: guardian_approval`. The producer supplies `responders` from guardianship records in Access. `expires_at` is required and is not extended by Relay. Silence is not consent: a `default_response` is rejected for this profile. Approval happens on the Access approval surface and the waitpoint closes at `access_aas_ref` level.
+
+## Events
+
+| Event | When |
+|---|---|
+| `waitpoint.created` | The waitpoint was opened |
+| `waitpoint.escalated` | An escalation tier ran |
+| `waitpoint.resolved` | A valid reply was recorded |
+| `waitpoint.expired` | The total deadline passed; the owner decides what happens next |
+| `waitpoint.cancelled` | The waitpoint was cancelled |
+| `waitpoint.stalled` | The waiter's heartbeat stopped |
+| `waitpoint.response_rejected` | A reply was rejected, for example after the deadline |
+
+Events go through the shared delivery engine and to the waiter's mailbox. Names and schemas are defined in the event catalog.
+
+Related events: `agent.ceiling_exceeded` (an agent exceeded its send cap; held notifications await the owner's decision) and `mailbox.abuse_reported` (a recipient reported a message as abuse).
+
+## Escalation and surface policy
+
+- Each escalation tier sets a delay and a new recipient and/or a more interruptive channel. Every added recipient must be in `responders`.
+- The last tier only emits `waitpoint.expired`.
+- Pending tiers are cancelled when the waitpoint is resolved, cancelled or stalled.
+- A `surface_policy` lists ordered steps per recipient. Each step names a set of surfaces (a registered `device_id` or a channel) and an `escalate_after` delay. Surfaces not named receive the invitation together after the last step. Relay sets no default delays.
+- If a step's surface is not registered, not permitted, or fails permanently, Relay moves to the next step at once and records `surface_step_skipped`.
+- The schedule starts at the first step's delivery and never extends `expires_at`.
+- The first valid reply closes the waitpoint on all surfaces; delivered copies switch to "no reply needed".
+
+## Mailbox
+
+| Element | Meaning |
+|---|---|
+| Owner | A subscriber, an agent or an API client; one mailbox per owner, created on first use |
+| Stream | `(stream, epoch, seq)`; `seq` follows commit order and increases monotonically |
+| Record kinds | `message`, `waitpoint_event`, `early_event` |
+| Cursor | The reader's last reported position; it only moves forward within an epoch, and an epoch change resets it |
+| State | `active`, `suspended` or `deleted` (the mailbox and its records are kept) |
+
+### Record delivery states
+
+| State | Meaning |
+|---|---|
+| `available` | Ready to be leased |
+| `leased` | Held by a reader until the lease expires |
+| `acked` | Acknowledged by the reader |
+| `dead_lettered` | Exceeded the redelivery count; kept in the dead-letter view and the owner is notified |
+| `held` | An early reply buffered for a future waitpoint; not leasable |
+
+- **Lease, then acknowledge.** A reader leases one or more records in sequence order. Without an acknowledgement before the lease expires, the record becomes available again.
+- Acknowledgement results include `acked`, `already_acked`, `lease_lost` (the lease moved to another holder or expired) and `not_found`.
+- Lease duration and maximum redeliveries are tenant settings within upper limits.
+- Delivery is at least once; readers deduplicate by message ID.
+- Delivery order is not guaranteed; read order is. A reader fills gaps with `since=seq`. A resync is required when the epoch changed, or when the requested position is below the oldest retained record or ahead of the head.
+
+### Wake-up hints
+
+Push, webhook and A2A push are only hints that something is waiting. If a hint is lost, the message still waits in the mailbox. Each delivery carries a durable handle and a query endpoint.
+
+### End-to-end encrypted envelopes
+
+A mailbox message can carry an envelope encrypted between sender and recipient. Relay holds no keys for it, cannot decrypt, render or template it, and sees only metadata: the sender's Access identity, recipient, size, time, rate and Relay's own typed fields. The recipient's encryption keys and mailbox endpoint come from the recipient's Access identity; Relay is not a key directory. The envelope follows all mailbox rules, and the push that wakes the recipient carries neither content nor the sender's name. Relay marks the whole envelope as encrypted, untrusted content; the receiving side applies the content rules after decrypting.
+
+### First contact
+
+- A message from a sender whose relationship with the recipient is "unknown" (as recorded in Access) lands in the mailbox's **request box**. It does not resolve waitpoints, trigger workflows or publish to topics, and wakes the agent only if the recipient subscribed to its request box. The message carries `relationship: unknown`.
+- First contact passes a per-sender rate limit and requires an anonymous, rate-limited Privacy Pass token (RFC 9576, 9577, 9578), which Relay verifies. Without a valid token the message is rejected with `first_contact_token_required`; over the rate limit it returns `429`.
+- A recipient can block a sender. Messages from a blocked sender are recorded with the `blocked` trust label, do not reach the request box, do not wake the agent, and the sender is not told.
+
+## Protocol state mapping
+
+| Relay waitpoint state | A2A task state | MCP task state |
+|---|---|---|
+| `open` (question or review) | `INPUT_REQUIRED` | `input_required` |
+| `open` (Access approval invitation) | `AUTH_REQUIRED` | `input_required` |
+| `stalled` | Unchanged; the owner receives `waitpoint.stalled` | Unchanged |
+| `resolved` | The waiter continues (`WORKING`) | `working` |
+| `expired` or `cancelled` | The owner decides; Relay only delivers the event | The owner decides |
+
+Task state itself belongs to the waiting side; the table translates the waitpoint into each protocol's terms.
+
+### MCP tools
+
+Planned tools: send a notification, open a waitpoint, read a waitpoint's state, list requests waiting for a reply, read the mailbox, acknowledge, and subscribe to a topic. The server is stateless and offers tool calls only; it does not use flows where the server asks the client for input. The tool list narrows to the caller's scopes, and there is no tool that answers a human-facing waitpoint.
+
+## Limits
+
+These limits are planned to appear on the published limits page and in error bodies:
+
+| Limit | Value |
+|---|---|
+| Maximum wait | 30 days |
+| Messages and escalation tiers per waitpoint | Set by measurement |
+| Reply and message payload size | Set by measurement; oversized untrusted content is carried by reference |
+| Concurrent open waitpoints per tenant and per waiter | Set by measurement |
+| Mailbox lease duration and redelivery count | Tenant setting, with upper limits |

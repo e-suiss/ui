@@ -1,0 +1,94 @@
+---
+title: Validity, projections and revocation
+description: How authority travels outside Access as tokens and portable proofs, how long it stays valid, and what revocation does and does not do.
+---
+
+Access decides online, but authority also has to work at enforcement points, on devices that go offline, and in long-running jobs. Access is designed to carry authority outward as short-lived, holder-bound artifacts, each with an explicit contract that says how long it may be relied on.
+
+## Projections
+
+A **projection** is a short-lived, holder-bound artifact that carries authority outward: an access token, an exact-intent or bounds token, a portable authority proof. It is evidence of authority, not authority itself.
+
+- Every reusable artifact comes from a `projection.issue` exercise and carries a validity contract.
+- A projection is never more than its source: its bounds are the Grant's authority intersected with the Mandate, limited to the intended actions.
+- No projection is a bearer artifact. The presenter must prove possession of the holder key.
+
+### Decision receipt is not a credential
+
+A **decision receipt** lets an enforcement point and an auditor check offline that "this effect, for this intent, by this actor, received an ALLOW". It is bound to one exercise, one intent and one audience. It cannot be presented for another intent, another enforcement point or another nonce, and it does not support a second effect.
+
+### Portable authority proof
+
+A **portable authority proof** is designed to be checked offline and across organizations. It carries the issuing domain, the `projection.issue` exercise, the holder and its key binding, the allowed capacity, the bounds, local requirements, the validity contract, an optional offline budget slice, a status reference, a commitment to the lineage (without revealing the whole graph), the audience and the elements a verifier must understand.
+
+## Validity contract
+
+A **ValidityContract** says until when, for whom, under which freshness rules and within which bounds an artifact may be relied on without asking the domain again. It is a value; it carries no authority of its own. Identity tokens are covered by the same contract semantics.
+
+Its main parts:
+
+| Part | Meaning |
+|---|---|
+| Horizon | The absolute end of validity. Never later than the earliest bound of what the authority rests on |
+| Freshness profile | Connectivity class and variant, maximum staleness Δ, and where status can be refreshed |
+| Revalidation | When a new online decision is required: after a number of uses, on reconnect, or for listed action classes |
+| Offline slice | Budget drawn in advance for offline use |
+| Local requirements | Requirements the verifier can check itself |
+
+A verifier never takes its acceptance ceiling from the artifact. It uses the ceilings published in the domain metadata and its own verifier profile. Field-level rules are in the [validity contract reference](/access/docs/reference/validity-contract).
+
+## Connectivity profiles
+
+| Class | Variant | What the verifier does | When a revocation takes effect there |
+|---|---|---|---|
+| `online` | `online-strict` | Asks Access for every action | At the next decision |
+| `intermittent` | `bounded-staleness` | Refreshes status within Δ, otherwise goes online | Within Δ |
+| `intermittent` | `revalidate-on-reconnect` | Gets a new decision on reconnect; during an outage works until the horizon | Within the outage, at most the horizon |
+| `offline` | `checkpointed-offline` | Uses a portable proof with a budget slice and reports usage later | At most the horizon; consumption at most the slice |
+| `long-running` | `checkpoint-continuation` | The executing system asks `continue` at each checkpoint | At the next checkpoint |
+
+Use inside a declared window after a revocation is classified as a declared staleness window, not as use outside authority. Whether a verifier actually closes that window depends on the verifier following its profile.
+
+### Offline budget
+
+A budget slice for offline use is drawn from the lineage budgets when the projection is issued. It cannot be spent twice centrally, and consumption beyond the slice cannot happen offline. When the verifier reconnects, it sends an **offline exercise report**, which Access records as a claim. The report itself changes no authority. Returning an unused slice is an explicit `consumption.release` by an authorized actor.
+
+## Revocation
+
+Revocation is itself an authority exercise. It is designed to be:
+
+- **Prospective.** It applies from the moment it is committed. Every later online `commit`, `continue` and `projection.issue` that relies on the revoked authority is denied. Completed exercises stay in the record.
+- **Cascading.** Everything derived from the revoked authority (delegated Grants, Mandate coverage, reusable decisions, projections) becomes invalid from that moment.
+- **Bounded elsewhere by declared windows.** Offline and intermittent verifiers honor it within the window their contract declares.
+
+Revocation is not a physical stop. Access revokes authority; it does not claim that a running agent or process has halted. The honest status after a revocation reads "Authority revoked. Agent: running / paused (confirmed) / unknown".
+
+### Invalidity and restriction
+
+| | Invalidity | Restriction |
+|---|---|---|
+| Examples | Revoke, expire, renounce, losing a qualifying claim, Instance termination | Suspend, containment, restriction policy |
+| Effect | Terminal and cascading | An overlay that only adds DENY or requirements; the lineage stays intact |
+| Undo | None; a new explicit Grant is needed | Removing it is a widening exercise |
+
+### Signals accelerate, they do not secure
+
+Shared-signal events and status lists speed up how quickly enforcement points notice a change. Their delivery is best effort and triggers a re-check. Security rests on the contract's horizon, Δ and the fail-closed rule, never on a signal arriving. Losing an event never widens authority.
+
+### Sessions and tokens
+
+The identity plane uses two mechanisms to end sessions and tokens quickly:
+
+| Mechanism | Purpose |
+|---|---|
+| `session_epoch` | Fast revocation of identity sessions and tokens, per Instance or Party. Raised after an Instance is terminated or a Party is marked compromised |
+| `key_epoch` | Signing key windows and rotation |
+
+These are mechanisms; the guarantee rests on the validity contract. A resource server that only validates self-contained tokens sees revocation at token expiry. So after a sign-out, the honest wording is: "Sessions ended; apps that already hold a token may keep access until the token expires."
+
+An answer from a cache that has never seen a user, session or token is never "valid": the system goes to the source of truth or fails closed.
+
+## Related
+
+- [Validity contract reference](/access/docs/reference/validity-contract)
+- [Security](/access/docs/security)

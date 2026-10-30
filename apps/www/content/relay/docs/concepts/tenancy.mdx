@@ -1,0 +1,79 @@
+---
+title: Tenancy and identity
+description: Installations, regions, tenants, sub-tenants, live and test environments, and the identities that act in Relay.
+---
+
+Every record in Relay belongs to one tenant and one environment. This page defines the scope model and the identities that are allowed to act inside it.
+
+## Installation and region
+
+An **installation** (`installation`) is one Relay deployment. A **region** (`region`) is an independent installation where data is stored and processed. The planned regions are Turkey (`tr`), the EU (`eu`) and the US (`us`).
+
+- Each region has its own database, signal store and key store.
+- No data flows between regions, including replication, backups and operational data.
+- A tenant chooses its region at sign-up and its data stays there. Moving region means creating a new tenant in the new region and exporting and importing data.
+- A tenant's Access and Relay records are always in the same region.
+
+## Tenant
+
+A **tenant** (`tenant`) is a customer account and the top-level isolation unit. Settings, provider connections, templates, workflows, recipients and all records belong to a tenant.
+
+| Field | Rule |
+|---|---|
+| `region` | Chosen at creation; cannot change |
+| `default_timezone` | Required IANA time zone; the last link in the time zone chain. There is no system default. |
+| `default_locale` | Required BCP 47 locale; the last link in the language chain. There is no system default. |
+| State | `active`, `suspended` or `closed` |
+
+When a tenant is suspended, every entry point stops at the same time: the API, campaigns, inbound webhooks, scheduled sends, recurring rules and real-time connections. Pending work is paused, not deleted. Each Relay tenant is linked to an Access organization when it is created.
+
+## Sub-tenant
+
+A **sub-tenant** (`sub_tenant`) represents one of the tenant's own customers or brands. It is a single-level, first-class object; a sub-tenant has no sub-tenants of its own.
+
+A sub-tenant can hold:
+
+- a brand: logo, colors and template variants;
+- sender identities, such as an email sending domain or an SMS sender name;
+- channel identities, such as a push app identity;
+- optionally its own provider account;
+- preference defaults and an inbox scope.
+
+**Inheritance rule:** if the sub-tenant does not define a setting, the tenant's setting applies; if it does, the sub-tenant's value wins. A send that names an unknown or mismatched sub-tenant is not lost: it is recorded as skipped with the reason `scope_mismatch`.
+
+Access B2B organizations map to Relay sub-tenants automatically.
+
+## Environment
+
+Each tenant has two separate data planes, `live` and `test` (`environment`). They have separate recipients, workflow publications, webhook endpoints, idempotency space and quotas.
+
+- The environment is a property of the API client. It cannot be chosen or changed in a request body.
+- A `test` client cannot reach `live` data, and the reverse. Cross-environment access returns `403 auth_environment_mismatch`.
+- Both environments run the same processing pipeline: validation, idempotency, preferences, consent, routing, templates and stop controls. Only the last step differs: in `test`, a simulated provider produces set outcomes for set addresses, such as a bounce, a missing delivery report or a late delivery.
+- A virtual clock that moves time forward exists only in `test`.
+- There is no flag that weakens security in either environment.
+
+`send_mode` is separate from the environment. See [Messages and delivery](/relay/docs/concepts/messages#send-modes).
+
+## Identities
+
+Relay does not keep its own user or password store. Every identity comes from Access.
+
+| Identity | Code name | How it authenticates | What it can do |
+|---|---|---|---|
+| Operator | `operator` | Access sign-in (OpenID Connect) | Uses the console and management API. Roles and permissions are kept in Relay. Every management action is audited. |
+| Installation operator | `installation_operator` | Access sign-in | Runs the installation: platform-wide stops, tenant suspension, shared provider accounts. Cannot read tenant data by bypassing isolation. |
+| API client | `api_client` | Short-lived Access access token obtained with OAuth 2.0 client credentials | Calls the server API. Bound to one tenant and one environment. Publish and read are separate scopes. |
+| Subscriber token | `subscriber_token` | Issued by Relay in exchange for an Access token (RFC 8693 token exchange) | Lets a browser or mobile app touch only that subscriber's own inbox, preferences, devices and presence |
+| Agent | `agent` | Access token for the agent's Access identity | Opens waitpoints, reads and acknowledges its mailbox, sends within its scopes |
+
+Rules that apply to all identities:
+
+- Relay has no separate API key system and does not store client secrets. Secrets and rotation live in Access.
+- Browsers and mobile apps never hold a secret credential and cannot trigger events.
+- A resource that belongs to another tenant, or to the other environment, returns `404`, not `403`, so its existence is not revealed.
+- Sensitive operator actions require step-up authentication through Access. Loosening a control requires more authority than tightening it.
+
+## Producers
+
+A **producer** (`producer`) is a product or system that sends events to Relay and may publish its own protected templates. The content, the recipient list and the reason for sending belong to the producer. Access runs inside Relay as an isolated platform tenant with its own sending domain and separately tracked reputation. Other suiss products use the same public contract as any other producer.

@@ -1,0 +1,113 @@
+---
+title: "Overview"
+description: "Work is a work coordination system for people, AI agents, systems and machines. What it is designed to do, who it is for, and what it is not."
+---
+
+> Work is in development. These docs describe its design, which may change before release.
+
+## What Work is
+
+Work is the suiss work coordination system. When people, AI agents, systems and machines work on the same thing, Work is designed to answer, from the records of the work itself:
+
+- who has this, and what was promised to whom;
+- what each piece of work is waiting on, from whom, and until when;
+- which decision or approval is pending, and who will give it;
+- who is acting on whose behalf, and who is accountable;
+- whose attention is needed right now, and what happens if they wait.
+
+Work comes down to one question:
+
+> Who promised what to whom, what is waiting on what, and whose attention is needed now?
+
+Work coordinates. The work itself is carried out by people, agents, systems and machines.
+
+## The problem it addresses
+
+As work spreads across people, agents, systems and organizations, five things get lost.
+
+| What gets lost | What happens | How Work is designed to respond |
+|---|---|---|
+| Legibility | What happened is scattered across chats, tools and agent sessions | Work has a durable identity; its state is derived from records |
+| Coordination | Nobody can see who is waiting on whom | Every wait says who or what it waits for, why, and until when |
+| Intervention | People either approve everything or cannot step in when it matters | Gates, stop requests, and controls offered only where the executor supports them |
+| Accountability | Nobody can tell who acted, for whom, with what authority | Signed records, an on-behalf-of chain, and a single accountable party |
+| Continuity | A session ends, a model changes, a person leaves, and the work is lost | Work is independent of sessions, models and vendors |
+
+Agents make this harder. An agent can take work, run for hours on another machine, get stuck on a question, or need a person to approve a step. Work gives people and agents one shared record of commitments, waits and decisions, and puts the few things that actually need a person in front of that person.
+
+## Who it is for
+
+| Who | Main question | Where they work |
+|---|---|---|
+| People taking part in work (doing, requesting, accepting) | "What do I need to do, and what do I owe to whom?" | Needs Attention, Commitments, My Work |
+| Accountable parties and queue owners | "What is stuck or at risk in the work I am accountable for?" | Needs Attention, Work View |
+| Principals (whoever an agent acts for) | "Who is acting on my behalf, and can I step in?" | Work View, Live |
+| Agents, systems and machines | Typed operations, waits and reports | API, MCP and A2A; no user interface |
+| People in other organizations | Work shared across an organization boundary | Their own Work ledger, through federation |
+| Developers and integrators | Connecting executors and external systems | API, events and signed webhooks |
+
+Work is not designed around any profession or industry. Building maintenance, a software release, an order with a supplier and an analysis run by several agents use the same model. Domain vocabulary is added with optional templates called [Practices](/work/docs/concepts/practices).
+
+## Core ideas
+
+1. **The unit of work is a commitment, and "done" means accepted.** Someone requests, someone promises, someone delivers, someone accepts. Saying "done" is a statement, not acceptance.
+2. **State is derived from records.** Nobody moves a status by hand. Work with no reports shows as unknown, never as in progress.
+3. **Attention is the scarcest resource.** Work goes to a person only when something actually needs them. An agent sounding sure of itself does not change the ranking.
+4. **Authority, control and execution are separate.** Work only offers the interventions the executor can really perform.
+5. **Across organizations, the author owns the record.** Each record stays in its author's ledger. The other side writes its own admission, quarantine or reasoned rejection.
+6. **Visibility never widens on its own.** There is a wall between personal context and shared work.
+7. **Structure is required for agents and suggested to people.** People write freely. The system or their One suggests the right typed operation, and the person confirms it.
+
+## The main surfaces
+
+| Surface | The question it answers |
+|---|---|
+| Needs Attention | "What do I really need to do, why now, and what happens if I wait?" |
+| Briefing | "What meaningfully changed while I was away?" |
+| My Work | "Where does the work I take part in stand?" |
+| Commitments | "Who promised me what, and what do I owe to whom?" |
+| Work View | "Where does this piece of work stand, in a form a person can read?" |
+| Live | "What is happening in this work right now?" |
+
+Chat is not a surface. It is a channel attached to the work. Something binding said in chat only binds once it becomes a typed record.
+
+## What Work is not
+
+| Work is not | Who owns that job | Work's role there |
+|---|---|---|
+| An execution engine | The executor (an agent runtime, system or machine) | Assigns work, passes on control requests, records reports |
+| An identity and authority system | Access | Records the authority that was used and its basis; never creates authority |
+| Notification and real-time delivery | Relay | Decides who should hear, why and by when, and the escalation policy; Relay delivers |
+| A personal assistant or memory | One | Never reads personal memory; receives only explicit, minimal sharing |
+| A payment system | Pay, with funds in Money | Provides delivery evidence and acceptance |
+| A task manager or project tool | — | Its unit is a commitment, not a card; state is never moved by hand |
+| A chat app | — | Chat is a channel; anything binding becomes a record |
+| A workflow engine | — | A pre-drawn flow does not own the state of the work |
+| An agent marketplace | — | Work does not pick, rank or sell agents |
+
+A few rules hold everywhere:
+
+- **"Done" is not acceptance.** The doer's "done" is a statement. The work is fulfilled when the requester, or a verifier named in advance, accepts it.
+- **Silence is not approval.** An unanswered decision is never a yes. Implicit acceptance only happens on the basis of an explicit statement given beforehand.
+- **An agent is never the only accountable party.** The accountability chain always ends in a person or an organization.
+- **Work never creates authority.** Authority always lives in Access. Work can only narrow it.
+- **Records are not physically deleted.** A request to erase personal data makes the content unreadable by crypto-shredding; the record skeleton remains.
+
+## How Work fits with other suiss products
+
+| Product | Relationship |
+|---|---|
+| Access | Required. Identity, authority, step-up authentication and approval of authority gates live in Access. Work can narrow authority but never create it |
+| Relay | Required. Notifications, real-time updates, waits and escalation delivery to people and agents go through Relay |
+| Executors | Do the work. They connect to Access for authority and to Work for coordination, through the same contracts for suiss and customer executors |
+| One | A person's representative. It takes part as a separate party with no special privileges, and its private context never enters Work |
+| Pay and Money | Payments and funds. Work provides only acceptance and evidence |
+| Commerce and Serve | Not Work's subject. Their objects are linked to work with ordinary references |
+
+## Where to go next
+
+- [Concepts](/work/docs/concepts) explains the vocabulary: Work, Party, Aim, Commitment, Condition, Reference, Act, Declaration and Claim.
+- [Commitments](/work/docs/concepts/commitments) covers the request, promise, deliver and accept cycle.
+- [Architecture](/work/docs/architecture) shows the components and how a record flows through them.
+- [Security](/work/docs/security) describes the trust model and what Work does and does not claim.
+- The reference section lists the draft [record format](/work/docs/reference/records), [state machines](/work/docs/reference/state-machines), [API](/work/docs/reference/api) and [events and integrations](/work/docs/reference/events-and-integrations).

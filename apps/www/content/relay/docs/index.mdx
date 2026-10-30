@@ -1,0 +1,82 @@
+---
+title: Overview
+description: Relay is designed to get events to the right person, service, device or AI agent, on the right channel and time, with a record of every message.
+---
+
+> Relay is in development. These docs describe its design, which may change before release.
+
+Relay is the events and messaging product of suiss. When your product says "this happened", Relay is designed to take that event and get it to the right recipient, on the right channel, at the right time, within consent rules, and to keep a record of what happened to every message, including the ones it decided not to send.
+
+Relay is built around one question:
+
+> How does this event or message reach the right person, service, device or agent?
+
+## What Relay is designed to do
+
+For every event it accepts, Relay will:
+
+- decide who is notified, on which channel and when, using workflows, routes, preferences, quiet hours and the recipient's time zone;
+- apply consent and regulatory rules, such as Turkey's İYS consent registry, one-click unsubscribe and per-country rules;
+- prepare the message in the right language and in a form suited to each channel, using versioned templates and brands;
+- hand it to a provider, retrying or falling over to another channel or provider when needed;
+- record the outcome with evidence: delivered, failed, unknown, or skipped with the reason and the rule that decided it.
+
+The same engine is planned to serve four kinds of recipient:
+
+| Recipient | How it is reached | Durable record |
+|---|---|---|
+| Person | Push, email, SMS, WhatsApp, voice, chat apps, in-app inbox | Inbox (seen, read, archived, hidden) |
+| Device | Push and real-time streams | Inbox, with read state synced across devices |
+| Service | Signed HTTPS webhooks, queues and streams, object storage | Delivery log, dead-letter queue, replay |
+| AI agent | Mailbox plus a wake-up hint (push, webhook, A2A push) | Mailbox, read in order with lease and acknowledge |
+
+## Who it is for
+
+- **Product teams** that would otherwise rebuild channel selection, retries, provider failover, a preference center, quiet hours, consent checks, delivery tracking, an in-app inbox and webhooks in every product.
+- **Teams building AI agents** that need to ask a person or a system a question, wait for the answer without holding a process open, and escalate when nobody responds.
+- **The other suiss products**, which send their messages through Relay using the same public contract as everyone else.
+
+## What Relay is not
+
+| Relay is not | Who owns that job | What Relay does there |
+|---|---|---|
+| A source of authority or approval | Access | Delivers the approval invitation and collects the reply. A reply is not an approval. |
+| A durable execution engine (checkpoints, resume, compensation) | The waiting system: an agent framework or your own code | Holds the wait, matches the reply and delivers the "resolved" event |
+| A human work and approval queue | Work | Applies the escalation policy and reaches the person |
+| An identity provider | Access | Takes operator, subscriber, agent and API client identity from Access |
+| A one-time-code generator or verifier | Access or the sending product | Delivers the code and applies destination protections |
+| Marketing automation (segments, journeys) | Your own system | Sends to lists and topic subscribers |
+| A transport (push platforms, mail servers, SMS carriers) | Platforms and providers | Uses them |
+| An analytics database | Your data warehouse | Ready-made reports, plus a stream of events to your destination |
+| A platform that runs customer code | Nobody | Customization is done through data, templates and allow lists |
+
+## Design principles
+
+1. **One whole with Access.** Relay is designed to always run together with Access. Identity always comes from Access, and every human-facing message from Access goes through Relay.
+2. **Delivery is not approval.** A delivery, acknowledgement, "seen" state or channel reply is never treated as authority or approval.
+3. **Waiting belongs to Relay, execution to the waiter.** Relay holds the wait and the delivery; checkpointing and resuming stay with the waiting side.
+4. **The message class decides the rules.** Each message gets one of seven fixed classes when it is accepted. The class does not change, and priority lane, preference and compliance rules follow from it.
+5. **No silent loss.** Every message that is not sent is recorded with a machine-readable reason and the rule that decided it.
+6. **Records are the truth.** Delivery state is derived from an append-only ledger. Real-time signals, push and webhooks are hints, not the source of truth.
+7. **Gates fail closed.** Compliance and security checks cannot be bypassed with a flag. A tenant can only make the rules stricter.
+8. **No physical deletion, no cross-region data flow.** Personal data is erased by destroying its encryption key, and each region is a separate installation.
+
+## How Relay fits with the other suiss products
+
+| Product | Relationship |
+|---|---|
+| Access | Sign-in, API credentials, subscriber tokens, agent identity, legal marketing consent and approvals come from Access. Access sends all its messages through Relay as an isolated tenant. |
+| Work | Work decides who to escalate to; Relay delivers it. The human work queue stays in Work. |
+| One | One sends and receives through Relay like any other agent, with no special status. |
+| Commerce, Serve, Pay | Order, payment and delivery updates reach people through Relay. The content and the recipient list belong to the sending product. |
+
+## Next steps
+
+- [Tenancy and identity](/relay/docs/concepts/tenancy)
+- [Messages and delivery](/relay/docs/concepts/messages)
+- [Workflows and routing](/relay/docs/concepts/workflows)
+- [Preferences and consent](/relay/docs/concepts/preferences-consent)
+- [Agents, waitpoints and mailboxes](/relay/docs/concepts/agents)
+- [Architecture](/relay/docs/architecture)
+- [Security, privacy and compliance](/relay/docs/security)
+- [HTTP API reference](/relay/docs/reference/http-api)

@@ -1,3 +1,5 @@
+import path from "node:path"
+import { createMDX } from "fumadocs-mdx/next"
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
@@ -11,6 +13,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   agentRules: false,
   turbopack: {
+    root: path.join(import.meta.dirname, "../.."),
     rules: {
       "*.css": {
         loaders: ["@tailwindcss/turbopack"],
@@ -20,4 +23,6 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default nextConfig
+const withMDX = createMDX()
+
+export default withMDX(nextConfig)

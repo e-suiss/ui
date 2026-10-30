@@ -1,0 +1,164 @@
+---
+title: Inbox and real-time
+description: Draft reference for Relay's planned in-app inbox, read semantics, badge counters, real-time streams, sync and client token rules.
+---
+
+> This is a draft reference. Events, fields and defaults may change before release.
+
+The in-app inbox is the human face of Relay's durable mailbox core. Truth lives in the database; real-time transport is only a signal and delivery layer. Without real-time, the inbox still shows correct data, only less promptly.
+
+## Inbox items
+
+- Each recipient has a sequence-numbered durable record, a cursor and an outbox. Every change written to the inbox is also a sequence-numbered event on the recipient's stream.
+- The inbox is stored separately from delivery records. An in-app delivery points to its inbox item, and the commit of that item is the in-app delivery evidence.
+- **Subject plus activities.** A digest does not open a new item; it updates the existing one (`activity_count`, latest actors, latest activity time).
+- **Fields:** title, body, structured content (avatar, action buttons, data rows), category, tags, `severity`, `group_key`, `expires_at`, `snoozed_until`, `state_version`, `locale`, `dir`.
+- **Rendered at send time.** The item shows the text as it was sent; later template changes do not alter old items.
+- **One item per notification.** A recipient gets at most one inbox item per notification. Writing is idempotent, and an item's ID and `state_version` always travel together in the API.
+- **Announcements.** A tenant-wide, sub-tenant-wide or list-wide announcement is one record merged into each person's list at read time, not one row per person. A recipient's state for an announcement is written only when they act on it.
+- **Scope.** Tenant × environment × optional sub-tenant. Counters can be read per scope.
+- **Action buttons are never approvals.** On an approval item, the action is only a deep link to the Access approval surface. Other reply buttons collect replies under the [waitpoint rules](/relay/docs/reference/waitpoints).
+
+## Item states
+
+| State | How it happens | Reversible |
+|---|---|---|
+| `seen` | The item was displayed (the client reports it automatically) | No; monotonic |
+| `read` | The user opened it or marked it read | Yes, with `unread` |
+| `archived` | The user archived it; it leaves the inbox for the archive tab | Yes, with `unarchive` |
+| `hidden` | The user hid it (the UI may call this "delete"); it leaves both inbox and archive | Not for the user; the record is kept for retention |
+| `snoozed` | The user snoozed it until `snoozed_until`, then it returns | Yes |
+
+- `read` always implies `seen`.
+- Seen and read are separate axes. "Seen" drives the badge by default; "read" drives bold versus normal in the list and the unread tab.
+- Each reversible state uses two monotonic server timestamps (`read_at` / `unread_marked_at`, `archived_at` / `unarchived_at`); the later one wins. Every change increments `state_version`.
+- An item past its `expires_at` leaves the list and the counters; the record stays under retention.
+- **Retraction.** In-app is the only channel where a sent message can be withdrawn. A cancelled or retracted item is hidden with reason `retracted`, counters update and a real-time update is published.
+
+## Intent protocol
+
+Clients send **intents**, not states:
+
+```json
+{ "op": "read", "item_id": "<item id>", "client_seq": 18, "base_state_version": 4 }
+```
+
+- Forward operations (`seen`, `read`, `archive`, `hide`) are unconditional and idempotent.
+- Reverse operations (`unread`, `unarchive`) use optimistic concurrency: if `base_state_version` is stale, the server returns `409` with the item's current state.
+- A client that receives `409` accepts the server state silently, and only shows "updated on another device" if the user just made that reverse change on screen.
+- **Offline queue.** Ordered by `client_seq` and compacted per item to the latest intent. An old offline intent cannot overwrite a newer reverse action from another device: forward intents still go through, reverse intents are dropped.
+- **Mark all as read** (whole inbox or one category) completes in one request and resets the unread counter atomically. Bulk actions on arbitrary filters, bulk archive and bulk hide run asynchronously in chunks with progress.
+- "Undo" in the UI is resolved with a short client-side buffer before anything is written.
+- All writes from clients go through the REST API; there are no writes over the real-time connection.
+
+## Badge and counters
+
+- The tenant chooses, per app, whether the badge counts `unseen` (default) or `unread`.
+- The server always keeps three counters: `unseen_count`, `unread_count`, `total_count`, updated in the same transaction as the item.
+- The badge is an absolute, versioned number computed on the server. It is never sent as an increment. A client ignores counters with a lower `version` than the one it has.
+- On every return to the foreground, the client requests fresh counters; this is the main safeguard for badge accuracy. If the client finds the server's count inconsistent with its list, it reports it and the server reconciles that recipient at once. A nightly reconciliation also checks recipients with recent changes.
+
+| Platform | Rule |
+|---|---|
+| Native mobile badge | Absolute value, capped at 999. If the server is unsure of the count, the badge field is omitted and the badge stays unchanged. |
+| Android | `notification_count` is filled in; the product does not depend on launcher badges |
+| Web | App badge only for an installed PWA; the service worker updates it on push |
+| In-app display | Capped at `99+` |
+
+## Real-time streams
+
+Every stream is ordered by `(stream, epoch, seq)`. `seq` increases monotonically within a stream and follows commit order.
+
+- The client resumes from its `since` cursor, so a dropped connection is designed not to cost any events.
+- If `epoch` changes (the stream was rebuilt, or the recovery window was exceeded), the client gets a signal to resync from scratch.
+- **Transports.** WebSocket and Server-Sent Events (with `Last-Event-ID`) are equal and carry the same events. Long-poll and periodic polling are the last fallback. The web SDK tries WebSocket first.
+- **Publishing.** The item write, counter update and broadcast record are in one transaction. Broadcasts leave only after commit, and every committed change is eventually broadcast (at least once). Broadcasting never blocks the write path.
+- **Server-side subscriptions.** Allowed streams are written in the subscriber token. A client cannot subscribe itself to other streams, cannot publish, and cannot query stream history over the real-time layer; history comes only from authorized REST endpoints. The tenant ID never appears in stream names or envelopes.
+- **Authorization continuity.** When a subscriber or tenant is suspended or a token is revoked, open connections are closed by the server. Reconnecting and recovering check authorization again.
+
+### Envelope
+
+Every real-time message uses one envelope, and every message carries `counters`:
+
+```json
+{
+  "t": "inbox.counters_changed",
+  "v": 1,
+  "ts": "2026-01-15T09:30:00Z",
+  "d": { "unseen": 3, "unread": 5, "total": 42, "version": 118 }
+}
+```
+
+| Member | Meaning |
+|---|---|
+| `t` | Event type |
+| `v` | Schema version |
+| `ts` | Server time |
+| `d` | Body |
+
+### Inbox stream events
+
+| Event | Body |
+|---|---|
+| `inbox.item_created` | The full item and `state_version` |
+| `inbox.item_updated` | Item ID, `state_version` and the changed state fields |
+| `inbox.items_bulk_updated` | Scope (whole inbox or category) and bulk operation type; no row list |
+| `inbox.counters_changed` | `unseen`, `unread`, `total`, `version` |
+| `stream.resync_required` | `reason` |
+
+- `inbox.item_created` contains everything needed to draw the list, within a size limit. Above that, only a thin summary is broadcast and the client fetches the item.
+- Each broadcast carries the relevant version (`state_version` or `counters.version`). The client silently drops events with a version lower than or equal to its own; this one mechanism handles reordering, duplicates and recovery replays.
+
+AG-UI events and other opaque payloads travel as separate stream types under the same `(stream, epoch, seq)` model and authorization rules. Relay does not interpret them.
+
+### Client pattern
+
+Client SDKs are planned to embed this pattern: open the stream first and buffer incoming events; then list the snapshot or history; then apply the buffer, deduplicating by ID and version. Listing before opening the stream loses changes made between the two steps.
+
+### Sync
+
+| Kind | When | What |
+|---|---|---|
+| Cold sync | First open, sign-in, `epoch` change | First page plus counters |
+| Delta sync | Short offline periods, returning from background | `changes?since=<cursor>` returns created, updated and hidden items and a new cursor |
+
+A delta response carries at most 500 changes (planned default). Above that it is marked `truncated` and the client falls back to cold sync. List pagination is keyset-based with an opaque cursor; there are no offsets or total page counts.
+
+### Mobile and web behavior
+
+- A mobile app closes its real-time connection in the background and relies on push. On returning to the foreground it requests counters, reconnects, runs delta or cold sync, then flushes its offline queue last.
+- A silent push to sync carries no inbox content, only a sync signal and counter version, and is throttled per recipient.
+- In a browser, one tab holds the connection and shares the stream with other tabs. Follower tabs make their own REST writes. A long-hidden leader tab disconnects and returns with a delta sync.
+- After a deploy, clients reconnect with exponential backoff and full jitter, and nodes limit how fast they accept connections.
+
+## Across devices
+
+- By default a notification goes to all of the recipient's active devices. Reading it on one device marks it read elsewhere and removes the shown notification (removal on some platforms happens through the SDK and may lag).
+- A tenant can choose "last active device only" in a workflow step or route.
+- A device with an active real-time connection receives the notification in real time instead of an extra push.
+
+### Device presence
+
+The presence channel carries short-lived signals from the recipient's devices: wearable on or off, locked or unlocked, headphones connected, focus mode, and a `break` point. The signal set is a versioned vocabulary with no free-form fields.
+
+- Each signal has a time-to-live; when it lapses the state is `unknown`.
+- Signals are never written to the database, the inbox, the ledger or the archive.
+- A device writes only its own presence, with `presence:write`. Readers are the recipient's own clients and agents the recipient authorized in Access, with a separate `presence:read` scope.
+- Relay itself reads presence only to detect a next break and to avoid pushing to a device that already has a live connection.
+- Presence is personal data: it never reaches other recipients, the tenant's server API, analytics, logs, metric labels or traces. Delivery records show only the applied rule (`next_break`), never the presence value.
+
+## Subscriber token
+
+- Issued only by Relay, only by exchanging an Access token (RFC 8693). Relay does not accept an Access token for inbox access.
+- Scopes: `inbox:read`, `inbox:write`, `preferences`, `devices:write`, `presence:write`.
+- Asymmetrically signed; the audience is the inbox and real-time surface; the environment and allowed streams are in the token.
+- Short-lived (planned default 15 minutes); SDKs refresh it before expiry. Revocation closes open connections at once.
+- The subscriber is matched by Access's pairwise subject identifier, which is also the subscriber's `external_id`.
+- A client never holds a secret, never triggers events, and never writes recipient profiles or consent records. Registering its own device is allowed.
+
+## Retention
+
+- Users only archive or hide; items are never physically deleted.
+- An erasure request crypto-shreds personal fields; rows remain unreadable.
+- Planned defaults: last 1,000 visible items, 90 days active, 1 year archived, adjustable within the retention table.
+- A message with `retention: none` cannot go to the in-app channel, because the inbox must keep the rendered item; the combination is rejected at acceptance.

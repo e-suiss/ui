@@ -1,0 +1,127 @@
+---
+title: Capability
+description: "Draft reference for CapabilityDefinition: naming, record fields, autonomy and reversibility values, action paths, Triggers and tool server rules."
+---
+
+> Draft reference. Field names, values and rules may change before release.
+
+A `CapabilityDefinition` describes the meaning of an action or information capability. It is not authority: what One may actually do is decided by Access at the time of each action.
+
+## Naming
+
+- Capabilities are named by meaning, not by provider: `transport.ride.request`, not a particular app's method.
+- Names sit under the reverse-DNS form of a single suiss root domain, chosen once and kept stable.
+- Names are versioned and support `extends`, which links an extension to a parent capability.
+- Third parties define extensions in their own reverse-DNS namespace and `extends` a suiss capability.
+- Negotiation uses intersection: the capabilities both sides support, at the highest common version. An extension without its parent is dropped.
+- Handles for One-to-One addresses live in a separate namespace and never mix with capability names.
+
+Choosing between providers of the same capability uses intersection, policy and your preferences. Commissions and paid placement never affect the order, and suiss products are treated like any other provider.
+
+## Record fields
+
+| Field | Content |
+|---|---|
+| Meaning | Reverse-DNS name, version, `extends`, a short description in English and Turkish |
+| Actions | The capability's actions and their Access action references |
+| Input and output | JSON Schema 2020-12. May not contain password, token or card fields |
+| Examples | Usage examples in English and Turkish; a first-class input to capability selection |
+| Authority requirement | The required Grant scope and Access consequence tier |
+| Autonomy ceiling | The highest behaviour the capability permits; see below. A Mandate may be narrower |
+| Reversibility | `reversible`, `compensable` or `irreversible` |
+| Data class | The data classes it reads and writes |
+| Surface requirement | The surface capability it needs (screen, voice, strong authentication) and the approval ceiling |
+| Providers and path | The list of providers and, for each, the path type: API, tool server, operating system or browser |
+| Test status | Time and result of the last successful evaluation |
+
+### Autonomy values
+
+These are Access Mandate behaviour values.
+
+| Value | Meaning | One's behaviour |
+|---|---|---|
+| `act` | Do it without asking | If Access allows, One acts, unless an "ask anyway" factor applies |
+| Act if agreed beforehand | Do it if you agreed to it earlier | One acts only if the origin of the earlier go-ahead (which request, which wording, when) is recorded against the Mandate; otherwise it asks |
+| `ask` | Ask before doing it | One prepares; you confirm on the Access trusted approval surface |
+| `handoff` | Hand it to you | One prepares the information and link and does not act |
+
+The wire name of the second value is defined by Access.
+
+### Reversibility values
+
+| Value | Meaning | Shown to you |
+|---|---|---|
+| `reversible` | Undone without side effects | "Undo" |
+| `compensable` | Made good with time and cost | The name of the remedy, such as "Request refund" or "Cancel", with its time and cost |
+| `irreversible` | Cannot be undone | No undo button |
+
+The value is declared in the definition and verified at the evaluation gate. An undeclared or unverifiable value is treated as `irreversible`. For `irreversible` sends, the executor applies a short delayed-commit window by default, adjustable per capability.
+
+## What the planner sees
+
+- Only capabilities inside the current Grant and Mandate. Anything else is never shown.
+- From those, a few candidates retrieved for the task; only their definitions reach the model.
+- Disabled capabilities, capabilities whose hash does not match, and capabilities whose permission was withdrawn never become candidates.
+
+## Registry rules
+
+- Only tested, working capabilities are in the registry. A capability whose evaluation fails, or whose provider breaks, disappears from planning and is shown as "not working right now".
+- Every new capability and behaviour passes an evaluation gate with real tasks. Vendor benchmark numbers do not count as measurement.
+- The evaluation also checks the declared reversibility, data class and surface requirement.
+
+## Action paths
+
+| Order | Path | Notes |
+|---|---|---|
+| 1 | Official API, tool server or commerce protocol | Payments always through Pay |
+| 2 | Operating-system intent mechanisms | Where the platform allows |
+| 3 | Self-identifying cloud browser | Signed with Web Bot Auth; only if there is no API |
+| 4 | Hand off to you | No path, the site blocks agents, or its terms forbid them |
+
+A lower path is chosen only if the higher one is missing or not working. The path is written into the task step.
+
+## Triggers
+
+A Trigger is an Access record, "when X happens, do Y", always bound to a Mandate.
+
+| Field | Content |
+|---|---|
+| Event source | Calendar, email, price watch, Relay event, another One's typed reply |
+| Condition | Written in the shared restriction language |
+| Allowed action | A single action reference with a fixed target |
+| Budget | Amount and/or count ceiling |
+| End date | Required; there are no open-ended Triggers |
+| Bound Mandate | The Trigger cannot exceed its scope |
+
+When it fires, a fresh Access decision is taken. Only an allow runs; an action-required result waits for you.
+
+## Tool servers
+
+### Catalog and custom servers
+
+- The default catalog is a curated sub-registry run by suiss.
+- A custom server, added under "Advanced", runs in a restricted sandbox: network egress only to the sites it declares, output always labelled untrusted, and no data flow to other servers.
+- Packages are signed and declare their permissions. A tool's name, description and schema are pinned by hash when accepted; if they change, the tool stops and you are asked to confirm again.
+- Tool descriptions and annotations, including read-only hints, are untrusted content. A read-only hint never replaces the Access class in the registry.
+
+### Isolation between servers
+
+One server's output reaches another only as typed fields, with a provenance label, through One's data-flow policy. A server can neither see nor influence another server's tool definitions. Tokens are never passed through to a server.
+
+### Information requests from a server
+
+| Mode | Rule |
+|---|---|
+| Form | One fills only low-sensitivity profile fields (display name, preferred language, time zone), and only if there is a Grant for that server. Every other field is asked of you. Passwords, API keys, tokens and payment details are never given |
+| URL | Always goes to you, opened in a secure browser view, never an in-app web view. The full URL is shown, the domain highlighted, and lookalike characters flagged. The URL is not prefetched or opened without your consent, and the person opening it must be the person who started the request |
+
+Responses keep `accept`, `decline` and `cancel` distinct.
+
+## One as a capability provider to others
+
+One can be called as a tool server, an A2A agent or an app intent.
+
+- Every caller carries an Access Grant. The default scope is read-only; writing and acting need a separate, explicit Grant.
+- Personal context (memory, preferences, history) is exposed only to an assistant whose provider neither stores nor trains on the data. Sensitive classes go to no outside assistant.
+- Other assistants get only context-free capabilities: "give One a task" and "ask for status", where the status answer carries task state only, not content.
+- Every new endpoint passes the evaluation gate before it opens.

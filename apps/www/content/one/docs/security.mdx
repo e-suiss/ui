@@ -1,0 +1,299 @@
+---
+title: Security and privacy
+description: "One's security and privacy design: keys on your devices, confidential computing, prompt injection defences, provenance, and what is and is not claimed."
+---
+
+One does not assume good intent. Every piece of content it reads (web pages, emails, calendar invites, documents, another One's messages, tool descriptions, screenshots, tool output), every third-party capability, every model output and every suiss operator may be malicious, compromised or simply wrong. The design starts from that.
+
+## Security rules
+
+These rules bind every part of the design and are enforced wherever possible by types, schema validation, automated checks and rule tests.
+
+1. **Planning, deciding and executing are separate.** One plans, Access decides (allow, deny, or action required), the executor runs. No model, whether planner, reviewer or classifier, is the final decision; the final decision is Access's deterministic one.
+2. **Content is neither authority nor instruction.** Observations, inferences, memories, routines, relationship levels, model predictions and any text One reads never create authority. Data, instructions and authority never turn into one another on their own.
+3. **Instructions come only from you.** An instruction comes only from your own verified session, from One's surfaces, or from a channel account verified as yours. A message from another One, another person or a tool is data, whatever it says.
+4. **Model output is never executed directly.** Every consequential step becomes a typed intent, is validated against a schema, goes through an Access decision and then runs in the executor. There is no path from free text to execution.
+5. **Confidence does not widen authority.** It is used only after Access allows an action, and only to make One ask anyway.
+6. **Secrets never reach a model.** Passwords, session cookies, card data, one-time codes, upstream tokens and the sign-in credentials of your own coding agents never enter a model context, a memory record, a log or telemetry. A leaked secret is fixed by rotating it, not just by redacting it.
+7. **An approval is not text the agent wrote.** It is given on the Access trusted approval surface, bound to the exact intent. Agent prose, notification buttons, channel replies and a "yes" in chat are not approval records. Silence is not consent.
+8. **Revoking authority is not the same as stopping.** "Stop" is always available on every surface; One says something stopped only once the executor confirms it.
+9. **Failure on a security path falls to the safe side.** If an input to a security decision is missing, stale or unverifiable, no action is taken. There is no flag, "development mode" or region-specific path that quietly weakens security.
+
+## Threat model
+
+### What is protected
+
+| Asset | Where it lives | Why it matters |
+|---|---|---|
+| Personal memory, episodes, behaviour profile, personal models | Your encrypted space | The densest summary of your life; if poisoned, One's behaviour degrades for good |
+| Access to your accounts (email, calendar, messages) | Access token vault; the executor | Both a data source and a channel for writing to the world |
+| Money and payment methods | Pay; your Access Mandate | Direct financial harm |
+| Your identity and account security | Access | If taken, everything is taken |
+| Promises One makes to others | Access recorded actions; Work commitments | Binding effects on third parties in your name |
+| Your attention | The attention engine | If abused, One turns into a nuisance and a manipulation tool |
+
+### Who and what One defends against
+
+- **Indirect prompt injection** is the main threat. The attacker talks not to you but to the content One reads: an email, a calendar invite description, a web page (including invisible text and URL fragments), a PDF, text in a screenshot, another One's message, a tool description. A personal agent combines private data, untrusted content and outward communication all the time.
+- **Malicious or changing third-party capabilities**: hidden instructions in tool descriptions, descriptions that change after you accepted them, one server poisoning another's behaviour.
+- **Memory poisoning**: getting external content to write a lasting instruction or a false fact into memory.
+- **Another One or person**: spam, social engineering, information gathering through first contact, instructions buried in proposal text.
+- **A compromised device or account**: your session, a channel account, a stolen phone.
+- **Insiders and operators**: a suiss employee, a host, someone with physical access to a data centre, or a state.
+- **Model and software supply chain**: open model weights, dependencies, the build pipeline.
+
+Every threat is handled as prevent, limit, detect and recover. A probabilistic defence alone never counts as a boundary, and cryptographic authenticity (a valid signature, a valid attestation) is not semantic correctness.
+
+## Prompt injection defences
+
+The defence is a deterministic boundary with probabilistic layers on top. The boundary is the single source of instructions, a planner that never sees untrusted content, provenance labels, One's data-flow policy and the Access decision, the egress gate, the Rule of Two and the per-task site set. A reviewer model, classifiers and model training are layers; no security claim rests on a layer alone.
+
+### The planner never sees untrusted content
+
+The plan (steps, capabilities to call, data flow) is built only from your request, One's own records and Access and Work records. External content enters the planner only as typed, labelled values produced by the quarantine model, and only in variable positions. A typed value cannot change control flow: it cannot decide which capability is called, which recipient is used or which step is skipped. Values that would need to make such decisions go, with their label, to the checks below.
+
+This separation costs some task success. That cost is accepted for a personal agent and is tracked by measurement.
+
+If your request itself depends on untrusted content ("do what this email says"), structural separation cannot protect you, so every consequential step needs your approval.
+
+### The quarantine model
+
+External content is turned into structured fields only by a quarantine model: a separate call of One's small model with no tools, no memory, no personal context and a fresh context every time.
+
+- Its input is one piece of external content and a schema of the fields to extract; its output is only typed fields that match the schema (dates, amounts, names, addresses, option lists). Free text comes back only as a summary for you, labelled as coming from external content.
+- It cannot call tools, see capabilities, write to memory or share context with another request.
+- Every value it outputs keeps the provenance label of its input.
+- Output that does not match the schema is rejected, and the task result is "external content could not be read". There is no fallback to free text.
+
+### The reviewer model
+
+Before every consequential step, a separate model instance sees only your original goal, the relevant plan step, the action's metadata (capability, target, amount, recipient, provenance labels) and the intent going to Access. It asks one question: does this action fit your goal? It can only answer "continue" or "stop and ask you". It can never turn an Access decision into an allow or replace an approval, and its "continue" is not a security guarantee.
+
+### Two independent checks
+
+Before every consequential action:
+
+1. **One's data-flow policy**, deterministic code, escalates the action to your approval if any authority-relevant parameter (recipient, amount, target URL, file destination, data class being shared) has untrusted provenance.
+2. **The Access decision** is always taken, even if One's own policy would allow it.
+3. If either escalates, the escalation applies. The stricter one wins.
+
+### Egress gate
+
+Every outgoing request, message, form submission and link passes the executor's egress gate, which enforces the Access decision and the task's site set. Model-generated URLs are checked deterministically: requests to sites outside the set, URLs that carry personal or encoded data in the query or path, and redirects you did not see are blocked. In One's own output, remote images and links are not loaded automatically; a link opens only when you tap it, showing the full URL.
+
+## Provenance labels
+
+Every value carries a provenance label. When values combine, the result takes the worst label, and an unlabelled value counts as untrusted.
+
+| One label | Meaning | Access provenance |
+|---|---|---|
+| `user.direct` | Your direct input in this task: something you typed, said or chose | `user` |
+| `user.memory` | A memory record whose origin is entirely your own statement or explicit confirmation, with no external content in its chain | `user` |
+| `record.trusted` | A value read from an Access or Work record (a Grant, a Commitment, a verified attribute) | `trusted` |
+| `one.inferred` | A value One produced from observation or inference; or an externally sourced memory record that became lasting through a second independent source, without your confirmation | `untrusted-external` |
+| `external.*` | Web, email, calendar invite, document, PDF, screen, another One, another person, tool output, tool description, imported record | `untrusted-external` |
+
+- The order from worst to best is `external.*`, `one.inferred`, `record.trusted`, `user.*`. Summarizing, translating, quarantine extraction and writing to memory never clean a label.
+- When you confirm an externally sourced candidate, what becomes `user.memory` is exactly the value you were shown and confirmed, not anything derived from it that you did not see.
+- Labels go into the intent sent to Access, which uses them as a decision input. One and the executor are responsible for labelling correctly.
+- A label can only be tightened. A value is promoted to a more trusted label only by your explicit action on a trusted surface.
+
+### Per-task site set
+
+For each task, One derives from the plan which sites may be read and which may be written, and puts that set into the Mandate or the intent. You see it in plain language: "In this task I'll look at these sites and write only here." Reading or writing outside the set is denied in Access, and the executor, the cloud browser and the browser extension enforce it. Widening the set mid-task is a new Access decision, and a site that came from external content needs your approval.
+
+## Rule of Two
+
+A session or sub-task may have at most two of these three at once:
+
+- **A**: it processes untrusted input;
+- **B**: it can access private data or a sensitive system;
+- **C**: it changes state or communicates with the outside.
+
+The planner splits tasks along this rule: a sub-task that reads external content does not also have private data and outward writing. Reading, extracting and writing are separate sub-tasks, and only typed, labelled values pass between them. If all three are truly needed, the consequential step goes to your approval, and Access independently reaches the same result. Every message from another One counts as untrusted input, which is why One-to-One messages are typed.
+
+## Memory poisoning
+
+- Memory enters a model as a marked data block with its source and epistemic state; instruction-like text inside it cannot change control fields.
+- A record derived from external content is a candidate until you confirm it or a second, independent source supports it. A second copy of the same source is not independent.
+- Behaviour rules are proposed by One and take effect only after you accept them. One cannot rewrite its own rules or system instructions.
+- Imported records arrive as data, "imported, not verified", and never enter any training.
+- Content labelled `external.*` never enters the training data of your personal models; your adapter learns style and behaviour only from your own interactions.
+- Recovery: affected records are corrected or set to "don't use"; forgetting permanently destroys their keys and those of everything derived from them, and the personal adapter is retrained from the remaining memory.
+
+## Credentials
+
+One does not hold, see or carry secrets; a secret stays on its owner's surface.
+
+- Upstream tokens are in the Access token vault, and releasing one is a recorded Access action. They never reach a model, memory or One's own storage.
+- Browser profiles, cookies and sessions live in the executor, encrypted with your key. Passwords are filled from your own password manager at execution time, only on a matching domain.
+- For payments, One never sees raw card data; an agent token or single-use card comes from Pay.
+- The sign-in credentials of your own coding agents stay in those tools' local storage. One, the executor and Access never take them.
+- Approval and information-request channels never collect secrets. A tool server's request to open a URL always goes to you, in a secure browser view showing the full URL; a form request is filled by One only for low-sensitivity profile fields (display name, preferred language, time zone) and only with a Grant for that server.
+- When you take over a session, screen capture and the model context are off.
+- Secrets on devices are kept in the platform's secure key storage; there are no plain-text key files.
+
+## Third-party capabilities
+
+- The default catalog is curated by suiss, and lists only tested, working capabilities. A server you add yourself runs in a restricted sandbox and receives only the values the task needs and that you saw for that call, never memory or sensitive classes.
+- Catalog packages are signed and declare their permissions (read or write, data class, network targets). Behaviour outside the declaration is a reason to reject and disable.
+- Every tool's description, schema and declaration is pinned by hash. If the hash changes, the capability stops until you confirm it again. Tool descriptions and annotations are untrusted content; only the pinned, curated meaning fields reach the planner.
+- Data from one server reaches another only through the plan's explicit data flow and the checks above. Servers never see each other's context.
+- Capabilities never receive secrets. Tokens stay in Access, execution in the executor.
+- The planner sees only capabilities Access allows right now.
+
+One's own code dependencies, model weights, personal adapters and on-device models are signed and pinned by content hash. Model serving and clients refuse a model whose hash or signature does not match.
+
+## Your encrypted space and keys
+
+All of One's personal data (memory, episodes, behaviour profile, personal models, task plans, observation records, sensitive classes) lives in an encrypted space keyed to you. Plain text is never written to any persistent medium such as indexes, analytics, queues or logs.
+
+| Key | Where it lives |
+|---|---|
+| Key-encryption key | On your devices' secure hardware and in your passkeys. suiss operators cannot reach it |
+| Data keys | One per person and retention class, generated randomly, stored in the cloud only wrapped by your key-encryption key |
+| Session keys | Short-lived. A data key needed for cloud processing is sent per request, wrapped only to the attested environment's public key |
+
+Adding a new device means transferring the key-encryption key from an existing device or a recovery path, and authorizing a new device is always your own action.
+
+### Work while you are away
+
+Night-time personal training, memory consolidation, re-embedding, Triggers and replying to other Ones while you are away open your data only with a key permission from your device:
+
+- While your device is online, it wraps the data keys the job needs only to the attested environment's job key.
+- The permission is bound to a purpose, a scope, a duration and the environment's measurement. The planned default maximum duration is 24 hours. For state-changing work, it is also bound to that work's Mandate and falls away with it.
+- Each permission is a content-free Access record. You can see every one under "Privacy and data", and revoke it with one tap.
+- If your device does not reconnect in time, the job waits, and One shows it ("Your phone hasn't connected for 2 days; night jobs are waiting").
+- suiss keeps no standing key escrow. Without a permission, a cloud job cannot open your data.
+
+### Confidential computing
+
+Cloud processing of personal data is designed to happen per request in an attested confidential computing environment:
+
+1. **Stateless nodes.** Your data is decrypted only for the request and does not stay on the node afterwards.
+2. **Enforceable guarantees.** Your client encrypts a request only to the public key of a node whose attestation it verified, checked against a public, append-only build log. If attestation cannot be verified, the request is not sent.
+3. **No privileged runtime access.** Production nodes have no remote shell and no debugger, not even during incidents.
+4. **Non-targetability.** Request identity is separated from user identity with an anonymous token and an IP-hiding relay, so a physically compromised node cannot pick out a specific user.
+5. **Verifiable transparency.** Every production build goes into an immutable public log.
+6. Where possible, trust is split across more than one operator or host.
+
+Attestation is necessary but not sufficient. Commercial trusted execution environments have been broken by attackers with physical access, so this design does not claim protection against physical attackers. That is why you can keep any sensitive class only on your device.
+
+### What suiss can and cannot see
+
+Your data is encrypted with your key and processed so that suiss cannot read it. Even so, operators can see some metadata: account identifier, number and size of records, access times and frequency, which retention class was accessed, and region. They cannot see content, memory text, task plans, or model inputs and outputs. This list is shown in plain words under "Privacy and data".
+
+Support and incident response have no path to key-protected content. You can attach something to a support request yourself, and you are shown exactly what you shared.
+
+### Recovery
+
+Because the key is yours, recovery is designed in from the start. At least two of these paths are required at setup:
+
+| Path | How it works |
+|---|---|
+| Recovery PIN | A short PIN combined with a secret in an attempt-limited hardware vault; the vault locks for good once the limit is reached |
+| Recovery key | A long key you keep on paper or in a password manager |
+| Recovery contact | Someone you trust contributes to recovery without being able to see your data |
+| Another device | Another registered device of yours |
+
+You are warned when only one path remains. If every path is lost, you are told plainly that the encrypted data cannot be recovered, and you continue with a new, empty space. There is no escrow suiss could use to recover it.
+
+## Retention and making data unreadable
+
+Nothing is physically erased in the application or in operations. Data reaches the end of its life through soft deletion plus crypto-shredding, which means destroying the keys so the content becomes unreadable.
+
+| One data | Retention class | Rule |
+|---|---|---|
+| Memory records, episodes, behaviour profile and rules, tasks | `one_memory` | Made unreadable on permanent forgetting and on account deletion |
+| Personal adapter and personal small models | `one_model` | On permanent forgetting, retrained from the remaining memory; the old version made unreadable |
+| Raw audio, screen, camera image, location trail | `one_observation` | Not kept by default |
+| Records in sensitive classes | `one_sensitive` | Not produced by default; made unreadable as soon as consent is withdrawn |
+| Which processor received which data class, without content | `one_provider_trace` | Metadata and summaries only |
+| Executor browser profile and cookies | `one_browser_profile` | Made unreadable when the bound Mandate or task ends |
+
+Crypto-shredding covers the wrapped keys on the server, key copies on devices, the recovery vault and backups. Backups hold only encrypted data, and when a backup is restored, the shredding is applied again. A device you remove from Access has its local key invalidated, so it is refused even if it reconnects.
+
+Data that the law requires to be kept, such as payment and Work records, is never placed in your key-protected space. It stays with its owner product, in that product's retention class.
+
+Deleting your account makes all One data unreadable. The screen also lists the classes kept elsewhere by law and for how long. The wording is "Your One data was made unreadable; records the law requires are kept separately." Deleting the account is never delegated to One.
+
+The privacy promise is versioned and never changes retroactively: data stays bound to the promise that applied when it was collected, and any change that does not narrow it is announced in advance. If a feature has to be withdrawn in a region, you are told; encryption, recovery and confidential computing are never quietly weakened.
+
+## Sensitive classes
+
+Health, religion and belief, political opinion, sex life and orientation, biometrics, precise location history and relationship status, plus every other special category under data protection law (genetic data, racial and ethnic origin, philosophical belief, trade union membership, criminal records), get special protection.
+
+By default One does not infer, store, derive routines from or make proactive assumptions about these classes. "Same clinic every week" does not become a health inference. You can open a class with explicit consent, area by area. Once opened, its records use a separate data key, are processed only by One's own models inside confidential computing, go to no outside party, never show on the lock screen or in voice, and become unreadable as soon as you withdraw consent. You can also keep a class only on the device.
+
+Something you say about yourself ("I have diabetes") is a statement, not an inference, but it gets the same protection and becomes lasting only with your confirmation. No sensitive inference is ever made about a third party.
+
+## People, children and honesty
+
+- **Third parties.** About the other people in your life, One keeps only a minimal relationship record: name, role and last interaction.
+- **Children.** A child profile has protected defaults: memory is off or kept briefly, and there is no personal adapter. Parents see safety signals and settings, not transcripts.
+- **One never hides that it is an AI.** It is never presented as a human. Every email or message One sends that you did not accept word for word carries a note that it was sent by an AI agent, voice calls start with a spoken disclosure, and generated media is marked. One is not positioned as a companion and does not imitate a doctor, lawyer or therapist.
+- **No manipulation.** No fake urgency, no guilt and no reward loops to pull you back.
+
+## Training
+
+- Your personal models (attention, risk, intent, personal adapter) are trained only on your data, only for you, can be exported, and can be made unreadable.
+- Shared training across users does not happen by default; only with explicit opt-in, and without collecting raw data. If you withdraw consent, your data will not enter future training. Third parties' data and voices never enter shared training.
+- One's data is never used for advertising, targeting or sale.
+
+## What is guaranteed, and how
+
+The design distinguishes three kinds of statement, and product wording may never say something more strongly than its kind allows.
+
+### By design
+
+These follow from records, types and rules:
+
+1. One does not create or widen authority; what it uses is Grant intersected with Mandate.
+2. Every consequential action goes through an Access decision; there is no path that skips it.
+3. Model output does not run without schema validation and an Access decision.
+4. A confidence score cannot turn an Access decision into an allow.
+5. An unlabelled parameter counts as untrusted; a combination takes the worst label.
+6. The planner's input contains no external content text.
+7. A memory record or routine is not a Grant; no memory write changes authority.
+8. An externally sourced memory candidate does not become lasting without confirmation or independent evidence.
+9. A tool whose description hash changed is not called until you confirm it again.
+10. Silence is not consent; an expired approval stops the work.
+11. "Stop requested" and "stopped" are never shown as the same thing.
+12. Never-delegated actions cannot be given to One by any Grant.
+13. Failure on a security path results in no action.
+
+### Under stated conditions
+
+| Statement | Condition |
+|---|---|
+| Operators cannot read your content | Keys on your devices; processing in a verified attested environment; physical attackers excluded |
+| Execution stops after authority is revoked | The executor supports and confirms the stop |
+| Provenance-based Access rules apply correctly | One and the executor label values correctly |
+| No reading or writing outside the site set | The executor, cloud browser and extension enforce it |
+| Secrets do not reach the model | The executor and token vault conform, and text you write yourself contains no secret |
+| Personal data is made unreadable | Wrapped keys, device key copies and the recovery vault are destroyed; copies already disclosed are out of scope; this is not legal erasure |
+| An external effect happens once | The external system supports the idempotency key |
+| The approval surface is intact | A conforming trusted approval surface was used |
+| Downloaded models and adapters are unmodified | Signature and hash checks run on the client and in model serving |
+
+### Not claimed
+
+One does not claim that:
+
+- any model is immune to prompt injection, or that the reviewer or classifiers catch every attack;
+- an action is correct or safe because you accepted it;
+- confidential computing protects against attackers with physical access;
+- operators cannot see metadata such as size, time and frequency;
+- data already disclosed can be recalled, or that crypto-shredding removes copies distributed earlier;
+- data that once entered a shared model can be taken out of its weights;
+- an offline or compromised executor stopped without confirmation;
+- encrypted data can be recovered once every recovery path is lost;
+- key-protected content can be handed over in readable form;
+- an external effect happened only once if the other system does not support idempotency;
+- a website will accept an agent;
+- a compromised but still authorized session can be told apart from legitimate use before it is detected;
+- a third-party capability follows its declared permissions on its own servers.
+
+### Measurement
+
+Prompt injection resistance is designed to be measured on One's own evaluation set, with an adaptive attacker (automated and human red team), separately for each surface: email, calendar invite, web page, PDF, another One's message, tool description, channel message and screenshot. Attack success (unwanted action, data exfiltration, memory poisoning), lost usefulness and over-blocking are measured separately. Vendors' published numbers are not used for One's security claims. A new capability, surface or model version does not ship before it is measured, and a regression stops the release. The plan is to publish the security design (key layout and recovery, the confidential computing contract, the metadata operators can see, the prompt injection architecture and this guarantee matrix) together with these measurements.

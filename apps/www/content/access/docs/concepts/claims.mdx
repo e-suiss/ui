@@ -1,0 +1,92 @@
+---
+title: Claims and Acceptance
+description: How outside facts enter Access. A claim records who said what; an Acceptance decides whose claims count, and for what.
+---
+
+Access does not record the truth. It records **who said what**, and it decides explicitly whose statements it will rely on, and for which purpose.
+
+## Claim
+
+A **Claim** is someone's assertion about something. It is not the truth itself, but an attributable record of who said what.
+
+Examples:
+
+- The HR system says: "this person is in Finance".
+- The identity plane says: "this person signed in with a passkey".
+- A device management system says: "this device meets the posture policy".
+
+A claim records the issuer, the subject, the claim class, the value (or its digest), when it was issued, its validity, proof of attribution and when it was ingested. It never records "this is true".
+
+Because of this, Access is designed never to present a claim as verified fact. A claim is shown as "*issuer* says (signed)".
+
+### Claims never create authority
+
+Ingesting a claim is not an authority change. A claim cannot create positive authority and cannot change any Grant, Mandate or other authority object. It enters a decision only within the purpose an active Acceptance allows.
+
+Everything the identity plane produces (sign-in results, sessions, provisioning results) reaches the authority plane only as claims.
+
+### Ordering
+
+"Newer" and "current" are judged by the **issuer's** order, not by arrival order. If the order is ambiguous, the disqualifying claim wins. An older claim that arrives late is recorded but does not count as asserting.
+
+A claim dated in the future (beyond the accepted clock tolerance) cannot be used.
+
+## Acceptance
+
+An **Acceptance** is an explicit, scoped and revocable decision about whose claims are relied on, and for what purpose. It is the only meaning of "trust" in Access.
+
+Example: "we use the HR system's department data to select who holds the Finance Grants".
+
+An Acceptance names:
+
+| Field | Meaning |
+|---|---|
+| `issuer` | Whose claims; fixed for the lifetime of the Acceptance |
+| `use` | What the claims may be used for; fixed for the lifetime of the Acceptance |
+| `artifactClasses` | Which kinds of artifacts and claim classes |
+| `subjectClass` | About which subjects |
+| `domain` | Which authority domain, optionally narrowed to an anchor scope |
+| `assuranceFloor` | The minimum assurance a claim must carry |
+| `validity` | How long the Acceptance holds |
+
+Establishing, amending and revoking an Acceptance are meta-actions with their own decisions and records. There is no separate "trust configuration" message.
+
+### Uses
+
+| Use | What claims under it can do | If the issuer is compromised |
+|---|---|---|
+| `actor-binding` | Bind an authenticated actor to a Party | Impersonation of Parties in the subject class, up to the authority they already hold |
+| `subject-selection` | Select holders of rule-shaped Grants | Selection within the ceilings of existing rule-shaped Grants |
+| `predicate-input` | Feed requirements and restriction policies | Only narrowing or extra requirements |
+| `foreign-authority` | Accept proof of authority from another domain | Up to the ceiling of the local bridging Grant |
+| `schema-definition` | Pin the exact action schemas a domain uses | The meaning of the pinned schema digest |
+
+None of these uses can produce a Grant, an Acceptance, a reserved action or a meta-action. The damage a compromised issuer can do is limited to the declared effect of the use it was accepted for. `subject-selection`, `foreign-authority` and `schema-definition` are reserved uses.
+
+### Ingest is not acceptance
+
+A claim from an authenticated issuer that falls outside every Acceptance is not silently dropped. It is either recorded but not used (quarantined), or rejected with a reason.
+
+A federation trust chain or trust mark is input to an Acceptance, never an Acceptance in itself. A trust chain's own policy can narrow an Acceptance but never widen it.
+
+### Upstream identity providers and provisioning
+
+Trusting an upstream identity provider or a provisioning source is an Acceptance (`actor-binding`, `subject-selection` or `predicate-input`), scoped and revocable, not a configuration flag. An external identity provider enters under the same conditions as the Access identity plane itself; there is no implicit Acceptance for either.
+
+### Facts from enforcement points
+
+A policy enforcement point is not trusted to inject facts into a decision. It can contribute a claim only as an issuer with an active Acceptance in the `predicate-input` use, and such a claim can only add requirements or restrictions. It can never select holders.
+
+## Schemas
+
+Actions and resources belong to the domain that defines them. A **publisher** describes its namespace in a signed schema publication: action names and versions, typed parameters, which actions are reserved or consume budget, and compatibility declarations.
+
+- A schema version is usable in a domain only when a `schema-definition` Acceptance pins its exact digest.
+- Action prefixes in Grants are pinned to a catalog version. Actions added in a later catalog are not covered.
+- A mapping between schema versions is applied automatically only in the non-widening direction, and only after the domain has pinned it.
+- Free text is never authority. Purposes are typed codes or references, compared by equality and declared order.
+
+## Related
+
+- [Decisions](/access/docs/concepts/decisions): how claims become proofs in a decision.
+- [Security](/access/docs/security): blast radius per component.

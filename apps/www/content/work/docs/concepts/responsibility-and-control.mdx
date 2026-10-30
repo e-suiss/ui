@@ -1,0 +1,199 @@
+---
+title: "Responsibility and control"
+description: "Accountability, queues and pools, assignment, distribution policy, autonomy, the control axis, stop requests and the executor coordination contract."
+---
+
+This page covers who is responsible for what in a piece of work, and how people step into work that is under way. Three rules apply throughout:
+
+1. **Everyone is no one.** Every commitment and every queue has exactly one accountable party. Responsibility never changes hands silently and never evaporates.
+2. **Work coordinates; it does not execute or enforce.** In Work, assigning, stopping and taking over are requests and records. Authority lives in Access; actual execution and actual stopping happen in the executor.
+3. **The interface only promises what can really be done.** Control options are limited to the capabilities the executor declares.
+
+## Roles and accountability
+
+The **performer** (who does the work), the **obligor** (who carries the obligation) and the **accountable** party (who answers for the result) are separate roles. Often they are one person; then the interface shows them once and the records keep them apart. An agent can be performer and obligor.
+
+The accountable party is always a single party. It can be an organization, whose own rule then names the internal owner, and that resolution is recorded. A group such as "the legal team" can be accountable only after a rule resolves it to one party. Group membership comes from Access; Work does not define membership.
+
+Accountability comes from records: an explicit undertaking, an on-behalf-of delegation, an accepted obligor or owner role, or an organization rule. It is an explicit field on the commitment; if it is not written, it is derived from the principal chain and shown as derived.
+
+The accountability chain is explicit and finite and ends in a party that the declared regime treats as accountable. Work's default regime treats people and organizations as accountable. An agent can be responsible as an obligor, but every agent commitment has a chain that ends in a person or an organization.
+
+Accountability cannot be dropped. Transferring it needs the new party's explicit acceptance; until then, the previous party stays accountable. If a party is disabled in Access, its open commitments and queues move, with a "no owner" signal, to the next accountable party up the chain, or to the organization party. There are no ownerless commitments and no ownerless queues.
+
+Whoever takes over control becomes responsible from the moment of the takeover record, not for what came before. Coordinating roles (dispatching, monitoring) are separate from doing; an action taken by a coordinator without a control lease is marked as out-of-band intervention.
+
+Accountability in Work is a coordination record. How responsibility is divided under contract and law is outside Work's scope.
+
+### Guarantees for the principal
+
+| Guarantee | Can it be turned off? |
+|---|---|
+| Seeing the parties acting on your behalf and what they did | No |
+| Inspecting evidence | No |
+| Revoking going forward, as far as your own authority allows | No |
+| Being told about failures and breaches | No |
+| Warning before an irreversible action | Can be narrowed by a scoped, recorded waiver |
+| Intervening, as far as the executor supports it | Can be narrowed by a scoped, recorded waiver |
+| Immediate notification | Can be narrowed by a scoped, recorded waiver |
+
+A waiver can never widen authority.
+
+## Queues and pools
+
+A queue is not a new concept. It is a typed queue definition Declaration, versioned with `supersedes`. A request can be addressed to a queue instead of an obligor; that commitment is then in its pool phase.
+
+| Field | Meaning | Required |
+|---|---|---|
+| Owner | The single party responsible for work in the queue | Yes |
+| Candidate set | A list of parties, or a group or role reference in Access | Yes |
+| Distribution policy | How work is handed out (see below) | Yes, default is pull |
+| Start deadline | Time allowed for someone to pick up pooled work | No |
+| Ownership lease | How long a pickup lasts and what happens when it runs out | No |
+| Excluded parties | Parties who may not take work from this queue, for separation of duties | No |
+| Ping-pong threshold | Number of forwards after which the owner gets an attention signal | No |
+
+A queue without an owner is invalid. Work nobody has picked up is the owner's responsibility, so it never becomes the least visible work. If the start deadline passes, or the policy finds no candidate, the assignment axis becomes `failed-to-assign` and the owner gets an attention signal. "Nobody picked it up" and "picked up but not finished" are different situations with different interventions.
+
+Every forward between queues or teams is counted, and the count and the forward chain are always visible on the work and to the queue owner.
+
+## The assignment axis
+
+The assignment axis records who the obligor is and how that was decided. It is independent of the execution axis.
+
+| Value | Meaning |
+|---|---|
+| `pooled` | In the pool; there are candidates but nobody has picked it up |
+| `offered` | Offered or directly requested from a specific party; waiting for an answer |
+| `held` | The obligor is known; the lease is valid if one is defined |
+| `failed-to-assign` | Nobody picked it up: the start deadline passed or the policy found no candidate |
+
+Responsibility operations are a separate closed set:
+
+| Operation | Who | Effect |
+|---|---|---|
+| `claim` | A party in the candidate set | Becomes obligor and counts as having promised; `held` |
+| `unclaim` | The obligor who claimed it | Returns to the pool; not a cancel, and not a release |
+| `forward` | Queue owner or the claiming obligor | Moves the work to another queue or candidate set; a reason is required; the ping-pong count goes up |
+| `nominate` | Queue owner, obligee or accountable party | Proposes a candidate; nobody becomes obligor without accepting |
+| `offer` | Queue owner or the distribution policy | Offers to a specific party, who answers with promise, decline or counter |
+| `reassign` | Queue owner or accountable party | Opens an offer to a new party; the current obligor stays until the new one accepts |
+| `renew-lease` | Obligor | Extends the lease |
+
+Ownership can be a timed lease, if the queue declares one. It is renewed by progress reports, heartbeats or `renew-lease`. When it runs out, the queue's declared behaviour applies: return to the pool, or keep the lease and signal the owner. Either way, a record and a signal are produced.
+
+**Assignment does not grant access.** Being assigned or claiming work creates no authority in Access. Missing access is requested from Access and shows on the commitment as an authority wait. Claiming also requires Access to allow taking that work.
+
+## Distribution policy
+
+The distribution method is a versioned policy declared on the work, the queue or a Practice, never built into the data model.
+
+| Method | Meaning | Example |
+|---|---|---|
+| Push | The queue owner or a rule offers the work to a specific party | A team lead hands a job to one person |
+| Pull | Candidates claim work | A night-shift nursing pool |
+| Bidding | Candidates bid and one is chosen; the choice is an offer and its acceptance is a binding promise | Pallet moves offered to a warehouse robot fleet |
+| Skill or capacity | A rule offers work based on capability statements and open workload | Routing support requests by language |
+
+Work applies the organization's declared policy. It does not pick or rank "the best agent" or "the best person". Every distribution decision records which policy version and which inputs it used, so it can be explained. A capability statement (a machine factsheet, an A2A AgentCard, a skill list) is a Claim and an input to distribution; it creates neither authority nor accountability.
+
+Open workload per party is a derived view. A policy can declare a work-in-progress limit; going over it produces an overload signal.
+
+## Normative basis and autonomy
+
+An agent's basis for acting does not have to be a single instruction. A valid basis is made of: an Aim, a Commitment, an on-behalf-of delegation, Access authority evidence, an autonomy policy and the Declarations of eligible parties. Content, tool output, chat text, model predictions or a page the agent saw are never a basis on their own.
+
+Capability, authority, trust and autonomy are different things:
+
+| Term | Meaning | Source |
+|---|---|---|
+| Capability | Evidence or a claim about being able to do something | Claim |
+| Authority | Being allowed to do it | Access |
+| Trust | A context-specific assessment derived from past evidence; there is no general trust score | Derived Claim |
+| Autonomy | Doing something within authority now, without asking | Work policy, declared by the principal |
+
+Autonomy is always within authority: an autonomy policy can narrow authority but never widen it. Evaluating autonomy gives one of four outcomes: `proceed`, `proceed-and-notify`, `require-gate`, `deny`. A deny from Access can never be overcome in Work by a gate or a waiver.
+
+Autonomy depends on the risk of the action, not on a fixed per-agent setting: reversibility, blast radius (including how many objects a bulk change touches), whether it binds another party, and how close it is to the edge of authority. By default, irreversible actions, actions that bind another party, and actions near the authority limit require a gate. For high-impact work, or work with weak evidence, the default mode is "suggest": the agent presents a proposal with its reasoning, and the action is accepted separately, one by one.
+
+Automation widens only through explicit policy. Repeated decisions can turn into an autonomy proposal, but it takes effect only with the principal's Declaration.
+
+## Control and the single driver
+
+Authority, control and execution are separate:
+
+- **Authority** is being allowed to act (Access).
+- **Control** is the ability to pause, cancel or take over (declared by the executor).
+- **Execution** is the action actually running, stopping or finishing in the world (reported by the executor).
+
+The interface never presents "authority revoked" as if execution had halted.
+
+An attention request ("look at this"), a consultation (the doer asks and keeps control) and a takeover (control moves to another driver) are three different interventions and are never merged into one.
+
+The control mode (`automatic`, `intervened`, `manual`) comes from the executor as a Claim and appears as the control axis. Work uses it, together with the executor's capability statement, to limit which requests are offered.
+
+In an execution environment (a browser session, a terminal, a robot arm) there is one responsible driver by default; others observe. A second driver comes in only through a takeover, with a timed **control lease** recording who held control, from when to when, and why. When control is handed back, the agent continues.
+
+```text
+pause request → executor confirmation or checkpoint → control lease → the person changes the work
+   → hand back control with a handover note → re-check assumptions → continue OR re-plan
+```
+
+If the executor does not support pausing, cancelling or taking over, the interface says so and does not offer the missing button.
+
+A supervision requirement can be a Condition ("this work proceeds only while an observer with role Y is connected"): defined in Access, enforced by the executor, visible in Work. When a model or provider fails, the options offered are: wait, swap the underlying model while the same party continues, delegate to a new party, or have a person take control.
+
+## Stop requests
+
+A stop at the Work level is a request. It says which kind of stop is wanted: stop immediately (`immediate`), finish safely and then stop (`finish_then_stop`), or pause (`pause`). Any party with stop authority in Access for that work can send one.
+
+The doer answers with a `stop_response`: `accept`, `finish_then_stop`, or `refuse` with a reason. Stopping is asynchronous and has intermediate states; until the answer comes, the request shows as pending.
+
+- **A forced stop always exists, but not in Work.** The principal's path to force a stop is revoking authority in Access plus enforcement by the executor. Safe stopping does not depend on the coordinator: it keeps working in the executor and locally even if Work is down or unreachable.
+- **Separate records.** The stop request, the answer, any forced stop and the executor's confirmation that it stopped are separate records. A refusal goes to the attention of the principal and the requester. Work shows "stopped" only on the executor's Claim; without that confirmation, the state is unknown.
+- **Local safety authority is never overridden.** A coordinator's command is a request. A machine or executor's own safety and stop authority cannot be overridden by Work and is never handed to it. Steps that cannot be cancelled are listed in advance in the executor's capability statement; a cancel request during such a step applies when the step ends.
+- **Intervention is asymmetric.** Stopping is easy. Continuing, or widening the scope, needs an explicit recorded decision (`resume_after_stop`) and never happens on its own.
+
+## The executor coordination contract
+
+One executor, two contracts. The Access contract covers authority: the executor's identity and registration, a per-job token, and checking back with Access before every significant step. The Work coordination contract is described here. Executors run by suiss and customer executors use the same two contracts, with no privileged path.
+
+| Item | Direction | Content |
+|---|---|---|
+| Assignment | Work → executor | Commitment reference and version, aim, acceptance criterion, budget, amendment policy, context references |
+| Control capability statement | Executor → Work | Supported operations (pause and resume, cancel, take over), stop types, amendment policies, non-cancellable steps, safe state definition, checkpoint support, heartbeat interval, integration depth. It is a Claim; the interface offers only what is declared |
+| Request delivery | Work → executor | Stop, pause, take over, hand back control, amendment (with version), budget exhausted |
+| Request answer | Executor → Work | Accept, finish then stop, or refuse with a reason; the amendment version applied |
+| Action and claim reports | Executor → Work | Acts (actions taken) and Claims (observations, progress, consumption). Progress event types: action, question, answer, error, plan update, reasoning summary. Raw chain of thought is never sent; raw traces are only References |
+| Status report | Executor → Work | Minimum schema: status, what I did, what I need; the same for agents and machines |
+| Control mode | Executor → Work | `automatic`, `intervened` or `manual`; start and end of a control lease |
+| Handover note | Executor → Work | What was done, what changed, what is next |
+| Heartbeat | Executor → Work | A signal at the declared interval; if it stops, liveness becomes stale or unknown, never "in progress" |
+
+The execution session (an agent session, a machine job) is a first-class Reference, and its state is derived from its event stream. Attempts are grouped by session References, and past attempts and their reasons are kept. Capability statements, plan Claims and Act reports are kept apart.
+
+The integration depth is declared explicitly and shown in the interface:
+
+- **Full control:** all items above.
+- **Traffic light only:** permission to start, stop and resume; the executor makes its own plan.
+- **Read only:** Work only watches reports and sends no requests.
+
+Agent protocol tasks (A2A or MCP tasks) are the execution projection of a commitment. How they map is in [Events and integrations](/work/docs/reference/events-and-integrations).
+
+## Agent participation policy
+
+How an agent takes part in a piece of work is a declared parameter of its `engaged-in` role:
+
+| Value | Meaning |
+|---|---|
+| `on-call` | Speaks or acts only when mentioned or when a request arrives |
+| `proactive` | Joins in on events in the work with comments or suggestions on its own |
+| `assigned-only` | Works only on commitments assigned to it |
+
+Whoever adds the agent declares it; the interface suggests `on-call`. Everyone in the work can see the policy, and the principal changes it. Participation is about when an agent speaks or acts; autonomy is about what it does without asking. Participation creates no authority.
+
+## Role labels and machines
+
+A role name and its meaning in the work ("the on-call physician is the acceptor here") is a label defined in a Practice. The role's authority is defined in Access; the Practice links the label to an Access role and cannot widen it. Responsibility comes from commitment and accountability records, never from a label.
+
+A machine in the doer role is a party, with the right to decline, escalate and stop. As a shared resource (a door, an elevator, a device) it is the target of a sharing Condition. As the asset being maintained, it is a Reference. The same machine can play all three roles at once.

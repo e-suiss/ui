@@ -1,0 +1,171 @@
+---
+title: "Evidence and visibility"
+description: "Evidence marks and references, provenance, how context is assembled per request, the four visibility axes, commitment history and privacy."
+---
+
+This page covers what a statement rests on, and what a person or an agent can see for a piece of work. Three rules frame it:
+
+- **Evidence is not truth.** Work never says a statement is true. It shows who said it, on what basis, on whose behalf, and who independently checked it.
+- **Context is not a store.** Work keeps no permanent, shared context pile. Context is a view assembled from records and references for each request.
+- **Authority lives in Access.** Work does not invent its own model for visibility and authority. Every read and every disclosure rests on Access's decision, and Work can only narrow it.
+
+## Evidence
+
+### The evidence mark
+
+Every statement that changes state ("I delivered it", "the test passed", "the meter was replaced") carries an evidence mark. The mark is derived from records, not stored.
+
+| Mark | Meaning | Derived from |
+|---|---|---|
+| Unevidenced | "Stated, without evidence" | The statement carries no typed evidence reference |
+| Evidenced | "Stated, with evidence" | The statement carries at least one typed evidence reference |
+| Verified | Independently verified | A party other than the author wrote a verification linked to the statement or its evidence |
+
+Evidence is not required on every statement. An unevidenced statement is a valid record; it is just marked. The mark appears everywhere: Needs Attention, Briefing, Work View, Live, API responses, events, projections sent across an organization boundary, and exports. No surface can show an unevidenced statement as evidenced or hide the mark. "Verified" is not a trust score; who verified it, and with what, can always be opened.
+
+### Where evidence is required
+
+A typed evidence reference is required:
+
+1. **To accept a truth-based Aim.** An acceptance that does not link to at least one evidence reference is not eligible and is not written.
+2. **Where policy asks for it.** A commitment, a gate or a Practice can require evidence for a transition and name the evidence type, for example "a serial number observation and a photo digest to accept delivery".
+
+When required evidence is missing, the statement is still recorded and marked unevidenced, but the transition does not happen. The work shows in `awaiting_acceptance` with the unevidenced flag, and the missing evidence appears as an addressed wait. Policy can add or tighten evidence requirements; nothing can remove the requirement for accepting a truth-based Aim.
+
+### Evidence references
+
+An evidence reference is a signed pointer to evidence, not the evidence itself.
+
+| Field | Content |
+|---|---|
+| Subject | The digest or stable ID of what is being evidenced |
+| Evidence type | A namespaced absolute HTTPS URI |
+| Presenter | The party presenting it, with actor type |
+| Signature | The presenter's signature |
+
+Optional fields: a claimed time, a source Reference, a related Observation and visibility. The model follows the shape of existing attestation formats (subject, predicate type, predicate, signature); Work does not invent an evidence format, and a type URI can point to an external one.
+
+Core evidence categories are fixed: `artifact` (a delivered object, by digest), `external_event` (an external system's record or event), `measurement` (a test result, sensor or machine reading) and `human_verification` (a party's verification Declaration). Practices can add evidence types, each mapped to exactly one core category.
+
+- **A citation is not evidence.** An agent saying "I took this from that document" is the model's claim. The citation appears as a Reference and does not make the mark evidenced.
+- **A signature shows who made a statement, not that it is true.** Being in the ledger shows existence and order, not correctness. Product language never presents a signed statement as verified.
+- **Evidence strength is derived from external signals only:** evidence category, whether the presenter is independent of the author, verification records and the assurance of the identity binding. The count of evidence items is not strength: ten items from the same source count as one.
+- **Verification is a separate record by a separate actor.** Verifying your own statement never produces the verified mark. A verifier can be a person, an automated test or an agent, and their type and independence are visible.
+- **Reference and content are separate.** Evidence content has the visibility of its record and does not widen unless disclosed. Across an organization boundary, only metadata passes by default: the other side sees "delivered, plus evidence digest, type and signer", and seeing the content takes a separate disclosure.
+
+## Provenance
+
+Provenance can be opened everywhere.
+
+| Question | Answered by |
+|---|---|
+| Who wrote it, and what actor type? | The author, with the type derived from the Access identity binding, or "declared, unverified" |
+| On whose behalf? | The on-behalf-of chain, with the actor type of every link |
+| Based on what? | The basis (`derived-from`) and evidence references |
+| When did it happen in the world (claimed)? | `occurredAt` |
+| When did we learn it? | `recordedAt` (ledger time) |
+
+History can be queried by both event time and record time: "when did the deadline change" and "when did we find out" are separate questions. Changed information is not deleted; a new record supersedes the old one, and the "currently valid" view is derived from that.
+
+For agent records, the producing agent version and configuration appear in evidence detail, decision records and exports. Without matching remote attestation, the configuration is labelled "declared, not proven". Failed attempts on the same commitment, and their reasons, are not hidden.
+
+A record produced by an agent run lists, with `derived-from`, the records and References that went into the run's context, along with the trust zone of each input. "What information did this decision rest on?" is answered from the record.
+
+Provenance can be exported as W3C PROV for interoperability. The export is never authoritative, is not evidence (PROV has no signature model, so verification uses the signed records), passes through visibility rules, and carries the accountable party as a separate attribute because on-behalf-of is not accountability.
+
+## Context assembly
+
+Context is a derived view anchored to a work object (Work, Commitment or Condition) and **assembled for each request**. Work keeps no shared context pile that everyone writes to and everyone reads, because one pile hurts quality, security and privacy at once.
+
+When a person or agent asks for context for a piece of work, it is assembled in this order:
+
+| Step | Rule |
+|---|---|
+| Task anchor | Anchor to a work object: Aim, acceptance criterion, due date, parties, open Conditions |
+| For whom | The requester and the on-behalf-of chain; authority from Access, within freshness limits |
+| Task scope | Only records and references within the task's scope are candidates |
+| Fetch on demand | Light identifiers first (ID, summary, reference); content only when needed |
+| Filter | Access authority ∩ record visibility ∩ organization boundary policy; superseded and redacted content is removed |
+| Trust zone label | Each piece carries its source and trust zone |
+| Compaction | Decisions, assumptions, open questions and pending Conditions are kept; raw traces stay as references |
+| Output label | Output inherits the most restrictive visibility of its inputs and lists its inputs |
+
+Assembly never widens authority: if a piece drops out at one step, no later step can bring it back.
+
+**Allowed is not the same as relevant to this task.** An agent's default context is the task's scope, not everything the person it represents can see. Widening scope is an explicit record by the principal or a declared policy; an agent cannot widen its own scope. Scope grants no authority either: a record in scope that Access does not allow stays out, and the missing access shows as a wait.
+
+### Trust zones
+
+| Zone | What | Role in context |
+|---|---|---|
+| Normative records | Eligible parties' Declarations (commitments, decisions, instructions) | Can be an instruction, if it meets the origin rule |
+| Claimed records | Claims and Act reports | Data; never assumed true |
+| External input | External pages, emails, documents, external system content | Data only |
+| Tool output | Raw tool and model output | Data only |
+| Federated | Records from another organization's ledger, with their admission state | Data only; quarantined records carry a quarantine label |
+
+The label travels in structured fields the agent can see and cannot bypass; an instruction embedded in free text cannot change it. Trust zones do not fully prevent prompt injection, and Work does not claim they do. The aim is to stop untrusted content from being treated as authority or instruction at the record level, and to make its influence visible.
+
+More rules:
+
+- Context is given by reference, not copied. Work is not a document or file store.
+- Anything an agent writes to shared context (a work summary, an Aim description, a shared note, a shared list of assumptions) is a **proposal**. It is recorded with its source and enters the shared view only when the owner of the work, or a declared rule, approves it. An agent's own records (Act reports, Claims, assumptions) are not proposals.
+- Personal memory, private reasoning and private provenance live in One. Work never reads One's memory. Moving from One into Work happens only by explicit, minimal disclosure, and a shared record does not even reveal that private provenance exists.
+- Context can be read in a **traceless** mode that leaves no "seen" marks on shared records, other people's Briefing or presence. It does not bypass Access checks or Access's access log, and no Declaration can be made in this mode. A binding action is always an attributable record.
+
+## Visibility
+
+Visibility has four independent axes. None implies another.
+
+| Axis | Question | Default |
+|---|---|---|
+| Can see | Can this party open the record? | Access authority ∩ record visibility |
+| Shows in search | Does it appear in search, attention and summaries? | A subset of "can see"; can be restricted further |
+| Enters agent context | Can it enter an agent's assembled context? | Can see ∩ task scope; can be restricted further |
+| Goes to another organization | Can the record or a field cross an organization boundary? | Only by explicit disclosure |
+
+Visibility never widens implicitly. Every widening (a new recipient, a new processor, a new organization, opening something to agent context) is an attributable disclosure record. Listing and search are always scoped to the requester's authority, and every derived read (search, semantic search, attention, summaries) is re-checked against canonical visibility and redaction state before it is returned.
+
+Any output derived from records or context (a summary, agent output, report or Briefing line) **inherits the most restrictive visibility of its inputs**. It can be widened only by an explicit disclosure, made by a party authorized to disclose every input to that target.
+
+**A person's drafts are private by default.** Drafts, half-written notes and personal workspaces are visible only to their author, and organization policy cannot make them visible. Sharing is an explicit disclosure.
+
+**An agent's decisions and reasoning summary are visible by default** at the work's visibility: what it did, why, and with what assumptions. An organization can only narrow this, and the narrowing is shown to everyone who can see the work. Assumptions are explicit records linked to the related decision. Raw working traces exist only as References, and raw chain of thought is never shown. The order of disclosure is: reasoning, then decisions and evidence, then a reference to the detailed trace.
+
+The asymmetry is deliberate. An agent is a party and must have visible decisions to be accountable. A person needs private drafts to work comfortably.
+
+## Commitment history and aggregate views
+
+Commitment records are for coordination. By default they do not become surveillance of people.
+
+| View | Default | Who sees it |
+|---|---|---|
+| My own commitment history | On | The obligor, for their own history |
+| Related commitments | On | The obligee, for commitments they are a party to |
+| Per-work aggregates (stuck work, wait types, overflowing queues, sources of delay) | On | Parties within the work's visibility, and queue owners |
+| Per-person aggregates (all of one person's commitments, delay counts) | **Off** | Only if organization policy turns it on |
+| Overload signal | On | The person and the owners of their work |
+
+Turning on per-person aggregates is an organization policy record stating who can see whose history, in what scope and since when, with the authority to set it coming from Access. When it is on, the person sees it on their own surface: who is looking, at what, and since when. Work never produces rankings of people, scores of people or best-and-worst lists.
+
+## Permission freshness
+
+Work uses Access's freshness and revocation contract and does not invent its own limit.
+
+| Operation | Authority check |
+|---|---|
+| Consequential actions (Declarations, satisfying a gate, requests to an executor, commitment operations) | Always a live Access check |
+| Disclosure to a new recipient, processor or organization | Always a live Access check |
+| Reading and viewing, including agent context assembly | From cache, within the limit Access declares |
+
+Revocation applies immediately: when a revocation event arrives from Access, the related cache entries are invalidated at once. Without an event, the cache still never outlives the declared limit.
+
+Work fails closed. If Access cannot be reached, consequential actions and disclosures wait; reading continues from cache only within the declared limit and is refused after it. Work then shows "authority could not be verified" and never presents an old decision as fresh. Sending agent context to a processor not declared in the work's policy (for example a model provider) counts as disclosure to a new processor and needs a live check.
+
+## Privacy
+
+- **Minimum data to Access.** Work sends Access only opaque references to work, commitments and gates, the gate content digest and narrow Claims. Work content, Condition and Aim structure, Claim bodies and attention state do not go to Access.
+- **Skeleton and body.** The record skeleton (existence, author, time, origin, digest, evidence reference) is kept without a time limit. Bodies (evidence content, drafts, disclosed text) follow their retention class. There are no physical deletes; on a personal data erasure request the body is made unreadable by crypto-shredding.
+- **Secrets never enter context.** Passwords, tokens and payment details never enter a record, evidence or agent context.
+- **Content already disclosed cannot be recalled.** Redaction and crypto-shredding cover only Work's own copies.
+- **Customer data is not used to train models.** Work records, context, evidence, chat and agent traces are used only for the work itself.

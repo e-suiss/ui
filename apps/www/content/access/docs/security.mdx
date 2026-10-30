@@ -1,0 +1,152 @@
+---
+title: Security and privacy
+description: The guarantees Access is designed to give, the limits it declares openly, the trust model per component, and how privacy is handled.
+---
+
+Access states each security property together with its guarantee class and its limits. What is not guaranteed is said plainly instead of being left out. The design target is "secure with declared limits": no compromised issuer, identity provider, schema publisher, provider operator, executing system or verifier can create positive authority beyond its own declared reach.
+
+## Guarantee classes
+
+Every guarantee in Access belongs to one of these classes:
+
+| Class | Meaning |
+|---|---|
+| **By semantics** | Follows from the model itself. Holds wherever the model is implemented correctly |
+| **Under declared capability or policy** | Holds when a stated condition is met, such as a verifier following its profile or a witness being configured. The condition is always written next to the guarantee |
+| **Not guaranteed** | Cannot be prevented by Access. Often detectable, sometimes only limited |
+
+## The security core
+
+In short:
+
+- positive authority is created only by a recorded, attributable and signed meta-action;
+- every outside input is only as effective as the declared reach of the use it was accepted for;
+- every uncertainty produces DENY or REQUIRE_ACTION;
+- every revocation is prospective and takes effect at the latest within a declared window.
+
+Beyond that, Access does not promise physical stopping, outside truth, human judgement or forgetting.
+
+## Guarantees by semantics
+
+| Guarantee | Statement |
+|---|---|
+| Single source | Positive authority is created only by a meta-action in an anchor's lineage. No other system can create authority |
+| Non-amplification | A child is within its parent; what an Instance can use is holding ∩ Mandate; a projection is within its source |
+| Budgets | Every exercise draws from every budget along the lineage. An offline slice cannot be spent twice centrally. Releases never exceed draws |
+| Revocation | From its commit, every later online `commit`, `continue` and `projection.issue` that relies on it is denied |
+| Invalidity | Terminal and cascading. Nothing revives. Qualifying again starts a new episode |
+| Restrictions | Only narrow. Removing one is a widening |
+| Claims | A claim is decision input only within its Acceptance's use. Ingest is not acceptance |
+| Approvals | An approval is a contribution bound to an exact intent digest. It cannot override DENY, budgets or ceilings, and it is single-use |
+| Actor attribution | Only through an Actor Intent Statement signed with the actor's key binding. The enforcement point or transport identity is never the actor; a request without a statement is anonymous |
+| No unknown | A decision is never UNKNOWN. A protocol error or rejection produces no effect |
+| Receipts | A decision is not a credential. A receipt is bound to one exercise, intent and audience. Projections are holder-bound |
+| Events | No event, lost event or reordering widens authority |
+| Must-understand | Anything a verifier or evaluator does not understand covers nothing |
+| No backdating | Authority cannot be backdated |
+| History | The existence, attribution, lineage, digest and time of records cannot be erased |
+| No privilege by position | Being first-party, hosting, custody or operating the provider carries no semantic privilege or authority |
+| Domain binding | An artifact signed with another domain's operational key is not accepted |
+| Fail closed | No error in the decision or verification path (rate limiter, cache, introspection backend, policy evaluation, parser) produces ALLOW, an active token or a new token |
+| Overflow | Arithmetic overflow in an authority evaluation is DENY, never a partial ALLOW |
+| No impersonation | Support access is a Grant. Support staff cannot sign as the user; every support action is attributed to their own Instance |
+| Identity is not authority | Every identity-plane output is a claim within its accepted use and creates no authority |
+| One write path | Identity configuration changes are domain actions and go through the same decision path |
+
+## Declared limits
+
+| Limit | Class | Why it cannot be avoided |
+|---|---|---|
+| **Custodial keys.** Whoever holds a Party's keys can act as that Party, unless custody is user-gated | Not guaranteed | Not using a key you hold is a physical matter |
+| **Approval surfaces.** The party operating an approval screen could show one thing and collect an assertion for another | Not guaranteed; conformant independent surfaces narrow it | Authenticators do not display content; only the surface renders it |
+| **Offline windows.** After a revocation, use within a declared horizon, Δ or slice | Under declared capability | Offline verifiers cannot hear about a revocation instantly |
+| **Provider correctness.** A provider can produce a wrong decision or show different histories to different parties | Not guaranteed to prevent; detectable by re-evaluation and witnesses | The provider physically holds the decision |
+| **Forced recovery.** Changes after the cited checkpoint may be lost | Not guaranteed without witness and replica-before-acknowledge | A witness cosigns commitments; it does not hold records |
+| **Authorized but malicious actors.** People, agents or roots can do harm within their own authority; colluding people can defeat split authority | Not guaranteed; limited by budgets, Mandates, requirements and windows | Approved is not the same as wise |
+| **Policy oracle.** Repeated queries can reveal thresholds | Not guaranteed; limited by disclosure scope, rate limits and detection | Decisions are deterministic by design |
+| **Availability.** If Access is unreachable, consequential effects outside a declared contract stop | Not guaranteed; a deliberate trade-off | Fail closed has an availability cost |
+| **Residual linkability.** Pairwise identifiers remove identifier-level correlation, but shared keys, timing, network and device data remain | Not guaranteed | Identifier separation does not erase side information |
+| **Co-tenant side channels.** Shared hardware can leak secrets through microarchitectural side channels | Not guaranteed; dedicated compute narrows it | Software cannot fully isolate shared hardware |
+
+## Trust model
+
+"Blast radius" is the widest result a component can reach if it is fully malicious. The "never" column is a by-semantics boundary.
+
+| Component | Relied on for | Blast radius if compromised | Never |
+|---|---|---|---|
+| Anchor root | Being the source of authority in its scope | Everything in its scope, within its root requirements | Another scope; reserved actions without their requirements; erasing history |
+| Provider (evaluator) | Producing decisions per specification and keeping records | Wrong decisions, denial of service, equivocation | Producing an exercise for an actor without its statement; owning authority |
+| Provider signing key | Signing receipts, proofs, checkpoints and metadata | Forged artifacts accepted only within each verifier's local ceilings, until recovery reaches the verifier | An online decision; a central budget draw; acceptance after recovery without an inclusion proof |
+| Identity plane | Issuing authentication and binding claims, within accepted uses | Impersonation of accepted subjects up to the authority they already hold | New Grants, Acceptances, ceiling-exceeding authority, reserved actions |
+| External identity provider | Its accepted use | Impersonation within its subject class, or selection within existing ceilings | New Grants, Acceptances or meta-actions |
+| HR or other claim issuer | Selection facts | The holder sets of existing rule-shaped Grants, within their ceilings | Exceeding a Grant's ceiling, reserved actions, budgets |
+| Schema publisher | The meaning of its namespace, up to the accepted digest | The meaning of the accepted digest | Changing scope with an unaccepted digest; silently removing a reserved flag |
+| Foreign domain | Authority proof within its Acceptance | Up to the bridging Grant's ceiling | Writing to the local record |
+| Enforcement point | Applying the decision before the effect | Effects it physically controls anyway | Producing an actor signature; moving a receipt to another intent |
+| Offline verifier | Following its contract | Contracts in its audience, up to horizon and slice | Spending a slice twice centrally |
+| Approval surface | Faithful rendering and collecting the user act | Collecting assertions for a different intent from its own users | A contribution without the approver's statement and assertion |
+| Relay and signal transmitter | Best-effort delivery | Delayed, lost or fake events | Widening authority |
+| Work or another coordinator | Gates and attention | Misrouting or flooding approval requests | Creating authority; bypassing a DENY with a gate |
+| One or another agent | Exercising within its own Instance and Mandate | Anything within Grant ∩ Mandate ∩ budget | Grants, widening or approvals without the user's own Instance |
+| Witness | Faithfully cosigning checkpoints | A false cosignature; hiding equivocation if it is the only witness | Changing authority state |
+| Support staff | Acting under the support Grant the user gave | The scope and duration of that Grant | Signing in as the user |
+
+The containment lever for each component is itself an attributable exercise: revoking an Acceptance, a Grant or a Mandate, terminating an Instance, or moving the domain to another provider.
+
+### Operator cannot create authority
+
+The operator of a provider cannot create authority because of two independent barriers, plus one detection mechanism:
+
+1. **One write path.** Authority state changes only through an ALLOW on a meta-action. Management APIs reduce to meta-action requests, and the operator holds no Grant from genesis.
+2. **Actor attribution.** Every recorded `commit` and `continue` carries a statement signed with the actor Instance's key binding. The operator cannot produce it.
+3. **Detection by replay.** Anyone who re-evaluates a record export against the specification can detect a meta-action without a valid statement or lineage, or a wrong ALLOW. This detects; it does not prevent, and only when someone replays.
+
+These barriers do not hold when the operator is also the key custodian or also runs the approval surface. For this reason the design defaults for domain roots and reserved Grant holders are non-custodial controllers with device-bound passkeys, at least one witness independent of the operator, and an independent rendering path for the highest consequence tier.
+
+## Witnesses and replicas
+
+- A **witness** only cosigns checkpoint commitments (root and size). It does not hold records. A **replica** holds the records. Cosigning is not replicating.
+- The design default is at least two witnesses, at least one independent of the provider and its operator.
+- Revocations and highest-tier commits are acknowledged only after the covering checkpoint is cosigned by an independent witness and every record up to it has reached the declared replica.
+- Equivocation cannot be prevented; it is detectable when at least one independent witness compares checkpoints. Witness checks assume at least one honest witness.
+- Records are tamper-evident, checked against independent witnesses, where witnesses are configured.
+
+## Cryptography
+
+| Requirement | Applies to |
+|---|---|
+| Tamper evidence | The authority record, checkpoints, offline report chains, record exports |
+| Technical non-repudiation (signature-based attribution) | Actor Intent Statements, approval statements and assertions, claims, checkpoints, receipts, portable proofs. Legal non-repudiation is not claimed |
+| Forward secrecy | Transport only. Signed records must stay checkable for a long time |
+| Long-term verifiability | Algorithm identifiers are part of signed content; records can be re-anchored when algorithms change |
+| Confidentiality at rest | Applied, but not stated as a semantic guarantee. Minimization and redaction are the primary controls |
+
+Authority artifacts are signed with Ed25519 by default; ES256 verification is required; a post-quantum signature (ML-DSA) is an opt-in profile. Authority artifacts are never signed with RSA. The accepted algorithm set comes from the domain metadata, never from an artifact's header. `alg: none`, HMAC algorithms and embedded keys are always rejected. Secret comparisons are measured as constant-time; the compiler gives no guarantee. Details are in [records and signatures](/access/docs/reference/records-and-signatures).
+
+## Privacy
+
+- **Pseudonyms by default.** Relying parties get pairwise user identifiers. Outside a domain, Parties appear under domain-pairwise pseudonyms. Authority-level correlation across domains happens only through a recorded bridging Grant or identity binding.
+- **Disclosure scope.** Explanations, search and events never exceed the viewer's own authority. For an unauthorized requester, an existing and a non-existent account, basis or resource get the same answer content.
+- **Opaque positions.** Below audit scope, identifiers that would reveal log positions are opaque tokens.
+- **Selective disclosure.** Records commit to each field separately, so a record can be disclosed with some fields withheld while staying checkable.
+- **Redaction.** A record's body can be redacted when nothing live depends on it. Its existence, attribution, lineage, digest and time stay. Copies shared earlier are not recalled.
+- **Erasure.** Personal fields are made unreadable within the declared period by destroying their encryption keys. The pseudonymous audit skeleton is kept.
+
+## What Access never promises
+
+| Never promised | What Access says instead |
+|---|---|
+| Immediate effect on every device | Effective now for new requests; offline devices may honor it until T if they follow their profile |
+| The agent has stopped | Authority revoked. Agent: running / paused (confirmed) / unknown |
+| A claim is true | *Issuer* says (signed) |
+| The action is done | Allowed · owner: reported done / unknown |
+| No changes lost in recovery | Changes after the recovery checkpoint may be lost; repeat revocations made after then |
+| Approvers are independent | Different people, different devices |
+| An approval makes the action correct | Records your approval. Access then re-checks the request |
+| Records cannot be altered | Tamper-evident, checked against independent witnesses, where witnesses are configured |
+| Agents cannot be misused | The agent can only use what you delegated, within limits |
+| Uninterrupted availability | Offline and continuity windows, with their conditions |
+| Logged out of every app | Sessions ended; apps that already hold a token may keep access until it expires |
+| Passkeys make takeover impossible | Passkeys are phishing-resistant; device binding separately protects against session theft |
+| Your data is deleted | Personal fields are made unreadable within the declared period; the pseudonymous audit skeleton is kept |
+| Legal force of an approval | Not said |

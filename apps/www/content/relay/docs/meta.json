@@ -1,0 +1,17 @@
+{
+  "title": "Relay",
+  "pages": [
+    "index",
+    "concepts",
+    "architecture",
+    "security",
+    "---Reference---",
+    "reference/http-api",
+    "reference/errors",
+    "reference/delivery-status",
+    "reference/webhooks",
+    "reference/inbox-realtime",
+    "reference/waitpoints",
+    "reference/identifiers"
+  ]
+}
