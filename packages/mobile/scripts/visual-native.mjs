@@ -217,7 +217,7 @@ export async function run(driver, values) {
     }
   }
 
-  if (values.update && !filter.length) {
+  if (values.update) {
     const kept = new Set(
       examples.flatMap((name) => THEMES.map((theme) => `${name}-${theme}.png`))
     )

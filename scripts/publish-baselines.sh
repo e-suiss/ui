@@ -18,7 +18,9 @@ export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/baselines -o IdentitiesOnly=yes"
 work="$(mktemp -d)"
 git clone --quiet --depth 1 git@github.com:e-suiss/ui-baselines.git "$work"
 cd "$work"
-rm -rf "$target"
+if [ -z "${ONLY:-}" ]; then
+  rm -rf "$target"
+fi
 mkdir -p "$target"
 cp -R "$source_dir"/. "$target"/
 git config user.name "github-actions[bot]"

@@ -177,7 +177,7 @@ jobs:
         with:
           name: baselines-android-${{ matrix.shard }}
           path: packages/mobile/tests/screenshots/mobile
-          if-no-files-found: error
+          if-no-files-found: ${{ inputs.only && 'ignore' || 'error' }}
 
   publish:
     needs: visual
@@ -200,5 +200,6 @@ jobs:
       - name: Replace the Android screenshots in e-suiss/ui-baselines
         env:
           BASELINES_KEY: ${{ secrets.BASELINES_KEY }}
+          ONLY: ${{ inputs.only }}
           SOURCE: ${{ github.sha }}
         run: scripts/publish-baselines.sh mobile/android "${{ runner.temp }}/screenshots/mobile/android"
