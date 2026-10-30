@@ -169,10 +169,10 @@ public struct MessageScroller<Data: RandomAccessCollection, ID: Hashable, Row: V
           }
           .padding(.vertical, 16)
           .scrollTargetLayout()
-          .onGeometryChange(for: MessageScrollerMetrics.self) { content in
-            let frame = content.frame(in: .named(space))
-            return MessageScrollerMetrics(minY: frame.minY, maxY: frame.maxY)
-          } action: { value in
+          .onGeometryChange(for: CGRect.self) { content in
+            content.frame(in: .named(space))
+          } action: { frame in
+            let value = MessageScrollerMetrics(minY: frame.minY, maxY: frame.maxY)
             metrics = value
             updateEdges(controller, metrics: value, viewport: viewport.size.height)
           }
