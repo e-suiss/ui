@@ -73,6 +73,7 @@ jobs:
     timeout-minutes: 5
     outputs:
       swift: ${{ steps.filter.outputs.swift }}
+      swift-cli: ${{ steps.filter.outputs.swift-cli }}
       kotlin: ${{ steps.filter.outputs.kotlin }}
     steps:
       - id: filter
@@ -84,6 +85,7 @@ jobs:
         run: |
           all() {
             echo "swift=true" >> "$GITHUB_OUTPUT"
+            echo "swift-cli=true" >> "$GITHUB_OUTPUT"
             echo "kotlin=true" >> "$GITHUB_OUTPUT"
             exit 0
           }
@@ -101,6 +103,7 @@ jobs:
           }
           shared='packages/tokens/|packages/mobile/scripts/build-tokens\.mjs|\.github/workflows/ci\.yml'
           echo "swift=$(changed "^(packages/mobile/swiftui/|${shared})")" >> "$GITHUB_OUTPUT"
+          echo "swift-cli=$(changed "^(packages/mobile/swiftui/|packages/mobile/registry|packages/cli/|scripts/compat-swift\.mjs|${shared})")" >> "$GITHUB_OUTPUT"
           echo "kotlin=$(changed "^(packages/mobile/kotlin/|${shared})")" >> "$GITHUB_OUTPUT"
           cat "$GITHUB_OUTPUT"
 
@@ -133,6 +136,28 @@ jobs:
             exit 1
           fi
           xcodebuild -scheme EsuissUI -destination "id=${device}" -clonedSourcePackagesDirPath "$RUNNER_TEMP/spm" test -quiet
+
+  swift-cli:
+    name: SwiftUI install (${{ matrix.project }})
+    needs: changes
+    if: needs.changes.outputs.swift-cli == 'true'
+    runs-on: macos-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - package
+          - xcode
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 24
+
+      - name: Add every item to a new project and build it
+        run: node scripts/compat-swift.mjs --project=${{ matrix.project }}
 
   kotlin:
     name: Jetpack Compose
