@@ -1,6 +1,6 @@
-import { execFileSync } from "node:child_process"
 import { readFileSync } from "node:fs"
 import { PNG } from "pngjs"
+import { findDevice, setDefault, simctl } from "./simulator.mjs"
 import { BUNDLE, options, run } from "./visual-native.mjs"
 
 const STATUS_BAR = 186
@@ -9,62 +9,19 @@ const HOME_INDICATOR = 102
 
 const values = options("iPhone 17 Pro Max")
 
-function simctl(...args) {
-  return execFileSync("xcrun", ["simctl", ...args], { encoding: "utf8" })
-}
-
-function findDevice(name) {
-  const { devices } = JSON.parse(simctl("list", "devices", "available", "-j"))
-  const matches = Object.entries(devices)
-    .filter(([runtime]) => runtime.includes("iOS"))
-    .flatMap(([, list]) => list)
-    .filter((device) => device.name === name)
-  const device =
-    matches.find((candidate) => candidate.state === "Booted") ?? matches.at(-1)
-  return device ?? createDevice(name)
-}
-
-function createDevice(name) {
-  const { devicetypes } = JSON.parse(simctl("list", "devicetypes", "-j"))
-  const { runtimes } = JSON.parse(simctl("list", "runtimes", "available", "-j"))
-  const type = devicetypes.find((candidate) => candidate.name === name)
-  const runtime = runtimes
-    .filter((candidate) => candidate.platform === "iOS")
-    .at(-1)
-  if (!type || !runtime) {
-    console.error(`Cannot create a simulator named "${name}".`)
-    process.exit(1)
-  }
-  const udid = simctl(
-    "create",
-    name,
-    type.identifier,
-    runtime.identifier
-  ).trim()
-  return { name, udid, state: "Shutdown" }
-}
-
 function prepare() {
   if (device.state !== "Booted") simctl("boot", device.udid)
   simctl("bootstatus", device.udid, "-b")
-  simctl(
-    "spawn",
+  setDefault(
     device.udid,
-    "defaults",
-    "write",
     "com.apple.Accessibility",
     "ReduceMotionEnabled",
-    "-bool",
     "true"
   )
-  simctl(
-    "spawn",
+  setDefault(
     device.udid,
-    "defaults",
-    "write",
     "com.apple.keyboard.preferences",
     "KeyboardPrediction",
-    "-bool",
     "false"
   )
   simctl(
@@ -127,24 +84,16 @@ function ready(full) {
 function finish() {
   simctl("terminate", device.udid, BUNDLE)
   simctl("status_bar", device.udid, "clear")
-  simctl(
-    "spawn",
+  setDefault(
     device.udid,
-    "defaults",
-    "write",
     "com.apple.Accessibility",
     "ReduceMotionEnabled",
-    "-bool",
     "false"
   )
-  simctl(
-    "spawn",
+  setDefault(
     device.udid,
-    "defaults",
-    "write",
     "com.apple.keyboard.preferences",
     "KeyboardPrediction",
-    "-bool",
     "true"
   )
 }

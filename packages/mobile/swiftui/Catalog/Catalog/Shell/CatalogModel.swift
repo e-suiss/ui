@@ -44,6 +44,12 @@ final class CatalogModel {
     if let link = UserDefaults.standard.string(forKey: "link"), let url = URL(string: link) {
       open(url)
     }
+    if let shard = UserDefaults.standard.string(forKey: "snapshots") {
+      let only = (UserDefaults.standard.string(forKey: "only") ?? "")
+        .split(separator: ",")
+        .map(String.init)
+      Task { @MainActor in await StorySnapshot.captureAll(shard: shard, only: only) }
+    }
   }
 
   func open(_ url: URL) {

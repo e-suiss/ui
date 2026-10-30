@@ -20,7 +20,8 @@
     "tokens:check": "node scripts/build-tokens.mjs --check",
     "styles": "node scripts/derive-styles.mjs",
     "visual:android": "node scripts/visual-android.mjs",
-    "visual:ios": "node scripts/visual-ios.mjs"
+    "visual:ios": "node scripts/visual-ios.mjs",
+    "visual:swiftui": "node scripts/visual-swiftui.mjs"
   },
   "dependencies": {
     "class-variance-authority": "catalog:",

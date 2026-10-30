@@ -21,7 +21,7 @@ const STARTUP = 1500
 const WARM_UP = 15_000
 const CONFIRM_DELAY = 8000
 const STABLE_TIMEOUT = 60_000
-const ALLOWED_MISMATCHED_PIXELS = 10
+export const ALLOWED_MISMATCHED_PIXELS = 10
 const EXAMPLE_FILE = /\.tsx$/
 
 export const BUNDLE = "com.esuiss.ui"
@@ -46,7 +46,7 @@ function same(a, b) {
   )
 }
 
-function compare(reference, actual) {
+export function compare(reference, actual) {
   if (reference.width !== actual.width || reference.height !== actual.height) {
     return { mismatched: Number.POSITIVE_INFINITY }
   }
@@ -62,7 +62,7 @@ function compare(reference, actual) {
   return { mismatched, diff }
 }
 
-function readReference(file) {
+export function readReference(file) {
   if (!existsSync(file)) return undefined
   try {
     return PNG.sync.read(readFileSync(file))

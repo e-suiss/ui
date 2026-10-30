@@ -12,6 +12,7 @@ on:
       - "packages/mobile/global.css"
       - "packages/mobile/styles/**"
       - "packages/mobile/uniwind/**"
+      - "packages/mobile/scripts/simulator.mjs"
       - "packages/mobile/scripts/visual-ios.mjs"
       - "packages/mobile/scripts/visual-native.mjs"
       - "packages/mobile/package.json"
