@@ -14,6 +14,7 @@ public struct Spinner: View {
     }
   }
 
+  @Environment(\.accessibilityReduceMotion) private var reduceMotion
   let dimension: CGFloat
   let label: Text
 
@@ -28,8 +29,8 @@ public struct Spinner: View {
   }
 
   public var body: some View {
-    TimelineView(.periodic(from: .now, by: 0.1)) { context in
-      let step = Int((context.date.timeIntervalSinceReferenceDate * 10).rounded(.down)) % 8
+    TimelineView(.animation(minimumInterval: 0.1, paused: reduceMotion)) { context in
+      let step = reduceMotion ? 0 : Int((context.date.timeIntervalSinceReferenceDate * 10).rounded(.down)) % 8
       SpinnerSpokes(dimension: dimension, progress: nil)
         .rotationEffect(.degrees(Double(step) * 45))
     }
