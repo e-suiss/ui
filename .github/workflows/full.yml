@@ -58,7 +58,14 @@ jobs:
           RUN: ${{ github.run_id }}
         run: |
           names='{"ci":"CI","compat":"Compatibility","web":"Visual (web)","android":"Visual (Android)","ios":"Visual (iOS)","swiftui":"Visual (SwiftUI)","compose":"Visual (Compose)"}'
-          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN/jobs" --paginate --jq '.jobs[] | {name, conclusion, html_url}' | jq -s '.' > "$RUNNER_TEMP/jobs.json"
+          for attempt in 1 2 3 4 5; do
+            if gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN/jobs?per_page=30" --paginate --jq '.jobs[] | {name, conclusion, html_url}' > "$RUNNER_TEMP/jobs.ndjson"; then
+              break
+            fi
+            : > "$RUNNER_TEMP/jobs.ndjson"
+            sleep $((attempt * 15))
+          done
+          jq -s '.' "$RUNNER_TEMP/jobs.ndjson" > "$RUNNER_TEMP/jobs.json"
           {
             echo "## Full run of ${GITHUB_SHA:0:8}"
             echo
