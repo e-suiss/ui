@@ -477,15 +477,13 @@ import SwiftUI
 enum CalendarDates {
   static func day(_ offset: Int) -> Date {
     let calendar = Foundation.Calendar.current
-    let start = calendar.startOfDay(for: Date())
+    let start = calendar.date(from: DateComponents(year: 2026, month: 1, day: 15)) ?? Date()
     return calendar.date(byAdding: .day, value: offset, to: start) ?? start
   }
 
   static func dayOfMonth(_ day: Int) -> Date {
     let calendar = Foundation.Calendar.current
-    var components = calendar.dateComponents([.year, .month], from: Date())
-    components.day = day
-    return calendar.date(from: components) ?? Date()
+    return calendar.date(from: DateComponents(year: 2026, month: 1, day: day)) ?? Date()
   }
 }
 
@@ -517,6 +515,7 @@ struct CalendarSingleDemo: View {
       captionLayout: captionLayout,
       showOutsideDays: showOutsideDays,
       showWeekNumber: showWeekNumber,
+      today: CalendarDates.day(0),
       isDisabled: { day in
         guard weekendsDisabled else { return false }
         let weekday = Foundation.Calendar.current.component(.weekday, from: day)
@@ -555,8 +554,7 @@ import java.util.GregorianCalendar
 import java.util.Locale
 
 fun calendarDay(offsetDays: Int = 0, dayOfMonth: Int? = null): Date {
-    val now = GregorianCalendar()
-    val result = GregorianCalendar(now.get(GregorianCalendar.YEAR), now.get(GregorianCalendar.MONTH), now.get(GregorianCalendar.DAY_OF_MONTH))
+    val result = GregorianCalendar(2026, GregorianCalendar.JANUARY, 15)
     if (dayOfMonth != null) result.set(GregorianCalendar.DAY_OF_MONTH, dayOfMonth)
     result.add(GregorianCalendar.DAY_OF_MONTH, offsetDays)
     return result.time
@@ -601,6 +599,7 @@ fun CalendarSingle(
             disabled = { weekendsDisabled && calendarIsWeekend(it) },
             buttonVariant = buttonVariant,
             locale = locale,
+            today = calendarDay(),
         )
     }
 }

@@ -45,8 +45,7 @@ val calendarStories = StoryGroup(
 )
 
 private fun calendarDay(offsetDays: Int = 0, dayOfMonth: Int? = null): Date {
-    val now = GregorianCalendar()
-    val result = GregorianCalendar(now.get(GregorianCalendar.YEAR), now.get(GregorianCalendar.MONTH), now.get(GregorianCalendar.DAY_OF_MONTH))
+    val result = GregorianCalendar(2026, GregorianCalendar.JANUARY, 15)
     if (dayOfMonth != null) result.set(GregorianCalendar.DAY_OF_MONTH, dayOfMonth)
     result.add(GregorianCalendar.DAY_OF_MONTH, offsetDays)
     return result.time
@@ -91,6 +90,7 @@ private fun CalendarSingle(
             disabled = { weekendsDisabled && calendarIsWeekend(it) },
             buttonVariant = buttonVariant,
             locale = locale,
+            today = calendarDay(),
         )
     }
 }
@@ -116,6 +116,7 @@ private fun CalendarRange() {
                 to = range?.to
             },
             numberOfMonths = 2,
+            today = calendarDay(),
         )
     }
 }
@@ -126,7 +127,7 @@ private fun CalendarMultiple() {
         mutableStateOf(listOf(calendarDay(dayOfMonth = 8), calendarDay(dayOfMonth = 15), calendarDay(dayOfMonth = 22)))
     }
     CalendarFrame {
-        Calendar(selected = dates, onSelect = { value: List<Date> -> dates = value })
+        Calendar(selected = dates, onSelect = { value: List<Date> -> dates = value }, today = calendarDay())
     }
 }
 

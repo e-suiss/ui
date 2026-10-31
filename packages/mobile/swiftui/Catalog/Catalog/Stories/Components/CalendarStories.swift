@@ -48,15 +48,13 @@ enum CalendarStories {
 private enum CalendarDates {
   static func day(_ offset: Int) -> Date {
     let calendar = Foundation.Calendar.current
-    let start = calendar.startOfDay(for: Date())
+    let start = calendar.date(from: DateComponents(year: 2026, month: 1, day: 15)) ?? Date()
     return calendar.date(byAdding: .day, value: offset, to: start) ?? start
   }
 
   static func dayOfMonth(_ day: Int) -> Date {
     let calendar = Foundation.Calendar.current
-    var components = calendar.dateComponents([.year, .month], from: Date())
-    components.day = day
-    return calendar.date(from: components) ?? Date()
+    return calendar.date(from: DateComponents(year: 2026, month: 1, day: day)) ?? Date()
   }
 }
 
@@ -88,6 +86,7 @@ private struct CalendarSingleDemo: View {
       captionLayout: captionLayout,
       showOutsideDays: showOutsideDays,
       showWeekNumber: showWeekNumber,
+      today: CalendarDates.day(0),
       isDisabled: { day in
         guard weekendsDisabled else { return false }
         let weekday = Foundation.Calendar.current.component(.weekday, from: day)
@@ -102,7 +101,7 @@ private struct CalendarRangeDemo: View {
   @State private var range: DateRange? = DateRange(from: CalendarDates.day(0), to: CalendarDates.day(6))
 
   var body: some View {
-    DateCalendar(selection: $range, numberOfMonths: 2)
+    DateCalendar(selection: $range, numberOfMonths: 2, today: CalendarDates.day(0))
       .modifier(CalendarBordered())
   }
 }
@@ -115,7 +114,7 @@ private struct CalendarMultipleDemo: View {
   ]
 
   var body: some View {
-    DateCalendar(selection: $dates)
+    DateCalendar(selection: $dates, today: CalendarDates.day(0))
       .modifier(CalendarBordered())
   }
 }
