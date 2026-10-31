@@ -333,6 +333,34 @@ describe("native add with an icon library", () => {
     await addNative(["button"], { cwd, platform: "kotlin" })
     expect(output().includes("android { compileSdk = 37 }")).toBe(asks)
   })
+
+  it("reads the dependencies a module takes from the version catalog", async () => {
+    serveRegistry(files)
+    const cwd = createProject({
+      "gradle/libs.versions.toml":
+        '[versions]\nui = "1.0.0"\n\n[libraries]\nandroidx-ui = { group = "androidx.compose.ui", name = "ui" }\nphosphor = { module = "com.adamglin:phosphor-icon-android", version = "1.0.0" }\nunused = "com.example:unused:1.0.0"\n\n[plugins]\nandroid-application = { id = "com.android.application", version = "9.0.0" }\n',
+      "app/build.gradle.kts":
+        "plugins {\n  alias(libs.plugins.android.application)\n  alias(libs.plugins.kotlin.compose)\n}\nandroid {\n  compileSdk = 37\n  defaultConfig { minSdk = 26 }\n  buildFeatures { compose = true }\n}\ndependencies {\n  implementation(libs.androidx.ui)\n  implementation(libs.phosphor)\n}\n",
+      "app/src/main/kotlin/com/esuiss/ui/theme/Theme.kt": "",
+      "app/src/main/kotlin/com/esuiss/ui/theme/Tokens.kt": "",
+    })
+    await addNative(["button"], { cwd, platform: "kotlin" })
+    expect(output()).not.toContain("Add to")
+  })
+
+  it("asks for catalog libraries the module does not use", async () => {
+    serveRegistry(files)
+    const cwd = createProject({
+      "gradle/libs.versions.toml":
+        '[libraries]\nandroidx-ui = { group = "androidx.compose.ui", name = "ui" }\nandroidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }\n',
+      "app/build.gradle.kts":
+        "plugins {\n  alias(libs.plugins.android.application)\n  alias(libs.plugins.kotlin.compose)\n}\nandroid {\n  compileSdk = 37\n  defaultConfig { minSdk = 26 }\n  buildFeatures { compose = true }\n}\ndependencies {\n  debugImplementation(libs.androidx.ui.tooling)\n}\n",
+      "app/src/main/kotlin/com/esuiss/ui/theme/Theme.kt": "",
+      "app/src/main/kotlin/com/esuiss/ui/theme/Tokens.kt": "",
+    })
+    await addNative(["button"], { cwd, platform: "kotlin" })
+    expect(output()).toContain('implementation("androidx.compose.ui:ui")')
+  })
 })
 
 const MOBILE = path.join(import.meta.dirname, "../../mobile")

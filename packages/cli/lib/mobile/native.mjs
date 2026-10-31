@@ -57,6 +57,14 @@ const COMPOSE_ENABLED = /compose\s*=\s*true|compose\s+true/
 const LAST_LIST_SEPARATOR = /, ([^,]+)$/
 const GRADLE_FILES = ["build.gradle.kts", "build.gradle"]
 const KOTLIN_PACKAGE = path.join("src", "main", "kotlin", "com", "esuiss", "ui")
+const VERSION_CATALOG = path.join("gradle", "libs.versions.toml")
+const CATALOG_LIBRARIES = /^\[libraries\]\s*$([\s\S]*?)(?=^\[|(?![\s\S]))/m
+const CATALOG_ENTRY = /^\s*([\w-]+)\s*=\s*(?:"([^"]+)"|\{([^}]*)\})/gm
+const CATALOG_MODULE = /module\s*=\s*"([^"]+)"/
+const CATALOG_GROUP = /group\s*=\s*"([^"]+)"/
+const CATALOG_NAME = /name\s*=\s*"([^"]+)"/
+const CATALOG_SEPARATOR = /[-_]/g
+const COORDINATE_CHARACTER = /[\w.-]/
 
 function directories(dir) {
   return existsSync(dir)
@@ -135,6 +143,32 @@ async function detectXcode(cwd, options) {
   }
 }
 
+function catalogDependencies(cwd, module, build) {
+  const catalog = [cwd, path.dirname(module), module]
+    .map((dir) => path.join(dir, VERSION_CATALOG))
+    .find((file) => existsSync(file))
+  const libraries = readText(catalog).match(CATALOG_LIBRARIES)?.[1] ?? ""
+  return [...libraries.matchAll(CATALOG_ENTRY)]
+    .map(([, alias, notation, table = ""]) => {
+      const group = table.match(CATALOG_GROUP)?.[1]
+      const name = table.match(CATALOG_NAME)?.[1]
+      const coordinate =
+        notation ??
+        table.match(CATALOG_MODULE)?.[1] ??
+        (group && name ? `${group}:${name}` : null)
+      return {
+        accessor: `libs.${alias.replace(CATALOG_SEPARATOR, ".")}`,
+        coordinate,
+      }
+    })
+    .filter(
+      ({ accessor, coordinate }) =>
+        coordinate &&
+        new RegExp(`${accessor.replaceAll(".", "\\.")}(?![\\w.])`).test(build)
+    )
+    .map(({ coordinate }) => coordinate)
+}
+
 function detectGradle(cwd, { path: target }) {
   const module = gradleModule(cwd)
   if (!module) {
@@ -151,7 +185,10 @@ function detectGradle(cwd, { path: target }) {
       ? path.resolve(cwd, target)
       : path.join(module, KOTLIN_PACKAGE),
     buildFile,
-    settings: readText(buildFile),
+    settings: [
+      readText(buildFile),
+      ...catalogDependencies(cwd, module, readText(buildFile)),
+    ].join("\n"),
   }
 }
 
@@ -173,13 +210,25 @@ function swiftRequirements(project, { ios, packages }) {
   }
 }
 
+function mentions(text, coordinate) {
+  for (
+    let index = text.indexOf(coordinate);
+    index !== -1;
+    index = text.indexOf(coordinate, index + 1)
+  ) {
+    const next = text[index + coordinate.length]
+    if (!(next && COORDINATE_CHARACTER.test(next))) return true
+  }
+  return false
+}
+
 function kotlinRequirements(
   project,
   { minSdk, compileSdk, bom, dependencies }
 ) {
   const settings = project.settings
   const declared = (coordinate) =>
-    settings.includes(coordinate.split(":").slice(0, 2).join(":"))
+    mentions(settings, coordinate.split(":").slice(0, 2).join(":"))
   const sdk = Number(settings.match(MIN_SDK)?.[1])
   const compile = Number(settings.match(COMPILE_SDK)?.[1])
   const missing = [
