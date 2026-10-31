@@ -1,5 +1,11 @@
 import { execFileSync } from "node:child_process"
-import { copyFileSync, mkdirSync, symlinkSync, writeFileSync } from "node:fs"
+import {
+  chmodSync,
+  copyFileSync,
+  mkdirSync,
+  symlinkSync,
+  writeFileSync,
+} from "node:fs"
 import path from "node:path"
 import { describe, expect, it } from "vitest"
 
@@ -12,8 +18,14 @@ const registryScript = new URL(
 ).pathname
 const webModules = new URL("../../web/node_modules", import.meta.url).pathname
 
+const bin = temporaryDirectory("esuiss-bin-")
+writeFileSync(path.join(bin, "gh"), '#!/bin/sh\necho "$FULL_RUNS"\n')
+chmodSync(path.join(bin, "gh"), 0o755)
+
 const env = {
   ...process.env,
+  PATH: `${bin}${path.delimiter}${process.env.PATH}`,
+  FULL_RUNS: "1",
   GIT_CONFIG_GLOBAL: "/dev/null",
   GIT_CONFIG_NOSYSTEM: "1",
   GIT_AUTHOR_NAME: "Release Test",
@@ -70,10 +82,14 @@ function repository({ cli = "0.9.0" } = {}) {
 }
 
 function release(cwd, ...args) {
+  return releaseWith(env, cwd, ...args)
+}
+
+function releaseWith(environment, cwd, ...args) {
   try {
     const stdout = execFileSync("node", ["scripts/release.mjs", ...args], {
       cwd,
-      env,
+      env: environment,
       encoding: "utf8",
       stdio: "pipe",
     })
@@ -184,6 +200,15 @@ describe("release", () => {
     expect(result.stderr).toContain(
       "main is not in sync with origin/main. Pull or push first."
     )
+  })
+
+  it("refuses until the full run passed on main", () => {
+    const { cwd, origin } = repository()
+    const result = releaseWith({ ...env, FULL_RUNS: "0" }, cwd, "patch")
+    expect(result.code).toBe(1)
+    expect(result.stderr).toContain("The Full run workflow has not passed on")
+    expect(version(cwd, "packages/cli/package.json")).toBe("0.9.0")
+    expect(git(origin, "tag", "--list")).toBe("")
   })
 
   it("refuses to reuse an existing tag", () => {

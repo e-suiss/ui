@@ -62,6 +62,33 @@ if (git("rev-parse", "HEAD") !== git("rev-parse", `origin/${BRANCH}`)) {
 
 if (git("tag", "--list", tag)) fail(`${tag} already exists.`)
 
+function fullRunPassed(commit) {
+  try {
+    const count = execFileSync(
+      "gh",
+      [
+        "api",
+        `repos/{owner}/{repo}/actions/workflows/full.yml/runs?head_sha=${commit}&status=success&per_page=1`,
+        "--jq",
+        ".total_count",
+      ],
+      { encoding: "utf8", stdio: ["ignore", "pipe", "inherit"] }
+    )
+    return Number(count) > 0
+  } catch {
+    fail(
+      "Could not ask GitHub for the full runs. Install the GitHub CLI and sign in with gh auth login."
+    )
+  }
+}
+
+const head = git("rev-parse", "HEAD")
+if (!fullRunPassed(head)) {
+  fail(
+    `The Full run workflow has not passed on ${head.slice(0, 8)}. Run it with gh workflow run full.yml --ref ${BRANCH}, wait for it to pass, then release again.`
+  )
+}
+
 for (const library of LIBRARIES) {
   if (!existsSync(library)) continue
   execFileSync("node", ["scripts/build-registry.mjs", "--check"], {

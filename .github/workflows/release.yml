@@ -22,7 +22,40 @@ env:
   TAG: ${{ inputs.tag || github.ref_name }}
 
 jobs:
+  gate:
+    name: Check the full run
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: refs/tags/${{ env.TAG }}
+          fetch-depth: 2
+
+      - name: Find a passing full run of this commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          commit=$(git rev-parse HEAD)
+          candidates=("$commit")
+          if [ "$(git diff --name-only HEAD^ HEAD)" = "packages/cli/package.json" ]; then
+            candidates+=("$(git rev-parse HEAD^)")
+          fi
+          for sha in "${candidates[@]}"; do
+            passed=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/full.yml/runs?head_sha=$sha&status=success&per_page=1" --jq '.total_count')
+            if [ "$passed" -gt 0 ]; then
+              echo "The full run passed on ${sha:0:8}."
+              exit 0
+            fi
+          done
+          echo "::error title=No passing full run::$TAG is not released because the Full run workflow has not passed on ${commit:0:8}. Run it on main (Actions > Full run > Run workflow, or gh workflow run full.yml), then run the Release workflow again with tag $TAG (Actions > Release > Run workflow)."
+          exit 1
+
   publish:
+    needs: gate
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
