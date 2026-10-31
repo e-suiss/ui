@@ -150,6 +150,7 @@ public struct DateCalendar: View {
   let showWeekNumber: Bool
   let startMonth: Date?
   let endMonth: Date?
+  let today: Date
   let isDisabled: (Date) -> Bool
 
   @State private var internalMonth: Date
@@ -170,6 +171,7 @@ public struct DateCalendar: View {
     showWeekNumber: Bool,
     startMonth: Date?,
     endMonth: Date?,
+    today: Date,
     isDisabled: @escaping (Date) -> Bool
   ) {
     self.selection = selection
@@ -182,8 +184,9 @@ public struct DateCalendar: View {
     self.showWeekNumber = showWeekNumber
     self.startMonth = startMonth
     self.endMonth = endMonth
+    self.today = today
     self.isDisabled = isDisabled
-    _internalMonth = State(initialValue: initial ?? Date())
+    _internalMonth = State(initialValue: initial ?? today)
   }
 
   public init(
@@ -197,6 +200,7 @@ public struct DateCalendar: View {
     showWeekNumber: Bool = false,
     startMonth: Date? = nil,
     endMonth: Date? = nil,
+    today: Date = Date(),
     isDisabled: @escaping (Date) -> Bool = { _ in false }
   ) {
     self.init(
@@ -211,6 +215,7 @@ public struct DateCalendar: View {
       showWeekNumber: showWeekNumber,
       startMonth: startMonth,
       endMonth: endMonth,
+      today: today,
       isDisabled: isDisabled
     )
   }
@@ -226,6 +231,7 @@ public struct DateCalendar: View {
     showWeekNumber: Bool = false,
     startMonth: Date? = nil,
     endMonth: Date? = nil,
+    today: Date = Date(),
     isDisabled: @escaping (Date) -> Bool = { _ in false }
   ) {
     self.init(
@@ -240,6 +246,7 @@ public struct DateCalendar: View {
       showWeekNumber: showWeekNumber,
       startMonth: startMonth,
       endMonth: endMonth,
+      today: today,
       isDisabled: isDisabled
     )
   }
@@ -255,6 +262,7 @@ public struct DateCalendar: View {
     showWeekNumber: Bool = false,
     startMonth: Date? = nil,
     endMonth: Date? = nil,
+    today: Date = Date(),
     isDisabled: @escaping (Date) -> Bool = { _ in false }
   ) {
     self.init(
@@ -269,6 +277,7 @@ public struct DateCalendar: View {
       showWeekNumber: showWeekNumber,
       startMonth: startMonth,
       endMonth: endMonth,
+      today: today,
       isDisabled: isDisabled
     )
   }
@@ -536,7 +545,7 @@ public struct DateCalendar: View {
 
   private func modifiers(for day: Date, month: Date) -> CalendarDayModifiers {
     var result = CalendarDayModifiers()
-    result.today = calendar.isDateInToday(day)
+    result.today = calendar.isDate(day, inSameDayAs: today)
     result.outside = !calendar.isDate(day, equalTo: month, toGranularity: .month)
     result.disabled = isDisabled(day)
     switch selection {
