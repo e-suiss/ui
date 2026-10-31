@@ -7,6 +7,18 @@ on:
     paths:
       - "packages/mobile/kotlin/**"
       - ".github/workflows/visual-compose.yml"
+  pull_request:
+    paths:
+      - "packages/mobile/kotlin/**"
+      - ".github/workflows/visual-compose.yml"
+  workflow_call:
+    inputs:
+      update:
+        type: string
+        default: "no"
+      only:
+        type: string
+        default: ""
   workflow_dispatch:
     inputs:
       update:
@@ -27,13 +39,39 @@ permissions:
 
 concurrency:
   group: visual-compose-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   UPDATE: ${{ github.event_name == 'workflow_dispatch' && inputs.update != 'no' }}
 
 jobs:
+  changes:
+    name: Choose the stories
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      run: ${{ steps.changes.outputs.run }}
+      only: ${{ steps.changes.outputs.only }}
+      shards: ${{ steps.changes.outputs.shards }}
+      count: ${{ steps.changes.outputs.count }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 24
+
+      - id: changes
+        env:
+          BASE: ${{ (github.event_name == 'pull_request' || github.event_name == 'push') && (github.event.pull_request.base.sha || github.event.before) || '' }}
+          ONLY: ${{ inputs.only }}
+        run: node scripts/changed.mjs --platform=kotlin --base="$BASE" --only="$ONLY" --shards=1 --per-shard=1000 | tee -a "$GITHUB_OUTPUT"
+
   visual:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     name: Screenshots (Compose)
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -61,7 +99,7 @@ jobs:
 
       - name: Take every story
         env:
-          ONLY: ${{ inputs.only }}
+          ONLY: ${{ needs.changes.outputs.only }}
         run: |
           task=verifyRoborazziDebug
           if [ "$UPDATE" = "true" ]; then

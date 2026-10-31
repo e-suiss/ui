@@ -14,6 +14,25 @@ on:
       - "packages/mobile/scripts/visual-swiftui.mjs"
       - "pnpm-lock.yaml"
       - ".github/workflows/visual-swiftui.yml"
+  pull_request:
+    paths:
+      - "packages/mobile/swiftui/Package.swift"
+      - "packages/mobile/swiftui/Package.resolved"
+      - "packages/mobile/swiftui/Sources/**"
+      - "packages/mobile/swiftui/Catalog/**"
+      - "packages/mobile/scripts/simulator.mjs"
+      - "packages/mobile/scripts/visual-native.mjs"
+      - "packages/mobile/scripts/visual-swiftui.mjs"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/visual-swiftui.yml"
+  workflow_call:
+    inputs:
+      update:
+        type: string
+        default: "no"
+      only:
+        type: string
+        default: ""
   workflow_dispatch:
     inputs:
       update:
@@ -34,14 +53,40 @@ permissions:
 
 concurrency:
   group: visual-swiftui-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   UPDATE: ${{ github.event_name == 'workflow_dispatch' && inputs.update != 'no' }}
   APP: packages/mobile/swiftui/Catalog/build/Build/Products/Release-iphonesimulator/Catalog.app
 
 jobs:
+  changes:
+    name: Choose the stories
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      run: ${{ steps.changes.outputs.run }}
+      only: ${{ steps.changes.outputs.only }}
+      shards: ${{ steps.changes.outputs.shards }}
+      count: ${{ steps.changes.outputs.count }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 24
+
+      - id: changes
+        env:
+          BASE: ${{ (github.event_name == 'pull_request' || github.event_name == 'push') && (github.event.pull_request.base.sha || github.event.before) || '' }}
+          ONLY: ${{ inputs.only }}
+        run: node scripts/changed.mjs --platform=swift --base="$BASE" --only="$ONLY" --shards=4 --per-shard=15 | tee -a "$GITHUB_OUTPUT"
+
   build:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     name: Build the catalog
     runs-on: macos-latest
     timeout-minutes: 60
@@ -62,14 +107,14 @@ jobs:
           retention-days: 1
 
   visual:
-    needs: build
-    name: Screenshots (SwiftUI ${{ matrix.shard }}/4)
+    needs: [changes, build]
+    name: Screenshots (SwiftUI ${{ matrix.shard }}/${{ needs.changes.outputs.count }})
     runs-on: macos-latest
     timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4]
+        shard: ${{ fromJSON(needs.changes.outputs.shards) }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
@@ -102,8 +147,8 @@ jobs:
       - name: Take every story
         working-directory: packages/mobile
         env:
-          SHARD: ${{ matrix.shard }}/4
-          ONLY: ${{ inputs.only }}
+          SHARD: ${{ matrix.shard }}/${{ needs.changes.outputs.count }}
+          ONLY: ${{ needs.changes.outputs.only }}
         run: |
           flags=()
           if [ -n "$ONLY" ]; then

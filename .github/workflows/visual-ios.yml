@@ -18,6 +18,29 @@ on:
       - "packages/mobile/package.json"
       - "pnpm-lock.yaml"
       - ".github/workflows/visual-ios.yml"
+  pull_request:
+    paths:
+      - "packages/mobile/App.tsx"
+      - "packages/mobile/capture.tsx"
+      - "packages/mobile/components/**"
+      - "packages/mobile/examples/**"
+      - "packages/mobile/global.css"
+      - "packages/mobile/styles/**"
+      - "packages/mobile/uniwind/**"
+      - "packages/mobile/scripts/simulator.mjs"
+      - "packages/mobile/scripts/visual-ios.mjs"
+      - "packages/mobile/scripts/visual-native.mjs"
+      - "packages/mobile/package.json"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/visual-ios.yml"
+  workflow_call:
+    inputs:
+      update:
+        type: string
+        default: "no"
+      only:
+        type: string
+        default: ""
   workflow_dispatch:
     inputs:
       update:
@@ -29,20 +52,50 @@ on:
           - publish
           - replace
         default: "no"
+      only:
+        description: Comma-separated example names to take instead of every example
+        type: string
+        default: ""
 
 permissions:
   contents: read
 
 concurrency:
   group: visual-ios-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   UPDATE: ${{ github.event_name == 'workflow_dispatch' && inputs.update != 'no' }}
   APP: packages/mobile/ios/build/Build/Products/Release-iphonesimulator/suissui.app
 
 jobs:
+  changes:
+    name: Choose the examples
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      run: ${{ steps.changes.outputs.run }}
+      only: ${{ steps.changes.outputs.only }}
+      shards: ${{ steps.changes.outputs.shards }}
+      count: ${{ steps.changes.outputs.count }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 24
+
+      - id: changes
+        env:
+          BASE: ${{ (github.event_name == 'pull_request' || github.event_name == 'push') && (github.event.pull_request.base.sha || github.event.before) || '' }}
+          ONLY: ${{ inputs.only }}
+        run: node scripts/changed.mjs --platform=rn --base="$BASE" --only="$ONLY" --shards=4 --per-shard=40 | tee -a "$GITHUB_OUTPUT"
+
   build:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     name: Build the app
     runs-on: macos-latest
     timeout-minutes: 60
@@ -78,14 +131,14 @@ jobs:
           retention-days: 1
 
   visual:
-    needs: build
-    name: Screenshots (iOS ${{ matrix.shard }}/4)
+    needs: [changes, build]
+    name: Screenshots (iOS ${{ matrix.shard }}/${{ needs.changes.outputs.count }})
     runs-on: macos-latest
     timeout-minutes: ${{ inputs.update == 'replace' && 180 || 90 }}
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4]
+        shard: ${{ fromJSON(needs.changes.outputs.shards) }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
@@ -118,16 +171,24 @@ jobs:
       - name: Take every example
         working-directory: packages/mobile
         env:
-          SHARD: ${{ matrix.shard }}/4
+          SHARD: ${{ matrix.shard }}/${{ needs.changes.outputs.count }}
+          ONLY: ${{ needs.changes.outputs.only }}
         run: |
+          flags=(--app="$RUNNER_TEMP/suissui.app" --shard="$SHARD")
+          if [ -n "$ONLY" ]; then
+            if [ "${{ inputs.update }}" = "replace" ]; then
+              echo "::error::replace takes every example, so it cannot be combined with only"
+              exit 1
+            fi
+            flags+=("--only=$ONLY")
+          fi
           if [ "$UPDATE" = "true" ]; then
-            node scripts/visual-ios.mjs --app="$RUNNER_TEMP/suissui.app" --shard="$SHARD" --update
+            flags+=(--update)
           elif [ ! -d tests/screenshots/mobile/ios ]; then
             echo "::notice title=No reference screenshots::e-suiss/ui-baselines has no iOS screenshots yet, so this run only checks that every example renders. Run the Visual (iOS) workflow with update set to publish to add them."
-            node scripts/visual-ios.mjs --app="$RUNNER_TEMP/suissui.app" --shard="$SHARD" --update
-          else
-            node scripts/visual-ios.mjs --app="$RUNNER_TEMP/suissui.app" --shard="$SHARD"
+            flags+=(--update)
           fi
+          node scripts/visual-ios.mjs "${flags[@]}"
 
       - name: Upload the differences
         if: failure()
@@ -145,7 +206,7 @@ jobs:
         with:
           name: baselines-ios-${{ matrix.shard }}
           path: packages/mobile/tests/screenshots/mobile
-          if-no-files-found: error
+          if-no-files-found: ${{ inputs.only && 'ignore' || 'error' }}
 
   publish:
     needs: visual
@@ -168,5 +229,6 @@ jobs:
       - name: Replace the iOS screenshots in e-suiss/ui-baselines
         env:
           BASELINES_KEY: ${{ secrets.BASELINES_KEY }}
+          ONLY: ${{ inputs.only }}
           SOURCE: ${{ github.sha }}
         run: scripts/publish-baselines.sh mobile/ios "${{ runner.temp }}/screenshots/mobile/ios"
