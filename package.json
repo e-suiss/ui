@@ -20,6 +20,7 @@
     "compat": "node scripts/compat.mjs",
     "compat:rn": "node scripts/compat-rn.mjs",
     "compat:swift": "node scripts/compat-swift.mjs",
+    "compat:kotlin": "node scripts/compat-kotlin.mjs",
     "matrix": "node scripts/matrix.mjs",
     "indexnow": "node scripts/indexnow.mjs",
     "prepare": "lefthook install"
