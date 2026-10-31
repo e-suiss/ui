@@ -387,7 +387,7 @@ function nativeThemeNotes(platform, requirements) {
     dependency.startsWith("androidx.")
   )
   return [
-    `Needs minSdk ${requirements.minSdk} or higher, the org.jetbrains.kotlin.plugin.compose plugin and buildFeatures { compose = true }.`,
+    `Needs compileSdk ${requirements.compileSdk} or higher, minSdk ${requirements.minSdk} or higher, the org.jetbrains.kotlin.plugin.compose plugin and buildFeatures { compose = true }.`,
     `Add implementation(platform("${requirements.bom}")) and ${core.map((dependency) => `implementation("${dependency}")`).join(", ")} to the dependencies of your app module.`,
     "The files go to app/src/main/kotlin/com/esuiss/ui/.",
   ]

@@ -183,6 +183,7 @@
       ],
       "requirements": {
         "minSdk": 24,
+        "compileSdk": 37,
         "bom": "androidx.compose:compose-bom:2026.09.00",
         "dependencies": [
           "androidx.compose.foundation:foundation",

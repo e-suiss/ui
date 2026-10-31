@@ -51,6 +51,7 @@ const ANDROID_PLUGIN =
   /com\.android\.(?:application|library)|android[.-](?:application|library)|androidApplication|androidLibrary/
 const GIT_SUFFIX = /\.git$/
 const MIN_SDK = /minSdk(?:Version)?\s*=?\s*(\d+)/
+const COMPILE_SDK = /compileSdk(?:Version)?\b[^\d\n]*(\d+)/
 const COMPOSE_PLUGIN = /plugin\.compose|compose\.compiler|kotlin\.compose/
 const COMPOSE_ENABLED = /compose\s*=\s*true|compose\s+true/
 const LAST_LIST_SEPARATOR = /, ([^,]+)$/
@@ -172,11 +173,15 @@ function swiftRequirements(project, { ios, packages }) {
   }
 }
 
-function kotlinRequirements(project, { minSdk, bom, dependencies }) {
+function kotlinRequirements(
+  project,
+  { minSdk, compileSdk, bom, dependencies }
+) {
   const settings = project.settings
   const declared = (coordinate) =>
     settings.includes(coordinate.split(":").slice(0, 2).join(":"))
   const sdk = Number(settings.match(MIN_SDK)?.[1])
+  const compile = Number(settings.match(COMPILE_SDK)?.[1])
   const missing = [
     ...(COMPOSE_PLUGIN.test(settings)
       ? []
@@ -184,6 +189,9 @@ function kotlinRequirements(project, { minSdk, bom, dependencies }) {
     ...(COMPOSE_ENABLED.test(settings)
       ? []
       : ["android { buildFeatures { compose = true } }"]),
+    ...(!compileSdk || compile >= compileSdk
+      ? []
+      : [`android { compileSdk = ${compileSdk} }`]),
     ...(sdk >= minSdk
       ? []
       : [`android { defaultConfig { minSdk = ${minSdk} } }`]),

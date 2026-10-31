@@ -546,7 +546,7 @@ function swiftManual(relative, texts, spec) {
 }
 
 function kotlinManual(relative, texts, spec) {
-  const { minSdk, bom, dependencies } = spec.requirements
+  const { minSdk, compileSdk, bom, dependencies } = spec.requirements
   const needed = dependencies.filter((dependency) => {
     const group = dependency.split(":")[0]
     if (group.startsWith("androidx.")) return true
@@ -562,6 +562,7 @@ function kotlinManual(relative, texts, spec) {
     "}",
     "",
     "android {",
+    `    compileSdk = ${compileSdk}`,
     `    defaultConfig { minSdk = ${minSdk} }`,
     "    buildFeatures { compose = true }",
     "}",
@@ -571,7 +572,7 @@ function kotlinManual(relative, texts, spec) {
     "}",
   ]
   const steps = [
-    `Apply the Compose compiler plugin, enable Compose, set \`minSdk\` to ${minSdk} or higher and add the dependencies:\n\n\`\`\`kotlin title="build.gradle.kts"\n${gradle.join("\n")}\n\`\`\``,
+    `Apply the Compose compiler plugin, enable Compose, set \`compileSdk\` to ${compileSdk} or higher and \`minSdk\` to ${minSdk} or higher, and add the dependencies:\n\n\`\`\`kotlin title="build.gradle.kts"\n${gradle.join("\n")}\n\`\`\``,
     `Copy the theme files every view uses:\n\n${spec.base.map((file) => `<ComponentSource path="kotlin/${file}" />`).join("\n\n")}`,
     `Copy the source${relative.length > 1 ? " and every file it uses" : ""}:\n\n${relative.map((file) => `<ComponentSource path="kotlin/${file}" />`).join("\n\n")}`,
     "Update the `com.esuiss.ui` package names to match your project.",

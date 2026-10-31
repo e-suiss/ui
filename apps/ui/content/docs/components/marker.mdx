@@ -342,7 +342,7 @@ npx expo install class-variance-authority cn
 
 <Only platform="kotlin">
 
-1. Apply the Compose compiler plugin, enable Compose, set `minSdk` to 24 or higher and add the dependencies:
+1. Apply the Compose compiler plugin, enable Compose, set `compileSdk` to 37 or higher and `minSdk` to 24 or higher, and add the dependencies:
 
 ```kotlin title="build.gradle.kts"
 plugins {
@@ -350,6 +350,7 @@ plugins {
 }
 
 android {
+    compileSdk = 37
     defaultConfig { minSdk = 24 }
     buildFeatures { compose = true }
 }

@@ -11,6 +11,7 @@ const EXPRESSION_END = /[\w)\]?!>]/
 const IOS_PLATFORM = /\.iOS\(\.v(\d+)\)/
 const ANDROID_TEST = /^\s*androidTest/m
 const MIN_SDK = /minSdk\s*=\s*(\d+)/
+const COMPILE_SDK = /compileSdk\s*=\s*(\d+)/
 const GRADLE_PLATFORM = /platform\("([^"]+)"\)/
 
 const IDENTIFIER = /[A-Za-z_]\w*/g
@@ -372,6 +373,7 @@ export async function nativeRequirements(root, platform) {
   const main = manifest.slice(0, manifest.search(ANDROID_TEST))
   return {
     minSdk: Number(manifest.match(MIN_SDK)?.[1]),
+    compileSdk: Number(manifest.match(COMPILE_SDK)?.[1]),
     bom: main.match(GRADLE_PLATFORM)?.[1],
     dependencies: [
       ...main.matchAll(/(?:api|implementation)\("([^"]+)"\)/g),

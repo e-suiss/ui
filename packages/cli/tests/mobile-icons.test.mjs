@@ -95,6 +95,7 @@ const registry = {
       base: ["theme/Theme.kt", "theme/Tokens.kt"],
       requirements: {
         minSdk: 24,
+        compileSdk: 37,
         dependencies: [
           "androidx.compose.ui:ui",
           "com.adamglin:phosphor-icon-android:1.0.0",
@@ -314,6 +315,23 @@ describe("native add with an icon library", () => {
       files["icons/kotlin/lucide/icons/bold/Bold.kt"]
     )
     expect(output()).not.toContain("phosphor-icon-android")
+  })
+
+  it.each([
+    ["compileSdk = 36", true],
+    ["compileSdk = 37", false],
+    ["compileSdk { version = release(36) }", true],
+    ["compileSdk { version = release(37) }", false],
+    ["compileSdkVersion 37", false],
+  ])("asks for compileSdk 37 when the module has %s", async (setting, asks) => {
+    serveRegistry(files)
+    const cwd = createProject({
+      "build.gradle.kts": `plugins { id("com.android.application") }\nandroid {\n  ${setting}\n  defaultConfig { minSdk = 26 }\n}\n`,
+      "src/main/kotlin/com/esuiss/ui/theme/Theme.kt": "",
+      "src/main/kotlin/com/esuiss/ui/theme/Tokens.kt": "",
+    })
+    await addNative(["button"], { cwd, platform: "kotlin" })
+    expect(output().includes("android { compileSdk = 37 }")).toBe(asks)
   })
 })
 
