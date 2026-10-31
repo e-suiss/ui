@@ -11,7 +11,7 @@ enum StorySnapshot {
     let index = parts.count == 2 ? parts[0] : 1
     let count = parts.count == 2 ? max(parts[1], 1) : 1
     let entries = StoryCatalog.entriesByID.values
-      .filter { !$0.story.live && (only.isEmpty || only.contains($0.id)) }
+      .filter { !$0.story.live && (only.isEmpty || only.contains($0.id) || only.contains($0.group.id)) }
       .sorted { $0.id < $1.id }
       .enumerated()
       .filter { $0.offset % count == index - 1 }

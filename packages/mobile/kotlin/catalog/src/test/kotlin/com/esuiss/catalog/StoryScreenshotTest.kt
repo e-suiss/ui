@@ -49,8 +49,9 @@ class StoryScreenshotTest(private val id: String, private val theme: ThemeMode) 
         fun stories(): List<Array<Any>> {
             val only = System.getProperty("only").orEmpty().split(",").filter(String::isNotBlank).toSet()
             return Catalog.groups
-                .flatMap { group -> group.stories.filterNot(Story::live).map(group::storyId) }
-                .filter { only.isEmpty() || it in only }
+                .flatMap { group ->
+                    group.stories.filterNot(Story::live).map(group::storyId).filter { only.isEmpty() || group.id in only || it in only }
+                }
                 .sorted()
                 .flatMap { id -> listOf(ThemeMode.Light, ThemeMode.Dark).map { arrayOf<Any>(id, it) } }
         }
