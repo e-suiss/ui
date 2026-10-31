@@ -9,6 +9,6 @@ val logLiveStories = StoryGroup(
     section = Section.Blocks,
     title = "Log Live",
     stories = listOf(
-        Story("Default", fullScreen = true) { LogLive() },
+        Story("Default", fullScreen = true, live = true) { LogLive() },
     ),
 )

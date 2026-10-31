@@ -1,0 +1,115 @@
+name: Visual (Compose)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/mobile/kotlin/**"
+      - ".github/workflows/visual-compose.yml"
+  workflow_dispatch:
+    inputs:
+      update:
+        description: Take new reference screenshots, to review as artifacts or to publish to e-suiss/ui-baselines
+        type: choice
+        options:
+          - "no"
+          - review
+          - publish
+        default: "no"
+      only:
+        description: Comma-separated story ids to take instead of every story
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: visual-compose-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  UPDATE: ${{ github.event_name == 'workflow_dispatch' && inputs.update != 'no' }}
+
+jobs:
+  visual:
+    name: Screenshots (Compose)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: packages/mobile/kotlin
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Check out the reference screenshots
+        if: env.UPDATE != 'true'
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: e-suiss/ui-baselines
+          path: packages/mobile/tests/screenshots
+          sparse-checkout: mobile/compose
+
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6
+
+      - name: Take every story
+        env:
+          ONLY: ${{ inputs.only }}
+        run: |
+          task=verifyRoborazziDebug
+          if [ "$UPDATE" = "true" ]; then
+            task=recordRoborazziDebug
+          elif [ ! -d ../tests/screenshots/mobile/compose ]; then
+            echo "::notice title=No reference screenshots::e-suiss/ui-baselines has no Compose screenshots yet, so this run only checks that every story renders. Run the Visual (Compose) workflow with update set to publish to add them."
+            task=recordRoborazziDebug
+          fi
+          ./gradlew --no-daemon ":catalog:$task" "-Ponly=$ONLY"
+
+      - name: Upload the differences
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: differences-compose
+          path: |
+            packages/mobile/kotlin/catalog/build/outputs/roborazzi
+            packages/mobile/kotlin/catalog/build/reports/tests
+          if-no-files-found: ignore
+
+      - name: Upload the new reference screenshots
+        if: env.UPDATE == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: baselines-compose
+          path: packages/mobile/tests/screenshots/mobile
+          if-no-files-found: error
+
+  publish:
+    needs: visual
+    if: github.event_name == 'workflow_dispatch' && (inputs.update == 'publish') && github.ref == 'refs/heads/main'
+    name: Publish the reference screenshots
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: ui-baselines
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: baselines-compose
+          path: ${{ runner.temp }}/screenshots/mobile
+
+      - name: Replace the Compose screenshots in e-suiss/ui-baselines
+        env:
+          BASELINES_KEY: ${{ secrets.BASELINES_KEY }}
+          SOURCE: ${{ github.sha }}
+          ONLY: ${{ inputs.only }}
+        run: scripts/publish-baselines.sh mobile/compose "${{ runner.temp }}/screenshots/mobile/compose"

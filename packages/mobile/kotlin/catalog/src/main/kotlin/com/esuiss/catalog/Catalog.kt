@@ -20,6 +20,7 @@ class Story(
     val exportName: String,
     val displayName: String? = null,
     val fullScreen: Boolean = false,
+    val live: Boolean = false,
     val content: @Composable () -> Unit,
 ) {
     val name: String
