@@ -1,0 +1,79 @@
+name: Full run
+
+on:
+  schedule:
+    - cron: "41 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: full-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+
+  compat:
+    name: Compatibility
+    uses: ./.github/workflows/compat.yml
+    with:
+      full: true
+
+  web:
+    name: Visual (web)
+    uses: ./.github/workflows/visual.yml
+
+  android:
+    name: Visual (Android)
+    uses: ./.github/workflows/visual-android.yml
+
+  ios:
+    name: Visual (iOS)
+    uses: ./.github/workflows/visual-ios.yml
+
+  swiftui:
+    name: Visual (SwiftUI)
+    uses: ./.github/workflows/visual-swiftui.yml
+
+  compose:
+    name: Visual (Compose)
+    uses: ./.github/workflows/visual-compose.yml
+
+  report:
+    needs: [ci, compat, web, android, ios, swiftui, compose]
+    if: always()
+    name: Report
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Summarize every suite
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RESULTS: ${{ toJSON(needs) }}
+          RUN: ${{ github.run_id }}
+        run: |
+          names='{"ci":"CI","compat":"Compatibility","web":"Visual (web)","android":"Visual (Android)","ios":"Visual (iOS)","swiftui":"Visual (SwiftUI)","compose":"Visual (Compose)"}'
+          jobs=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN/jobs" --paginate --jq '.jobs[]' | jq -s '.')
+          {
+            echo "## Full run of ${GITHUB_SHA:0:8}"
+            echo
+            echo "| Suite | Result | Jobs | Failed |"
+            echo "| --- | --- | ---: | ---: |"
+            jq -r --argjson names "$names" --argjson jobs "$jobs" 'to_entries[] | . as $suite | ($names[$suite.key]) as $name | [$jobs[] | select(.name | startswith($name + " / "))] as $mine | "| \($name) | \(if $suite.value.result == "success" then "✅ passed" elif $suite.value.result == "skipped" then "⏭️ skipped" else "❌ \($suite.value.result)" end) | \($mine | length) | \([$mine[] | select(.conclusion == "failure")] | length) |"' <<< "$RESULTS"
+            failed=$(jq -r '.[] | select(.conclusion == "failure") | "- [\(.name)](\(.html_url))"' <<< "$jobs")
+            if [ -n "$failed" ]; then
+              echo
+              echo "### Failed jobs"
+              echo
+              echo "$failed"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          if jq -e 'to_entries | any(.value.result != "success")' <<< "$RESULTS" > /dev/null; then
+            echo "::error::At least one suite did not pass. See the summary of this run."
+            exit 1
+          fi
