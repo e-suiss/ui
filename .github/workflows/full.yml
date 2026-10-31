@@ -58,14 +58,14 @@ jobs:
           RUN: ${{ github.run_id }}
         run: |
           names='{"ci":"CI","compat":"Compatibility","web":"Visual (web)","android":"Visual (Android)","ios":"Visual (iOS)","swiftui":"Visual (SwiftUI)","compose":"Visual (Compose)"}'
-          jobs=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN/jobs" --paginate --jq '.jobs[]' | jq -s '.')
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN/jobs" --paginate --jq '.jobs[] | {name, conclusion, html_url}' | jq -s '.' > "$RUNNER_TEMP/jobs.json"
           {
             echo "## Full run of ${GITHUB_SHA:0:8}"
             echo
             echo "| Suite | Result | Jobs | Failed |"
             echo "| --- | --- | ---: | ---: |"
-            jq -r --argjson names "$names" --argjson jobs "$jobs" 'to_entries[] | . as $suite | ($names[$suite.key]) as $name | [$jobs[] | select(.name | startswith($name + " / "))] as $mine | "| \($name) | \(if $suite.value.result == "success" then "✅ passed" elif $suite.value.result == "skipped" then "⏭️ skipped" else "❌ \($suite.value.result)" end) | \($mine | length) | \([$mine[] | select(.conclusion == "failure")] | length) |"' <<< "$RESULTS"
-            failed=$(jq -r '.[] | select(.conclusion == "failure") | "- [\(.name)](\(.html_url))"' <<< "$jobs")
+            jq -r --argjson names "$names" --slurpfile jobs "$RUNNER_TEMP/jobs.json" 'to_entries[] | . as $suite | ($names[$suite.key]) as $name | [$jobs[0][] | select(.name | startswith($name + " / "))] as $mine | "| \($name) | \(if $suite.value.result == "success" then "✅ passed" elif $suite.value.result == "skipped" then "⏭️ skipped" else "❌ \($suite.value.result)" end) | \($mine | length) | \([$mine[] | select(.conclusion == "failure")] | length) |"' <<< "$RESULTS"
+            failed=$(jq -r '.[] | select(.conclusion == "failure") | "- [\(.name)](\(.html_url))"' "$RUNNER_TEMP/jobs.json")
             if [ -n "$failed" ]; then
               echo
               echo "### Failed jobs"
