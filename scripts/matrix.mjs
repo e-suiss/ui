@@ -189,8 +189,15 @@ const RN_OPTIONS = {
   cli: CLIS,
 }
 
+const WEB_VISUAL = { base: BASES, style: STYLES, rtl: BOOLEAN }
+
 const PAIRWISE = {
   "web-options": { dimensions: WEB_OPTIONS, allowed: webOnly, tokens: TOKENS },
+  "web-visual-pairs": {
+    dimensions: WEB_VISUAL,
+    allowed: () => true,
+    tokens: {},
+  },
   "rn-options": { dimensions: RN_OPTIONS, allowed: () => true, tokens: {} },
 }
 
@@ -205,7 +212,8 @@ const SUITES = {
     }),
   "web-options": () =>
     withBaseColor(eachOnce(pairwise(WEB_OPTIONS, webOnly), TOKENS)),
-  "web-visual": () => product({ base: BASES, style: STYLES, rtl: BOOLEAN }),
+  "web-visual": () => product(WEB_VISUAL),
+  "web-visual-pairs": () => pairwise(WEB_VISUAL),
   "web-icons": () => product({ base: BASES, icons: WEB_ICONS }),
   "rn-install": () =>
     product({

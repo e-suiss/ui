@@ -15,6 +15,13 @@ on:
       - "scripts/matrix.mjs"
       - "pnpm-lock.yaml"
       - ".github/workflows/visual.yml"
+  schedule:
+    - cron: "23 2 * * *"
+  workflow_call:
+    inputs:
+      update:
+        type: string
+        default: "no"
   workflow_dispatch:
     inputs:
       update:
@@ -39,23 +46,53 @@ env:
 jobs:
   matrix:
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
     outputs:
       visual: ${{ steps.matrix.outputs.visual }}
+      run: ${{ steps.changes.outputs.run }}
+      base: ${{ steps.changes.outputs.base }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:
           node-version: 24
 
-      - id: matrix
+      - id: changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+          CHANGED_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
-          visual=$(node scripts/matrix.mjs web-visual)
-          icons=$(node scripts/matrix.mjs web-icons)
-          echo "visual=$(jq -cn --argjson a "$visual" --argjson b "$icons" '{include: ($a.include + $b.include)}')" >> "$GITHUB_OUTPUT"
+          base=""
+          if [ "$EVENT" = "pull_request" ] || [ "$EVENT" = "push" ]; then
+            base="$CHANGED_BASE"
+          elif [ "$EVENT" = "schedule" ] && [ "$SCHEDULE" = "23 2 * * *" ]; then
+            base=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow visual.yml --event schedule --status success --limit 1 --json headSha --jq '.[0].headSha // ""')
+          fi
+          node scripts/changed.mjs --platform=web --base="$base" | tee -a "$GITHUB_OUTPUT"
+
+      - id: matrix
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ steps.changes.outputs.base }}
+        run: |
+          if [ -n "$BASE" ] && [ "$EVENT" != "schedule" ]; then
+            echo "visual=$(node scripts/matrix.mjs web-visual-pairs)" >> "$GITHUB_OUTPUT"
+          else
+            visual=$(node scripts/matrix.mjs web-visual)
+            icons=$(node scripts/matrix.mjs web-icons)
+            echo "visual=$(jq -cn --argjson a "$visual" --argjson b "$icons" '{include: ($a.include + $b.include)}')" >> "$GITHUB_OUTPUT"
+          fi
 
   visual:
     needs: matrix
+    if: needs.matrix.outputs.run == 'true'
     name: Screenshots (${{ matrix.name }})
     runs-on: ubuntu-latest
     timeout-minutes: 90
@@ -70,8 +107,11 @@ jobs:
       PROJECT: ${{ matrix.base == 'base' && 'examples' || format('examples-{0}', matrix.base) }}
       SCREENSHOTS: ${{ matrix.icons && format('icons-{0}', matrix.icons) || matrix.style }}
       ARTIFACT: ${{ matrix.base }}-${{ matrix.icons && format('icons-{0}', matrix.icons) || matrix.style }}${{ matrix.rtl && '-rtl' || '' }}
+      BASE: ${{ needs.matrix.outputs.base }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: ${{ needs.matrix.outputs.base && '0' || '1' }}
 
       - name: Check out the reference screenshots
         if: env.UPDATE != 'true'
@@ -102,13 +142,17 @@ jobs:
       - name: Take every example in ${{ matrix.name }}
         working-directory: packages/web
         run: |
+          flags=(--project "$PROJECT")
+          if [ -n "$BASE" ]; then
+            flags+=(--changed "$BASE" --passWithNoTests)
+          fi
           if [ "$UPDATE" = "true" ]; then
-            pnpm exec vitest run --project "$PROJECT" --update
+            pnpm exec vitest run "${flags[@]}" --update
           elif [ ! -d "tests/screenshots/web/${{ matrix.base }}/$SCREENSHOTS" ]; then
             echo "::notice title=No reference screenshots::e-suiss/ui-baselines has no screenshots for ${{ matrix.name }} yet, so this run only checks that every example renders. Run the Visual workflow with update set to publish to add them."
-            pnpm exec vitest run --project "$PROJECT" --update
+            pnpm exec vitest run "${flags[@]}" --update
           else
-            pnpm exec vitest run --project "$PROJECT"
+            pnpm exec vitest run "${flags[@]}"
           fi
 
       - name: Upload the differences
