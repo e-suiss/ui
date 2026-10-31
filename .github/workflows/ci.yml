@@ -218,7 +218,7 @@ jobs:
           arch: x86_64
           profile: pixel_7
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
-          disable-animations: true
+          disable-animations: false
           working-directory: packages/mobile/kotlin
           script: ./gradlew --no-daemon :ui:connectedDebugAndroidTest
 
