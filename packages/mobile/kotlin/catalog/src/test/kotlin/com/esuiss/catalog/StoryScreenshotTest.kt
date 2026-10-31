@@ -1,6 +1,10 @@
 package com.esuiss.catalog
 
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.performSemanticsAction
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import org.junit.Rule
 import org.junit.Test
@@ -25,7 +29,18 @@ class StoryScreenshotTest(private val id: String, private val theme: ThemeMode) 
         compose.mainClock.autoAdvance = false
         compose.setContent { CatalogApp(state) }
         compose.mainClock.advanceTimeBy(2_000)
-        captureScreenRoboImage("$id-${theme.name.lowercase()}.png")
+        val name = "$id-${theme.name.lowercase()}"
+        captureScreenRoboImage("$name.png")
+        val story = compose.onAllNodesWithTag("story").fetchSemanticsNodes().singleOrNull() ?: return
+        val range = story.config[SemanticsProperties.VerticalScrollAxisRange]
+        val page = story.size.height.toFloat()
+        var number = 1
+        while (range.value() < range.maxValue()) {
+            number += 1
+            compose.onAllNodesWithTag("story")[0].performSemanticsAction(SemanticsActions.ScrollBy) { it(0f, page) }
+            compose.mainClock.advanceTimeBy(1_000)
+            captureScreenRoboImage("$name-$number.png")
+        }
     }
 
     companion object {
