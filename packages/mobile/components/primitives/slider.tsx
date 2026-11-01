@@ -341,10 +341,12 @@ function Root<Value extends SliderValue = SliderValue>({
   }, [])
 
   const setThumbSize = React.useCallback((size: Size) => {
+    const width = Math.round(size.width)
+    const height = Math.round(size.height)
     setThumbSizeState((previous) =>
-      previous.width === size.width && previous.height === size.height
+      previous.width === width && previous.height === height
         ? previous
-        : size
+        : { width, height }
     )
   }, [])
 
