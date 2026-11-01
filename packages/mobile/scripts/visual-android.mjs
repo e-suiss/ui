@@ -125,8 +125,9 @@ function ready() {
     if (dialog[1] !== BUNDLE) shell("am", "force-stop", dialog[1])
     return false
   }
-  pid ||= shell(`pidof ${BUNDLE} || true`).trim()
-  if (!pid) return false
+  const now = shell(`pidof ${BUNDLE} || true`).trim()
+  if (!now || (pid && now !== pid)) return false
+  pid = now
   const log = adb("logcat", "-d", `--pid=${pid}`, "-s", "ReactNativeJS:I")
   const states = [...log.matchAll(READY)]
   const last = states.at(-1)
