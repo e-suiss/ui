@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises"
+import { readdir, readFile } from "node:fs/promises"
 import path from "node:path"
 import { source } from "@/lib/source"
 
@@ -14,6 +14,25 @@ async function hookCount() {
     items: { type: string }[]
   }
   return items.filter((item) => item.type === "registry:hook").length
+}
+
+const packagesDir = path.join(process.cwd(), "../../packages")
+
+async function exampleCount(dir: string) {
+  const files = await readdir(path.join(packagesDir, dir))
+  return files.filter((file) => file.endsWith(".tsx")).length
+}
+
+export async function coverageCounts() {
+  const { items } = JSON.parse(
+    await readFile(path.join(packagesDir, "mobile/registry.json"), "utf8")
+  ) as { items: { swift?: string[]; kotlin?: string[] }[] }
+  return {
+    web: await exampleCount("web/examples"),
+    native: await exampleCount("mobile/examples"),
+    swift: items.filter((item) => item.swift?.length).length,
+    kotlin: items.filter((item) => item.kotlin?.length).length,
+  }
 }
 
 export async function pieceCounts(): Promise<PieceCounts> {

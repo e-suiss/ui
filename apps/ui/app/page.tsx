@@ -4,7 +4,8 @@ import type * as React from "react"
 import { Anchor } from "@/components/site/anchor"
 import { Bento } from "@/components/site/bento"
 import { InstallCommand } from "@/components/site/install-command"
-import { pieceCounts } from "@/lib/collections"
+import { ICON_LIBRARIES, STYLES } from "@/lib/code-options"
+import { coverageCounts, pieceCounts } from "@/lib/collections"
 import { site } from "@/lib/site"
 import { strings } from "@/lib/strings"
 import { cn } from "@/lib/utils"
@@ -224,6 +225,80 @@ function Library() {
   )
 }
 
+async function Coverage() {
+  const counts = await coverageCounts()
+  const format = (value: number) => value.toLocaleString("en-US")
+  const figures = [
+    {
+      value: "170,000+",
+      label: `Reference screenshots: every web state in ${STYLES.length} styles, light and dark, both text directions, and every mobile example`,
+    },
+    {
+      value: format(counts.web),
+      label: "Web examples to copy into Next.js and Vite apps",
+    },
+    {
+      value: "3",
+      label: "Primitive libraries to build on: Radix, Base UI and React Aria",
+    },
+    {
+      value: format(counts.native),
+      label: "React Native examples captured on two mobile platforms",
+    },
+    {
+      value: format(counts.swift),
+      label: "SwiftUI pieces to copy into your app",
+    },
+    {
+      value: format(counts.kotlin),
+      label: "Jetpack Compose pieces to copy into your app",
+    },
+    {
+      value: String(ICON_LIBRARIES.length),
+      label: "Icon libraries to choose from",
+    },
+    {
+      value: "150+",
+      label: "CI jobs that pass before any version ships",
+    },
+  ]
+  return (
+    <section className="pb-32 md:pb-48">
+      <div
+        className={cn(
+          frame,
+          "mb-12 grid gap-6 md:mb-16 md:grid-cols-[1fr_3fr]"
+        )}
+      >
+        <Label index="04">Coverage</Label>
+        <h2 className="text-[clamp(2.5rem,5vw,5rem)] leading-[0.92] font-semibold tracking-[-0.055em]">
+          Checked on every change.{" "}
+          <span className="text-muted-foreground">
+            On every platform, before it ships.
+          </span>
+        </h2>
+      </div>
+      <dl
+        className={cn(frame, "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4")}
+      >
+        {figures.map((figure) => (
+          <div
+            key={figure.label}
+            className="flex flex-col gap-3 border-t border-foreground/15 py-8 pr-6 md:py-10"
+          >
+            <dt className="order-2 max-w-xs text-[17px] leading-[1.4] tracking-[-0.02em] text-muted-foreground">
+              {figure.label}
+            </dt>
+            <dd className="order-1 text-[clamp(2.5rem,4.4vw,4.5rem)] leading-none font-semibold tracking-[-0.055em] tabular-nums">
+              {figure.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  )
+}
+
 export default function Home() {
   return (
     <main>
@@ -231,6 +306,7 @@ export default function Home() {
       <Manifesto />
       <Interface />
       <Library />
+      <Coverage />
     </main>
   )
 }
