@@ -1,0 +1,59 @@
+---
+title: MCP Server
+description: Let your AI coding assistant browse, search and add suiss/ui components and their examples through the registry MCP server.
+eyebrow: suiss/ui
+---
+
+## Overview
+
+The registry MCP server lets AI coding assistants such as Claude Code, Cursor, VS Code, Codex and OpenCode work with the `@esuiss` registry. Ask for a component in plain language and the assistant can list and search the registry, read the code of an item and its examples, and add it to your project with the registry CLI.
+
+Every item on this site is in the registry: components, patterns, interactions, charts, blocks, hooks and the theme. Every example on the docs pages is in the registry too, such as `button-with-icon` or `date-picker-locale`, so the assistant can see how an item is meant to be used before it writes code with it.
+
+## Requirements
+
+A React project with a `components.json` that lists the `@esuiss` registry. `npx @esuiss/ui@latest init` writes it for you. To add the registry yourself, add it under `registries`:
+
+```json title="components.json"
+{
+  "registries": {
+    "@esuiss": "https://suiss.app/ui/r/{style}/{name}.json"
+  }
+}
+```
+
+## Quick start
+
+Run this in your project and pick your client:
+
+```bash title="Terminal"
+npx shadcn@latest mcp init
+```
+
+Or name the client with `--client`:
+
+```bash title="Terminal"
+npx shadcn@latest mcp init --client claude
+```
+
+| Client | `--client` | Config file |
+| --- | --- | --- |
+| Claude Code | `claude` | `.mcp.json` |
+| Cursor | `cursor` | `.cursor/mcp.json` |
+| VS Code | `vscode` | `.vscode/mcp.json` |
+| Codex | `codex` | `.codex/config.toml` |
+| OpenCode | `opencode` | `opencode.json` |
+
+Then restart the client, or enable the server in its MCP settings.
+
+## Example prompts
+
+- Show me the components in the esuiss registry.
+- Find an esuiss example of a button with an icon.
+- Add the date picker from esuiss and use it in the booking form.
+- Build a settings page with blocks from the esuiss registry.
+
+## Limits
+
+- The server reads items in the suiss style on the Radix base, whatever `components.json` says. The files it adds still follow the style in `components.json`, because it adds them with the registry CLI.
+- The server works with React items. In React Native, SwiftUI and Compose projects, add items with [`@esuiss/ui`](/docs/cli).
