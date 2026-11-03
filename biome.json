@@ -15,6 +15,7 @@
       "!packages/mobile/uniwind-types.d.ts",
       "!packages/web/styles/vendor",
       "!packages/web/styles/generated",
+      "!packages/web/registry/**/examples.json",
       "!packages/web/registry/styles.json"
     ]
   },

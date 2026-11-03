@@ -3,6 +3,7 @@ import {
   copyFileSync,
   existsSync,
   mkdirSync,
+  readdirSync,
   readFileSync,
   symlinkSync,
   writeFileSync,
@@ -18,6 +19,10 @@ const SCRIPTS = [
   [
     "packages/web/scripts/build-registry.mjs",
     `${PACKAGE}/scripts/build-registry.mjs`,
+  ],
+  [
+    "packages/web/scripts/example-registry.mjs",
+    `${PACKAGE}/scripts/example-registry.mjs`,
   ],
   ["scripts/lib/registry.mjs", "scripts/lib/registry.mjs"],
 ]
@@ -614,6 +619,190 @@ import { Slot } from "radix-ui"
   })
 })
 
+describe("examples", () => {
+  const files = {
+    "components/ui/button.tsx": 'import { cn } from "@/lib/utils"',
+    "lib/utils.ts": 'export { cn } from "cn"',
+    "examples/button-demo.tsx":
+      'import { Button } from "@/components/ui/button"',
+    "examples/button-sizes.tsx": `import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+import { Button } from "@/components/ui/button"
+`,
+    "examples/button-chart.tsx": `import { Bar } from "recharts"
+import { Button } from "@/components/ui/button"
+`,
+    "bases/radix/files.json": JSON.stringify({
+      base: "radix",
+      files: ["examples/button-demo.tsx"],
+    }),
+    "bases/radix/examples/button-demo.tsx": `import { Slot } from "radix-ui"
+import { Button } from "@/components/ui/button"
+`,
+  }
+  const BUTTON_DOCS = `---
+title: Button
+description: "About button."
+---
+
+<ComponentPreview name="button-demo" />
+
+## Examples
+
+### Sizes
+
+<ComponentPreview name="button-sizes" />
+`
+
+  function exampleProject(extra = {}) {
+    const cwd = project({ ...files, ...extra })
+    writeFileSync(
+      path.join(cwd, "../../apps/ui/content/docs/components/button.mdx"),
+      BUTTON_DOCS
+    )
+    return cwd
+  }
+
+  const examplesOf = (cwd, base) =>
+    JSON.parse(
+      readFileSync(
+        path.join(cwd, "registry", base ?? "", "examples.json"),
+        "utf8"
+      )
+    )
+
+  const example = (cwd, name, base) =>
+    examplesOf(cwd, base).items.find((entry) => entry.name === name)
+
+  it("publishes every example apart from the registry the CLI reads", () => {
+    const cwd = exampleProject()
+    const result = build(cwd)
+    expect(result.code).toBe(0)
+    expect(result.stdout).toContain("registry/examples.json: 3 items")
+    expect(standardOf(cwd).items.map((entry) => entry.name)).toEqual([
+      "button",
+      "utils",
+      "theme-suiss",
+    ])
+    expect(example(cwd, "button-demo")).toEqual({
+      name: "button-demo",
+      type: "registry:example",
+      title: "Button Demo",
+      description: "Button example.",
+      registryDependencies: ["@esuiss/button"],
+      files: [{ path: "examples/button-demo.tsx", type: "registry:example" }],
+      meta: { links: { docs: "https://suiss.app/ui/docs/components/button" } },
+    })
+  })
+
+  it("describes an example by the docs heading above it", () => {
+    const cwd = exampleProject()
+    expect(build(cwd).code).toBe(0)
+    expect(example(cwd, "button-sizes").description).toBe(
+      "Button example: Sizes."
+    )
+    expect(example(cwd, "button-chart")).toMatchObject({
+      description: "Button Chart example.",
+      dependencies: ["react-is", "recharts"],
+    })
+    expect(example(cwd, "button-chart").meta).toBeUndefined()
+  })
+
+  it("takes twinned examples and their dependencies from the base", () => {
+    const cwd = exampleProject()
+    expect(build(cwd).code).toBe(0)
+    expect(example(cwd, "button-demo", "radix")).toMatchObject({
+      dependencies: ["radix-ui"],
+      files: [
+        {
+          path: "bases/radix/examples/button-demo.tsx",
+          type: "registry:example",
+        },
+      ],
+    })
+    expect(example(cwd, "button-sizes", "radix")).toEqual(
+      example(cwd, "button-sizes")
+    )
+  })
+
+  it("reports an example that requires an item that does not exist", () => {
+    const cwd = exampleProject({
+      "examples/card-demo.tsx": 'import { Card } from "@/components/ui/card"',
+    })
+    const result = build(cwd)
+    expect(result.code).toBe(1)
+    expect(result.stderr).toContain(
+      'example card-demo requires missing item "card"'
+    )
+  })
+
+  it("reports an example with the name of an item", () => {
+    const cwd = exampleProject({ "examples/button.tsx": "export {}" })
+    const result = build(cwd)
+    expect(result.code).toBe(1)
+    expect(result.stderr).toContain('example "button" has the name of an item')
+  })
+
+  it("checks that the examples are up to date", () => {
+    const cwd = exampleProject()
+    expect(build(cwd).code).toBe(0)
+    writeFileSync(
+      path.join(cwd, "examples/button-chart.tsx"),
+      'import { Button } from "@/components/ui/button"'
+    )
+    const stale = build(cwd, "--check")
+    expect(stale.code).toBe(1)
+    expect(stale.stderr).toContain("registry/examples.json")
+  })
+
+  it("adds the examples with their code to a built registry", () => {
+    const cwd = exampleProject()
+    expect(build(cwd).code).toBe(0)
+    const output = path.join(cwd, "out")
+    for (const base of ["base", "radix"]) {
+      const index = base === "base" ? "registry" : `registry/${base}`
+      mkdirSync(path.join(output, base), { recursive: true })
+      copyFileSync(
+        path.join(cwd, index, "registry.json"),
+        path.join(output, base, "registry.json")
+      )
+    }
+    const run = () =>
+      execFileSync(
+        "node",
+        [
+          path.join(cwd, "scripts/example-registry.mjs"),
+          output,
+          "base",
+          "radix",
+        ],
+        { cwd, encoding: "utf8", stdio: "pipe" }
+      )
+    expect(run()).toContain("radix: added 3 examples")
+    run()
+    const index = JSON.parse(
+      readFileSync(path.join(output, "radix/registry.json"), "utf8")
+    )
+    expect(index.items.map((entry) => entry.name)).toEqual([
+      "button",
+      "utils",
+      "theme-suiss",
+      "button-chart",
+      "button-demo",
+      "button-sizes",
+    ])
+    const item = JSON.parse(
+      readFileSync(path.join(output, "radix/button-demo.json"), "utf8")
+    )
+    expect(item.files).toEqual([
+      {
+        path: "bases/radix/examples/button-demo.tsx",
+        content: files["bases/radix/examples/button-demo.tsx"],
+        type: "registry:example",
+      },
+    ])
+  })
+})
+
 describe("the published registry", () => {
   const registry = registryOf(repo)
   const manifest = JSON.parse(
@@ -694,6 +883,24 @@ describe("the published registry", () => {
   it("points every item at a file that exists", () => {
     const missing = registry.items.flatMap((entry) =>
       entry.files.filter((file) => !existsSync(path.join(repo, file)))
+    )
+    expect(missing).toEqual([])
+  })
+
+  it("publishes every example with a file that exists", () => {
+    const examples = ["", "radix", "aria"].flatMap(
+      (base) =>
+        JSON.parse(
+          readFileSync(
+            path.join(repo, "registry", base, "examples.json"),
+            "utf8"
+          )
+        ).items
+    )
+    const sources = readdirSync(path.join(repo, "examples")).length
+    expect(examples).toHaveLength(sources * 3)
+    const missing = examples.flatMap((entry) =>
+      entry.files.filter((file) => !existsSync(path.join(repo, file.path)))
     )
     expect(missing).toEqual([])
   })

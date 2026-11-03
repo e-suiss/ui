@@ -33,6 +33,11 @@ const LOCAL_IMPORT =
   /^@\/(components\/ui|components\/patterns|components\/interactions|components\/charts|components\/blocks|hooks|lib)\/([\w-]+)$/
 const SOURCE_FILE = /\.(tsx?|jsx?)$/
 const FRONTMATTER = /^---\n([\s\S]*?)\n---/
+const EXAMPLE_OUTPUT = "examples.json"
+const EXAMPLES = { dir: "examples", type: "registry:example" }
+const PREVIEW = /<ComponentPreview\b[^>]*\bname="([\w-]+)"/
+const HEADING = /^#{2,4} (.+)$/
+const DOC_EXTENSION = /(?:\/index)?\.mdx$/
 
 function isInstalled(pkg) {
   try {
@@ -334,6 +339,108 @@ async function collectAll(base) {
   return entries
 }
 
+async function docFiles(dir) {
+  if (!existsSync(dir)) return []
+  const entries = await readdir(dir, { withFileTypes: true })
+  const nested = await Promise.all(
+    entries.map((entry) => {
+      const file = path.join(dir, entry.name)
+      if (entry.isDirectory()) return docFiles(file)
+      return entry.name.endsWith(".mdx") ? [file] : []
+    })
+  )
+  return nested.flat().sort()
+}
+
+async function examplePages() {
+  const pages = new Map()
+  for (const file of await docFiles(DOCS)) {
+    const text = await readFile(file, "utf8")
+    const title = frontmatterValue(text.match(FRONTMATTER)?.[1], "title")
+    const url = `/docs/${path
+      .relative(DOCS, file)
+      .split(path.sep)
+      .join("/")
+      .replace(DOC_EXTENSION, "")}`
+    let heading
+    for (const line of text.split("\n")) {
+      heading = line.match(HEADING)?.[1] ?? heading
+      const name = line.match(PREVIEW)?.[1]
+      if (name && !pages.has(name)) pages.set(name, { url, title, heading })
+    }
+  }
+  return pages
+}
+
+async function collectExamples(base) {
+  const dir = path.join(ROOT, EXAMPLES.dir)
+  if (!existsSync(dir)) return []
+  const files = (await readdir(dir)).filter((file) => SOURCE_FILE.test(file))
+  return Promise.all(files.sort().map((file) => collect(EXAMPLES, file, base)))
+}
+
+function exampleDescription(entry, page) {
+  if (!page?.title) return `${toTitle(entry.name)} example.`
+  return page.heading
+    ? `${page.title} example: ${page.heading}.`
+    : `${page.title} example.`
+}
+
+function toExample(entry, pages) {
+  const page = pages.get(entry.name)
+  const registryDependencies = entry.requires.map(
+    (name) => `${NAMESPACE}/${name}`
+  )
+  return {
+    name: entry.name,
+    type: EXAMPLES.type,
+    title: toTitle(entry.name),
+    description: exampleDescription(entry, page),
+    ...(entry.dependencies.length && { dependencies: entry.dependencies }),
+    ...(registryDependencies.length && { registryDependencies }),
+    files: [{ path: entry.path, type: EXAMPLES.type }],
+    ...(page && { meta: { links: { docs: `${SITE}${page.url}` } } }),
+  }
+}
+
+function toExampleRegistry(examples, pages) {
+  return {
+    $schema: `${SCHEMA_URL}/registry.json`,
+    name: "esuiss",
+    homepage: SITE,
+    items: examples.map((entry) => toExample(entry, pages)),
+  }
+}
+
+function asSchemaItems(registry) {
+  return {
+    ...registry,
+    items: registry.items.map((item) => ({
+      ...item,
+      type: "registry:component",
+      files: item.files.map((file) => ({
+        ...file,
+        type: "registry:component",
+      })),
+    })),
+  }
+}
+
+function validateExamples(examples, entries) {
+  const names = new Set(entries.map((entry) => entry.name))
+  return examples.flatMap((example) => [
+    ...(names.has(example.name)
+      ? [`example "${example.name}" has the name of an item`]
+      : []),
+    ...example.requires
+      .filter((required) => !names.has(required))
+      .map(
+        (required) =>
+          `example ${example.name} requires missing item "${required}"`
+      ),
+  ])
+}
+
 async function toRegistry(entries) {
   return {
     $schema: `${SCHEMA_URL}/registry.json`,
@@ -351,14 +458,21 @@ const legacy = {
   items: entries.map(toLegacy),
 }
 const registry = await toRegistry(entries)
+const pages = await examplePages()
+const examples = await collectExamples()
+const exampleRegistry = toExampleRegistry(examples, pages)
 const variants = await Promise.all(
   (await readBases()).map(async (base) => {
     const baseEntries = await collectAll(base)
+    const baseExamples = await collectExamples(base)
     return {
       name: base.name,
       file: path.join(ROOT, "registry", base.name, "registry.json"),
+      examplesFile: path.join(ROOT, "registry", base.name, EXAMPLE_OUTPUT),
       entries: baseEntries,
+      examples: baseExamples,
       registry: await toRegistry(baseEntries),
+      exampleRegistry: toExampleRegistry(baseExamples, pages),
     }
   })
 )
@@ -367,12 +481,18 @@ const checking = process.argv.includes("--check")
 const schema = process.argv.includes("--schema")
 const problems = [
   ...validate(entries, registry),
+  ...validateExamples(examples, entries),
   ...(schema ? await validateSchema(Ajv, registry) : []),
+  ...(schema ? await validateSchema(Ajv, asSchemaItems(exampleRegistry)) : []),
 ]
 for (const variant of variants) {
   const found = [
     ...validate(variant.entries, variant.registry),
+    ...validateExamples(variant.examples, variant.entries),
     ...(schema ? await validateSchema(Ajv, variant.registry) : []),
+    ...(schema
+      ? await validateSchema(Ajv, asSchemaItems(variant.exampleRegistry))
+      : []),
   ]
   problems.push(...found.map((problem) => `${variant.name}: ${problem}`))
 }
@@ -384,7 +504,11 @@ if (problems.length) {
 const outputs = [
   [OUTPUT, registry],
   [LEGACY_OUTPUT, legacy],
-  ...variants.map((variant) => [variant.file, variant.registry]),
+  [path.join(ROOT, "registry", EXAMPLE_OUTPUT), exampleRegistry],
+  ...variants.flatMap((variant) => [
+    [variant.file, variant.registry],
+    [variant.examplesFile, variant.exampleRegistry],
+  ]),
 ]
 
 if (checking) {
