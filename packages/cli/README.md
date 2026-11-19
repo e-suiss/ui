@@ -187,7 +187,7 @@ Your stylesheet holds the whole theme:
 .dark {
   --background: oklch(0 0 0);
   --foreground: oklch(0.9707 0.0026 286.29);
-  --primary: oklch(0.669 0.1808 251.84);
+  --primary: oklch(0.6243 0.2056 255.49);
   --primary-foreground: oklch(1 0 0);
 }
 

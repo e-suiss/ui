@@ -36,7 +36,7 @@ The variable names are the common theme variables used across Tailwind component
 .dark {
   --background: oklch(0 0 0);
   --foreground: oklch(0.9707 0.0026 286.29);
-  --primary: oklch(0.669 0.1808 251.84);
+  --primary: oklch(0.6243 0.2056 255.49);
   --primary-foreground: oklch(1 0 0);
 }
 
@@ -84,6 +84,8 @@ There is no separate variable per state. States use the same variables with an o
 | Tinted background | `bg-primary/10`, `bg-destructive/10` |
 | Keyboard focus | `focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50` |
 | Invalid | `aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20` |
+| Focused text field | `focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring` |
+| Invalid text field | `aria-invalid:border-[1.5px] aria-invalid:border-destructive aria-invalid:bg-destructive/5` |
 | Disabled | `disabled:opacity-50` or `data-disabled:opacity-50` |
 
 The `button` component uses them this way:
@@ -111,7 +113,7 @@ Values are from the default stylesheet.
 
 | Variable | Used for | Light | Dark |
 | --- | --- | --- | --- |
-| `primary` | The brand color: default buttons, checked controls, links | `oklch(0.5629 0.1933 256.16)` | `oklch(0.669 0.1808 251.84)` |
+| `primary` | The brand color: default buttons, checked controls, links | `oklch(0.5629 0.1933 256.16)` | `oklch(0.6243 0.2056 255.49)` |
 | `primary-foreground` | Text on `primary` | `oklch(1 0 0)` | `oklch(1 0 0)` |
 | `secondary` | Fills for secondary buttons, fields and tracks | `oklch(0 0 0 / 4%)` | `oklch(1 0 0 / 10%)` |
 | `secondary-foreground` | Text on `secondary` | `oklch(0.2316 0.0038 286.09)` | `oklch(0.9707 0.0026 286.29)` |
@@ -121,7 +123,7 @@ Values are from the default stylesheet.
 | Variable | Used for | Light | Dark |
 | --- | --- | --- | --- |
 | `muted` | Quiet backgrounds: filled cards, skeletons, grouped lists | `oklch(0.9707 0.0026 286.29)` | `oklch(0.2006 0.002 286.21)` |
-| `muted-foreground` | Secondary text, descriptions and placeholders | `oklch(0.5399 0.0077 286.13)` | `oklch(0.7105 0.0072 286.2)` |
+| `muted-foreground` | Secondary text, descriptions and placeholders | `oklch(0.5399 0.0077 286.13)` | `oklch(0.6217 0.0074 286.18)` |
 | `accent` | Hovered, highlighted and selected items | `oklch(0 0 0 / 6%)` | `oklch(1 0 0 / 10%)` |
 | `accent-foreground` | Text on `accent` | `oklch(0.2316 0.0038 286.09)` | `oklch(0.9707 0.0026 286.29)` |
 
@@ -129,10 +131,10 @@ Values are from the default stylesheet.
 
 | Variable | Used for | Light | Dark |
 | --- | --- | --- | --- |
-| `destructive` | Destructive actions and errors | `oklch(0.5329 0.2255 27.27)` | `oklch(0.7033 0.2236 28.29)` |
+| `destructive` | Destructive actions and errors | `oklch(0.6542 0.2321 28.66)` | `oklch(0.6633 0.2236 28.29)` |
 | `border` | Lines, dividers and borders | `oklch(0.8652 0.0068 286.24)` | `oklch(0.3802 0.005 286.15)` |
 | `input` | Stronger borders and the unchecked switch track | `oklch(0.6217 0.0074 286.17)` | `oklch(0.5399 0.0077 286.13)` |
-| `ring` | The keyboard focus outline | `oklch(0.5629 0.1933 256.16)` | `oklch(0.5629 0.1933 256.16)` |
+| `ring` | The keyboard focus outline | `oklch(0.5629 0.1933 256.16)` | `oklch(0.6243 0.2056 255.49)` |
 
 ### Charts
 
@@ -154,12 +156,12 @@ The `sidebar` component has its own set, so it can differ from the page.
 | --- | --- | --- |
 | `sidebar` | `oklch(0.9707 0.0026 286.29)` | `oklch(0.2006 0.002 286.21)` |
 | `sidebar-foreground` | `oklch(0.2316 0.0038 286.09)` | `oklch(0.9707 0.0026 286.29)` |
-| `sidebar-primary` | `oklch(0.5629 0.1933 256.16)` | `oklch(0.669 0.1808 251.84)` |
+| `sidebar-primary` | `oklch(0.5629 0.1933 256.16)` | `oklch(0.6243 0.2056 255.49)` |
 | `sidebar-primary-foreground` | `oklch(1 0 0)` | `oklch(1 0 0)` |
 | `sidebar-accent` | `oklch(0 0 0 / 6%)` | `oklch(1 0 0 / 10%)` |
 | `sidebar-accent-foreground` | `oklch(0.2316 0.0038 286.09)` | `oklch(0.9707 0.0026 286.29)` |
 | `sidebar-border` | `oklch(0.8652 0.0068 286.24)` | `oklch(0.3802 0.005 286.15)` |
-| `sidebar-ring` | `oklch(0.5629 0.1933 256.16)` | `oklch(0.5629 0.1933 256.16)` |
+| `sidebar-ring` | `oklch(0.5629 0.1933 256.16)` | `oklch(0.6243 0.2056 255.49)` |
 
 ### Status and other colors
 
@@ -187,7 +189,7 @@ Text sizes and shadows are the Tailwind defaults on every platform: `xs` is 12 p
 | SwiftUI | `.textStyle(.sm)` | `.shadow(.md)` |
 | Compose | `EsuissTheme.typography.sm` | `Modifier.shadow(EsuissTheme.shadows.md, shape)` |
 
-Focused fields in Uniwind and NativeWind draw the same `border-ring ring-3 ring-ring/50` ring as the web. SwiftUI and Compose keep the system focus.
+Focused fields in Uniwind and NativeWind draw a `border-ring ring-3 ring-ring/50` ring. SwiftUI and Compose keep the system focus.
 
 ### Styles
 
