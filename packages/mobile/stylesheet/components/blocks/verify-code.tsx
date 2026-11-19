@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.xl,
     borderWidth: 1,
     backgroundColor: "transparent",
+    boxShadow: [],
   },
   hint: { ...fontSize.sm, marginTop: 14, minHeight: 20 },
   links: { marginTop: 24, alignItems: "center", gap: 10 },

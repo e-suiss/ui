@@ -363,6 +363,9 @@ val DuotoneIcons.Palette: ImageVector
 val DuotoneIcons.PaperPlaneTilt: ImageVector
   get() = iconVector("PaperPlaneTilt", IconData.PaperPlaneTilt, IconWeight.Duotone)
 
+val DuotoneIcons.Paperclip: ImageVector
+  get() = iconVector("Paperclip", IconData.Paperclip, IconWeight.Duotone)
+
 val DuotoneIcons.Path: ImageVector
   get() = iconVector("Path", IconData.Path, IconWeight.Duotone)
 

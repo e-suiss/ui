@@ -394,7 +394,7 @@ function UsersDetail({
                             }))
                           }}
                           accessibilityLabel="Role"
-                          className="bg-transparent px-1"
+                          className="border-transparent bg-transparent px-1 dark:bg-transparent"
                         >
                           {ROLES.map((item) => (
                             <PickerItem key={item} value={item}>

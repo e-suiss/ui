@@ -1,7 +1,6 @@
 package com.esuiss.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -58,9 +57,10 @@ import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
-enum class SelectSize(val height: Dp, val radius: Dp) {
-    Default(Metrics.Height.input, Metrics.Radius.input),
-    Sm(36.dp, Radius.md),
+enum class SelectSize(val height: Dp, val radius: Dp, val horizontalPadding: Dp) {
+    Default(Metrics.Height.input, Metrics.Radius.input, 12.dp),
+    Sm(36.dp, Radius.md, 12.dp),
+    Lg(54.dp, Metrics.Radius.input, 16.dp),
 }
 
 @Immutable
@@ -73,8 +73,7 @@ private val LocalSelect = staticCompositionLocalOf { SelectContext(null) {} }
 
 private val LocalSelectLabels = staticCompositionLocalOf<SnapshotStateMap<String, String>?> { null }
 
-internal fun controlBackground(colors: Colors, invalid: Boolean): Color =
-    if (invalid) colors.destructive.copy(alpha = if (colors.isDark) 0.1f else 0.05f) else colors.secondary
+internal fun controlBackground(colors: Colors, invalid: Boolean): Color = formFieldBackground(colors, invalid)
 
 @Composable
 fun Select(
@@ -151,8 +150,7 @@ fun Select(
                 .height(size.height)
                 .alpha(if (isEnabled) 1f else 0.5f)
                 .clip(shape)
-                .background(controlBackground(colors, isInvalid), shape)
-                .border(1.dp, if (isInvalid) colors.destructive else Color.Transparent, shape)
+                .formFieldSurface(colors, shape, expanded, isInvalid, LocalFieldInset.current)
                 .semantics { stateDescription = if (expanded) "Expanded" else "Collapsed" }
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
@@ -161,14 +159,14 @@ fun Select(
                     role = Role.DropdownList,
                     onClick = { expanded = !expanded },
                 )
-                .padding(horizontal = 12.dp),
+                .padding(horizontal = size.horizontalPadding),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             BasicText(
                 text ?: placeholder,
                 modifier = Modifier.weight(1f),
-                style = Typography.base.copy(color = foreground),
+                style = (if (size == SelectSize.Lg) FormTextLg else Typography.base).copy(color = foreground),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )

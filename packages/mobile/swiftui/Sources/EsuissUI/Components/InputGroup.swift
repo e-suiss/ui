@@ -8,7 +8,24 @@ public enum InputGroupAddonAlign: CaseIterable, Sendable, Hashable {
   }
 }
 
+public enum InputGroupSize: CaseIterable, Sendable {
+  case `default`, lg
+
+  var height: CGFloat {
+    self == .lg ? InputMetrics.largeHeight : Metrics.Height.input
+  }
+
+  var padding: CGFloat {
+    self == .lg ? InputMetrics.largePadding : 12
+  }
+
+  var textStyle: TextStyle {
+    self == .lg ? .fieldLarge : .base
+  }
+}
+
 struct InputGroupContext: Sendable {
+  var size = InputGroupSize.default
   var focusRequest = 0
   var addons: Set<InputGroupAddonAlign> = []
   var requestFocus: @MainActor @Sendable () -> Void = {}
@@ -60,17 +77,18 @@ struct InputGroupSlotKey: LayoutValueKey {
 }
 
 public struct InputGroup<Content: View>: View {
+  public typealias Size = InputGroupSize
+
+  let size: Size
   let content: Content
 
   @State private var focusRequest = 0
   @State private var addons: Set<InputGroupAddonAlign> = []
   @State private var focused = false
   @State private var multiline = false
-  @Environment(\.isEnabled) private var isEnabled
-  @Environment(\.isInvalid) private var invalid
-  @Environment(\.colorScheme) private var colorScheme
 
-  public init(@ViewBuilder content: () -> Content) {
+  public init(size: Size = .default, @ViewBuilder content: () -> Content) {
+    self.size = size
     self.content = content()
   }
 
@@ -81,10 +99,11 @@ public struct InputGroup<Content: View>: View {
       InputGroupLayout {
         content
       }
-      .frame(maxWidth: .infinity, minHeight: Metrics.Height.input)
+      .frame(maxWidth: .infinity, minHeight: size.height)
       .environment(
         \.inputGroup,
         InputGroupContext(
+          size: size,
           focusRequest: focusRequest,
           addons: addons,
           requestFocus: { request.wrappedValue += 1 }
@@ -93,23 +112,10 @@ public struct InputGroup<Content: View>: View {
       .onPreferenceChange(InputGroupAddonsKey.self) { addons = $0 }
       .onPreferenceChange(InputGroupFocusedKey.self) { focused = $0 }
       .onPreferenceChange(InputGroupMultilineKey.self) { multiline = $0 }
-      .background(background, in: shape)
-      .overlay {
-        shape.strokeBorder(border, lineWidth: 1)
-      }
+      .fieldSurface(shape, focused: focused)
       .contentShape(shape)
     }
     .accessibilityElement(children: .contain)
-  }
-
-  private var background: Color {
-    if invalid { return EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) }
-    return EsuissColor.secondary
-  }
-
-  private var border: Color {
-    if invalid { return EsuissColor.destructive }
-    return focused ? EsuissColor.ring : .clear
   }
 }
 
@@ -227,7 +233,7 @@ public struct InputGroupAddon<Content: View>: View {
       content
     }
     .labelStyle(ButtonLabelStyle(spacing: 8, iconSize: 16))
-    .scaledFont(.base)
+    .scaledFont(size.textStyle)
     .foregroundStyle(EsuissColor.mutedForeground)
     .opacity(isEnabled ? 1 : 0.5)
     .lineLimit(1)
@@ -245,9 +251,11 @@ public struct InputGroupAddon<Content: View>: View {
     .layoutValue(key: InputGroupSlotKey.self, value: .addon(align))
   }
 
+  private var size: InputGroupSize { group?.size ?? .default }
+
   private var leading: CGFloat {
     switch align {
-    case .inlineStart: hasButton ? 8 : 12
+    case .inlineStart: hasButton ? size.padding - 4 : size.padding
     case .inlineEnd: 0
     case .blockStart, .blockEnd: 12
     }
@@ -255,7 +263,7 @@ public struct InputGroupAddon<Content: View>: View {
 
   private var trailing: CGFloat {
     switch align {
-    case .inlineEnd: hasButton ? 8 : 12
+    case .inlineEnd: hasButton ? (size == .lg ? 9 : 8) : size.padding
     case .inlineStart: 0
     case .blockStart, .blockEnd: 12
     }
@@ -263,7 +271,7 @@ public struct InputGroupAddon<Content: View>: View {
 }
 
 public enum InputGroupButtonSize: CaseIterable, Sendable {
-  case xs, sm, iconXs, iconSm
+  case xs, sm, iconXs, iconSm, icon
 }
 
 public struct InputGroupButton<Label: View>: View {
@@ -304,6 +312,8 @@ public struct InputGroupButton<Label: View>: View {
       VariantButtonStyle(variant, size: .iconXs, metrics: ButtonMetrics(horizontalPadding: 0, spacing: 4, iconSize: 14, textStyle: .sm))
     case .iconSm:
       VariantButtonStyle(variant, size: .iconSm)
+    case .icon:
+      VariantButtonStyle(variant, size: .icon, metrics: ButtonMetrics(horizontalPadding: 0, spacing: 6, iconSize: 16, textStyle: .sm, height: 36, radius: 18))
     }
   }
 }
@@ -322,6 +332,8 @@ extension InputGroupButton where Label == Text {
 public struct InputGroupText<Content: View>: View {
   let content: Content
 
+  @Environment(\.inputGroup) private var group
+
   public init(@ViewBuilder content: () -> Content) {
     self.content = content()
   }
@@ -331,7 +343,7 @@ public struct InputGroupText<Content: View>: View {
       content
     }
     .labelStyle(ButtonLabelStyle(spacing: 8, iconSize: 16))
-    .scaledFont(.base)
+    .scaledFont((group?.size ?? .default).textStyle)
     .foregroundStyle(EsuissColor.mutedForeground)
   }
 }
@@ -360,15 +372,16 @@ public struct InputGroupInput: View {
 
   public var body: some View {
     let addons = group?.addons ?? []
+    let size = group?.size ?? .default
     TextField(title, text: text)
       .textFieldStyle(.plain)
-      .scaledFont(.base)
+      .scaledFont(size.textStyle)
       .foregroundStyle(EsuissColor.foreground)
       .tint(EsuissColor.primary)
       .opacity(isEnabled ? 1 : 0.5)
-      .padding(.leading, addons.contains(.inlineStart) ? 6 : 12)
-      .padding(.trailing, addons.contains(.inlineEnd) ? 6 : 12)
-      .frame(maxWidth: .infinity, minHeight: Metrics.Height.input)
+      .padding(.leading, addons.contains(.inlineStart) ? 6 : size.padding)
+      .padding(.trailing, addons.contains(.inlineEnd) ? 6 : size.padding)
+      .frame(maxWidth: .infinity, minHeight: size.height)
       .modifier(InputGroupFocus(request: group?.focusRequest ?? 0))
       .layoutValue(key: InputGroupSlotKey.self, value: .control)
   }
@@ -389,15 +402,16 @@ public struct InputGroupTextarea: View {
   }
 
   public var body: some View {
+    let size = group?.size ?? .default
     TextField(title, text: text, axis: .vertical)
       .textFieldStyle(.plain)
       .lineLimit(lineLimit)
-      .scaledFont(.base)
+      .scaledFont(size.textStyle)
       .foregroundStyle(EsuissColor.foreground)
       .tint(EsuissColor.primary)
       .opacity(isEnabled ? 1 : 0.5)
-      .padding(.horizontal, 12)
-      .padding(.vertical, 10)
+      .padding(.horizontal, size.padding)
+      .padding(.vertical, size == .lg ? InputMetrics.largeVerticalPadding : 10)
       .frame(maxWidth: .infinity, alignment: .topLeading)
       .modifier(InputGroupFocus(request: group?.focusRequest ?? 0))
       .preference(key: InputGroupMultilineKey.self, value: true)

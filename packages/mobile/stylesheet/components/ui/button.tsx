@@ -33,6 +33,7 @@ type ButtonSize =
   | "sm"
   | "lg"
   | "xl"
+  | "form"
   | "icon"
   | "icon-xs"
   | "icon-sm"
@@ -61,6 +62,7 @@ const sizes = StyleSheet.create({
     paddingHorizontal: metrics.paddingX.buttonLg,
   },
   xl: { height: 56, gap: 8, paddingHorizontal: 31 },
+  form: { height: 50, gap: 6, paddingHorizontal: 24 },
   icon: { width: metrics.height.button, height: metrics.height.button },
   "icon-xs": {
     width: metrics.height.buttonXs,
@@ -83,6 +85,7 @@ const blockRadius: Partial<Record<ButtonSize, number>> = {
   default: radius.md,
   lg: radius.lg,
   xl: radius.xl,
+  form: radius.xl,
 }
 
 const styles = StyleSheet.create({
@@ -157,6 +160,14 @@ function buttonTextStyle(
   let scale: TextStyle =
     size === "lg" || size === "xl" ? fontSize.base : fontSize.sm
   if (size === "xs") scale = fontSize.xs
+  if (size === "form") {
+    return {
+      ...scale,
+      fontSize: 15,
+      fontWeight: "600",
+      color: buttonTextColor(variant, colors),
+    }
+  }
   return {
     ...scale,
     fontWeight: metrics.fontWeight.button,

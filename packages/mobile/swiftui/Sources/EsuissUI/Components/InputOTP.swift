@@ -114,7 +114,6 @@ public struct InputOTPSlot: View {
   @Environment(\.inputOTPTone) private var tone
   @Environment(\.isEnabled) private var isEnabled
   @Environment(\.isInvalid) private var invalid
-  @Environment(\.colorScheme) private var colorScheme
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
   @ScaledMetric(relativeTo: .title2) private var scale: CGFloat = 1
 
@@ -123,7 +122,7 @@ public struct InputOTPSlot: View {
   }
 
   public var body: some View {
-    let shape = RoundedRectangle(cornerRadius: Radius.lg, style: .continuous)
+    let shape = RoundedRectangle(cornerRadius: Metrics.Radius.input, style: .continuous)
     let character = index < context.characters.count ? context.characters[index] : nil
     let active = isEnabled && context.focused
       && index == min(context.characters.count, context.length - 1)
@@ -140,10 +139,7 @@ public struct InputOTPSlot: View {
       }
     }
     .frame(width: 44 * scale, height: 52 * scale)
-    .background(background, in: shape)
-    .overlay {
-      shape.strokeBorder(border(active: active), lineWidth: 1.5)
-    }
+    .modifier(InputOTPSlotSurface(shape: shape, active: active, verified: tone.verified))
     .opacity((tone.dimmed ? 0.6 : 1) * (isEnabled ? 1 : 0.5))
     .animation(.easeInOut(duration: 0.3), value: tone)
     .animation(.easeInOut(duration: 0.3), value: invalid)
@@ -165,17 +161,21 @@ public struct InputOTPSlot: View {
     return EsuissColor.foreground
   }
 
-  private var background: Color {
-    if tone.verified { return Color.adaptive(light: Palette.green500.opacity(0.1), dark: Palette.green500.opacity(0.2)) }
-    if invalid { return EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) }
-    return EsuissColor.secondary
-  }
+}
 
-  private func border(active: Bool) -> Color {
-    if !isEnabled { return .clear }
-    if tone.verified { return Palette.green500 }
-    if invalid { return EsuissColor.destructive }
-    return active ? EsuissColor.primary : .clear
+private struct InputOTPSlotSurface: ViewModifier {
+  let shape: RoundedRectangle
+  let active: Bool
+  let verified: Bool
+
+  func body(content: Content) -> some View {
+    if verified {
+      content
+        .background(Color.adaptive(light: Palette.green500.opacity(0.1), dark: Palette.green500.opacity(0.2)), in: shape)
+        .overlay { shape.strokeBorder(Palette.green500, lineWidth: 1.5) }
+    } else {
+      content.fieldSurface(shape, focused: active)
+    }
   }
 }
 

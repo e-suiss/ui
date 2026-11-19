@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.xl,
     borderWidth: 1,
     backgroundColor: "transparent",
+    boxShadow: [],
   },
   waiting: { flexDirection: "row", alignItems: "center", gap: 10 },
   panel: {

@@ -514,6 +514,7 @@ function SettingsNotifications() {
                       onValueChange={row.onChange}
                       accessibilityLabel={row.label}
                       style={{
+                        borderColor: "transparent",
                         backgroundColor: "transparent",
                         paddingHorizontal: 4,
                       }}

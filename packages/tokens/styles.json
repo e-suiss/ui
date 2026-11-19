@@ -2,7 +2,7 @@
   "suiss": {
     "radius": {
       "button": 9999,
-      "input": 10,
+      "input": 12,
       "textarea": 12,
       "card": 18,
       "dialog": 18,

@@ -413,17 +413,23 @@ import SwiftUI
 
 struct TextareaDemo: View {
   let placeholder: LocalizedStringKey
+  let size: TextareaStyle.Size
 
   @State private var text: String
 
-  init(initial: String = "", placeholder: LocalizedStringKey = "Type your message here.") {
+  init(
+    initial: String = "",
+    placeholder: LocalizedStringKey = "Type your message here.",
+    size: TextareaStyle.Size = .default
+  ) {
     self.placeholder = placeholder
+    self.size = size
     _text = State(initialValue: initial)
   }
 
   var body: some View {
     TextField(placeholder, text: $text, axis: .vertical)
-      .textFieldStyle(.textarea)
+      .textFieldStyle(.textarea(size: size))
       .frame(maxWidth: .infinity)
   }
 }
@@ -480,6 +486,12 @@ A textarea inside a `Field`, which gives it the field's label and description.
 
 <NativeExample name="textarea-with-label" />
 
+### Large
+
+The `lg` size, with more padding and 17 point text to match `lg` inputs.
+
+<NativeExample name="textarea-large" />
+
 ### Disabled
 
 A disabled textarea that can't be edited.
@@ -510,9 +522,13 @@ A textarea inside an invalid `Field`, which gives it a destructive border and an
 
 The multi-line text field.
 
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"default" \| "lg"` | `"default"` |
+
 Also accepts the props of `React.ComponentProps<typeof InputPrimitive.Root>`.
 
-The value works controlled with `value` and `onValueChange(value, details)`, or uncontrolled with `defaultValue`. Inside a `Field`, the textarea picks up the field's label, description, invalid and disabled state. Override `numberOfLines` or set a height through `className` to change the visible size. In Uniwind and NativeWind, a focused field also draws the `ring-3 ring-ring/50` focus ring.
+The value works controlled with `value` and `onValueChange(value, details)`, or uncontrolled with `defaultValue`. Inside a `Field`, the textarea picks up the field's label, description, invalid and disabled state. Override `numberOfLines` or set a height through `className` to change the visible size. `size="lg"` starts at 54 tall with 16 point side padding and 17 point text. Focus turns the `border` outline to `ring` with a solid ring.
 
 </Only>
 
@@ -522,11 +538,17 @@ The value works controlled with `value` and `onValueChange(value, details)`, or 
 
 Style that creates `TextareaStyle`.
 
-Takes no parameters.
+| Parameter | Type | Default |
+| --- | --- | --- |
+| `size` | `TextareaStyle.Size`: `.default` \| `.lg` | `.default` |
 
 </Only>
 
 <Only platform="kotlin">
+
+### TextareaSize
+
+Values: `Default`, `Lg`.
 
 ### Textarea
 
@@ -537,6 +559,7 @@ The multi-line text field.
 | `value` | `String` | - |
 | `onValueChange` | `(String) -> Unit` | - |
 | `modifier` | `Modifier` | `Modifier` |
+| `size` | `TextareaSize`: `Default` \| `Lg` | `TextareaSize.Default` |
 | `enabled` | `Boolean` | `LocalFieldState.current.enabled` |
 | `readOnly` | `Boolean` | `false` |
 | `invalid` | `Boolean` | `LocalFieldState.current.invalid` |

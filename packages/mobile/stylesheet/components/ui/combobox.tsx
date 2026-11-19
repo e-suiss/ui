@@ -18,7 +18,19 @@ import { AnimatedView } from "@/components/ui/animated-view"
 import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
 import { Text, TextStyleContext } from "@/components/ui/text"
-import { fontSize, radius, shadow, useTheme } from "@/components/ui/theme"
+import {
+  fontSize,
+  metrics,
+  radius,
+  shadow,
+  useTheme,
+} from "@/components/ui/theme"
+
+function ring(color: string) {
+  return {
+    boxShadow: [{ offsetX: 0, offsetY: 0, spreadDistance: 1, color }],
+  }
+}
 
 function withAlpha(color: string, alpha: number) {
   if (!color.startsWith("#") || color.length !== 7) return color
@@ -52,13 +64,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
-    borderRadius: radius.lg,
+    borderRadius: metrics.radius.input,
     borderWidth: 1,
-    borderColor: "transparent",
     paddingRight: 8,
   },
   inputGroupInPopup: {
     width: "auto",
+    borderRadius: radius.lg,
     height: 32,
     margin: 6,
     marginBottom: 0,
@@ -122,12 +134,12 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     alignItems: "center",
     gap: 6,
-    borderRadius: radius.lg,
+    borderRadius: metrics.radius.input,
     borderWidth: 1,
-    borderColor: "transparent",
     paddingHorizontal: 12,
     paddingVertical: 6,
   },
+  invalid: { borderWidth: 1.5 },
   chipsFilled: { paddingHorizontal: 6 },
   chip: {
     height: 22,
@@ -230,12 +242,22 @@ function ComboboxInput({
     <ComboboxPrimitive.InputGroup
       style={[
         styles.inputGroup,
-        { backgroundColor: colors.secondary },
-        isInvalid && {
-          borderColor: colors.destructive,
-          backgroundColor: `${colors.destructive}${isDark ? "1a" : "0d"}`,
+        {
+          backgroundColor: isDark
+            ? `${colors.foreground}0f`
+            : colors.background,
+          borderColor: colors.border,
         },
-        focused && !inPopup && { borderColor: colors.ring },
+        focused &&
+          !inPopup && { borderColor: colors.ring, ...ring(colors.ring) },
+        isInvalid && [
+          styles.invalid,
+          {
+            borderColor: colors.destructive,
+            backgroundColor: `${colors.destructive}${isDark ? "1a" : "0d"}`,
+          },
+          focused && !inPopup && ring(colors.destructive),
+        ],
         inPopup && [
           styles.inputGroupInPopup,
           { borderColor: `${colors.border}4d` },
@@ -465,12 +487,20 @@ function ComboboxChips({
     <ComboboxPrimitive.Chips
       style={(state) => [
         styles.chips,
-        { backgroundColor: colors.secondary },
-        hasValue && styles.chipsFilled,
-        isInvalid && {
-          borderColor: colors.destructive,
-          backgroundColor: `${colors.destructive}${isDark ? "1a" : "0d"}`,
+        {
+          backgroundColor: isDark
+            ? `${colors.foreground}0f`
+            : colors.background,
+          borderColor: colors.border,
         },
+        hasValue && styles.chipsFilled,
+        isInvalid && [
+          styles.invalid,
+          {
+            borderColor: colors.destructive,
+            backgroundColor: `${colors.destructive}${isDark ? "1a" : "0d"}`,
+          },
+        ],
         disabled && { opacity: 0.5 },
         resolveStyle(style, state) as StyleProp<ViewStyle>,
       ]}

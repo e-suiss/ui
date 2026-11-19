@@ -223,6 +223,12 @@ function useFieldRootContext() {
   return React.useContext(RootContext) ?? FALLBACK_CONTEXT
 }
 
+const InsetContext = React.createContext(false)
+
+function useInsetContext() {
+  return React.useContext(InsetContext)
+}
+
 function getText(node: React.ReactNode): string {
   if (node == null || typeof node === "boolean") return ""
   if (typeof node === "string" || typeof node === "number") return String(node)
@@ -855,8 +861,10 @@ export {
   Control,
   Description,
   ErrorPart as Error,
+  InsetContext,
   Label,
   Root,
   useFieldRootContext,
+  useInsetContext,
   Validity,
 }

@@ -94,9 +94,9 @@ function DatePicker({
         accessibilityLabel={accessibilityLabel}
         accessibilityLabelledBy={accessibilityLabelledBy}
         className={cn(
-          "h-11 flex-row items-center gap-2 self-start rounded-lg border border-transparent bg-secondary px-3",
+          "h-11 flex-row items-center gap-2 self-start rounded-input border border-border bg-background px-3 dark:bg-foreground-6",
           invalid &&
-            "border-destructive bg-destructive-5 dark:bg-destructive-10",
+            "border-[1.5px] border-destructive bg-destructive-5 dark:bg-destructive-10",
           disabled && "opacity-50",
           className
         )}

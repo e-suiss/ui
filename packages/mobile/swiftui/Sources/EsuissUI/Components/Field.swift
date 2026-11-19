@@ -3,6 +3,7 @@ import SwiftUI
 extension EnvironmentValues {
   @Entry public var isInvalid = false
   @Entry var fieldInset = false
+  @Entry var fieldSize = FieldSize.default
   @Entry var fieldGroupInset = false
   @Entry var fieldSetInset = false
 }
@@ -17,8 +18,19 @@ public enum FieldOrientation: CaseIterable, Sendable {
   case vertical, horizontal
 }
 
+public enum FieldSize: CaseIterable, Sendable {
+  case `default`, lg
+
+  var spacing: CGFloat {
+    self == .lg ? 8 : 12
+  }
+}
+
 public struct Field<Content: View>: View {
+  public typealias Size = FieldSize
+
   let orientation: FieldOrientation
+  let size: Size
   let invalid: Bool?
   let content: Content
 
@@ -27,10 +39,12 @@ public struct Field<Content: View>: View {
 
   public init(
     orientation: FieldOrientation = .vertical,
+    size: Size = .default,
     invalid: Bool? = nil,
     @ViewBuilder content: () -> Content
   ) {
     self.orientation = orientation
+    self.size = size
     self.invalid = invalid
     self.content = content()
   }
@@ -39,9 +53,9 @@ public struct Field<Content: View>: View {
     Group {
       switch orientation {
       case .vertical:
-        VStack(alignment: .leading, spacing: 12) { content }
+        VStack(alignment: .leading, spacing: size.spacing) { content }
       case .horizontal:
-        HStack(alignment: .center, spacing: 12) { content }
+        HStack(alignment: .center, spacing: size.spacing) { content }
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
@@ -57,6 +71,7 @@ public struct Field<Content: View>: View {
       }
     }
     .environment(\.fieldInset, inset)
+    .environment(\.fieldSize, size)
     .environment(\.fieldGroupInset, false)
     .environment(\.isInvalid, invalid ?? inheritedInvalid)
   }

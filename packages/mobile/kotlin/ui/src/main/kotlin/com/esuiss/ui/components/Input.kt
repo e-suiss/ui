@@ -38,6 +38,7 @@ enum class InputSize(
     Default(Metrics.Height.input, Metrics.PaddingX.input, Metrics.Radius.input),
     Md(36.dp, 12.dp, Radius.lg),
     Sm(32.dp, 10.dp, Radius.md),
+    Lg(54.dp, 16.dp, Metrics.Radius.input),
 }
 
 @Composable
@@ -60,8 +61,12 @@ fun Input(
     val focused by source.collectIsFocusedAsState()
     val group = LocalButtonGroup.current
     val item = rememberButtonGroupItem(group, RoundedCornerShape(size.radius))
-    val textStyle = (if (size == InputSize.Default) Typography.base else Typography.sm)
-        .copy(color = colors.foreground)
+    val inset = LocalFieldInset.current
+    val textStyle = when (size) {
+        InputSize.Default -> Typography.base
+        InputSize.Lg -> FormTextLg
+        else -> Typography.sm
+    }.copy(color = colors.foreground)
     CompositionLocalProvider(LocalTextSelectionColors provides formSelectionColors(colors)) {
         BasicTextField(
             value = value,
@@ -71,7 +76,7 @@ fun Input(
                 .then(item.modifier)
                 .fillMaxWidth()
                 .height(size.height)
-                .formInputSurface(colors, item.shape, focused, invalid, enabled)
+                .formInputSurface(colors, item.shape, focused, invalid, enabled, inset)
                 .then(if (invalid) Modifier.semantics { error("Invalid") } else Modifier),
             enabled = enabled,
             readOnly = readOnly,

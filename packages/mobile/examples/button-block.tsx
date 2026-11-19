@@ -8,6 +8,9 @@ export default function ButtonBlock() {
       <Button block size="lg">
         <Text>Continue</Text>
       </Button>
+      <Button block size="form">
+        <Text>Continue</Text>
+      </Button>
       <Button block size="lg" variant="secondary">
         <Text>Not now</Text>
       </Button>

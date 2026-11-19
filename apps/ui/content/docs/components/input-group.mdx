@@ -226,7 +226,7 @@ Also accepts the props of `React.ComponentProps<"textarea">`.
 
 <Only platform="rn">
 
-`InputGroup` draws one `bg-secondary` field and places an `InputGroupInput` or `InputGroupTextarea` inside it with addons around. Addons can sit on the start or end of the same line (`inline-start`, `inline-end`), or above or below the input (`block-start`, `block-end`), which turns the group into a column.
+`InputGroup` draws one outlined field and places an `InputGroupInput` or `InputGroupTextarea` inside it with addons around. Addons can sit on the start or end of the same line (`inline-start`, `inline-end`), or above or below the input (`block-start`, `block-end`), which turns the group into a column.
 
 </Only>
 
@@ -441,6 +441,8 @@ npx expo install class-variance-authority cn
 <ComponentSource path="swift/Components/Field.swift" />
 
 <ComponentSource path="swift/Components/Haptics.swift" />
+
+<ComponentSource path="swift/Components/Input.swift" />
 
 <ComponentSource path="swift/Components/Separator.swift" />
 
@@ -776,6 +778,7 @@ struct InputGroupDefaultDemo: View {
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -783,6 +786,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import com.adamglin.PhosphorIcons
@@ -873,6 +877,18 @@ Use a `block-end` addon with `InputGroupTextarea` for a footer row, here holding
 
 <NativeExample name="input-group-with-textarea" />
 
+### Button sizes
+
+The `xs`, `icon-xs`, `icon-sm` and `icon` button sizes in one addon.
+
+<NativeExample name="input-group-button-sizes" />
+
+### Large
+
+The `lg` group for forms such as sign-in screens, with a country code before the number and a round `icon` button that submits it.
+
+<NativeExample name="input-group-large" />
+
 ### Block start
 
 A label addon above the input with `block-start`.
@@ -899,12 +915,13 @@ Field container that lays out the input and addons.
 
 | Prop | Type | Default |
 | --- | --- | --- |
+| `size` | `"default" \| "lg"` | `"default"` |
 | `disabled` | `boolean` | `false` |
 | `invalid` | `boolean` | - |
 
 Also accepts the props of `ViewProps`.
 
-Set `invalid` to show the destructive border and tint, or `disabled` to disable the group and its input, or let a Field provide them. In Uniwind and NativeWind, a focused field also draws a `ring-3 ring-ring/50` focus ring.
+Set `invalid` to show the destructive border and tint, or `disabled` to disable the group and its input, or let a Field provide them. Focus turns the `border` outline to `ring` with a solid ring. `lg` makes the group 54 tall with 16 point padding and 17 point text.
 
 ### InputGroupAddon
 
@@ -924,9 +941,11 @@ Compact button inside an addon.
 
 | Prop | Type | Default |
 | --- | --- | --- |
-| `size` | `"xs" \| "sm" \| "icon-xs" \| "icon-sm"` | `"xs"` |
+| `size` | `"xs" \| "sm" \| "icon-xs" \| "icon-sm" \| "icon"` | `"xs"` |
 
 Also accepts the props of `React.ComponentProps<typeof Button>`.
+
+`icon` is a 36 point round button for `lg` groups.
 
 ### InputGroupText
 
@@ -954,12 +973,17 @@ Also accepts the props of `React.ComponentProps<typeof Textarea>`.
 
 Values: `.inlineStart`, `.inlineEnd`, `.blockStart`, `.blockEnd`.
 
+### InputGroupSize
+
+Values: `.default`, `.lg`.
+
 ### InputGroup
 
 Field container that lays out the input and addons.
 
 | Parameter | Type | Default |
 | --- | --- | --- |
+| `size` | `Size`: `.default` \| `.lg` | `.default` |
 | `content` | `() -> Content` | - |
 
 ### InputGroupAddon
@@ -973,7 +997,7 @@ Slot for text, icons or buttons beside or around the input.
 
 ### InputGroupButtonSize
 
-Values: `.xs`, `.sm`, `.iconXs`, `.iconSm`.
+Values: `.xs`, `.sm`, `.iconXs`, `.iconSm`, `.icon`.
 
 ### InputGroupButton
 
@@ -982,7 +1006,7 @@ Compact button inside an addon.
 | Parameter | Type | Default |
 | --- | --- | --- |
 | `variant` | `VariantButtonStyle.Variant` | `.ghost` |
-| `size` | `Size`: `.xs` \| `.sm` \| `.iconXs` \| `.iconSm` | `.xs` |
+| `size` | `Size`: `.xs` \| `.sm` \| `.iconXs` \| `.iconSm` \| `.icon` | `.xs` |
 | `action` | `() -> Void` | - |
 | `label` | `() -> Label` | - |
 | `_ title` | `LocalizedStringKey` | - |
@@ -1028,9 +1052,13 @@ Multi-line input without its own border.
 
 Values: `InlineStart`, `InlineEnd`, `BlockStart`, `BlockEnd`.
 
+### InputGroupSize
+
+Values: `Default`, `Lg`.
+
 ### InputGroupButtonSize
 
-Values: `Xs`, `Sm`, `IconXs`, `IconSm`.
+Values: `Xs`, `Sm`, `IconXs`, `IconSm`, `Icon`.
 
 ### InputGroup
 
@@ -1039,6 +1067,7 @@ Field container that lays out the input and addons.
 | Parameter | Type | Default |
 | --- | --- | --- |
 | `modifier` | `Modifier` | `Modifier` |
+| `size` | `InputGroupSize`: `Default` \| `Lg` | `InputGroupSize.Default` |
 | `enabled` | `Boolean` | `LocalFieldState.current.enabled` |
 | `invalid` | `Boolean` | `LocalFieldState.current.invalid` |
 | `content` | `@Composable () -> Unit` | - |
@@ -1073,7 +1102,7 @@ Compact button inside an addon.
 | --- | --- | --- |
 | `onClick` | `() -> Unit` | - |
 | `modifier` | `Modifier` | `Modifier` |
-| `size` | `InputGroupButtonSize`: `Xs` \| `Sm` \| `IconXs` \| `IconSm` | `InputGroupButtonSize.Xs` |
+| `size` | `InputGroupButtonSize`: `Xs` \| `Sm` \| `IconXs` \| `IconSm` \| `Icon` | `InputGroupButtonSize.Xs` |
 | `variant` | `ButtonVariant` | `ButtonVariant.Ghost` |
 | `enabled` | `Boolean` | `true` |
 | `content` | `@Composable RowScope.() -> Unit` | - |

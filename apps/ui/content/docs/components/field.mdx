@@ -687,6 +687,16 @@ A complete form with validation and a submit button.
 
 <NativeExample name="field-form" />
 
+### Large
+
+<Only platform="rn">
+
+`Field` with `size="lg"`, `lg` inputs and a full-width `form` button, for sign-in screens.
+
+</Only>
+
+<NativeExample name="field-large" />
+
 <Only platform="rn">
 
 ## Accessibility
@@ -737,10 +747,11 @@ One field that shares state with its control.
 | Prop | Type | Default |
 | --- | --- | --- |
 | `orientation` | `FieldOrientation` | `"vertical"` |
+| `size` | `"default" \| "lg"` | `"default"` |
 
 Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Root>`.
 
-`orientation` is `vertical`, `horizontal` or `responsive`. Put a `FieldLabel`, the control and a `FieldError` inside `Field`. The control is labelled by the label and uses the description and error text as its accessibility hint.
+`orientation` is `vertical`, `horizontal` or `responsive`. `lg` makes the label 13 point, medium weight and muted, 8 points above the control. Put a `FieldLabel`, the control and a `FieldError` inside `Field`. The control is labelled by the label and uses the description and error text as its accessibility hint.
 
 ### FieldContent
 
@@ -804,6 +815,10 @@ Also accepts the props of `React.ComponentProps<typeof FieldPrimitive.Error>`.
 
 Values: `.vertical`, `.horizontal`.
 
+### FieldSize
+
+Values: `.default`, `.lg`.
+
 ### Field
 
 One field that shares state with its control.
@@ -811,6 +826,7 @@ One field that shares state with its control.
 | Parameter | Type | Default |
 | --- | --- | --- |
 | `orientation` | `FieldOrientation`: `.vertical` \| `.horizontal` | `.vertical` |
+| `size` | `Size`: `.default` \| `.lg` | `.default` |
 | `invalid` | `Bool?` | `nil` |
 | `content` | `() -> Content` | - |
 
@@ -906,6 +922,10 @@ Values: `Default`, `Inset`.
 
 Values: `Legend`, `Label`.
 
+### FieldSize
+
+Values: `Default`, `Lg`.
+
 ### FieldScope.weight
 
 Receiver: `Modifier`.
@@ -955,6 +975,7 @@ One field that shares state with its control.
 | --- | --- | --- |
 | `modifier` | `Modifier` | `Modifier` |
 | `orientation` | `FieldOrientation`: `Vertical` \| `Horizontal` \| `Responsive` | `FieldOrientation.Vertical` |
+| `size` | `FieldSize`: `Default` \| `Lg` | `FieldSize.Default` |
 | `enabled` | `Boolean` | `LocalFieldState.current.enabled` |
 | `invalid` | `Boolean` | `false` |
 | `content` | `@Composable FieldScope.() -> Unit` | - |

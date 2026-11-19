@@ -6,7 +6,7 @@ public struct VariantButtonStyle: ButtonStyle {
   }
 
   public enum Size: CaseIterable, Sendable {
-    case `default`, xs, sm, lg, xl, icon, iconXs, iconSm, iconLg, iconXl
+    case `default`, xs, sm, lg, xl, form, icon, iconXs, iconSm, iconLg, iconXl
 
     var height: CGFloat {
       switch self {
@@ -15,6 +15,7 @@ public struct VariantButtonStyle: ButtonStyle {
       case .default, .icon: Metrics.Height.button
       case .lg, .iconLg: Metrics.Height.buttonLg
       case .xl, .iconXl: 56
+      case .form: 50
       }
     }
 
@@ -25,6 +26,7 @@ public struct VariantButtonStyle: ButtonStyle {
       case .default: Metrics.PaddingX.button
       case .lg: Metrics.PaddingX.buttonLg
       case .xl: 31
+      case .form: 24
       case .icon, .iconXs, .iconSm, .iconLg, .iconXl: 0
       }
     }
@@ -41,8 +43,13 @@ public struct VariantButtonStyle: ButtonStyle {
       switch self {
       case .xs, .iconXs: .xs
       case .lg, .xl: .base
+      case .form: .buttonForm
       default: .sm
       }
+    }
+
+    var weight: Font.Weight {
+      self == .form ? .semibold : Metrics.Weight.button
     }
 
     public var iconSize: CGFloat {
@@ -56,7 +63,7 @@ public struct VariantButtonStyle: ButtonStyle {
       switch self {
       case .xs, .iconXs: Radius.sm
       case .lg, .iconLg: Radius.lg
-      case .xl, .iconXl: Radius.xl
+      case .xl, .iconXl, .form: Radius.xl
       default: Radius.md
       }
     }
@@ -97,6 +104,12 @@ struct ButtonMetrics: Sendable {
   var spacing: CGFloat
   var iconSize: CGFloat
   var textStyle: TextStyle
+  var height: CGFloat?
+  var radius: CGFloat?
+}
+
+extension TextStyle {
+  static let buttonForm = TextStyle(size: 15, lineHeight: 20)
 }
 
 private struct StyledButton: View {
@@ -113,18 +126,18 @@ private struct StyledButton: View {
   var body: some View {
     let joined = group != nil && variant != .ghost && variant != .plain
     let rounded = RoundedRectangle(
-      cornerRadius: block ? size.blockRadius : Metrics.Radius.button,
+      cornerRadius: metrics?.radius ?? (block ? size.blockRadius : Metrics.Radius.button),
       style: .continuous
     )
     let shape = joined ? AnyShape(Rectangle()) : AnyShape(rounded)
     configuration.label
       .labelStyle(ButtonLabelStyle(spacing: metrics?.spacing ?? size.spacing, iconSize: metrics?.iconSize ?? size.iconSize))
-    .scaledFont(metrics?.textStyle ?? size.textStyle, weight: Metrics.Weight.button)
+    .scaledFont(metrics?.textStyle ?? size.textStyle, weight: size.weight)
     .underline(variant == .link && pressed && isEnabled)
     .lineLimit(1)
     .foregroundStyle(foreground)
     .padding(.horizontal, metrics?.horizontalPadding ?? size.horizontalPadding)
-    .frame(width: size.isIcon && !block ? size.height : nil, height: size.height)
+    .frame(width: size.isIcon && !block ? height : nil, height: height)
     .frame(maxWidth: block || group == .vertical ? .infinity : nil)
     .background(background, in: shape)
     .overlay {
@@ -139,6 +152,7 @@ private struct StyledButton: View {
     }
   }
 
+  private var height: CGFloat { metrics?.height ?? size.height }
   private var isDark: Bool { colorScheme == .dark }
   private var pressed: Bool { configuration.isPressed }
 

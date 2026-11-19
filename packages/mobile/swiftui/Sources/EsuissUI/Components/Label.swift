@@ -4,6 +4,7 @@ public struct FieldLabel<Content: View>: View {
   let content: Content
 
   @Environment(\.fieldInset) private var inset
+  @Environment(\.fieldSize) private var size
   @Environment(\.isEnabled) private var isEnabled
 
   public init(@ViewBuilder content: () -> Content) {
@@ -11,11 +12,23 @@ public struct FieldLabel<Content: View>: View {
   }
 
   public var body: some View {
-    content
-      .scaledTextStyle(.base, weight: inset ? .regular : .semibold)
-      .foregroundStyle(EsuissColor.foreground)
-      .opacity(isEnabled ? 1 : 0.5)
+    if size == .lg && !inset {
+      content
+        .scaledTextStyle(.fieldLabelLarge, weight: .medium)
+        .foregroundStyle(EsuissColor.mutedForeground)
+        .padding(.leading, 2)
+        .opacity(isEnabled ? 1 : 0.5)
+    } else {
+      content
+        .scaledTextStyle(.base, weight: inset ? .regular : .semibold)
+        .foregroundStyle(EsuissColor.foreground)
+        .opacity(isEnabled ? 1 : 0.5)
+    }
   }
+}
+
+extension TextStyle {
+  static let fieldLabelLarge = TextStyle(size: 13, lineHeight: 18)
 }
 
 extension FieldLabel where Content == Text {

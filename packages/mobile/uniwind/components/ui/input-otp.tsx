@@ -12,6 +12,7 @@ import Animated, {
   withSequence,
   withTiming,
 } from "react-native-reanimated"
+import { useFieldRootContext } from "@/components/primitives/field"
 import * as OTPFieldPrimitive from "@/components/primitives/otp-field"
 import { resolveClassName } from "@/components/primitives/use-render"
 import { Icon } from "@/components/ui/icon"
@@ -26,17 +27,26 @@ const InputOTPSlotClassContext = React.createContext<
   InputOTPSlotClassNames | undefined
 >(undefined)
 
+const InputOTPInvalidContext = React.createContext(false)
+
 function InputOTP({
   className,
+  invalid,
   ...props
-}: React.ComponentProps<typeof OTPFieldPrimitive.Root>) {
+}: React.ComponentProps<typeof OTPFieldPrimitive.Root> & {
+  invalid?: boolean
+}) {
+  const field = useFieldRootContext()
+  const isInvalid = invalid ?? field.state.invalid
   return (
-    <OTPFieldPrimitive.Root
-      className={(state) =>
-        cn("flex-row items-center gap-2", resolveClassName(className, state))
-      }
-      {...props}
-    />
+    <InputOTPInvalidContext.Provider value={isInvalid}>
+      <OTPFieldPrimitive.Root
+        className={(state) =>
+          cn("flex-row items-center gap-2", resolveClassName(className, state))
+        }
+        {...props}
+      />
+    </InputOTPInvalidContext.Provider>
   )
 }
 
@@ -88,14 +98,17 @@ function InputOTPSlot({
   ...props
 }: Omit<React.ComponentProps<typeof OTPFieldPrimitive.Input>, "children">) {
   const slotClassNames = React.useContext(InputOTPSlotClassContext)
+  const invalid = React.useContext(InputOTPInvalidContext)
   return (
     <OTPFieldPrimitive.Input
       index={index}
       className={(state) =>
         cn(
-          "relative h-13 w-11 items-center justify-center rounded-lg border-[1.5px] border-transparent bg-secondary",
+          "relative h-13 w-11 items-center justify-center rounded-input border border-border bg-background dark:bg-foreground/6",
           state.disabled && "opacity-50",
-          state.active && "z-10 border-primary",
+          state.active && "z-10 border-ring ring-1 ring-ring",
+          invalid &&
+            "border-[1.5px] border-destructive bg-destructive/5 ring-destructive dark:bg-destructive/10",
           slotClassNames?.className,
           resolveClassName(className, state)
         )

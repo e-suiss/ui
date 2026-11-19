@@ -77,7 +77,11 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     paddingHorizontal: 0,
   },
-  picker: { backgroundColor: "transparent", paddingHorizontal: 4 },
+  picker: {
+    borderColor: "transparent",
+    backgroundColor: "transparent",
+    paddingHorizontal: 4,
+  },
   footer: { flexDirection: "row", alignItems: "center", gap: 10 },
   summary: { ...fontSize.sm, flex: 1 },
   heading: {

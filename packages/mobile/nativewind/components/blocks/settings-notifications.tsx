@@ -351,7 +351,7 @@ function SettingsNotifications() {
                       value={row.value}
                       onValueChange={row.onChange}
                       accessibilityLabel={row.label}
-                      className="bg-transparent px-1"
+                      className="border-transparent bg-transparent px-1 dark:bg-transparent"
                     >
                       {row.options.map((option) => (
                         <PickerItem key={option} value={option}>

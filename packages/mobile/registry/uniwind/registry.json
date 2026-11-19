@@ -1014,6 +1014,7 @@
       ],
       "registryDependencies": [
         "@esuiss/icon",
+        "@esuiss/primitives-field",
         "@esuiss/primitives-otp-field",
         "@esuiss/primitives-use-render",
         "@esuiss/text"
@@ -1039,6 +1040,7 @@
         "cn"
       ],
       "registryDependencies": [
+        "@esuiss/primitives-field",
         "@esuiss/primitives-input",
         "@esuiss/primitives-use-render"
       ],

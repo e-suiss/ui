@@ -125,6 +125,7 @@ public enum EsuissIcon: String, CaseIterable, Identifiable {
   case `package`
   case palette
   case paperPlaneTilt
+  case paperclip
   case path
   case pause
   case pencilSimple
@@ -308,6 +309,7 @@ public enum EsuissIcon: String, CaseIterable, Identifiable {
     case .`package`: [IconShape("M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z", fill: false, width: 2), IconShape("M12 22V12", fill: false, width: 2), IconShape("M3.29 7L12 12L20.71 7", fill: false, width: 2), IconShape("m7.5 4.27 9 5.15", fill: false, width: 2)]
     case .palette: [IconShape("M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z", fill: false, width: 2), IconShape("M13 6.5a0.5 0.5 0 1 0 1 0a0.5 0.5 0 1 0 -1 0Z", fill: false, width: 2), IconShape("M17 10.5a0.5 0.5 0 1 0 1 0a0.5 0.5 0 1 0 -1 0Z", fill: false, width: 2), IconShape("M6 12.5a0.5 0.5 0 1 0 1 0a0.5 0.5 0 1 0 -1 0Z", fill: false, width: 2), IconShape("M8 7.5a0.5 0.5 0 1 0 1 0a0.5 0.5 0 1 0 -1 0Z", fill: false, width: 2)]
     case .paperPlaneTilt: [IconShape("M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z", fill: false, width: 2), IconShape("m21.854 2.147-10.94 10.939", fill: false, width: 2)]
+    case .paperclip: [IconShape("m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551", fill: false, width: 2)]
     case .path: [IconShape("M3 19a3 3 0 1 0 6 0a3 3 0 1 0 -6 0Z", fill: false, width: 2), IconShape("M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15", fill: false, width: 2), IconShape("M15 5a3 3 0 1 0 6 0a3 3 0 1 0 -6 0Z", fill: false, width: 2)]
     case .pause: [IconShape("M15 3h3a1 1 0 0 1 1 1v16a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-16a1 1 0 0 1 1 -1Z", fill: false, width: 2), IconShape("M6 3h3a1 1 0 0 1 1 1v16a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-16a1 1 0 0 1 1 -1Z", fill: false, width: 2)]
     case .pencilSimple: [IconShape("M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z", fill: false, width: 2), IconShape("m15 5 4 4", fill: false, width: 2)]

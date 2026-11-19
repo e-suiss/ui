@@ -37,7 +37,7 @@ const LEVELS = [
 const STRENGTH_LABEL = ["Weak", "Weak", "Fair", "Good", "Strong"]
 
 const INPUT_CLASS =
-  "h-[3.25rem] rounded-none border-transparent bg-transparent px-4 text-lg"
+  "h-[3.25rem] rounded-none border-transparent bg-transparent px-4 text-lg dark:bg-transparent"
 
 const strength = (value: string) =>
   [

@@ -435,6 +435,9 @@ object IconData {
   val PaperPlaneTilt: IconSet
     get() = IconSet(listOf(IconShape("M10 14l11 -11", false, 2f), IconShape("M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5", false, 2f)), listOf(IconShape("M21.864 3.549l-6.454 17.868a1.55 1.55 0 0 1 -1.41 .903a1.54 1.54 0 0 1 -1.394 -.874l-2.88 -5.759zm-1.414 -1.414l-12.139 12.138l-5.728 -2.864a1.55 1.55 0 0 1 -.903 -1.409c0 -.606 .353 -1.157 .981 -1.44z", true, 0f)))
 
+  val Paperclip: IconSet
+    get() = IconSet(listOf(IconShape("M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5", false, 2f)))
+
   val Path: IconSet
     get() = IconSet(listOf(IconShape("M3 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0", false, 2f), IconShape("M19 7a2 2 0 1 0 0 -4a2 2 0 0 0 0 4", false, 2f), IconShape("M11 19h5.5a3.5 3.5 0 0 0 0 -7h-8a3.5 3.5 0 0 1 0 -7h4.5", false, 2f)))
 

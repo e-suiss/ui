@@ -176,7 +176,7 @@ function InviteForm({
                 autoComplete="email"
                 placeholder={emails.length ? "Add another" : "name@example.com"}
                 accessibilityLabelledBy="users-invite-email"
-                className="h-7.5 min-w-35 flex-1 border-0 bg-transparent px-0 text-sm"
+                className="h-7.5 min-w-35 flex-1 border-0 bg-transparent px-0 text-sm dark:bg-transparent"
               />
             </View>
           </Item>
@@ -191,7 +191,7 @@ function InviteForm({
                 value={role}
                 onValueChange={setRole}
                 accessibilityLabel="Role"
-                className="bg-transparent px-1"
+                className="border-transparent bg-transparent px-1 dark:bg-transparent"
               >
                 {ROLES.map((item) => (
                   <PickerItem key={item} value={item}>

@@ -7,18 +7,18 @@ public enum EsuissColor {
   public static let cardForeground = Color.adaptive(light: .init(0x1D1D1F), dark: .init(0xF5F5F7))
   public static let popover = Color.adaptive(light: .init(0xFFFFFF), dark: .init(0x1D1D1F))
   public static let popoverForeground = Color.adaptive(light: .init(0x1D1D1F), dark: .init(0xF5F5F7))
-  public static let primary = Color.adaptive(light: .init(0x0071E3), dark: .init(0x2997FF))
+  public static let primary = Color.adaptive(light: .init(0x0071E3), dark: .init(0x0A84FF))
   public static let primaryForeground = Color.adaptive(light: .init(0xFFFFFF), dark: .init(0xFFFFFF))
   public static let secondary = Color.adaptive(light: .init(0x000000, 0.04), dark: .init(0xFFFFFF, 0.1))
   public static let secondaryForeground = Color.adaptive(light: .init(0x1D1D1F), dark: .init(0xF5F5F7))
   public static let muted = Color.adaptive(light: .init(0xF5F5F7), dark: .init(0x161617))
-  public static let mutedForeground = Color.adaptive(light: .init(0x6E6E73), dark: .init(0xA1A1A6))
+  public static let mutedForeground = Color.adaptive(light: .init(0x6E6E73), dark: .init(0x86868B))
   public static let accent = Color.adaptive(light: .init(0x000000, 0.06), dark: .init(0xFFFFFF, 0.1))
   public static let accentForeground = Color.adaptive(light: .init(0x1D1D1F), dark: .init(0xF5F5F7))
-  public static let destructive = Color.adaptive(light: .init(0xD0000A), dark: .init(0xFF5447))
+  public static let destructive = Color.adaptive(light: .init(0xFF3B30), dark: .init(0xFF453A))
   public static let border = Color.adaptive(light: .init(0xD2D2D7), dark: .init(0x424245))
   public static let input = Color.adaptive(light: .init(0x86868B), dark: .init(0x6E6E73))
-  public static let ring = Color.adaptive(light: .init(0x0071E3), dark: .init(0x0071E3))
+  public static let ring = Color.adaptive(light: .init(0x0071E3), dark: .init(0x0A84FF))
   public static let chart1 = Color.adaptive(light: .init(0x007AFF), dark: .init(0x0A84FF))
   public static let chart2 = Color.adaptive(light: .init(0x30B0C7), dark: .init(0x40C8E0))
   public static let chart3 = Color.adaptive(light: .init(0x5856D6), dark: .init(0x5E5CE6))
@@ -26,15 +26,15 @@ public enum EsuissColor {
   public static let chart5 = Color.adaptive(light: .init(0x8E8E93), dark: .init(0x8E8E93))
   public static let sidebar = Color.adaptive(light: .init(0xF5F5F7), dark: .init(0x161617))
   public static let sidebarForeground = Color.adaptive(light: .init(0x1D1D1F), dark: .init(0xF5F5F7))
-  public static let sidebarPrimary = Color.adaptive(light: .init(0x0071E3), dark: .init(0x2997FF))
+  public static let sidebarPrimary = Color.adaptive(light: .init(0x0071E3), dark: .init(0x0A84FF))
   public static let sidebarPrimaryForeground = Color.adaptive(light: .init(0xFFFFFF), dark: .init(0xFFFFFF))
   public static let sidebarAccent = Color.adaptive(light: .init(0x000000, 0.06), dark: .init(0xFFFFFF, 0.1))
   public static let sidebarAccentForeground = Color.adaptive(light: .init(0x1D1D1F), dark: .init(0xF5F5F7))
   public static let sidebarBorder = Color.adaptive(light: .init(0xD2D2D7), dark: .init(0x424245))
-  public static let sidebarRing = Color.adaptive(light: .init(0x0071E3), dark: .init(0x0071E3))
+  public static let sidebarRing = Color.adaptive(light: .init(0x0071E3), dark: .init(0x0A84FF))
   public static let menu = Color.adaptive(light: .init(0xFFFFFF), dark: .init(0x1D1D1F))
   public static let menuForeground = Color.adaptive(light: .init(0x1D1D1F), dark: .init(0xF5F5F7))
-  public static let menuMutedForeground = Color.adaptive(light: .init(0x6E6E73), dark: .init(0xA1A1A6))
+  public static let menuMutedForeground = Color.adaptive(light: .init(0x6E6E73), dark: .init(0x86868B))
   public static let menuAccent = Color.adaptive(light: .init(0x000000, 0.06), dark: .init(0xFFFFFF, 0.1))
   public static let menuAccentForeground = Color.adaptive(light: .init(0x1D1D1F), dark: .init(0xF5F5F7))
   public static let menuBorder = Color.adaptive(light: .init(0xD2D2D7), dark: .init(0x424245))
@@ -99,7 +99,7 @@ public enum Fonts {
 public enum Metrics {
   public enum Radius {
     public static let button: CGFloat = 9999
-    public static let input: CGFloat = 10
+    public static let input: CGFloat = 12
     public static let textarea: CGFloat = 12
     public static let card: CGFloat = 18
     public static let dialog: CGFloat = 18

@@ -56,7 +56,7 @@ function Picker({
   onValueChange?: (value: string) => void
   placeholder?: string
   items?: PickerItemData[]
-  size?: "sm" | "default"
+  size?: "sm" | "default" | "lg"
   disabled?: boolean
   invalid?: boolean
   style?: StyleProp<ViewStyle>

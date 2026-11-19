@@ -31,6 +31,7 @@ import com.esuiss.catalog.Section
 import com.esuiss.catalog.Story
 import com.esuiss.catalog.StoryGroup
 import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonSize
 import com.esuiss.ui.components.Checkbox
 import com.esuiss.ui.components.Field
 import com.esuiss.ui.components.FieldContent
@@ -43,8 +44,10 @@ import com.esuiss.ui.components.FieldLegend
 import com.esuiss.ui.components.FieldOrientation
 import com.esuiss.ui.components.FieldSeparator
 import com.esuiss.ui.components.FieldSet
+import com.esuiss.ui.components.FieldSize
 import com.esuiss.ui.components.FieldTitle
 import com.esuiss.ui.components.Input
+import com.esuiss.ui.components.InputSize
 import com.esuiss.ui.components.Switch
 import com.esuiss.ui.components.Text
 import com.esuiss.ui.components.TextVariant
@@ -65,6 +68,7 @@ val fieldStories = StoryGroup(
         Story("CheckboxGroup") { FieldCheckboxGroup() },
         Story("Inset") { FieldInset() },
         Story("Form") { FieldForm() },
+        Story("Large") { FieldLarge() },
     ),
 )
 
@@ -266,6 +270,37 @@ private fun FieldInsetInput(value: String, onValueChange: (String) -> Unit, labe
             Row(verticalAlignment = Alignment.CenterVertically) { inner() }
         },
     )
+}
+
+@Composable
+private fun FieldLarge() {
+    var email by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+    FieldGroup {
+        Field(size = FieldSize.Lg) {
+            FieldLabel("Email")
+            Input(
+                email,
+                { email = it },
+                Modifier.semantics { contentDescription = "Email" },
+                size = InputSize.Lg,
+                placeholder = "jane@example.com",
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, capitalization = KeyboardCapitalization.None),
+            )
+        }
+        Field(size = FieldSize.Lg) {
+            FieldLabel("Password")
+            Input(
+                password,
+                { password = it },
+                Modifier.semantics { contentDescription = "Password" },
+                size = InputSize.Lg,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                visualTransformation = PasswordVisualTransformation(),
+            )
+        }
+        Button("Continue", onClick = {}, size = ButtonSize.Form, block = true)
+    }
 }
 
 @Composable

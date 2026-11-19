@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.constrainWidth
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.Shadow
+import com.esuiss.ui.theme.textStyle
 
 internal val FormShadowXs = Shadow(0.dp, 1.dp, 2.dp, Color.Black.copy(alpha = 0.05f))
 
@@ -58,21 +59,44 @@ internal fun formSelectionColors(colors: Colors) = TextSelectionColors(
     backgroundColor = colors.primary.copy(alpha = 0.3f),
 )
 
+internal val FormTextLg get() = textStyle(17.0, 24.0)
+
+internal fun formFieldBackground(colors: Colors, invalid: Boolean): Color = when {
+    invalid -> colors.destructive.copy(alpha = if (colors.isDark) 0.1f else 0.05f)
+    colors.isDark -> colors.foreground.copy(alpha = 0.06f)
+    else -> colors.background
+}
+
+internal fun Modifier.formFieldBorder(
+    colors: Colors,
+    shape: Shape,
+    focused: Boolean,
+    invalid: Boolean,
+    inset: Boolean = false,
+): Modifier = when {
+    invalid -> border(if (focused) 2.dp else 1.5.dp, colors.destructive, shape)
+    focused -> border(2.dp, colors.ring, shape)
+    inset -> this
+    else -> border(1.dp, colors.border, shape)
+}
+
+internal fun Modifier.formFieldSurface(
+    colors: Colors,
+    shape: Shape,
+    focused: Boolean,
+    invalid: Boolean,
+    inset: Boolean = false,
+): Modifier = background(formFieldBackground(colors, invalid), shape)
+    .formFieldBorder(colors, shape, focused, invalid, inset)
+
 internal fun Modifier.formInputSurface(
     colors: Colors,
     shape: Shape,
     focused: Boolean,
     invalid: Boolean,
     enabled: Boolean,
-): Modifier {
-    val background = if (invalid) colors.destructive.copy(alpha = if (colors.isDark) 0.1f else 0.05f) else colors.secondary
-    val border = when {
-        invalid -> colors.destructive
-        focused -> colors.ring
-        else -> Color.Transparent
-    }
-    return alpha(if (enabled) 1f else 0.5f).clip(shape).background(background, shape).border(1.dp, border, shape)
-}
+    inset: Boolean = false,
+): Modifier = alpha(if (enabled) 1f else 0.5f).clip(shape).formFieldSurface(colors, shape, focused, invalid, inset)
 
 @Composable
 internal fun FormDividedStack(

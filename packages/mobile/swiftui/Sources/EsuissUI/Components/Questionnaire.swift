@@ -620,7 +620,7 @@ public struct QuestionnaireInput: View {
   @Environment(\.questionnaire) private var questionnaire
   @Environment(\.questionnaireItem) private var item
   @Environment(\.isEnabled) private var isEnabled
-  @Environment(\.colorScheme) private var colorScheme
+  @FocusState private var focused: Bool
 
   public init(
     _ placeholder: LocalizedStringResource = "",
@@ -639,7 +639,7 @@ public struct QuestionnaireInput: View {
     let invalid = item?.invalid ?? false
     let enabled = isEnabled && !disabled && !(item?.disabled ?? false)
     let controller = questionnaire
-    let shape = RoundedRectangle(cornerRadius: Radius.lg, style: .continuous)
+    let shape = RoundedRectangle(cornerRadius: Metrics.Radius.input, style: .continuous)
     TextField(
       text: Binding(
         get: { controller?.text(for: name) ?? "" },
@@ -658,10 +658,11 @@ public struct QuestionnaireInput: View {
     .scaledFont(.base)
     .foregroundStyle(EsuissColor.foreground)
     .tint(EsuissColor.primary)
+    .focused($focused)
     .padding(.horizontal, 12)
     .frame(height: 44)
-    .background(invalid ? EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) : EsuissColor.secondary, in: shape)
-    .overlay { shape.strokeBorder(invalid ? EsuissColor.destructive : .clear, lineWidth: 1) }
+    .fieldSurface(shape, focused: focused)
+    .environment(\.isInvalid, invalid)
     .opacity(enabled ? 1 : 0.5)
     .disabled(!enabled)
   }

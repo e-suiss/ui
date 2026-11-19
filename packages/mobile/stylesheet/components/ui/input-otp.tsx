@@ -11,10 +11,11 @@ import Animated, {
   withSequence,
   withTiming,
 } from "react-native-reanimated"
+import { useFieldRootContext } from "@/components/primitives/field"
 import * as OTPFieldPrimitive from "@/components/primitives/otp-field"
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, metrics, useTheme } from "@/components/ui/theme"
 
 type InputOTPSlotStyles = {
   style?: ViewStyle
@@ -34,11 +35,11 @@ const styles = StyleSheet.create({
     width: 44,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: radius.lg,
-    borderWidth: 1.5,
-    borderColor: "transparent",
+    borderRadius: metrics.radius.input,
+    borderWidth: 1,
   },
   slotActive: { zIndex: 10 },
+  slotInvalid: { borderWidth: 1.5 },
   char: { ...fontSize.xl, fontWeight: "600", fontVariant: ["tabular-nums"] },
   caretContainer: {
     position: "absolute",
@@ -53,18 +54,33 @@ const styles = StyleSheet.create({
   separator: { alignItems: "center" },
 })
 
+const InputOTPInvalidContext = React.createContext(false)
+
+function ring(color: string) {
+  return {
+    boxShadow: [{ offsetX: 0, offsetY: 0, spreadDistance: 1, color }],
+  }
+}
+
 function InputOTP({
   style,
+  invalid,
   ...props
-}: React.ComponentProps<typeof OTPFieldPrimitive.Root>) {
+}: React.ComponentProps<typeof OTPFieldPrimitive.Root> & {
+  invalid?: boolean
+}) {
+  const field = useFieldRootContext()
+  const isInvalid = invalid ?? field.state.invalid
   return (
-    <OTPFieldPrimitive.Root
-      style={(state) => [
-        styles.root,
-        typeof style === "function" ? style(state) : style,
-      ]}
-      {...props}
-    />
+    <InputOTPInvalidContext.Provider value={isInvalid}>
+      <OTPFieldPrimitive.Root
+        style={(state) => [
+          styles.root,
+          typeof style === "function" ? style(state) : style,
+        ]}
+        {...props}
+      />
+    </InputOTPInvalidContext.Provider>
   )
 }
 
@@ -107,16 +123,33 @@ function InputOTPSlot({
   style,
   ...props
 }: Omit<React.ComponentProps<typeof OTPFieldPrimitive.Input>, "children">) {
-  const { colors } = useTheme()
+  const { colors, isDark } = useTheme()
   const slotStyles = React.useContext(InputOTPSlotStyleContext)
+  const invalid = React.useContext(InputOTPInvalidContext)
   return (
     <OTPFieldPrimitive.Input
       index={index}
       style={(state) => [
         styles.slot,
-        { backgroundColor: colors.secondary },
+        {
+          backgroundColor: isDark
+            ? `${colors.foreground}0f`
+            : colors.background,
+          borderColor: colors.border,
+        },
         state.disabled && { opacity: 0.5 },
-        state.active && [styles.slotActive, { borderColor: colors.primary }],
+        state.active && [
+          styles.slotActive,
+          { borderColor: colors.ring, ...ring(colors.ring) },
+        ],
+        invalid && [
+          styles.slotInvalid,
+          {
+            borderColor: colors.destructive,
+            backgroundColor: `${colors.destructive}${isDark ? "1a" : "0d"}`,
+          },
+          state.active && ring(colors.destructive),
+        ],
         slotStyles?.style,
         typeof style === "function" ? style(state) : style,
       ]}

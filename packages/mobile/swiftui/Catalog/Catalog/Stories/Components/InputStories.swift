@@ -14,6 +14,11 @@ enum InputStories {
         InputDemo(placeholder: "Small", size: .sm)
         InputDemo(placeholder: "Medium", size: .md)
         InputDemo(placeholder: "Default")
+        HStack(spacing: 8) {
+          InputDemo(placeholder: "Large", size: .lg)
+          Button("Save") {}
+            .buttonStyle(.variant(size: .form))
+        }
       }
     },
     Story("WithValue") {

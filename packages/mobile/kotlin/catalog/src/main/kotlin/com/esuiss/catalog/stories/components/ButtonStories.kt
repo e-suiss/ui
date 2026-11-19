@@ -74,6 +74,7 @@ private fun ButtonSizes() {
             Button("Default", onClick = {})
             Button("Large", onClick = {}, size = ButtonSize.Lg)
             Button("Extra large", onClick = {}, size = ButtonSize.Xl)
+            Button("Form", onClick = {}, size = ButtonSize.Form)
         }
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -124,5 +125,6 @@ private fun ButtonBlock() {
         Button("Continue", onClick = {}, size = ButtonSize.Lg, block = true)
         Button("Not now", onClick = {}, size = ButtonSize.Lg, variant = ButtonVariant.Secondary, block = true)
         Button("Learn more", onClick = {}, variant = ButtonVariant.Tinted, block = true)
+        Button("Continue", onClick = {}, size = ButtonSize.Form, block = true)
     }
 }

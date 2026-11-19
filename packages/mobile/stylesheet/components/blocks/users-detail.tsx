@@ -176,7 +176,11 @@ const styles = StyleSheet.create({
   panel: { gap: 12 },
   regular: { fontWeight: "400" },
   shrink: { flexShrink: 1 },
-  picker: { backgroundColor: "transparent", paddingHorizontal: 4 },
+  picker: {
+    borderColor: "transparent",
+    backgroundColor: "transparent",
+    paddingHorizontal: 4,
+  },
   sessionSeparator: { marginStart: 60 },
   sessionMedia: { width: 30, height: 30, borderRadius: 7 },
   tight: { gap: 0 },

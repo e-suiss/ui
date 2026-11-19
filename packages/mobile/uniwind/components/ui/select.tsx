@@ -20,6 +20,11 @@ interface Option {
   label: string
 }
 
+type SelectTriggerSize = "default" | "sm" | "lg"
+
+const SelectTriggerSizeContext =
+  React.createContext<SelectTriggerSize>("default")
+
 const Select = SelectPrimitive.Root
 
 function SelectGroup({
@@ -38,12 +43,14 @@ function SelectValue({
   className,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
+  const size = React.useContext(SelectTriggerSizeContext)
   return (
     <SelectPrimitive.Value
       numberOfLines={1}
       className={(state) =>
         cn(
           "flex-1 text-left text-base text-foreground",
+          size === "lg" && "text-[17px]",
           state.placeholder && "text-muted-foreground",
           resolveClassName(className, state)
         )
@@ -61,30 +68,33 @@ function SelectTrigger({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
   children?: React.ReactNode
-  size?: "default" | "sm"
+  size?: SelectTriggerSize
   invalid?: boolean
 }) {
   const field = useFieldRootContext()
   const isInvalid = invalid ?? field.state.invalid
   return (
-    <SelectPrimitive.Trigger
-      className={(state) =>
-        cn(
-          "h-input flex-row items-center justify-between gap-1.5 self-start rounded-input border border-transparent bg-secondary px-input-x py-2",
-          size === "sm" && "h-9 rounded-md",
-          isInvalid &&
-            "border-destructive bg-destructive/5 dark:bg-destructive/10",
-          state.disabled && "opacity-50",
-          resolveClassName(className, state)
-        )
-      }
-      {...props}
-    >
-      {children}
-      <SelectPrimitive.Icon>
-        <Icon as={CaretUpDownIcon} className="size-4 text-muted-foreground" />
-      </SelectPrimitive.Icon>
-    </SelectPrimitive.Trigger>
+    <SelectTriggerSizeContext.Provider value={size}>
+      <SelectPrimitive.Trigger
+        className={(state) =>
+          cn(
+            "flex-row items-center justify-between gap-1.5 self-start rounded-input border border-border bg-background py-2 dark:bg-foreground/6",
+            size === "lg" ? "h-13.5 px-4" : "h-input px-input-x",
+            size === "sm" && "h-9 rounded-md",
+            isInvalid &&
+              "border-[1.5px] border-destructive bg-destructive/5 dark:bg-destructive/10",
+            state.disabled && "opacity-50",
+            resolveClassName(className, state)
+          )
+        }
+        {...props}
+      >
+        {children}
+        <SelectPrimitive.Icon>
+          <Icon as={CaretUpDownIcon} className="size-4 text-muted-foreground" />
+        </SelectPrimitive.Icon>
+      </SelectPrimitive.Trigger>
+    </SelectTriggerSizeContext.Provider>
   )
 }
 

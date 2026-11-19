@@ -1,7 +1,6 @@
 package com.esuiss.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
@@ -64,6 +63,7 @@ import com.adamglin.phosphoricons.regular.Check
 import com.adamglin.phosphoricons.regular.X
 import com.esuiss.ui.theme.Colors
 import com.esuiss.ui.theme.EsuissTheme
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
 
@@ -107,7 +107,7 @@ fun <T> Combobox(
     }
     val visible = if (filtering && query.isNotEmpty()) items.filter { filter(it, query) } else items
     val clearVisible = showClear && (value != null || query.isNotEmpty())
-    val shape = RoundedCornerShape(Radius.lg)
+    val shape = RoundedCornerShape(Metrics.Radius.input)
     val foreground = colors.foreground
 
     Box(modifier = modifier) {
@@ -117,16 +117,7 @@ fun <T> Combobox(
                 .height(44.dp)
                 .alpha(if (isEnabled) 1f else 0.5f)
                 .clip(shape)
-                .background(controlBackground(colors, isInvalid), shape)
-                .border(
-                    1.dp,
-                    when {
-                        isInvalid -> colors.destructive
-                        focused -> colors.ring
-                        else -> Color.Transparent
-                    },
-                    shape,
-                )
+                .formFieldSurface(colors, shape, focused, isInvalid, LocalFieldInset.current)
                 .padding(end = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -227,7 +218,7 @@ fun <T> MultiCombobox(
         interaction.interactions.collect { if (it is PressInteraction.Release) expanded = true }
     }
     val visible = if (query.isNotEmpty()) items.filter { filter(it, query) } else items
-    val shape = RoundedCornerShape(Radius.lg)
+    val shape = RoundedCornerShape(Metrics.Radius.input)
     val hasValue = values.isNotEmpty()
 
     Box(modifier = modifier) {
@@ -237,8 +228,7 @@ fun <T> MultiCombobox(
                 .heightIn(min = 44.dp)
                 .alpha(if (isEnabled) 1f else 0.5f)
                 .clip(shape)
-                .background(controlBackground(colors, isInvalid), shape)
-                .border(1.dp, if (isInvalid) colors.destructive else Color.Transparent, shape)
+                .formFieldSurface(colors, shape, expanded, isInvalid, LocalFieldInset.current)
                 .padding(horizontal = if (hasValue) 6.dp else 12.dp, vertical = 6.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterVertically),

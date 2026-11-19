@@ -2,6 +2,7 @@ package com.esuiss.catalog.stories.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
@@ -9,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -18,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.esuiss.catalog.Section
 import com.esuiss.catalog.Story
 import com.esuiss.catalog.StoryGroup
+import com.esuiss.ui.components.Button
+import com.esuiss.ui.components.ButtonSize
 import com.esuiss.ui.components.Field
 import com.esuiss.ui.components.FieldDescription
 import com.esuiss.ui.components.FieldError
@@ -80,10 +84,24 @@ private fun InputSizes() {
     var small by rememberSaveable { mutableStateOf("") }
     var medium by rememberSaveable { mutableStateOf("") }
     var default by rememberSaveable { mutableStateOf("") }
+    var large by rememberSaveable { mutableStateOf("") }
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Input(small, { small = it }, size = InputSize.Sm, placeholder = "Small")
-        Input(medium, { medium = it }, size = InputSize.Md, placeholder = "Medium")
-        Input(default, { default = it }, placeholder = "Default")
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Input(small, { small = it }, Modifier.weight(1f), size = InputSize.Sm, placeholder = "Small")
+            Button("Save", onClick = {}, size = ButtonSize.Sm)
+        }
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Input(medium, { medium = it }, Modifier.weight(1f), size = InputSize.Md, placeholder = "Medium")
+            Button("Save", onClick = {})
+        }
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Input(default, { default = it }, Modifier.weight(1f), placeholder = "Default")
+            Button("Save", onClick = {}, size = ButtonSize.Lg)
+        }
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Input(large, { large = it }, Modifier.weight(1f), size = InputSize.Lg, placeholder = "Large")
+            Button("Save", onClick = {}, size = ButtonSize.Form)
+        }
     }
 }
 

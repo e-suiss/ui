@@ -106,6 +106,7 @@ import {
   Nfc as LucideNfc,
   Package as LucidePackage,
   Palette as LucidePalette,
+  Paperclip as LucidePaperclip,
   Pause as LucidePause,
   Pencil as LucidePencil,
   Pin as LucidePin,
@@ -338,6 +339,7 @@ export const NotePencilIcon = icon(LucideSquarePen)
 export const PackageIcon = icon(LucidePackage)
 export const PaletteIcon = icon(LucidePalette)
 export const PaperPlaneTiltIcon = icon(LucideSend)
+export const PaperclipIcon = icon(LucidePaperclip)
 export const PathIcon = icon(LucideRoute)
 export const PauseIcon = icon(LucidePause)
 export const PencilSimpleIcon = icon(LucidePencil)

@@ -23,6 +23,11 @@ interface Option {
   label: string
 }
 
+type SelectTriggerSize = "default" | "sm" | "lg"
+
+const SelectTriggerSizeContext =
+  React.createContext<SelectTriggerSize>("default")
+
 const Select = SelectPrimitive.Root
 
 const FullWindowOverlay =
@@ -40,11 +45,13 @@ const styles = StyleSheet.create({
     gap: 6,
     borderRadius: metrics.radius.input,
     borderWidth: 1,
-    borderColor: "transparent",
     paddingHorizontal: metrics.paddingX.input,
     paddingVertical: 8,
   },
   triggerSm: { height: 36, borderRadius: radius.md },
+  triggerLg: { height: 54, paddingHorizontal: 16 },
+  triggerInvalid: { borderWidth: 1.5 },
+  valueLg: { fontSize: 17 },
   content: {
     position: "relative",
     minWidth: 144,
@@ -104,6 +111,7 @@ function SelectValue({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
   const { colors } = useTheme()
+  const size = React.useContext(SelectTriggerSizeContext)
   return (
     <SelectPrimitive.Value
       numberOfLines={1}
@@ -113,6 +121,7 @@ function SelectValue({
           : colors.foreground
         return [
           styles.value,
+          size === "lg" && styles.valueLg,
           { color },
           resolveStyle(style, state) as StyleProp<TextStyle>,
         ]
@@ -130,32 +139,43 @@ function SelectTrigger({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
   children?: React.ReactNode
-  size?: "default" | "sm"
+  size?: SelectTriggerSize
   invalid?: boolean
 }) {
   const { colors, isDark } = useTheme()
   const field = useFieldRootContext()
   const isInvalid = invalid ?? field.state.invalid
   return (
-    <SelectPrimitive.Trigger
-      style={(state) => [
-        styles.trigger,
-        { backgroundColor: colors.secondary },
-        size === "sm" && styles.triggerSm,
-        isInvalid && {
-          borderColor: colors.destructive,
-          backgroundColor: `${colors.destructive}${isDark ? "1a" : "0d"}`,
-        },
-        state.disabled && { opacity: 0.5 },
-        resolveStyle(style, state) as StyleProp<ViewStyle>,
-      ]}
-      {...props}
-    >
-      {children}
-      <SelectPrimitive.Icon>
-        <Icon as={CaretUpDownIcon} size={16} color={colors.mutedForeground} />
-      </SelectPrimitive.Icon>
-    </SelectPrimitive.Trigger>
+    <SelectTriggerSizeContext.Provider value={size}>
+      <SelectPrimitive.Trigger
+        style={(state) => [
+          styles.trigger,
+          {
+            backgroundColor: isDark
+              ? `${colors.foreground}0f`
+              : colors.background,
+            borderColor: colors.border,
+          },
+          size === "sm" && styles.triggerSm,
+          size === "lg" && styles.triggerLg,
+          isInvalid && [
+            styles.triggerInvalid,
+            {
+              borderColor: colors.destructive,
+              backgroundColor: `${colors.destructive}${isDark ? "1a" : "0d"}`,
+            },
+          ],
+          state.disabled && { opacity: 0.5 },
+          resolveStyle(style, state) as StyleProp<ViewStyle>,
+        ]}
+        {...props}
+      >
+        {children}
+        <SelectPrimitive.Icon>
+          <Icon as={CaretUpDownIcon} size={16} color={colors.mutedForeground} />
+        </SelectPrimitive.Icon>
+      </SelectPrimitive.Trigger>
+    </SelectTriggerSizeContext.Provider>
   )
 }
 

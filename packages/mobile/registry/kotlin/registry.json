@@ -983,11 +983,6 @@
           "target": "~/app/src/main/kotlin/com/esuiss/ui/components/Overlay.kt"
         },
         {
-          "path": "kotlin/ui/src/main/kotlin/com/esuiss/ui/components/Select.kt",
-          "type": "registry:file",
-          "target": "~/app/src/main/kotlin/com/esuiss/ui/components/Select.kt"
-        },
-        {
           "path": "kotlin/ui/src/main/kotlin/com/esuiss/ui/components/Separator.kt",
           "type": "registry:file",
           "target": "~/app/src/main/kotlin/com/esuiss/ui/components/Separator.kt"
@@ -3575,11 +3570,6 @@
           "target": "~/app/src/main/kotlin/com/esuiss/ui/components/Overlay.kt"
         },
         {
-          "path": "kotlin/ui/src/main/kotlin/com/esuiss/ui/components/Select.kt",
-          "type": "registry:file",
-          "target": "~/app/src/main/kotlin/com/esuiss/ui/components/Select.kt"
-        },
-        {
           "path": "kotlin/ui/src/main/kotlin/com/esuiss/ui/components/Separator.kt",
           "type": "registry:file",
           "target": "~/app/src/main/kotlin/com/esuiss/ui/components/Separator.kt"
@@ -3830,11 +3820,6 @@
           "path": "kotlin/ui/src/main/kotlin/com/esuiss/ui/components/Overlay.kt",
           "type": "registry:file",
           "target": "~/app/src/main/kotlin/com/esuiss/ui/components/Overlay.kt"
-        },
-        {
-          "path": "kotlin/ui/src/main/kotlin/com/esuiss/ui/components/Select.kt",
-          "type": "registry:file",
-          "target": "~/app/src/main/kotlin/com/esuiss/ui/components/Select.kt"
         },
         {
           "path": "kotlin/ui/src/main/kotlin/com/esuiss/ui/components/Separator.kt",

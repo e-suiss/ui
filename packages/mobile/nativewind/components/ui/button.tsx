@@ -28,6 +28,7 @@ const buttonVariants = cva(
         sm: "h-button-sm gap-1 px-button-sm-x",
         lg: "h-button-lg gap-1.5 px-button-lg-x",
         xl: "h-14 gap-2 px-[1.9375rem]",
+        form: "h-[3.125rem] gap-1.5 px-6",
         icon: "size-button",
         "icon-xs": "size-button-xs",
         "icon-sm": "size-button-sm",
@@ -43,6 +44,7 @@ const buttonVariants = cva(
       { block: true, size: ["sm", "default"], className: "rounded-md" },
       { block: true, size: "lg", className: "rounded-lg" },
       { block: true, size: "xl", className: "rounded-xl" },
+      { block: true, size: "form", className: "rounded-xl" },
     ],
     defaultVariants: {
       variant: "default",
@@ -69,6 +71,7 @@ const buttonTextVariants = cva("font-button text-sm text-foreground", {
       sm: "",
       lg: "text-base",
       xl: "text-base",
+      form: "text-[15px] font-semibold",
       icon: "",
       "icon-xs": "",
       "icon-sm": "",

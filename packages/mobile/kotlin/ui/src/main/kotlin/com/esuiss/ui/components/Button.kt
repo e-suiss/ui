@@ -23,8 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -33,6 +35,7 @@ import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
+import com.esuiss.ui.theme.textStyle
 
 enum class ButtonVariant { Default, Outline, Secondary, Tinted, Ghost, Plain, Destructive, Link }
 
@@ -49,6 +52,7 @@ enum class ButtonSize(
     Sm(Metrics.Height.buttonSm, Metrics.PaddingX.buttonSm, 4.dp, 16.dp, Radius.md, false),
     Lg(Metrics.Height.buttonLg, Metrics.PaddingX.buttonLg, 6.dp, 16.dp, Radius.lg, false),
     Xl(56.dp, 31.dp, 8.dp, 16.dp, Radius.xl, false),
+    Form(50.dp, 24.dp, 6.dp, 16.dp, Radius.xl, false),
     Icon(Metrics.Height.button, 0.dp, 6.dp, 16.dp, Radius.md, true),
     IconXs(Metrics.Height.buttonXs, 0.dp, 4.dp, 12.dp, Radius.sm, true),
     IconSm(Metrics.Height.buttonSm, 0.dp, 4.dp, 16.dp, Radius.md, true),
@@ -60,8 +64,12 @@ enum class ButtonSize(
         get() = when (this) {
             Xs, IconXs -> Typography.xs
             Lg, Xl -> Typography.base
+            Form -> textStyle(15.0, 20.0)
             else -> Typography.sm
         }
+
+    internal val fontWeight: FontWeight
+        get() = if (this == Form) FontWeight.SemiBold else Metrics.Weight.button
 }
 
 @Composable
@@ -74,13 +82,27 @@ fun Button(
     enabled: Boolean = true,
     content: @Composable RowScope.() -> Unit,
 ) {
+    ButtonBase(onClick, modifier, variant, size, block, enabled, null, content)
+}
+
+@Composable
+internal fun ButtonBase(
+    onClick: () -> Unit,
+    modifier: Modifier,
+    variant: ButtonVariant,
+    size: ButtonSize,
+    block: Boolean,
+    enabled: Boolean,
+    shape: Shape?,
+    content: @Composable RowScope.() -> Unit,
+) {
     val colors = EsuissTheme.colors
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     val foreground = buttonForeground(variant, colors)
     val group = LocalButtonGroup.current?.takeIf { variant != ButtonVariant.Ghost && variant != ButtonVariant.Plain }
     RegisterButtonGroupOutline(group, variant == ButtonVariant.Outline)
-    val shape = group.itemShape(if (block) RoundedCornerShape(size.blockRadius) else RoundedCornerShape(Metrics.Radius.button))
+    val shape = group.itemShape(shape ?: if (block) RoundedCornerShape(size.blockRadius) else RoundedCornerShape(Metrics.Radius.button))
     val sizing = when {
         block -> Modifier.fillMaxWidth().height(size.height)
         size.isIcon -> Modifier.size(size.height)
@@ -121,7 +143,7 @@ fun Button(
             LocalButtonGroup provides null,
             LocalContentStyle provides size.textStyle.copy(
                 color = foreground,
-                fontWeight = Metrics.Weight.button,
+                fontWeight = size.fontWeight,
                 textDecoration = if (variant == ButtonVariant.Link && pressed && enabled) {
                     TextDecoration.Underline
                 } else {

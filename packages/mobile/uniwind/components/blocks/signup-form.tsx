@@ -45,7 +45,7 @@ const STACK_CLASS =
   "overflow-hidden rounded-xl border border-input bg-background"
 
 const INPUT_CLASS =
-  "h-13 rounded-none border-transparent bg-transparent px-4 text-lg"
+  "h-13 rounded-none border-transparent bg-transparent px-4 text-lg dark:bg-transparent"
 
 const strength = (value: string) =>
   RULES.filter((rule) => rule.test(value)).length + (SYMBOL.test(value) ? 1 : 0)
@@ -250,7 +250,7 @@ function SignupForm({
                 value={form.country}
                 onValueChange={update("country")}
                 accessibilityLabel="Country or region"
-                className="h-13 w-full self-stretch rounded-none border-transparent bg-transparent ps-4"
+                className="h-13 w-full self-stretch rounded-none border-transparent bg-transparent ps-4 dark:bg-transparent"
               >
                 {COUNTRIES.map((country) => (
                   <PickerItem key={country} value={country}>

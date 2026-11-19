@@ -7,6 +7,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import com.esuiss.catalog.Section
 import com.esuiss.catalog.Story
 import com.esuiss.catalog.StoryGroup
@@ -15,6 +17,7 @@ import com.esuiss.ui.components.FieldDescription
 import com.esuiss.ui.components.FieldError
 import com.esuiss.ui.components.FieldLabel
 import com.esuiss.ui.components.Textarea
+import com.esuiss.ui.components.TextareaSize
 
 val textareaStories = StoryGroup(
     section = Section.Components,
@@ -29,6 +32,7 @@ val textareaStories = StoryGroup(
         Story("WithLabel") { TextareaWithLabel() },
         Story("Disabled") { TextareaDemo(placeholder = "Disabled", enabled = false) },
         Story("Invalid") { TextareaInvalid() },
+        Story("Large") { TextareaLarge() },
     ),
 )
 
@@ -40,6 +44,20 @@ private fun TextareaDemo(
 ) {
     var value by rememberSaveable { mutableStateOf(initial) }
     Textarea(value, { value = it }, Modifier.fillMaxWidth(), enabled = enabled, placeholder = placeholder)
+}
+
+@Composable
+private fun TextareaLarge() {
+    var value by rememberSaveable { mutableStateOf("") }
+    Textarea(
+        value,
+        { value = it },
+        Modifier
+            .fillMaxWidth()
+            .semantics { contentDescription = "Message" },
+        size = TextareaSize.Lg,
+        placeholder = "Write a message...",
+    )
 }
 
 @Composable

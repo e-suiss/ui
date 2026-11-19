@@ -21,17 +21,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Metrics
-import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
+
+enum class TextareaSize(
+    internal val minHeight: Dp,
+    internal val horizontalPadding: Dp,
+    internal val verticalPadding: Dp,
+) {
+    Default(64.dp, 12.dp, 12.dp),
+    Lg(54.dp, 16.dp, 14.dp),
+}
 
 @Composable
 fun Textarea(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    size: TextareaSize = TextareaSize.Default,
     enabled: Boolean = LocalFieldState.current.enabled,
     readOnly: Boolean = false,
     invalid: Boolean = LocalFieldState.current.invalid,
@@ -46,15 +56,16 @@ fun Textarea(
     val source = interactionSource ?: remember { MutableInteractionSource() }
     val focused by source.collectIsFocusedAsState()
     val shape = RoundedCornerShape(Metrics.Radius.textarea)
-    val textStyle = Typography.base.copy(color = colors.foreground)
+    val inset = LocalFieldInset.current
+    val textStyle = (if (size == TextareaSize.Lg) FormTextLg else Typography.base).copy(color = colors.foreground)
     CompositionLocalProvider(LocalTextSelectionColors provides formSelectionColors(colors)) {
         BasicTextField(
             value = value,
             onValueChange = onValueChange,
             modifier = modifier
                 .fillMaxWidth()
-                .heightIn(min = 64.dp)
-                .formInputSurface(colors, shape, focused, invalid, enabled)
+                .heightIn(min = size.minHeight)
+                .formInputSurface(colors, shape, focused, invalid, enabled, inset)
                 .then(if (invalid) Modifier.semantics { error("Invalid") } else Modifier),
             enabled = enabled,
             readOnly = readOnly,
@@ -68,7 +79,7 @@ fun Textarea(
             cursorBrush = SolidColor(colors.primary),
             decorationBox = { inner ->
                 Box(
-                    modifier = Modifier.padding(12.dp),
+                    modifier = Modifier.padding(horizontal = size.horizontalPadding, vertical = size.verticalPadding),
                     contentAlignment = Alignment.TopStart,
                 ) {
                     if (value.isEmpty() && placeholder != null) {

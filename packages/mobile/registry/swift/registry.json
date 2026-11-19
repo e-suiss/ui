@@ -628,6 +628,11 @@
           "target": "~/EsuissUI/Components/Haptics.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Item.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Item.swift"
@@ -733,6 +738,11 @@
           "target": "~/EsuissUI/Components/Field.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Item.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Item.swift"
@@ -793,6 +803,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Field.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Field.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Overlay.swift",
@@ -924,6 +939,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Field.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Field.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Overlay.swift",
@@ -1218,6 +1238,11 @@
           "target": "~/EsuissUI/Components/Haptics.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Separator.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Separator.swift"
@@ -1245,9 +1270,24 @@
           "target": "~/EsuissUI/Components/InputOTP.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Button.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Button.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/ButtonGroup.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/ButtonGroup.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Field.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Field.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Separator.swift",
@@ -1776,6 +1816,11 @@
           "target": "~/EsuissUI/Components/Haptics.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Separator.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Separator.swift"
@@ -1831,6 +1876,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Haptics.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Haptics.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Label.swift",
@@ -1919,6 +1969,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Field.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Field.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Overlay.swift",
@@ -2193,6 +2248,11 @@
           "target": "~/EsuissUI/Components/Haptics.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Overlay.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Overlay.swift"
@@ -2248,6 +2308,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Field.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Field.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Overlay.swift",
@@ -2569,6 +2634,11 @@
           "target": "~/EsuissUI/Components/Haptics.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Overlay.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Overlay.swift"
@@ -2706,6 +2776,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Field.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Field.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Overlay.swift",
@@ -2857,6 +2932,11 @@
           "target": "~/EsuissUI/Components/Haptics.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Overlay.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Overlay.swift"
@@ -2952,6 +3032,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Haptics.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Haptics.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Overlay.swift",
@@ -3060,6 +3145,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Field.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Field.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Overlay.swift",
@@ -3186,6 +3276,11 @@
           "target": "~/EsuissUI/Components/Field.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Overlay.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Overlay.swift"
@@ -3241,6 +3336,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Field.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Field.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Overlay.swift",
@@ -3426,6 +3526,16 @@
           "target": "~/EsuissUI/Interactions/OtpAutofill.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Button.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Button.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/ButtonGroup.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/ButtonGroup.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Checkbox.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Checkbox.swift"
@@ -3439,6 +3549,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Haptics.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Haptics.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/InputOTP.swift",
@@ -3902,6 +4017,11 @@
           "target": "~/EsuissUI/Components/Header.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/KeyboardScrollView.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/KeyboardScrollView.swift"
@@ -4134,6 +4254,11 @@
           "target": "~/EsuissUI/Components/Header.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/InputGroup.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/InputGroup.swift"
@@ -4230,6 +4355,11 @@
           "target": "~/EsuissUI/Components/Haptics.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/InputGroup.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/InputGroup.swift"
@@ -4319,6 +4449,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Haptics.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Haptics.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/InputGroup.swift",
@@ -4420,6 +4555,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Header.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Header.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Item.swift",
@@ -4612,6 +4752,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Header.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Header.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Item.swift",
@@ -4817,6 +4962,11 @@
           "target": "~/EsuissUI/Components/Field.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Item.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Item.swift"
@@ -4916,6 +5066,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Header.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Header.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Item.swift",
@@ -5453,6 +5608,11 @@
           "target": "~/EsuissUI/Components/Header.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Item.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Item.swift"
@@ -5552,6 +5712,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Header.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Header.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/KeyboardScrollView.swift",
@@ -5658,6 +5823,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Header.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Header.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Item.swift",
@@ -5898,6 +6068,11 @@
           "target": "~/EsuissUI/Components/Haptics.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/KeyboardScrollView.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/KeyboardScrollView.swift"
@@ -6007,6 +6182,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Header.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Header.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Item.swift",
@@ -6273,6 +6453,11 @@
           "target": "~/EsuissUI/Components/Haptics.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/KeyboardScrollView.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/KeyboardScrollView.swift"
@@ -6384,6 +6569,11 @@
           "target": "~/EsuissUI/Components/Haptics.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/KeyboardScrollView.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/KeyboardScrollView.swift"
@@ -6488,6 +6678,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Haptics.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Haptics.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Item.swift",
@@ -6599,6 +6794,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Header.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Header.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Item.swift",
@@ -6803,6 +7003,11 @@
           "target": "~/EsuissUI/Components/Header.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/InputGroup.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/InputGroup.swift"
@@ -6887,6 +7092,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Haptics.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Haptics.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/Item.swift",
@@ -7258,6 +7468,11 @@
           "target": "~/EsuissUI/Components/Haptics.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Item.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Item.swift"
@@ -7404,6 +7619,11 @@
           "target": "~/EsuissUI/Components/Header.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Item.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Item.swift"
@@ -7540,6 +7760,11 @@
           "target": "~/EsuissUI/Components/Header.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/InputGroup.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/InputGroup.swift"
@@ -7611,6 +7836,16 @@
           "target": "~/EsuissUI/Blocks/VerifyCode.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Button.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Button.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/ButtonGroup.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/ButtonGroup.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Checkbox.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Checkbox.swift"
@@ -7624,6 +7859,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Haptics.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Haptics.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/InputOTP.swift",
@@ -7677,6 +7917,16 @@
           "target": "~/EsuissUI/Blocks/VerifyDevice.swift"
         },
         {
+          "path": "swiftui/Sources/EsuissUI/Components/Button.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Button.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/ButtonGroup.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/ButtonGroup.swift"
+        },
+        {
           "path": "swiftui/Sources/EsuissUI/Components/Checkbox.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Checkbox.swift"
@@ -7690,6 +7940,11 @@
           "path": "swiftui/Sources/EsuissUI/Components/Haptics.swift",
           "type": "registry:file",
           "target": "~/EsuissUI/Components/Haptics.swift"
+        },
+        {
+          "path": "swiftui/Sources/EsuissUI/Components/Input.swift",
+          "type": "registry:file",
+          "target": "~/EsuissUI/Components/Input.swift"
         },
         {
           "path": "swiftui/Sources/EsuissUI/Components/InputOTP.swift",

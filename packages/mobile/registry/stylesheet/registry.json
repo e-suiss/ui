@@ -977,6 +977,7 @@
       ],
       "registryDependencies": [
         "@esuiss/icon",
+        "@esuiss/primitives-field",
         "@esuiss/primitives-otp-field",
         "@esuiss/text",
         "@esuiss/theme-suiss"
@@ -999,6 +1000,7 @@
       "title": "Input",
       "description": "A single-line text field for entering and editing short values.",
       "registryDependencies": [
+        "@esuiss/primitives-field",
         "@esuiss/primitives-input",
         "@esuiss/theme-suiss"
       ],

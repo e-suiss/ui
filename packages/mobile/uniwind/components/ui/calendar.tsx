@@ -100,7 +100,7 @@ function CalendarDropdown({
       <SelectTrigger
         size="sm"
         accessibilityLabel={label}
-        className="h-auto gap-1 rounded-full bg-transparent px-1.5 py-0.5"
+        className="h-auto gap-1 rounded-full border-transparent bg-transparent px-1.5 py-0.5 dark:bg-transparent"
       >
         <SelectValue
           className={cn("flex-none font-semibold", CAPTION_TEXT[size])}

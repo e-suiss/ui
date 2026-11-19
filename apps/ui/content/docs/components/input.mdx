@@ -472,7 +472,7 @@ Pass a `TextInput` prop such as `secureTextEntry`, `keyboardType` or `inputMode`
 
 ### Sizes
 
-The `sm`, `md` and default sizes.
+The `sm`, `md`, default and `lg` sizes, each next to a matching button. `lg` is 54 tall with 17 point text, for forms such as sign-in screens.
 
 <NativeExample name="input-sizes" />
 
@@ -540,7 +540,7 @@ The text field.
 
 Also accepts the props of `React.ComponentProps<typeof InputPrimitive.Root>`.
 
-`size` sets the height and text size. The value works controlled with `value` and `onValueChange(value, details)`, or uncontrolled with `defaultValue`. Inside a `Field`, the input picks up the field's label, description, invalid and disabled state. `className` can be a function that receives the state (`focused`, `invalid`, `disabled`, `filled`, …) and returns classes. In Uniwind and NativeWind, a focused field also draws a `ring-3 ring-ring/50` focus ring.
+`size` sets the height and text size. The value works controlled with `value` and `onValueChange(value, details)`, or uncontrolled with `defaultValue`. Inside a `Field`, the input picks up the field's label, description, invalid and disabled state. `className` can be a function that receives the state (`focused`, `invalid`, `disabled`, `filled`, …) and returns classes. Fields have a `border` outline; focus turns it to `ring` with a solid ring, and an invalid field gets a thicker `destructive` border with a tint.
 
 </Only>
 
@@ -552,7 +552,7 @@ Style that creates `InputStyle`.
 
 | Parameter | Type | Default |
 | --- | --- | --- |
-| `size` | `InputStyle.Size`: `.default` \| `.md` \| `.sm` | `.default` |
+| `size` | `InputStyle.Size`: `.default` \| `.md` \| `.sm` \| `.lg` | `.default` |
 
 </Only>
 
@@ -560,7 +560,7 @@ Style that creates `InputStyle`.
 
 ### InputSize
 
-Values: `Default`, `Md`, `Sm`.
+Values: `Default`, `Md`, `Sm`, `Lg`.
 
 ### Input
 
@@ -571,7 +571,7 @@ The text field.
 | `value` | `String` | - |
 | `onValueChange` | `(String) -> Unit` | - |
 | `modifier` | `Modifier` | `Modifier` |
-| `size` | `InputSize`: `Default` \| `Md` \| `Sm` | `InputSize.Default` |
+| `size` | `InputSize`: `Default` \| `Md` \| `Sm` \| `Lg` | `InputSize.Default` |
 | `enabled` | `Boolean` | `LocalFieldState.current.enabled` |
 | `readOnly` | `Boolean` | `false` |
 | `invalid` | `Boolean` | `LocalFieldState.current.invalid` |

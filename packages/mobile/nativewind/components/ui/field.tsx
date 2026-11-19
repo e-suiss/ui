@@ -10,6 +10,8 @@ type FieldGroupVariant = "default" | "inset"
 
 type FieldOrientation = "vertical" | "horizontal" | "responsive"
 
+type FieldSize = "default" | "lg"
+
 interface FieldGroupItemContextValue {
   variant: FieldGroupVariant
   index: number
@@ -20,7 +22,9 @@ const FieldGroupItemContext =
 
 const FieldSetInsetContext = React.createContext(false)
 
-const FieldInsetContext = React.createContext(false)
+const FieldInsetContext = FieldPrimitive.InsetContext
+
+const FieldSizeContext = React.createContext<FieldSize>("default")
 
 function FieldSet({
   className,
@@ -118,32 +122,37 @@ const ORIENTATION_CLASS: Record<FieldOrientation, string> = {
 function Field({
   className,
   orientation = "vertical",
+  size = "default",
   children,
   ...props
 }: React.ComponentProps<typeof FieldPrimitive.Root> & {
   orientation?: FieldOrientation
+  size?: FieldSize
 }) {
   const item = React.useContext(FieldGroupItemContext)
   const inset = item?.variant === "inset"
   return (
     <FieldGroupItemContext.Provider value={null}>
       <FieldInsetContext.Provider value={inset}>
-        <FieldPrimitive.Root
-          className={(state) =>
-            cn(
-              "w-full gap-3",
-              ORIENTATION_CLASS[orientation],
-              inset && "relative min-h-11 justify-center px-4 py-1.5",
-              resolveClassName(className, state)
-            )
-          }
-          {...props}
-        >
-          {inset && item.index > 0 ? (
-            <View className="absolute end-0 start-4 top-0 h-px bg-border" />
-          ) : null}
-          {children}
-        </FieldPrimitive.Root>
+        <FieldSizeContext.Provider value={size}>
+          <FieldPrimitive.Root
+            className={(state) =>
+              cn(
+                "w-full gap-3",
+                ORIENTATION_CLASS[orientation],
+                size === "lg" && "gap-2",
+                inset && "relative min-h-11 justify-center px-4 py-1.5",
+                resolveClassName(className, state)
+              )
+            }
+            {...props}
+          >
+            {inset && item.index > 0 ? (
+              <View className="absolute end-0 start-4 top-0 h-px bg-border" />
+            ) : null}
+            {children}
+          </FieldPrimitive.Root>
+        </FieldSizeContext.Provider>
       </FieldInsetContext.Provider>
     </FieldGroupItemContext.Provider>
   )
@@ -161,11 +170,14 @@ function FieldLabel({
   ...props
 }: React.ComponentProps<typeof FieldPrimitive.Label>) {
   const inset = React.useContext(FieldInsetContext)
+  const size = React.useContext(FieldSizeContext)
   return (
     <FieldPrimitive.Label
       className={(state) =>
         cn(
           "text-base font-semibold text-foreground",
+          size === "lg" &&
+            "ps-0.5 text-[13px] font-medium text-muted-foreground",
           inset && "font-normal",
           state.disabled && "opacity-50",
           resolveClassName(className, state)

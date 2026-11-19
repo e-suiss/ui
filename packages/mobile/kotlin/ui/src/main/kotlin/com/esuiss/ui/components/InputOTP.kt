@@ -54,7 +54,7 @@ import com.adamglin.phosphoricons.Regular
 import com.adamglin.phosphoricons.regular.Minus
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Palette
-import com.esuiss.ui.theme.Radius
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Typography
 
 internal enum class OtpTone { Default, Verifying, Verified, Invalid }
@@ -156,20 +156,22 @@ fun InputOTPSlot(index: Int, modifier: Modifier = Modifier) {
     val char = state.value.getOrNull(index)
     val active = state.focused && state.maxLength > 0 &&
         index == state.value.length.coerceAtMost(state.maxLength - 1)
-    val shape = RoundedCornerShape(Radius.lg)
-    val dangerFill = colors.destructive.copy(alpha = if (colors.isDark) 0.1f else 0.05f)
+    val shape = RoundedCornerShape(Metrics.Radius.input)
     val background = when {
         tone == OtpTone.Verified -> Palette.green500.copy(alpha = if (colors.isDark) 0.2f else 0.1f)
-        tone == OtpTone.Invalid || state.invalid -> dangerFill
-        else -> colors.secondary
+        else -> formFieldBackground(colors, tone == OtpTone.Invalid || state.invalid)
     }
     val border = when {
-        !state.enabled -> Color.Transparent
         tone == OtpTone.Verified -> Palette.green500
         tone == OtpTone.Invalid -> colors.destructive
-        active -> colors.primary
         state.invalid -> colors.destructive
-        else -> Color.Transparent
+        active -> colors.ring
+        else -> colors.border
+    }
+    val borderWidth = when {
+        tone == OtpTone.Verified || tone == OtpTone.Invalid || state.invalid -> if (active) 2.dp else 1.5.dp
+        active -> 2.dp
+        else -> 1.dp
     }
     val foreground = when {
         tone == OtpTone.Verified -> if (colors.isDark) Palette.green400 else Palette.green600
@@ -216,7 +218,7 @@ fun InputOTPSlot(index: Int, modifier: Modifier = Modifier) {
             }
             .size(width = 44.dp, height = 52.dp)
             .background(animatedBackground, shape)
-            .border(1.5.dp, animatedBorder, shape),
+            .border(borderWidth, animatedBorder, shape),
         contentAlignment = Alignment.Center,
     ) {
         if (char != null) {

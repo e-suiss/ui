@@ -667,6 +667,8 @@ npx expo install phosphor-react-native react-native-reanimated react-native-scre
 
 <ComponentSource path="swift/Components/Field.swift" />
 
+<ComponentSource path="swift/Components/Input.swift" />
+
 <ComponentSource path="swift/Components/Overlay.swift" />
 
 <ComponentSource path="swift/Components/Separator.swift" />
@@ -1007,6 +1009,12 @@ The `sm` trigger size.
 
 <NativeExample name="select-small" />
 
+### Large
+
+The `lg` trigger size, 54 tall with 17 point text.
+
+<NativeExample name="select-large" />
+
 ### Grouped
 
 Two labeled groups divided by a separator.
@@ -1092,12 +1100,12 @@ Pressable field that opens the list.
 | Prop | Type | Default |
 | --- | --- | --- |
 | `children` | `React.ReactNode` | - |
-| `size` | `"default" \| "sm"` | `"default"` |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` |
 | `invalid` | `boolean` | - |
 
 Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Trigger>`.
 
-`invalid` shows the destructive border, and falls back to the invalid state of an enclosing field. The trigger uses `bg-secondary`.
+`invalid` shows the destructive border, and falls back to the invalid state of an enclosing field. The trigger draws the same outlined field as `Input`.
 
 ### SelectContent
 
@@ -1141,7 +1149,7 @@ Also accepts the props of `React.ComponentProps<typeof SelectPrimitive.Separator
 
 ### SelectSize
 
-Values: `.default`, `.sm`.
+Values: `.default`, `.sm`, `.lg`.
 
 ### SelectField
 
@@ -1149,7 +1157,7 @@ Values: `.default`, `.sm`.
 | --- | --- | --- |
 | `selection` | `Binding<Value?>` | - |
 | `placeholder` | `LocalizedStringKey` | `"Select"` |
-| `size` | `Size`: `.default` \| `.sm` | `.default` |
+| `size` | `Size`: `.default` \| `.sm` \| `.lg` | `.default` |
 | `content` | `() -> Content` | - |
 
 ### SelectItem
@@ -1192,7 +1200,7 @@ Takes no parameters.
 
 ### SelectSize
 
-Values: `Default`, `Sm`.
+Values: `Default`, `Sm`, `Lg`.
 
 ### SelectOption
 
@@ -1213,7 +1221,7 @@ The root that holds the selected value and the open state.
 | `options` | `List<SelectOption>` | - |
 | `modifier` | `Modifier` | `Modifier` |
 | `placeholder` | `String` | `""` |
-| `size` | `SelectSize`: `Default` \| `Sm` | `SelectSize.Default` |
+| `size` | `SelectSize`: `Default` \| `Sm` \| `Lg` | `SelectSize.Default` |
 | `invalid` | `Boolean?` | `null` |
 | `enabled` | `Boolean` | `true` |
 | `side` | `PopupSide` | `PopupSide.Bottom` |

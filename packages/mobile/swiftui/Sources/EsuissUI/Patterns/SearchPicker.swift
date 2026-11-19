@@ -47,8 +47,6 @@ public struct SearchPicker: View {
   @State private var open = false
   @CompactLayout private var compact
   @Environment(\.isEnabled) private var isEnabled
-  @Environment(\.isInvalid) private var invalid
-  @Environment(\.colorScheme) private var colorScheme
 
   public init(
     items: [SearchPickerItem],
@@ -103,7 +101,7 @@ public struct SearchPicker: View {
   }
 
   private var trigger: some View {
-    let shape = RoundedRectangle(cornerRadius: Radius.lg, style: .continuous)
+    let shape = RoundedRectangle(cornerRadius: Metrics.Radius.input, style: .continuous)
     let selected = selected
     return Button {
       open = true
@@ -129,10 +127,7 @@ public struct SearchPicker: View {
       }
       .padding(.horizontal, 12)
       .frame(height: 44)
-      .background(background, in: shape)
-      .overlay {
-        if invalid { shape.strokeBorder(EsuissColor.destructive) }
-      }
+      .fieldSurface(shape)
       .contentShape(shape)
       .opacity(isEnabled ? 1 : 0.5)
     }
@@ -140,10 +135,6 @@ public struct SearchPicker: View {
     .accessibilityHint(Text("Shows options"))
   }
 
-  private var background: Color {
-    if invalid { return EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) }
-    return EsuissColor.secondary
-  }
 }
 
 struct SearchPickerSheet: View {

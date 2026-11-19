@@ -12,8 +12,6 @@ public struct Combobox<Item: Hashable & Sendable>: View {
 
   @State private var open = false
   @Environment(\.isEnabled) private var isEnabled
-  @Environment(\.isInvalid) private var invalid
-  @Environment(\.colorScheme) private var colorScheme
 
   public init(
     _ items: [Item],
@@ -71,12 +69,7 @@ public struct Combobox<Item: Hashable & Sendable>: View {
   }
 
   private var shape: RoundedRectangle {
-    RoundedRectangle(cornerRadius: Radius.lg, style: .continuous)
-  }
-
-  private var background: Color {
-    if invalid { return EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) }
-    return EsuissColor.secondary
+    RoundedRectangle(cornerRadius: Metrics.Radius.input, style: .continuous)
   }
 
   @ViewBuilder private var trigger: some View {
@@ -132,10 +125,7 @@ public struct Combobox<Item: Hashable & Sendable>: View {
     }
     .padding(.trailing, 8)
     .frame(height: 44)
-    .background(background, in: shape)
-    .overlay {
-      if invalid { shape.strokeBorder(EsuissColor.destructive) }
-    }
+    .fieldSurface(shape)
     .opacity(isEnabled ? 1 : 0.5)
   }
 
@@ -157,10 +147,7 @@ public struct Combobox<Item: Hashable & Sendable>: View {
     .padding(.horizontal, values.isEmpty ? 12 : 6)
     .padding(.vertical, 6)
     .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-    .background(background, in: shape)
-    .overlay {
-      if invalid { shape.strokeBorder(EsuissColor.destructive) }
-    }
+    .fieldSurface(shape)
     .opacity(isEnabled ? 1 : 0.5)
     .contentShape(shape)
     .onTapGesture {
@@ -340,11 +327,8 @@ struct ComboboxPanel<Item: Hashable & Sendable>: View {
         .tint(EsuissColor.primary)
         .padding(.horizontal, 12)
         .frame(height: 32)
-        .background(EsuissColor.secondary, in: RoundedRectangle(cornerRadius: Radius.lg, style: .continuous))
-        .overlay {
-          RoundedRectangle(cornerRadius: Radius.lg, style: .continuous)
-            .strokeBorder(EsuissColor.border.opacity(0.3))
-        }
+        .fieldSurface(RoundedRectangle(cornerRadius: Metrics.Radius.input, style: .continuous))
+        .environment(\.isInvalid, false)
         .padding([.horizontal, .top], 6)
       ViewThatFits(in: .vertical) {
         list

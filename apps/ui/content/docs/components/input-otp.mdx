@@ -180,7 +180,7 @@ Each part sets a `data-slot`, such as `input-otp-slot`, for styling.
 
 <Only platform="rn">
 
-`InputOTP` is backed by one hidden `TextInput` and shows each character in an `InputOTPSlot`. The active slot gets a `border-primary` border and a blinking caret. The hidden input uses the one-time-code autofill hints, so codes from messages can be filled in automatically, and pasting fills every slot.
+`InputOTP` is backed by one hidden `TextInput` and shows each character in an `InputOTPSlot`. The active slot gets the focused field look, a `ring` border with a solid ring, and a blinking caret. The hidden input uses the one-time-code autofill hints, so codes from messages can be filled in automatically, and pasting fills every slot.
 
 Group slots with `InputOTPGroup` and place an `InputOTPSeparator` between groups for codes such as `123-456`.
 
@@ -262,6 +262,14 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="uniwind/components/primitives/event-details.ts" plain />
 
+<ComponentSource path="uniwind/components/primitives/field.tsx" plain />
+
+<ComponentSource path="uniwind/components/primitives/fieldset.tsx" plain />
+
+<ComponentSource path="uniwind/components/primitives/font.ts" plain />
+
+<ComponentSource path="uniwind/components/primitives/form.tsx" plain />
+
 <ComponentSource path="uniwind/components/primitives/hooks.ts" plain />
 
 <ComponentSource path="uniwind/components/primitives/merge-props.ts" plain />
@@ -269,6 +277,8 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 <ComponentSource path="uniwind/components/primitives/otp-field.tsx" plain />
 
 <ComponentSource path="uniwind/components/primitives/types.ts" plain />
+
+<ComponentSource path="uniwind/components/primitives/use-controllable-state.ts" plain />
 
 <ComponentSource path="uniwind/components/primitives/use-render.tsx" plain />
 
@@ -294,6 +304,14 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 
 <ComponentSource path="nativewind/components/primitives/event-details.ts" plain />
 
+<ComponentSource path="nativewind/components/primitives/field.tsx" plain />
+
+<ComponentSource path="nativewind/components/primitives/fieldset.tsx" plain />
+
+<ComponentSource path="nativewind/components/primitives/font.ts" plain />
+
+<ComponentSource path="nativewind/components/primitives/form.tsx" plain />
+
 <ComponentSource path="nativewind/components/primitives/hooks.ts" plain />
 
 <ComponentSource path="nativewind/components/primitives/merge-props.ts" plain />
@@ -301,6 +319,8 @@ npx expo install cn phosphor-react-native react-native-reanimated react-native-s
 <ComponentSource path="nativewind/components/primitives/otp-field.tsx" plain />
 
 <ComponentSource path="nativewind/components/primitives/types.ts" plain />
+
+<ComponentSource path="nativewind/components/primitives/use-controllable-state.ts" plain />
 
 <ComponentSource path="nativewind/components/primitives/use-render.tsx" plain />
 
@@ -326,6 +346,14 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="stylesheet/components/primitives/event-details.ts" plain />
 
+<ComponentSource path="stylesheet/components/primitives/field.tsx" plain />
+
+<ComponentSource path="stylesheet/components/primitives/fieldset.tsx" plain />
+
+<ComponentSource path="stylesheet/components/primitives/font.ts" plain />
+
+<ComponentSource path="stylesheet/components/primitives/form.tsx" plain />
+
 <ComponentSource path="stylesheet/components/primitives/hooks.ts" plain />
 
 <ComponentSource path="stylesheet/components/primitives/merge-props.ts" plain />
@@ -333,6 +361,8 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 <ComponentSource path="stylesheet/components/primitives/otp-field.tsx" plain />
 
 <ComponentSource path="stylesheet/components/primitives/types.ts" plain />
+
+<ComponentSource path="stylesheet/components/primitives/use-controllable-state.ts" plain />
 
 <ComponentSource path="stylesheet/components/primitives/use-render.tsx" plain />
 
@@ -368,7 +398,13 @@ npx expo install phosphor-react-native react-native-reanimated react-native-svg 
 
 <ComponentSource path="swift/Components/InputOTP.swift" />
 
+<ComponentSource path="swift/Components/Button.swift" />
+
+<ComponentSource path="swift/Components/ButtonGroup.swift" />
+
 <ComponentSource path="swift/Components/Field.swift" />
+
+<ComponentSource path="swift/Components/Input.swift" />
 
 <ComponentSource path="swift/Components/Separator.swift" />
 

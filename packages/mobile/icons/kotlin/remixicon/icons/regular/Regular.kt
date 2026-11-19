@@ -363,6 +363,9 @@ val RegularIcons.Palette: ImageVector
 val RegularIcons.PaperPlaneTilt: ImageVector
   get() = iconVector("PaperPlaneTilt", IconData.PaperPlaneTilt, IconWeight.Regular)
 
+val RegularIcons.Paperclip: ImageVector
+  get() = iconVector("Paperclip", IconData.Paperclip, IconWeight.Regular)
+
 val RegularIcons.Path: ImageVector
   get() = iconVector("Path", IconData.Path, IconWeight.Regular)
 

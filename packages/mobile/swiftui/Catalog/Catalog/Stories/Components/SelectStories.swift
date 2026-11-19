@@ -12,6 +12,9 @@ enum SelectStories {
     Story("Small") {
       SelectDemo(size: .sm)
     },
+    Story("Large") {
+      SelectLargeDemo()
+    },
     Story("Grouped") {
       SelectGroupedDemo()
     },
@@ -83,6 +86,22 @@ private struct SelectDemo: View {
       }
     }
     .frame(width: 192)
+  }
+}
+
+private struct SelectLargeDemo: View {
+  @State private var value: String?
+
+  var body: some View {
+    SelectField(selection: $value, placeholder: "Select a fruit", size: .lg) {
+      SelectItem("Mango", value: "mango")
+      SelectItem("Banana", value: "banana")
+      SelectItem("Blueberry", value: "blueberry")
+      SelectItem("Grapes", value: "grapes")
+      SelectItem("Pineapple", value: "pineapple")
+    }
+    .frame(width: 256)
+    .accessibilityLabel(Text("Fruit"))
   }
 }
 

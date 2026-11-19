@@ -13,6 +13,7 @@ import {
   ArrowTurnBackwardIcon as HugeArrowTurnBackward,
   ArrowUp01Icon as HugeArrowUp01,
   ArrowUpRight01Icon as HugeArrowUpRight01,
+  AttachmentIcon as HugeAttachment,
   BluetoothIcon as HugeBluetooth,
   Book02Icon as HugeBook02,
   Bookmark01Icon as HugeBookmark01,
@@ -338,6 +339,7 @@ export const NotePencilIcon = icon(HugePencilEdit02)
 export const PackageIcon = icon(HugePackage)
 export const PaletteIcon = icon(HugePaintBoard)
 export const PaperPlaneTiltIcon = icon(HugeSent)
+export const PaperclipIcon = icon(HugeAttachment)
 export const PathIcon = icon(HugeRoute01)
 export const PauseIcon = icon(HugePause)
 export const PencilSimpleIcon = icon(HugePencilEdit01)

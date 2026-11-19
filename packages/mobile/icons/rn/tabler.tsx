@@ -173,6 +173,7 @@ import {
   IconPackage,
   IconPalette,
   IconPaletteFilled,
+  IconPaperclip,
   IconPencil,
   IconPencilFilled,
   IconPhoto,
@@ -443,6 +444,7 @@ export const NotePencilIcon = icon(IconEdit, IconEditFilled)
 export const PackageIcon = icon(IconPackage)
 export const PaletteIcon = icon(IconPalette, IconPaletteFilled)
 export const PaperPlaneTiltIcon = icon(IconSend, IconSendFilled)
+export const PaperclipIcon = icon(IconPaperclip)
 export const PathIcon = icon(IconRoute)
 export const PauseIcon = icon(IconPlayerPause, IconPlayerPauseFilled)
 export const PencilSimpleIcon = icon(IconPencil, IconPencilFilled)

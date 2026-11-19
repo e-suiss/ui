@@ -34,6 +34,7 @@ val selectStories = StoryGroup(
         Story("Default") { SelectDemo() },
         Story("WithValue") { SelectDemo(initial = "blueberry") },
         Story("Small") { SelectDemo(size = SelectSize.Sm) },
+        Story("Large") { SelectLarge() },
         Story("Grouped") { SelectGrouped() },
         Story("WithLabel") { SelectWithLabel() },
         Story("Disabled") { SelectDemo(initial = "mango", enabled = false) },
@@ -79,6 +80,29 @@ private fun SelectDemo(
         SelectGroup {
             SelectLabel("Fruits")
             selectFruits.forEach { SelectItem(it.value, it.label) }
+        }
+    }
+}
+
+@Composable
+private fun SelectLarge() {
+    var value by rememberSaveable { mutableStateOf<String?>(null) }
+    Select(
+        value = value,
+        onValueChange = { value = it },
+        displayValue = null,
+        modifier = Modifier
+            .width(256.dp)
+            .semantics { contentDescription = "Fruit" },
+        placeholder = "Select a fruit",
+        size = SelectSize.Lg,
+    ) {
+        SelectGroup {
+            SelectItem("apple", "Apple")
+            SelectItem("banana", "Banana")
+            SelectItem("blueberry", "Blueberry")
+            SelectItem("grapes", "Grapes")
+            SelectItem("pineapple", "Pineapple")
         }
     }
 }

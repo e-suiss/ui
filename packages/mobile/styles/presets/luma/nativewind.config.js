@@ -57,6 +57,7 @@ module.exports = {
         "destructive-15": "var(--destructive-15)",
         "destructive-20": "var(--destructive-20)",
         "foreground-5": "var(--foreground-5)",
+        "foreground-6": "var(--foreground-6)",
         "foreground-10": "var(--foreground-10)",
         "foreground-15": "var(--foreground-15)",
         "foreground-20": "var(--foreground-20)",

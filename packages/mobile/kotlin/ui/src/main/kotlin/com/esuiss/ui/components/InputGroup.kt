@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.BasicTextField
@@ -38,6 +40,7 @@ import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Metrics
@@ -46,11 +49,17 @@ import com.esuiss.ui.theme.Typography
 
 enum class InputGroupAddonAlign { InlineStart, InlineEnd, BlockStart, BlockEnd }
 
+enum class InputGroupSize(internal val height: Dp) {
+    Default(Metrics.Height.input),
+    Lg(54.dp),
+}
+
 enum class InputGroupButtonSize(internal val buttonSize: ButtonSize) {
     Xs(ButtonSize.Xs),
     Sm(ButtonSize.Sm),
     IconXs(ButtonSize.IconXs),
     IconSm(ButtonSize.IconSm),
+    Icon(ButtonSize.Icon),
 }
 
 private object InputGroupControl
@@ -61,6 +70,7 @@ private class InputGroupState {
     var focused by mutableStateOf(false)
     var enabled by mutableStateOf(true)
     var invalid by mutableStateOf(false)
+    var size by mutableStateOf(InputGroupSize.Default)
     var inlineStart by mutableIntStateOf(0)
     var inlineEnd by mutableIntStateOf(0)
     var blockStart by mutableIntStateOf(0)
@@ -81,6 +91,7 @@ private val LocalInputGroupAddon = staticCompositionLocalOf<InputGroupAddonState
 @Composable
 fun InputGroup(
     modifier: Modifier = Modifier,
+    size: InputGroupSize = InputGroupSize.Default,
     enabled: Boolean = LocalFieldState.current.enabled,
     invalid: Boolean = LocalFieldState.current.invalid,
     content: @Composable () -> Unit,
@@ -89,6 +100,7 @@ fun InputGroup(
     val state = remember { InputGroupState() }
     state.enabled = enabled
     state.invalid = invalid
+    state.size = size
     val tall = state.blockStart > 0 || state.blockEnd > 0 || state.multiline > 0
     val item = rememberButtonGroupItem(LocalButtonGroup.current, RoundedCornerShape(if (tall) Metrics.Radius.textarea else Metrics.Radius.input))
     CompositionLocalProvider(
@@ -100,11 +112,11 @@ fun InputGroup(
             modifier = modifier
                 .then(item.modifier)
                 .fillMaxWidth()
-                .formInputSurface(colors, item.shape, state.focused, invalid, enabled)
+                .formInputSurface(colors, item.shape, state.focused, invalid, enabled, LocalFieldInset.current)
                 .semantics { isTraversalGroup = true },
         ) { measurables, constraints ->
             val width = if (constraints.hasBoundedWidth) constraints.maxWidth else 320.dp.roundToPx()
-            val rowMin = Metrics.Height.input.roundToPx()
+            val rowMin = size.height.roundToPx()
             val blockStart = measurables.filter { it.layoutId == InputGroupAddonAlign.BlockStart }
                 .map { it.measure(Constraints(minWidth = width, maxWidth = width)) }
             val blockEnd = measurables.filter { it.layoutId == InputGroupAddonAlign.BlockEnd }
@@ -172,10 +184,18 @@ fun InputGroupAddon(
     val enabled = group?.enabled ?: true
     val hasButton = addon.buttons > 0
     val hasControl = (group?.controls ?: 0) > 0 && (group?.multiline ?: 0) == 0
-    val edge = if (hasButton) 8.dp else 12.dp
+    val large = group?.size == InputGroupSize.Lg
+    val startEdge = when {
+        large -> if (hasButton) 12.dp else 16.dp
+        else -> if (hasButton) 8.dp else 12.dp
+    }
+    val endEdge = when {
+        large -> if (hasButton) 9.dp else 16.dp
+        else -> if (hasButton) 8.dp else 12.dp
+    }
     val padding = when (align) {
-        InputGroupAddonAlign.InlineStart -> Modifier.padding(start = edge, top = 8.dp, bottom = 8.dp)
-        InputGroupAddonAlign.InlineEnd -> Modifier.padding(end = edge, top = 8.dp, bottom = 8.dp)
+        InputGroupAddonAlign.InlineStart -> Modifier.padding(start = startEdge, top = 8.dp, bottom = 8.dp)
+        InputGroupAddonAlign.InlineEnd -> Modifier.padding(end = endEdge, top = 8.dp, bottom = 8.dp)
         InputGroupAddonAlign.BlockStart -> Modifier.padding(start = 12.dp, end = 12.dp, top = if (hasControl) 14.dp else 12.dp)
         InputGroupAddonAlign.BlockEnd -> Modifier.padding(start = 12.dp, end = 12.dp, bottom = if (hasControl) 14.dp else 12.dp)
     }
@@ -194,7 +214,7 @@ fun InputGroupAddon(
     ) {
         CompositionLocalProvider(
             LocalInputGroupAddon provides addon,
-            LocalContentStyle provides Typography.base.copy(color = foreground),
+            LocalContentStyle provides (if (large) FormTextLg else Typography.base).copy(color = foreground),
             LocalContentColor provides foreground,
             LocalIconSize provides 16.dp,
         ) {
@@ -238,12 +258,14 @@ fun InputGroupButton(
         }
     }
     val groupEnabled = LocalInputGroup.current?.enabled ?: true
-    Button(
+    ButtonBase(
         onClick = onClick,
-        modifier = modifier,
+        modifier = if (size == InputGroupButtonSize.Icon) modifier.size(36.dp) else modifier,
         variant = variant,
         size = size.buttonSize,
+        block = false,
         enabled = enabled && groupEnabled,
+        shape = if (size == InputGroupButtonSize.Icon) CircleShape else null,
     ) {
         CompositionLocalProvider(LocalIconSize provides if (size == InputGroupButtonSize.Xs) 14.dp else LocalIconSize.current) {
             content()
@@ -294,9 +316,18 @@ fun InputGroupInput(
     val colors = EsuissTheme.colors
     val enabled = group?.enabled ?: true
     val invalid = group?.invalid ?: false
-    val textStyle = Typography.base.copy(color = colors.foreground)
-    val start = if ((group?.inlineStart ?: 0) > 0) 6.dp else 12.dp
-    val end = if ((group?.inlineEnd ?: 0) > 0) 6.dp else 12.dp
+    val large = group?.size == InputGroupSize.Lg
+    val textStyle = (if (large) FormTextLg else Typography.base).copy(color = colors.foreground)
+    val start = when {
+        large -> 16.dp
+        (group?.inlineStart ?: 0) > 0 -> 6.dp
+        else -> 12.dp
+    }
+    val end = when {
+        large -> 16.dp
+        (group?.inlineEnd ?: 0) > 0 -> 6.dp
+        else -> 12.dp
+    }
     val hasBlockStart = (group?.blockStart ?: 0) > 0
     val hasBlockEnd = (group?.blockEnd ?: 0) > 0
     val top = when {
@@ -361,7 +392,8 @@ fun InputGroupTextarea(
     val colors = EsuissTheme.colors
     val enabled = group?.enabled ?: true
     val invalid = group?.invalid ?: false
-    val textStyle = Typography.base.copy(color = colors.foreground)
+    val large = group?.size == InputGroupSize.Lg
+    val textStyle = (if (large) FormTextLg else Typography.base).copy(color = colors.foreground)
     BasicTextField(
         value = value,
         onValueChange = onValueChange,
@@ -381,7 +413,7 @@ fun InputGroupTextarea(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 10.dp),
+                    .padding(horizontal = if (large) 16.dp else 12.dp, vertical = if (large) 14.dp else 10.dp),
                 contentAlignment = Alignment.TopStart,
             ) {
                 if (value.isEmpty() && placeholder != null) {

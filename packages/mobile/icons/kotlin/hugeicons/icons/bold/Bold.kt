@@ -363,6 +363,9 @@ val BoldIcons.Palette: ImageVector
 val BoldIcons.PaperPlaneTilt: ImageVector
   get() = iconVector("PaperPlaneTilt", IconData.PaperPlaneTilt, IconWeight.Bold)
 
+val BoldIcons.Paperclip: ImageVector
+  get() = iconVector("Paperclip", IconData.Paperclip, IconWeight.Bold)
+
 val BoldIcons.Path: ImageVector
   get() = iconVector("Path", IconData.Path, IconWeight.Bold)
 

@@ -20,8 +20,11 @@ type InputGroupAlign =
   | "block-start"
   | "block-end"
 
+type InputGroupSize = "default" | "lg"
+
 type InputGroupContextProps = {
   block: boolean
+  size: InputGroupSize
   disabled: boolean
   inputRef: React.RefObject<React.ComponentRef<typeof TextInput> | null>
   setFocused: (focused: boolean) => void
@@ -51,8 +54,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: metrics.radius.input,
     borderWidth: 1,
-    borderColor: "transparent",
   },
+  lg: { height: 54 },
+  invalid: { borderWidth: 1.5 },
   auto: { height: "auto", borderRadius: metrics.radius.textarea },
   block: { flexDirection: "column", alignItems: "stretch" },
   addon: {
@@ -76,11 +80,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingBottom: 12,
   },
+  "inline-start-lg": { paddingStart: 16 },
+  "inline-end-lg": { paddingEnd: 16 },
+  "inline-start-lg-button": { paddingStart: 12 },
+  "inline-end-lg-button": { paddingEnd: 9 },
   control: {
     borderRadius: 0,
     borderWidth: 0,
     backgroundColor: "transparent",
+    boxShadow: [],
   },
+  controlLg: { fontSize: 17, paddingHorizontal: 16 },
+  textareaLg: { fontSize: 17, paddingHorizontal: 16, paddingVertical: 14 },
+  icon: { width: 36, height: 36, paddingHorizontal: 0 },
 })
 
 function withAlpha(color: string, alpha: number) {
@@ -89,6 +101,12 @@ function withAlpha(color: string, alpha: number) {
   const g = Number.parseInt(color.slice(3, 5), 16)
   const b = Number.parseInt(color.slice(5, 7), 16)
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
+function ring(color: string) {
+  return {
+    boxShadow: [{ offsetX: 0, offsetY: 0, spreadDistance: 1, color }],
+  }
 }
 
 function alignOf(node: React.ReactNode): InputGroupAlign | null {
@@ -102,8 +120,13 @@ function InputGroup({
   children,
   disabled = false,
   invalid,
+  size = "default",
   ...props
-}: ViewProps & { disabled?: boolean; invalid?: boolean }) {
+}: ViewProps & {
+  disabled?: boolean
+  invalid?: boolean
+  size?: InputGroupSize
+}) {
   const { colors, isDark } = useTheme()
   const field = useFieldRootContext()
   const inputRef = React.useRef<React.ComponentRef<typeof TextInput> | null>(
@@ -132,8 +155,8 @@ function InputGroup({
     ),
   ]
   const contextValue = React.useMemo(
-    () => ({ block, disabled: isDisabled, inputRef, setFocused }),
-    [block, isDisabled]
+    () => ({ block, size, disabled: isDisabled, inputRef, setFocused }),
+    [block, size, isDisabled]
   )
   return (
     <InputGroupContext.Provider value={contextValue}>
@@ -141,14 +164,27 @@ function InputGroup({
         role="group"
         style={[
           styles.root,
-          { backgroundColor: colors.secondary },
+          size === "lg" && styles.lg,
+          {
+            backgroundColor: isDark
+              ? withAlpha(colors.foreground, 0.06)
+              : colors.background,
+            borderColor: colors.border,
+          },
           (block || multiline) && styles.auto,
           block && styles.block,
-          focused && { borderColor: colors.ring },
-          isInvalid && {
-            borderColor: colors.destructive,
-            backgroundColor: withAlpha(colors.destructive, isDark ? 0.1 : 0.05),
-          },
+          focused && { borderColor: colors.ring, ...ring(colors.ring) },
+          isInvalid && [
+            styles.invalid,
+            {
+              borderColor: colors.destructive,
+              backgroundColor: withAlpha(
+                colors.destructive,
+                isDark ? 0.1 : 0.05
+              ),
+            },
+            focused && ring(colors.destructive),
+          ],
           isDisabled && { opacity: 0.5 },
           style,
         ]}
@@ -160,6 +196,15 @@ function InputGroup({
   )
 }
 
+function hasButton(
+  children: React.ComponentProps<typeof Pressable>["children"]
+) {
+  if (typeof children === "function") return false
+  return React.Children.toArray(children).some(
+    (child) => React.isValidElement(child) && child.type === InputGroupButton
+  )
+}
+
 function InputGroupAddon({
   style,
   align = "inline-start",
@@ -167,16 +212,30 @@ function InputGroupAddon({
   ...props
 }: React.ComponentProps<typeof Pressable> & { align?: InputGroupAlign }) {
   const { colors } = useTheme()
-  const { inputRef } = useInputGroup()
+  const { inputRef, size } = useInputGroup()
   const color = colors.mutedForeground
+  const large = size === "lg"
+  const button = large && hasButton(props.children)
   return (
-    <TextStyleContext.Provider value={{ ...fontSize.base, color }}>
+    <TextStyleContext.Provider
+      value={{ ...fontSize.base, ...(large && { fontSize: 17 }), color }}
+    >
       <IconSizeContext.Provider value={16}>
         <Pressable
           accessible={false}
           style={(state) => [
             styles.addon,
             styles[align],
+            large &&
+              align === "inline-start" &&
+              (button
+                ? styles["inline-start-lg-button"]
+                : styles["inline-start-lg"]),
+            large &&
+              align === "inline-end" &&
+              (button
+                ? styles["inline-end-lg-button"]
+                : styles["inline-end-lg"]),
             typeof style === "function" ? style(state) : style,
           ]}
           onPress={(event) => {
@@ -195,6 +254,7 @@ const BUTTON_SIZE = {
   sm: "sm",
   "icon-xs": "icon-xs",
   "icon-sm": "icon-sm",
+  icon: "icon",
 } as const satisfies Record<string, ButtonSize>
 
 function InputGroupButton({
@@ -212,6 +272,7 @@ function InputGroupButton({
       style={(state) => [
         { borderRadius: radius.full },
         size === "xs" && { paddingHorizontal: 6 },
+        size === "icon" && styles.icon,
         typeof style === "function" ? style(state) : style,
       ]}
       {...props}
@@ -232,9 +293,10 @@ function useControl(
   onFocus: FocusHandler | undefined,
   onBlur: BlurHandler | undefined
 ) {
-  const { block, disabled, inputRef, setFocused } = useInputGroup()
+  const { block, size, disabled, inputRef, setFocused } = useInputGroup()
   return {
     block,
+    size,
     disabled,
     ref: (node: React.ComponentRef<typeof TextInput> | null) => {
       inputRef.current = node
@@ -270,6 +332,7 @@ function InputGroupInput({
       style={(state) => [
         styles.control,
         control.block ? { width: "100%" } : { flex: 1 },
+        control.size === "lg" && styles.controlLg,
         typeof style === "function" ? style(state) : style,
       ]}
     />
@@ -294,6 +357,7 @@ function InputGroupTextarea({
       style={(state) => [
         styles.control,
         { width: "100%", flex: 1, paddingVertical: 10 },
+        control.size === "lg" && styles.textareaLg,
         typeof style === "function" ? style(state) : style,
       ]}
     />

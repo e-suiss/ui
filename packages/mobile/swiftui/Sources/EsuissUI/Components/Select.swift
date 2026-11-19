@@ -20,7 +20,23 @@ struct SelectLabelsKey: PreferenceKey {
 }
 
 public enum SelectSize: CaseIterable, Sendable {
-  case `default`, sm
+  case `default`, sm, lg
+
+  var height: CGFloat {
+    switch self {
+    case .default: Metrics.Height.input
+    case .sm: 36
+    case .lg: InputMetrics.largeHeight
+    }
+  }
+
+  var horizontalPadding: CGFloat {
+    self == .lg ? InputMetrics.largePadding : Metrics.PaddingX.input
+  }
+
+  var textStyle: TextStyle {
+    self == .lg ? .fieldLarge : .base
+  }
 }
 
 public struct SelectField<Value: Hashable & Sendable, Content: View>: View {
@@ -34,8 +50,6 @@ public struct SelectField<Value: Hashable & Sendable, Content: View>: View {
   @State private var open = false
   @State private var labels: [AnyHashable: Text] = [:]
   @Environment(\.isEnabled) private var isEnabled
-  @Environment(\.isInvalid) private var invalid
-  @Environment(\.colorScheme) private var colorScheme
 
   public init(
     selection: Binding<Value?>,
@@ -65,7 +79,7 @@ public struct SelectField<Value: Hashable & Sendable, Content: View>: View {
       } label: {
         HStack(spacing: 6) {
           (valueText ?? Text(placeholder))
-            .scaledFont(TextStyle.base)
+            .scaledFont(size.textStyle)
             .lineLimit(1)
             .foregroundStyle(valueText == nil ? EsuissColor.mutedForeground : EsuissColor.foreground)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -74,14 +88,9 @@ public struct SelectField<Value: Hashable & Sendable, Content: View>: View {
             .foregroundStyle(EsuissColor.mutedForeground)
             .accessibilityHidden(true)
         }
-        .padding(.horizontal, Metrics.PaddingX.input)
-        .frame(height: size == .sm ? 36 : Metrics.Height.input)
-        .background(background, in: shape)
-        .overlay {
-          if invalid {
-            shape.strokeBorder(EsuissColor.destructive)
-          }
-        }
+        .padding(.horizontal, size.horizontalPadding)
+        .frame(height: size.height)
+        .fieldSurface(shape)
         .contentShape(shape)
         .opacity(isEnabled ? 1 : 0.5)
       }
@@ -112,10 +121,6 @@ public struct SelectField<Value: Hashable & Sendable, Content: View>: View {
     }
   }
 
-  private var background: Color {
-    if invalid { return EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) }
-    return EsuissColor.secondary
-  }
 }
 
 private struct SelectTriggerStyle: ButtonStyle {

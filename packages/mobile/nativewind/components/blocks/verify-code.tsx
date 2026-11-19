@@ -183,7 +183,7 @@ function VerifyCode({
                     index={index}
                     className={(state) =>
                       cn(
-                        "h-14 w-11 rounded-xl border bg-transparent",
+                        "h-14 w-11 rounded-xl border bg-transparent ring-0 dark:bg-transparent",
                         status === "error" && "border-destructive",
                         status !== "error" && state.active && "border-primary",
                         status !== "error" && !state.active && "border-input"

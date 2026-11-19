@@ -27,6 +27,9 @@ enum FieldStories {
     Story("Form") {
       FieldFormDemo()
     },
+    Story("Large") {
+      FieldLargeDemo()
+    },
   ])
 }
 
@@ -336,5 +339,35 @@ private struct FieldFormDemo: View {
       return
     }
     submitted = "{\"username\":\"\(username)\",\"password\":\"\(password)\"}"
+  }
+}
+
+private struct FieldLargeDemo: View {
+  @State private var email = ""
+  @State private var password = ""
+
+  var body: some View {
+    FieldGroup {
+      Field(size: .lg) {
+        FieldLabel("Email")
+          .accessibilityHidden(true)
+        TextField("jane@example.com", text: $email)
+          .textFieldStyle(.input(size: .lg))
+          .keyboardType(.emailAddress)
+          .textContentType(.emailAddress)
+          .textInputAutocapitalization(.never)
+          .accessibilityLabel(Text("Email"))
+      }
+      Field(size: .lg) {
+        FieldLabel("Password")
+          .accessibilityHidden(true)
+        SecureField("", text: $password)
+          .textFieldStyle(.input(size: .lg))
+          .textContentType(.password)
+          .accessibilityLabel(Text("Password"))
+      }
+      Button("Continue") {}
+        .buttonStyle(.variant(size: .form, block: true))
+    }
   }
 }

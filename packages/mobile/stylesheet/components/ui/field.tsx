@@ -14,6 +14,8 @@ type FieldGroupVariant = "default" | "inset"
 
 type FieldOrientation = "vertical" | "horizontal" | "responsive"
 
+type FieldSize = "default" | "lg"
+
 interface FieldGroupItemContextValue {
   variant: FieldGroupVariant
   index: number
@@ -24,7 +26,9 @@ const FieldGroupItemContext =
 
 const FieldSetInsetContext = React.createContext(false)
 
-const FieldInsetContext = React.createContext(false)
+const FieldInsetContext = FieldPrimitive.InsetContext
+
+const FieldSizeContext = React.createContext<FieldSize>("default")
 
 const styles = StyleSheet.create({
   set: { flexDirection: "column", gap: 24 },
@@ -40,6 +44,7 @@ const styles = StyleSheet.create({
   group: { width: "100%", flexDirection: "column", gap: 28 },
   groupInset: { gap: 0, overflow: "hidden", borderRadius: radius["2xl"] },
   field: { width: "100%", gap: 12 },
+  fieldLg: { gap: 8 },
   vertical: { flexDirection: "column" },
   horizontal: { flexDirection: "row", alignItems: "center" },
   fieldInset: {
@@ -58,6 +63,7 @@ const styles = StyleSheet.create({
   },
   content: { flex: 1, flexDirection: "column", gap: 4 },
   label: { ...fontSize.base, fontWeight: "600" },
+  labelLg: { fontSize: 13, fontWeight: "500", paddingStart: 2 },
   labelInset: { fontWeight: "400" },
   title: { ...fontSize.base, fontWeight: "600" },
   description: { ...fontSize.sm, fontWeight: "400", textAlign: "auto" },
@@ -168,10 +174,12 @@ function FieldGroup({
 function Field({
   style,
   orientation = "vertical",
+  size = "default",
   children,
   ...props
 }: React.ComponentProps<typeof FieldPrimitive.Root> & {
   orientation?: FieldOrientation
+  size?: FieldSize
 }) {
   const { colors } = useTheme()
   const { width } = useWindowDimensions()
@@ -183,22 +191,28 @@ function Field({
   return (
     <FieldGroupItemContext.Provider value={null}>
       <FieldInsetContext.Provider value={inset}>
-        <FieldPrimitive.Root
-          style={(state) => [
-            styles.field,
-            horizontal ? styles.horizontal : styles.vertical,
-            inset && styles.fieldInset,
-            typeof style === "function" ? style(state) : style,
-          ]}
-          {...props}
-        >
-          {inset && item.index > 0 ? (
-            <View
-              style={[styles.insetDivider, { backgroundColor: colors.border }]}
-            />
-          ) : null}
-          {children}
-        </FieldPrimitive.Root>
+        <FieldSizeContext.Provider value={size}>
+          <FieldPrimitive.Root
+            style={(state) => [
+              styles.field,
+              horizontal ? styles.horizontal : styles.vertical,
+              size === "lg" && styles.fieldLg,
+              inset && styles.fieldInset,
+              typeof style === "function" ? style(state) : style,
+            ]}
+            {...props}
+          >
+            {inset && item.index > 0 ? (
+              <View
+                style={[
+                  styles.insetDivider,
+                  { backgroundColor: colors.border },
+                ]}
+              />
+            ) : null}
+            {children}
+          </FieldPrimitive.Root>
+        </FieldSizeContext.Provider>
       </FieldInsetContext.Provider>
     </FieldGroupItemContext.Provider>
   )
@@ -214,12 +228,16 @@ function FieldLabel({
 }: React.ComponentProps<typeof FieldPrimitive.Label>) {
   const { colors } = useTheme()
   const inset = React.useContext(FieldInsetContext)
+  const size = React.useContext(FieldSizeContext)
   return (
     <FieldPrimitive.Label
       style={(state) => [
         styles.label,
+        size === "lg" && styles.labelLg,
         inset && styles.labelInset,
-        { color: colors.foreground },
+        {
+          color: size === "lg" ? colors.mutedForeground : colors.foreground,
+        },
         state.disabled && { opacity: 0.5 },
         typeof style === "function" ? style(state) : style,
       ]}

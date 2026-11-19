@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/drawer"
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
-import { fontSize, radius, useTheme } from "@/components/ui/theme"
+import { fontSize, metrics, useTheme } from "@/components/ui/theme"
 import {
   WheelPicker,
   WheelPickerColumn,
@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     alignItems: "center",
     gap: 8,
-    borderRadius: radius.lg,
+    borderRadius: metrics.radius.input,
     borderWidth: 1,
-    borderColor: "transparent",
     paddingHorizontal: 12,
   },
+  triggerInvalid: { borderWidth: 1.5 },
   icon: { flexShrink: 0 },
   label: { flexShrink: 1, ...fontSize.base },
   docked: { borderTopLeftRadius: 0, borderTopRightRadius: 0 },
@@ -130,11 +130,22 @@ function DatePicker({
         accessibilityLabelledBy={accessibilityLabelledBy}
         style={[
           styles.trigger,
-          { backgroundColor: colors.secondary },
-          invalid && {
-            borderColor: colors.destructive,
-            backgroundColor: withAlpha(colors.destructive, isDark ? 0.1 : 0.05),
+          {
+            backgroundColor: isDark
+              ? withAlpha(colors.foreground, 0.06)
+              : colors.background,
+            borderColor: colors.border,
           },
+          invalid && [
+            styles.triggerInvalid,
+            {
+              borderColor: colors.destructive,
+              backgroundColor: withAlpha(
+                colors.destructive,
+                isDark ? 0.1 : 0.05
+              ),
+            },
+          ],
           disabled && { opacity: 0.5 },
           style,
         ]}

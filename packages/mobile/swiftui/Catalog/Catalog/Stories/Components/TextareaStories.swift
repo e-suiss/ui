@@ -9,6 +9,10 @@ enum TextareaStories {
     Story("WithValue") {
       TextareaDemo(initial: "The quick brown fox jumps over the lazy dog. This text spans a few lines to show how the textarea handles longer content.")
     },
+    Story("Large") {
+      TextareaDemo(placeholder: "Write a message...", size: .lg)
+        .accessibilityLabel(Text("Message"))
+    },
     Story("WithLabel") {
       Field {
         FieldLabel("Your message")
@@ -32,17 +36,23 @@ enum TextareaStories {
 
 private struct TextareaDemo: View {
   let placeholder: LocalizedStringKey
+  let size: TextareaStyle.Size
 
   @State private var text: String
 
-  init(initial: String = "", placeholder: LocalizedStringKey = "Type your message here.") {
+  init(
+    initial: String = "",
+    placeholder: LocalizedStringKey = "Type your message here.",
+    size: TextareaStyle.Size = .default
+  ) {
     self.placeholder = placeholder
+    self.size = size
     _text = State(initialValue: initial)
   }
 
   var body: some View {
     TextField(placeholder, text: $text, axis: .vertical)
-      .textFieldStyle(.textarea)
+      .textFieldStyle(.textarea(size: size))
       .frame(maxWidth: .infinity)
   }
 }

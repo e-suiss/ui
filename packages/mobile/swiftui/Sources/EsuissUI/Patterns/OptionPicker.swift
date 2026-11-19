@@ -16,8 +16,6 @@ public struct OptionPicker<Value: Hashable & Sendable, Content: View>: View {
   @State private var labels: [AnyHashable: Text] = [:]
   @CompactLayout private var compact
   @Environment(\.isEnabled) private var isEnabled
-  @Environment(\.isInvalid) private var invalid
-  @Environment(\.colorScheme) private var colorScheme
 
   public init(
     selection: Binding<Value?>,
@@ -46,7 +44,7 @@ public struct OptionPicker<Value: Hashable & Sendable, Content: View>: View {
       set: { value in binding.wrappedValue = value?.base as? Value }
     )
     let valueText = binding.wrappedValue.flatMap { labels[AnyHashable($0)] }
-    let shape = RoundedRectangle(cornerRadius: size == .sm ? Radius.md : Radius.lg, style: .continuous)
+    let shape = RoundedRectangle(cornerRadius: size == .sm ? Radius.md : Metrics.Radius.input, style: .continuous)
     return Menu {
       Picker(selection: erased) {
         content().environment(\.optionPickerNative, true)
@@ -57,7 +55,7 @@ public struct OptionPicker<Value: Hashable & Sendable, Content: View>: View {
     } label: {
       HStack(spacing: 6) {
         (valueText ?? Text(placeholder))
-          .scaledFont(.base)
+          .scaledFont(size.textStyle)
           .lineLimit(1)
           .foregroundStyle(valueText == nil ? EsuissColor.mutedForeground : EsuissColor.foreground)
           .frame(maxWidth: .infinity, alignment: .leading)
@@ -66,14 +64,9 @@ public struct OptionPicker<Value: Hashable & Sendable, Content: View>: View {
           .foregroundStyle(EsuissColor.mutedForeground)
           .accessibilityHidden(true)
       }
-      .padding(.horizontal, 12)
-      .frame(minHeight: size == .sm ? 36 : 44)
-      .background(background, in: shape)
-      .overlay {
-        if invalid {
-          shape.strokeBorder(EsuissColor.destructive)
-        }
-      }
+      .padding(.horizontal, size.horizontalPadding)
+      .frame(minHeight: size.height)
+      .fieldSurface(shape)
       .contentShape(shape)
       .opacity(isEnabled ? 1 : 0.5)
     }
@@ -94,10 +87,6 @@ public struct OptionPicker<Value: Hashable & Sendable, Content: View>: View {
     }
   }
 
-  private var background: Color {
-    if invalid { return EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) }
-    return EsuissColor.secondary
-  }
 }
 
 public struct OptionPickerItem: View {

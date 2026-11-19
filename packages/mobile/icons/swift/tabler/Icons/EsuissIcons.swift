@@ -125,6 +125,7 @@ public enum EsuissIcon: String, CaseIterable, Identifiable {
   case `package`
   case palette
   case paperPlaneTilt
+  case paperclip
   case path
   case pause
   case pencilSimple
@@ -308,6 +309,7 @@ public enum EsuissIcon: String, CaseIterable, Identifiable {
     case .`package`: [IconShape("M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5", fill: false, width: 2), IconShape("M12 12l8 -4.5", fill: false, width: 2), IconShape("M12 12l0 9", fill: false, width: 2), IconShape("M12 12l-8 -4.5", fill: false, width: 2), IconShape("M16 5.25l-8 4.5", fill: false, width: 2)]
     case .palette: [IconShape("M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25", fill: false, width: 2), IconShape("M7.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0", fill: false, width: 2), IconShape("M11.5 7.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0", fill: false, width: 2), IconShape("M15.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0", fill: false, width: 2)]
     case .paperPlaneTilt: [IconShape("M10 14l11 -11", fill: false, width: 2), IconShape("M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5", fill: false, width: 2)]
+    case .paperclip: [IconShape("M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5", fill: false, width: 2)]
     case .path: [IconShape("M3 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0", fill: false, width: 2), IconShape("M19 7a2 2 0 1 0 0 -4a2 2 0 0 0 0 4", fill: false, width: 2), IconShape("M11 19h5.5a3.5 3.5 0 0 0 0 -7h-8a3.5 3.5 0 0 1 0 -7h4.5", fill: false, width: 2)]
     case .pause: [IconShape("M6 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12", fill: false, width: 2), IconShape("M14 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12", fill: false, width: 2)]
     case .pencilSimple: [IconShape("M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4", fill: false, width: 2), IconShape("M13.5 6.5l4 4", fill: false, width: 2)]

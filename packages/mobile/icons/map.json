@@ -713,6 +713,12 @@
     "hugeicons": "SentIcon",
     "remixicon": "RiSendPlaneLine"
   },
+  "Paperclip": {
+    "lucide": "PaperclipIcon",
+    "tabler": "IconPaperclip",
+    "hugeicons": "AttachmentIcon",
+    "remixicon": "RiAttachment2"
+  },
   "Path": {
     "lucide": "RouteIcon",
     "tabler": "IconRoute",

@@ -194,6 +194,53 @@ private struct ControlsGallery: View {
   }
 }
 
+private struct LargeFieldsGallery: View {
+  var body: some View {
+    VStack(alignment: .leading, spacing: 16) {
+      Field(size: .lg) {
+        FieldLabel("Email")
+        TextField("Email", text: .constant(""), prompt: Text(verbatim: "jane@example.com"))
+          .textFieldStyle(.input(size: .lg))
+      }
+      Field(size: .lg, invalid: true) {
+        FieldLabel("Password")
+        SecureField("Password", text: .constant("secret"))
+          .textFieldStyle(.input(size: .lg))
+      }
+      Button("Continue") {}
+        .buttonStyle(.variant(size: .form, block: true))
+      HStack(spacing: 8) {
+        TextField("Large", text: .constant("")).textFieldStyle(.input(size: .lg))
+        Button("Save") {}.buttonStyle(.variant(size: .form))
+      }
+      TextField("Message", text: .constant(""), axis: .vertical)
+        .textFieldStyle(.textarea(size: .lg))
+      SelectField(selection: .constant(String?.none), placeholder: "Select a fruit", size: .lg) {
+        SelectItem("Mango", value: "mango")
+        SelectItem("Banana", value: "banana")
+      }
+      InputGroup(size: .lg) {
+        InputGroupAddon {
+          InputGroupText {
+            Text(verbatim: "+90").foregroundStyle(EsuissColor.foreground)
+          }
+          EsuissColor.border.frame(width: 1, height: 22)
+        }
+        InputGroupInput("555 123 45 67", text: .constant(""))
+        InputGroupAddon(align: .inlineEnd) {
+          InputGroupButton(variant: .default, size: .icon) {} label: {
+            Ph.caretRight.bold.frame(width: 16, height: 16)
+          }
+        }
+      }
+      InputGroup {
+        InputGroupInput("Invalid", text: .constant("x"))
+      }
+      .invalid()
+    }
+  }
+}
+
 @MainActor
 final class FormsGalleryTests: XCTestCase {
   private func render<V: View>(_ view: V, name: String) throws {
@@ -220,6 +267,10 @@ final class FormsGalleryTests: XCTestCase {
 
   func testRendersFormsGallery() throws {
     try snapshot(FormsGallery(), name: "forms-inputs")
+  }
+
+  func testRendersLargeFieldsGallery() throws {
+    try snapshot(LargeFieldsGallery(), name: "forms-large")
   }
 
   private func snapshot<V: View>(_ view: V, name: String) throws {

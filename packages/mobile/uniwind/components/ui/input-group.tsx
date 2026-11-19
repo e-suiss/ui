@@ -16,8 +16,11 @@ type InputGroupAlign =
   | "block-start"
   | "block-end"
 
+type InputGroupSize = "default" | "lg"
+
 type InputGroupContextProps = {
   block: boolean
+  size: InputGroupSize
   disabled: boolean
   inputRef: React.RefObject<React.ComponentRef<typeof TextInput> | null>
   setFocused: (focused: boolean) => void
@@ -48,8 +51,13 @@ function InputGroup({
   children,
   disabled = false,
   invalid,
+  size = "default",
   ...props
-}: ViewProps & { disabled?: boolean; invalid?: boolean }) {
+}: ViewProps & {
+  disabled?: boolean
+  invalid?: boolean
+  size?: InputGroupSize
+}) {
   const field = useFieldRootContext()
   const inputRef = React.useRef<React.ComponentRef<typeof TextInput> | null>(
     null
@@ -77,20 +85,21 @@ function InputGroup({
     ),
   ]
   const contextValue = React.useMemo(
-    () => ({ block, disabled: isDisabled, inputRef, setFocused }),
-    [block, isDisabled]
+    () => ({ block, size, disabled: isDisabled, inputRef, setFocused }),
+    [block, size, isDisabled]
   )
   return (
     <InputGroupContext.Provider value={contextValue}>
       <View
         role="group"
         className={cn(
-          "relative h-input w-full min-w-0 flex-row items-center rounded-input border border-transparent bg-secondary",
+          "relative w-full min-w-0 flex-row items-center rounded-input border border-border bg-background dark:bg-foreground/6",
+          size === "lg" ? "h-13.5" : "h-input",
           (block || multiline) && "h-auto rounded-textarea",
           block && "flex-col items-stretch",
-          focused && "border-ring ring-3 ring-ring/50",
+          focused && "border-ring ring-1 ring-ring",
           isInvalid &&
-            "border-destructive bg-destructive/5 dark:bg-destructive/10",
+            "border-[1.5px] border-destructive bg-destructive/5 ring-destructive dark:bg-destructive/10",
           isDisabled && "opacity-50",
           className
         )}
@@ -119,6 +128,15 @@ const inputGroupAddonVariants = cva(
   }
 )
 
+function hasButton(
+  children: React.ComponentProps<typeof Pressable>["children"]
+) {
+  if (typeof children === "function") return false
+  return React.Children.toArray(children).some(
+    (child) => React.isValidElement(child) && child.type === InputGroupButton
+  )
+}
+
 function InputGroupAddon({
   className,
   align = "inline-start",
@@ -126,13 +144,22 @@ function InputGroupAddon({
   ...props
 }: React.ComponentProps<typeof Pressable> &
   VariantProps<typeof inputGroupAddonVariants>) {
-  const { inputRef } = useInputGroup()
+  const { inputRef, size } = useInputGroup()
+  const large = size === "lg"
+  const button = large && hasButton(props.children)
   return (
-    <TextClassContext.Provider value="text-base text-muted-foreground">
+    <TextClassContext.Provider
+      value={cn("text-base text-muted-foreground", large && "text-[17px]")}
+    >
       <IconClassContext.Provider value="size-4 text-muted-foreground">
         <Pressable
           accessible={false}
-          className={cn(inputGroupAddonVariants({ align }), className)}
+          className={cn(
+            inputGroupAddonVariants({ align }),
+            large && align === "inline-start" && (button ? "ps-3" : "ps-4"),
+            large && align === "inline-end" && (button ? "pe-[9px]" : "pe-4"),
+            className
+          )}
           onPress={(event) => {
             onPress?.(event)
             inputRef.current?.focus()
@@ -149,6 +176,7 @@ const BUTTON_SIZE = {
   sm: "sm",
   "icon-xs": "icon-xs",
   "icon-sm": "icon-sm",
+  icon: "icon",
 } as const
 
 function InputGroupButton({
@@ -163,7 +191,12 @@ function InputGroupButton({
     <Button
       variant={variant}
       size={BUTTON_SIZE[size]}
-      className={cn("rounded-full", size === "xs" && "px-1.5", className)}
+      className={cn(
+        "rounded-full",
+        size === "xs" && "px-1.5",
+        size === "icon" && "size-9 p-0",
+        className
+      )}
       {...props}
     />
   )
@@ -183,7 +216,7 @@ function InputGroupInput({
   ref,
   ...props
 }: React.ComponentProps<typeof Input>) {
-  const { block, disabled, inputRef, setFocused } = useInputGroup()
+  const { block, size, disabled, inputRef, setFocused } = useInputGroup()
   return (
     <Input
       {...props}
@@ -204,7 +237,8 @@ function InputGroupInput({
       className={(state) =>
         cn(
           block ? "w-full" : "flex-1",
-          "rounded-none border-0 bg-transparent",
+          "rounded-none border-0 bg-transparent ring-0 dark:bg-transparent",
+          size === "lg" && "px-4 text-[17px]",
           resolveClassName(className, state)
         )
       }
@@ -219,7 +253,7 @@ function InputGroupTextarea({
   ref,
   ...props
 }: React.ComponentProps<typeof Textarea>) {
-  const { disabled, inputRef, setFocused } = useInputGroup()
+  const { size, disabled, inputRef, setFocused } = useInputGroup()
   return (
     <Textarea
       {...props}
@@ -239,7 +273,8 @@ function InputGroupTextarea({
       }}
       className={(state) =>
         cn(
-          "w-full flex-1 rounded-none border-0 bg-transparent py-2.5",
+          "w-full flex-1 rounded-none border-0 bg-transparent py-2.5 ring-0 dark:bg-transparent",
+          size === "lg" && "px-4 py-3.5 text-[17px]",
           resolveClassName(className, state)
         )
       }

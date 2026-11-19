@@ -363,6 +363,9 @@ val ThinIcons.Palette: ImageVector
 val ThinIcons.PaperPlaneTilt: ImageVector
   get() = iconVector("PaperPlaneTilt", IconData.PaperPlaneTilt, IconWeight.Thin)
 
+val ThinIcons.Paperclip: ImageVector
+  get() = iconVector("Paperclip", IconData.Paperclip, IconWeight.Thin)
+
 val ThinIcons.Path: ImageVector
   get() = iconVector("Path", IconData.Path, IconWeight.Thin)
 

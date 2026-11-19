@@ -34,12 +34,15 @@ import androidx.compose.ui.unit.dp
 import com.esuiss.ui.theme.EsuissTheme
 import com.esuiss.ui.theme.Radius
 import com.esuiss.ui.theme.Typography
+import com.esuiss.ui.theme.textStyle
 
 enum class FieldOrientation { Vertical, Horizontal, Responsive }
 
 enum class FieldGroupVariant { Default, Inset }
 
 enum class FieldLegendVariant { Legend, Label }
+
+enum class FieldSize { Default, Lg }
 
 @Immutable
 internal class FieldState(val enabled: Boolean, val invalid: Boolean)
@@ -50,7 +53,9 @@ private val LocalFieldSetInset = staticCompositionLocalOf { false }
 
 private val LocalFieldGroupVariant = staticCompositionLocalOf<FieldGroupVariant?> { null }
 
-private val LocalFieldInset = staticCompositionLocalOf { false }
+internal val LocalFieldInset = staticCompositionLocalOf { false }
+
+private val LocalFieldSize = staticCompositionLocalOf { FieldSize.Default }
 
 @LayoutScopeMarker
 @Immutable
@@ -147,6 +152,7 @@ fun FieldGroup(
 fun Field(
     modifier: Modifier = Modifier,
     orientation: FieldOrientation = FieldOrientation.Vertical,
+    size: FieldSize = FieldSize.Default,
     enabled: Boolean = LocalFieldState.current.enabled,
     invalid: Boolean = false,
     content: @Composable FieldScope.() -> Unit,
@@ -163,6 +169,7 @@ fun Field(
     CompositionLocalProvider(
         LocalFieldGroupVariant provides null,
         LocalFieldInset provides inset,
+        LocalFieldSize provides size,
         LocalFieldState provides FieldState(enabled, invalid),
     ) {
         if (horizontal) {
@@ -177,7 +184,7 @@ fun Field(
         } else {
             Column(
                 modifier = sizing,
-                verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
+                verticalArrangement = Arrangement.spacedBy(if (size == FieldSize.Lg) 8.dp else 12.dp, Alignment.CenterVertically),
             ) {
                 ColumnFieldScope.content()
             }
@@ -201,6 +208,17 @@ fun FieldScope.FieldContent(
 fun FieldLabel(text: String, modifier: Modifier = Modifier) {
     val colors = EsuissTheme.colors
     val enabled = LocalFieldState.current.enabled
+    if (LocalFieldSize.current == FieldSize.Lg && !LocalFieldInset.current) {
+        BasicText(
+            text = text,
+            modifier = modifier.alpha(if (enabled) 1f else 0.5f).padding(start = 2.dp),
+            style = textStyle(13.0, 18.0).copy(
+                color = colors.mutedForeground,
+                fontWeight = FontWeight.Medium,
+            ),
+        )
+        return
+    }
     BasicText(
         text = text,
         modifier = modifier.alpha(if (enabled) 1f else 0.5f),

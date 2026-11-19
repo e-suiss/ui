@@ -2,18 +2,23 @@ import SwiftUI
 
 public struct InputStyle: TextFieldStyle {
   public enum Size: CaseIterable, Sendable {
-    case `default`, md, sm
+    case `default`, md, sm, lg
 
     var height: CGFloat {
       switch self {
       case .default: Metrics.Height.input
       case .md: 36
       case .sm: 32
+      case .lg: InputMetrics.largeHeight
       }
     }
 
     var horizontalPadding: CGFloat {
-      self == .sm ? 10 : Metrics.PaddingX.input
+      switch self {
+      case .sm: 10
+      case .lg: InputMetrics.largePadding
+      default: Metrics.PaddingX.input
+      }
     }
 
     var radius: CGFloat {
@@ -21,7 +26,11 @@ public struct InputStyle: TextFieldStyle {
     }
 
     var textStyle: TextStyle {
-      self == .default ? .base : .sm
+      switch self {
+      case .default: .base
+      case .lg: .fieldLarge
+      case .md, .sm: .sm
+      }
     }
   }
 
@@ -61,8 +70,6 @@ struct InputField: ViewModifier {
 
   @FocusState private var focused: Bool
   @Environment(\.isEnabled) private var isEnabled
-  @Environment(\.isInvalid) private var invalid
-  @Environment(\.colorScheme) private var colorScheme
 
   nonisolated init(
     radius: CGFloat,
@@ -90,23 +97,58 @@ struct InputField: ViewModifier {
         .padding(.horizontal, horizontalPadding)
         .padding(.vertical, verticalPadding)
         .frame(maxWidth: .infinity, minHeight: minHeight, alignment: alignment)
-        .background(background, in: shape)
-        .overlay {
-          shape.strokeBorder(border, lineWidth: 1)
-        }
+        .fieldSurface(shape, focused: focused)
         .contentShape(shape)
         .opacity(isEnabled ? 1 : 0.5)
         .onTapGesture { focused = true }
     }
   }
+}
 
-  private var background: Color {
-    if invalid { return EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) }
-    return EsuissColor.secondary
+enum InputMetrics {
+  static let largeHeight: CGFloat = 54
+  static let largePadding: CGFloat = 16
+  static let largeVerticalPadding: CGFloat = 14
+}
+
+extension TextStyle {
+  static let fieldLarge = TextStyle(size: 17, lineHeight: 24)
+}
+
+struct FieldSurface<S: InsettableShape>: ViewModifier {
+  let shape: S
+  let focused: Bool
+
+  @Environment(\.isInvalid) private var invalid
+  @Environment(\.fieldInset) private var inset
+  @Environment(\.colorScheme) private var colorScheme
+
+  func body(content: Content) -> some View {
+    content
+      .background(background, in: shape)
+      .overlay {
+        if invalid {
+          shape.strokeBorder(EsuissColor.destructive, lineWidth: 1.5)
+        } else if !inset {
+          shape.strokeBorder(EsuissColor.border, lineWidth: 1)
+        }
+      }
+      .overlay {
+        if focused {
+          shape.inset(by: -1).strokeBorder(invalid ? EsuissColor.destructive : EsuissColor.ring, lineWidth: invalid ? 1 : 2)
+        }
+      }
   }
 
-  private var border: Color {
-    if invalid { return EsuissColor.destructive }
-    return focused ? EsuissColor.ring : .clear
+  private var background: Color {
+    let dark = colorScheme == .dark
+    if invalid { return EsuissColor.destructive.opacity(dark ? 0.1 : 0.05) }
+    return dark ? EsuissColor.foreground.opacity(0.06) : EsuissColor.background
+  }
+}
+
+extension View {
+  func fieldSurface<S: InsettableShape>(_ shape: S, focused: Bool = false) -> some View {
+    modifier(FieldSurface(shape: shape, focused: focused))
   }
 }

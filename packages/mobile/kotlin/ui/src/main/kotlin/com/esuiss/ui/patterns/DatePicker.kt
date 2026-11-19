@@ -1,6 +1,5 @@
 package com.esuiss.ui.patterns
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -40,9 +39,10 @@ import com.esuiss.ui.components.LocalFieldState
 import com.esuiss.ui.components.RegisterPaneTitle
 import com.esuiss.ui.components.WheelPicker
 import com.esuiss.ui.components.WheelPickerColumn
-import com.esuiss.ui.components.controlBackground
+import com.esuiss.ui.components.LocalFieldInset
+import com.esuiss.ui.components.formFieldSurface
 import com.esuiss.ui.theme.EsuissTheme
-import com.esuiss.ui.theme.Radius
+import com.esuiss.ui.theme.Metrics
 import com.esuiss.ui.theme.Typography
 import java.util.Calendar
 import java.util.Date
@@ -121,7 +121,7 @@ internal fun PickerTrigger(
     val field = LocalFieldState.current
     val isInvalid = invalid ?: field.invalid
     val isEnabled = enabled && field.enabled
-    val shape = RoundedCornerShape(Radius.lg)
+    val shape = RoundedCornerShape(Metrics.Radius.input)
     val foreground = when {
         text == null -> colors.mutedForeground
         else -> colors.foreground
@@ -133,8 +133,7 @@ internal fun PickerTrigger(
             .height(44.dp)
             .alpha(if (isEnabled) 1f else 0.5f)
             .clip(shape)
-            .background(controlBackground(colors, isInvalid), shape)
-            .border(1.dp, if (isInvalid) colors.destructive else Color.Transparent, shape)
+            .formFieldSurface(colors, shape, false, isInvalid, LocalFieldInset.current)
             .then(if (isInvalid) Modifier.semantics { error("Invalid") } else Modifier)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },

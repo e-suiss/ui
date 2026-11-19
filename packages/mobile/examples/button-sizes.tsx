@@ -23,6 +23,9 @@ export default function ButtonSizes() {
         <Button size="xl">
           <Text>Extra large</Text>
         </Button>
+        <Button size="form">
+          <Text>Form</Text>
+        </Button>
       </View>
       <View className="flex-row flex-wrap items-center gap-3">
         <Button size="icon-xs" variant="secondary">

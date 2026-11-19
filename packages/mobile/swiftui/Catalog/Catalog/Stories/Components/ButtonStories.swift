@@ -29,6 +29,7 @@ enum ButtonStories {
           Button("Default") {}.buttonStyle(.variant())
           Button("Large") {}.buttonStyle(.variant(size: .lg))
           Button("Extra large") {}.buttonStyle(.variant(size: .xl))
+          Button("Form") {}.buttonStyle(.variant(size: .form))
         }
         FlowRow {
           IconButton(icon: Ph.plus.regular, size: .iconXs, variant: .secondary)
@@ -80,6 +81,7 @@ enum ButtonStories {
     Story("Block") {
       VStack(spacing: 12) {
         Button("Continue") {}.buttonStyle(.variant(size: .lg, block: true))
+        Button("Continue") {}.buttonStyle(.variant(size: .form, block: true))
         Button("Not now") {}.buttonStyle(.variant(.secondary, size: .lg, block: true))
         Button("Learn more") {}.buttonStyle(.variant(.tinted, block: true))
       }

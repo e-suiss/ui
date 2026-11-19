@@ -47,8 +47,6 @@ public struct DatePickerField: View {
   @State private var open = false
   @CompactLayout private var compact
   @Environment(\.isEnabled) private var isEnabled
-  @Environment(\.isInvalid) private var invalid
-  @Environment(\.colorScheme) private var colorScheme
   @Environment(\.locale) private var locale
 
   public init(
@@ -110,7 +108,7 @@ public struct DatePickerField: View {
   }
 
   private var trigger: some View {
-    let shape = RoundedRectangle(cornerRadius: Radius.lg, style: .continuous)
+    let shape = RoundedRectangle(cornerRadius: Metrics.Radius.input, style: .continuous)
     let empty = selection.wrappedValue == nil
     return Button {
       open = true
@@ -128,10 +126,7 @@ public struct DatePickerField: View {
       }
       .padding(.horizontal, 12)
       .frame(height: 44)
-      .background(background, in: shape)
-      .overlay {
-        if invalid { shape.strokeBorder(EsuissColor.destructive) }
-      }
+      .fieldSurface(shape)
       .contentShape(shape)
       .opacity(isEnabled ? 1 : 0.5)
     }
@@ -139,10 +134,6 @@ public struct DatePickerField: View {
     .accessibilityHint(Text("Shows date picker"))
   }
 
-  private var background: Color {
-    if invalid { return EsuissColor.destructive.opacity(colorScheme == .dark ? 0.1 : 0.05) }
-    return EsuissColor.secondary
-  }
 }
 
 struct DatePickerSheet: View {
