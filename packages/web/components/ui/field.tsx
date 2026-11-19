@@ -86,9 +86,11 @@ const FieldLabelContext = createContext(false)
 function Field({
   className,
   orientation = "vertical",
+  size = "default",
   ref,
   ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
+}: React.ComponentProps<"div"> &
+  VariantProps<typeof fieldVariants> & { size?: "default" | "lg" }) {
   const inLabel = useContext(FieldLabelContext)
   const fieldRef = useRef<HTMLDivElement | null>(null)
   const linkedRef = useRef<string[]>([])
@@ -135,6 +137,7 @@ function Field({
       role={inLabel ? undefined : "group"}
       data-slot="field"
       data-orientation={orientation}
+      data-size={size}
       className={cn(fieldVariants({ orientation }), className)}
       {...props}
     />

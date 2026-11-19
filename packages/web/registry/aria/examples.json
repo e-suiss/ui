@@ -4637,6 +4637,28 @@
       }
     },
     {
+      "name": "field-large",
+      "type": "registry:example",
+      "title": "Field Large",
+      "description": "Field example: Large.",
+      "registryDependencies": [
+        "@esuiss/button",
+        "@esuiss/field",
+        "@esuiss/input"
+      ],
+      "files": [
+        {
+          "path": "examples/field-large.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/components/field"
+        }
+      }
+    },
+    {
       "name": "field-multiple-errors",
       "type": "registry:example",
       "title": "Field Multiple Errors",

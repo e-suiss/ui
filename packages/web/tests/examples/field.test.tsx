@@ -7,6 +7,7 @@ import FieldDisabled from "@/examples/field-disabled"
 import FieldForm from "@/examples/field-form"
 import FieldHorizontal from "@/examples/field-horizontal"
 import FieldInvalid from "@/examples/field-invalid"
+import FieldLarge from "@/examples/field-large"
 import FieldMultipleErrors from "@/examples/field-multiple-errors"
 import FieldWithHelpLink from "@/examples/field-with-help-link"
 import FieldWithTextarea from "@/examples/field-with-textarea"
@@ -142,5 +143,25 @@ test("Form", async () => {
     await expect(
       canvas.getByRole("textbox", { name: "CVV" })
     ).not.toBeRequired()
+  })
+})
+test("Large", async () => {
+  const { canvas, step } = await renderExample(<FieldLarge />)
+
+  const email = canvas.getByLabelText("Email")
+  const password = canvas.getByLabelText("Password")
+
+  await step("links each label to its large input", async () => {
+    await expect(email.closest("[data-slot=field]")).toHaveAttribute(
+      "data-size",
+      "lg"
+    )
+    await expect(email).toHaveAttribute("data-size", "lg")
+  })
+
+  await step("moves from email to password", async () => {
+    await userEvent.type(email, "jane@example.com")
+    await userEvent.tab()
+    await expect(password).toHaveFocus()
   })
 })

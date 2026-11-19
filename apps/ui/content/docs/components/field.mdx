@@ -170,6 +170,12 @@ A complete payment form built from field sets, groups, a separator and actions.
 
 <ComponentPreview name="field-form" />
 
+### Large
+
+Set `size="lg"` on `Field` for forms such as sign-in pages: the label turns 13px, medium weight and muted, and sits 8px above the control. Pair it with `lg` inputs and a `form` button.
+
+<ComponentPreview name="field-large" />
+
 ### Separator with text
 
 Pass text as the children of `FieldSeparator` to center it on the line, here between a sign-in button and an email field.
@@ -223,10 +229,11 @@ Wraps a single control with its label, description and error.
 | Prop | Type | Default |
 | --- | --- | --- |
 | `orientation` | `"vertical" \| "horizontal" \| "responsive"` | `"vertical"` |
+| `size` | `"default" \| "lg"` | `"default"` |
 
 Also accepts the props of `React.ComponentProps<"div">`.
 
-`vertical` stacks the label above the control, `horizontal` places them side by side, and `responsive` switches to horizontal when the surrounding `FieldGroup` is wide enough. The field sets `data-orientation`.
+`vertical` stacks the label above the control, `horizontal` places them side by side, and `responsive` switches to horizontal when the surrounding `FieldGroup` is wide enough. `lg` makes the label 13px, medium weight and muted, and brings it 8px from the control. The field sets `data-orientation` and `data-size`.
 
 ### FieldContent
 
