@@ -130,7 +130,7 @@
 
   /* MARK: Input */
   .cn-input {
-    @apply h-11 rounded-lg border border-transparent bg-secondary px-3 py-1 text-base transition-[color,box-shadow,background-color] file:h-7 file:border-0 file:bg-transparent file:text-sm caret-primary focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-[size=md]:h-9 data-[size=md]:text-sm data-[size=sm]:h-8 data-[size=sm]:rounded-md data-[size=sm]:px-2.5 data-[size=sm]:text-sm aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10;
+    @apply h-11 rounded-xl border border-border bg-background dark:bg-foreground/6 px-3 py-1 text-base transition-[color,box-shadow,background-color,border-color] file:h-7 file:border-0 file:bg-transparent file:text-sm caret-primary focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring data-[size=md]:h-9 data-[size=md]:text-sm data-[size=sm]:h-8 data-[size=sm]:rounded-md data-[size=sm]:px-2.5 data-[size=sm]:text-sm aria-invalid:border-[1.5px] aria-invalid:border-destructive aria-invalid:ring-destructive aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10 in-[[data-slot=field-group][data-variant=inset]]:border-0;
   }
 
   /* MARK: Menubar */
@@ -189,7 +189,7 @@
   }
 
   .cn-questionnaire-input {
-    @apply h-11 rounded-lg border border-transparent bg-secondary px-3 py-1 text-base focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10;
+    @apply h-11 rounded-xl border border-border bg-background dark:bg-foreground/6 px-3 py-1 text-base focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring aria-invalid:border-[1.5px] aria-invalid:border-destructive aria-invalid:ring-destructive aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10;
   }
 
   .cn-questionnaire-error {
@@ -214,7 +214,7 @@
   }
 
   .cn-select-trigger {
-    @apply w-fit gap-1.5 rounded-lg border border-transparent bg-secondary px-3 py-2 text-base transition-[color,box-shadow,background-color] focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 group-data-invalid/select:border-destructive group-data-invalid/select:ring-3 group-data-invalid/select:ring-destructive/20 dark:group-data-invalid/select:ring-destructive/40 group-data-invalid/select:bg-destructive/5 dark:group-data-invalid/select:bg-destructive/10 has-data-placeholder:text-muted-foreground data-[size=default]:h-11 data-[size=sm]:h-9 data-[size=sm]:rounded-md;
+    @apply w-fit gap-1.5 rounded-xl border border-border bg-background dark:bg-foreground/6 px-3 py-2 text-base transition-[color,box-shadow,background-color,border-color] focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring group-data-invalid/select:border-[1.5px] group-data-invalid/select:border-destructive group-data-invalid/select:ring-destructive group-data-invalid/select:bg-destructive/5 dark:group-data-invalid/select:bg-destructive/10 has-data-placeholder:text-muted-foreground data-[size=default]:h-11 data-[size=sm]:h-9 data-[size=sm]:rounded-md;
   }
 
   .cn-select-content-aria {
