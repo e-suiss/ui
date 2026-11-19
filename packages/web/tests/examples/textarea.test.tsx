@@ -4,6 +4,7 @@ import { expect, test } from "vitest"
 import TextareaDemo from "@/examples/textarea-demo"
 import TextareaDisabled from "@/examples/textarea-disabled"
 import TextareaInvalid from "@/examples/textarea-invalid"
+import TextareaLarge from "@/examples/textarea-large"
 import TextareaResizable from "@/examples/textarea-resizable"
 import TextareaResizableOutside from "@/examples/textarea-resizable-outside"
 import TextareaWithLabel from "@/examples/textarea-with-label"
@@ -145,5 +146,16 @@ test("Invalid", async () => {
   await step("stays editable while invalid", async () => {
     await userEvent.type(textarea, " but fixed")
     await expect(textarea).toHaveValue("Too short but fixed")
+  })
+})
+test("Large", async () => {
+  const { canvas, step } = await renderExample(<TextareaLarge />)
+
+  const textarea = canvas.getByRole("textbox", { name: "Message" })
+
+  await step("accepts multi-line text in the large size", async () => {
+    await expect(textarea).toHaveAttribute("data-size", "lg")
+    await userEvent.type(textarea, "Hello{Enter}World")
+    await expect(textarea).toHaveValue("Hello\nWorld")
   })
 })

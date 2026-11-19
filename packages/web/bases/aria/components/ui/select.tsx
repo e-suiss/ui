@@ -119,7 +119,7 @@ function SelectTrigger({
 }: Omit<ButtonPrimitiveProps, "className" | "children"> & {
   className?: string
   children?: React.ReactNode
-  size?: "sm" | "default"
+  size?: "sm" | "default" | "lg"
 }) {
   return (
     <ButtonPrimitive

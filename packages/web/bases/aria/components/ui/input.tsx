@@ -10,7 +10,7 @@ function Input({
   size = "default",
   ...props
 }: Omit<React.ComponentProps<"input">, "size"> & {
-  size?: "sm" | "md" | "default"
+  size?: "sm" | "md" | "default" | "lg"
 }) {
   return (
     <InputPrimitive

@@ -16,6 +16,10 @@ export default function InputSizes() {
         <Input type="text" size="default" placeholder="Default" />
         <Button size="lg">Save</Button>
       </div>
+      <div className="flex items-center gap-2">
+        <Input type="text" size="lg" placeholder="Large" />
+        <Button size="form">Save</Button>
+      </div>
     </div>
   )
 }

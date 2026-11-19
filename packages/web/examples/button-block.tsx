@@ -16,6 +16,9 @@ export default function ButtonBlock() {
       <Button block size="xl">
         Add to Bag
       </Button>
+      <Button block size="form">
+        Continue
+      </Button>
       <Button block variant="secondary">
         Continue
       </Button>

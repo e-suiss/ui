@@ -5,7 +5,7 @@ import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 import { cn } from "@/lib/utils"
 
 type NativeSelectProps = Omit<React.ComponentProps<"select">, "size"> & {
-  size?: "sm" | "default"
+  size?: "sm" | "default" | "lg"
 }
 
 function NativeSelect({

@@ -13,6 +13,11 @@ export default function NativeSelectSizes() {
         <NativeSelectOption value="weekly">Weekly</NativeSelectOption>
         <NativeSelectOption value="monthly">Monthly</NativeSelectOption>
       </NativeSelect>
+      <NativeSelect defaultValue="weekly" size="lg" aria-label="Frequency">
+        <NativeSelectOption value="daily">Daily</NativeSelectOption>
+        <NativeSelectOption value="weekly">Weekly</NativeSelectOption>
+        <NativeSelectOption value="monthly">Monthly</NativeSelectOption>
+      </NativeSelect>
     </div>
   )
 }

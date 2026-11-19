@@ -30,6 +30,15 @@ export default function InputGroupButtonSizes() {
             remixicon="RiAttachment2"
           />
         </InputGroupButton>
+        <InputGroupButton variant="default" size="icon" aria-label="Send">
+          <IconPlaceholder
+            lucide="ArrowUpIcon"
+            tabler="IconArrowUp"
+            hugeicons="ArrowUp01Icon"
+            phosphor="ArrowUpIcon"
+            remixicon="RiArrowUpLine"
+          />
+        </InputGroupButton>
       </InputGroupAddon>
     </InputGroup>
   )

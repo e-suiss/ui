@@ -175,6 +175,7 @@
     "examples/select-disabled.tsx",
     "examples/select-grouped.tsx",
     "examples/select-invalid.tsx",
+    "examples/select-large.tsx",
     "examples/select-open.tsx",
     "examples/select-small.tsx",
     "examples/select-with-icons.tsx",

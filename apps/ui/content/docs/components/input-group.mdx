@@ -111,9 +111,15 @@ Use `InputGroupButton` inside an addon for actions such as copying a link, subsc
 
 ### Button sizes
 
-Use the `size` prop on `InputGroupButton` for the `xs`, `icon-xs` and `icon-sm` sizes, shown here in one addon.
+Use the `size` prop on `InputGroupButton` for the `xs`, `icon-xs`, `icon-sm` and `icon` sizes, shown here in one addon.
 
 <ComponentPreview name="input-group-button-sizes" />
+
+### Large
+
+Set `size="lg"` on `InputGroup` for the 54px field used in forms such as sign-in pages. Here a country code sits in a start addon and a round `icon` button submits the number.
+
+<ComponentPreview name="input-group-large" />
 
 ### With kbd
 
@@ -159,7 +165,13 @@ Disable the control and set `data-disabled="true"` on `InputGroup` to dim the gr
 
 The container that draws the field and holds the control and addons.
 
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"default" \| "lg"` | `"default"` |
+
 Also accepts the props of `React.ComponentProps<"div">`.
+
+`size="lg"` makes the field 54px tall with 16px side padding and 17px text.
 
 Its rounded corners grow when it contains a textarea or a block addon. Each part sets a `data-slot`, such as `input-group-addon`, for styling; the input and textarea use `input-group-control`.
 
@@ -181,12 +193,12 @@ A compact button sized to fit inside the field.
 
 | Prop | Type | Default |
 | --- | --- | --- |
-| `size` | `"xs" \| "sm" \| "icon-xs" \| "icon-sm"` | `"xs"` |
+| `size` | `"xs" \| "sm" \| "icon-xs" \| "icon-sm" \| "icon"` | `"xs"` |
 | `type` | `"button" \| "submit" \| "reset"` | `"button"` |
 
 Also accepts the props of `React.ComponentProps<typeof Button>`.
 
-`xs` is a small text button, and `icon-xs` and `icon-sm` are square icon buttons; `sm` keeps the base button size. `type` defaults to `button`, so the button does not submit a surrounding form unless you set `type="submit"`. The button sets `data-size`.
+`xs` is a small text button, `icon-xs` and `icon-sm` are square icon buttons, and `icon` is a 36px round button for `lg` groups; `sm` keeps the base button size. `type` defaults to `button`, so the button does not submit a surrounding form unless you set `type="submit"`. The button sets `data-size`.
 
 ### InputGroupText
 

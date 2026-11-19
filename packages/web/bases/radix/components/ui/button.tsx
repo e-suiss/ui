@@ -28,6 +28,7 @@ const buttonStyles = cva(
         sm: "cn-button-size-sm",
         lg: "cn-button-size-lg",
         xl: "cn-button-size-xl",
+        form: "cn-button-size-form",
         icon: "cn-button-size-icon",
         "icon-xs":
           "cn-button-size-icon-xs [&_svg:not([class*='size-'])]:size-3",
@@ -54,6 +55,7 @@ const blockRadius = cva("", {
       sm: "cn-button-block-size-sm",
       lg: "cn-button-block-size-lg",
       xl: "cn-button-block-size-xl",
+      form: "cn-button-block-size-form",
       icon: "",
       "icon-xs": "",
       "icon-sm": "",

@@ -5,6 +5,7 @@ import SelectDemo from "@/examples/select-demo"
 import SelectDisabled from "@/examples/select-disabled"
 import SelectGrouped from "@/examples/select-grouped"
 import SelectInvalid from "@/examples/select-invalid"
+import SelectLarge from "@/examples/select-large"
 import SelectOpen from "@/examples/select-open"
 import SelectSmall from "@/examples/select-small"
 import SelectWithIcons from "@/examples/select-with-icons"
@@ -93,6 +94,20 @@ test("Small", async () => {
 
   await step("opens the list and picks an option", async () => {
     await expect(trigger).toHaveAttribute("data-size", "sm")
+    await userEvent.click(trigger)
+    await userEvent.click(await screen.findByRole("option", { name: "Grapes" }))
+    await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())
+    await expect(trigger).toHaveTextContent("Grapes")
+  })
+})
+
+test("Large", async () => {
+  const { canvas, step } = await renderExample(<SelectLarge />)
+
+  const trigger = canvas.getByRole(TRIGGER, { name: triggerName("Fruit") })
+
+  await step("opens the list and picks an option", async () => {
+    await expect(trigger).toHaveAttribute("data-size", "lg")
     await userEvent.click(trigger)
     await userEvent.click(await screen.findByRole("option", { name: "Grapes" }))
     await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull())

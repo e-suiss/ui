@@ -5142,6 +5142,26 @@
       }
     },
     {
+      "name": "input-group-large",
+      "type": "registry:example",
+      "title": "Input Group Large",
+      "description": "Input Group example: Large.",
+      "registryDependencies": [
+        "@esuiss/input-group"
+      ],
+      "files": [
+        {
+          "path": "examples/input-group-large.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/components/input-group"
+        }
+      }
+    },
+    {
       "name": "input-group-search",
       "type": "registry:example",
       "title": "Input Group Search",
@@ -8629,6 +8649,26 @@
       }
     },
     {
+      "name": "select-large",
+      "type": "registry:example",
+      "title": "Select Large",
+      "description": "Select example: Large.",
+      "registryDependencies": [
+        "@esuiss/select"
+      ],
+      "files": [
+        {
+          "path": "examples/select-large.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/components/select"
+        }
+      }
+    },
+    {
       "name": "select-open",
       "type": "registry:example",
       "title": "Select Open",
@@ -10315,6 +10355,26 @@
       "files": [
         {
           "path": "examples/textarea-invalid.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "meta": {
+        "links": {
+          "docs": "https://suiss.app/ui/docs/components/textarea"
+        }
+      }
+    },
+    {
+      "name": "textarea-large",
+      "type": "registry:example",
+      "title": "Textarea Large",
+      "description": "Textarea example: Large.",
+      "registryDependencies": [
+        "@esuiss/textarea"
+      ],
+      "files": [
+        {
+          "path": "examples/textarea-large.tsx",
           "type": "registry:example"
         }
       ],

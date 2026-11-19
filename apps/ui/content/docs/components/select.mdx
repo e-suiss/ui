@@ -161,6 +161,12 @@ Set `size="sm"` on `SelectTrigger` for the compact trigger.
 
 <ComponentPreview name="select-small" />
 
+### Large
+
+Set `size="lg"` on `SelectTrigger` for the 54px trigger used in forms such as sign-in pages.
+
+<ComponentPreview name="select-large" />
+
 ### Grouped
 
 Wrap options in a `SelectGroup` with a `SelectLabel`, and put a `SelectSeparator` between groups.
@@ -279,11 +285,11 @@ The button that opens the popup and displays the current value.
 
 | Prop | Type | Default |
 | --- | --- | --- |
-| `size` | `"sm" \| "default"` | `"default"` |
+| `size` | `"sm" \| "default" \| "lg"` | `"default"` |
 
 Also accepts the props of the primitive part it wraps.
 
-The `default` size is 44px tall, and `sm` is 36px with smaller corners. The trigger sets `data-size` and styles its placeholder, invalid and disabled states; invalid triggers use the `destructive` color.
+The `lg` size is 54px tall with 17px text, the `default` size is 44px tall, and `sm` is 36px with smaller corners. The trigger sets `data-size` and styles its placeholder, invalid and disabled states; invalid triggers use the `destructive` color.
 
 ### SelectContent
 

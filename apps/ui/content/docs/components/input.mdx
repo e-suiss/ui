@@ -9,7 +9,7 @@ platforms: [web, rn, swift, kotlin]
 
 <ComponentPreview name="input-demo" />
 
-`Input` renders a native `input` element with a filled control style. It supports every native input `type`, including `email`, `password`, `number`, `search` and `file`, and adds a `size` prop for three heights.
+`Input` renders a native `input` element with a bordered control style. It supports every native input `type`, including `email`, `password`, `number`, `search` and `file`, and adds a `size` prop for four heights.
 
 Use it for short, free-form values. For multi-line text use a textarea, for icons, buttons or text attached to the field use `InputGroup`, and for one-time codes use `InputOTP`.
 
@@ -114,11 +114,11 @@ The text field.
 
 | Prop | Type | Default |
 | --- | --- | --- |
-| `size` | `"sm" \| "md" \| "default"` | `"default"` |
+| `size` | `"sm" \| "md" \| "default" \| "lg"` | `"default"` |
 
 Also accepts the props of `React.ComponentProps<"input">`.
 
-`size` sets the height and text size: `default` is the tallest, `md` is medium and `sm` is the most compact with a smaller radius. It replaces the native `size` attribute. Give every input a visible label, for example with `FieldLabel` inside a `Field`, or set `aria-label` when a visible label is not possible. The input sets `data-slot="input"` and `data-size` for styling.
+`size` sets the height and text size: `lg` is 54px with 17px text for forms such as sign-in pages, `default` is 44px, `md` is medium and `sm` is the most compact with a smaller radius. It replaces the native `size` attribute. Give every input a visible label, for example with `FieldLabel` inside a `Field`, or set `aria-label` when a visible label is not possible. The input sets `data-slot="input"` and `data-size` for styling.
 
 </Only>
 

@@ -5,6 +5,7 @@ import InputGroupButtonSizes from "@/examples/input-group-button-sizes"
 import InputGroupDemo from "@/examples/input-group-demo"
 import InputGroupDisabled from "@/examples/input-group-disabled"
 import InputGroupInvalid from "@/examples/input-group-invalid"
+import InputGroupLarge from "@/examples/input-group-large"
 import InputGroupSearch from "@/examples/input-group-search"
 import InputGroupWithButtons from "@/examples/input-group-with-buttons"
 import InputGroupWithKbd from "@/examples/input-group-with-kbd"
@@ -99,7 +100,7 @@ test("Button Sizes", async () => {
   })
 
   await step("tabs through every button size", async () => {
-    for (const name of ["Extra small", "Copy", "Attach"]) {
+    for (const name of ["Extra small", "Copy", "Attach", "Send"]) {
       await userEvent.tab()
       await expect(canvas.getByRole("button", { name })).toHaveFocus()
     }
@@ -190,5 +191,20 @@ test("Disabled", async () => {
     await expect(input).toBeDisabled()
     await userEvent.type(input, "abc")
     await expect(input).toHaveValue("")
+  })
+})
+test("Large", async () => {
+  const { canvas, step } = await renderExample(<InputGroupLarge />)
+
+  const input = canvas.getByRole("textbox", { name: "Phone number" })
+
+  await step("accepts a phone number", async () => {
+    await userEvent.type(input, "5551234567")
+    await expect(input).toHaveValue("5551234567")
+  })
+
+  await step("reaches the continue button", async () => {
+    await userEvent.tab()
+    await expect(canvas.getByRole("button", { name: "Continue" })).toHaveFocus()
   })
 })

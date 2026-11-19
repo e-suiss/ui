@@ -7,10 +7,15 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
-function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
+function InputGroup({
+  className,
+  size = "default",
+  ...props
+}: React.ComponentProps<"div"> & { size?: "default" | "lg" }) {
   return (
     <div
       data-slot="input-group"
+      data-size={size}
       role="group"
       className={cn(
         "cn-input-group group/input-group relative flex w-full min-w-0 items-center outline-none has-[>[data-align=block-end]]:[&>input]:pt-3 has-[>[data-align=block-start]]:[&>input]:pb-3 has-[>[data-align=inline-end]]:[&>input]:pe-1.5 has-[>[data-align=inline-start]]:[&>input]:ps-1.5",
@@ -76,6 +81,7 @@ const inputGroupButtonVariants = cva(
         sm: "cn-input-group-button-size-sm",
         "icon-xs": "cn-input-group-button-size-icon-xs",
         "icon-sm": "cn-input-group-button-size-icon-sm",
+        icon: "cn-input-group-button-size-icon",
       },
     },
     defaultVariants: {
@@ -109,7 +115,7 @@ function InputGroupText({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       className={cn(
-        "flex items-center gap-2 text-base text-muted-foreground [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+        "flex items-center gap-2 text-base text-muted-foreground group-data-[size=lg]/input-group:text-[17px] [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}

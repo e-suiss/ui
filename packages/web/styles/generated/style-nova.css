@@ -1851,6 +1851,10 @@
     @apply h-14 gap-2 px-7.75 text-base has-data-[icon=inline-end]:pe-6 has-data-[icon=inline-start]:ps-6;
   }
 
+  .cn-button-size-form {
+    @apply h-12.5 gap-1.5 px-6 text-[15px] font-semibold has-data-[icon=inline-end]:pe-5 has-data-[icon=inline-start]:ps-5;
+  }
+
   .cn-button-size-icon-xl {
     @apply size-14;
   }
@@ -1872,6 +1876,10 @@
   }
 
   .cn-button-block-size-xl {
+    @apply rounded-xl;
+  }
+
+  .cn-button-block-size-form {
     @apply rounded-xl;
   }
   .cn-alert-sheet-overlay {
@@ -1976,6 +1984,10 @@
 
   .cn-input-group-button-size-sm {
     @apply h-8 gap-1.5 rounded-full px-2.5 has-[>svg]:px-2.5;
+  }
+
+  .cn-input-group-button-size-icon {
+    @apply size-9 rounded-full p-0 has-[>svg]:p-0;
   }
 
   .cn-combobox-chip-input {

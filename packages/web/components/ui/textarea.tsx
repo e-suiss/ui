@@ -70,14 +70,17 @@ function TextareaHandle({ placement }: { placement: "inside" | "outside" }) {
 function Textarea({
   className,
   resizable,
+  size = "default",
   ...props
 }: React.ComponentProps<"textarea"> & {
   resizable?: "inside" | "outside"
+  size?: "default" | "lg"
 }) {
   const textarea = (
     <textarea
       data-slot="textarea"
       data-resizable={resizable}
+      data-size={size}
       className={cn(
         "cn-textarea flex w-full outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 peer",
         className

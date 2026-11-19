@@ -7,6 +7,7 @@ export default function ButtonSizes() {
       <Button size="sm">Small</Button>
       <Button size="default">Default</Button>
       <Button size="lg">Large</Button>
+      <Button size="form">Form</Button>
     </div>
   )
 }

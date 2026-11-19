@@ -83,6 +83,12 @@ Set `resizable="outside"` to place the handle just outside the bottom corner of 
 
 <ComponentPreview name="textarea-resizable-outside" />
 
+### Large
+
+Set `size="lg"` for more padding and 17px text, to match `lg` inputs.
+
+<ComponentPreview name="textarea-large" />
+
 ### Disabled
 
 Set `disabled` so the textarea can't be edited. The resize handle is hidden while it is disabled.
@@ -110,6 +116,7 @@ The multi-line text field, with an optional resize handle.
 | Prop | Type | Default |
 | --- | --- | --- |
 | `resizable` | `"inside" \| "outside"` | - |
+| `size` | `"default" \| "lg"` | `"default"` |
 
 Also accepts the props of `React.ComponentProps<"textarea">`.
 
@@ -117,7 +124,7 @@ Also accepts the props of `React.ComponentProps<"textarea">`.
 
 `resizable` adds a vertical resize handle, placed `inside` or `outside` the field's bottom corner, and turns off automatic growth. The textarea and its handle are then wrapped in a relative container. A resizable textarea starts at a minimum height of `6rem`, dragging never shrinks it below its minimum height, and the handle mirrors in right-to-left layouts.
 
-The textarea uses `data-slot="textarea"` and sets `data-resizable` when resizable; the wrapper and handle use `textarea-container` and `textarea-handle`.
+`size="lg"` starts at 54px with 16px side padding and 17px text. The textarea uses `data-slot="textarea"`, sets `data-size`, and sets `data-resizable` when resizable; the wrapper and handle use `textarea-container` and `textarea-handle`.
 
 </Only>
 
