@@ -67,7 +67,7 @@ function Textarea({
             borderColor: colors.destructive,
             backgroundColor: withAlpha(colors.destructive, isDark ? 0.1 : 0.05),
           },
-          state.focused && ring(colors.destructive),
+          state.focused && { boxShadow: [] },
         ],
         state.disabled && { opacity: 0.5 },
         typeof style === "function" ? style(state) : style,

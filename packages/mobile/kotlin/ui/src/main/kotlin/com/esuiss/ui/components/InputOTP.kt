@@ -169,7 +169,8 @@ fun InputOTPSlot(index: Int, modifier: Modifier = Modifier) {
         else -> colors.border
     }
     val borderWidth = when {
-        tone == OtpTone.Verified || tone == OtpTone.Invalid || state.invalid -> if (active) 2.dp else 1.5.dp
+        tone == OtpTone.Verified -> if (active) 2.dp else 1.5.dp
+        tone == OtpTone.Invalid || state.invalid -> 1.5.dp
         active -> 2.dp
         else -> 1.dp
     }

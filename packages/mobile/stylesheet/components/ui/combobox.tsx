@@ -256,7 +256,7 @@ function ComboboxInput({
             borderColor: colors.destructive,
             backgroundColor: `${colors.destructive}${isDark ? "1a" : "0d"}`,
           },
-          focused && !inPopup && ring(colors.destructive),
+          focused && !inPopup && { boxShadow: [] },
         ],
         inPopup && [
           styles.inputGroupInPopup,

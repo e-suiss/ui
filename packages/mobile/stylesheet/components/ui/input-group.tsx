@@ -183,7 +183,7 @@ function InputGroup({
                 isDark ? 0.1 : 0.05
               ),
             },
-            focused && ring(colors.destructive),
+            focused && { boxShadow: [] },
           ],
           isDisabled && { opacity: 0.5 },
           style,

@@ -78,7 +78,7 @@ function Input({
             borderColor: colors.destructive,
             backgroundColor: withAlpha(colors.destructive, isDark ? 0.1 : 0.05),
           },
-          state.focused && ring(colors.destructive),
+          state.focused && { boxShadow: [] },
         ],
         inset && styles.inset,
         state.disabled && { opacity: 0.5 },

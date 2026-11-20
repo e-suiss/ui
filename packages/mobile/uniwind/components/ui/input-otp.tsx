@@ -108,7 +108,7 @@ function InputOTPSlot({
           state.disabled && "opacity-50",
           state.active && "z-10 border-ring ring-1 ring-ring",
           invalid &&
-            "border-[1.5px] border-destructive bg-destructive/5 ring-destructive dark:bg-destructive/10",
+            "border-[1.5px] border-destructive bg-destructive/5 ring-0 dark:bg-destructive/10",
           slotClassNames?.className,
           resolveClassName(className, state)
         )

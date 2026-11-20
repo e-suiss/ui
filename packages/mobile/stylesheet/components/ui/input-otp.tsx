@@ -148,7 +148,7 @@ function InputOTPSlot({
             borderColor: colors.destructive,
             backgroundColor: `${colors.destructive}${isDark ? "1a" : "0d"}`,
           },
-          state.active && ring(colors.destructive),
+          state.active && { boxShadow: [] },
         ],
         slotStyles?.style,
         typeof style === "function" ? style(state) : style,

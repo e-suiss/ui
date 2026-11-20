@@ -48,7 +48,7 @@ function Textarea({
             : "min-h-16 px-3 py-3 text-base",
           state.focused && "border-ring ring-1 ring-ring",
           state.invalid &&
-            "border-[1.5px] border-destructive bg-destructive-5 ring-destructive dark:bg-destructive-10",
+            "border-[1.5px] border-destructive bg-destructive-5 ring-0 dark:bg-destructive-10",
           state.disabled && "opacity-50",
           resolveClassName(className, state)
         )

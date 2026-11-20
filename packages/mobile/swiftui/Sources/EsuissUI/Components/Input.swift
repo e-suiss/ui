@@ -134,8 +134,8 @@ struct FieldSurface<S: InsettableShape>: ViewModifier {
         }
       }
       .overlay {
-        if focused {
-          shape.inset(by: -1).strokeBorder(invalid ? EsuissColor.destructive : EsuissColor.ring, lineWidth: invalid ? 1 : 2)
+        if focused && !invalid {
+          shape.inset(by: -1).strokeBorder(EsuissColor.ring, lineWidth: 2)
         }
       }
   }

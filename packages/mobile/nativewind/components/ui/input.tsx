@@ -50,7 +50,7 @@ function Input({
           size === "sm" && "h-8 rounded-md px-2.5 text-[14px]",
           state.focused && "border-ring ring-1 ring-ring",
           state.invalid &&
-            "border-[1.5px] border-destructive bg-destructive-5 ring-destructive dark:bg-destructive-10",
+            "border-[1.5px] border-destructive bg-destructive-5 ring-0 dark:bg-destructive-10",
           inset && "border-0 bg-transparent ring-0 dark:bg-transparent",
           state.disabled && "opacity-50",
           resolveClassName(className, state)

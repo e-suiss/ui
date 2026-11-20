@@ -206,7 +206,7 @@
   }
 
   .cn-questionnaire-input {
-    @apply h-11 rounded-xl border border-border bg-background dark:bg-foreground/6 px-3 py-1 text-base focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring aria-invalid:border-[1.5px] aria-invalid:border-destructive aria-invalid:ring-destructive aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10;
+    @apply h-11 rounded-xl border border-border bg-background dark:bg-foreground/6 px-3 py-1 text-base focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring aria-invalid:border-[1.5px] aria-invalid:border-destructive aria-invalid:focus-visible:border-destructive aria-invalid:focus-visible:ring-0 aria-invalid:bg-destructive/5 dark:aria-invalid:bg-destructive/10;
   }
 
   .cn-questionnaire-error {

@@ -74,7 +74,7 @@ internal fun Modifier.formFieldBorder(
     invalid: Boolean,
     inset: Boolean = false,
 ): Modifier = when {
-    invalid -> border(if (focused) 2.dp else 1.5.dp, colors.destructive, shape)
+    invalid -> border(1.5.dp, colors.destructive, shape)
     focused -> border(2.dp, colors.ring, shape)
     inset -> this
     else -> border(1.dp, colors.border, shape)
