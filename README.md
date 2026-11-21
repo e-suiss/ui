@@ -19,7 +19,7 @@ Visit [suiss.app/ui/docs](https://suiss.app/ui/docs) to view the documentation.
 
 ## Contributing
 
-Please read the [contributing guide](CONTRIBUTING.md).
+Please read the [contributing guide](CONTRIBUTING.md) before opening a pull request, and report vulnerabilities privately as described in [SECURITY.md](SECURITY.md). Everyone taking part is expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
 
