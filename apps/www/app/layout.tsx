@@ -34,6 +34,7 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+  twitter: { site: site.xHandle, creator: site.xHandle },
   formatDetection: { telephone: false, email: false, address: false },
 }
 
@@ -132,7 +133,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         url: site.url,
         logo: absolute("/icon"),
         description: dictionary.description,
-        sameAs: [site.github, site.npm],
+        sameAs: [site.github, site.npm, site.x, site.instagram],
       },
       {
         "@type": "WebSite",

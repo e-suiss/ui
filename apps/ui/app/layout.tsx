@@ -48,6 +48,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: site.organization.xHandle,
+    creator: site.organization.xHandle,
     title: site.title,
     description: site.description,
   },
@@ -82,7 +84,12 @@ const structuredData = {
       name: site.organization.name,
       url: site.organization.url,
       logo: site.organization.logo,
-      sameAs: [site.organization.github, site.organization.npm],
+      sameAs: [
+        site.organization.github,
+        site.organization.npm,
+        site.organization.x,
+        site.organization.instagram,
+      ],
     },
     {
       "@type": "WebSite",

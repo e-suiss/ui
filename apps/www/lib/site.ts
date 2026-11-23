@@ -6,6 +6,9 @@ export const site = {
   ),
   github: "https://github.com/e-suiss",
   npm: "https://www.npmjs.com/org/esuiss",
+  x: "https://x.com/suissapp",
+  xHandle: "@suissapp",
+  instagram: "https://www.instagram.com/suissapp/",
 }
 
 export const absolute = (path: string) =>

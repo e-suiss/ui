@@ -28,6 +28,8 @@ export function pageMetadata({
     },
     twitter: {
       card: "summary_large_image",
+      site: site.xHandle,
+      creator: site.xHandle,
       title,
       description,
       images: [image],

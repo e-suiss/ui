@@ -28,6 +28,9 @@ export const site = {
     logo: `${origin}/icon`,
     github: "https://github.com/e-suiss",
     npm: "https://www.npmjs.com/org/esuiss",
+    x: "https://x.com/suissapp",
+    xHandle: "@suissapp",
+    instagram: "https://www.instagram.com/suissapp/",
   },
   keywords: [
     "React components",

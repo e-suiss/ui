@@ -265,6 +265,8 @@ export async function generateMetadata(
     },
     twitter: {
       card: "summary_large_image",
+      site: site.organization.xHandle,
+      creator: site.organization.xHandle,
       title,
       description,
       images: [image],
