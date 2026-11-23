@@ -31,6 +31,7 @@ export const site = {
     x: "https://x.com/suissapp",
     xHandle: "@suissapp",
     instagram: "https://www.instagram.com/suissapp/",
+    linkedin: "https://www.linkedin.com/company/suissapp/",
   },
   keywords: [
     "React components",

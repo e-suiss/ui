@@ -89,6 +89,7 @@ const structuredData = {
         site.organization.npm,
         site.organization.x,
         site.organization.instagram,
+        site.organization.linkedin,
       ],
     },
     {

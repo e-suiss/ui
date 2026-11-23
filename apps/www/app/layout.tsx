@@ -133,7 +133,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         url: site.url,
         logo: absolute("/icon"),
         description: dictionary.description,
-        sameAs: [site.github, site.npm, site.x, site.instagram],
+        sameAs: [site.github, site.npm, site.x, site.instagram, site.linkedin],
       },
       {
         "@type": "WebSite",
