@@ -18,7 +18,7 @@ import { markdownUrl } from "@/lib/llms"
 import { absolute, site } from "@/lib/site"
 import { source } from "@/lib/source"
 import { strings } from "@/lib/strings"
-import { pageSummary } from "@/lib/summary"
+import { pageSummary, pageTitle } from "@/lib/summary"
 import { cn } from "@/lib/utils"
 
 const WIDE_PAGE = /^\/docs\/(patterns|interactions|blocks)(\/|$)/
@@ -240,9 +240,15 @@ export async function generateMetadata(
 
   const image = `/og/docs/${[...page.slugs, "image.png"].join("/")}`
   const description = page.data.description ?? site.description
+  const title = pageTitle(
+    page.data.title,
+    page.data.eyebrow,
+    page.data.platforms,
+    page.data.seoTitle
+  )
 
   return {
-    title: page.data.title,
+    title: { absolute: title },
     description,
     alternates: {
       canonical: page.url,
@@ -253,13 +259,13 @@ export async function generateMetadata(
       siteName: site.name,
       locale: "en_US",
       url: page.url,
-      title: page.data.title,
+      title,
       description,
       images: [{ url: image, width: 1200, height: 630, alt: page.data.title }],
     },
     twitter: {
       card: "summary_large_image",
-      title: page.data.title,
+      title,
       description,
       images: [image],
     },
