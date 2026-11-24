@@ -106,7 +106,7 @@ function InputOTPSlot({
         cn(
           "relative h-[3.25rem] w-11 items-center justify-center rounded-input border border-border bg-background dark:bg-foreground-6",
           state.disabled && "opacity-50",
-          state.active && "z-10 border-ring ring-1 ring-ring",
+          state.active && "z-10 border-ring",
           invalid &&
             "border-[1.5px] border-destructive bg-destructive-5 ring-0 dark:bg-destructive-10",
           slotClassNames?.className,

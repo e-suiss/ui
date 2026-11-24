@@ -103,12 +103,6 @@ function withAlpha(color: string, alpha: number) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
-function ring(color: string) {
-  return {
-    boxShadow: [{ offsetX: 0, offsetY: 0, spreadDistance: 1, color }],
-  }
-}
-
 function alignOf(node: React.ReactNode): InputGroupAlign | null {
   if (!React.isValidElement<{ align?: InputGroupAlign }>(node)) return null
   if (node.type !== InputGroupAddon) return null
@@ -173,7 +167,7 @@ function InputGroup({
           },
           (block || multiline) && styles.auto,
           block && styles.block,
-          focused && { borderColor: colors.ring, ...ring(colors.ring) },
+          focused && { borderColor: colors.ring },
           isInvalid && [
             styles.invalid,
             {

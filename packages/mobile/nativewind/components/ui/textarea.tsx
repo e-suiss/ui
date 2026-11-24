@@ -46,7 +46,7 @@ function Textarea({
           size === "lg"
             ? "min-h-[3.375rem] px-4 py-3.5 text-[17px]"
             : "min-h-16 px-3 py-3 text-base",
-          state.focused && "border-ring ring-1 ring-ring",
+          state.focused && "border-ring",
           state.invalid &&
             "border-[1.5px] border-destructive bg-destructive-5 ring-0 dark:bg-destructive-10",
           state.disabled && "opacity-50",

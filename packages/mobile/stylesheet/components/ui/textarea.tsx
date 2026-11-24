@@ -12,12 +12,6 @@ function withAlpha(color: string, alpha: number) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
-function ring(color: string) {
-  return {
-    boxShadow: [{ offsetX: 0, offsetY: 0, spreadDistance: 1, color }],
-  }
-}
-
 const styles = StyleSheet.create({
   root: {
     ...fontSize.base,
@@ -60,7 +54,7 @@ function Textarea({
           borderColor: colors.border,
           color: colors.foreground,
         },
-        state.focused && { borderColor: colors.ring, ...ring(colors.ring) },
+        state.focused && { borderColor: colors.ring },
         state.invalid && [
           styles.invalid,
           {

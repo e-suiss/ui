@@ -21,7 +21,7 @@ function Input({
           size === "lg" ? "h-13.5 px-4 text-[17px]" : "h-input px-input-x",
           size === "md" && "h-9 text-[14px]",
           size === "sm" && "h-8 rounded-md px-2.5 text-[14px]",
-          state.focused && "border-ring ring-1 ring-ring",
+          state.focused && "border-ring",
           state.invalid &&
             "border-[1.5px] border-destructive bg-destructive/5 ring-0 dark:bg-destructive/10",
           inset && "border-0 bg-transparent ring-0 dark:bg-transparent",

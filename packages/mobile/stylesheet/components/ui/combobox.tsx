@@ -26,12 +26,6 @@ import {
   useTheme,
 } from "@/components/ui/theme"
 
-function ring(color: string) {
-  return {
-    boxShadow: [{ offsetX: 0, offsetY: 0, spreadDistance: 1, color }],
-  }
-}
-
 function withAlpha(color: string, alpha: number) {
   if (!color.startsWith("#") || color.length !== 7) return color
   const r = Number.parseInt(color.slice(1, 3), 16)
@@ -248,8 +242,7 @@ function ComboboxInput({
             : colors.background,
           borderColor: colors.border,
         },
-        focused &&
-          !inPopup && { borderColor: colors.ring, ...ring(colors.ring) },
+        focused && !inPopup && { borderColor: colors.ring },
         isInvalid && [
           styles.invalid,
           {

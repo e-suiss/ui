@@ -97,7 +97,7 @@ function InputGroup({
           size === "lg" ? "h-13.5" : "h-input",
           (block || multiline) && "h-auto rounded-textarea",
           block && "flex-col items-stretch",
-          focused && "border-ring ring-1 ring-ring",
+          focused && "border-ring",
           isInvalid &&
             "border-[1.5px] border-destructive bg-destructive/5 ring-0 dark:bg-destructive/10",
           isDisabled && "opacity-50",

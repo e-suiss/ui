@@ -56,12 +56,6 @@ const styles = StyleSheet.create({
 
 const InputOTPInvalidContext = React.createContext(false)
 
-function ring(color: string) {
-  return {
-    boxShadow: [{ offsetX: 0, offsetY: 0, spreadDistance: 1, color }],
-  }
-}
-
 function InputOTP({
   style,
   invalid,
@@ -138,10 +132,7 @@ function InputOTPSlot({
           borderColor: colors.border,
         },
         state.disabled && { opacity: 0.5 },
-        state.active && [
-          styles.slotActive,
-          { borderColor: colors.ring, ...ring(colors.ring) },
-        ],
+        state.active && [styles.slotActive, { borderColor: colors.ring }],
         invalid && [
           styles.slotInvalid,
           {
