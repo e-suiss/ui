@@ -214,10 +214,10 @@ function useProgress(isHome: boolean, storageKey: string) {
   }, [isHome, storageKey, target, tween, write])
 
   const expand = React.useCallback(
-    (open: boolean) => {
+    (open: boolean, to = 0) => {
       state.current.locked = true
       if (open) {
-        tween(0, EXPAND_DURATION)
+        tween(to, EXPAND_DURATION)
         return
       }
       tween(isHome ? target() : 1, EXPAND_DURATION, () => {
@@ -284,8 +284,9 @@ export function GlobalNav({
         rtl ? box.right - rect.right : rect.left - box.left
       const linksStart = offset(links.getBoundingClientRect())
       const logoBox = logo?.getBoundingClientRect()
+      const compact = panel === SEARCH && links.offsetParent === null
       const logoEnd =
-        logo && logoBox
+        logo && logoBox && !compact
           ? (rtl ? box.right - logoBox.right : logoBox.left - box.left) +
             logo.offsetWidth +
             LOGO_GAP
@@ -314,8 +315,9 @@ export function GlobalNav({
   React.useEffect(() => {
     if (panelOpen === wasPanelOpen.current) return
     wasPanelOpen.current = panelOpen
-    expand(panelOpen)
-  }, [panelOpen, expand])
+    const compact = panel === SEARCH && linksRef.current?.offsetParent === null
+    expand(panelOpen, compact ? 1 : 0)
+  }, [panel, panelOpen, expand])
 
   const wasOpen = React.useRef(false)
   React.useEffect(() => {
@@ -599,7 +601,7 @@ export function GlobalNav({
               className="nav-panel"
             >
               <div
-                style={{ paddingInlineStart: linksStart }}
+                style={{ paddingInlineStart: linksStart || undefined }}
                 className="mx-auto flex max-w-[1680px] gap-20 px-5 py-10 md:px-10"
               >
                 <div>
@@ -664,7 +666,7 @@ export function GlobalNav({
               className="nav-panel"
             >
               <div
-                style={{ paddingInlineStart: linksStart }}
+                style={{ paddingInlineStart: linksStart || undefined }}
                 className="mx-auto max-w-[1680px] px-5 py-8 md:px-10"
               >
                 <div className="flex items-center gap-3 border-b border-border pb-3 text-foreground">
