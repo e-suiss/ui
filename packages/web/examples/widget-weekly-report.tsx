@@ -115,7 +115,7 @@ export default function WidgetWeeklyReport() {
             </li>
           </ul>
         </div>
-        <div className="hidden w-72 shrink-0 flex-col gap-2 group-data-[size=extra-large]/widget:flex">
+        <div className="hidden w-72 shrink-0 flex-col gap-2 group-data-[size=extra-large]/widget:@2xl/widget:flex">
           <p className="text-xs font-semibold text-muted-foreground">
             Best sellers
           </p>
@@ -140,7 +140,7 @@ export default function WidgetWeeklyReport() {
         </div>
       </Widget>
       <p className="mt-6 text-xs text-muted-foreground">
-        Extra large shows best sellers, large hides them.
+        Extra large shows best sellers when it has room, large hides them.
       </p>
     </div>
   )

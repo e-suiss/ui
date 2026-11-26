@@ -157,6 +157,34 @@ test("Weekly Report", async () => {
     await expect(bestSellersTitle).toBeVisible()
   })
 })
+test("Weekly Report in a narrow column", async () => {
+  const { canvas, canvasElement, step } = await renderExample(
+    <div style={{ width: 352 }}>
+      <WidgetWeeklyReport />
+    </div>
+  )
+
+  const widget = bySlot(canvasElement, "widget")
+
+  await step(
+    "hides the best sellers when extra large has no room",
+    async () => {
+      await expect(widget).toHaveAttribute("data-size", "extra-large")
+      await expect(canvas.getByText("Best sellers")).not.toBeVisible()
+    }
+  )
+
+  await step("keeps the total and the channels inside the widget", async () => {
+    const box = widget.getBoundingClientRect()
+    for (const text of ["₺121,900", "Dine-in", "₺18,800"]) {
+      const element = canvas.getByText(text)
+      await expect(element).toBeVisible()
+      const rect = element.getBoundingClientRect()
+      expect(rect.right).toBeLessThanOrEqual(box.right)
+      expect(rect.left).toBeGreaterThanOrEqual(box.left)
+    }
+  })
+})
 test("Free Resize", async () => {
   const { canvas, canvasElement, step } = await renderExample(
     <WidgetFreeResize />
