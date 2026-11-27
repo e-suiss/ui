@@ -8766,7 +8766,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/area-chart-axes"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart#axes"
         }
       }
     },
@@ -8821,7 +8821,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/area-chart-default"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart#default"
         }
       }
     },
@@ -8876,7 +8876,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/area-chart-gradient"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart#gradient"
         }
       }
     },
@@ -8962,7 +8962,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/area-chart-interactive"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart#interactive"
         }
       }
     },
@@ -9017,7 +9017,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/area-chart-linear"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart#linear"
         }
       }
     },
@@ -9072,7 +9072,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/area-chart-range"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart#range"
         }
       }
     },
@@ -9132,7 +9132,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/area-chart-sparkline"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart#sparkline"
         }
       }
     },
@@ -9187,7 +9187,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/area-chart-stacked-expand"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart#stacked-expand"
         }
       }
     },
@@ -9242,7 +9242,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/area-chart-stacked"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart#stacked"
         }
       }
     },
@@ -9297,7 +9297,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/area-chart-step"
+          "docs": "https://suiss.app/ui/docs/charts/area-chart#step"
         }
       }
     },
@@ -9352,7 +9352,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/bar-chart-active"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart#active"
         }
       }
     },
@@ -9407,7 +9407,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/bar-chart-default"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart#default"
         }
       }
     },
@@ -9462,7 +9462,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/bar-chart-horizontal"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart#horizontal"
         }
       }
     },
@@ -9517,7 +9517,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/bar-chart-hourly"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart#hourly"
         }
       }
     },
@@ -9603,7 +9603,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/bar-chart-interactive"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart#interactive"
         }
       }
     },
@@ -9658,7 +9658,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/bar-chart-labeled"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart#labeled"
         }
       }
     },
@@ -9713,7 +9713,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/bar-chart-multiple"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart#multiple"
         }
       }
     },
@@ -9768,7 +9768,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/bar-chart-negative"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart#negative"
         }
       }
     },
@@ -9823,7 +9823,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/bar-chart-range"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart#range"
         }
       }
     },
@@ -9878,7 +9878,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/bar-chart-stacked"
+          "docs": "https://suiss.app/ui/docs/charts/bar-chart#stacked"
         }
       }
     },
@@ -9933,7 +9933,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/line-chart-default"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart#default"
         }
       }
     },
@@ -9988,7 +9988,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/line-chart-dots"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart#dots"
         }
       }
     },
@@ -10043,7 +10043,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/line-chart-forecast"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart#forecast"
         }
       }
     },
@@ -10098,7 +10098,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/line-chart-goal-dots"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart#goal-dots"
         }
       }
     },
@@ -10153,7 +10153,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/line-chart-goal"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart#goal"
         }
       }
     },
@@ -10239,7 +10239,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/line-chart-interactive"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart#interactive"
         }
       }
     },
@@ -10294,7 +10294,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/line-chart-labeled"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart#labeled"
         }
       }
     },
@@ -10349,7 +10349,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/line-chart-linear"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart#linear"
         }
       }
     },
@@ -10404,7 +10404,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/line-chart-multiple"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart#multiple"
         }
       }
     },
@@ -10459,7 +10459,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/line-chart-step"
+          "docs": "https://suiss.app/ui/docs/charts/line-chart#step"
         }
       }
     },
@@ -10514,7 +10514,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/pie-chart-active"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart#active"
         }
       }
     },
@@ -10569,7 +10569,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/pie-chart-default"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart#default"
         }
       }
     },
@@ -10624,7 +10624,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/pie-chart-donut-text"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart#donut-text"
         }
       }
     },
@@ -10679,7 +10679,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/pie-chart-donut"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart#donut"
         }
       }
     },
@@ -10734,7 +10734,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/pie-chart-half"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart#half"
         }
       }
     },
@@ -10820,7 +10820,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/pie-chart-interactive"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart#interactive"
         }
       }
     },
@@ -10875,7 +10875,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/pie-chart-label"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart#label"
         }
       }
     },
@@ -10930,7 +10930,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/pie-chart-legend"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart#legend"
         }
       }
     },
@@ -10985,7 +10985,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/pie-chart-nested"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart#nested"
         }
       }
     },
@@ -11040,7 +11040,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/pie-chart-separated"
+          "docs": "https://suiss.app/ui/docs/charts/pie-chart#separated"
         }
       }
     },
@@ -11095,7 +11095,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radar-chart-default"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart#default"
         }
       }
     },
@@ -11150,7 +11150,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radar-chart-dots"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart#dots"
         }
       }
     },
@@ -11205,7 +11205,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radar-chart-grid-circle"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart#grid-circle"
         }
       }
     },
@@ -11260,7 +11260,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radar-chart-grid-filled"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart#grid-filled"
         }
       }
     },
@@ -11315,7 +11315,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radar-chart-grid-none"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart#grid-none"
         }
       }
     },
@@ -11370,7 +11370,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radar-chart-interactive"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart#interactive"
         }
       }
     },
@@ -11425,7 +11425,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radar-chart-legend"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart#legend"
         }
       }
     },
@@ -11480,7 +11480,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radar-chart-lines-only"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart#lines-only"
         }
       }
     },
@@ -11535,7 +11535,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radar-chart-multiple"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart#multiple"
         }
       }
     },
@@ -11590,7 +11590,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radar-chart-radius-axis"
+          "docs": "https://suiss.app/ui/docs/charts/radar-chart#radius-axis"
         }
       }
     },
@@ -11645,7 +11645,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radial-chart-batteries"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart#batteries"
         }
       }
     },
@@ -11700,7 +11700,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radial-chart-default"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart#default"
         }
       }
     },
@@ -11755,7 +11755,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radial-chart-gauge"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart#gauge"
         }
       }
     },
@@ -11805,7 +11805,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radial-chart-interactive"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart#interactive"
         }
       }
     },
@@ -11860,7 +11860,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radial-chart-label"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart#label"
         }
       }
     },
@@ -11915,7 +11915,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radial-chart-progress"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart#progress"
         }
       }
     },
@@ -11950,7 +11950,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radial-chart-rings"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart#rings"
         }
       }
     },
@@ -12005,7 +12005,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radial-chart-stacked"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart#stacked"
         }
       }
     },
@@ -12060,7 +12060,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radial-chart-text"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart#text"
         }
       }
     },
@@ -12115,7 +12115,7 @@
       ],
       "meta": {
         "links": {
-          "docs": "https://suiss.app/ui/docs/charts/radial-chart-tinted"
+          "docs": "https://suiss.app/ui/docs/charts/radial-chart#tinted"
         }
       }
     },
