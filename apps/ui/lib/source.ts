@@ -11,6 +11,7 @@ const docs = defineDocs({
       eyebrow: z.string().optional(),
       seoTitle: z.string().optional(),
       platforms: z.array(z.enum(["web", "rn", "swift", "kotlin"])).optional(),
+      variants: z.array(z.string()).optional(),
     }),
     postprocess: { includeProcessedMarkdown: true },
   },

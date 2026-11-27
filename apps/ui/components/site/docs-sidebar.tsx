@@ -171,7 +171,13 @@ function SectionSwitcher() {
   )
 }
 
-export function DocsSidebar({ nodes: all }: { nodes: PageTree.Node[] }) {
+export function DocsSidebar({
+  nodes: all,
+  weights = {},
+}: {
+  nodes: PageTree.Node[]
+  weights?: Record<string, number>
+}) {
   const pathname = usePathname()
   const section = sectionOf(all, pathname)
   const groups = groupNodes(section.nodes)
@@ -186,7 +192,7 @@ export function DocsSidebar({ nodes: all }: { nodes: PageTree.Node[] }) {
         <div className="flex items-baseline justify-between ps-5 pe-2 pb-3 font-mono text-[11px] tracking-[0.04em] text-foreground uppercase">
           <span>{section.title}</span>
           <span className="text-muted-foreground tabular-nums">
-            {pages.length}
+            {pages.reduce((total, page) => total + (weights[page.url] ?? 1), 0)}
           </span>
         </div>
         <nav aria-label={section.title}>

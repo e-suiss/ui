@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-
+import { listedPages } from "@/lib/hubs"
 import { pageMarkdown } from "@/lib/llms"
 import { absolute } from "@/lib/site"
 import { source } from "@/lib/source"
@@ -28,10 +28,10 @@ export async function GET(
 }
 
 export function generateStaticParams() {
-  return source
-    .generateParams()
-    .filter(({ slug }) => slug.length > 0)
-    .map(({ slug }) => ({
+  return listedPages()
+    .map((page) => page.slugs)
+    .filter((slug) => slug.length > 0)
+    .map((slug) => ({
       slug: [...slug.slice(0, -1), `${slug.at(-1)}.md`],
     }))
 }

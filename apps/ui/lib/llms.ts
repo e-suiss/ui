@@ -4,6 +4,7 @@ import type * as PageTree from "fumadocs-core/page-tree"
 import { DEFAULT_BASE, STYLING_LABELS } from "@/lib/code-options"
 import { BASE_TITLES } from "@/lib/create/templates"
 import { exampleSource, readSource, sourcePath } from "@/lib/highlight"
+import { hubOf, hubVariants, listedPages, pageHref } from "@/lib/hubs"
 import { nativeCode, nativePreview } from "@/lib/native"
 import { absolute, site } from "@/lib/site"
 import { source } from "@/lib/source"
@@ -44,12 +45,13 @@ const fileKey = (file: string) =>
 
 function ownerPage(file: string) {
   const key = fileKey(file)
-  return source
+  const page = source
     .getPages()
     .find(
       (page) =>
         page.slugs.length === 2 && sourceKey(page.slugs[1] ?? "") === key
     )
+  return page && (hubOf(page)?.hub ?? page)
 }
 
 function repositoryUrl(file: string) {
@@ -59,7 +61,7 @@ function repositoryUrl(file: string) {
     : undefined
 }
 
-export type MarkdownContext = {
+type MarkdownContext = {
   page: Page
   seen: Set<string>
   full?: boolean
@@ -167,8 +169,7 @@ const attr = (tag: string, name: string) => {
 
 function registryIndex(tag: string) {
   const category = attr(tag, "category") ?? ""
-  return source
-    .getPages()
+  return listedPages()
     .filter((page) => page.slugs[0] === category && page.slugs.length > 1)
     .map(
       (page) =>
@@ -316,8 +317,8 @@ function cleanMarkdown(body: string, full: boolean) {
 
 export const markdownUrl = (url: string) => `${url}.md`
 
-export async function pageMarkdown(page: Page, full = false) {
-  const body = cleanMarkdown(
+async function markdownBody(page: Page, full: boolean) {
+  return cleanMarkdown(
     await toMarkdown(await page.data.getText("processed"), {
       page,
       seen: new Set(),
@@ -325,12 +326,34 @@ export async function pageMarkdown(page: Page, full = false) {
     }),
     full
   )
+}
+
+const HEADING = /^(#{1,5}) /gm
+
+async function variantMarkdown(page: Page, full: boolean) {
+  return [
+    `## ${page.data.title}`,
+    page.data.description ?? "",
+    `Source: ${absolute(pageHref(page.url))}`,
+    (await markdownBody(page, full)).replace(HEADING, "#$1 "),
+  ]
+    .filter(Boolean)
+    .join("\n\n")
+}
+
+export async function pageMarkdown(page: Page, full = false) {
+  const variants = await Promise.all(
+    (hubVariants(page) ?? []).map(({ page: variant }) =>
+      variantMarkdown(variant, full)
+    )
+  )
   return [
     `# ${page.data.title}`,
     page.data.description ?? "",
     pageSummary(page.data.title, page.data.eyebrow, page.data.platforms) ?? "",
     `Source: ${absolute(page.url)}`,
-    body,
+    await markdownBody(page, full),
+    ...variants,
   ]
     .filter(Boolean)
     .join("\n\n")
@@ -366,7 +389,7 @@ export function pageGroups() {
   const groups = new Map<string, Page[]>(
     ["Get started", ...Object.values(groupTitles)].map((title) => [title, []])
   )
-  for (const page of [...source.getPages()].sort((a, b) => rank(a) - rank(b))) {
+  for (const page of [...listedPages()].sort((a, b) => rank(a) - rank(b))) {
     const title = groupTitles[page.slugs[0] ?? ""] ?? "Get started"
     groups.set(title, [...(groups.get(title) ?? []), page])
   }

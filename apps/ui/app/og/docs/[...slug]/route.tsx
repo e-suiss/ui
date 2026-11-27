@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-
+import { listedPages } from "@/lib/hubs"
 import { ogImage } from "@/lib/og"
 import { source } from "@/lib/source"
 
@@ -20,9 +20,9 @@ export async function GET(
 }
 
 export function generateStaticParams() {
-  return source
-    .getPages()
-    .map((page) => ({ slug: [...page.slugs, "image.png"] }))
+  return listedPages().map((page) => ({
+    slug: [...page.slugs, "image.png"],
+  }))
 }
 
 export const dynamic = "force-static"

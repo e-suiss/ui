@@ -1,8 +1,6 @@
 import type { MetadataRoute } from "next"
-
-import { contentDates } from "@/lib/dates"
+import { listedPages, pageDates } from "@/lib/hubs"
 import { absolute } from "@/lib/site"
-import { source } from "@/lib/source"
 
 function priorityOf(depth: number) {
   if (depth === 0) return 0.9
@@ -11,11 +9,11 @@ function priorityOf(depth: number) {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const pages = source.getPages().map((page) => {
+  const pages = listedPages().map((page) => {
     const depth = page.slugs.length
     return {
       url: absolute(page.url),
-      lastModified: contentDates(page.path).modified,
+      lastModified: pageDates(page).modified,
       changeFrequency: "weekly" as const,
       priority: priorityOf(depth),
     }

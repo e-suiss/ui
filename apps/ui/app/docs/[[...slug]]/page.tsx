@@ -7,13 +7,14 @@ import * as React from "react"
 import { getMDXComponents } from "@/components/mdx"
 import { Anchor } from "@/components/site/anchor"
 import { BaseItemsProvider } from "@/components/site/base-items"
+import { HubVariants, variantTitle } from "@/components/site/hub-variants"
 import { JsonLd } from "@/components/site/json-ld"
 import { PageActions } from "@/components/site/page-actions"
 import { PlatformScope, PlatformSwitcher } from "@/components/site/platform"
 import { Toc } from "@/components/site/toc"
 import { withBase } from "@/lib/base-path"
-import { contentDates } from "@/lib/dates"
 import { baseItems } from "@/lib/dependencies"
+import { hubVariants, isVariant, listedPages, pageDates } from "@/lib/hubs"
 import { markdownUrl } from "@/lib/llms"
 import { absolute, site } from "@/lib/site"
 import { source } from "@/lib/source"
@@ -90,16 +91,28 @@ async function DocPage(props: {
 }) {
   const params = await props.params
   const page = getDocPage(params)
-  if (!page) notFound()
+  if (!page || isVariant(page)) notFound()
 
+  const variants = hubVariants(page)
   const eyebrow = page.data.eyebrow
   const kind = eyebrow && eyebrow !== strings.brand ? eyebrow : undefined
-  const { body: MDX, toc } = await page.data.load()
+  const { body: MDX, toc: pageToc } = await page.data.load()
+  const toc = variants
+    ? [
+        ...pageToc,
+        ...variants.map(({ page: variant, anchor }) => ({
+          title: variantTitle(variant.data.title, page.data.title),
+          url: `#${anchor}`,
+          depth: 2,
+        })),
+      ]
+    : pageToc
   const wide = WIDE_PAGE.test(page.url)
   const item = page.slugs.at(-1)
-  const items = item
-    ? await baseItems(item, () => page.data.getText("raw"))
-    : undefined
+  const items =
+    item && !variants
+      ? await baseItems(item, () => page.data.getText("raw"))
+      : undefined
   const { previous, next } = findNeighbour(source.getPageTree(), page.url, {
     separateRoot: true,
   })
@@ -116,7 +129,7 @@ async function DocPage(props: {
     page.data.eyebrow,
     page.data.platforms
   )
-  const { published, modified } = contentDates(page.path)
+  const { published, modified } = pageDates(page)
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -197,6 +210,9 @@ async function DocPage(props: {
           <BaseItemsProvider value={items}>
             <MDX components={getMDXComponents()} />
           </BaseItemsProvider>
+          {variants && (
+            <HubVariants variants={variants} hubTitle={page.data.title} />
+          )}
         </div>
         {(previous || next) && (
           <nav
@@ -229,14 +245,17 @@ async function DocPage(props: {
 }
 
 export function generateStaticParams() {
-  return source.generateParams()
+  const listed = new Set(listedPages().map((page) => page.url))
+  return source
+    .generateParams()
+    .filter((params) => listed.has(source.getPage(params.slug)?.url ?? ""))
 }
 
 export async function generateMetadata(
   props: PageProps<"/docs/[[...slug]]">
 ): Promise<Metadata> {
   const page = getDocPage(await props.params)
-  if (!page) notFound()
+  if (!page || isVariant(page)) notFound()
 
   const image = `/og/docs/${[...page.slugs, "image.png"].join("/")}`
   const description = pageDescription(

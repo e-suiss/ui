@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync } from "node:fs"
 import path from "node:path"
+import { isHub } from "../../../scripts/lib/docs-hubs.mjs"
 
 const DOCS = path.resolve(import.meta.dirname, "../content/docs")
 const COUNT = /^description: (\d+) /m
@@ -12,7 +13,10 @@ for (const entry of readdirSync(DOCS, { withFileTypes: true })) {
   if (!entry.isDirectory()) continue
   const folder = path.join(DOCS, entry.name)
   const files = readdirSync(folder).filter(
-    (file) => file.endsWith(".mdx") && file !== "index.mdx"
+    (file) =>
+      file.endsWith(".mdx") &&
+      file !== "index.mdx" &&
+      !isHub(path.join(folder, file))
   )
   const pages = files.length
   const index = readFileSync(path.join(folder, "index.mdx"), "utf8")

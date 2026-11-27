@@ -1,5 +1,6 @@
 import type { Node } from "fumadocs-core/page-tree"
 
+import { hubVariants } from "@/lib/hubs"
 import { source } from "@/lib/source"
 
 type Entry = { title: string; description?: string; url: string }
@@ -17,12 +18,25 @@ function pagesOf(nodes: Node[]): string[] {
 }
 
 export function GET() {
-  const pages = new Map(source.getPages().map((page) => [page.url, page.data]))
+  const pages = new Map(source.getPages().map((page) => [page.url, page]))
   const entry = (url: string): Entry[] => {
-    const data = pages.get(url)
-    return data
-      ? [{ title: data.title ?? url, description: data.description, url }]
-      : []
+    const page = pages.get(url)
+    if (!page) return []
+    const variants = (hubVariants(page) ?? []).map(
+      ({ page: variant, anchor }) => ({
+        title: variant.data.title,
+        description: variant.data.description,
+        url: `${url}#${anchor}`,
+      })
+    )
+    return [
+      {
+        title: page.data.title ?? url,
+        description: page.data.description,
+        url,
+      },
+      ...variants,
+    ]
   }
   const groups: { name: string; pages: Entry[] }[] = []
   let current: { name: string; pages: Entry[] } | undefined

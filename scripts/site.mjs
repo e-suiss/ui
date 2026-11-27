@@ -1,5 +1,6 @@
-import { cp, readdir, rm, stat } from "node:fs/promises"
+import { appendFile, cp, readdir, rm, stat } from "node:fs/promises"
 import path from "node:path"
+import { docsHubs } from "./lib/docs-hubs.mjs"
 
 const root = path.join(import.meta.dirname, "..")
 const dist = path.join(root, "dist")
@@ -9,6 +10,15 @@ await cp(path.join(root, "apps/www/out"), dist, { recursive: true })
 await cp(path.join(root, "apps/ui/out"), path.join(dist, "ui"), {
   recursive: true,
 })
+
+const hubRedirects = [...docsHubs()].map(
+  ([url, { hub, anchor }]) => `/ui${url} /ui${hub}#${anchor} 301`
+)
+if (hubRedirects.length > 0)
+  await appendFile(
+    path.join(dist, "_redirects"),
+    `${hubRedirects.join("\n")}\n`
+  )
 
 const LIMIT = 1.75 * 1024 * 1024
 const heavy = []

@@ -22,6 +22,10 @@ export const strings = {
   taglineEnd: "Agent era",
   github: "GitHub",
   piecesLead: "Add the pieces it builds on:",
+  showCode: "Show code",
+  loadingCode: "Loading…",
+  hubManualLead: "Follow the manual steps under ",
+  hubManualTail: " and copy this variant's source instead.",
   copyright: "Copyright © 2026 suiss. All rights reserved.",
   license: "Released under open-source licenses.",
   heroLead:

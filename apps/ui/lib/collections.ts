@@ -39,7 +39,7 @@ export async function pieceCounts(): Promise<PieceCounts> {
   const counts: PieceCounts = {}
   for (const page of source.getPages()) {
     const [collection] = page.slugs
-    if (page.slugs.length !== 2 || !collection) continue
+    if (page.slugs.length !== 2 || !collection || page.data.variants) continue
     counts[collection] = (counts[collection] ?? 0) + 1
   }
   counts.hooks = await hookCount()

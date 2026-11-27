@@ -5,6 +5,7 @@ import path from "node:path"
 import { runInNewContext } from "node:vm"
 import Ajv from "ajv"
 import postcss from "postcss"
+import { docsHref, docsHubs } from "../../../scripts/lib/docs-hubs.mjs"
 import {
   collectImports,
   frontmatterValue,
@@ -18,6 +19,7 @@ import {
 const SITE = "https://suiss.app/ui"
 const NAMESPACE = "@esuiss"
 const DOCS = path.resolve(import.meta.dirname, "../../../apps/ui/content/docs")
+const HUBS = docsHubs()
 const THEME = "theme-suiss"
 export const UNIWIND_THEME = "registry/uniwind/theme-suiss.css"
 export const PRESETS = "styles/presets"
@@ -98,7 +100,7 @@ async function docsPage(kind, name, platform = "rn") {
     return undefined
   }
   return {
-    url: `${SITE}/docs/${kind.docs}/${name}`,
+    url: `${SITE}${docsHref(`/docs/${kind.docs}/${name}`, HUBS)}`,
     title: frontmatterValue(frontmatter, "title"),
     description: frontmatterValue(frontmatter, "description"),
   }

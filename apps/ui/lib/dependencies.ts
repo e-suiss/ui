@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises"
 import path from "node:path"
 import { DEFAULT_BASE, PRIMITIVE_BASES } from "@/lib/code-options"
+import { pageHref } from "@/lib/hubs"
 import { source } from "@/lib/source"
 import { strings } from "@/lib/strings"
 
@@ -63,7 +64,9 @@ function piece(name: string): Piece {
         PIECE_SECTIONS.has(entry.slugs[0] ?? "") &&
         entry.slugs[1] === name
     )
-  return page ? { name, title: page.data.title, href: page.url } : { name }
+  return page
+    ? { name, title: page.data.title, href: pageHref(page.url) }
+    : { name }
 }
 
 const INSTALL_COMMAND =

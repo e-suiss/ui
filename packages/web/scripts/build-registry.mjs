@@ -4,7 +4,7 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import Ajv from "ajv"
 import postcss from "postcss"
-
+import { docsHref, docsHubs } from "../../../scripts/lib/docs-hubs.mjs"
 import {
   collectImports,
   frontmatterValue,
@@ -38,6 +38,7 @@ const EXAMPLES = { dir: "examples", type: "registry:example" }
 const PREVIEW = /<ComponentPreview\b[^>]*\bname="([\w-]+)"/
 const HEADING = /^#{2,4} (.+)$/
 const DOC_EXTENSION = /(?:\/index)?\.mdx$/
+const HUBS = docsHubs()
 
 function isInstalled(pkg) {
   try {
@@ -145,7 +146,7 @@ async function docsPage(source, name) {
   if (!existsSync(file)) return undefined
   const frontmatter = (await readFile(file, "utf8")).match(FRONTMATTER)?.[1]
   return {
-    url: `/docs/${source.docs}/${name}`,
+    url: docsHref(`/docs/${source.docs}/${name}`, HUBS),
     title: frontmatterValue(frontmatter, "title"),
     description: frontmatterValue(frontmatter, "description"),
   }
@@ -366,7 +367,8 @@ async function examplePages() {
     for (const line of text.split("\n")) {
       heading = line.match(HEADING)?.[1] ?? heading
       const name = line.match(PREVIEW)?.[1]
-      if (name && !pages.has(name)) pages.set(name, { url, title, heading })
+      if (name && !pages.has(name))
+        pages.set(name, { url: docsHref(url, HUBS), title, heading })
     }
   }
   return pages
