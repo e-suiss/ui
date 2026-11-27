@@ -27,7 +27,7 @@ function manualTabs(first: { anchor: string; title: string }) {
         {command}
         <p>
           {strings.hubManualLead}
-          <a href={`#${first.anchor}-installation`}>{first.title}</a>
+          <a href={`#${first.anchor}`}>{first.title}</a>
           {strings.hubManualTail}
         </p>
       </Tabs>
