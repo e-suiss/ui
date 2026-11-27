@@ -17,6 +17,14 @@ Accessible and customizable components that you copy into your apps, for React w
 
 Visit [suiss.app/ui/docs](https://suiss.app/ui/docs) to view the documentation.
 
+- [Installation](https://suiss.app/ui/docs/installation): set up a Next.js, Vite, Expo, SwiftUI or Jetpack Compose project.
+- [Components](https://suiss.app/ui/docs/components): buttons, inputs, dialogs, sheets, menus and more.
+- [Patterns](https://suiss.app/ui/docs/patterns) and [Interactions](https://suiss.app/ui/docs/interactions): app shells, pickers, swipe actions and other building blocks.
+- [Charts](https://suiss.app/ui/docs/charts): area, bar, line, pie, radar and radial charts.
+- [Blocks](https://suiss.app/ui/docs/blocks): sign-in, settings, dashboards, inboxes and other full screens.
+- [AI](https://suiss.app/ui/docs/ai): chat, reasoning, tools and sources for AI apps.
+- [CLI](https://suiss.app/ui/docs/cli): add pieces to your project from the terminal.
+
 ## Contributing
 
 Please read the [contributing guide](CONTRIBUTING.md).

@@ -201,5 +201,14 @@ jobs:
             echo '```bash'
             echo "npx @esuiss/ui@${TAG#v} init"
             echo '```'
+            echo
+            echo "## Documentation"
+            echo
+            echo "- [Installation](https://suiss.app/ui/docs/installation)"
+            echo "- [Components](https://suiss.app/ui/docs/components)"
+            echo "- [Patterns](https://suiss.app/ui/docs/patterns)"
+            echo "- [Charts](https://suiss.app/ui/docs/charts)"
+            echo "- [Blocks](https://suiss.app/ui/docs/blocks)"
+            echo "- [CLI](https://suiss.app/ui/docs/cli)"
           } > notes.md
           gh release create "$TAG" --title "@esuiss/ui@${TAG#v}" --notes-file notes.md --verify-tag
