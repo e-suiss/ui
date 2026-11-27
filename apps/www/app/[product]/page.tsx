@@ -194,7 +194,7 @@ export default async function ProductPage({ params }: PageProps<"/[product]">) {
               key={principle.title}
               className="flex flex-col gap-4 border-t border-foreground/15 pt-6"
             >
-              <span className="font-mono text-xs text-foreground/45">
+              <span className="font-mono text-xs text-muted-foreground">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <h2 className="text-[clamp(1.5rem,2.2vw,2.25rem)] leading-[1.02] font-semibold tracking-[-0.045em] text-balance">
@@ -290,7 +290,7 @@ export default async function ProductPage({ params }: PageProps<"/[product]">) {
                   key={item}
                   className="flex items-baseline gap-4 border-t border-foreground/15 py-5"
                 >
-                  <span className="font-mono text-xs text-foreground/45">
+                  <span className="font-mono text-xs text-muted-foreground">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <span className="text-[clamp(1.25rem,1.6vw,1.5rem)] leading-[1.2] font-semibold tracking-[-0.035em]">
@@ -329,7 +329,7 @@ export default async function ProductPage({ params }: PageProps<"/[product]">) {
               key={fact.label}
               className="flex flex-col gap-2 border-t border-foreground/15 py-6 sm:pe-10"
             >
-              <dt className="font-mono text-xs tracking-[0.02em] text-foreground/45 uppercase">
+              <dt className="font-mono text-xs tracking-[0.02em] text-muted-foreground uppercase">
                 {fact.label}
               </dt>
               <dd className="text-[clamp(1.25rem,1.6vw,1.5rem)] leading-[1.25] font-semibold tracking-[-0.035em]">
@@ -421,7 +421,7 @@ export default async function ProductPage({ params }: PageProps<"/[product]">) {
           className="group flex items-center justify-between gap-6 border-y border-foreground/15 py-8 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:py-12"
         >
           <span className="flex flex-col gap-3">
-            <span className="font-mono text-xs tracking-[0.02em] text-foreground/45 uppercase">
+            <span className="font-mono text-xs tracking-[0.02em] text-muted-foreground uppercase">
               {dictionary.nextProduct}
             </span>
             <span

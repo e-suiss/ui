@@ -67,11 +67,11 @@ function Approach() {
       <Label index="01">{dictionary.approachLabel}</Label>
       <p className="text-[clamp(2rem,4.4vw,4.5rem)] leading-[1.04] font-semibold tracking-[-0.045em] text-balance">
         {dictionary.approachLead}{" "}
-        <span className="text-foreground/45">
+        <span className="text-foreground/55">
           {dictionary.approachLeadMuted}
         </span>{" "}
         {dictionary.approachBody}{" "}
-        <span className="text-foreground/45">
+        <span className="text-foreground/55">
           {dictionary.approachBodyMuted}
         </span>
       </p>
@@ -179,7 +179,7 @@ function Products() {
         <Label index="02">{dictionary.productsLabel}</Label>
         <h2 className="text-[clamp(2.5rem,6vw,6rem)] leading-[0.92] font-semibold tracking-[-0.055em] text-balance">
           {dictionary.productsTitle}{" "}
-          <span className="text-foreground/45">
+          <span className="text-foreground/55">
             {dictionary.productsTitleMuted}
           </span>
         </h2>
