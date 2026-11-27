@@ -17,7 +17,6 @@ export const strings = {
   explore: "Explore",
   quickLinks: "Quick links",
   back: "Back",
-  home: "suiss home",
   taglineStart: "For the",
   taglineEnd: "Agent era",
   github: "GitHub",

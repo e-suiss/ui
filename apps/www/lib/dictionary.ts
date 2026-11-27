@@ -67,7 +67,6 @@ export const dictionary = {
   onThisPage: "On this page",
   previous: "Previous",
   next: "Next",
-  home: "suiss home",
   taglineStart: "For the",
   taglineEnd: "Agent era",
 }

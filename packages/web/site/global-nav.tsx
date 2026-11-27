@@ -18,7 +18,6 @@ export type GlobalNavLabels = {
   back: string
   explore: string
   quickLinks: string
-  home: string
 }
 
 const COMPACT_SIZE = 29
@@ -547,7 +546,6 @@ export function GlobalNav({
             <a
               ref={logoRef}
               href={home}
-              aria-label={labels.home}
               style={{
                 transform:
                   "translateY(calc(var(--p) * -36px)) scale(calc(1 - var(--p) * (1 - var(--end-scale))))",

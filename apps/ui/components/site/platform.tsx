@@ -140,7 +140,7 @@ export function PlatformSwitcher({ platforms }: { platforms: Platform[] }) {
           role="tab"
           aria-selected={active === platform}
           onClick={() => selectPlatform(platform)}
-          className="relative h-10 shrink-0 cursor-pointer text-[15px] font-medium tracking-[-0.01em] text-foreground/45 outline-none transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="relative h-10 shrink-0 cursor-pointer text-[15px] font-medium tracking-[-0.01em] text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           {PLATFORM_LABELS[platform]}
           <span data-only={platform} aria-hidden className="contents">

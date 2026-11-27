@@ -52,7 +52,6 @@ export function GlobalNav({ items }: { items: NavItem[] }) {
         back: strings.back,
         explore: strings.explore,
         quickLinks: strings.quickLinks,
-        home: strings.home,
       }}
       actions={
         <>

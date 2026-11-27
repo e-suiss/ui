@@ -175,7 +175,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               back: dictionary.back,
               explore: dictionary.explore,
               quickLinks: dictionary.quickLinks,
-              home: dictionary.home,
               developers: dictionary.developers,
             }}
           />
