@@ -25,6 +25,7 @@ const SCRIPTS = [
     `${PACKAGE}/scripts/example-registry.mjs`,
   ],
   ["scripts/lib/registry.mjs", "scripts/lib/registry.mjs"],
+  ["scripts/lib/docs-hubs.mjs", "scripts/lib/docs-hubs.mjs"],
 ]
 
 const DOCS = {

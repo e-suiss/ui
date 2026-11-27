@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from "node:fs"
+import { existsSync, readdirSync, readFileSync } from "node:fs"
 import path from "node:path"
 
 const FRONTMATTER = /^---\n([\s\S]*?)\n---/
@@ -27,6 +27,7 @@ export function isHub(file) {
 
 export function docsHubs(docs = DOCS) {
   const owners = new Map()
+  if (!existsSync(docs)) return owners
   for (const section of readdirSync(docs, { withFileTypes: true })) {
     if (!section.isDirectory()) continue
     const folder = path.join(docs, section.name)

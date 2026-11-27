@@ -67,6 +67,10 @@ function repository({ cli = "0.9.0" } = {}) {
     path.join(scripts, "lib/registry.mjs"),
     path.join(cwd, "scripts/lib/registry.mjs")
   )
+  copyFileSync(
+    path.join(scripts, "lib/docs-hubs.mjs"),
+    path.join(cwd, "scripts/lib/docs-hubs.mjs")
+  )
   execFileSync("node", ["scripts/build-registry.mjs"], {
     cwd: path.join(cwd, "packages/web"),
     env,
