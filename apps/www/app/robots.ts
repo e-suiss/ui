@@ -23,7 +23,7 @@ const aiCrawlers = [
 ]
 
 export default function robots(): MetadataRoute.Robots {
-  const disallow = ["/ui/api/", "/ui/source/", "/ui/native/"]
+  const disallow = ["/ui/api/", "/ui/source/", "/ui/native/", "/ui/preview/"]
   return {
     rules: [
       { userAgent: "*", allow: "/", disallow },
