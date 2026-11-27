@@ -18,7 +18,7 @@ import { markdownUrl } from "@/lib/llms"
 import { absolute, site } from "@/lib/site"
 import { source } from "@/lib/source"
 import { strings } from "@/lib/strings"
-import { pageSummary, pageTitle } from "@/lib/summary"
+import { pageDescription, pageSummary, pageTitle } from "@/lib/summary"
 import { cn } from "@/lib/utils"
 
 const WIDE_PAGE = /^\/docs\/(patterns|interactions|blocks)(\/|$)/
@@ -239,7 +239,11 @@ export async function generateMetadata(
   if (!page) notFound()
 
   const image = `/og/docs/${[...page.slugs, "image.png"].join("/")}`
-  const description = page.data.description ?? site.description
+  const description = pageDescription(
+    page.data.description ?? site.description,
+    page.data.eyebrow,
+    page.data.platforms
+  )
   const title = pageTitle(
     page.data.title,
     page.data.eyebrow,

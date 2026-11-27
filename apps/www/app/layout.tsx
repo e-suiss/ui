@@ -12,7 +12,7 @@ import { hasDocs } from "@/lib/source"
 import "./globals.css"
 
 const fontInter = Inter({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   variable: "--font-inter",
 })
 
@@ -24,11 +24,7 @@ export const metadata: Metadata = {
   publisher: site.name,
   category: "technology",
   robots: {
-    index: true,
-    follow: true,
     googleBot: {
-      index: true,
-      follow: true,
       "max-image-preview": "large",
       "max-snippet": -1,
       "max-video-preview": -1,

@@ -5,11 +5,21 @@ import { products } from "@/lib/products"
 import { absolute } from "@/lib/site"
 import { DOCS, source } from "@/lib/source"
 
-function lastModified() {
+const HOME_FILES = ["app/page.tsx", "lib/dictionary.ts", "components"]
+const PRODUCT_FILES = ["app/[product]", "lib/products.ts"]
+
+function lastModified(files: string[], follow = false) {
   try {
     const date = execFileSync(
       "git",
-      ["log", "-1", "--format=%cI", "--", "app", "lib", "components"],
+      [
+        "log",
+        "-1",
+        ...(follow ? ["--follow"] : []),
+        "--format=%cI",
+        "--",
+        ...files,
+      ],
       { encoding: "utf8" }
     ).trim()
     return date || undefined
@@ -18,25 +28,29 @@ function lastModified() {
   }
 }
 
-function priority(path: string, docs: string[]) {
-  if (path === "/") return 1
-  if (docs.includes(path)) return 0.6
-  return 0.8
-}
-
 export default function sitemap(): MetadataRoute.Sitemap {
-  const modified = lastModified()
-  const docs = source
-    .getPages()
-    .filter((page) => page.slugs[1] === DOCS)
-    .map((page) => page.url)
-  const paths = ["/", ...products.map((product) => `/${product.slug}`), ...docs]
-  return paths.map((path) => ({
-    url: absolute(path),
-    lastModified: modified,
-    changeFrequency: "weekly" as const,
-    priority: priority(path, docs),
-  }))
+  const docs = source.getPages().filter((page) => page.slugs[1] === DOCS)
+  const productModified = lastModified(PRODUCT_FILES)
+  return [
+    {
+      url: absolute("/"),
+      lastModified: lastModified(HOME_FILES),
+      changeFrequency: "weekly" as const,
+      priority: 1,
+    },
+    ...products.map((product) => ({
+      url: absolute(`/${product.slug}`),
+      lastModified: productModified,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    })),
+    ...docs.map((page) => ({
+      url: absolute(page.url),
+      lastModified: lastModified([`content/${page.path}`], true),
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    })),
+  ]
 }
 
 export const dynamic = "force-static"

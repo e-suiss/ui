@@ -45,13 +45,17 @@ const titleKinds: Record<string, string> = {
   AI: "Component",
 }
 
-function platformLabel(platforms: string[]) {
+function platformLabels(platforms: string[]) {
   const set = new Set(platforms)
   const mobile = set.has("rn") && set.has("swift") && set.has("kotlin")
-  if (set.has("web") && mobile) return "React, SwiftUI & Compose"
-  if (mobile) return "React Native, SwiftUI & Compose"
-  if (set.size === 1 && set.has("web")) return "React"
-  return undefined
+  if (set.has("web") && mobile)
+    return [
+      "React, React Native, SwiftUI & Compose",
+      "React, SwiftUI & Compose",
+    ]
+  if (mobile) return ["React Native, SwiftUI & Compose"]
+  if (set.size === 1 && set.has("web")) return ["React"]
+  return []
 }
 
 function fit(candidates: string[]) {
@@ -70,8 +74,8 @@ export function pageTitle(
 ) {
   const brand = ` – ${strings.brand}`
   if (seoTitle) return fit([`${seoTitle}${brand}`, seoTitle])
-  const target = platformLabel(platforms)
-  if (!eyebrow || !target) return `${title}${brand}`
+  const targets = platformLabels(platforms)
+  if (!eyebrow || targets.length === 0) return `${title}${brand}`
 
   const name = eyebrow === "AI" ? `AI ${title}` : title
   const chart = eyebrow === "Chart" ? title.match(CHART_TITLE) : null
@@ -85,12 +89,40 @@ export function pageTitle(
     heads = kind ? [`${name} ${kind}`, name] : [name]
   }
 
-  const candidates =
-    target === "React"
-      ? heads.flatMap((head) => [`React ${head}${brand}`, `React ${head}`])
-      : heads.flatMap((head) => [
-          `${head} for ${target}${brand}`,
-          `${head} for ${target}`,
-        ])
+  const candidates = targets.flatMap((target) => {
+    const titles = heads.map((head) =>
+      target === "React" ? `React ${head}` : `${head} for ${target}`
+    )
+    return [...titles.map((head) => `${head}${brand}`), ...titles]
+  })
   return fit(candidates)
+}
+
+const MAX_DESCRIPTION = 160
+
+export function pageDescription(
+  description: string,
+  eyebrow: string | undefined,
+  platforms: string[] = []
+) {
+  const kind = eyebrow === "AI" ? "component" : eyebrow && kinds[eyebrow]
+  if (!kind) return description
+  const names = platforms
+    .map((platform) => platformNames[platform])
+    .filter(Boolean)
+  if (names.length === 0) return description
+  const web = names.length === 1 && names[0] === "React"
+  const targets = web
+    ? ["React and Tailwind CSS", "React"]
+    : [list(names), list(names.map((name) => name.replace("Jetpack ", "")))]
+  const suffixes = [
+    ...targets.map((target) => `Open-source suiss/ui ${kind} for ${target}.`),
+    ...targets.map((target) => `suiss/ui ${kind} for ${target}.`),
+    ...targets.map((target) => `For ${target}.`),
+  ]
+  return (
+    suffixes
+      .map((suffix) => `${description} ${suffix}`)
+      .find((text) => text.length <= MAX_DESCRIPTION) ?? description
+  )
 }

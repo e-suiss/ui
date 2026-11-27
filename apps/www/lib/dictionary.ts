@@ -21,7 +21,8 @@ export const dictionary = {
   verbsTitle: "Every product answers one question.",
   developersLabel: "Developers",
   developersTitle: "Build with suiss today.",
-  developersBody: "Our component library is open source and available now.",
+  developersBody:
+    "suiss/ui, our component library for React, React Native, SwiftUI and Jetpack Compose, is open source and available now.",
   learnMore: "Learn more",
   visitSite: "Visit site",
   inDevelopment: "In development",

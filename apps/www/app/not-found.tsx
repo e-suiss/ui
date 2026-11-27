@@ -1,4 +1,10 @@
+import type { Metadata } from "next"
 import { Anchor } from "@/components/anchor"
+import { site } from "@/lib/site"
+
+export const metadata: Metadata = {
+  title: { absolute: `Page not found – ${site.name}` },
+}
 
 export default function NotFound() {
   return (

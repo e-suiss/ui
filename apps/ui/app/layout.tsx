@@ -14,7 +14,7 @@ import { strings } from "@/lib/strings"
 import "./globals.css"
 
 const fontInter = Inter({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   variable: "--font-inter",
 })
 
@@ -54,11 +54,7 @@ export const metadata: Metadata = {
     description: site.description,
   },
   robots: {
-    index: true,
-    follow: true,
     googleBot: {
-      index: true,
-      follow: true,
       "max-image-preview": "large",
       "max-snippet": -1,
       "max-video-preview": -1,
