@@ -4,7 +4,7 @@ import type { IconProps } from "@phosphor-icons/react"
 import * as React from "react"
 import { useCodeOptions } from "@/components/site/code-options"
 import { DEFAULT_ICONS, type IconLibrary } from "@/lib/code-options"
-import { IconPlaceholder as PhosphorIcon } from "../../../../packages/web/app/(create)/components/icon-placeholder"
+import { icons as phosphorIcons } from "@/lib/icons/phosphor"
 
 type IconSet = Record<string, unknown>
 type Svg = React.ComponentType<Record<string, unknown>>
@@ -77,19 +77,10 @@ export function IconPlaceholder({
   const icons = useIconSet(library)
   const name = { lucide, tabler, hugeicons, phosphor, remixicon }[library]
   const icon = icons?.[name]
-  if (!icon)
-    return (
-      <PhosphorIcon
-        {...props}
-        lucide={lucide}
-        tabler={tabler}
-        hugeicons={hugeicons}
-        phosphor={
-          phosphor as React.ComponentProps<typeof PhosphorIcon>["phosphor"]
-        }
-        remixicon={remixicon}
-      />
-    )
+  if (!icon) {
+    const Phosphor = phosphorIcons[phosphor as keyof typeof phosphorIcons]
+    return Phosphor ? <Phosphor {...props} /> : null
+  }
   if (library === "hugeicons") {
     const Wrapper = icons.HugeiconsIcon as Svg
     return <Wrapper icon={icon} strokeWidth={2} {...props} />

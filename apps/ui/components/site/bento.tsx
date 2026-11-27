@@ -1,19 +1,14 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import type * as React from "react"
-import { Pie, PieChart } from "recharts"
 import {
   SegmentPicker,
   SegmentPickerItem,
 } from "@/components/patterns/segment-picker"
 import { Avatar, AvatarFallback, AvatarGroup } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+import type { ChartConfig } from "@/components/ui/chart"
 import { Input } from "@/components/ui/input"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
@@ -21,6 +16,16 @@ import { ThemeToggle } from "@/components/ui/theme"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import type { PieceCounts } from "@/lib/collections"
 import { cn } from "@/lib/utils"
+
+const BentoPie = dynamic(
+  () => import("@/components/site/bento-pie").then((mod) => mod.BentoPie),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="aspect-square w-full max-w-90 justify-self-center" />
+    ),
+  }
+)
 
 function Tile({
   file,
@@ -109,28 +114,7 @@ function ChartTile({ counts }: { counts: PieceCounts }) {
             ))}
           </ul>
         </div>
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-square w-full max-w-90 justify-self-center [&_.recharts-pie-sector]:origin-center [&_.recharts-pie-sector]:cursor-pointer [&_.recharts-pie-sector]:transition-[scale] [&_.recharts-pie-sector]:duration-500 [&_.recharts-pie-sector]:ease-[cubic-bezier(0.32,0.08,0.24,1)] [&_.recharts-pie-sector]:[transform-box:view-box] [&_.recharts-pie-sector:hover]:scale-[1.06] [&_svg]:overflow-visible"
-        >
-          <PieChart>
-            <ChartTooltip
-              cursor={false}
-              isAnimationActive={false}
-              content={<ChartTooltipContent hideLabel nameKey="kind" />}
-            />
-            <Pie
-              data={pieces}
-              dataKey="count"
-              nameKey="kind"
-              innerRadius="56%"
-              outerRadius="94%"
-              strokeWidth={0}
-              paddingAngle={1.5}
-              cornerRadius={6}
-            />
-          </PieChart>
-        </ChartContainer>
+        <BentoPie config={chartConfig} pieces={pieces} />
       </div>
     </Tile>
   )
