@@ -64,4 +64,4 @@ jobs:
             since=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${BEFORE}" --jq .commit.committer.date || true)
           fi
           echo "Submitting pages changed since ${since:-the last 2 days}"
-          node scripts/indexnow.mjs ${since:+"--since=$since"}
+          node scripts/indexnow.mjs --dir=dist ${since:+"--since=$since"}

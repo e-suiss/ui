@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises"
+import path from "node:path"
 import { parseArgs } from "node:util"
 
 const KEY = "d7238253730183adfa7e236e91fb09cb"
@@ -15,6 +17,7 @@ const { values, positionals } = parseArgs({
     since: { type: "string", default: "" },
     days: { type: "string", default: "2" },
     all: { type: "boolean", default: false },
+    dir: { type: "string", default: "" },
   },
 })
 
@@ -74,7 +77,20 @@ async function submit(host, urlList) {
   return false
 }
 
-async function read(sitemap) {
+function readLocal(sitemap) {
+  const file = path.join(values.dir, new URL(sitemap).pathname)
+  return readFile(file, "utf8").catch((error) => {
+    console.error(`${file}: ${error.message}`)
+    return undefined
+  })
+}
+
+async function readRemote(sitemap) {
+  const response = await readResponse(sitemap)
+  return response ? response.text() : undefined
+}
+
+async function readResponse(sitemap) {
   for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
     const response = await fetch(sitemap).catch((error) => {
       console.error(`${sitemap}: ${error.cause?.message ?? error.message}`)
@@ -100,13 +116,13 @@ let failed = false
 const byHost = new Map()
 
 for (const sitemap of sitemaps) {
-  const response = await read(sitemap)
-  if (!response) {
+  const text = values.dir ? await readLocal(sitemap) : await readRemote(sitemap)
+  if (text === undefined) {
     failed = true
     continue
   }
   const { host } = new URL(sitemap)
-  const urls = changedUrls(await response.text())
+  const urls = changedUrls(text)
   byHost.set(host, [...(byHost.get(host) ?? []), ...urls])
 }
 
